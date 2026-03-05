@@ -1,0 +1,121 @@
+{
+  "version": 1,
+  "skills": {
+    "security-audit": {
+      "version": "1.0.0",
+      "installedAt": 1772148179028
+    },
+    "to-do": {
+      "version": "1.0.2",
+      "installedAt": 1772148186746
+    },
+    "k-deep-research": {
+      "version": "2.0.0",
+      "installedAt": 1772148197215
+    },
+    "quack-memory": {
+      "version": "1.0.2",
+      "installedAt": 1772148230362
+    },
+    "work-application": {
+      "version": "1.0.1",
+      "installedAt": 1772148255870
+    },
+    "caldav-calendar": {
+      "version": "1.0.1",
+      "installedAt": 1772149015120
+    },
+    "ontology": {
+      "version": "0.1.2",
+      "installedAt": 1772149034186
+    },
+    "summarize": {
+      "version": "1.0.0",
+      "installedAt": 1772149045113
+    },
+    "api-gateway": {
+      "version": "1.0.51",
+      "installedAt": 1772149064024
+    },
+    "weather": {
+      "version": "1.0.0",
+      "installedAt": 1772149085080
+    },
+    "nano-banana-pro": {
+      "version": "1.0.1",
+      "installedAt": 1772149094188
+    },
+    "free-ride": {
+      "version": "1.0.4",
+      "installedAt": 1772149919848
+    },
+    "polymarket-odds": {
+      "version": "1.0.0",
+      "installedAt": 1772149924516
+    },
+    "openai-whisper": {
+      "version": "1.0.0",
+      "installedAt": 1772149927625
+    },
+    "auto-updater": {
+      "version": "1.0.0",
+      "installedAt": 1772149932031
+    },
+    "youtube-api-skill": {
+      "version": "1.0.3",
+      "installedAt": 1772149935173
+    },
+    "himalaya": {
+      "version": "1.0.0",
+      "installedAt": 1772149953074
+    },
+    "gemini": {
+      "version": "1.0.0",
+      "installedAt": 1772149955143
+    },
+    "perplexity": {
+      "version": "1.0.0",
+      "installedAt": 1772149958862
+    },
+    "memory-manager": {
+      "version": "1.0.0",
+      "installedAt": 1772149963657
+    },
+    "ai-ppt-generator": {
+      "version": "1.1.2",
+      "installedAt": 1772149966245
+    },
+    "searxng": {
+      "version": "1.0.3",
+      "installedAt": 1772149984873
+    },
+    "gemini-deep-research": {
+      "version": "1.0.0",
+      "installedAt": 1772149989822
+    },
+    "openclaw-anything": {
+      "version": "1.0.2",
+      "installedAt": 1772150012759
+    },
+    "clawhub-publisher": {
+      "version": "1.0.0",
+      "installedAt": 1772150044255
+    },
+    "day-trading-skill": {
+      "version": "1.2.2",
+      "installedAt": 1772150066691
+    },
+    "larrybrain": {
+      "version": "1.5.3",
+      "installedAt": 1772198696187
+    },
+    "bird-twitter": {
+      "version": "1.0.0",
+      "installedAt": 1772540538721
+    },
+    "opus": {
+      "version": "1.0.0",
+      "installedAt": 1772717347403
+    }
+  }
+}
