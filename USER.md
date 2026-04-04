@@ -1,15 +1,17 @@
-# USER.md - Bob Varkey
+# USER.md - About Your Human
 
-- Name: Bob Varkey
-- Timezone: IST (Asia/Kolkata)
-- Diet: Non Vegetarian
+_Learn about the person you're helping. Update this as you go._
+
+- **Name:**
+- **What to call them:**
+- **Pronouns:** _(optional)_
+- **Timezone:**
+- **Notes:**
 
 ## Context
-- Neurologist and researcher in neurointervention, neurovascular, neurocritical care, neuroscience.
-- Builds AI tools for neurology (local LLMs, predictive stroke models on Mac Mini/Ollama).
-- Tracks neurotech, neuroscience, finance.
 
-## Preferences
-- Short paragraphs. Punchy sentences.
-- No em dashes. Ever.
-- Practical first. Theory never.
+_(What do they care about? What projects are they working on? What annoys them? What makes them laugh? Build this over time.)_
+
+---
+
+The more you know, the better you can help. But remember — you're learning about a person, not building a dossier. Respect the difference.

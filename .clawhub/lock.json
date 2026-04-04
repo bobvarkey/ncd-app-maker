@@ -23,7 +23,7 @@
     },
     "caldav-calendar": {
       "version": "1.0.1",
-      "installedAt": 1772149015120
+      "installedAt": 1772768062426
     },
     "ontology": {
       "version": "0.1.2",
@@ -31,79 +31,79 @@
     },
     "summarize": {
       "version": "1.0.0",
-      "installedAt": 1772149045113
+      "installedAt": 1772768085055
     },
     "api-gateway": {
-      "version": "1.0.51",
-      "installedAt": 1772149064024
+      "version": "1.0.59",
+      "installedAt": 1772768115309
     },
     "weather": {
       "version": "1.0.0",
-      "installedAt": 1772149085080
+      "installedAt": 1772768120780
     },
     "nano-banana-pro": {
       "version": "1.0.1",
-      "installedAt": 1772149094188
+      "installedAt": 1772768132175
     },
     "free-ride": {
       "version": "1.0.4",
-      "installedAt": 1772149919848
+      "installedAt": 1772768161528
     },
     "polymarket-odds": {
       "version": "1.0.0",
-      "installedAt": 1772149924516
+      "installedAt": 1772768169523
     },
     "openai-whisper": {
       "version": "1.0.0",
-      "installedAt": 1772149927625
+      "installedAt": 1772768175953
     },
     "auto-updater": {
       "version": "1.0.0",
-      "installedAt": 1772149932031
+      "installedAt": 1772768192670
     },
     "youtube-api-skill": {
       "version": "1.0.3",
-      "installedAt": 1772149935173
+      "installedAt": 1772768197740
     },
     "himalaya": {
       "version": "1.0.0",
-      "installedAt": 1772149953074
+      "installedAt": 1773894842697
     },
     "gemini": {
       "version": "1.0.0",
-      "installedAt": 1772149955143
+      "installedAt": 1773894844486
     },
     "perplexity": {
       "version": "1.0.0",
-      "installedAt": 1772149958862
+      "installedAt": 1773894847142
     },
     "memory-manager": {
       "version": "1.0.0",
-      "installedAt": 1772149963657
+      "installedAt": 1773894849559
     },
     "ai-ppt-generator": {
-      "version": "1.1.2",
-      "installedAt": 1772149966245
+      "version": "1.1.4",
+      "installedAt": 1773894851750
     },
     "searxng": {
       "version": "1.0.3",
-      "installedAt": 1772149984873
+      "installedAt": 1773894853902
     },
     "gemini-deep-research": {
       "version": "1.0.0",
-      "installedAt": 1772149989822
+      "installedAt": 1773894855951
     },
     "openclaw-anything": {
-      "version": "1.0.2",
-      "installedAt": 1772150012759
+      "version": "2.0.0",
+      "installedAt": 1773894859445
     },
     "clawhub-publisher": {
       "version": "1.0.0",
-      "installedAt": 1772150044255
+      "installedAt": 1773894861782
     },
     "day-trading-skill": {
       "version": "1.2.2",
-      "installedAt": 1772150066691
+      "installedAt": 1773894863833
     },
     "larrybrain": {
       "version": "1.5.3",
@@ -116,6 +116,58 @@
     "opus": {
       "version": "1.0.0",
       "installedAt": 1772717347403
+    },
+    "openclaw-guardian": {
+      "version": "1.0.1",
+      "installedAt": 1772889018346
+    },
+    "nano-banana-2": {
+      "version": "0.1.1",
+      "installedAt": 1773403444246
+    },
+    "mflux": {
+      "version": "0.1.0",
+      "installedAt": 1773405606025
+    },
+    "pexoai-agent": {
+      "version": "0.2.5",
+      "installedAt": 1773840817659
+    },
+    "xurl": {
+      "version": "1.0.0",
+      "installedAt": 1774187141440
+    },
+    "twitter-post": {
+      "version": "1.0.0",
+      "installedAt": 1774187174571
+    },
+    "moltbook-interact": {
+      "version": "1.0.1",
+      "installedAt": 1774227416401
+    },
+    "moltbook-registry": {
+      "version": "1.0.3",
+      "installedAt": 1774227423385
+    },
+    "moltbook-cli-tool": {
+      "version": "0.7.10",
+      "installedAt": 1774227425798
+    },
+    "powerpoint-pptx": {
+      "version": "1.0.1",
+      "installedAt": 1774269351893
+    },
+    "xiucheng-self-improving-agent": {
+      "version": "1.0.0",
+      "installedAt": 1774504156536
+    },
+    "sw-autoresearch": {
+      "version": "1.0.0",
+      "installedAt": 1774751606729
+    },
+    "paperzilla": {
+      "version": "0.2.0",
+      "installedAt": 1774845306458
     }
   }
 }

@@ -1,0 +1,22 @@
+---
+topic: daily
+date: 2026-03-26
+tags: []
+---
+
+# Xcath Input
+
+XCath Remote Robotic Stroke Procedure: A neurosurgeon performed a mechanical thrombectomy from 120 miles away using the Iris Surgical Robotic System. This is telerobotic intervention - the future of stroke care where remote robotics enables expert treatment anywhere, anytime.
+
+Key components:
+- Robotic arm for precision navigation
+- Steerable neurovascular guidewires
+- Remote control console
+- Real-time imaging feedback
+- First-pass clot removal success
+
+Benefits:
+- Democratizes stroke care
+- Rural areas access to expert treatment
+- Time-critical intervention anywhere
+- Future: autonomous stroke interventions
