@@ -168,6 +168,10 @@
     "paperzilla": {
       "version": "0.2.0",
       "installedAt": 1774845306458
+    },
+    "clawcontrol-logger": {
+      "version": "1.0.0",
+      "installedAt": 1775317926411
     }
   }
 }

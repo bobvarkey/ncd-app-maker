@@ -1,0 +1,3 @@
+{"created_at_ms":1775437382657,"session_id":"session-1775437382657-0","type":"session_meta","updated_at_ms":1775437386618,"version":1}
+{"message":{"blocks":[{"text":"say hello in 3 words","type":"text"}],"role":"user"},"type":"message"}
+{"message":{"blocks":[{"text":"Hey there, friend! 👋","type":"text"}],"role":"assistant","usage":{"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"input_tokens":10319,"output_tokens":26}},"type":"message"}

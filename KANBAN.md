@@ -1,46 +1,105 @@
-# 🎯 Bobby's Kanban Board
+# KANBAN — Bob's Goals
 
-_Last updated: 2026-04-04 08:00 IST_
-
----
-
-## 📋 To Do
-
-- [x] Post Hook 1 (OpenClaw updates frustration) to X ✅ Apr 4
-- [ ] Post Hook 3 (local AI vs cloud) to X — hook ready in drafts
-- [ ] YouTube niche research: top 5 AI+Neurology channels + video angles
-- [ ] Define SaaS product concept (needed before building)
+## Goals
+- YouTube: 100K subscribers
+- X: 150K followers  
+- SaaS: Launch by Q3 2026
+- AI+Neuro community: Build engaged community
+- Books: 2/month
+- French: Learn
 
 ---
 
-## 🔄 In Progress
+## To Do (2026-04-07)
 
-- [ ] Define SaaS product concept (blocked — need Bobby's input)
-
----
-
-## ✅ Done
-
-- [x] Posted Hook 1 (OpenClaw update frustration) to X — Apr 4 08:10 IST
-- [x] YouTube niche research — full report saved to workspace
-
----
-
-## 📚 Backlog
-
-- [ ] MiroFish installation (blocked: exec policy)
-- [ ] YouTube content calendar (pending niche research)
-- [ ] French learning routine setup
-- [ ] Book reading tracker Q2
+- [ ] Post REM Sleep X thread (drafted, ready — content-factory/reports/x-thread-rem-sleep-2026-04-07.md)
+- [ ] Post Thrombectomy X thread (drafted, ready — content-factory/reports/x-thread-thrombectomy-2026-04-07.md)
+- [ ] Film + post Thrombectomy YouTube video (script ready at content-factory/reports/youtube-script-thrombectomy-2026-04-07.md)
+- [ ] Review SaaS MVP spec and validate with 3 potential users (spec at SAAS-MVP.md)
+- [ ] Engage on X with 3+ posts on neuro/neuroscience news
+- [ ] French: Complete 1 lesson (20 min)
+- [ ] Start booking research for AI+Neuro community growth plan
 
 ---
 
-## 📊 Weekly Stats
+## In Progress
 
-| Week | Tasks Done | Tasks Added |
-|------|-----------|------------|
-| W14 | 0 | 4 |
+- [ ] EMG AI Clinical Guide YouTube video (script in progress — check content-factory)
 
 ---
 
-_Auto-managed by Hermes. Update in real-time._
+## Done (2026-04-07)
+
+- [x] SaaS MVP spec defined: "NeuroFlow AI" — Clinical Decision Support Platform (SAAS-MVP.md)
+- [x] X Thread: REM Sleep & Problem Solving — finalized, 8-part thread ready to post
+- [x] X Thread: Thrombectomy 24-Hour Window — drafted (7-part thread)
+- [x] YouTube Script: Stroke Thrombectomy The Expanding Window (film-ready, ~16 min)
+- [x] KANBAN updated for 2026-04-07
+
+---
+
+## Done (2026-04-06)
+
+- [x] REM Sleep Research Run — research brief delivered
+- [x] X Thread Draft: REM Sleep & Problem Solving (8-part thread, ready to post)
+- [x] YouTube Research: 5 Trending AI+Neuro Topics (Mind Captioning, BCI, Sleep Spindles, Psychedelics, Neuroplastic AI)
+- [x] 4 YouTube Scripts Written: Mind Captioning, BCI Non-invasive, Sleep Spindles, Psychedelics+Neuroplasticity
+- [x] SaaS Competitor Research: Brain training apps landscape (NeurotrackerX, Neurosity, Brainbuddy, Elevate)
+
+---
+
+## YouTube Content Pipeline
+
+| Topic | Script Status | Notes |
+|-------|--------------|-------|
+| Mind Captioning AI | ✅ Written (11 min) | High potential |
+| Non-invasive BCI Revolution | ✅ Written (12 min) | High potential |
+| Sleep Spindles: File Compression | ✅ Written (10 min) | Builds on viral "Brain Cleans Itself" |
+| Psychedelics + Neuroplasticity | ✅ Written (13 min) | Medium priority |
+| Neuroplastic AI | ✅ Written (12 min) | High priority |
+| Stroke Thrombectomy: The Expanding Window | ✅ Scripted (16 min) | NEW 2026-04-07 — ready to film |
+| EMG AI Clinical Guide | 🔄 In progress | Check content-factory |
+
+---
+
+## X Content Pipeline
+
+| Topic | Status | Ready |
+|-------|--------|-------|
+| REM Sleep + Problem Solving | ✅ Finalized | 2026-04-07 |
+| Thrombectomy: 24-Hour Window | ✅ Drafted | 2026-04-07 |
+| Neuroplastic AI (1-tweet) | ✅ Written | Prior |
+| Iran/US War + Neurological Impact | 🔄 Needs research | Lower priority |
+
+---
+
+## SaaS MVP: NeuroFlow AI
+
+- Spec: SAAS-MVP.md (created 2026-04-07)
+- Core value prop: EMG/NCS + Sleep study AI interpretation assistant
+- Target users: Neurologists, Clinical Neurophysiologists, Neuro residents
+- MVP features: Waveform interpretation, Report drafting, Pattern recognition
+- Next step: User interviews with 3 potential customers
+
+---
+
+## Books Read 2026
+
+| # | Title | Author | Date Completed | Notes |
+|---|-------|--------|----------------|-------|
+| 1 | | | | |
+| 2 | | | | |
+| Goal | 2/month | | | |
+
+---
+
+## French Progress
+
+- Current level: Beginner (assumed)
+- Resources: (to be filled in)
+- Target: Conversational by end of 2026
+- Lessons this month: 0/4
+
+---
+
+*LastUpdated: 2026-04-07 08:00 IST*

@@ -1,0 +1,126 @@
+{
+  "version": 1,
+  "updatedAt": "2026-04-06T21:03:24.482Z",
+  "entries": {
+    "memory:memory/2026-03-27.md:1:22": {
+      "key": "memory:memory/2026-03-27.md:1:22",
+      "path": "memory/2026-03-27.md",
+      "startLine": 1,
+      "endLine": 22,
+      "source": "memory",
+      "snippet": "# 2026-03-27 ## Session Start - User introduced themselves: **Bob**, New Delhi, IST timezone - Memory system not yet configured (memory_search returned `provider: none`) - User's workspace contains medical/neurology content (presentations, research notes) ## User Profile - **Profession:** Neurologist, Academician - **Interests:** Neuroscience, Neurointervention, Neurocritical care, AI, OpenClaw, agentic AI, stock trading ## Memory System Issue - Found root cause: `[memory] Skipping memory file sync in FTS-only mode (no embedding provider)` - 38 memory files exist but indexer skips them without OpenAI/Google/Voyage/Mistral API key - FTS is ready but not being populated - Bob asked to \"Fix",
+      "recallCount": 1,
+      "dailyCount": 0,
+      "totalScore": 0.8508217179544376,
+      "maxScore": 0.8508217179544376,
+      "firstRecalledAt": "2026-04-06T21:03:24.482Z",
+      "lastRecalledAt": "2026-04-06T21:03:24.482Z",
+      "queryHashes": [
+        "3435f2e5ee4d"
+      ],
+      "recallDays": [
+        "2026-04-07"
+      ],
+      "conceptTags": [
+        "embedding",
+        "openai",
+        "memory-search",
+        "medical/neurology",
+        "fts-only",
+        "openai/google/voyage/mistral",
+        "start",
+        "user"
+      ]
+    },
+    "memory:memory/2026-03-05.md:1:32": {
+      "key": "memory:memory/2026-03-05.md:1:32",
+      "path": "memory/2026-03-05.md",
+      "startLine": 1,
+      "endLine": 32,
+      "source": "memory",
+      "snippet": "# Memory - March 5th, 2026 ## Bob's Current Setup ### Goals - Grow YouTube to 100k subscribers - Grow X to 150k followers - Launch SaaS by Q3 - Build community around AI + Neurology - Read 2 books/month - Learn French ### Active Systems - Reddit Monitor: Every 4 hours via cron - Content Factory: Daily at 8 AM - LobsterBoard: Running at localhost:8080 - ClawX: ~/Downloads/ClawX - Mission Control: ~/Downloads/mission-control/index.html ### Skills Added Today - opus: Smart model switching (Haiku → Sonnet → Opus for cost savings) ### Morning Workflow - Added workflow-master.sh: Runs at 4:30 AM daily - Runs Reddit Monitor + Content Factory - pubmed-search - biogpt-search - public-apis - redd",
+      "recallCount": 1,
+      "dailyCount": 0,
+      "totalScore": 0.8324628828721494,
+      "maxScore": 0.8324628828721494,
+      "firstRecalledAt": "2026-04-06T21:03:24.482Z",
+      "lastRecalledAt": "2026-04-06T21:03:24.482Z",
+      "queryHashes": [
+        "3435f2e5ee4d"
+      ],
+      "recallDays": [
+        "2026-04-07"
+      ],
+      "conceptTags": [
+        "gpt",
+        "books/month",
+        "downloads/clawx",
+        "workflow-master.sh",
+        "pubmed-search",
+        "biogpt-search",
+        "public-apis",
+        "march"
+      ]
+    },
+    "memory:memory/2026-03-30.md:1:34": {
+      "key": "memory:memory/2026-03-30.md:1:34",
+      "path": "memory/2026-03-30.md",
+      "startLine": 1,
+      "endLine": 34,
+      "source": "memory",
+      "snippet": "# 2026-03-30 ## Notes - **Hermes Agent**: Already installed on this machine at `/Users/bobvarkey/.hermes/hermes-agent` (v0.5.0). Not something I installed — it was pre-existing. - User asked about `/sethome` command but it doesn't exist in Hermes or OpenClaw. ## 8:00 AM — X/Twitter Bookmarks Sync - Cron job `7ad6447b-4f5e-42ab-bf0b-636d2748262b` fired successfully - `x-twitter-bookmarks-cli.py` ran: sample bookmark inserted into memory test DB at `memory_test.db` - Automation completed successfully. # 2026-03-30 ## Notes - **Hermes Agent**: Already installed on this machine at `/Users/bobvarkey/.hermes/hermes-agent` (v0.5.0). Not something I installed — it was pre-existing. - User asked",
+      "recallCount": 1,
+      "dailyCount": 0,
+      "totalScore": 0.8076664225735735,
+      "maxScore": 0.8076664225735735,
+      "firstRecalledAt": "2026-04-06T21:03:24.482Z",
+      "lastRecalledAt": "2026-04-06T21:03:24.482Z",
+      "queryHashes": [
+        "3435f2e5ee4d"
+      ],
+      "recallDays": [
+        "2026-04-07"
+      ],
+      "conceptTags": [
+        "users/bobvarkey",
+        "hermes/hermes-agent",
+        "v0.5.0",
+        "pre-existing",
+        "x/twitter",
+        "x-twitter-bookmarks-cli.py",
+        "memory-test.db",
+        "hermes"
+      ]
+    },
+    "memory:memory/2026-03-26.md:1:5": {
+      "key": "memory:memory/2026-03-26.md:1:5",
+      "path": "memory/2026-03-26.md",
+      "startLine": 1,
+      "endLine": 5,
+      "source": "memory",
+      "snippet": "# 2026-03-26 Thursday ## 08:00 - X Twitter Bookmarks Sync (Cron) - Automated bookmark sync ran successfully - Sample bookmark inserted into memory test DB",
+      "recallCount": 1,
+      "dailyCount": 0,
+      "totalScore": 0.8035964201098202,
+      "maxScore": 0.8035964201098202,
+      "firstRecalledAt": "2026-04-06T21:03:24.482Z",
+      "lastRecalledAt": "2026-04-06T21:03:24.482Z",
+      "queryHashes": [
+        "3435f2e5ee4d"
+      ],
+      "recallDays": [
+        "2026-04-07"
+      ],
+      "conceptTags": [
+        "thursday",
+        "twitter",
+        "bookmarks",
+        "sync",
+        "cron",
+        "automated",
+        "bookmark",
+        "ran"
+      ]
+    }
+  }
+}
