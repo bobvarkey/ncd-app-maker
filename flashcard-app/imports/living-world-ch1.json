@@ -1,0 +1,12 @@
+[
+  {"front": "What is the science of life forms and living processes?", "back": "Biology", "tags": ["Biology", "Introduction"]},
+  {"front": "How many known species are there on Earth?", "back": "1.7-1.8 million", "tags": ["Biodiversity"]},
+  {"front": "What is nomenclature in biology?", "back": "Standardisation of naming living organisms worldwide", "tags": ["Taxonomy", "Nomenclature"]},
+  {"front": "What does identification involve in biology?", "back": "Correctly describing an organism and attaching the correct name to it", "tags": ["Taxonomy", "Identification"]},
+  {"front": "Who introduced the binomial nomenclature system?", "back": "Carolus Linnaeus", "tags": ["Binomial Nomenclature", "Taxonomy"]},
+  {"front": "Which code governs plant scientific names?", "back": "International Code for Botanical Nomenclature (ICBN)", "tags": ["Nomenclature", "Plants"]},
+  {"front": "Which code governs animal scientific names?", "back": "International Code of Zoological Nomenclature (ICZN)", "tags": ["Nomenclature", "Animals"]},
+  {"front": "What are the rules of biological nomenclature?", "back": "1) Names in Latin and italics, 2) First word = genus, second = specific epithet, 3) Handwritten names are separately underlined", "tags": ["Nomenclature", "Rules"]},
+  {"front": "Who was Ernst Mayr and what did he pioneer?", "back": "Harvard evolutionary biologist called 'The Darwin of the 20th century' who pioneered the biological species definition. Won Balzan Prize (1983), International Prize for Biology (1994), Crafoord Prize (1999).", "tags": ["Ernst Mayr", "Scientists", "Evolution"]},
+  {"front": "In what two ways are living organisms related?", "back": "Horizontally (same era/time period) and vertically (across generations/ancestry)", "tags": ["Biodiversity", "Evolution"]}
+]

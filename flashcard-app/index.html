@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Flashcard SRS</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div id="app">
+    <!-- Top Navigation -->
+    <nav class="nav">
+      <div class="nav-logo">⚡ Flashcards</div>
+      <div class="nav-links">
+        <button class="nav-link active" data-view="dashboard">Dashboard</button>
+        <button class="nav-link" data-view="generator">Generator</button>
+        <button class="nav-link" data-view="stats">Stats</button>
+      </div>
+    </nav>
+
+    <!-- Dashboard View -->
+    <div id="dashboard-view" class="view active">
+      <div class="view-header">
+        <h1>Your Decks</h1>
+        <button class="btn btn-primary" id="create-deck-btn">+ Create Deck</button>
+      </div>
+      
+      <!-- Stats Bento Grid -->
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-icon">📚</div>
+          <div class="stat-label">Total Cards</div>
+          <div class="stat-value" id="stat-total">0</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon">📅</div>
+          <div class="stat-label">Due Today</div>
+          <div class="stat-value" id="stat-due">0</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon">⭐</div>
+          <div class="stat-label">Mastered</div>
+          <div class="stat-value" id="stat-mastered">0</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon">🔥</div>
+          <div class="stat-label">Streak</div>
+          <div class="stat-value" id="stat-streak">0</div>
+        </div>
+      </div>
+
+      <!-- Deck List -->
+      <div id="deck-list" class="deck-list"></div>
+    </div>
+
+    <!-- Deck Manager View -->
+    <div id="deck-view" class="view">
+      <div class="view-header">
+        <button class="btn btn-ghost" id="back-to-dashboard">← Back</button>
+        <input type="text" class="deck-name-input" id="deck-name" placeholder="Deck Name">
+        <button class="btn btn-danger" id="delete-deck-btn">Delete Deck</button>
+      </div>
+      <div class="deck-actions">
+        <button class="btn btn-primary" id="add-card-btn">+ Add Card</button>
+        <button class="btn btn-secondary" id="start-review-btn">Start Review</button>
+      </div>
+      <div id="card-list" class="card-list"></div>
+    </div>
+
+    <!-- Card Editor Modal -->
+    <div id="card-editor" class="modal">
+      <div class="modal-content">
+        <h2 id="card-editor-title">Add Card</h2>
+        <div class="form-group">
+          <label>Front (Question)</label>
+          <textarea id="card-front" placeholder="Enter question..."></textarea>
+        </div>
+        <div class="form-group">
+          <label>Back (Answer)</label>
+          <textarea id="card-back" placeholder="Enter answer..."></textarea>
+        </div>
+        <div class="form-group">
+          <label>Tags (comma separated)</label>
+          <input type="text" id="card-tags" placeholder="e.g., biology, chapter1">
+        </div>
+        <div class="modal-actions">
+          <button class="btn btn-ghost" id="cancel-card">Cancel</button>
+          <button class="btn btn-primary" id="save-card">Save Card</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Review Mode View -->
+    <div id="review-view" class="view">
+      <div class="review-header">
+        <button class="btn btn-ghost" id="exit-review">← Exit</button>
+        <span class="review-progress" id="review-progress">Card 0 of 0</span>
+      </div>
+      <div class="review-card-container">
+        <div class="flashcard" id="flashcard">
+          <div class="flashcard-inner">
+            <div class="flashcard-front">
+              <div class="card-content" id="review-front"></div>
+            </div>
+            <div class="flashcard-back">
+              <div class="card-content" id="review-back"></div>
+              <div class="card-tags" id="review-tags"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="review-controls">
+        <button class="btn btn-review btn-again" id="btn-again" style="display:none;">Again</button>
+        <button class="btn btn-review btn-hard" id="btn-hard" style="display:none;">Hard</button>
+        <button class="btn btn-review btn-good" id="btn-good" style="display:none;">Good</button>
+        <button class="btn btn-review btn-easy" id="btn-easy" style="display:none;">Easy</button>
+        <button class="btn btn-primary btn-large" id="flip-btn">Flip Card</button>
+      </div>
+    </div>
+
+    <!-- Review Complete View -->
+    <div id="review-complete-view" class="view">
+      <div class="complete-screen">
+        <h2>🎉 Review Complete!</h2>
+        <div class="complete-stats">
+          <div class="complete-stat">
+            <span class="complete-value" id="complete-reviewed">0</span>
+            <span class="complete-label">Cards Reviewed</span>
+          </div>
+          <div class="complete-stat">
+            <span class="complete-value" id="complete-accuracy">0%</span>
+            <span class="complete-label">Good+ Rate</span>
+          </div>
+        </div>
+        <button class="btn btn-primary" id="done-review">Done</button>
+      </div>
+    </div>
+
+    <!-- Generator View -->
+    <div id="generator-view" class="view">
+      <div class="view-header">
+        <h1>AI Card Generator</h1>
+      </div>
+      <div class="generator-tabs">
+        <button class="tab-btn active" data-tab="text">Text</button>
+        <button class="tab-btn" data-tab="url">URL</button>
+        <button class="tab-btn" data-tab="pdf">PDF</button>
+        <button class="tab-btn" data-tab="ollama">Local AI</button>
+      </div>
+      
+      <div class="generator-inputs">
+        <div class="tab-content active" id="text-input">
+          <textarea id="source-text" placeholder="Paste your study material here..."></textarea>
+        </div>
+        <div class="tab-content" id="url-input">
+          <input type="text" id="source-url" placeholder="Enter URL to extract content from">
+        </div>
+        <div class="tab-content" id="pdf-input">
+          <input type="file" id="source-pdf" accept=".pdf">
+        </div>
+        <div class="tab-content" id="ollama-input">
+          <div class="form-group">
+            <label>Paste study material below</label>
+            <textarea id="source-ollama" placeholder="Paste your notes, textbook content, or any study material here..."></textarea>
+          </div>
+          <div class="form-group">
+            <label>Local Model</label>
+            <select id="ollama-model">
+              <option value="qwen2.5-coder:7b">qwen2.5-coder:7b (default)</option>
+              <option value="minimax-m2:cloud">minimax-m2:cloud</option>
+              <option value="qwen3-vl:4b">qwen3-vl:4b</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <button class="btn btn-primary btn-large" id="generate-btn">Generate Cards</button>
+      <div class="generator-actions" style="margin-bottom:1.5rem;">
+        <label class="btn btn-secondary" style="cursor:pointer;">Import JSON<input type="file" id="import-json" accept=".json" style="display:none;"></label>
+      </div>
+      
+      <div id="generated-preview" class="generated-preview" style="display:none;">
+        <h3>Generated Cards</h3>
+        <div id="generated-list"></div>
+        <div class="generator-actions">
+          <select id="target-deck">
+            <option value="">Select target deck...</option>
+          </select>
+          <button class="btn btn-primary" id="import-cards">Import Selected</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Stats View -->
+    <div id="stats-view" class="view">
+      <div class="view-header">
+        <h1>Statistics</h1>
+      </div>
+      <div class="stats-chart">
+        <h3>Last 7 Days</h3>
+        <div class="bar-chart" id="bar-chart"></div>
+      </div>
+      <div class="stats-summary">
+        <div class="summary-item">
+          <span class="summary-label">Total Reviews</span>
+          <span class="summary-value" id="total-reviews">0</span>
+        </div>
+        <div class="summary-item">
+          <span class="summary-label">Average Ease</span>
+          <span class="summary-value" id="avg-ease">2.5</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Delete Confirmation Modal -->
+    <div id="confirm-modal" class="modal">
+      <div class="modal-content modal-small">
+        <h2 id="confirm-title">Confirm Delete</h2>
+        <p id="confirm-message">Are you sure?</p>
+        <div class="modal-actions">
+          <button class="btn btn-ghost" id="confirm-cancel">Cancel</button>
+          <button class="btn btn-danger" id="confirm-ok">Delete</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>

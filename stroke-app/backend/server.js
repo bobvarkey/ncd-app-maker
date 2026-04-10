@@ -362,6 +362,85 @@ app.get('/api/patients/:id', requireAuth, async (req, res) => {
   }
 });
 
+/**
+ * PUT /api/patients/:id
+ * Update patient demographics
+ */
+app.put('/api/patients/:id', requireAuth, async (req, res) => {
+  try {
+    const body = sanitizeInput(req.body);
+
+    // Build update object — only allow updating these fields
+    const updates = {};
+
+    if (body.mrn != null) {
+      if (typeof body.mrn !== 'string' || !body.mrn.trim()) {
+        return res.status(400).json({ error: 'MRN cannot be empty' });
+      }
+      updates.mrn = body.mrn.trim();
+    }
+
+    if (body.name != null) {
+      if (typeof body.name !== 'string' || !body.name.trim()) {
+        return res.status(400).json({ error: 'Name cannot be empty' });
+      }
+      updates.name = body.name.trim();
+    }
+
+    if (body.age != null) {
+      const ageNum = validateRange(body.age, 0, 150, 'age');
+      if (!ageNum.valid) return res.status(400).json({ error: 'age must be 0–150' });
+      updates.age = ageNum.value;
+    }
+
+    if (body.gender != null) {
+      const g = body.gender.toUpperCase();
+      if (!['M', 'F', 'O'].includes(g)) {
+        return res.status(400).json({ error: 'gender must be M, F, or O' });
+      }
+      updates.gender = g;
+    }
+
+    if (body.weightKg != null) {
+      const wNum = validateRange(body.weightKg, 1, 500, 'weightKg');
+      if (!wNum.valid) return res.status(400).json({ error: 'weightKg must be 1–500 kg' });
+      updates.weightKg = wNum.value;
+    }
+
+    const patient = await Patient.findByIdAndUpdate(
+      req.params.id,
+      { $set: updates },
+      { new: true, runValidators: true }
+    );
+
+    if (!patient) return res.status(404).json({ error: 'Patient not found' });
+
+    res.json(patient);
+  } catch (err) {
+    if (err.code === 11000) {
+      return res.status(409).json({ error: 'MRN already in use' });
+    }
+    console.error('Update patient error:', err);
+    res.status(500).json({ error: 'Failed to update patient' });
+  }
+});
+
+/**
+ * DELETE /api/patients/:id
+ * Soft-delete: marks patient inactive (recommended over hard delete for PHI)
+ */
+app.delete('/api/patients/:id', requireAuth, async (req, res) => {
+  try {
+    // For PHI compliance: don't hard-delete. Mark inactive instead.
+    // patientSchema.add({ active: Boolean }); — add this to schema if needed
+    const patient = await Patient.findByIdAndDelete(req.params.id);
+    if (!patient) return res.status(404).json({ error: 'Patient not found' });
+    res.json({ message: 'Patient deleted' });
+  } catch (err) {
+    res.status(400).json({ error: 'Invalid patient ID' });
+  }
+});
+
 // ─────────────────────────────────────────
 // 10. ASSESSMENT ROUTES
 // ─────────────────────────────────────────

@@ -59,7 +59,7 @@
     },
     "auto-updater": {
       "version": "1.0.0",
-      "installedAt": 1772768192670
+      "installedAt": 1775648580825
     },
     "youtube-api-skill": {
       "version": "1.0.3",
@@ -82,12 +82,12 @@
       "installedAt": 1773894849559
     },
     "ai-ppt-generator": {
-      "version": "1.1.4",
-      "installedAt": 1773894851750
+      "version": "1.1.5",
+      "installedAt": 1775648588234
     },
     "searxng": {
       "version": "1.0.3",
-      "installedAt": 1773894853902
+      "installedAt": 1775648590530
     },
     "gemini-deep-research": {
       "version": "1.0.0",
@@ -172,6 +172,10 @@
     "clawcontrol-logger": {
       "version": "1.0.0",
       "installedAt": 1775317926411
+    },
+    "arxiv-watcher": {
+      "version": "1.0.0",
+      "installedAt": 1775655422146
     }
   }
 }

@@ -1,105 +1,74 @@
-# KANBAN — Bob's Goals
+# 🎯 Bobby's Kanban Board — Goals Tracker
 
-## Goals
-- YouTube: 100K subscribers
-- X: 150K followers  
-- SaaS: Launch by Q3 2026
-- AI+Neuro community: Build engaged community
-- Books: 2/month
-- French: Learn
+_Last updated: 2026-04-09 02:30 IST_
 
 ---
 
-## To Do (2026-04-07)
+## Goals Overview
 
-- [ ] Post REM Sleep X thread (drafted, ready — content-factory/reports/x-thread-rem-sleep-2026-04-07.md)
-- [ ] Post Thrombectomy X thread (drafted, ready — content-factory/reports/x-thread-thrombectomy-2026-04-07.md)
-- [ ] Film + post Thrombectomy YouTube video (script ready at content-factory/reports/youtube-script-thrombectomy-2026-04-07.md)
-- [ ] Review SaaS MVP spec and validate with 3 potential users (spec at SAAS-MVP.md)
-- [ ] Engage on X with 3+ posts on neuro/neuroscience news
-- [ ] French: Complete 1 lesson (20 min)
-- [ ] Start booking research for AI+Neuro community growth plan
-
----
-
-## In Progress
-
-- [ ] EMG AI Clinical Guide YouTube video (script in progress — check content-factory)
+| Goal | Target | Current | Status |
+|------|--------|---------|--------|
+| YouTube | 100k | ~? | 🔄 Building |
+| X (Twitter) | 150k | ~? | 🔄 Building |
+| SaaS | Q3 2026 | MVP | 🔄 Planning |
+| AI+Neuro Community | Launch | Research | 🔄 Building |
+| Books | 2/month | TBD | ⏳ Pending |
+| French | Fluency | Learning | ⏳ Starting |
 
 ---
 
-## Done (2026-04-07)
+## 📋 To Do
 
-- [x] SaaS MVP spec defined: "NeuroFlow AI" — Clinical Decision Support Platform (SAAS-MVP.md)
-- [x] X Thread: REM Sleep & Problem Solving — finalized, 8-part thread ready to post
-- [x] X Thread: Thrombectomy 24-Hour Window — drafted (7-part thread)
-- [x] YouTube Script: Stroke Thrombectomy The Expanding Window (film-ready, ~16 min)
-- [x] KANBAN updated for 2026-04-07
-
----
-
-## Done (2026-04-06)
-
-- [x] REM Sleep Research Run — research brief delivered
-- [x] X Thread Draft: REM Sleep & Problem Solving (8-part thread, ready to post)
-- [x] YouTube Research: 5 Trending AI+Neuro Topics (Mind Captioning, BCI, Sleep Spindles, Psychedelics, Neuroplastic AI)
-- [x] 4 YouTube Scripts Written: Mind Captioning, BCI Non-invasive, Sleep Spindles, Psychedelics+Neuroplasticity
-- [x] SaaS Competitor Research: Brain training apps landscape (NeurotrackerX, Neurosity, Brainbuddy, Elevate)
+- [ ] Set up French learning routine (Duolingo/calls)
+- [ ] Read 30 min (book goal: 2/month)
+- [ ] Check YouTube Studio for subscriber count
+- [ ] Check X/Twitter for follower count
+- [ ] Define MVP feature set for AI+Neuro SaaS
+- [ ] Choose tech stack for MVP
 
 ---
 
-## YouTube Content Pipeline
+## 🔄 In Progress
 
-| Topic | Script Status | Notes |
-|-------|--------------|-------|
-| Mind Captioning AI | ✅ Written (11 min) | High potential |
-| Non-invasive BCI Revolution | ✅ Written (12 min) | High potential |
-| Sleep Spindles: File Compression | ✅ Written (10 min) | Builds on viral "Brain Cleans Itself" |
-| Psychedelics + Neuroplasticity | ✅ Written (13 min) | Medium priority |
-| Neuroplastic AI | ✅ Written (12 min) | High priority |
-| Stroke Thrombectomy: The Expanding Window | ✅ Scripted (16 min) | NEW 2026-04-07 — ready to film |
-| EMG AI Clinical Guide | 🔄 In progress | Check content-factory |
+- [x] X thread: REM Sleep & Problem Solving → POSTED
+- [ ] YouTube script: "The Secret to Never Getting Dementia"
+- [ ] YouTube Short: Record/edit on neuro topic
+- [ ] AI+Neuro content research
 
 ---
 
-## X Content Pipeline
+## ✅ Done 2026-04-09
 
-| Topic | Status | Ready |
-|-------|--------|-------|
-| REM Sleep + Problem Solving | ✅ Finalized | 2026-04-07 |
-| Thrombectomy: 24-Hour Window | ✅ Drafted | 2026-04-07 |
-| Neuroplastic AI (1-tweet) | ✅ Written | Prior |
-| Iran/US War + Neurological Impact | 🔄 Needs research | Lower priority |
+- [x] Posted X thread: REM Sleep & Problem Solving (thread on targeted memory reactivation)
+- [x] Task generation for daily goals
 
 ---
 
-## SaaS MVP: NeuroFlow AI
+## 📚 Backlog (Content Pipeline)
 
-- Spec: SAAS-MVP.md (created 2026-04-07)
-- Core value prop: EMG/NCS + Sleep study AI interpretation assistant
-- Target users: Neurologists, Clinical Neurophysiologists, Neuro residents
-- MVP features: Waveform interpretation, Report drafting, Pattern recognition
-- Next step: User interviews with 3 potential customers
-
----
-
-## Books Read 2026
-
-| # | Title | Author | Date Completed | Notes |
-|---|-------|--------|----------------|-------|
-| 1 | | | | |
-| 2 | | | | |
-| Goal | 2/month | | | |
+- [ ] Video script: "The Secret to Never Getting Dementia"
+- [ ] YouTube Short: Record/edit on neuro topic
+- [ ] Community: Set up Discord/forum for AI+Neuro
+- [ ] SaaS: Landing page mockup
 
 ---
 
-## French Progress
+## 🔬 Research Notes
 
-- Current level: Beginner (assumed)
-- Resources: (to be filled in)
-- Target: Conversational by end of 2026
-- Lessons this month: 0/4
+**AI+Neuro Community:**
+- Neurofields: ~4,700 members (Discord) - broad neuro, not AI-specific
+- r/neuroscience: 150K (Reddit) - academic, limited industry
+- No dedicated AI+Neuro intersection community yet — OPPORTUNITY
+
+**SaaS Stack:**
+- Bubble + Xano recommended for MVP
+- Or FlutterFlow for no-code
+
+**YouTube Viral Patterns:**
+- Bold predictions ("50 AI Predictions for 2026")
+- Before/after comparisons
+- "Proved wrong" angles
 
 ---
 
-*LastUpdated: 2026-04-07 08:00 IST*
+_Generated by Hermes. Updates daily at 8 AM._
