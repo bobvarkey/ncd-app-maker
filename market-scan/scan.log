@@ -1,0 +1,105 @@
+Starting Enhanced Market Scan...
+Fetching 10 quotes...
+  ⚠️ BAJAJ-AUTO: Failed
+  ⚠️ HEROMOTOCO: Failed
+  ⚠️ EICHERMOT: Failed
+  ⚠️ ONGC: Failed
+  ⚠️ COALINDIA: Failed
+  ⚠️ PIDILITIND: Failed
+  ⚠️ TITAN: Failed
+  ⚠️ TORNTPHARM: Failed
+  ⚠️ MFSL: Failed
+  ⚠️ ADANIPOWER: Failed
+No data - retry with new stocks
+Fetching 10 quotes...
+  ⚠️ RELIANCE: Failed
+  ⚠️ TCS: Failed
+  ⚠️ HDFCBANK: Failed
+  ⚠️ INFY: Failed
+  ⚠️ ICICIBANK: Failed
+  ⚠️ SBIN: Failed
+  ⚠️ BHARTIARTL: Failed
+  ⚠️ LT: Failed
+  ⚠️ KOTAKBANK: Failed
+  ⚠️ HINDUNILVR: Failed
+Still no data. API may be rate-limited.
+Starting Enhanced Market Scan...
+Fetching 10 quotes...
+  ⚠️ COLPAL: Failed
+  ⚠️ PIDILITIND: Failed
+  ⚠️ TITAN: Failed
+  ⚠️ TORNTPHARM: Failed
+  ⚠️ MFSL: Failed
+  ⚠️ RELIANCE: Failed
+  ⚠️ TCS: Failed
+  ⚠️ HDFCBANK: Failed
+  ⚠️ INFY: Failed
+  ⚠️ ICICIBANK: Failed
+No data - retry with new stocks
+Fetching 10 quotes...
+  ⚠️ BAJAJ-AUTO: Failed
+  ⚠️ HEROMOTOCO: Failed
+  ⚠️ EICHERMOT: Failed
+  ⚠️ ONGC: Failed
+  ⚠️ COALINDIA: Failed
+  ⚠️ NTPC: Failed
+  ⚠️ POWERGRID: Failed
+  ⚠️ SUNPHARMA: Failed
+  ⚠️ DRREDDY: Failed
+  ⚠️ CIPLA: Failed
+Still no data. API may be rate-limited.
+Starting Enhanced Market Scan...
+Fetching 10 quotes...
+  ✅ APOLLOHOSP: ₹7515.25 (+0.01%)
+  ✅ RELIANCE: ₹1314.55 (-2.64%)
+  ✅ TCS: ₹2472.65 (-2.05%)
+  ✅ HDFCBANK: ₹794.05 (-2.02%)
+  ✅ INFY: ₹1277.35 (-1.16%)
+  ✅ BAJAJ-AUTO: ₹9812.10 (-0.02%)
+  ✅ HEROMOTOCO: ₹5246.65 (-4.06%)
+  ✅ EICHERMOT: ₹7051.25 (-4.99%)
+  ✅ ONGC: ₹287.50 (+0.33%)
+  ✅ COALINDIA: ₹435.10 (+0.20%)
+
+=======================================================
+MARKET SCAN - 2026-04-15 08:00
+=======================================================
+Sensitivity: high | Macro: neutral
+Thresholds: Drop <-1.0%, Rally >1.0%
+Scanned: 10 stocks | Opportunities: 8
+
+WATCH (30-50):
+  HEROMOTOCO.BSE ₹5246.65 (-4.06%) | 45
+  EICHERMOT.BSE ₹7051.25 (-4.99%) | 45
+  HDFCBANK.BSE ₹794.05 (-2.02%) | 40
+  RELIANCE.BSE ₹1314.55 (-2.64%) | 35
+
+Top Movers:
+  Gainers: ONGC.BSE:+0.3%, COALINDIA.BSE:+0.2%, APOLLOHOSP.BSE:+0.0%
+  Losers: EICHERMOT.BSE:-5.0%, HEROMOTOCO.BSE:-4.1%, RELIANCE.BSE:-2.6%
+=======================================================
+Starting Enhanced Market Scan...
+Fetching 10 quotes...
+  ✅ HINDUNILVR: ₹2156.50 (+1.36%)
+  ✅ COLPAL: ₹1943.65 (+1.46%)
+  ✅ PIDILITIND: ₹1329.15 (+0.21%)
+  ✅ TITAN: ₹4523.45 (+1.95%)
+  ✅ TORNTPHARM: ₹4156.05 (-0.55%)
+  ✅ BAJAJ-AUTO: ₹9861.00 (+0.50%)
+  ✅ HEROMOTOCO: ₹5284.90 (+0.73%)
+  ✅ EICHERMOT: ₹7128.05 (+1.09%)
+  ✅ ONGC: ₹287.55 (+0.02%)
+  ✅ COALINDIA: ₹435.70 (+0.14%)
+
+=======================================================
+MARKET SCAN - 2026-04-16 08:00
+=======================================================
+Sensitivity: high | Macro: neutral
+Thresholds: Drop <-1.0%, Rally >1.0%
+Scanned: 10 stocks | Opportunities: 8
+
+
+Top Movers:
+  Gainers: TITAN.BSE:+2.0%, COLPAL.BSE:+1.5%, HINDUNILVR.BSE:+1.4%
+  Losers: TORNTPHARM.BSE:-0.6%, ONGC.BSE:0.0%, COALINDIA.BSE:0.1%
+=======================================================

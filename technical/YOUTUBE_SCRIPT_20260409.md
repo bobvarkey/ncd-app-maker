@@ -1,3 +1,11 @@
+---
+topic: technical
+date: 2026-04-11
+tags: []
+---
+
+# Youtube Script 20260409
+
 # YouTube Script — "The Secret to Never Getting Dementia"
 
 ## Hook (0:00-0:15)

@@ -1,0 +1,23 @@
+{
+  "scans": [
+    {
+      "date": "2026-04-10T10:10:18.336225",
+      "count": 5
+    },
+    {
+      "date": "2026-04-10T13:08:34.968208",
+      "stocks_scanned": 10,
+      "opportunities": 3
+    },
+    {
+      "date": "2026-04-10T13:11:02.394263",
+      "stocks_scanned": 10,
+      "opportunities": 4
+    },
+    {
+      "date": "2026-04-10T13:25:08.314048",
+      "stocks_scanned": 4,
+      "opportunities": 2
+    }
+  ]
+}

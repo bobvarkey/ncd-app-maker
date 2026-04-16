@@ -47,6 +47,7 @@
 - [Neurogenic Atrophy](pages/concepts/neurogenic-atrophy.md) — Muscle wasting from denervation; moth-eaten US pattern; ALS, radiculopathy | 2026-04-05
 - [Fibrillations](pages/concepts/fibrillations.md) — Spontaneous muscle fiber contractions indicating denervation; now detectable by US | 2026-04-05
 - [Myopathy](pages/concepts/myopathy.md) — Muscle disease causing proximal weakness; EMG, CK, muscle US findings | 2026-04-05
+- [CJD Mimics: Autoimmune Encephalitis & Bismuth Toxicity](pages/concepts/2026-04-14-cjd-mimics-autoimmune-toxic.md) — Anti-AMPAR encephalitis + bismuth toxicity both mimic CJD; treatable | 2026-04-14
 
 ### Sleep Medicine & Mental Health
 - [Insomnia](pages/concepts/insomnia.md) — Chronic sleep difficulty; ISI severity scale | 2026-04-05

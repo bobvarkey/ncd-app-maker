@@ -272,3 +272,10 @@
 - Notes: Clinical diagnosis: 45-55yo with 12 months amenorrhea + vasomotor symptoms = no labs needed. Labs only for POI (<40yo), hormonal contraception use, post-hysterectomy. Perimenopausal FSH unreliable (fluctuates). Always rule out thyroid/prolactin issues.
 - Notes: Source was an image containing technical specs comparing single fibre EMG needles vs concentric needles for jitter studies. Key insight: CNE jitter values are systematically less than SFEMG values; reference values not interchangeable. CNE increasingly preferred due to lower cost and disposability.
 - Notes: Source was an image (scanned document) containing CNE jitter study reference values from Stahlberg et al 2016. Abnormal: mean/median exceeds UL OR >10% pairs abnormal. Key values: orbicularis oculi vol mean UL 31 µs, frontaliss stim mean UL 21 µs.
+
+## [2026-04-14] ingest | CJD Mimics - Anti-AMPAR Encephalitis and Bismuth Toxicity
+- Action: created concept page for CJD mimics combining Durbano et al. anti-AMPAR reference + bismuth toxicity note
+- Pages created: pages/concepts/2026-04-14-cjd-mimics-autoimmune-toxic.md
+- Index updated: added entry under Neurophysiology & Neurology
+- Source note: user provided the anti-AMPAR reference (Durbano, Ann Neurol) + added bismuth toxicity as additional CJD mimic
+- Key points: Anti-AMPAR encephalitis mimics CJD with rapid dementia + myoclonus; bismuth toxicity also reversible CJD-like picture; both treatable - critical to consider in rapidly progressive dementia
