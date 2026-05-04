@@ -1,0 +1,83 @@
+# X/Twitter Posts — Posted 2026-04-17
+
+## Status: ❌ NOT POSTED — Credentials missing
+
+### Missing Environment Variables:
+- `TWITTER_CONSUMER_KEY`
+- `TWITTER_CONSUMER_SECRET`
+- `TWITTER_ACCESS_TOKEN`
+- `TWITTER_ACCESS_TOKEN_SECRET`
+
+---
+
+## Post 1: Dopamine & Attention Economy (Thread)
+[Cleaned — ready to post when credentials are added]
+
+🧠 Your brain wasn't built for the attention economy — and that's by design.
+
+Dopamine isn't about "pleasure." It's about *prediction error* — the gap between what you expected and what you got.
+
+When your phone pings randomly, your brain says "UNPREDICTABLE REWARD!" and floods you with dopamine.
+
+That's why variable reward schedules are *more* addictive than predictable ones.
+
+Slot machines > steady income. (Sorry.)
+
+The cost? Your prefrontal cortex — the part that plans, focuses, and makes long-term decisions — gets crowded out by the limbic system screaming "CHECK IT NOW."
+
+The irony: dopamine makes you feel motivated but actually *less* able to focus on what matters.
+
+Fix: Make rewards predictable. Turn off random notifications. Build systems, not依赖 willpower.
+
+---
+
+## Post 2: Neuroplasticity in Adulthood
+[Cleaned — ready to post when credentials are added]
+
+❌ Old myth: "You can't teach an old dog new tricks."
+✅ New science: Adult brains are plastic AF.
+
+Your hippocampus — memory center — produces new neurons throughout life. This process is called adult hippocampal neurogenesis.
+
+What boosts it:
+→ Aerobic exercise (running = ~2x neurogenesis)
+→ Learning something genuinely difficult
+→ Deep sleep (especially NREM)
+→ Omega-3s, curcumin, blueberries
+
+What kills it:
+→ Chronic stress (cortisol is neurogenic poison)
+→ Alcohol
+→ Sleep deprivation
+→ Inflammation
+
+Key insight: Plasticity is *use it or lose it*. The brain strengthens what you repeatedly fire, prunes what you don't.
+
+Repetition isn't just practice — it's physical brain change.
+
+---
+
+## Post 3: Sleep & Memory Consolidation
+[Cleaned — ready to post when credentials are added]
+
+You don't learn when you're awake. You learn when you sleep.
+
+Memory consolidation happens primarily during deep NREM sleep and REM:
+
+**NREM (deep sleep):**
+- Hippocampus replays today's events
+- Transfers memories to neocortex for long-term storage
+- Like moving files from RAM to SSD
+
+**REM (dream sleep):**
+- Emotional memories get processed
+- Connections between concepts are rearranged
+- This is where "sleeping on it" actually works
+
+Practical: 
+- 7-9 hours matters more than you think
+- Sleeping AFTER learning locks it in
+- Sleeping BEFORE learning improves encoding
+- Alcohol destroys REM — yes, even one drink
+
+The shortcut nobody talks about: nap after hard learning. 20 min = memory boost. 90 min = full cycle.

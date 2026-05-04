@@ -1,0 +1,15 @@
+---
+topic: daily
+date: 2026-05-04
+tags: []
+---
+
+# Agents
+
+{
+  "defaults": {
+    "compaction": {
+      "reserveTokensFloor": 40000
+    }
+  }
+}

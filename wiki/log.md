@@ -1,5 +1,11 @@
 # Wiki Log
 
+## [2026-05-03] ingest | Continuum: Neurology of Systemic Disease (Feb 2026)
+- Action: ingested 320-page Continuum PDF, saved full text as source document, created comprehensive summary covering all 9 review articles + selected topics on teaching neurology
+- Pages created/updated: sources/2026-02-01-continuum-neurology-of-systemic-disease.md, summaries/continuum-neurology-of-systemic-disease-feb-2026.md, index.md, log.md
+- Source ID: [64]
+- Key content: Cardiac, renal/electrolyte (Wijdicks — ODS dogma challenged), hepatic/GI (Wilson, HCV, IBD, celiac, Whipple), endocrine, hematologic, rheumatologic, critical illness, cancer, pregnancy/menopause, substance use, teaching neurology in busy clinical practice
+
 ## [2026-04-05] ingest | LLM Wiki Pattern
 - Action: created wiki structure (SCHEMA.md, index.md, log.md), ingested source document, created summary page and 6 concept pages, cross-linked all pages
 - Pages created/updated: SCHEMA.md, index.md, log.md, sources/2026-04-05-llm-wiki-pattern.md, summaries/2026-04-05-llm-wiki-pattern.md, concepts/persistent-wiki.md, concepts/rag-vs-wiki.md, concepts/ingest-workflow.md, concepts/query-workflow.md, concepts/lint-workflow.md, concepts/three-layer-architecture.md, entities/obsidian.md, entities/marp.md, entities/qmd.md, entities/obsidian-web-clipper.md

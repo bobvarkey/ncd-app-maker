@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-04-06T21:03:24.482Z",
+  "updatedAt": "2026-05-03T13:33:47.326Z",
   "entries": {
     "memory:memory/2026-03-27.md:1:22": {
       "key": "memory:memory/2026-03-27.md:1:22",
@@ -11,6 +11,7 @@
       "snippet": "# 2026-03-27 ## Session Start - User introduced themselves: **Bob**, New Delhi, IST timezone - Memory system not yet configured (memory_search returned `provider: none`) - User's workspace contains medical/neurology content (presentations, research notes) ## User Profile - **Profession:** Neurologist, Academician - **Interests:** Neuroscience, Neurointervention, Neurocritical care, AI, OpenClaw, agentic AI, stock trading ## Memory System Issue - Found root cause: `[memory] Skipping memory file sync in FTS-only mode (no embedding provider)` - 38 memory files exist but indexer skips them without OpenAI/Google/Voyage/Mistral API key - FTS is ready but not being populated - Bob asked to \"Fix",
       "recallCount": 1,
       "dailyCount": 0,
+      "groundedCount": 0,
       "totalScore": 0.8508217179544376,
       "maxScore": 0.8508217179544376,
       "firstRecalledAt": "2026-04-06T21:03:24.482Z",
@@ -41,6 +42,7 @@
       "snippet": "# Memory - March 5th, 2026 ## Bob's Current Setup ### Goals - Grow YouTube to 100k subscribers - Grow X to 150k followers - Launch SaaS by Q3 - Build community around AI + Neurology - Read 2 books/month - Learn French ### Active Systems - Reddit Monitor: Every 4 hours via cron - Content Factory: Daily at 8 AM - LobsterBoard: Running at localhost:8080 - ClawX: ~/Downloads/ClawX - Mission Control: ~/Downloads/mission-control/index.html ### Skills Added Today - opus: Smart model switching (Haiku → Sonnet → Opus for cost savings) ### Morning Workflow - Added workflow-master.sh: Runs at 4:30 AM daily - Runs Reddit Monitor + Content Factory - pubmed-search - biogpt-search - public-apis - redd",
       "recallCount": 1,
       "dailyCount": 0,
+      "groundedCount": 0,
       "totalScore": 0.8324628828721494,
       "maxScore": 0.8324628828721494,
       "firstRecalledAt": "2026-04-06T21:03:24.482Z",
@@ -69,17 +71,20 @@
       "endLine": 34,
       "source": "memory",
       "snippet": "# 2026-03-30 ## Notes - **Hermes Agent**: Already installed on this machine at `/Users/bobvarkey/.hermes/hermes-agent` (v0.5.0). Not something I installed — it was pre-existing. - User asked about `/sethome` command but it doesn't exist in Hermes or OpenClaw. ## 8:00 AM — X/Twitter Bookmarks Sync - Cron job `7ad6447b-4f5e-42ab-bf0b-636d2748262b` fired successfully - `x-twitter-bookmarks-cli.py` ran: sample bookmark inserted into memory test DB at `memory_test.db` - Automation completed successfully. # 2026-03-30 ## Notes - **Hermes Agent**: Already installed on this machine at `/Users/bobvarkey/.hermes/hermes-agent` (v0.5.0). Not something I installed — it was pre-existing. - User asked",
-      "recallCount": 1,
+      "recallCount": 2,
       "dailyCount": 0,
-      "totalScore": 0.8076664225735735,
-      "maxScore": 0.8076664225735735,
+      "groundedCount": 0,
+      "totalScore": 1.8076664225735735,
+      "maxScore": 1,
       "firstRecalledAt": "2026-04-06T21:03:24.482Z",
-      "lastRecalledAt": "2026-04-06T21:03:24.482Z",
+      "lastRecalledAt": "2026-05-03T02:30:36.417Z",
       "queryHashes": [
-        "3435f2e5ee4d"
+        "3435f2e5ee4d",
+        "e34e8ff1cc88"
       ],
       "recallDays": [
-        "2026-04-07"
+        "2026-04-07",
+        "2026-05-03"
       ],
       "conceptTags": [
         "users/bobvarkey",
@@ -99,17 +104,20 @@
       "endLine": 5,
       "source": "memory",
       "snippet": "# 2026-03-26 Thursday ## 08:00 - X Twitter Bookmarks Sync (Cron) - Automated bookmark sync ran successfully - Sample bookmark inserted into memory test DB",
-      "recallCount": 1,
+      "recallCount": 2,
       "dailyCount": 0,
-      "totalScore": 0.8035964201098202,
-      "maxScore": 0.8035964201098202,
+      "groundedCount": 0,
+      "totalScore": 1.8035964201098202,
+      "maxScore": 1,
       "firstRecalledAt": "2026-04-06T21:03:24.482Z",
-      "lastRecalledAt": "2026-04-06T21:03:24.482Z",
+      "lastRecalledAt": "2026-05-03T02:30:36.417Z",
       "queryHashes": [
-        "3435f2e5ee4d"
+        "3435f2e5ee4d",
+        "e34e8ff1cc88"
       ],
       "recallDays": [
-        "2026-04-07"
+        "2026-04-07",
+        "2026-05-03"
       ],
       "conceptTags": [
         "thursday",
@@ -120,6 +128,131 @@
         "automated",
         "bookmark",
         "ran"
+      ]
+    },
+    "memory:memory/2026-03-31.md:1:11": {
+      "key": "memory:memory/2026-03-31.md:1:11",
+      "path": "memory/2026-03-31.md",
+      "startLine": 1,
+      "endLine": 11,
+      "source": "memory",
+      "snippet": "## X Scrape — 17:15 UTC - Ran X/Twitter scrape for neurointervention + stroke keywords (2 search queries) - 8 posts found, 6 new rows inserted to memory_x_posts.db - 4 posts had >50 likes: - @MedicoNotes (704 likes): stroke management overview - @teachplaygrub/Lea Alhilali MD (649 likes): intracranial aneurysm locations - @teachplaygrub (343 likes): Alzheimer imaging changes - @JNIS_BMJ (22 likes): EVT for sICAS restenosis - Report saved to knowledge-base/x-scrapes/x-scrape-2026-03-31.md",
+      "recallCount": 1,
+      "dailyCount": 0,
+      "groundedCount": 0,
+      "totalScore": 1,
+      "maxScore": 1,
+      "firstRecalledAt": "2026-05-03T02:30:36.417Z",
+      "lastRecalledAt": "2026-05-03T02:30:36.417Z",
+      "queryHashes": [
+        "e34e8ff1cc88"
+      ],
+      "recallDays": [
+        "2026-05-03"
+      ],
+      "conceptTags": [
+        "x/twitter",
+        "memory-x-posts.db",
+        "teachplaygrub/lea",
+        "jnis-bmj",
+        "scrape",
+        "utc",
+        "ran",
+        "twitter"
+      ]
+    },
+    "memory:memory/2026-03-04.md:1:55": {
+      "key": "memory:memory/2026-03-04.md:1:55",
+      "path": "memory/2026-03-04.md",
+      "startLine": 1,
+      "endLine": 55,
+      "source": "memory",
+      "snippet": "# Memory - March 4th, 2026 ## Goals (from Bob) - Grow YouTube to 100k subscribers - Grow X to 150k followers - Launch SaaS by Q3 - Build community around AI + Neurology - Read 2 books/month - Learn French ## Setup Today ### Reddit Monitor - Created: Reddit/subreddits.md (neurology, openclaw, medicine, finance) - Created: Reddit/Report/ for daily reports - Created: reddit_monitor.sh - runs every 4 hours via cron - Reports saved to Reddit/Report/YYYY-MM-DD.md ### Content Factory - Created: content-factory/ with daily_pipeline.sh - Generates: Research → Tweet Thread → Thumbnail - Runs at 8 AM daily via cron ### API Gateway - Configured MATON_API_KEY in openclaw.json ### Image Generation -",
+      "recallCount": 1,
+      "dailyCount": 0,
+      "groundedCount": 0,
+      "totalScore": 1,
+      "maxScore": 1,
+      "firstRecalledAt": "2026-05-03T02:30:36.417Z",
+      "lastRecalledAt": "2026-05-03T02:30:36.417Z",
+      "queryHashes": [
+        "e34e8ff1cc88"
+      ],
+      "recallDays": [
+        "2026-05-03"
+      ],
+      "conceptTags": [
+        "gateway",
+        "books/month",
+        "reddit/subreddits.md",
+        "reddit/report",
+        "reddit-monitor.sh",
+        "reddit/report/yyyy-mm-dd.md",
+        "content-factory",
+        "daily-pipeline.sh"
+      ]
+    },
+    "memory:memory/2026-03-04.md:48:62": {
+      "key": "memory:memory/2026-03-04.md:48:62",
+      "path": "memory/2026-03-04.md",
+      "startLine": 48,
+      "endLine": 62,
+      "source": "memory",
+      "snippet": "- Location: ~/Downloads/ClawX - Running at http://localhost:5173/ (dev mode) - Issue: Gateway token mismatch with existing OpenClaw gateway - To fix: Stop current gateway or enter auth token in ClawX settings ### Public APIs Skill - Cloned public-apis repo to ~/Downloads/public-apis/ - Created skill at ~/.openclaw/skills/public-apis/ - Usage: Ask to find APIs for any category (weather, finance, health, etc.) ### PubMed & BioGPT Search Skills - Created pubmed-search skill: ~/.openclaw/skills/pubmed-search/ - Created biogpt-search skill: ~/.openclaw/skills/biogpt-search/ - Usage: \"search pubmed stroke treatment\" or \"search biogpt Alzheimer's\"",
+      "recallCount": 2,
+      "dailyCount": 0,
+      "groundedCount": 0,
+      "totalScore": 2,
+      "maxScore": 1,
+      "firstRecalledAt": "2026-05-03T13:33:44.400Z",
+      "lastRecalledAt": "2026-05-03T13:33:47.326Z",
+      "queryHashes": [
+        "04b108c184e2",
+        "3e21e1b011ce"
+      ],
+      "recallDays": [
+        "2026-05-03"
+      ],
+      "conceptTags": [
+        "gateway",
+        "gpt",
+        "downloads/clawx",
+        "public-apis",
+        "downloads/public-apis",
+        "openclaw/skills/public-apis",
+        "pubmed-search",
+        "openclaw/skills/pubmed-search"
+      ]
+    },
+    "memory:memory/2026-04-10.md:1:18": {
+      "key": "memory:memory/2026-04-10.md:1:18",
+      "path": "memory/2026-04-10.md",
+      "startLine": 1,
+      "endLine": 18,
+      "source": "memory",
+      "snippet": "# 2026-04-10 Daily Notes ## X/Twitter Scrape (Morning, ~00:30 UTC) - Ran X scraper for 2 search queries: 1. `neurointervention OR thrombectomy OR #Neurointervention OR #stroke` 2. `cerebral AVM OR intracranial aneurysm OR endovascular` - Total posts extracted: 11 - High-engagement (>50 likes): 4 posts - DB: `~/.openclaw/workspace/memory_x_posts.db` - Report: `~/.openclaw/workspace/knowledge-base/x-scrapes/x-scrape-2026-04-10.md` - ⚠️ `since:today` filter on X.com did NOT work — results span Feb 2026 to Jan 2025. Future scrapes should consider date-filtered API approach. - Top posts: @GreenJournal on epithelioid hemangioendothelioma aneurysms (89 likes), @bobvarkey No-reflow phenomenon",
+      "recallCount": 1,
+      "dailyCount": 0,
+      "groundedCount": 0,
+      "totalScore": 1,
+      "maxScore": 1,
+      "firstRecalledAt": "2026-05-03T13:33:44.400Z",
+      "lastRecalledAt": "2026-05-03T13:33:44.400Z",
+      "queryHashes": [
+        "04b108c184e2"
+      ],
+      "recallDays": [
+        "2026-05-03"
+      ],
+      "conceptTags": [
+        "x/twitter",
+        "high-engagement",
+        "x.com",
+        "date-filtered",
+        "no-reflow",
+        "twitter",
+        "scrape",
+        "morning"
       ]
     }
   }

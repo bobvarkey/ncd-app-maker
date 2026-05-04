@@ -176,6 +176,10 @@
     "arxiv-watcher": {
       "version": "1.0.0",
       "installedAt": 1775655422146
+    },
+    "slack": {
+      "version": "1.0.0",
+      "installedAt": 1776519421643
     }
   }
 }

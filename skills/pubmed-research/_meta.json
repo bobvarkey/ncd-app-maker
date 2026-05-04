@@ -1,8 +1,0 @@
-{
-  "source": "github",
-  "slug": "pubmed-research",
-  "version": "1.0.0",
-  "installedAt": "2026-03-16T19:00:00+05:30",
-  "githubRepo": "gijswobben/pymed",
-  "notes": "Custom wrapper script around pymed library for PubMed CLI access"
-}

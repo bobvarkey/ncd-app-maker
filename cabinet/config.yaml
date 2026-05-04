@@ -1,0 +1,12 @@
+---
+topic: cabinet
+date: 2026-05-04
+tags: []
+---
+
+# Config
+
+agents:
+  defaults:
+    compaction:
+      reserveTokensFloor: 769000

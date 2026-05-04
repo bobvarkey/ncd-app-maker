@@ -1,46 +1,31 @@
 {
-  "scan_date": "2026-04-16T08:00:16.658435",
+  "scan_date": "2026-05-04T08:00:17.474916",
   "stocks_scanned": 10,
   "opportunities": [
     {
-      "ticker": "HINDUNILVR.BSE",
-      "name": "HINDUNILVR",
-      "price": 2156.5,
-      "change": 1.3631,
-      "signals": [
-        {
-          "type": "price_rally",
-          "value": 1.3631,
-          "reason": "Rally: +1.4%"
-        }
-      ],
-      "prediction_score": 15,
-      "recommendation": "NEUTRAL"
-    },
-    {
-      "ticker": "COLPAL.BSE",
-      "name": "COLPAL",
-      "price": 1943.65,
-      "change": 1.4616,
-      "signals": [
-        {
-          "type": "price_rally",
-          "value": 1.4616,
-          "reason": "Rally: +1.5%"
-        }
-      ],
-      "prediction_score": 15,
-      "recommendation": "NEUTRAL"
-    },
-    {
-      "ticker": "PIDILITIND.BSE",
-      "name": "PIDILITIND",
-      "price": 1329.15,
-      "change": 0.2073,
+      "ticker": "ONGC.BSE",
+      "name": "ONGC",
+      "price": 299.35,
+      "change": -0.6472,
       "signals": [
         {
           "type": "volatility",
-          "value": 2.5,
+          "value": 3.47256347256348,
+          "reason": "Range: 3.5%"
+        }
+      ],
+      "prediction_score": 10,
+      "recommendation": "NEUTRAL"
+    },
+    {
+      "ticker": "COALINDIA.BSE",
+      "name": "COALINDIA",
+      "price": 481.35,
+      "change": 0.3544,
+      "signals": [
+        {
+          "type": "volatility",
+          "value": 2.532948929159793,
           "reason": "Range: 2.5%"
         }
       ],
@@ -48,78 +33,58 @@
       "recommendation": "NEUTRAL"
     },
     {
-      "ticker": "TITAN.BSE",
-      "name": "TITAN",
-      "price": 4523.45,
-      "change": 1.9518,
+      "ticker": "SBIN.BSE",
+      "name": "SBIN",
+      "price": 1068.0,
+      "change": -1.6937,
       "signals": [
         {
-          "type": "price_rally",
-          "value": 1.9518,
-          "reason": "Rally: +2.0%"
+          "type": "price_drop",
+          "value": -1.6937,
+          "reason": "Drop: -1.7%"
         }
       ],
       "prediction_score": 15,
       "recommendation": "NEUTRAL"
     },
     {
-      "ticker": "TORNTPHARM.BSE",
-      "name": "TORNTPHARM",
-      "price": 4156.05,
-      "change": -0.5504,
-      "signals": [
-        {
-          "type": "volatility",
-          "value": 2.9285412460678906,
-          "reason": "Range: 2.9%"
-        }
-      ],
-      "prediction_score": 10,
-      "recommendation": "NEUTRAL"
-    },
-    {
-      "ticker": "HEROMOTOCO.BSE",
-      "name": "HEROMOTOCO",
-      "price": 5284.9,
-      "change": 0.729,
-      "signals": [
-        {
-          "type": "volatility",
-          "value": 2.0841065993615784,
-          "reason": "Range: 2.1%"
-        }
-      ],
-      "prediction_score": 10,
-      "recommendation": "NEUTRAL"
-    },
-    {
-      "ticker": "EICHERMOT.BSE",
-      "name": "EICHERMOT",
-      "price": 7128.05,
-      "change": 1.0892,
+      "ticker": "SUNPHARMA.BSE",
+      "name": "SUNPHARMA",
+      "price": 1808.2,
+      "change": 1.6442,
       "signals": [
         {
           "type": "price_rally",
-          "value": 1.0892,
-          "reason": "Rally: +1.1%"
+          "value": 1.6442,
+          "reason": "Rally: +1.6%"
+        },
+        {
+          "type": "volatility",
+          "value": 3.0027834790676806,
+          "reason": "Range: 3.0%"
         }
       ],
-      "prediction_score": 15,
+      "prediction_score": 25,
       "recommendation": "NEUTRAL"
     },
     {
-      "ticker": "ONGC.BSE",
-      "name": "ONGC",
-      "price": 287.55,
-      "change": 0.0174,
+      "ticker": "RELIANCE.BSE",
+      "name": "RELIANCE",
+      "price": 1430.85,
+      "change": 0.3296,
       "signals": [
         {
+          "type": "high_volume",
+          "value": 4.741352,
+          "reason": "Vol: 4.7M"
+        },
+        {
           "type": "volatility",
-          "value": 2.372166578808645,
-          "reason": "Range: 2.4%"
+          "value": 3.0078912912700377,
+          "reason": "Range: 3.0%"
         }
       ],
-      "prediction_score": 10,
+      "prediction_score": 25,
       "recommendation": "NEUTRAL"
     }
   ],

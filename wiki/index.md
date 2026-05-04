@@ -18,6 +18,7 @@
 - [Dynamic Muscle Ultrasound - Detecting Fibrillations](pages/summaries/2026-04-05-muscle-us-fibrillations.md) — Dynamic muscle US can now detect fibrillations (previously only on needle EMG); non-invasive denervation assessment | 2026-04-05
 - [Muscle Ultrasound - Comprehensive](pages/summaries/2026-04-05-muscle-ultrasound-comprehensive.md) — Heckmatt grading, fasciculations, CF, diaphragm ZOA, sarcopenia assessment, body composition | 2026-04-05 | 2026-04-05
 - [Word of the Day — Saufzwerg](pages/summaries/2026-04-05-word-of-the-day-saufzwerg.md) — Saufzwerg: German "drinking dwarf" - a small person who gets drunk quickly | 2026-04-05
+- [Continuum: Neurology of Systemic Disease](pages/summaries/continuum-neurology-of-systemic-disease-feb-2026.md) — Feb 2026 issue: 9 review articles covering neurologic complications of cardiac, renal/electrolyte, hepatic/GI, endocrine, hematologic, rheumatologic, critical illness, cancer, pregnancy/menopause, substance use + teaching neurology | 2026-05-03
 
 ## Concepts
 ### Knowledge Management
@@ -141,4 +142,6 @@
 - [2026-04-05 — Antihypertensives ABCDE](pages/sources/2026-04-05-antihypertensive-classification.md) — Antihypertensive drug classification framework
 - [2026-04-05 — VOGM Pediatric AVM](pages/sources/2026-04-05-vogm-pediatric-avm.md) — Vein of Galen and pediatric high-flow AVMs | 2026-04-05
 
-<!-- stats: 231 pages across 63 sources, last updated 2026-04-05 -->
+- [2026-02-01 — Continuum: Neurology of Systemic Disease](pages/sources/2026-02-01-continuum-neurology-of-systemic-disease.md) — Feb 2026 Continuum issue, 320 pages, 9 review articles + selected topics on teaching neurology | 2026-05-03
+
+<!-- stats: 232 pages across 64 sources, last updated 2026-05-03 -->
