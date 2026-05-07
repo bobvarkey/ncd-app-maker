@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-05-03T13:33:47.326Z",
+  "updatedAt": "2026-05-06T00:33:58.901Z",
   "entries": {
     "memory:memory/2026-03-27.md:1:22": {
       "key": "memory:memory/2026-03-27.md:1:22",
@@ -9,18 +9,23 @@
       "endLine": 22,
       "source": "memory",
       "snippet": "# 2026-03-27 ## Session Start - User introduced themselves: **Bob**, New Delhi, IST timezone - Memory system not yet configured (memory_search returned `provider: none`) - User's workspace contains medical/neurology content (presentations, research notes) ## User Profile - **Profession:** Neurologist, Academician - **Interests:** Neuroscience, Neurointervention, Neurocritical care, AI, OpenClaw, agentic AI, stock trading ## Memory System Issue - Found root cause: `[memory] Skipping memory file sync in FTS-only mode (no embedding provider)` - 38 memory files exist but indexer skips them without OpenAI/Google/Voyage/Mistral API key - FTS is ready but not being populated - Bob asked to \"Fix",
-      "recallCount": 1,
+      "recallCount": 4,
       "dailyCount": 0,
       "groundedCount": 0,
-      "totalScore": 0.8508217179544376,
-      "maxScore": 0.8508217179544376,
+      "totalScore": 3.8508217179544375,
+      "maxScore": 1,
       "firstRecalledAt": "2026-04-06T21:03:24.482Z",
-      "lastRecalledAt": "2026-04-06T21:03:24.482Z",
+      "lastRecalledAt": "2026-05-05T21:03:50.432Z",
       "queryHashes": [
-        "3435f2e5ee4d"
+        "3435f2e5ee4d",
+        "0c23a89e5ec8",
+        "c5d3a7659dba",
+        "fbdd8e1b5665"
       ],
       "recallDays": [
-        "2026-04-07"
+        "2026-04-07",
+        "2026-05-04",
+        "2026-05-06"
       ],
       "conceptTags": [
         "embedding",
@@ -30,7 +35,7 @@
         "fts-only",
         "openai/google/voyage/mistral",
         "start",
-        "user"
+        "introduced"
       ]
     },
     "memory:memory/2026-03-05.md:1:32": {
@@ -40,18 +45,23 @@
       "endLine": 32,
       "source": "memory",
       "snippet": "# Memory - March 5th, 2026 ## Bob's Current Setup ### Goals - Grow YouTube to 100k subscribers - Grow X to 150k followers - Launch SaaS by Q3 - Build community around AI + Neurology - Read 2 books/month - Learn French ### Active Systems - Reddit Monitor: Every 4 hours via cron - Content Factory: Daily at 8 AM - LobsterBoard: Running at localhost:8080 - ClawX: ~/Downloads/ClawX - Mission Control: ~/Downloads/mission-control/index.html ### Skills Added Today - opus: Smart model switching (Haiku → Sonnet → Opus for cost savings) ### Morning Workflow - Added workflow-master.sh: Runs at 4:30 AM daily - Runs Reddit Monitor + Content Factory - pubmed-search - biogpt-search - public-apis - redd",
-      "recallCount": 1,
+      "recallCount": 4,
       "dailyCount": 0,
       "groundedCount": 0,
-      "totalScore": 0.8324628828721494,
-      "maxScore": 0.8324628828721494,
+      "totalScore": 3.832462882872149,
+      "maxScore": 1,
       "firstRecalledAt": "2026-04-06T21:03:24.482Z",
-      "lastRecalledAt": "2026-04-06T21:03:24.482Z",
+      "lastRecalledAt": "2026-05-05T21:03:50.432Z",
       "queryHashes": [
-        "3435f2e5ee4d"
+        "3435f2e5ee4d",
+        "c5d3a7659dba",
+        "db9719586595",
+        "fbdd8e1b5665"
       ],
       "recallDays": [
-        "2026-04-07"
+        "2026-04-07",
+        "2026-05-04",
+        "2026-05-06"
       ],
       "conceptTags": [
         "gpt",
@@ -168,18 +178,24 @@
       "endLine": 55,
       "source": "memory",
       "snippet": "# Memory - March 4th, 2026 ## Goals (from Bob) - Grow YouTube to 100k subscribers - Grow X to 150k followers - Launch SaaS by Q3 - Build community around AI + Neurology - Read 2 books/month - Learn French ## Setup Today ### Reddit Monitor - Created: Reddit/subreddits.md (neurology, openclaw, medicine, finance) - Created: Reddit/Report/ for daily reports - Created: reddit_monitor.sh - runs every 4 hours via cron - Reports saved to Reddit/Report/YYYY-MM-DD.md ### Content Factory - Created: content-factory/ with daily_pipeline.sh - Generates: Research → Tweet Thread → Thumbnail - Runs at 8 AM daily via cron ### API Gateway - Configured MATON_API_KEY in openclaw.json ### Image Generation -",
-      "recallCount": 1,
+      "recallCount": 5,
       "dailyCount": 0,
       "groundedCount": 0,
-      "totalScore": 1,
+      "totalScore": 5,
       "maxScore": 1,
       "firstRecalledAt": "2026-05-03T02:30:36.417Z",
-      "lastRecalledAt": "2026-05-03T02:30:36.417Z",
+      "lastRecalledAt": "2026-05-06T00:33:58.901Z",
       "queryHashes": [
-        "e34e8ff1cc88"
+        "e34e8ff1cc88",
+        "c5d3a7659dba",
+        "db9719586595",
+        "fbdd8e1b5665",
+        "cfef1eaebc9a"
       ],
       "recallDays": [
-        "2026-05-03"
+        "2026-05-03",
+        "2026-05-04",
+        "2026-05-06"
       ],
       "conceptTags": [
         "gateway",
@@ -231,18 +247,22 @@
       "endLine": 18,
       "source": "memory",
       "snippet": "# 2026-04-10 Daily Notes ## X/Twitter Scrape (Morning, ~00:30 UTC) - Ran X scraper for 2 search queries: 1. `neurointervention OR thrombectomy OR #Neurointervention OR #stroke` 2. `cerebral AVM OR intracranial aneurysm OR endovascular` - Total posts extracted: 11 - High-engagement (>50 likes): 4 posts - DB: `~/.openclaw/workspace/memory_x_posts.db` - Report: `~/.openclaw/workspace/knowledge-base/x-scrapes/x-scrape-2026-04-10.md` - ⚠️ `since:today` filter on X.com did NOT work — results span Feb 2026 to Jan 2025. Future scrapes should consider date-filtered API approach. - Top posts: @GreenJournal on epithelioid hemangioendothelioma aneurysms (89 likes), @bobvarkey No-reflow phenomenon",
-      "recallCount": 1,
+      "recallCount": 3,
       "dailyCount": 0,
       "groundedCount": 0,
-      "totalScore": 1,
+      "totalScore": 3,
       "maxScore": 1,
       "firstRecalledAt": "2026-05-03T13:33:44.400Z",
-      "lastRecalledAt": "2026-05-03T13:33:44.400Z",
+      "lastRecalledAt": "2026-05-06T00:33:58.901Z",
       "queryHashes": [
-        "04b108c184e2"
+        "04b108c184e2",
+        "0c23a89e5ec8",
+        "cfef1eaebc9a"
       ],
       "recallDays": [
-        "2026-05-03"
+        "2026-05-03",
+        "2026-05-04",
+        "2026-05-06"
       ],
       "conceptTags": [
         "x/twitter",
@@ -252,6 +272,169 @@
         "no-reflow",
         "twitter",
         "scrape",
+        "morning"
+      ]
+    },
+    "memory:memory/2026-03-07.md:45:63": {
+      "key": "memory:memory/2026-03-07.md:45:63",
+      "path": "memory/2026-03-07.md",
+      "startLine": 45,
+      "endLine": 63,
+      "source": "memory",
+      "snippet": "- **Voice set to: Professional but relaxed, neurologist tone** - No em-dashes in writing ### System Health - Guardian running (auto-repair daemon) - OpenClaw updated to latest version - Skills: 41 loaded ### Claude Code Integration - Installed at ~/.local/bin/claude (v2.1.71) - Added to OpenClaw runtimes as \"claude-code\" - Can use for coding tasks via sessions_spawn ### Gmail → Telegram Bridge - Created ~/Projects/gmail-telegram/ - Python app to forward Gmail to Telegram - Needs: Telegram bot token + Gmail OAuth credentials - Files: gmail_telegram.py, requirements.txt, README.md",
+      "recallCount": 1,
+      "dailyCount": 0,
+      "groundedCount": 0,
+      "totalScore": 1,
+      "maxScore": 1,
+      "firstRecalledAt": "2026-05-04T03:34:29.844Z",
+      "lastRecalledAt": "2026-05-04T03:34:29.844Z",
+      "queryHashes": [
+        "0c23a89e5ec8"
+      ],
+      "recallDays": [
+        "2026-05-04"
+      ],
+      "conceptTags": [
+        "em-dashes",
+        "auto-repair",
+        "local/bin/claude",
+        "v2.1.71",
+        "claude-code",
+        "sessions-spawn",
+        "projects/gmail-telegram",
+        "gmail-telegram.py"
+      ]
+    },
+    "memory:memory/2026-03-07.md:1:55": {
+      "key": "memory:memory/2026-03-07.md:1:55",
+      "path": "memory/2026-03-07.md",
+      "startLine": 1,
+      "endLine": 55,
+      "source": "memory",
+      "snippet": "# Memory - March 7th, 2026 ## New Today ### Hamlet Agent Created - Social media specialist agent - Reads research → creates X threads/LinkedIn posts - Own Soul.md with strict rules (only content, no research) - Commands: hamlet thread, hamlet linkedin, hamlet hooks ### Cron Fixes - Morning Brief cron had delivery issues - Added explicit --channel telegram to fix - Candidates now include real content (bullets + takeaways) ### Chartli Installed - Terminal charting tool (v0.0.5) - Doesn't display labels well - Fell back to HTML Chart.js for charts - Created stock chart (TCS, HDFC, Infosys, Reliance) - Created paints sector pie chart ### iCloud Calendar - Installed khal + vdirsyncer - Confi",
+      "recallCount": 1,
+      "dailyCount": 0,
+      "groundedCount": 0,
+      "totalScore": 1,
+      "maxScore": 1,
+      "firstRecalledAt": "2026-05-04T03:34:29.844Z",
+      "lastRecalledAt": "2026-05-04T03:34:29.844Z",
+      "queryHashes": [
+        "0c23a89e5ec8"
+      ],
+      "recallDays": [
+        "2026-05-04"
+      ],
+      "conceptTags": [
+        "threads/linkedin",
+        "soul.md",
+        "v0.0.5",
+        "chart.js",
+        "march",
+        "7th",
+        "new",
+        "hamlet"
+      ]
+    },
+    "memory:memory/2026-05-03.md:64:80": {
+      "key": "memory:memory/2026-05-03.md:64:80",
+      "path": "memory/2026-05-03.md",
+      "startLine": 64,
+      "endLine": 80,
+      "source": "memory",
+      "snippet": "- `clinical-decision-support` — Biomarker-stratified cohort analyses, GRADE-graded treatment recommendations, LaTeX/PDF output, Kaplan-Meier/forest plot generation Both are directly relevant to neurocritical care practice. Lesson saved to `~/neuro-daily/2026-05-03-skiller-lesson.md`. ## Status - French practice: NOT done (heartbeat suppression ran during early AM; time zone issue — Bob is IST, cron triggered before 8AM local) - Book reading: NOT done - Note: next heartbeat should remind for French + book if no user interaction before evening ## GMB Poster (Cron) Generated GMB neurology poster for 2026-05-03. - **Topic:** Multiple Sclerosis - **Image:** PIL-generated medical illustration",
+      "recallCount": 2,
+      "dailyCount": 0,
+      "groundedCount": 0,
+      "totalScore": 2,
+      "maxScore": 1,
+      "firstRecalledAt": "2026-05-04T03:34:29.902Z",
+      "lastRecalledAt": "2026-05-05T21:03:50.432Z",
+      "queryHashes": [
+        "c5d3a7659dba",
+        "fbdd8e1b5665"
+      ],
+      "recallDays": [
+        "2026-05-04",
+        "2026-05-06"
+      ],
+      "conceptTags": [
+        "clinical-decision-support",
+        "biomarker-stratified",
+        "grade-graded",
+        "latex/pdf",
+        "kaplan-meier/forest",
+        "pil-generated",
+        "clinical",
+        "decision"
+      ]
+    },
+    "memory:memory/2026-05-03.md:36:70": {
+      "key": "memory:memory/2026-05-03.md:36:70",
+      "path": "memory/2026-05-03.md",
+      "startLine": 36,
+      "endLine": 70,
+      "source": "memory",
+      "snippet": "- FLAIR absence → therapeutic window (AJNR) - Motor-predominant CIDP US + EMG profiles (M&N) - EMD imaging features (M&N) - Daytime function as insomnia outcome (Sleep Med) - Sleep + inflammation in mood disorders (Sleep Med) - Saved: `WEEKLY_JOURNAL_SCAN_20260503.md` ### KANBAN.md - Updated with all completed items - SaaS MVP scope now defined - YouTube Video 1 and Mon X thread marked done ## Files Created/Modified - `YOUTUBE_SCRIPT_20260503.md` (new) - `X_THREAD_20260503.md` (new) - `SAAS_LANDING_PAGE_20260503.md` (new) - `WEEKLY_JOURNAL_SCAN_20260503.md` (new) - `KANBAN.md` (updated) ## 08:00 — X/Twitter Bookmarks Sync - Cron job `7ad6447b-4f5e-42ab-bf0b-636d2748262b` fired s",
+      "recallCount": 3,
+      "dailyCount": 0,
+      "groundedCount": 0,
+      "totalScore": 3,
+      "maxScore": 1,
+      "firstRecalledAt": "2026-05-04T03:34:29.902Z",
+      "lastRecalledAt": "2026-05-05T21:03:50.432Z",
+      "queryHashes": [
+        "c5d3a7659dba",
+        "db9719586595",
+        "fbdd8e1b5665"
+      ],
+      "recallDays": [
+        "2026-05-04",
+        "2026-05-06"
+      ],
+      "conceptTags": [
+        "motor-predominant",
+        "weekly-journal-scan-20260503.md",
+        "kanban.md",
+        "created/modified",
+        "youtube-script-20260503.md",
+        "x-thread-20260503.md",
+        "saas-landing-page-20260503.md",
+        "x/twitter"
+      ]
+    },
+    "memory:memory/2026-05-03.md:1:44": {
+      "key": "memory:memory/2026-05-03.md:1:44",
+      "path": "memory/2026-05-03.md",
+      "startLine": 1,
+      "endLine": 44,
+      "source": "memory",
+      "snippet": "# Daily Notes — 2026-05-03 (Sunday) ## Morning Tasks Run - Bob asked to execute the 8AM cron tasks manually - Ran 4 high-leverage content tasks + weekly journal scan ## Tasks Completed ### YouTube Content - Wrote full script: \"Flow Diverter Stents for Aneurysms — 5-Year Data\" - Covers SCENT Trial, Pipeline FOREVER, FRED 5-year, MCA M1 data - ~10 min runtime - Saved: `YOUTUBE_SCRIPT_20260503.md` ### X Thread - Drafted 8-tweet thread: Thrombectomy — Who Actually Benefits? - Patient selection criteria (DAWN, DEFUSE-3) - Late window imaging mismatch - Who DOESN'T benefit - Practical algorithm - Saved: `X_THREAD_20260503.md` ### SaaS MVP Landing Page - Drafted complete landin",
+      "recallCount": 3,
+      "dailyCount": 0,
+      "groundedCount": 0,
+      "totalScore": 3,
+      "maxScore": 1,
+      "firstRecalledAt": "2026-05-04T03:34:29.902Z",
+      "lastRecalledAt": "2026-05-05T21:03:50.432Z",
+      "queryHashes": [
+        "c5d3a7659dba",
+        "db9719586595",
+        "fbdd8e1b5665"
+      ],
+      "recallDays": [
+        "2026-05-04",
+        "2026-05-06"
+      ],
+      "conceptTags": [
+        "high-leverage",
+        "5-year",
+        "youtube-script-20260503.md",
+        "8-tweet",
+        "defuse-3",
+        "x-thread-20260503.md",
+        "sunday",
         "morning"
       ]
     }

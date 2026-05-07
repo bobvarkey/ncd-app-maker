@@ -1,67 +1,152 @@
 {
-  "scan_date": "2026-05-04T08:00:17.474916",
+  "scan_date": "2026-05-07T08:00:18.681739",
   "stocks_scanned": 10,
   "opportunities": [
     {
-      "ticker": "ONGC.BSE",
-      "name": "ONGC",
-      "price": 299.35,
-      "change": -0.6472,
+      "ticker": "HEROMOTOCO.BSE",
+      "name": "HEROMOTOCO",
+      "price": 5169.7,
+      "change": 1.1109,
+      "signals": [
+        {
+          "type": "price_rally",
+          "value": 1.1109,
+          "reason": "Rally: +1.1%"
+        },
+        {
+          "type": "volatility",
+          "value": 6.328050410540379,
+          "reason": "Range: 6.3%"
+        }
+      ],
+      "prediction_score": 25,
+      "recommendation": "NEUTRAL"
+    },
+    {
+      "ticker": "EICHERMOT.BSE",
+      "name": "EICHERMOT",
+      "price": 7311.35,
+      "change": 0.209,
       "signals": [
         {
           "type": "volatility",
-          "value": 3.47256347256348,
-          "reason": "Range: 3.5%"
+          "value": 3.0635756130191925,
+          "reason": "Range: 3.1%"
         }
       ],
       "prediction_score": 10,
       "recommendation": "NEUTRAL"
+    },
+    {
+      "ticker": "ONGC.BSE",
+      "name": "ONGC",
+      "price": 280.7,
+      "change": -3.1401,
+      "signals": [
+        {
+          "type": "price_drop",
+          "value": -3.1401,
+          "reason": "Drop: -3.1%"
+        },
+        {
+          "type": "volatility",
+          "value": 4.120689655172409,
+          "reason": "Range: 4.1%"
+        }
+      ],
+      "prediction_score": 45,
+      "recommendation": "WATCH"
     },
     {
       "ticker": "COALINDIA.BSE",
       "name": "COALINDIA",
-      "price": 481.35,
-      "change": 0.3544,
+      "price": 469.75,
+      "change": -0.5715,
       "signals": [
         {
           "type": "volatility",
-          "value": 2.532948929159793,
-          "reason": "Range: 2.5%"
+          "value": 2.0042194092827006,
+          "reason": "Range: 2.0%"
         }
       ],
       "prediction_score": 10,
       "recommendation": "NEUTRAL"
     },
     {
-      "ticker": "SBIN.BSE",
-      "name": "SBIN",
-      "price": 1068.0,
-      "change": -1.6937,
+      "ticker": "NTPC.BSE",
+      "name": "NTPC",
+      "price": 394.7,
+      "change": -1.0033,
       "signals": [
         {
           "type": "price_drop",
-          "value": -1.6937,
-          "reason": "Drop: -1.7%"
+          "value": -1.0033,
+          "reason": "Drop: -1.0%"
+        },
+        {
+          "type": "volatility",
+          "value": 2.833145292716563,
+          "reason": "Range: 2.8%"
         }
       ],
-      "prediction_score": 15,
+      "prediction_score": 25,
       "recommendation": "NEUTRAL"
     },
     {
       "ticker": "SUNPHARMA.BSE",
       "name": "SUNPHARMA",
-      "price": 1808.2,
-      "change": 1.6442,
+      "price": 1850.4,
+      "change": 1.6284,
       "signals": [
         {
           "type": "price_rally",
-          "value": 1.6442,
+          "value": 1.6284,
           "reason": "Rally: +1.6%"
         },
         {
           "type": "volatility",
-          "value": 3.0027834790676806,
-          "reason": "Range: 3.0%"
+          "value": 2.10343234502813,
+          "reason": "Range: 2.1%"
+        }
+      ],
+      "prediction_score": 25,
+      "recommendation": "NEUTRAL"
+    },
+    {
+      "ticker": "DRREDDY.BSE",
+      "name": "DRREDDY",
+      "price": 1310.5,
+      "change": 3.1118,
+      "signals": [
+        {
+          "type": "price_rally",
+          "value": 3.1118,
+          "reason": "Rally: +3.1%"
+        },
+        {
+          "type": "volatility",
+          "value": 3.967670830271855,
+          "reason": "Range: 4.0%"
+        }
+      ],
+      "prediction_score": 25,
+      "recommendation": "NEUTRAL"
+    },
+    {
+      "ticker": "CIPLA.BSE",
+      "name": "CIPLA",
+      "price": 1365.25,
+      "change": 2.3771,
+      "signals": [
+        {
+          "type": "price_rally",
+          "value": 2.3771,
+          "reason": "Rally: +2.4%"
+        },
+        {
+          "type": "volatility",
+          "value": 2.8379387602688575,
+          "reason": "Range: 2.8%"
         }
       ],
       "prediction_score": 25,
@@ -70,22 +155,22 @@
     {
       "ticker": "RELIANCE.BSE",
       "name": "RELIANCE",
-      "price": 1430.85,
-      "change": 0.3296,
+      "price": 1437.85,
+      "change": -1.7963,
       "signals": [
         {
-          "type": "high_volume",
-          "value": 4.741352,
-          "reason": "Vol: 4.7M"
+          "type": "price_drop",
+          "value": -1.7963,
+          "reason": "Drop: -1.8%"
         },
         {
           "type": "volatility",
-          "value": 3.0078912912700377,
-          "reason": "Range: 3.0%"
+          "value": 3.1429156429156397,
+          "reason": "Range: 3.1%"
         }
       ],
-      "prediction_score": 25,
-      "recommendation": "NEUTRAL"
+      "prediction_score": 35,
+      "recommendation": "WATCH"
     }
   ],
   "config": {

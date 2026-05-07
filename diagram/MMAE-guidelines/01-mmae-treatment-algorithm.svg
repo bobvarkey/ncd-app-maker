@@ -1,0 +1,167 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 920">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&amp;display=swap');
+    text { font-family: 'JetBrains Mono', 'SF Mono', 'Cascadia Code', monospace; }
+  </style>
+  <defs>
+    <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+      <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#1e293b" stroke-width="0.5"/>
+    </pattern>
+    <marker id="arrow" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#64748b"/>
+    </marker>
+    <marker id="arrow-cyan" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#22d3ee"/>
+    </marker>
+    <marker id="arrow-emerald" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#34d399"/>
+    </marker>
+    <marker id="arrow-rose" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#fb7185"/>
+    </marker>
+  </defs>
+
+  <!-- Background -->
+  <rect width="100%" height="100%" fill="#0f172a"/>
+  <rect width="100%" height="100%" fill="url(#grid)"/>
+
+  <!-- Title -->
+  <text x="30" y="35" fill="white" font-size="16" font-weight="700">MMAE for Chronic Subdural Hematoma — SNIS Guidelines 2026</text>
+  <text x="30" y="53" fill="#94a3b8" font-size="9">Middle Meningeal Artery Embolization — Treatment Algorithm. Endorsed by ANZSNR &amp; ESMINT</text>
+
+  <!-- ========================================== -->
+  <!-- START                                       -->
+  <!-- ========================================== -->
+  <ellipse cx="500" cy="90" rx="90" ry="25" fill="#0f172a"/>
+  <ellipse cx="500" cy="90" rx="90" ry="25" fill="rgba(59,130,246,0.3)" stroke="#60a5fa" stroke-width="1.5"/>
+  <text x="500" y="88" fill="white" font-size="11" font-weight="600" text-anchor="middle">cSDH Diagnosis</text>
+  <text x="500" y="101" fill="#94a3b8" font-size="8" text-anchor="middle">Chronic Subdural Hematoma</text>
+
+  <line x1="500" y1="115" x2="500" y2="155" stroke="#64748b" marker-end="url(#arrow)"/>
+
+  <!-- ========================================== -->
+  <!-- Decision 1: Surgical Candidate?              -->
+  <!-- ========================================== -->
+  <g transform="translate(500, 195)">
+    <polygon points="0,-40 60,0 0,40 -60,0" fill="#0f172a"/>
+    <polygon points="0,-40 60,0 0,40 -60,0" fill="rgba(120,53,15,0.3)" stroke="#fbbf24" stroke-width="1.5"/>
+    <text y="4" fill="white" font-size="9" font-weight="600" text-anchor="middle">Surgical</text>
+    <text y="16" fill="white" font-size="9" font-weight="600" text-anchor="middle">Candidate?</text>
+  </g>
+
+  <!-- No branch (left) -->
+  <line x1="500" y1="235" x2="500" y2="280" stroke="#64748b" marker-end="url(#arrow)"/>
+  <text x="512" y="250" fill="#fb7185" font-size="8">Symptomatic,</text>
+  <text x="512" y="261" fill="#fb7185" font-size="8">large, mass effect?</text>
+
+  <!-- Yes branch (right) -->
+  <line x1="500" y1="155" x2="680" y2="155" stroke="#64748b" marker-end="url(#arrow)"/>
+  <text x="560" y="148" fill="#34d399" font-size="8">No / Small / Asymptomatic</text>
+
+  <!-- ========================================== -->
+  <!-- SURGICAL PATH (right column)                -->
+  <!-- ========================================== -->
+  <text x="680" y="135" fill="#22d3ee" font-size="11" font-weight="600" text-anchor="middle">┃ Non-Surgical Path ┃</text>
+  <line x1="680" y1="155" x2="680" y2="185" stroke="#64748b"/>
+  <text x="690" y="175" fill="#64748b" font-size="8">(mild/minimal symptoms,</text>
+  <text x="690" y="185" fill="#64748b" font-size="8"> high surgical risk, or small)</text>
+
+  <!-- Conservative management -->
+  <rect x="580" y="200" width="200" height="65" rx="8" fill="#0f172a"/>
+  <rect x="580" y="200" width="200" height="65" rx="8" fill="rgba(8,51,68,0.4)" stroke="#22d3ee" stroke-width="1.5"/>
+  <text x="680" y="222" fill="white" font-size="11" font-weight="600" text-anchor="middle">Conservative Management</text>
+  <text x="680" y="240" fill="#94a3b8" font-size="9" text-anchor="middle">Observation ± medical tx</text>
+  <text x="680" y="255" fill="#94a3b8" font-size="9" text-anchor="middle">(statins, tranexamic acid)</text>
+
+  <line x1="680" y1="265" x2="680" y2="310" stroke="#64748b" marker-end="url(#arrow)"/>
+
+  <!-- Decision: failure? -->
+  <g transform="translate(680, 345)">
+    <polygon points="0,-35 55,0 0,35 -55,0" fill="#0f172a"/>
+    <polygon points="0,-35 55,0 0,35 -55,0" fill="rgba(120,53,15,0.3)" stroke="#fbbf24" stroke-width="1.5"/>
+    <text y="2" fill="white" font-size="8" font-weight="600" text-anchor="middle">Treatment</text>
+    <text y="12" fill="white" font-size="8" font-weight="600" text-anchor="middle">Failure?</text>
+  </g>
+
+  <!-- No: continue observation -->
+  <line x1="735" y1="345" x2="820" y2="345" stroke="#64748b" marker-end="url(#arrow)"/>
+  <text x="755" y="338" fill="#34d399" font-size="8">No</text>
+
+  <rect x="825" y="325" width="150" height="40" rx="20" fill="#0f172a"/>
+  <rect x="825" y="325" width="150" height="40" rx="20" fill="rgba(6,78,59,0.3)" stroke="#34d399" stroke-width="1.5"/>
+  <text x="900" y="349" fill="white" font-size="10" font-weight="600" text-anchor="middle">Continue Observation</text>
+
+  <!-- Yes: standalone MMAE -->
+  <line x1="680" y1="380" x2="680" y2="425" stroke="#64748b" marker-end="url(#arrow)"/>
+  <text x="692" y="395" fill="#fb7185" font-size="8">Yes (progression)</text>
+
+  <!-- ========================================== -->
+  <!-- SURGICAL PATH (left column)                 -->
+  <!-- ========================================== -->
+  <!-- Surgical evacuation -->
+  <rect x="340" y="290" width="200" height="65" rx="8" fill="#0f172a"/>
+  <rect x="340" y="290" width="200" height="65" rx="8" fill="rgba(6,78,59,0.4)" stroke="#34d399" stroke-width="1.5"/>
+  <text x="440" y="312" fill="white" font-size="11" font-weight="600" text-anchor="middle">Surgical Evacuation</text>
+  <text x="440" y="330" fill="#94a3b8" font-size="9" text-anchor="middle">Burr hole / craniotomy / drain</text>
+  <text x="440" y="345" fill="#94a3b8" font-size="9" text-anchor="middle">Standard surgical management</text>
+
+  <line x1="440" y1="355" x2="440" y2="395" stroke="#64748b" marker-end="url(#arrow)"/>
+
+  <!-- Adjunctive MMAE -->
+  <rect x="340" y="400" width="200" height="70" rx="8" fill="#0f172a"/>
+  <rect x="340" y="400" width="200" height="70" rx="8" fill="rgba(76,29,149,0.4)" stroke="#a78bfa" stroke-width="1.5"/>
+  <text x="440" y="420" fill="white" font-size="11" font-weight="600" text-anchor="middle">+ Adjunctive MMAE</text>
+  <text x="440" y="438" fill="#94a3b8" font-size="9" text-anchor="middle">Recommendation 1 : Class I, Level A</text>
+  <text x="440" y="455" fill="#94a3b8" font-size="9" text-anchor="middle">Decreases recurrence requiring reintervention</text>
+
+  <line x1="440" y1="470" x2="440" y2="515" stroke="#64748b" marker-end="url(#arrow)"/>
+
+  <!-- Assessment before embolization -->
+  <rect x="290" y="520" width="340" height="65" rx="8" fill="#0f172a"/>
+  <rect x="290" y="520" width="340" height="65" rx="8" fill="rgba(136,19,55,0.4)" stroke="#fb7185" stroke-width="1.5"/>
+  <text x="460" y="540" fill="white" font-size="10" font-weight="600" text-anchor="middle">Pre-Embolization Assessment</text>
+  <text x="460" y="558" fill="#94a3b8" font-size="9" text-anchor="middle">Angiography: assess for dangerous collaterals</text>
+  <text x="460" y="573" fill="#94a3b8" font-size="9" text-anchor="middle">(e.g. orbital, petrous, or anastomotic branches)</text>
+
+  <!-- arrow: Recommendation 3 note -->
+  <line x1="630" y1="540" x2="850" y2="540" stroke="#64748b" marker-end="url(#arrow)"/>
+  <text x="700" y="533" fill="#fb7185" font-size="8">Rec 3: Class I, Level C-EO</text>
+
+  <line x1="460" y1="585" x2="460" y2="630" stroke="#64748b" marker-end="url(#arrow)"/>
+
+  <!-- MMAE procedure -->
+  <rect x="340" y="635" width="240" height="60" rx="8" fill="#0f172a"/>
+  <rect x="340" y="635" width="240" height="60" rx="8" fill="rgba(8,51,68,0.4)" stroke="#22d3ee" stroke-width="1.5"/>
+  <text x="460" y="657" fill="white" font-size="11" font-weight="600" text-anchor="middle">MMAE Procedure</text>
+  <text x="460" y="675" fill="#94a3b8" font-size="9" text-anchor="middle">Particle / liquid embolic agent</text>
+  <text x="460" y="690" fill="#94a3b8" font-size="9" text-anchor="middle">Target: distal MMA branches</text>
+
+  <line x1="460" y1="695" x2="460" y2="740" stroke="#64748b" marker-end="url(#arrow)"/>
+
+  <!-- Standalone MMAE for special populations -->
+  <rect x="340" y="745" width="240" height="70" rx="8" fill="#0f172a"/>
+  <rect x="340" y="745" width="240" height="70" rx="8" fill="rgba(120,53,15,0.3)" stroke="#fbbf24" stroke-width="1.5"/>
+  <text x="460" y="765" fill="white" font-size="10" font-weight="600" text-anchor="middle">Standalone MMAE</text>
+  <text x="460" y="783" fill="#94a3b8" font-size="9" text-anchor="middle">Special populations / circumstances</text>
+  <text x="460" y="798" fill="#94a3b8" font-size="9" text-anchor="middle">Rec 2 : Class IIa, Level B-NR</text>
+
+  <!-- Connect standalone MMAE back from conservative path -->
+  <line x1="680" y1="425" x2="680" y2="600" stroke="#64748b" stroke-dasharray="4,4"/>
+  <line x1="680" y1="600" x2="620" y2="660" stroke="#64748b" stroke-dasharray="4,4"/>
+  <line x1="620" y1="660" x2="580" y2="660" stroke="#64748b" stroke-dasharray="4,4" marker-end="url(#arrow)"/>
+  <text x="650" y="640" fill="#fbbf24" font-size="8">Standalone MMAE option</text>
+
+  <!-- Special populations annotation -->
+  <rect x="620" y="755" width="280" height="60" rx="6" fill="#0f172a"/>
+  <rect x="620" y="755" width="280" height="60" rx="6" fill="rgba(30,41,59,0.5)" stroke="#94a3b8" stroke-width="1"/>
+  <text x="640" y="775" fill="#cbd5e1" font-size="9">Special populations for standalone MMAE:</text>
+  <text x="640" y="793" fill="#cbd5e1" font-size="9">• High-risk surgical patients</text>
+  <text x="640" y="808" fill="#cbd5e1" font-size="9">• Bleeding diathesis / thrombocytopenia / coagulopathy</text>
+
+  <!-- ========================================== -->
+  <!-- EVIDENCE SUMMARY — bottom bar              -->
+  <!-- ========================================== -->
+  <rect x="30" y="840" width="940" height="55" rx="10" fill="rgba(30,41,59,0.5)" stroke="#94a3b8" stroke-width="0.5"/>
+  <text x="50" y="860" fill="#94a3b8" font-size="9">Key Evidence: EMBOLISE &amp; STEM RCTs, Meta-analyses</text>
+  <text x="50" y="878" fill="#64748b" font-size="8">MMAE + surgery: 4.7% recurrence vs 17.7% surgery alone (OR 0.23). Standalone MMAE: reduced treatment failure and mortality vs conservative management.</text>
+</svg>

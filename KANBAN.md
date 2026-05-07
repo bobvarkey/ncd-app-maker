@@ -1,89 +1,63 @@
-# KANBAN — Content & Goals Tracker
-*Updated: 2026-05-04*
+# KANBAN — Boby's Goals
+
+_Last updated: 2026-05-07 (8:55 AM IST)_
 
 ---
 
-## 🎯 Goals (Q3 2026)
+## 🎯 Goals
 
-- **YouTube:** 100K subscribers
-- **X/Twitter:** 150K followers
-- **SaaS:** Launch by Q3 2026
-- **AI+Neuro Community:** Build & grow
-- **Books:** 2/month
-- **French:** Learn/practice
+| Goal | Target | Current | Status |
+|------|--------|---------|--------|
+| YouTube | 100k | ~? | 🔴 |
+| X (Twitter) | 150k | ~? | 🔴 |
+| SaaS | Launch by Q3 2026 | BrainStack validation | 🟡 |
+| AI+Neuro Community | Build & grow | Early stage | 🟡 |
+| Books | 2/month | ? | 🟡 |
+| French | Learn | Beginner | 🟡 |
 
 ---
 
 ## 📋 To Do
 
-- [ ] YouTube: Script — "AI Is Making You Dumb: The Neuroscience of Cognitive Atrophy"
-- [ ] SaaS: Define MVP feature set
-- [ ] Community: Set up Discord or community platform
-- [ ] French: 30 min study session (Duolingo or grammar)
-- [ ] Book: Read 30 min (current book in progress)
-- [ ] YouTube Shorts (3x this week — see backlog below)
+- [ ] **Post X thread** — copy-paste from `X_THREAD_DRAFT_20260507.md` to Twitter
+- [ ] **YouTube Short** — shoot one this week, use `YOUTUBE_SCRIPT_20260507.md` hook
+- [ ] **BrainStack landing page** — Carrd/Notion, validate before building
+- [ ] **Community posting** — 3x/week on LinkedIn/X
+- [ ] **Read 30 min** — update what you're currently reading
+- [ ] **French: 15 min session** — use `FRENCH_DAILY_PLAN.md` (today's vocabulary + grammar ready)
 
 ---
 
 ## 🔄 In Progress
 
-*(none currently)*
+- [ ] **BrainStack SaaS** — validate via low-fidelity landing page
 
 ---
 
 ## ✅ Done
 
-- [x] 2026-04-09: Posted X thread — REM Sleep & Problem Solving (Targeted Memory Reactivation)
-- [x] 2026-04-09: Created YouTube script — "The Secret to Never Getting Dementia"
-- [x] 2026-04-09: Created KANBAN.md — goals tracking system
-- [x] 2026-04-18: YouTube content gap analysis (3 recommended gaps identified)
-- [x] 2026-04-18: X thread draft — Sleep & Memory
-- [x] 2026-05-02: YouTube growth plan (100K plan with content calendar)
-- [x] 2026-05-04: Weekly research — AI + Neuroscience May 4
-  - *Neuralink 12-month results, China BCI approved, Prima AI 97.5%, nicotine nootropic trend, AI model wars*
-  - *Saved to content/weekly-research-2026-05-04.md*
-- [x] 2026-05-04: X thread — Nicotine as Nootropic (8-tweet science-backed thread)
-  - *Saved to content/x-thread-nicotine-nootropic-2026-05-04.md — ready to post*
-- [x] 2026-05-04: YouTube script — "China Just Approved the World's First Brain Implant"
-  - *Saved to content/youtube-script-china-bci-2026-05-04.md — ~11:30 runtime, ready to record*
+- [x] **X Thread (2026-05-07)** — "Why Your Brain Stays Plastic Forever" — 8-tweet thread on neuroplasticity, critical periods, sleep science. File: `X_THREAD_DRAFT_20260507.md`
+- [x] **YouTube Script (2026-05-07)** — "Why Your Brain Wants You to Sleep" — 3:15 script on glymphatic system + 4 sleep pillars. File: `YOUTUBE_SCRIPT_20260507.md`
+- [x] **Community & SaaS Research (2026-05-07)** — 3 SaaS ideas, YouTube growth tactics, book recs. File: `AI_NEURO_COMMUNITY_SAAS_STRATEGY.md`
+- [x] **French Daily Plan (2026-05-07)** — 15-min routine, 10 vocab words, grammar rule, resources. File: `FRENCH_DAILY_PLAN.md`
+- [x] **KANBAN.md** — Goals tracking system created
 
 ---
 
-## 📊 Weekly Stats
+## 📝 Notes
 
-| Week | YouTube Upload | X Posts | Notes |
-|------|---------------|---------|-------|
-| Apr 1 | ? | ? | Starting baseline |
-| May 4 | Research + 1 script + 1 thread | 1 thread draft | Heavy production week |
+- **BrainStack priority:** Landing page first → affiliate + featured listings model. Low-cost, no-code validation.
+- **X Thread posting:** Best times: 8-10 AM or 6-8 PM. Hook in Tweet 1 is key.
+- **YouTube Shorts:** The glymphatic system hook is strong for a 30-60s short. Filming this week?
+- **Books:** Need to know what you're currently reading to track progress.
+- **French:** Today's 15-min session is ready. Vocabulary + grammar rule in the doc.
 
----
+## Files Created Today
 
-## 📝 Content Ideas Backlog
-
-### 🔴 High-Priority YouTube Scripts (ready to record)
-1. **"China Just Approved the World's First Brain Implant"** — ✅ DONE (saved)
-2. "AI Is Making You Dumb — The Neuroscience of Cognitive Atrophy"
-3. "AI + Genetics: Your Personalized Brain Protocol"
-4. "Neuralink 12-Month Results: What Actually Happened"
-5. "Prima AI Reads Brain MRIs — Should Radiologists Be Worried?"
-
-### 📤 X Threads Ready to Post
-1. **Nicotine as nootropic** — ✅ DONE (saved to content/)
-2. Neuralink 12-month results summary
-3. AI model wars: Opus 4.7 vs GPT-5.5
-
-### 🎬 YouTube Shorts (this week)
-1. "3 signs your brain needs help NOW" (neurological warning signs)
-2. "AI found something I missed" (AI radiology angle)
-3. "China's brain implant approved" (BCI short)
-
----
-
-## 📚 Books (May 2026)
-
-- Book 1: [in progress — update when known]
-- Book 2: [in progress — update when known]
-
----
-
-*Last updated: 2026-05-04 | 02:55 IST*
+| File | Purpose |
+|------|---------|
+| `X_THREAD_DRAFT_20260507.md` | 8-tweet X thread — ready to post |
+| `YOUTUBE_SCRIPT_20260507.md` | 3:15 YouTube script on sleep + brain |
+| `AI_NEURO_COMMUNITY_SAAS_STRATEGY.md` | Full strategy + SaaS ideas |
+| `FRENCH_DAILY_PLAN.md` | French 15-min daily plan + today's vocab |
+| `KANBAN.md` | This file — living goals tracker |

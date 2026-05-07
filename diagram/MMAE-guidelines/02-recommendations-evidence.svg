@@ -1,0 +1,137 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 800">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&amp;display=swap');
+    text { font-family: 'JetBrains Mono', 'SF Mono', 'Cascadia Code', monospace; }
+  </style>
+  <defs>
+    <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+      <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#1e293b" stroke-width="0.5"/>
+    </pattern>
+    <marker id="arrow" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#64748b"/>
+    </marker>
+  </defs>
+
+  <!-- Background -->
+  <rect width="100%" height="100%" fill="#0f172a"/>
+  <rect width="100%" height="100%" fill="url(#grid)"/>
+
+  <!-- Title -->
+  <text x="30" y="35" fill="white" font-size="16" font-weight="700">MMAE Guideline Recommendations &amp; Level of Evidence</text>
+  <text x="30" y="53" fill="#94a3b8" font-size="9">SNIS Standards and Guidelines Committee — Endorsed by ANZSNR &amp; ESMINT (JNIS 2026)</text>
+
+  <!-- ========================================== -->
+  <!-- RECOMMENDATION CARDS                        -->
+  <!-- ========================================== -->
+
+  <!-- Recommendation 1 -->
+  <rect x="50" y="80" width="900" height="140" rx="10" fill="#0f172a"/>
+  <rect x="50" y="80" width="900" height="140" rx="10" fill="rgba(6,78,59,0.3)" stroke="#34d399" stroke-width="2"/>
+
+  <!-- Class badge -->
+  <rect x="70" y="95" width="80" height="24" rx="4" fill="#34d399"/>
+  <text x="110" y="112" fill="#0f172a" font-size="11" font-weight="700" text-anchor="middle">Class I</text>
+  <rect x="155" y="95" width="80" height="24" rx="4" fill="#a78bfa"/>
+  <text x="195" y="112" fill="#0f172a" font-size="11" font-weight="700" text-anchor="middle">Level A</text>
+
+  <text x="70" y="140" fill="white" font-size="12" font-weight="600">Recommendation 1</text>
+  <text x="70" y="160" fill="#cbd5e1" font-size="10">MMAE as an adjunct to surgical drainage is RECOMMENDED to decrease the</text>
+  <text x="70" y="175" fill="#cbd5e1" font-size="10">risk of recurrence requiring a further intervention and should be balanced</text>
+  <text x="70" y="190" fill="#cbd5e1" font-size="10">against the risk of the procedure.</text>
+
+  <!-- Evidence bar -->
+  <rect x="70" y="205" width="860" height="1" fill="#1e293b"/>
+  <circle cx="85" cy="210" r="4" fill="#34d399"/>
+  <text x="95" y="214" fill="#94a3b8" font-size="8">EMBOLISE RCT (n=400)</text>
+  <circle cx="255" cy="210" r="4" fill="#34d399"/>
+  <text x="265" y="214" fill="#94a3b8" font-size="8">STEM RCT</text>
+  <circle cx="395" cy="210" r="4" fill="#34d399"/>
+  <text x="405" y="214" fill="#94a3b8" font-size="8">Meta-Analyses (recurrence: 4.7% vs 17.7%)</text>
+
+  <!-- Recommendation 2 -->
+  <rect x="50" y="240" width="900" height="140" rx="10" fill="#0f172a"/>
+  <rect x="50" y="240" width="900" height="140" rx="10" fill="rgba(120,53,15,0.3)" stroke="#fbbf24" stroke-width="2"/>
+
+  <rect x="70" y="255" width="80" height="24" rx="4" fill="#fbbf24"/>
+  <text x="110" y="272" fill="#0f172a" font-size="11" font-weight="700" text-anchor="middle">Class IIa</text>
+  <rect x="155" y="255" width="115" height="24" rx="4" fill="#60a5fa"/>
+  <text x="212" y="272" fill="#0f172a" font-size="10" font-weight="700" text-anchor="middle">Level B-NR</text>
+
+  <text x="70" y="300" fill="white" font-size="12" font-weight="600">Recommendation 2</text>
+  <text x="70" y="320" fill="#cbd5e1" font-size="10">Standalone MMAE for cSDH in special circumstances/populations is</text>
+  <text x="70" y="335" fill="#cbd5e1" font-size="10">REASONABLE. These include high-risk surgical patients, those with bleeding</text>
+  <text x="70" y="350" fill="#cbd5e1" font-size="10">diathesis including thrombocytopenia or coagulopathy, or the elderly.</text>
+
+  <rect x="70" y="365" width="860" height="1" fill="#1e293b"/>
+  <circle cx="85" cy="370" r="4" fill="#fbbf24"/>
+  <text x="95" y="374" fill="#94a3b8" font-size="8">Observational studies + non-randomized evidence</text>
+
+  <!-- Recommendation 3 -->
+  <rect x="50" y="400" width="900" height="110" rx="10" fill="#0f172a"/>
+  <rect x="50" y="400" width="900" height="110" rx="10" fill="rgba(136,19,55,0.3)" stroke="#fb7185" stroke-width="2"/>
+
+  <rect x="70" y="415" width="80" height="24" rx="4" fill="#fb7185"/>
+  <text x="110" y="432" fill="#0f172a" font-size="11" font-weight="700" text-anchor="middle">Class I</text>
+  <rect x="155" y="415" width="115" height="24" rx="4" fill="#fbbf24"/>
+  <text x="212" y="432" fill="#0f172a" font-size="10" font-weight="700" text-anchor="middle">Level C-EO</text>
+
+  <text x="70" y="460" fill="white" font-size="12" font-weight="600">Recommendation 3</text>
+  <text x="70" y="480" fill="#cbd5e1" font-size="10">Practitioners SHOULD assess for dangerous collaterals prior to embolization.</text>
+  <text x="70" y="496" fill="#cbd5e1" font-size="9">(e.g. orbital branches, petrous branches, anastomotic connections to internal carotid / vertebral arteries)</text>
+
+  <!-- ========================================== -->
+  <!-- EVIDENCE SYNTHESIS SECTION                  -->
+  <!-- ========================================== -->
+  <rect x="50" y="530" width="900" height="240" rx="12" fill="none" stroke="#22d3ee" stroke-width="1" stroke-dasharray="8,4"/>
+  <text x="70" y="550" fill="#22d3ee" font-size="10" font-weight="600">Evidence Synthesis</text>
+
+  <!-- Meta-analysis results box -->
+  <rect x="70" y="565" width="410" height="185" rx="8" fill="rgba(8,51,68,0.3)" stroke="#22d3ee" stroke-width="1"/>
+  <text x="275" y="585" fill="white" font-size="11" font-weight="600" text-anchor="middle">MMAE + Surgery vs Surgery Alone</text>
+
+  <!-- Recurrence rate comparison bars -->
+  <text x="90" y="610" fill="#94a3b8" font-size="9">Recurrence/Reintervention Rate</text>
+
+  <!-- Surgery alone bar -->
+  <rect x="90" y="620" width="100" height="25" rx="4" fill="#0f172a"/>
+  <rect x="90" y="620" width="100" height="25" rx="4" fill="rgba(136,19,55,0.5)" stroke="#fb7185" stroke-width="1"/>
+  <text x="140" y="637" fill="white" font-size="10" font-weight="600" text-anchor="middle">17.7%</text>
+  <text x="200" y="637" fill="#cbd5e1" font-size="9">Surgery Alone</text>
+
+  <!-- MMAE + surgery bar -->
+  <rect x="90" y="655" width="27" height="25" rx="4" fill="#0f172a"/>
+  <rect x="90" y="655" width="27" height="25" rx="4" fill="rgba(6,78,59,0.5)" stroke="#34d399" stroke-width="1"/>
+  <text x="107" y="672" fill="white" font-size="10" font-weight="600" text-anchor="middle">4.7%</text>
+  <text x="130" y="672" fill="#cbd5e1" font-size="9">MMAE + Surgery</text>
+
+  <text x="90" y="705" fill="#64748b" font-size="9">OR 0.23 — 77% relative risk reduction with MMAE adjunct</text>
+  <text x="90" y="720" fill="#64748b" font-size="9">No significant increase in functional deterioration or mortality</text>
+  <text x="90" y="735" fill="#fb7185" font-size="8">Note: small risk of serious embolization-related complications (notably stroke)</text>
+
+  <!-- Key trials box -->
+  <rect x="510" y="565" width="420" height="185" rx="8" fill="rgba(76,29,149,0.3)" stroke="#a78bfa" stroke-width="1"/>
+  <text x="720" y="585" fill="white" font-size="11" font-weight="600" text-anchor="middle">Key Landmark Trials</text>
+
+  <!-- EMBOLISE trial -->
+  <rect x="530" y="598" width="380" height="50" rx="6" fill="#0f172a"/>
+  <rect x="530" y="598" width="380" height="50" rx="6" fill="rgba(8,51,68,0.3)" stroke="#22d3ee" stroke-width="1"/>
+  <text x="550" y="616" fill="#22d3ee" font-size="10" font-weight="600">EMBOLISE</text>
+  <text x="550" y="633" fill="#94a3b8" font-size="8">RCT, n~400 — MMAE + surgery vs surgery alone for cSDH</text>
+  <text x="550" y="646" fill="#94a3b8" font-size="8">Lower recurrence/treatment failure rate, safe profile</text>
+
+  <!-- STEM trial -->
+  <rect x="530" y="658" width="380" height="50" rx="6" fill="#0f172a"/>
+  <rect x="530" y="658" width="380" height="50" rx="6" fill="rgba(6,78,59,0.3)" stroke="#34d399" stroke-width="1"/>
+  <text x="550" y="676" fill="#34d399" font-size="10" font-weight="600">STEM</text>
+  <text x="550" y="693" fill="#94a3b8" font-size="8">RCT — corroborates EMBOLISE findings</text>
+  <text x="550" y="706" fill="#94a3b8" font-size="8">Consistent outcomes across populations</text>
+
+  <!-- Meta-analyses -->
+  <rect x="530" y="718" width="380" height="25" rx="6" fill="#0f172a"/>
+  <rect x="530" y="718" width="380" height="25" rx="6" fill="rgba(120,53,15,0.2)" stroke="#fbbf24" stroke-width="1"/>
+  <text x="550" y="735" fill="#fbbf24" font-size="10" font-weight="600">Meta-Analyses</text>
+  <text x="640" y="735" fill="#94a3b8" font-size="8">Confirmed pooled estimates: 4.7% vs 17.7% recurrence</text>
+
+  <!-- Endorsement footer -->
+  <text x="30" y="795" fill="#64748b" font-size="8">DOI: 10.1136/jnis-2026-024979 | Endorsed by: ANZSNR (Australian &amp; New Zealand Society of Neuroradiology) &amp; ESMINT (European Society of Minimally Invasive Neurological Therapy)</text>
+</svg>

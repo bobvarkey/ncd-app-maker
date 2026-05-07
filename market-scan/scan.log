@@ -419,3 +419,87 @@ Top Movers:
   Gainers: SUNPHARMA.BSE:+1.6%, COALINDIA.BSE:+0.4%, RELIANCE.BSE:+0.3%
   Losers: SBIN.BSE:-1.7%, APOLLOHOSP.BSE:-0.8%, POWERGRID.BSE:-0.7%
 =======================================================
+Starting Enhanced Market Scan...
+Fetching 10 quotes...
+  ✅ SBIN: ₹1068.30 (+0.03%)
+  ✅ BHARTIARTL: ₹1826.90 (-3.14%)
+  ✅ LT: ₹4100.20 (+2.18%)
+  ✅ KOTAKBANK: ₹371.85 (-2.82%)
+  ✅ HINDUNILVR: ₹2309.05 (+2.60%)
+  ✅ HDFCBANK: ₹777.90 (+0.87%)
+  ✅ INFY: ₹1168.40 (-1.11%)
+  ✅ ICICIBANK: ₹1270.95 (+0.65%)
+  ⚠️ DEEPAKNTR: Failed
+  ✅ SUNPHARMA: ₹1824.10 (+0.88%)
+
+=======================================================
+MARKET SCAN - 2026-05-05 08:00
+=======================================================
+Sensitivity: high | Macro: neutral
+Thresholds: Drop <-1.0%, Rally >1.0%
+Scanned: 9 stocks | Opportunities: 6
+
+BUY (50-75):
+  KOTAKBANK.BSE ₹371.85 (-2.82%) | 60
+WATCH (30-50):
+  BHARTIARTL.BSE ₹1826.90 (-3.14%) | 45
+
+Top Movers:
+  Gainers: HINDUNILVR.BSE:+2.6%, LT.BSE:+2.2%, SUNPHARMA.BSE:+0.9%
+  Losers: BHARTIARTL.BSE:-3.1%, KOTAKBANK.BSE:-2.8%, INFY.BSE:-1.1%
+=======================================================
+Starting Enhanced Market Scan...
+Fetching 10 quotes...
+  ✅ TITAN: ₹4371.95 (+0.21%)
+  ✅ TORNTPHARM: ₹4275.95 (+0.56%)
+  ✅ MFSL: ₹1596.25 (-0.59%)
+  ✅ ADANIPOWER: ₹229.90 (+1.05%)
+  ✅ CONCOR: ₹517.70 (+0.26%)
+  ⚠️ DEEPAKNTR: Failed
+  ✅ SUNPHARMA: ₹1820.75 (-0.18%)
+  ✅ DRREDDY: ₹1270.95 (-1.32%)
+  ✅ CIPLA: ₹1333.55 (-0.10%)
+  ✅ APOLLOHOSP: ₹7771.20 (+0.43%)
+
+=======================================================
+MARKET SCAN - 2026-05-06 08:00
+=======================================================
+Sensitivity: high | Macro: neutral
+Thresholds: Drop <-1.0%, Rally >1.0%
+Scanned: 9 stocks | Opportunities: 3
+
+WATCH (30-50):
+  ADANIPOWER.BSE ₹229.90 (+1.05%) | 40
+
+Top Movers:
+  Gainers: ADANIPOWER.BSE:+1.1%, TORNTPHARM.BSE:+0.6%, APOLLOHOSP.BSE:+0.4%
+  Losers: DRREDDY.BSE:-1.3%, MFSL.BSE:-0.6%, SUNPHARMA.BSE:-0.2%
+=======================================================
+Starting Enhanced Market Scan...
+Fetching 10 quotes...
+  ✅ HEROMOTOCO: ₹5169.70 (+1.11%)
+  ✅ EICHERMOT: ₹7311.35 (+0.21%)
+  ✅ ONGC: ₹280.70 (-3.14%)
+  ✅ COALINDIA: ₹469.75 (-0.57%)
+  ✅ NTPC: ₹394.70 (-1.00%)
+  ✅ SUNPHARMA: ₹1850.40 (+1.63%)
+  ✅ DRREDDY: ₹1310.50 (+3.11%)
+  ✅ CIPLA: ₹1365.25 (+2.38%)
+  ✅ APOLLOHOSP: ₹7756.50 (-0.19%)
+  ✅ RELIANCE: ₹1437.85 (-1.80%)
+
+=======================================================
+MARKET SCAN - 2026-05-07 08:00
+=======================================================
+Sensitivity: high | Macro: neutral
+Thresholds: Drop <-1.0%, Rally >1.0%
+Scanned: 10 stocks | Opportunities: 9
+
+WATCH (30-50):
+  ONGC.BSE ₹280.70 (-3.14%) | 45
+  RELIANCE.BSE ₹1437.85 (-1.80%) | 35
+
+Top Movers:
+  Gainers: DRREDDY.BSE:+3.1%, CIPLA.BSE:+2.4%, SUNPHARMA.BSE:+1.6%
+  Losers: ONGC.BSE:-3.1%, RELIANCE.BSE:-1.8%, NTPC.BSE:-1.0%
+=======================================================

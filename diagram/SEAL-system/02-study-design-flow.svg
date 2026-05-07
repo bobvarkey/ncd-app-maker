@@ -1,0 +1,153 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 920">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&amp;display=swap');
+    text { font-family: 'JetBrains Mono', 'SF Mono', 'Cascadia Code', monospace; }
+  </style>
+  <defs>
+    <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+      <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#1e293b" stroke-width="0.5"/>
+    </pattern>
+    <marker id="arrow" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#64748b"/>
+    </marker>
+    <marker id="arrow-cyan" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#22d3ee"/>
+    </marker>
+    <marker id="arrow-rose" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#fb7185"/>
+    </marker>
+  </defs>
+
+  <!-- Background -->
+  <rect width="100%" height="100%" fill="#0f172a"/>
+  <rect width="100%" height="100%" fill="url(#grid)"/>
+
+  <!-- Title -->
+  <text x="30" y="35" fill="white" font-size="16" font-weight="700">Pre-SEAL IT — Study Design &amp; Patient Flow</text>
+  <text x="30" y="53" fill="#94a3b8" font-size="9">Prospective, Multicenter, Single-Arm, First-in-Human Interventional Trial (NCT05686733)</text>
+
+  <!-- ──────────────────────────────────────────── -->
+  <!-- START NODE                                    -->
+  <!-- ──────────────────────────────────────────── -->
+  <ellipse cx="500" cy="90" rx="100" ry="28" fill="#0f172a"/>
+  <ellipse cx="500" cy="90" rx="100" ry="28" fill="rgba(59,130,246,0.3)" stroke="#60a5fa" stroke-width="1.5"/>
+  <text x="500" y="88" fill="white" font-size="11" font-weight="600" text-anchor="middle">Pre-SEAL IT Trial</text>
+  <text x="500" y="101" fill="#94a3b8" font-size="8" text-anchor="middle">First-in-Human</text>
+
+  <!-- Arrow down -->
+  <line x1="500" y1="118" x2="500" y2="160" stroke="#64748b" marker-end="url(#arrow)"/>
+
+  <!-- ──────────────────────────────────────────── -->
+  <!-- INCLUSION BOX                                 -->
+  <!-- ──────────────────────────────────────────── -->
+  <rect x="340" y="165" width="320" height="80" rx="8" fill="#0f172a"/>
+  <rect x="340" y="165" width="320" height="80" rx="8" fill="rgba(8,51,68,0.4)" stroke="#22d3ee" stroke-width="1.5"/>
+  <text x="500" y="185" fill="white" font-size="11" font-weight="600" text-anchor="middle">Patient Selection</text>
+  <text x="500" y="203" fill="#94a3b8" font-size="9" text-anchor="middle">saccular wide-neck bifurcation aneurysms (WNBA)</text>
+  <text x="500" y="218" fill="#94a3b8" font-size="9" text-anchor="middle">Single unruptured or ruptured IA requiring treatment</text>
+  <text x="500" y="233" fill="#94a3b8" font-size="9" text-anchor="middle">WEB-IT IDE pivotal trial-like inclusion/exclusion</text>
+
+  <!-- Arrow down -->
+  <line x1="500" y1="245" x2="500" y2="290" stroke="#64748b" marker-end="url(#arrow)"/>
+
+  <!-- ──────────────────────────────────────────── -->
+  <!-- ENROLLMENT                                    -->
+  <!-- ──────────────────────────────────────────── -->
+  <rect x="340" y="295" width="320" height="55" rx="8" fill="#0f172a"/>
+  <rect x="340" y="295" width="320" height="55" rx="8" fill="rgba(6,78,59,0.4)" stroke="#34d399" stroke-width="1.5"/>
+  <text x="500" y="317" fill="white" font-size="12" font-weight="600" text-anchor="middle">Enrolled: N = 13 patients</text>
+  <text x="500" y="336" fill="#94a3b8" font-size="9" text-anchor="middle">13 WNBA aneurysms across 13 patients</text>
+
+  <!-- Arrow down -->
+  <line x1="500" y1="350" x2="500" y2="395" stroke="#64748b" marker-end="url(#arrow)"/>
+
+  <!-- ──────────────────────────────────────────── -->
+  <!-- TREATMENT                                     -->
+  <!-- ──────────────────────────────────────────── -->
+  <rect x="340" y="400" width="320" height="70" rx="8" fill="#0f172a"/>
+  <rect x="340" y="400" width="320" height="70" rx="8" fill="rgba(76,29,149,0.4)" stroke="#a78bfa" stroke-width="1.5"/>
+  <text x="500" y="420" fill="white" font-size="11" font-weight="600" text-anchor="middle">Intervention</text>
+  <text x="500" y="440" fill="#94a3b8" font-size="9" text-anchor="middle">SEAL™ System (Arc or Base configuration)</text>
+  <text x="500" y="455" fill="#94a3b8" font-size="9" text-anchor="middle">Intrasaccular flow disruption via endovascular approach</text>
+
+  <!-- Arrow down -->
+  <line x1="500" y1="470" x2="500" y2="515" stroke="#64748b" marker-end="url(#arrow)"/>
+
+  <!-- ──────────────────────────────────────────── -->
+  <!-- ASSESSMENTS                                   -->
+  <!-- ──────────────────────────────────────────── -->
+  <rect x="310" y="520" width="380" height="70" rx="8" fill="#0f172a"/>
+  <rect x="310" y="520" width="380" height="70" rx="8" fill="rgba(120,53,15,0.3)" stroke="#fbbf24" stroke-width="1.5"/>
+  <text x="500" y="540" fill="white" font-size="11" font-weight="600" text-anchor="middle">Independent Core Lab Adjudication</text>
+  <text x="500" y="558" fill="#94a3b8" font-size="9" text-anchor="middle">Angiographic follow-up: RROC / WOS occlusion scales</text>
+  <text x="500" y="575" fill="#94a3b8" font-size="9" text-anchor="middle">Clinical follow-up: 24h, discharge, 30d, 6mo, 12mo</text>
+
+  <!-- Arrow down -->
+  <line x1="500" y1="590" x2="500" y2="640" stroke="#64748b" marker-end="url(#arrow)"/>
+
+  <!-- ──────────────────────────────────────────── -->
+  <!-- PRIMARY ENDPOINTS — split into safety & eff.   -->
+  <!-- ──────────────────────────────────────────── -->
+
+  <!-- Safety endpoint -->
+  <rect x="140" y="645" width="320" height="110" rx="8" fill="#0f172a"/>
+  <rect x="140" y="645" width="320" height="110" rx="8" fill="rgba(136,19,55,0.4)" stroke="#fb7185" stroke-width="1.5"/>
+  <text x="300" y="665" fill="white" font-size="11" font-weight="600" text-anchor="middle">Primary Safety Endpoint (12mo)</text>
+  <text x="150" y="688" fill="#cbd5e1" font-size="9">Composite of:</text>
+  <text x="150" y="705" fill="#cbd5e1" font-size="9">• Major periprocedural stroke</text>
+  <text x="150" y="720" fill="#cbd5e1" font-size="9">• New subarachnoid hemorrhage</text>
+  <text x="150" y="735" fill="#cbd5e1" font-size="9">• Neurologic death</text>
+
+  <!-- Efficacy endpoint -->
+  <rect x="540" y="645" width="320" height="110" rx="8" fill="#0f172a"/>
+  <rect x="540" y="645" width="320" height="110" rx="8" fill="rgba(8,51,68,0.4)" stroke="#22d3ee" stroke-width="1.5"/>
+  <text x="700" y="665" fill="white" font-size="11" font-weight="600" text-anchor="middle">Primary Efficacy Endpoint (12mo)</text>
+  <text x="550" y="688" fill="#cbd5e1" font-size="9">Complete occlusion:</text>
+  <text x="550" y="705" fill="#cbd5e1" font-size="9">RROC 1 | WOS A or RROC 1 | WOS B</text>
+  <text x="550" y="722" fill="#cbd5e1" font-size="9">Adequate occlusion:</text>
+  <text x="550" y="739" fill="#cbd5e1" font-size="9">RROC 1|WOS A, RROC 1|WOS B, or RROC 2|WOS C</text>
+  <text x="550" y="756" fill="#94a3b8" font-size="8">Without parent artery compromise</text>
+
+  <!-- Arrows to endpoints -->
+  <line x1="440" y1="625" x2="300" y2="645" stroke="#64748b" marker-end="url(#arrow)"/>
+  <line x1="560" y1="625" x2="700" y2="645" stroke="#64748b" marker-end="url(#arrow)"/>
+
+  <!-- ──────────────────────────────────────────── -->
+  <!-- RESULTS — bottom section                      -->
+  <!-- ──────────────────────────────────────────── -->
+
+  <!-- Results region -->
+  <rect x="30" y="775" width="940" height="120" rx="12" fill="none" stroke="#34d399" stroke-width="1.5" stroke-dasharray="8,4"/>
+  <text x="42" y="793" fill="#34d399" font-size="10" font-weight="600">Final 12-Month Results (Primary Subgroup Analysis)</text>
+
+  <!-- Technical Success -->
+  <rect x="55" y="805" width="200" height="70" rx="6" fill="#0f172a"/>
+  <rect x="55" y="805" width="200" height="70" rx="6" fill="rgba(59,130,246,0.3)" stroke="#60a5fa" stroke-width="1.5"/>
+  <text x="155" y="830" fill="white" font-size="20" font-weight="700" text-anchor="middle">100%</text>
+  <text x="155" y="855" fill="#94a3b8" font-size="9" text-anchor="middle">Technical Success</text>
+  <text x="155" y="868" fill="#64748b" font-size="8" text-anchor="middle">13/13 devices deployed as intended</text>
+
+  <!-- Complete Occlusion -->
+  <rect x="285" y="805" width="200" height="70" rx="6" fill="#0f172a"/>
+  <rect x="285" y="805" width="200" height="70" rx="6" fill="rgba(6,78,59,0.4)" stroke="#34d399" stroke-width="1.5"/>
+  <text x="385" y="830" fill="white" font-size="20" font-weight="700" text-anchor="middle">84.6%</text>
+  <text x="385" y="855" fill="#94a3b8" font-size="9" text-anchor="middle">Complete Occlusion</text>
+  <text x="385" y="868" fill="#64748b" font-size="8" text-anchor="middle">11/13 patients @ 12 months</text>
+
+  <!-- Adequate Occlusion -->
+  <rect x="515" y="805" width="200" height="70" rx="6" fill="#0f172a"/>
+  <rect x="515" y="805" width="200" height="70" rx="6" fill="rgba(76,29,149,0.4)" stroke="#a78bfa" stroke-width="1.5"/>
+  <text x="615" y="830" fill="white" font-size="20" font-weight="700" text-anchor="middle">92.3%</text>
+  <text x="615" y="855" fill="#94a3b8" font-size="9" text-anchor="middle">Adequate Occlusion</text>
+  <text x="615" y="868" fill="#64748b" font-size="8" text-anchor="middle">12/13 patients @ 12 months</text>
+
+  <!-- Safety -->
+  <rect x="745" y="805" width="200" height="70" rx="6" fill="#0f172a"/>
+  <rect x="745" y="805" width="200" height="70" rx="6" fill="rgba(136,19,55,0.4)" stroke="#fb7185" stroke-width="1.5"/>
+  <text x="845" y="830" fill="white" font-size="20" font-weight="700" text-anchor="middle">0%</text>
+  <text x="845" y="855" fill="#94a3b8" font-size="9" text-anchor="middle">Safety Events</text>
+  <text x="845" y="868" fill="#64748b" font-size="8" text-anchor="middle">No major stroke, SAH, or death</text>
+
+  <!-- Legend -->
+  <text x="30" y="915" fill="#64748b" font-size="8">RROC = Raymond-Roy Occlusion Classification | WOS = Woven EndoBridge Occlusion Scale | IFD = Intrasaccular Flow Disrupter</text>
+</svg>
