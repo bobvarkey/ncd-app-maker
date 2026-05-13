@@ -503,3 +503,118 @@ Top Movers:
   Gainers: DRREDDY.BSE:+3.1%, CIPLA.BSE:+2.4%, SUNPHARMA.BSE:+1.6%
   Losers: ONGC.BSE:-3.1%, RELIANCE.BSE:-1.8%, NTPC.BSE:-1.0%
 =======================================================
+Starting Enhanced Market Scan...
+Fetching 10 quotes...
+  ⚠️ SBIN: Failed
+  ⚠️ BHARTIARTL: Failed
+  ⚠️ LT: Failed
+  ⚠️ KOTAKBANK: Failed
+  ⚠️ HINDUNILVR: Failed
+  ⚠️ RELIANCE: Failed
+  ⚠️ TCS: Failed
+  ⚠️ HDFCBANK: Failed
+  ⚠️ INFY: Failed
+  ⚠️ ICICIBANK: Failed
+No data - retry with new stocks
+Fetching 10 quotes...
+  ⚠️ PIDILITIND: Failed
+  ⚠️ TITAN: Failed
+  ⚠️ TORNTPHARM: Failed
+  ⚠️ MFSL: Failed
+  ⚠️ ADANIPOWER: Failed
+  ⚠️ CONCOR: Failed
+  ⚠️ AARTIIND: Failed
+  ⚠️ DEEPAKNTR: Failed
+  ⚠️ GODREJCP: Failed
+  ⚠️ MARUTI: Failed
+Still no data. API may be rate-limited.
+Starting Enhanced Market Scan...
+Fetching 10 quotes...
+  ✅ BAJAJ-AUTO: ₹10710.85 (+0.98%)
+  ✅ HEROMOTOCO: ₹5321.50 (-0.38%)
+  ✅ EICHERMOT: ₹7300.10 (-0.40%)
+  ✅ ONGC: ₹279.25 (-1.66%)
+  ✅ COALINDIA: ₹456.35 (-2.15%)
+  ✅ PIDILITIND: ₹1476.15 (+1.72%)
+  ✅ TITAN: ₹4513.40 (+4.76%)
+  ✅ TORNTPHARM: ₹4380.35 (+0.49%)
+  ✅ MFSL: ₹1698.40 (-0.43%)
+  ✅ ADANIPOWER: ₹225.15 (-2.17%)
+
+=======================================================
+MARKET SCAN - 2026-05-11 08:00
+=======================================================
+Sensitivity: high | Macro: neutral
+Thresholds: Drop <-1.0%, Rally >1.0%
+Scanned: 10 stocks | Opportunities: 8
+
+WATCH (30-50):
+  ADANIPOWER.BSE ₹225.15 (-2.17%) | 35
+
+Top Movers:
+  Gainers: TITAN.BSE:+4.8%, PIDILITIND.BSE:+1.7%, BAJAJ-AUTO.BSE:+1.0%
+  Losers: ADANIPOWER.BSE:-2.2%, COALINDIA.BSE:-2.2%, ONGC.BSE:-1.7%
+=======================================================
+Starting Enhanced Market Scan...
+Fetching 10 quotes...
+  ✅ APOLLOHOSP: ₹8080.95 (-0.17%)
+  ✅ RELIANCE: ₹1388.15 (-3.31%)
+  ✅ TCS: ₹2392.45 (-0.10%)
+  ✅ HDFCBANK: ₹764.55 (-2.13%)
+  ⚠️ INFY: Failed
+  ✅ PIDILITIND: ₹1436.40 (-2.69%)
+  ✅ TITAN: ₹4205.35 (-6.83%)
+  ✅ TORNTPHARM: ₹4519.25 (+3.17%)
+  ⚠️ MFSL: Failed
+  ✅ ADANIPOWER: ₹222.10 (-1.35%)
+
+=======================================================
+MARKET SCAN - 2026-05-12 08:00
+=======================================================
+Sensitivity: high | Macro: neutral
+Thresholds: Drop <-1.0%, Rally >1.0%
+Scanned: 8 stocks | Opportunities: 6
+
+WATCH (30-50):
+  RELIANCE.BSE ₹1388.15 (-3.31%) | 45
+  PIDILITIND.BSE ₹1436.40 (-2.69%) | 45
+  TITAN.BSE ₹4205.35 (-6.83%) | 45
+  HDFCBANK.BSE ₹764.55 (-2.13%) | 40
+
+Top Movers:
+  Gainers: TORNTPHARM.BSE:+3.2%, TCS.BSE:+-0.1%, APOLLOHOSP.BSE:+-0.2%
+  Losers: TITAN.BSE:-6.8%, RELIANCE.BSE:-3.3%, PIDILITIND.BSE:-2.7%
+=======================================================
+Starting Enhanced Market Scan...
+Fetching 10 quotes...
+  ✅ HINDUNILVR: ₹2266.70 (-1.76%)
+  ✅ COLPAL: ₹2127.70 (-0.44%)
+  ✅ MARUTI: ₹13172.25 (-2.30%)
+  ✅ BAJAJ-AUTO: ₹10383.35 (-1.99%)
+  ✅ HEROMOTOCO: ₹5084.35 (-2.80%)
+  ✅ PIDILITIND: ₹1453.00 (+1.16%)
+  ✅ TITAN: ₹4054.05 (-3.60%)
+  ✅ TORNTPHARM: ₹4380.05 (-3.08%)
+  ✅ MFSL: ₹1653.05 (-2.46%)
+  ✅ ADANIPOWER: ₹209.60 (-5.63%)
+
+=======================================================
+MARKET SCAN - 2026-05-13 08:00
+=======================================================
+Sensitivity: high | Macro: neutral
+Thresholds: Drop <-1.0%, Rally >1.0%
+Scanned: 10 stocks | Opportunities: 9
+
+BUY (50-75):
+  ADANIPOWER.BSE ₹209.60 (-5.63%) | 60
+WATCH (30-50):
+  HEROMOTOCO.BSE ₹5084.35 (-2.80%) | 45
+  TITAN.BSE ₹4054.05 (-3.60%) | 45
+  TORNTPHARM.BSE ₹4380.05 (-3.08%) | 45
+  HINDUNILVR.BSE ₹2266.70 (-1.76%) | 35
+  MARUTI.BSE ₹13172.25 (-2.30%) | 35
+
+Top Movers:
+  Gainers: PIDILITIND.BSE:+1.2%, COLPAL.BSE:+-0.4%, HINDUNILVR.BSE:+-1.8%
+  Losers: ADANIPOWER.BSE:-5.6%, TITAN.BSE:-3.6%, TORNTPHARM.BSE:-3.1%
+=======================================================

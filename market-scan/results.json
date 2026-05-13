@@ -1,176 +1,191 @@
 {
-  "scan_date": "2026-05-07T08:00:18.681739",
+  "scan_date": "2026-05-13T08:00:17.846963",
   "stocks_scanned": 10,
   "opportunities": [
     {
-      "ticker": "HEROMOTOCO.BSE",
-      "name": "HEROMOTOCO",
-      "price": 5169.7,
-      "change": 1.1109,
-      "signals": [
-        {
-          "type": "price_rally",
-          "value": 1.1109,
-          "reason": "Rally: +1.1%"
-        },
-        {
-          "type": "volatility",
-          "value": 6.328050410540379,
-          "reason": "Range: 6.3%"
-        }
-      ],
-      "prediction_score": 25,
-      "recommendation": "NEUTRAL"
-    },
-    {
-      "ticker": "EICHERMOT.BSE",
-      "name": "EICHERMOT",
-      "price": 7311.35,
-      "change": 0.209,
-      "signals": [
-        {
-          "type": "volatility",
-          "value": 3.0635756130191925,
-          "reason": "Range: 3.1%"
-        }
-      ],
-      "prediction_score": 10,
-      "recommendation": "NEUTRAL"
-    },
-    {
-      "ticker": "ONGC.BSE",
-      "name": "ONGC",
-      "price": 280.7,
-      "change": -3.1401,
+      "ticker": "HINDUNILVR.BSE",
+      "name": "HINDUNILVR",
+      "price": 2266.7,
+      "change": -1.7596,
       "signals": [
         {
           "type": "price_drop",
-          "value": -3.1401,
-          "reason": "Drop: -3.1%"
+          "value": -1.7596,
+          "reason": "Drop: -1.8%"
         },
         {
           "type": "volatility",
-          "value": 4.120689655172409,
-          "reason": "Range: 4.1%"
+          "value": 2.168859649122819,
+          "reason": "Range: 2.2%"
+        }
+      ],
+      "prediction_score": 35,
+      "recommendation": "WATCH"
+    },
+    {
+      "ticker": "MARUTI.BSE",
+      "name": "MARUTI",
+      "price": 13172.25,
+      "change": -2.2997,
+      "signals": [
+        {
+          "type": "price_drop",
+          "value": -2.2997,
+          "reason": "Drop: -2.3%"
+        },
+        {
+          "type": "volatility",
+          "value": 2.289882651443073,
+          "reason": "Range: 2.3%"
+        }
+      ],
+      "prediction_score": 35,
+      "recommendation": "WATCH"
+    },
+    {
+      "ticker": "BAJAJ-AUTO.BSE",
+      "name": "BAJAJ-AUTO",
+      "price": 10383.3496,
+      "change": -1.9939,
+      "signals": [
+        {
+          "type": "price_drop",
+          "value": -1.9939,
+          "reason": "Drop: -2.0%"
+        },
+        {
+          "type": "volatility",
+          "value": 3.096119318181812,
+          "reason": "Range: 3.1%"
+        }
+      ],
+      "prediction_score": 35,
+      "recommendation": "WATCH"
+    },
+    {
+      "ticker": "HEROMOTOCO.BSE",
+      "name": "HEROMOTOCO",
+      "price": 5084.35,
+      "change": -2.8044,
+      "signals": [
+        {
+          "type": "price_drop",
+          "value": -2.8044,
+          "reason": "Drop: -2.8%"
+        },
+        {
+          "type": "volatility",
+          "value": 3.77546141340728,
+          "reason": "Range: 3.8%"
         }
       ],
       "prediction_score": 45,
       "recommendation": "WATCH"
     },
     {
-      "ticker": "COALINDIA.BSE",
-      "name": "COALINDIA",
-      "price": 469.75,
-      "change": -0.5715,
+      "ticker": "PIDILITIND.BSE",
+      "name": "PIDILITIND",
+      "price": 1453.0,
+      "change": 1.1557,
       "signals": [
         {
+          "type": "price_rally",
+          "value": 1.1557,
+          "reason": "Rally: +1.2%"
+        },
+        {
           "type": "volatility",
-          "value": 2.0042194092827006,
-          "reason": "Range: 2.0%"
+          "value": 3.8367716754948553,
+          "reason": "Range: 3.8%"
         }
       ],
-      "prediction_score": 10,
+      "prediction_score": 25,
       "recommendation": "NEUTRAL"
     },
     {
-      "ticker": "NTPC.BSE",
-      "name": "NTPC",
-      "price": 394.7,
-      "change": -1.0033,
+      "ticker": "TITAN.BSE",
+      "name": "TITAN",
+      "price": 4054.05,
+      "change": -3.5978,
       "signals": [
         {
           "type": "price_drop",
-          "value": -1.0033,
-          "reason": "Drop: -1.0%"
+          "value": -3.5978,
+          "reason": "Drop: -3.6%"
         },
         {
           "type": "volatility",
-          "value": 2.833145292716563,
-          "reason": "Range: 2.8%"
+          "value": 3.9147736099327273,
+          "reason": "Range: 3.9%"
         }
       ],
-      "prediction_score": 25,
-      "recommendation": "NEUTRAL"
+      "prediction_score": 45,
+      "recommendation": "WATCH"
     },
     {
-      "ticker": "SUNPHARMA.BSE",
-      "name": "SUNPHARMA",
-      "price": 1850.4,
-      "change": 1.6284,
-      "signals": [
-        {
-          "type": "price_rally",
-          "value": 1.6284,
-          "reason": "Rally: +1.6%"
-        },
-        {
-          "type": "volatility",
-          "value": 2.10343234502813,
-          "reason": "Range: 2.1%"
-        }
-      ],
-      "prediction_score": 25,
-      "recommendation": "NEUTRAL"
-    },
-    {
-      "ticker": "DRREDDY.BSE",
-      "name": "DRREDDY",
-      "price": 1310.5,
-      "change": 3.1118,
-      "signals": [
-        {
-          "type": "price_rally",
-          "value": 3.1118,
-          "reason": "Rally: +3.1%"
-        },
-        {
-          "type": "volatility",
-          "value": 3.967670830271855,
-          "reason": "Range: 4.0%"
-        }
-      ],
-      "prediction_score": 25,
-      "recommendation": "NEUTRAL"
-    },
-    {
-      "ticker": "CIPLA.BSE",
-      "name": "CIPLA",
-      "price": 1365.25,
-      "change": 2.3771,
-      "signals": [
-        {
-          "type": "price_rally",
-          "value": 2.3771,
-          "reason": "Rally: +2.4%"
-        },
-        {
-          "type": "volatility",
-          "value": 2.8379387602688575,
-          "reason": "Range: 2.8%"
-        }
-      ],
-      "prediction_score": 25,
-      "recommendation": "NEUTRAL"
-    },
-    {
-      "ticker": "RELIANCE.BSE",
-      "name": "RELIANCE",
-      "price": 1437.85,
-      "change": -1.7963,
+      "ticker": "TORNTPHARM.BSE",
+      "name": "TORNTPHARM",
+      "price": 4380.05,
+      "change": -3.0802,
       "signals": [
         {
           "type": "price_drop",
-          "value": -1.7963,
-          "reason": "Drop: -1.8%"
+          "value": -3.0802,
+          "reason": "Drop: -3.1%"
         },
         {
           "type": "volatility",
-          "value": 3.1429156429156397,
-          "reason": "Range: 3.1%"
+          "value": 3.41645113513275,
+          "reason": "Range: 3.4%"
+        }
+      ],
+      "prediction_score": 45,
+      "recommendation": "WATCH"
+    },
+    {
+      "ticker": "MFSL.BSE",
+      "name": "MFSL",
+      "price": 1653.05,
+      "change": -2.4634,
+      "signals": [
+        {
+          "type": "price_drop",
+          "value": -2.4634,
+          "reason": "Drop: -2.5%"
+        },
+        {
+          "type": "volatility",
+          "value": 2.985381922997735,
+          "reason": "Range: 3.0%"
         }
       ],
       "prediction_score": 35,
       "recommendation": "WATCH"
+    },
+    {
+      "ticker": "ADANIPOWER.BSE",
+      "name": "ADANIPOWER",
+      "price": 209.6,
+      "change": -5.6281,
+      "signals": [
+        {
+          "type": "price_drop",
+          "value": -5.6281,
+          "reason": "Drop: -5.6%"
+        },
+        {
+          "type": "high_volume",
+          "value": 5.184608,
+          "reason": "Vol: 5.2M"
+        },
+        {
+          "type": "volatility",
+          "value": 7.4724285392752625,
+          "reason": "Range: 7.5%"
+        }
+      ],
+      "prediction_score": 60,
+      "recommendation": "BUY"
     }
   ],
   "config": {

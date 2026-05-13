@@ -1,63 +1,69 @@
-# KANBAN — Boby's Goals
-
-_Last updated: 2026-05-07 (8:55 AM IST)_
-
----
+# KANBAN — 2026-05-13
 
 ## 🎯 Goals
-
-| Goal | Target | Current | Status |
-|------|--------|---------|--------|
-| YouTube | 100k | ~? | 🔴 |
-| X (Twitter) | 150k | ~? | 🔴 |
-| SaaS | Launch by Q3 2026 | BrainStack validation | 🟡 |
-| AI+Neuro Community | Build & grow | Early stage | 🟡 |
-| Books | 2/month | ? | 🟡 |
-| French | Learn | Beginner | 🟡 |
-
----
-
-## 📋 To Do
-
-- [ ] **Post X thread** — copy-paste from `X_THREAD_DRAFT_20260507.md` to Twitter
-- [ ] **YouTube Short** — shoot one this week, use `YOUTUBE_SCRIPT_20260507.md` hook
-- [ ] **BrainStack landing page** — Carrd/Notion, validate before building
-- [ ] **Community posting** — 3x/week on LinkedIn/X
-- [ ] **Read 30 min** — update what you're currently reading
-- [ ] **French: 15 min session** — use `FRENCH_DAILY_PLAN.md` (today's vocabulary + grammar ready)
-
----
-
-## 🔄 In Progress
-
-- [ ] **BrainStack SaaS** — validate via low-fidelity landing page
+- YouTube 100k | X 150k | SaaS Q3 | AI+Neuro Community | 2 books/month | French
 
 ---
 
 ## ✅ Done
 
-- [x] **X Thread (2026-05-07)** — "Why Your Brain Stays Plastic Forever" — 8-tweet thread on neuroplasticity, critical periods, sleep science. File: `X_THREAD_DRAFT_20260507.md`
-- [x] **YouTube Script (2026-05-07)** — "Why Your Brain Wants You to Sleep" — 3:15 script on glymphatic system + 4 sleep pillars. File: `YOUTUBE_SCRIPT_20260507.md`
-- [x] **Community & SaaS Research (2026-05-07)** — 3 SaaS ideas, YouTube growth tactics, book recs. File: `AI_NEURO_COMMUNITY_SAAS_STRATEGY.md`
-- [x] **French Daily Plan (2026-05-07)** — 15-min routine, 10 vocab words, grammar rule, resources. File: `FRENCH_DAILY_PLAN.md`
-- [x] **KANBAN.md** — Goals tracking system created
+### Content
+- [X] Neuralink VOICE X thread — written, ready to post ✍️
+- [X] X thread: "Brain Learns Like Neural Network" — written, ready to post
+- [X] YouTube Short script: MMA Embolization JAMA 2026
+- [X] YouTube Short script: BCI Breakthroughs 2026
+- [X] **YouTube Full Script: "2026: The Year BCI Stopped Being Science Fiction"** (10-12 min, 350 lines) ✅ *NEW*
+- [X] French practice session — 5 sentences, 5 flashcards, reading passage (150 lines) ✅ *NEW*
+
+### SaaS: FocusFlow
+- [X] **MVP Backend — FastAPI + SQLite + JWT Auth + Task CRUD** ✅ *NEW*
+- [X] Files: main.py, database.py, models.py, schemas.py, auth.py, routes_tasks.py, deps.py
+
+### Research
+- [X] Fresh neuro research scan (May 12) — 8 major discoveries
 
 ---
 
-## 📝 Notes
+## 🚧 In Progress
 
-- **BrainStack priority:** Landing page first → affiliate + featured listings model. Low-cost, no-code validation.
-- **X Thread posting:** Best times: 8-10 AM or 6-8 PM. Hook in Tweet 1 is key.
-- **YouTube Shorts:** The glymphatic system hook is strong for a 30-60s short. Filming this week?
-- **Books:** Need to know what you're currently reading to track progress.
-- **French:** Today's 15-min session is ready. Vocabulary + grammar rule in the doc.
+### X Growth
+- [ ] Post Neuralink VOICE thread → browser needs first-time X login
+- [ ] Post Brain/MIT thread
+- [ ] X bookmarks sync (6AM, 8AM cron)
 
-## Files Created Today
+### YouTube
+- [ ] Record Short: MMA JAMA 2026
+- [ ] Record Short: BCI Breakthroughs
+- [ ] Record Full Video: BCI 2026 Deep Dive
 
-| File | Purpose |
-|------|---------|
-| `X_THREAD_DRAFT_20260507.md` | 8-tweet X thread — ready to post |
-| `YOUTUBE_SCRIPT_20260507.md` | 3:15 YouTube script on sleep + brain |
-| `AI_NEURO_COMMUNITY_SAAS_STRATEGY.md` | Full strategy + SaaS ideas |
-| `FRENCH_DAILY_PLAN.md` | French 15-min daily plan + today's vocab |
-| `KANBAN.md` | This file — living goals tracker |
+### SaaS
+- [ ] Run `uvicorn app.main:app --reload` and test FocusFlow API
+- [ ] Build frontend (React/Vite) for FocusFlow
+
+### French
+- [ ] Complete FRENCH_PRACTICE_20260513.md session (15-20 min)
+
+---
+
+## 📋 To Do
+
+### Next Content
+- [ ] Thread: NeuroSTORM foundation model deep dive
+- [ ] Thread: GenT drug discovery
+- [ ] Video: "5 Neuroscience Principles Every AI User Should Know"
+
+### SaaS: FocusFlow
+- [ ] Add email verification
+- [ ] Add task sharing/collaboration
+- [ ] Deploy MVP (Render/Railway)
+
+### Community
+- [ ] Post to r/neurology on Reddit
+- [ ] Cross-post threads to LinkedIn
+
+### Reading
+- [ ] Book 1 for May (due in 2 weeks)
+- [ ] Book 2 for May
+
+### Maintenance
+- [ ] Weekly journal scan (JNIS, INR, AJNR, Muscle & Nerve, Sleep)

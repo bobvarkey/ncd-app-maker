@@ -1,0 +1,358 @@
+---
+topic: daily
+date: 2026-05-08
+tags: []
+---
+
+# X Scrape Result
+
+{
+  "date": "2026-05-07",
+  "query1_label": "neurointervention/thrombectomy/stroke",
+  "query2_label": "cerebral AVM/aneurysm/endovascular",
+  "query1_count": 12,
+  "query2_count": 13,
+  "new_saved": 0,
+  "total_in_db": 133,
+  "high_engagement_count": 9,
+  "high_engagement": [
+    {
+      "author": "Neurophilia",
+      "handle": "@bobvarkey",
+      "date": "Apr 28",
+      "likes": 3400,
+      "retweets": 25,
+      "text_preview": "Is 10 am the best time for a mechanical thrombectomy?\nEveryone is alert, relaxed and you can think of more options\nAn acute stroke ~2 hr since onset a"
+    },
+    {
+      "author": "Neurophilia",
+      "handle": "@bobvarkey",
+      "date": "Mar 4",
+      "likes": 2800,
+      "retweets": 54,
+      "text_preview": "Extended thrombectomy window: What the 2025-2026 trials tell us\nThe DAWN and DEFENSE trials changed everything. But new 2025 data pushes the envelope "
+    },
+    {
+      "author": "Neurochecklists",
+      "handle": "@neurochecklists",
+      "date": "Mar 6, 2023",
+      "likes": 2600,
+      "retweets": 27,
+      "text_preview": "Q15: Do statins reduce the risk of intracranial aneurysm rupture?\nA: Statin significantly reduce the risk of cerebral aneurysm rupture\nhttps://\nbit.ly"
+    },
+    {
+      "author": "CVIR Endovascular",
+      "handle": "@cvirendo",
+      "date": "Apr 30",
+      "likes": 1100,
+      "retweets": 16,
+      "text_preview": "Management of spontaneous abdominal wall hematomas: a narrative review with a focus on CTA-negative #endovascular cases\nhttps://\nlink.springer.com/art"
+    },
+    {
+      "author": "Robbie Aru, M.D.",
+      "handle": "@AruRobbie",
+      "date": "May 5",
+      "likes": 791,
+      "retweets": 13,
+      "text_preview": "Great talk by Dr Amna Ali on our management of a 7cm ascending aortic graft side branch pseudoaneurysm with zone 0 TEVAR under rapid ventricular pacin"
+    },
+    {
+      "author": "European Stroke Org",
+      "handle": "@ESOstroke",
+      "date": "14h",
+      "likes": 499,
+      "retweets": 7,
+      "text_preview": "Selective intra-arterial cooling indicates potential safety benefits but no sufficient functional improvement in stroke patients treated with endovasc"
+    },
+    {
+      "author": "Endovascular Today",
+      "handle": "@EVToday",
+      "date": "4h",
+      "likes": 380,
+      "retweets": 3,
+      "text_preview": "QoL Analysis Reported From PROMISE III Trial of Transcatheter Arterialization of the Deep Veins for CLTI\nQoL Analysis Reported From PROMISE III Trial "
+    },
+    {
+      "author": "KevinNeuroICU",
+      "handle": "@KMeierNSICU",
+      "date": "12h",
+      "likes": 109,
+      "retweets": 3,
+      "text_preview": "Day 31 of NeuroBedside Daily Rounds.\nBP-TARGET (2021): does intensive BP lowering after successful EVT reduce hemorrhage?\nINTERACT pilot (2008): does "
+    },
+    {
+      "author": "Neurología HUVR",
+      "handle": "@neuroHUVR",
+      "date": "8h",
+      "likes": 103,
+      "retweets": 2,
+      "text_preview": "Below, we leave you with some of the works presented by the residents and associates of our service at the 12th European Stroke Organization Conferenc"
+    }
+  ],
+  "posts": [
+    {
+      "author": "Whitfield Lewis, MD",
+      "handle": "@whitfieldlewis6",
+      "date": "11h",
+      "text": "Stroke Education\nThere are two main types of stroke:\nIschemic strokes\nHemorrhagic strokes\nAbout 85% of strokes are ischemic. Many are caused by occlusion of a large artery in the brain (LVO). The most common large artery involved is the middle cerebral artery (MCA).\nThese",
+      "likes": 17,
+      "retweets": 1,
+      "replies": 3,
+      "views": "1100",
+      "query": "neurointervention/thrombectomy/stroke"
+    },
+    {
+      "author": "Whitfield Lewis, MD",
+      "handle": "@whitfieldlewis6",
+      "date": "13h",
+      "text": "Happy to share my recent publication in the American Heart Association / SVIN journal!\nIn this study, we developed a predictive model to identify patients transferred under the Direct to Angio Suite (DTA) protocol who are most likely to need endovascular thrombectomy (EVT).\nShow more\nQuote\nWhitfield Lewis, MD",
+      "likes": 0,
+      "retweets": 0,
+      "replies": 0,
+      "views": "",
+      "query": "neurointervention/thrombectomy/stroke"
+    },
+    {
+      "author": "Dr. Fethi Benraouane MD, MBA",
+      "handle": "@DrBenCardio",
+      "date": "6h",
+      "text": "63 y/o M admitted for NSTEMI that progressed overnight to STEMI w/ bradycardia. Pt underwent PCI x 3 to the RCA with 99% stenosis. I performed aspiration thrombectomy with Penumbra and then delivered drug-eluting stent to the vessel. #medicine #fyp #pci #lhc",
+      "likes": 0,
+      "retweets": 19,
+      "replies": 1,
+      "views": "",
+      "query": "neurointervention/thrombectomy/stroke"
+    },
+    {
+      "author": "Neurología HUVR",
+      "handle": "@neuroHUVR",
+      "date": "8h",
+      "text": "Below, we leave you with some of the works presented by the residents and associates of our service at the 12th European Stroke Organization Conference in Maastricht (2/2) #12thESOC #stroke #vascularneurology",
+      "likes": 103,
+      "retweets": 2,
+      "replies": 2,
+      "views": "",
+      "query": "neurointervention/thrombectomy/stroke"
+    },
+    {
+      "author": "Neurophilia",
+      "handle": "@bobvarkey",
+      "date": "Mar 4",
+      "text": "Extended thrombectomy window: What the 2025-2026 trials tell us\nThe DAWN and DEFENSE trials changed everything. But new 2025 data pushes the envelope further.\nHere's what matters for your practice\n1/ Wake-up stroke & late presentation now have evidence for thrombectomy",
+      "likes": 2800,
+      "retweets": 54,
+      "replies": 12,
+      "views": "",
+      "query": "neurointervention/thrombectomy/stroke"
+    },
+    {
+      "author": "KevinNeuroICU",
+      "handle": "@KMeierNSICU",
+      "date": "12h",
+      "text": "Day 31 of NeuroBedside Daily Rounds.\nBP-TARGET (2021): does intensive BP lowering after successful EVT reduce hemorrhage?\nINTERACT pilot (2008): does early BP lowering after ICH limit hematoma growth?\nRESCUE-Japan LIMIT (2022): does EVT help in stroke with a large ischemic core",
+      "likes": 109,
+      "retweets": 3,
+      "replies": 1,
+      "views": "",
+      "query": "neurointervention/thrombectomy/stroke"
+    },
+    {
+      "author": "Nerfaphytum",
+      "handle": "@Nerfaphytum",
+      "date": "16m",
+      "text": "Replying to",
+      "likes": 0,
+      "retweets": 0,
+      "replies": 0,
+      "views": "",
+      "query": "neurointervention/thrombectomy/stroke"
+    },
+    {
+      "author": "Replying to",
+      "handle": "@44Yoshino",
+      "date": "10年くらい前の話だけど、僕の症状だと手術のリスクを考えるとその時の先生はやらない！と言われた。背骨の神経のすぐそばの骨を削る手術だからリスクが高いらしい",
+      "text": "Neurophilia",
+      "likes": 0,
+      "retweets": 0,
+      "replies": 0,
+      "views": "",
+      "query": "neurointervention/thrombectomy/stroke"
+    },
+    {
+      "author": "Neurophilia",
+      "handle": "@bobvarkey",
+      "date": "Apr 28",
+      "text": "Is 10 am the best time for a mechanical thrombectomy?\nEveryone is alert, relaxed and you can think of more options\nAn acute stroke ~2 hr since onset admitted for acute pancreatitis. In hospital stroke, picked up fast and taken to the lab\nThe left ICA was totally occluded\nAfter",
+      "likes": 3400,
+      "retweets": 25,
+      "replies": 1,
+      "views": "",
+      "query": "neurointervention/thrombectomy/stroke"
+    },
+    {
+      "author": "Neurophilia",
+      "handle": "@bobvarkey",
+      "date": "Mar 22",
+      "text": "7/ Not for everyone — acute SDH with midline shift still needs surgery. But MMA embolization is a powerful tool in our arsenal. #Neurosurgery #Neurointervention #SDH",
+      "likes": 0,
+      "retweets": 1100,
+      "replies": 6,
+      "views": "",
+      "query": "neurointervention/thrombectomy/stroke"
+    },
+    {
+      "author": "sheila martins",
+      "handle": "@sheilambrasil",
+      "date": "Follow",
+      "text": "Alex Muccilli",
+      "likes": 0,
+      "retweets": 0,
+      "replies": 0,
+      "views": "",
+      "query": "neurointervention/thrombectomy/stroke"
+    },
+    {
+      "author": "Robbie Aru, M.D.",
+      "handle": "@AruRobbie",
+      "date": "May 5",
+      "text": "Great talk by Dr Amna Ali on our management of a 7cm ascending aortic graft side branch pseudoaneurysm with zone 0 TEVAR under rapid ventricular pacing. Discharged on POD 4 without complications, and doing well 6 months later with sac regression and no endoleak. #AortaEd\nDelaware Valley Vascular Society and 3 others",
+      "likes": 791,
+      "retweets": 13,
+      "replies": 1,
+      "views": "",
+      "query": "cerebral AVM/aneurysm/endovascular"
+    },
+    {
+      "author": "GEDERM",
+      "handle": "@gederm",
+      "date": "2m",
+      "text": "Replying to",
+      "likes": 0,
+      "retweets": 0,
+      "replies": 0,
+      "views": "",
+      "query": "cerebral AVM/aneurysm/endovascular"
+    },
+    {
+      "author": "FIBMED",
+      "handle": "@fibmed",
+      "date": "16h",
+      "text": "Endovascular treatment for medium or distal vessel occlusion stroke (DISTAL): 12-month outcomes of a multicentre, open-label, randomised trial - The Lancet Neurology\nthelancet.com\nEndovascular treatment for medium or distal vessel occlusion stroke (DISTAL): 12-month outcomes of...\nIn patients with a medium or distal vessel occlusion stroke, endovascular treatment plus best medical treatment was not associated with a reduction of disability or death at 12 months compared with...",
+      "likes": 18,
+      "retweets": 1,
+      "replies": 1,
+      "views": "",
+      "query": "cerebral AVM/aneurysm/endovascular"
+    },
+    {
+      "author": "Mrs. E.",
+      "handle": "@EmeDeMaia",
+      "date": "10h",
+      "text": "Replying to",
+      "likes": 0,
+      "retweets": 0,
+      "replies": 0,
+      "views": "",
+      "query": "cerebral AVM/aneurysm/endovascular"
+    },
+    {
+      "author": "Endovascular Today",
+      "handle": "@EVToday",
+      "date": "4h",
+      "text": "QoL Analysis Reported From PROMISE III Trial of Transcatheter Arterialization of the Deep Veins for CLTI\nQoL Analysis Reported From PROMISE III Trial of Transcatheter Arterialization of the Deep Veins for...\nFrom evtoday.com",
+      "likes": 380,
+      "retweets": 3,
+      "replies": 1,
+      "views": "",
+      "query": "cerebral AVM/aneurysm/endovascular"
+    },
+    {
+      "author": "PAIRS",
+      "handle": "@pairsmedia",
+      "date": "May 5",
+      "text": "The 6th edition of SLICE Next Frontiers\nQualitative, fun, and innovative digital event dedicated to endovascular treatment of cerebral hemorrhage pathologies.\nJuly 6-7, 2026\nIt is a 100% free online event focuses on the education of the INR community\nRegister now\nQuote\nSLICE - Worldwide / Next Frontiers / Workshops",
+      "likes": 0,
+      "retweets": 0,
+      "replies": 0,
+      "views": "",
+      "query": "cerebral AVM/aneurysm/endovascular"
+    },
+    {
+      "author": "Medicina Interna HCSBA",
+      "handle": "@MHcsba",
+      "date": "32s",
+      "text": "New England Journal of Medicine (NEJM) 2026: Angiopatia cerebral amiloide\nDOI:10.1056/NEJMra2411298\nhttp://\nmedicina-interna.org\n#MedEd #MedTwitter #MedX\nJAMA",
+      "likes": 0,
+      "retweets": 0,
+      "replies": 0,
+      "views": "",
+      "query": "cerebral AVM/aneurysm/endovascular"
+    },
+    {
+      "author": "CVIR Endovascular",
+      "handle": "@cvirendo",
+      "date": "Apr 30",
+      "text": "Management of spontaneous abdominal wall hematomas: a narrative review with a focus on CTA-negative #endovascular cases\nhttps://\nlink.springer.com/article/10.118\n6/s42155-025-00647-7\n…\n#openaccess #interventionalradiology",
+      "likes": 1100,
+      "retweets": 16,
+      "replies": 5,
+      "views": "",
+      "query": "cerebral AVM/aneurysm/endovascular"
+    },
+    {
+      "author": "International Journal of Stroke",
+      "handle": "@IntJStroke",
+      "date": "May 1",
+      "text": "#FlashbackFriday !\nNew study finds high prevalence (8.3%) of cervical fibromuscular dysplasia in aneurysmal subarachnoid hemorrhage patients\nNo clear differences in aneurysm severity and internal carotid artery elongation compared to those without\nhttps://\njournals.sagepub.com/doi/abs/10.117\n7/17474930251387614\n…",
+      "likes": 8,
+      "retweets": 2,
+      "replies": 1,
+      "views": "679",
+      "query": "cerebral AVM/aneurysm/endovascular"
+    },
+    {
+      "author": "Ahmed Bennis MD",
+      "handle": "@drbennisahmed",
+      "date": "May 2",
+      "text": "Intracranial aneurysms in ADPKD — don’t miss it.\nPrevalence: 12.9% — 4-5x the general population.\nSAH rupture hits at mean age 41 with devastating consequences.\nScreen if: family/personal history of ICA, SAH, unexplained sudden death, de novo ADPKD, or pre-transplant.",
+      "likes": 9,
+      "retweets": 1,
+      "replies": 1,
+      "views": "582",
+      "query": "cerebral AVM/aneurysm/endovascular"
+    },
+    {
+      "author": "Neurochecklists",
+      "handle": "@neurochecklists",
+      "date": "Mar 6, 2023",
+      "text": "Q15: Do statins reduce the risk of intracranial aneurysm rupture?\nA: Statin significantly reduce the risk of cerebral aneurysm rupture\nhttps://\nbit.ly/3xS8fEO\nChecklist:\nhttps://\nbit.ly/3xTYVQD",
+      "likes": 2600,
+      "retweets": 27,
+      "replies": 13,
+      "views": "",
+      "query": "cerebral AVM/aneurysm/endovascular"
+    },
+    {
+      "author": "drjoaquinfernandogon",
+      "handle": "@drjoaquinIR",
+      "date": "May 6",
+      "text": "45-year-old patient who was going to end up disabled or dead due to absence of cerebral irrigation from a thrombus that wouldn't let blood pass through; fortunately, he attends",
+      "likes": 0,
+      "retweets": 0,
+      "replies": 0,
+      "views": "",
+      "query": "cerebral AVM/aneurysm/endovascular"
+    },
+    {
+      "author": "European Stroke Org",
+      "handle": "@ESOstroke",
+      "date": "14h",
+      "text": "Selective intra-arterial cooling indicates potential safety benefits but no sufficient functional improvement in stroke patients treated with endovascular thrombectomy\n@ESOstroke\n#StrokeTreatment #Neuroprotection #ESOC2026",
+      "likes": 499,
+      "retweets": 7,
+      "replies": 5,
+      "views": "",
+      "query": "cerebral AVM/aneurysm/endovascular"
+    }
+  ]
+}
