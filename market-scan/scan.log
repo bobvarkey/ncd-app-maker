@@ -618,3 +618,56 @@ Top Movers:
   Gainers: PIDILITIND.BSE:+1.2%, COLPAL.BSE:+-0.4%, HINDUNILVR.BSE:+-1.8%
   Losers: ADANIPOWER.BSE:-5.6%, TITAN.BSE:-3.6%, TORNTPHARM.BSE:-3.1%
 =======================================================
+Starting Enhanced Market Scan...
+Fetching 10 quotes...
+  ✅ MARUTI: ₹13104.90 (-0.51%)
+  ✅ BAJAJ-AUTO: ₹10258.10 (-1.21%)
+  ✅ HEROMOTOCO: ₹4994.85 (-1.76%)
+  ✅ EICHERMOT: ₹6968.30 (-2.19%)
+  ✅ ONGC: ₹297.15 (+0.64%)
+  ✅ GODREJCP: ₹1031.60 (+0.10%)
+  ⚠️ INFY: Failed
+  ✅ PIDILITIND: ₹1444.80 (-0.56%)
+  ✅ TITAN: ₹4092.40 (+0.95%)
+  ⚠️ TORNTPHARM: Failed
+
+=======================================================
+MARKET SCAN - 2026-05-14 08:00
+=======================================================
+Sensitivity: high | Macro: neutral
+Thresholds: Drop <-1.0%, Rally >1.0%
+Scanned: 8 stocks | Opportunities: 7
+
+WATCH (30-50):
+  HEROMOTOCO.BSE ₹4994.85 (-1.76%) | 35
+  EICHERMOT.BSE ₹6968.30 (-2.19%) | 35
+
+Top Movers:
+  Gainers: TITAN.BSE:+0.9%, ONGC.BSE:+0.6%, GODREJCP.BSE:+0.1%
+  Losers: EICHERMOT.BSE:-2.2%, HEROMOTOCO.BSE:-1.8%, BAJAJ-AUTO.BSE:-1.2%
+=======================================================
+Starting Enhanced Market Scan...
+Fetching 10 quotes...
+  ⚠️ DRREDDY: Failed
+  ⚠️ CIPLA: Failed
+  ⚠️ APOLLOHOSP: Failed
+  ⚠️ RELIANCE: Failed
+  ⚠️ TCS: Failed
+  ⚠️ INFY: Failed
+  ⚠️ PIDILITIND: Failed
+  ⚠️ TITAN: Failed
+  ⚠️ TORNTPHARM: Failed
+  ⚠️ MFSL: Failed
+No data - retry with new stocks
+Fetching 10 quotes...
+  ⚠️ KOTAKBANK: Failed
+  ⚠️ HINDUNILVR: Failed
+  ⚠️ COLPAL: Failed
+  ⚠️ PIDILITIND: Failed
+  ⚠️ TITAN: Failed
+  ⚠️ TORNTPHARM: Failed
+  ⚠️ MFSL: Failed
+  ⚠️ ADANIPOWER: Failed
+  ⚠️ CONCOR: Failed
+  ⚠️ AARTIIND: Failed
+Still no data. API may be rate-limited.

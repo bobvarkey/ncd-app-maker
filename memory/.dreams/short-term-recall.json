@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-05-12T21:02:58.121Z",
+  "updatedAt": "2026-05-16T01:09:51.318Z",
   "entries": {
     "memory:memory/2026-03-27.md:1:22": {
       "key": "memory:memory/2026-03-27.md:1:22",
@@ -49,13 +49,13 @@
       "endLine": 32,
       "source": "memory",
       "snippet": "# Memory - March 5th, 2026 ## Bob's Current Setup ### Goals - Grow YouTube to 100k subscribers - Grow X to 150k followers - Launch SaaS by Q3 - Build community around AI + Neurology - Read 2 books/month - Learn French ### Active Systems - Reddit Monitor: Every 4 hours via cron - Content Factory: Daily at 8 AM - LobsterBoard: Running at localhost:8080 - ClawX: ~/Downloads/ClawX - Mission Control: ~/Downloads/mission-control/index.html ### Skills Added Today - opus: Smart model switching (Haiku → Sonnet → Opus for cost savings) ### Morning Workflow - Added workflow-master.sh: Runs at 4:30 AM daily - Runs Reddit Monitor + Content Factory - pubmed-search - biogpt-search - public-apis - redd",
-      "recallCount": 11,
+      "recallCount": 15,
       "dailyCount": 0,
       "groundedCount": 0,
-      "totalScore": 10.83246288287215,
+      "totalScore": 14.83246288287215,
       "maxScore": 1,
       "firstRecalledAt": "2026-04-06T21:03:24.482Z",
-      "lastRecalledAt": "2026-05-12T21:02:58.121Z",
+      "lastRecalledAt": "2026-05-15T21:00:47.291Z",
       "queryHashes": [
         "3435f2e5ee4d",
         "c5d3a7659dba",
@@ -67,7 +67,10 @@
         "01ebcd5a0303",
         "87b81f6e4276",
         "74d9e02cf92e",
-        "b49138cb4c06"
+        "b49138cb4c06",
+        "82660a4fe2e3",
+        "527b948098b9",
+        "6512e02fe3f5"
       ],
       "recallDays": [
         "2026-04-07",
@@ -75,7 +78,9 @@
         "2026-05-06",
         "2026-05-07",
         "2026-05-11",
-        "2026-05-13"
+        "2026-05-13",
+        "2026-05-15",
+        "2026-05-16"
       ],
       "conceptTags": [
         "gpt",
@@ -195,13 +200,13 @@
       "endLine": 55,
       "source": "memory",
       "snippet": "# Memory - March 4th, 2026 ## Goals (from Bob) - Grow YouTube to 100k subscribers - Grow X to 150k followers - Launch SaaS by Q3 - Build community around AI + Neurology - Read 2 books/month - Learn French ## Setup Today ### Reddit Monitor - Created: Reddit/subreddits.md (neurology, openclaw, medicine, finance) - Created: Reddit/Report/ for daily reports - Created: reddit_monitor.sh - runs every 4 hours via cron - Reports saved to Reddit/Report/YYYY-MM-DD.md ### Content Factory - Created: content-factory/ with daily_pipeline.sh - Generates: Research → Tweet Thread → Thumbnail - Runs at 8 AM daily via cron ### API Gateway - Configured MATON_API_KEY in openclaw.json ### Image Generation -",
-      "recallCount": 8,
+      "recallCount": 10,
       "dailyCount": 0,
       "groundedCount": 0,
-      "totalScore": 8,
+      "totalScore": 10,
       "maxScore": 1,
       "firstRecalledAt": "2026-05-03T02:30:36.417Z",
-      "lastRecalledAt": "2026-05-12T21:02:58.121Z",
+      "lastRecalledAt": "2026-05-15T13:30:06.114Z",
       "queryHashes": [
         "e34e8ff1cc88",
         "c5d3a7659dba",
@@ -210,14 +215,16 @@
         "cfef1eaebc9a",
         "87b81f6e4276",
         "74d9e02cf92e",
-        "b49138cb4c06"
+        "b49138cb4c06",
+        "2844f3f5f3c6"
       ],
       "recallDays": [
         "2026-05-03",
         "2026-05-04",
         "2026-05-06",
         "2026-05-11",
-        "2026-05-13"
+        "2026-05-13",
+        "2026-05-15"
       ],
       "conceptTags": [
         "gateway",
@@ -237,19 +244,21 @@
       "endLine": 62,
       "source": "memory",
       "snippet": "- Location: ~/Downloads/ClawX - Running at http://localhost:5173/ (dev mode) - Issue: Gateway token mismatch with existing OpenClaw gateway - To fix: Stop current gateway or enter auth token in ClawX settings ### Public APIs Skill - Cloned public-apis repo to ~/Downloads/public-apis/ - Created skill at ~/.openclaw/skills/public-apis/ - Usage: Ask to find APIs for any category (weather, finance, health, etc.) ### PubMed & BioGPT Search Skills - Created pubmed-search skill: ~/.openclaw/skills/pubmed-search/ - Created biogpt-search skill: ~/.openclaw/skills/biogpt-search/ - Usage: \"search pubmed stroke treatment\" or \"search biogpt Alzheimer's\"",
-      "recallCount": 2,
+      "recallCount": 3,
       "dailyCount": 0,
       "groundedCount": 0,
-      "totalScore": 2,
+      "totalScore": 3,
       "maxScore": 1,
       "firstRecalledAt": "2026-05-03T13:33:44.400Z",
-      "lastRecalledAt": "2026-05-03T13:33:47.326Z",
+      "lastRecalledAt": "2026-05-15T13:30:06.114Z",
       "queryHashes": [
         "04b108c184e2",
-        "3e21e1b011ce"
+        "3e21e1b011ce",
+        "2844f3f5f3c6"
       ],
       "recallDays": [
-        "2026-05-03"
+        "2026-05-03",
+        "2026-05-15"
       ],
       "conceptTags": [
         "gateway",
@@ -307,19 +316,21 @@
       "endLine": 63,
       "source": "memory",
       "snippet": "- **Voice set to: Professional but relaxed, neurologist tone** - No em-dashes in writing ### System Health - Guardian running (auto-repair daemon) - OpenClaw updated to latest version - Skills: 41 loaded ### Claude Code Integration - Installed at ~/.local/bin/claude (v2.1.71) - Added to OpenClaw runtimes as \"claude-code\" - Can use for coding tasks via sessions_spawn ### Gmail → Telegram Bridge - Created ~/Projects/gmail-telegram/ - Python app to forward Gmail to Telegram - Needs: Telegram bot token + Gmail OAuth credentials - Files: gmail_telegram.py, requirements.txt, README.md",
-      "recallCount": 2,
+      "recallCount": 3,
       "dailyCount": 0,
       "groundedCount": 0,
-      "totalScore": 2,
+      "totalScore": 3,
       "maxScore": 1,
       "firstRecalledAt": "2026-05-04T03:34:29.844Z",
-      "lastRecalledAt": "2026-05-11T03:32:01.447Z",
+      "lastRecalledAt": "2026-05-16T01:09:51.318Z",
       "queryHashes": [
-        "0c23a89e5ec8"
+        "0c23a89e5ec8",
+        "59bf769233f1"
       ],
       "recallDays": [
         "2026-05-04",
-        "2026-05-11"
+        "2026-05-11",
+        "2026-05-16"
       ],
       "conceptTags": [
         "em-dashes",
@@ -371,13 +382,13 @@
       "endLine": 80,
       "source": "memory",
       "snippet": "- `clinical-decision-support` — Biomarker-stratified cohort analyses, GRADE-graded treatment recommendations, LaTeX/PDF output, Kaplan-Meier/forest plot generation Both are directly relevant to neurocritical care practice. Lesson saved to `~/neuro-daily/2026-05-03-skiller-lesson.md`. ## Status - French practice: NOT done (heartbeat suppression ran during early AM; time zone issue — Bob is IST, cron triggered before 8AM local) - Book reading: NOT done - Note: next heartbeat should remind for French + book if no user interaction before evening ## GMB Poster (Cron) Generated GMB neurology poster for 2026-05-03. - **Topic:** Multiple Sclerosis - **Image:** PIL-generated medical illustration",
-      "recallCount": 5,
+      "recallCount": 6,
       "dailyCount": 0,
       "groundedCount": 0,
-      "totalScore": 5,
+      "totalScore": 6,
       "maxScore": 1,
       "firstRecalledAt": "2026-05-04T03:34:29.902Z",
-      "lastRecalledAt": "2026-05-12T21:02:58.121Z",
+      "lastRecalledAt": "2026-05-15T13:30:06.098Z",
       "queryHashes": [
         "c5d3a7659dba",
         "fbdd8e1b5665",
@@ -389,7 +400,8 @@
         "2026-05-04",
         "2026-05-06",
         "2026-05-11",
-        "2026-05-13"
+        "2026-05-13",
+        "2026-05-15"
       ],
       "conceptTags": [
         "clinical-decision-support",
@@ -409,13 +421,13 @@
       "endLine": 70,
       "source": "memory",
       "snippet": "- FLAIR absence → therapeutic window (AJNR) - Motor-predominant CIDP US + EMG profiles (M&N) - EMD imaging features (M&N) - Daytime function as insomnia outcome (Sleep Med) - Sleep + inflammation in mood disorders (Sleep Med) - Saved: `WEEKLY_JOURNAL_SCAN_20260503.md` ### KANBAN.md - Updated with all completed items - SaaS MVP scope now defined - YouTube Video 1 and Mon X thread marked done ## Files Created/Modified - `YOUTUBE_SCRIPT_20260503.md` (new) - `X_THREAD_20260503.md` (new) - `SAAS_LANDING_PAGE_20260503.md` (new) - `WEEKLY_JOURNAL_SCAN_20260503.md` (new) - `KANBAN.md` (updated) ## 08:00 — X/Twitter Bookmarks Sync - Cron job `7ad6447b-4f5e-42ab-bf0b-636d2748262b` fired s",
-      "recallCount": 7,
+      "recallCount": 8,
       "dailyCount": 0,
       "groundedCount": 0,
-      "totalScore": 7,
+      "totalScore": 8,
       "maxScore": 1,
       "firstRecalledAt": "2026-05-04T03:34:29.902Z",
-      "lastRecalledAt": "2026-05-12T21:02:58.121Z",
+      "lastRecalledAt": "2026-05-15T13:30:06.098Z",
       "queryHashes": [
         "c5d3a7659dba",
         "db9719586595",
@@ -430,7 +442,8 @@
         "2026-05-06",
         "2026-05-11",
         "2026-05-12",
-        "2026-05-13"
+        "2026-05-13",
+        "2026-05-15"
       ],
       "conceptTags": [
         "motor-predominant",
@@ -613,23 +626,30 @@
       "endLine": 49,
       "source": "memory",
       "snippet": "# 2026-05-10 Daily Log ## Morning Tasks (8 AM Cron) ### Goals Progress - YouTube 100k | X 150k | SaaS Q3 | AI+Neuro Community | 2 books/month | French ### Actions Completed 1. **X Threads Research** — Generated 3 ready-to-post thread drafts: - \"The Brain Learns Like a Neural Network — MIT Confirmed\" - \"2026: The Year BCI Stopped Being Sci-Fi\" - \"Neuroscience Says Most Productivity Advice Is Wrong\" - Saved to: `X_THREADS_20260510.md` 2. **YouTube Research** — 5 video ideas identified: - Dopamine fasting + AI brain effects - 30-day BCI experiment - 5 neuroscience principles for AI users - ChatGPT vs human brain - Focus crisis + AI solutions - Saved to: `YOUTU",
-      "recallCount": 5,
+      "recallCount": 9,
       "dailyCount": 0,
       "groundedCount": 0,
-      "totalScore": 5,
+      "totalScore": 9,
       "maxScore": 1,
       "firstRecalledAt": "2026-05-10T21:00:10.120Z",
-      "lastRecalledAt": "2026-05-11T21:00:18.529Z",
+      "lastRecalledAt": "2026-05-15T21:00:47.291Z",
       "queryHashes": [
         "051b65d78343",
         "9454caf03d03",
         "9931c9b3ed46",
         "13dfc8aaeae0",
-        "2c1f8bb5ec72"
+        "2c1f8bb5ec72",
+        "8f0909bac681",
+        "82660a4fe2e3",
+        "f64e3121acd6",
+        "6512e02fe3f5"
       ],
       "recallDays": [
         "2026-05-11",
-        "2026-05-12"
+        "2026-05-12",
+        "2026-05-14",
+        "2026-05-15",
+        "2026-05-16"
       ],
       "conceptTags": [
         "gpt",
@@ -649,19 +669,27 @@
       "endLine": 36,
       "source": "memory",
       "snippet": "# 2026-05-11 Daily Log ## Morning Tasks (8 AM Cron) ### Goals - YouTube 100k | X 150k | SaaS Q3 | AI+Neuro Community | 2 books/month | French ### Actions Completed 1. **FocusFlow MVP Spec** — Complete spec saved to `FOCUSFLOW_MVP_SPEC.md`: - P0/P1/P2 features by priority - Tech stack: Tauri + React + FastAPI + PostgreSQL - 6-week roadmap to launch - 4-tier pricing: Free / $12/mo / $29/mo / $15/seat 2. **X Thread Ready** — Saved to `X_THREAD_FINAL.md`: - 7-tweet thread on MIT brain/backprop discovery - Ready to post (just add your handle) 3. **YouTube Script** — Saved to `YOUTUBE_SCRIPT_DOPAMINE_AI.md`: - 12-15 min script: \"Your Brain on AI: What Dopamine Fasting Ge",
-      "recallCount": 2,
+      "recallCount": 7,
       "dailyCount": 0,
       "groundedCount": 0,
-      "totalScore": 2,
+      "totalScore": 7,
       "maxScore": 1,
       "firstRecalledAt": "2026-05-11T21:00:18.509Z",
-      "lastRecalledAt": "2026-05-11T21:00:18.529Z",
+      "lastRecalledAt": "2026-05-15T21:00:47.291Z",
       "queryHashes": [
         "13dfc8aaeae0",
-        "2c1f8bb5ec72"
+        "2c1f8bb5ec72",
+        "8f0909bac681",
+        "82660a4fe2e3",
+        "527b948098b9",
+        "f64e3121acd6",
+        "6512e02fe3f5"
       ],
       "recallDays": [
-        "2026-05-12"
+        "2026-05-12",
+        "2026-05-14",
+        "2026-05-15",
+        "2026-05-16"
       ],
       "conceptTags": [
         "books/month",
@@ -681,18 +709,20 @@
       "endLine": 41,
       "source": "memory",
       "snippet": "# 2026-05-12 Daily Log ## Morning Cron (6 AM) ### Goals YouTube 100k | X 150k | SaaS Q3 | AI+Neuro Community | 2 books/month | French ### Research Discoveries 🔥 1. **JAMA Meta-Analysis (May 7): MMA Embolization for chronic SDH** - Adjunctive MMA embolization reduces recurrence by >50% - Based on large RCTs — this is practice-changing - Source: medicaldialogues.in, JAMA 2. **Neuralink VOICE Trial — ALS Patient Speaks Again** - Kenneth Shock (ALS, nonverbal years) → N1 implant → speech from neural signals - 21 enrolled participants, 5 programs, 4 countries, zero serious AEs - Thought-to-speech is now demonstrated in humans - Sources: PCMag, Machine Herald, Tesorb 3.",
-      "recallCount": 1,
+      "recallCount": 2,
       "dailyCount": 0,
       "groundedCount": 0,
-      "totalScore": 1,
+      "totalScore": 2,
       "maxScore": 1,
       "firstRecalledAt": "2026-05-12T12:39:40.706Z",
-      "lastRecalledAt": "2026-05-12T12:39:40.706Z",
+      "lastRecalledAt": "2026-05-15T13:30:06.098Z",
       "queryHashes": [
-        "bc418cabcf24"
+        "bc418cabcf24",
+        "74d9e02cf92e"
       ],
       "recallDays": [
-        "2026-05-12"
+        "2026-05-12",
+        "2026-05-15"
       ],
       "conceptTags": [
         "books/month",
@@ -703,6 +733,138 @@
         "log",
         "morning",
         "cron"
+      ]
+    },
+    "memory:memory/2026-05-14.md:1:36": {
+      "key": "memory:memory/2026-05-14.md:1:36",
+      "path": "memory/2026-05-14.md",
+      "startLine": 1,
+      "endLine": 36,
+      "source": "memory",
+      "snippet": "# 2026-05-14 Daily Log ## Morning Tasks (8 AM Cron) ### Goals - YouTube 100k | X 150k | SaaS Q3 | AI+Neuro Community | 2 books/month | French ### Actions Completed 1. **X Thread — \"Brain Scaling Laws\"** 🧵 - 7-tweet thread covering OmniMouse (150B neural tokens), Allen Institute MICrONS AI, Google synthetic neurons, Princeton 3D bioelectronic brain, Cleveland Clinic GenT - Saved to: `THREAD_BRAIN_SCALING_20260514.md` - Hook: \"brain scaling laws are real — and they're inverted\" 2. **FocusFlow SaaS Landing Page** 🚀 - Full production-quality dark-themed landing page - Hero, features grid, how it works, pricing (Free/$12/$29), waitlist signup - CSS animations, mobile resp",
+      "recallCount": 4,
+      "dailyCount": 0,
+      "groundedCount": 0,
+      "totalScore": 4,
+      "maxScore": 1,
+      "firstRecalledAt": "2026-05-14T21:00:32.843Z",
+      "lastRecalledAt": "2026-05-15T21:00:47.291Z",
+      "queryHashes": [
+        "82660a4fe2e3",
+        "527b948098b9",
+        "f64e3121acd6",
+        "6512e02fe3f5"
+      ],
+      "recallDays": [
+        "2026-05-15",
+        "2026-05-16"
+      ],
+      "conceptTags": [
+        "books/month",
+        "7-tweet",
+        "thread-brain-scaling-20260514.md",
+        "production-quality",
+        "dark-themed",
+        "log",
+        "morning",
+        "tasks"
+      ]
+    },
+    "memory:memory/2026-05-13.md:1:35": {
+      "key": "memory:memory/2026-05-13.md:1:35",
+      "path": "memory/2026-05-13.md",
+      "startLine": 1,
+      "endLine": 35,
+      "source": "memory",
+      "snippet": "# 2026-05-13 Daily Log ## 8 AM Cron — Daily Tasks ### Goals YouTube 100k | X 150k | SaaS Q3 | AI+Neuro Community | 2 books/month | French ### Actions Completed 1. **🚀 X Thread Attempt** — Neuralink VOICE thread (7 tweets) loaded into Chrome browser - Chrome needs first-time X login → couldn't auto-post. Thread content ready at `content/X_THREAD_NEURALINK_VOICE.md` 2. **🎬 YouTube Full Script: \"2026: The Year BCI Stopped Being Science Fiction\"** ✅ - 350-line, 10-12 min script covering: - Neuralink VOICE trial (NCT07224256, Kenneth Shock, N1 implant specs) - China's Beinao No.1 approval (April 2026) - Synchron Stentrode (jugular vein, no craniotomy) - NeuroSTORM",
+      "recallCount": 4,
+      "dailyCount": 0,
+      "groundedCount": 0,
+      "totalScore": 4,
+      "maxScore": 1,
+      "firstRecalledAt": "2026-05-14T21:01:57.546Z",
+      "lastRecalledAt": "2026-05-15T21:00:47.291Z",
+      "queryHashes": [
+        "527b948098b9",
+        "2844f3f5f3c6",
+        "f64e3121acd6",
+        "6512e02fe3f5"
+      ],
+      "recallDays": [
+        "2026-05-15",
+        "2026-05-16"
+      ],
+      "conceptTags": [
+        "books/month",
+        "first-time",
+        "auto-post",
+        "350-line",
+        "10-12",
+        "no.1",
+        "log",
+        "cron"
+      ]
+    },
+    "memory:memory/2026-05-13.md:29:65": {
+      "key": "memory:memory/2026-05-13.md:29:65",
+      "path": "memory/2026-05-13.md",
+      "startLine": 29,
+      "endLine": 65,
+      "source": "memory",
+      "snippet": "- Type hints, docstrings, error handling - Also includes frontend build (dist/) — was from prior setup - Ready to run: `cd focusflow && pip install -r requirements.txt && uvicorn app.main:app --reload` - Saved: `focusflow/` 4. **📚 French Practice Session** ✅ - 5 neurology-themed translation sentences (progressive difficulty) - 5 flashcards with IPA, gender notes, example sentences - BCI-focused reading passage (7 sentences about CEA Grenoble + Pitié-Salpêtrière) - 3 comprehension questions + pronunciation notes - Saved: `content/FRENCH_PRACTICE_20260513.md` ### Files Created/Updated - `KANBAN.md` (updated with today's progress) - `content/YOUTUBE_SCRIPT_BCI_20",
+      "recallCount": 1,
+      "dailyCount": 0,
+      "groundedCount": 0,
+      "totalScore": 1,
+      "maxScore": 1,
+      "firstRecalledAt": "2026-05-15T13:30:06.114Z",
+      "lastRecalledAt": "2026-05-15T13:30:06.114Z",
+      "queryHashes": [
+        "2844f3f5f3c6"
+      ],
+      "recallDays": [
+        "2026-05-15"
+      ],
+      "conceptTags": [
+        "requirements.txt",
+        "app.main",
+        "neurology-themed",
+        "bci-focused",
+        "pitié-salpêtrière",
+        "created/updated",
+        "kanban.md",
+        "content/youtube-script-bci-20"
+      ]
+    },
+    "memory:memory/2026-05-15.md:1:38": {
+      "key": "memory:memory/2026-05-15.md:1:38",
+      "path": "memory/2026-05-15.md",
+      "startLine": 1,
+      "endLine": 38,
+      "source": "memory",
+      "snippet": "# 2026-05-15 Daily Log ## Morning Tasks (8 AM Cron) ### Goals - YouTube 100k | X 150k | SaaS Q3 | AI+Neuro Community | 2 books/month | French ### Actions Completed 1. **X Thread — \"Your Brain's Genetic GPS\"** 🧵 - 8-tweet thread on Nagoya University SPERRFY discovery - 763 genes × 213 brain regions, 0.88 connectivity prediction accuracy - Validates 60-year-old chemoaffinity theory at whole-brain scale - Saved to: `X_THREAD_GENETIC_GPS_20260515.md` 2. **YouTube Script — \"Your Brain Has a Genetic GPS\"** 🎬 - 9-10 minute full script with B-roll markers - Covers: Sperry's 1963 theory → SPERRFY ML breakthrough → implications - Production notes, CTA suggestions, key stats",
+      "recallCount": 1,
+      "dailyCount": 0,
+      "groundedCount": 0,
+      "totalScore": 1,
+      "maxScore": 1,
+      "firstRecalledAt": "2026-05-15T21:00:24.086Z",
+      "lastRecalledAt": "2026-05-15T21:00:24.086Z",
+      "queryHashes": [
+        "f64e3121acd6"
+      ],
+      "recallDays": [
+        "2026-05-16"
+      ],
+      "conceptTags": [
+        "books/month",
+        "8-tweet",
+        "0.88",
+        "60-year-old",
+        "whole-brain",
+        "x-thread-genetic-gps-20260515.md",
+        "9-10",
+        "b-roll"
       ]
     }
   }

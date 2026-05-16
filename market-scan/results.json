@@ -1,191 +1,126 @@
 {
-  "scan_date": "2026-05-13T08:00:17.846963",
-  "stocks_scanned": 10,
+  "scan_date": "2026-05-14T08:00:16.329209",
+  "stocks_scanned": 8,
   "opportunities": [
-    {
-      "ticker": "HINDUNILVR.BSE",
-      "name": "HINDUNILVR",
-      "price": 2266.7,
-      "change": -1.7596,
-      "signals": [
-        {
-          "type": "price_drop",
-          "value": -1.7596,
-          "reason": "Drop: -1.8%"
-        },
-        {
-          "type": "volatility",
-          "value": 2.168859649122819,
-          "reason": "Range: 2.2%"
-        }
-      ],
-      "prediction_score": 35,
-      "recommendation": "WATCH"
-    },
     {
       "ticker": "MARUTI.BSE",
       "name": "MARUTI",
-      "price": 13172.25,
-      "change": -2.2997,
+      "price": 13104.9,
+      "change": -0.5113,
       "signals": [
         {
-          "type": "price_drop",
-          "value": -2.2997,
-          "reason": "Drop: -2.3%"
-        },
-        {
           "type": "volatility",
-          "value": 2.289882651443073,
-          "reason": "Range: 2.3%"
+          "value": 2.188304244513107,
+          "reason": "Range: 2.2%"
         }
       ],
-      "prediction_score": 35,
-      "recommendation": "WATCH"
+      "prediction_score": 10,
+      "recommendation": "NEUTRAL"
     },
     {
       "ticker": "BAJAJ-AUTO.BSE",
       "name": "BAJAJ-AUTO",
-      "price": 10383.3496,
-      "change": -1.9939,
+      "price": 10258.0996,
+      "change": -1.2063,
       "signals": [
         {
           "type": "price_drop",
-          "value": -1.9939,
-          "reason": "Drop: -2.0%"
+          "value": -1.2063,
+          "reason": "Drop: -1.2%"
         },
         {
           "type": "volatility",
-          "value": 3.096119318181812,
-          "reason": "Range: 3.1%"
-        }
-      ],
-      "prediction_score": 35,
-      "recommendation": "WATCH"
-    },
-    {
-      "ticker": "HEROMOTOCO.BSE",
-      "name": "HEROMOTOCO",
-      "price": 5084.35,
-      "change": -2.8044,
-      "signals": [
-        {
-          "type": "price_drop",
-          "value": -2.8044,
-          "reason": "Drop: -2.8%"
-        },
-        {
-          "type": "volatility",
-          "value": 3.77546141340728,
-          "reason": "Range: 3.8%"
-        }
-      ],
-      "prediction_score": 45,
-      "recommendation": "WATCH"
-    },
-    {
-      "ticker": "PIDILITIND.BSE",
-      "name": "PIDILITIND",
-      "price": 1453.0,
-      "change": 1.1557,
-      "signals": [
-        {
-          "type": "price_rally",
-          "value": 1.1557,
-          "reason": "Rally: +1.2%"
-        },
-        {
-          "type": "volatility",
-          "value": 3.8367716754948553,
-          "reason": "Range: 3.8%"
+          "value": 2.2595415159754477,
+          "reason": "Range: 2.3%"
         }
       ],
       "prediction_score": 25,
       "recommendation": "NEUTRAL"
     },
     {
-      "ticker": "TITAN.BSE",
-      "name": "TITAN",
-      "price": 4054.05,
-      "change": -3.5978,
+      "ticker": "HEROMOTOCO.BSE",
+      "name": "HEROMOTOCO",
+      "price": 4994.85,
+      "change": -1.7603,
       "signals": [
         {
           "type": "price_drop",
-          "value": -3.5978,
-          "reason": "Drop: -3.6%"
+          "value": -1.7603,
+          "reason": "Drop: -1.8%"
         },
         {
           "type": "volatility",
-          "value": 3.9147736099327273,
-          "reason": "Range: 3.9%"
-        }
-      ],
-      "prediction_score": 45,
-      "recommendation": "WATCH"
-    },
-    {
-      "ticker": "TORNTPHARM.BSE",
-      "name": "TORNTPHARM",
-      "price": 4380.05,
-      "change": -3.0802,
-      "signals": [
-        {
-          "type": "price_drop",
-          "value": -3.0802,
-          "reason": "Drop: -3.1%"
-        },
-        {
-          "type": "volatility",
-          "value": 3.41645113513275,
-          "reason": "Range: 3.4%"
-        }
-      ],
-      "prediction_score": 45,
-      "recommendation": "WATCH"
-    },
-    {
-      "ticker": "MFSL.BSE",
-      "name": "MFSL",
-      "price": 1653.05,
-      "change": -2.4634,
-      "signals": [
-        {
-          "type": "price_drop",
-          "value": -2.4634,
-          "reason": "Drop: -2.5%"
-        },
-        {
-          "type": "volatility",
-          "value": 2.985381922997735,
-          "reason": "Range: 3.0%"
+          "value": 2.9159083348010726,
+          "reason": "Range: 2.9%"
         }
       ],
       "prediction_score": 35,
       "recommendation": "WATCH"
     },
     {
-      "ticker": "ADANIPOWER.BSE",
-      "name": "ADANIPOWER",
-      "price": 209.6,
-      "change": -5.6281,
+      "ticker": "EICHERMOT.BSE",
+      "name": "EICHERMOT",
+      "price": 6968.3,
+      "change": -2.1938,
       "signals": [
         {
           "type": "price_drop",
-          "value": -5.6281,
-          "reason": "Drop: -5.6%"
-        },
-        {
-          "type": "high_volume",
-          "value": 5.184608,
-          "reason": "Vol: 5.2M"
+          "value": -2.1938,
+          "reason": "Drop: -2.2%"
         },
         {
           "type": "volatility",
-          "value": 7.4724285392752625,
-          "reason": "Range: 7.5%"
+          "value": 4.125614035087716,
+          "reason": "Range: 4.1%"
         }
       ],
-      "prediction_score": 60,
-      "recommendation": "BUY"
+      "prediction_score": 35,
+      "recommendation": "WATCH"
+    },
+    {
+      "ticker": "GODREJCP.BSE",
+      "name": "GODREJCP",
+      "price": 1031.6,
+      "change": 0.097,
+      "signals": [
+        {
+          "type": "volatility",
+          "value": 2.6608821402747562,
+          "reason": "Range: 2.7%"
+        }
+      ],
+      "prediction_score": 10,
+      "recommendation": "NEUTRAL"
+    },
+    {
+      "ticker": "PIDILITIND.BSE",
+      "name": "PIDILITIND",
+      "price": 1444.8,
+      "change": -0.5643,
+      "signals": [
+        {
+          "type": "volatility",
+          "value": 2.226428079834818,
+          "reason": "Range: 2.2%"
+        }
+      ],
+      "prediction_score": 10,
+      "recommendation": "NEUTRAL"
+    },
+    {
+      "ticker": "TITAN.BSE",
+      "name": "TITAN",
+      "price": 4092.4,
+      "change": 0.946,
+      "signals": [
+        {
+          "type": "volatility",
+          "value": 3.042817047688527,
+          "reason": "Range: 3.0%"
+        }
+      ],
+      "prediction_score": 10,
+      "recommendation": "NEUTRAL"
     }
   ],
   "config": {

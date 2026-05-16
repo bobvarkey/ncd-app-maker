@@ -1,69 +1,39 @@
-# KANBAN — 2026-05-13
+# KANBAN — Goals Tracker
 
-## 🎯 Goals
-- YouTube 100k | X 150k | SaaS Q3 | AI+Neuro Community | 2 books/month | French
+> **Big Goals:** YouTube 100k · X 150k · SaaS by Q3 · AI+Neuro Community · 2 books/month · Learn French
+> Updated: 2026-05-16
 
 ---
 
 ## ✅ Done
 
-### Content
-- [X] Neuralink VOICE X thread — written, ready to post ✍️
-- [X] X thread: "Brain Learns Like Neural Network" — written, ready to post
-- [X] YouTube Short script: MMA Embolization JAMA 2026
-- [X] YouTube Short script: BCI Breakthroughs 2026
-- [X] **YouTube Full Script: "2026: The Year BCI Stopped Being Science Fiction"** (10-12 min, 350 lines) ✅ *NEW*
-- [X] French practice session — 5 sentences, 5 flashcards, reading passage (150 lines) ✅ *NEW*
+- **YouTube Script — TRIBE v2 (Meta FAIR)** — 9-min script, 3-act structure, in-silico brain model
+- **X Thread — Seeing = Imagining (Simons Collaboration)** — 8-tweet thread, single-neuron study in *Science*
+- **French + Neuroscience Flashcards** — 25 bilingual cards + 5 mini-dialogues
+- **YouTube Script — BCI 2026** (May 13) — Neuralink VOICE + China Beinao No.1 + Synchron Stentrode
+- **YouTube Script — Brain Scaling Laws** (May 14) — OmniMouse, MICrONS, Google synthetic neurons
+- **YouTube Script — Genetic GPS** (May 15) — Nagoya SPERRFY, 763 genes × 213 brain regions
+- **FocusFlow Landing Page** (May 14) — Production dark-themed landing page
+- **FocusFlow Backend Scaffold** — FastAPI, auth, waitlist, sessions, PostgreSQL models
+- **FocusFlow MVP Spec** — 6-week roadmap, Tauri/React/FastAPI/PostgreSQL stack
 
-### SaaS: FocusFlow
-- [X] **MVP Backend — FastAPI + SQLite + JWT Auth + Task CRUD** ✅ *NEW*
-- [X] Files: main.py, database.py, models.py, schemas.py, auth.py, routes_tasks.py, deps.py
+## 🔄 In Progress
 
-### Research
-- [X] Fresh neuro research scan (May 12) — 8 major discoveries
-
----
-
-## 🚧 In Progress
-
-### X Growth
-- [ ] Post Neuralink VOICE thread → browser needs first-time X login
-- [ ] Post Brain/MIT thread
-- [ ] X bookmarks sync (6AM, 8AM cron)
-
-### YouTube
-- [ ] Record Short: MMA JAMA 2026
-- [ ] Record Short: BCI Breakthroughs
-- [ ] Record Full Video: BCI 2026 Deep Dive
-
-### SaaS
-- [ ] Run `uvicorn app.main:app --reload` and test FocusFlow API
-- [ ] Build frontend (React/Vite) for FocusFlow
-
-### French
-- [ ] Complete FRENCH_PRACTICE_20260513.md session (15-20 min)
-
----
+- **SaaS — FocusFlow Backend Polish** — Needs alembic migrations run, .env configured, live database connection
 
 ## 📋 To Do
 
-### Next Content
-- [ ] Thread: NeuroSTORM foundation model deep dive
-- [ ] Thread: GenT drug discovery
-- [ ] Video: "5 Neuroscience Principles Every AI User Should Know"
+- **YouTube** — Record/publish TRIBE v2 video, record Genetic GPS video, create YouTube channel trailer
+- **X Growth** — Post Seeing=Imagining thread, post TRIBE v2 thread, consistent daily posting schedule
+- **SaaS** — Deploy backend to Railway/Render, connect landing page to waitlist API, set up PostgreSQL
+- **AI+Neuro Community** — Create Discord/community space, cross-post content
+- **Books** — Current read: ?, next book lined up: ?
+- **French** — Review flashcards daily, practice mini-dialogues
 
-### SaaS: FocusFlow
-- [ ] Add email verification
-- [ ] Add task sharing/collaboration
-- [ ] Deploy MVP (Render/Railway)
+---
 
-### Community
-- [ ] Post to r/neurology on Reddit
-- [ ] Cross-post threads to LinkedIn
+## Weekly Focus (May 11-17)
 
-### Reading
-- [ ] Book 1 for May (due in 2 weeks)
-- [ ] Book 2 for May
-
-### Maintenance
-- [ ] Weekly journal scan (JNIS, INR, AJNR, Muscle & Nerve, Sleep)
+| Day | Theme | Priority |
+|-----|-------|----------|
+| Sat 16 | Content creation + SaaS backend | YouTube script, X thread, French study |

@@ -184,6 +184,10 @@
     "literature-review": {
       "version": "1.2.0",
       "installedAt": 1778593144501
+    },
+    "vibe-coding": {
+      "version": "1.0.0",
+      "installedAt": 1778679464781
     }
   }
 }
