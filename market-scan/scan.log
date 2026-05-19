@@ -671,3 +671,28 @@ Fetching 10 quotes...
   ⚠️ CONCOR: Failed
   ⚠️ AARTIIND: Failed
 Still no data. API may be rate-limited.
+Starting Enhanced Market Scan...
+Fetching 10 quotes...
+  ⚠️ DEEPAKNTR: Failed
+  ✅ GODREJCP: ₹1038.90 (+0.53%)
+  ✅ MARUTI: ₹13225.85 (+1.14%)
+  ✅ BAJAJ-AUTO: ₹10378.10 (-0.70%)
+  ✅ HEROMOTOCO: ₹5065.30 (-0.20%)
+  ✅ KOTAKBANK: ₹387.30 (+1.08%)
+  ✅ HINDUNILVR: ₹2271.00 (+1.00%)
+  ✅ COLPAL: ₹2159.75 (+0.70%)
+  ✅ PIDILITIND: ₹1466.45 (-1.18%)
+  ⚠️ TITAN: Failed
+
+=======================================================
+MARKET SCAN - 2026-05-18 08:00
+=======================================================
+Sensitivity: high | Macro: neutral
+Thresholds: Drop <-1.0%, Rally >1.0%
+Scanned: 8 stocks | Opportunities: 6
+
+
+Top Movers:
+  Gainers: MARUTI.BSE:+1.1%, KOTAKBANK.BSE:+1.1%, HINDUNILVR.BSE:+1.0%
+  Losers: PIDILITIND.BSE:-1.2%, BAJAJ-AUTO.BSE:-0.7%, HEROMOTOCO.BSE:-0.2%
+=======================================================

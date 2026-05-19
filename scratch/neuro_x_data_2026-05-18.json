@@ -1,0 +1,96 @@
+{
+  "scrape_date": "2026-05-18",
+  "scraped_at": "2026-05-18T14:52:00Z",
+  "queries": [
+    {
+      "name": "neurointervention OR thrombectomy OR #Neurointervention OR #stroke",
+      "posts": [
+        {
+          "author": "Dr Sharath Kumar G",
+          "handle": "@SharathKumarGG7",
+          "date": "2026-05-17T13:18:28.000Z",
+          "text": "New in The Lancet: The ATLAS IPD meta-analysis (N=1,886) confirms endovascular thrombectomy improves 90-day functional outcomes (OR 1.63) and reduces mortality (31.1% vs 37.3%) in large-core ischemic stroke up to 24 hours from onset! Safety: Clinical benefit outweighs",
+          "url": "https://x.com/SharathKumarGG7/status/2056001406683807745",
+          "replies": 2, "reposts": 8, "likes": 14, "bookmarks": 4, "views": 826
+        },
+        {
+          "author": "NeurologyLive®",
+          "handle": "@neurology_live",
+          "date": "2026-05-16T15:59:59.000Z",
+          "text": "Experts are highlighting how advanced neuroimaging is reshaping stroke intervention decisions. Vascular neurologist Firas Bounni, MD, discusses thrombectomy and the future of personalized stroke care. #Stroke #Neurology #BrainHealth",
+          "url": "https://x.com/neurology_live/status/2055679665738486233",
+          "replies": 0, "reposts": 0, "likes": 1, "bookmarks": 0, "views": 84
+        },
+        {
+          "author": "Mission Thrombectomy",
+          "handle": "@MThrombectomy",
+          "date": "2026-05-16T17:57:12.000Z",
+          "text": "Should neuroprotection still matter in the thrombectomy era? The discussion continues. Interesting presentation highlighting the potential role of adjunctive neuroprotective strategies alongside mechanical thrombectomy.",
+          "url": "https://x.com/MThrombectomy/status/2055709165327126938",
+          "replies": 1, "reposts": 5, "likes": 9, "bookmarks": 2, "views": 430
+        },
+        {
+          "author": "Mission Thrombectomy",
+          "handle": "@MThrombectomy",
+          "date": "2026-05-16T19:12:13.000Z",
+          "text": "Remedy Robotics & Neuroendovascular Innovation: Expanding Access Beyond Borders. Dr. David Bell — From early first-in-human experience (~10 cases, including remote interventions) to the evolving vision of robotic-assisted stroke care.",
+          "url": "https://x.com/MThrombectomy/status/2055728041427644584",
+          "replies": 1, "reposts": 7, "likes": 10, "bookmarks": 0, "views": 449
+        },
+        {
+          "author": "NEJM",
+          "handle": "@NEJM",
+          "date": "2026-05-15T21:00:16.000Z",
+          "text": "For patients with acute ischemic stroke, endovascular thrombectomy has improved outcomes in large-vessel occlusions, but its benefit in medium-vessel occlusions remains contentious. Research from the ORIENTAL-MeVO trial summarized in a new Quick Take video.",
+          "url": "https://x.com/NEJM/status/2055392844265726401",
+          "replies": 1, "reposts": 26, "likes": 84, "bookmarks": 22, "views": 13744
+        }
+      ]
+    },
+    {
+      "name": "cerebral AVM OR intracranial aneurysm OR endovascular",
+      "posts": [
+        {
+          "author": "Dr Sharath Kumar G",
+          "handle": "@SharathKumarGG7",
+          "date": "2026-05-18T13:39:59.000Z",
+          "text": "Superior cerebellar artery (SCA) aneurysms are exceptionally rare (~0.2% incidence), and fusiform variants are even rarer. For ruptured dissecting distal SCA aneurysms, endovascular parent artery occlusion offers a highly effective treatment with low morbidity.",
+          "url": "https://x.com/SharathKumarGG7/status/2056369210499174426",
+          "replies": 0, "reposts": 1, "likes": 8, "bookmarks": 1, "views": 136
+        },
+        {
+          "author": "Dr Sharath Kumar G",
+          "handle": "@SharathKumarGG7",
+          "date": "2026-05-17T13:12:02.000Z",
+          "text": "Flow diversion literally! #Aneurysm #Flowdiverter #Neuroradiology #Endovascular #Neurosurgery",
+          "url": "https://x.com/SharathKumarGG7/status/2055999785212289276",
+          "replies": 0, "reposts": 2, "likes": 11, "bookmarks": 2, "views": 431
+        },
+        {
+          "author": "Dr Sharath Kumar G",
+          "handle": "@SharathKumarGG7",
+          "date": "2026-05-17T13:18:28.000Z",
+          "text": "New in The Lancet: The ATLAS IPD meta-analysis (N=1,886) confirms endovascular thrombectomy improves 90-day functional outcomes (OR 1.63)...",
+          "url": "https://x.com/SharathKumarGG7/status/2056001406683807745",
+          "replies": 2, "reposts": 8, "likes": 14, "bookmarks": 4, "views": 826
+        },
+        {
+          "author": "NEJM",
+          "handle": "@NEJM",
+          "date": "2026-05-15T21:00:16.000Z",
+          "text": "For patients with acute ischemic stroke, endovascular thrombectomy... ORIENTAL-MeVO trial.",
+          "url": "https://x.com/NEJM/status/2055392844265726401",
+          "replies": 1, "reposts": 26, "likes": 84, "bookmarks": 22, "views": 13744
+        },
+        {
+          "author": "Nova Silva",
+          "handle": "@NovaSilva243204",
+          "date": "2026-05-18T09:41:14.000Z",
+          "text": "Discover India's Best Endovascular Aneurysm Surgeons Today. #EndovascularAneurysm #AneurysmTreatment #VascularSurgery #HeartCare #India",
+          "url": "https://x.com/NovaSilva243204/status/2056309126121312318",
+          "replies": 0, "reposts": 0, "likes": 0, "bookmarks": 0, "views": 2
+        }
+      ]
+    }
+  ]
+}

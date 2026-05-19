@@ -1,0 +1,7 @@
+# Long-Term Memory
+
+
+## Promoted From Short-Term Memory (2026-05-19)
+
+<!-- openclaw-memory-promotion:memory:memory/2026-03-04.md:48:62 -->
+- - Location: ~/Downloads/ClawX - Running at http://localhost:5173/ (dev mode) - Issue: Gateway token mismatch with existing OpenClaw gateway - To fix: Stop current gateway or enter auth token in ClawX settings ### Public APIs Skill - Cloned public-apis repo to ~/Downloads/public-apis/ - Created skill at ~/.openclaw/skills/public-apis/ - Usage: Ask to find APIs for any category (weather, finance, health, etc.) ### PubMed & BioGPT Search Skills - Created pubmed-search skill: ~/.openclaw/skills/pubmed-search/ - Created biogpt-search skill: ~/.openclaw/skills/biogpt-search/ - Usage: "search pubmed stroke treatment" or "search biogpt Alzheimer's" [score=0.817 recalls=3 avg=1.000 source=memory/2026-03-04.md:48-62]
