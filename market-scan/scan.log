@@ -696,3 +696,105 @@ Top Movers:
   Gainers: MARUTI.BSE:+1.1%, KOTAKBANK.BSE:+1.1%, HINDUNILVR.BSE:+1.0%
   Losers: PIDILITIND.BSE:-1.2%, BAJAJ-AUTO.BSE:-0.7%, HEROMOTOCO.BSE:-0.2%
 =======================================================
+Starting Enhanced Market Scan...
+Fetching 10 quotes...
+  ✅ SUNPHARMA: ₹1905.20 (+1.34%)
+  ✅ DRREDDY: ₹1331.40 (-0.42%)
+  ⚠️ CIPLA: Failed
+  ✅ APOLLOHOSP: ₹8021.10 (-0.75%)
+  ✅ RELIANCE: ₹1335.20 (-0.09%)
+  ⚠️ KOTAKBANK: Failed
+  ✅ HINDUNILVR: ₹2254.90 (-0.71%)
+  ⚠️ COLPAL: Failed
+  ✅ PIDILITIND: ₹1449.60 (-1.15%)
+  ⚠️ TORNTPHARM: Failed
+
+=======================================================
+MARKET SCAN - 2026-05-19 08:00
+=======================================================
+Sensitivity: high | Macro: neutral
+Thresholds: Drop <-1.0%, Rally >1.0%
+Scanned: 6 stocks | Opportunities: 2
+
+
+Top Movers:
+  Gainers: SUNPHARMA.BSE:+1.3%, RELIANCE.BSE:+-0.1%, DRREDDY.BSE:+-0.4%
+  Losers: PIDILITIND.BSE:-1.1%, APOLLOHOSP.BSE:-0.7%, HINDUNILVR.BSE:-0.7%
+=======================================================
+Starting Enhanced Market Scan...
+Fetching 10 quotes...
+  ✅ BHARTIARTL: ₹1913.60 (-1.26%)
+  ✅ LT: ₹3918.00 (-0.02%)
+  ⚠️ TITAN: Failed
+  ⚠️ DEEPAKNTR: Failed
+  ⚠️ GODREJCP: Failed
+  ✅ KOTAKBANK: ₹381.85 (-2.51%)
+  ✅ HINDUNILVR: ₹2231.95 (-1.02%)
+  ⚠️ COLPAL: Failed
+  ✅ PIDILITIND: ₹1455.00 (+0.37%)
+  ⚠️ TORNTPHARM: Failed
+
+=======================================================
+MARKET SCAN - 2026-05-20 08:00
+=======================================================
+Sensitivity: high | Macro: neutral
+Thresholds: Drop <-1.0%, Rally >1.0%
+Scanned: 5 stocks | Opportunities: 3
+
+WATCH (30-50):
+  KOTAKBANK.BSE ₹381.85 (-2.51%) | 45
+
+Top Movers:
+  Gainers: PIDILITIND.BSE:+0.4%, LT.BSE:+-0.0%, HINDUNILVR.BSE:+-1.0%
+  Losers: KOTAKBANK.BSE:-2.5%, BHARTIARTL.BSE:-1.3%, HINDUNILVR.BSE:-1.0%
+=======================================================
+Starting Enhanced Market Scan...
+Fetching 10 quotes...
+  ✅ GODREJCP: ₹1022.90 (+0.05%)
+  ✅ MARUTI: ₹12997.15 (+0.23%)
+  ✅ BAJAJ-AUTO: ₹10463.15 (+2.58%)
+  ⚠️ HEROMOTOCO: Failed
+  ✅ EICHERMOT: ₹6851.00 (-0.47%)
+  ✅ CONCOR: ₹503.45 (-0.38%)
+  ✅ AARTIIND: ₹464.00 (-1.08%)
+  ⚠️ DEEPAKNTR: Failed
+  ✅ CIPLA: ₹1399.50 (-0.73%)
+  ✅ KOTAKBANK: ₹383.15 (+0.34%)
+
+=======================================================
+MARKET SCAN - 2026-05-21 08:00
+=======================================================
+Sensitivity: high | Macro: neutral
+Thresholds: Drop <-1.0%, Rally >1.0%
+Scanned: 8 stocks | Opportunities: 6
+
+
+Top Movers:
+  Gainers: BAJAJ-AUTO.BSE:+2.6%, KOTAKBANK.BSE:+0.3%, MARUTI.BSE:+0.2%
+  Losers: AARTIIND.BSE:-1.1%, CIPLA.BSE:-0.7%, EICHERMOT.BSE:-0.5%
+=======================================================
+Starting Enhanced Market Scan...
+Fetching 10 quotes...
+  ✅ NTPC: ₹388.95 (-0.92%)
+  ✅ POWERGRID: ₹299.60 (-0.15%)
+  ✅ SUNPHARMA: ₹1891.15 (+0.57%)
+  ✅ DRREDDY: ₹1318.35 (-0.27%)
+  ✅ APOLLOHOSP: ₹8304.10 (+2.54%)
+  ✅ CIPLA: ₹1401.65 (+0.15%)
+  ✅ KOTAKBANK: ₹380.75 (-0.63%)
+  ✅ HINDUNILVR: ₹2178.80 (-1.37%)
+  ⚠️ PIDILITIND: Failed
+  ✅ TITAN: ₹4083.75 (-0.54%)
+
+=======================================================
+MARKET SCAN - 2026-05-22 08:00
+=======================================================
+Sensitivity: high | Macro: neutral
+Thresholds: Drop <-1.0%, Rally >1.0%
+Scanned: 9 stocks | Opportunities: 4
+
+
+Top Movers:
+  Gainers: APOLLOHOSP.BSE:+2.5%, SUNPHARMA.BSE:+0.6%, CIPLA.BSE:+0.2%
+  Losers: HINDUNILVR.BSE:-1.4%, NTPC.BSE:-0.9%, KOTAKBANK.BSE:-0.6%
+=======================================================

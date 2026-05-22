@@ -1,100 +1,75 @@
 {
-  "scan_date": "2026-05-18T08:00:15.690028",
-  "stocks_scanned": 8,
+  "scan_date": "2026-05-22T08:00:18.137151",
+  "stocks_scanned": 9,
   "opportunities": [
     {
-      "ticker": "MARUTI.BSE",
-      "name": "MARUTI",
-      "price": 13225.85,
-      "change": 1.1398,
-      "signals": [
-        {
-          "type": "price_rally",
-          "value": 1.1398,
-          "reason": "Rally: +1.1%"
-        }
-      ],
-      "prediction_score": 15,
-      "recommendation": "NEUTRAL"
-    },
-    {
-      "ticker": "BAJAJ-AUTO.BSE",
-      "name": "BAJAJ-AUTO",
-      "price": 10378.0996,
-      "change": -0.6975,
+      "ticker": "NTPC.BSE",
+      "name": "NTPC",
+      "price": 388.95,
+      "change": -0.9171,
       "signals": [
         {
           "type": "volatility",
-          "value": 2.358734299286699,
-          "reason": "Range: 2.4%"
+          "value": 2.0246027678113734,
+          "reason": "Range: 2.0%"
         }
       ],
       "prediction_score": 10,
       "recommendation": "NEUTRAL"
     },
     {
-      "ticker": "KOTAKBANK.BSE",
-      "name": "KOTAKBANK",
-      "price": 387.3,
-      "change": 1.0831,
+      "ticker": "APOLLOHOSP.BSE",
+      "name": "APOLLOHOSP",
+      "price": 8304.1,
+      "change": 2.5368,
       "signals": [
         {
           "type": "price_rally",
-          "value": 1.0831,
-          "reason": "Rally: +1.1%"
+          "value": 2.5368,
+          "reason": "Rally: +2.5%"
         },
         {
           "type": "volatility",
-          "value": 3.2791185729275973,
-          "reason": "Range: 3.3%"
+          "value": 4.057218116631299,
+          "reason": "Range: 4.1%"
         }
       ],
       "prediction_score": 25,
       "recommendation": "NEUTRAL"
     },
     {
+      "ticker": "KOTAKBANK.BSE",
+      "name": "KOTAKBANK",
+      "price": 380.75,
+      "change": -0.6264,
+      "signals": [
+        {
+          "type": "volatility",
+          "value": 2.2467532467532556,
+          "reason": "Range: 2.2%"
+        }
+      ],
+      "prediction_score": 10,
+      "recommendation": "NEUTRAL"
+    },
+    {
       "ticker": "HINDUNILVR.BSE",
       "name": "HINDUNILVR",
-      "price": 2271.0,
-      "change": 0.9962,
-      "signals": [
-        {
-          "type": "volatility",
-          "value": 2.2902121225597014,
-          "reason": "Range: 2.3%"
-        }
-      ],
-      "prediction_score": 10,
-      "recommendation": "NEUTRAL"
-    },
-    {
-      "ticker": "COLPAL.BSE",
-      "name": "COLPAL",
-      "price": 2159.75,
-      "change": 0.6994,
-      "signals": [
-        {
-          "type": "volatility",
-          "value": 2.4138482267236023,
-          "reason": "Range: 2.4%"
-        }
-      ],
-      "prediction_score": 10,
-      "recommendation": "NEUTRAL"
-    },
-    {
-      "ticker": "PIDILITIND.BSE",
-      "name": "PIDILITIND",
-      "price": 1466.45,
-      "change": -1.176,
+      "price": 2178.8,
+      "change": -1.3694,
       "signals": [
         {
           "type": "price_drop",
-          "value": -1.176,
-          "reason": "Drop: -1.2%"
+          "value": -1.3694,
+          "reason": "Drop: -1.4%"
+        },
+        {
+          "type": "volatility",
+          "value": 2.2364864864864704,
+          "reason": "Range: 2.2%"
         }
       ],
-      "prediction_score": 15,
+      "prediction_score": 25,
       "recommendation": "NEUTRAL"
     }
   ],
