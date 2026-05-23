@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-05-22T00:40:53.279Z",
+  "updatedAt": "2026-05-22T21:34:13.642Z",
   "entries": {
     "memory:memory/2026-03-27.md:1:22": {
       "key": "memory:memory/2026-03-27.md:1:22",
@@ -204,14 +204,14 @@
       "startLine": 1,
       "endLine": 55,
       "source": "memory",
-      "snippet": "# Memory - March 4th, 2026 ## Goals (from Bob) - Grow YouTube to 100k subscribers - Grow X to 150k followers - Launch SaaS by Q3 - Build community around AI + Neurology - Read 2 books/month - Learn French ## Setup Today ### Reddit Monitor - Created: Reddit/subreddits.md (neurology, openclaw, medicine, finance) - Created: Reddit/Report/ for daily reports - Created: reddit_monitor.sh - runs every 4 hours via cron - Reports saved to Reddit/Report/YYYY-MM-DD.md ### Content Factory - Created: content-factory/ with daily_pipeline.sh - Generates: Research → Tweet Thread → Thumbnail - Runs at 8 AM daily via cron ### API Gateway - Configured MATON_API_KEY in openclaw.json ### Image Generation - Using Pollinations AI with API key: sk_9c9Ie2nRJ53fJ2Q6jdpr6IKru8TceCP6 ### Skills Installed - bird-twitter (needs X auth tokens) - api-gateway - openai-whisper - openai-whisper-api - larrybrain ### Notes - LarryBrain rate limited - couldn't install: twitter-operations, faster-whisper, automation-workflows, nano-pdf - Discord not connected to any servers yet - Chrome browser relay available ## Updated This Session ### ClawX Desktop App ### ClawX Desktop App - Cloned from https://github.com/ValueCell-ai/ClawX - Location: ~/Downloads/ClawX - Running at http://localhost:5173/ (dev mode) - Issue: Gateway token mismatch with existing OpenClaw gateway - To fix: Stop current gateway or enter auth token in ClawX settings ### Public APIs Skill - Cloned public-apis repo to ~/Downloads/public-apis/ - Created skill at ~/.openclaw/skills/public-apis/",
-      "recallCount": 11,
+      "snippet": "# Memory - March 4th, 2026 ## Goals (from Bob) - Grow YouTube to 100k subscribers - Grow X to 150k followers - Launch SaaS by Q3 - Build community around AI + Neurology - Read 2 books/month - Learn French ## Setup Today ### Reddit Monitor - Created: Reddit/subreddits.md (neurology, openclaw, medicine, finance) - Created: Reddit/Report/ for daily reports - Created: reddit_monitor.sh - runs every 4 hours via cron - Reports saved to Reddit/Report/YYYY-MM-DD.md ### Content Factory - Created: content-factory/ with daily_pipeline.sh - Generates: Research → Tweet Thread → Thumbnail - Runs at 8 AM daily via cron ### API Gateway - Configured MATON_API_KEY in openclaw.json ### Image Generation -",
+      "recallCount": 12,
       "dailyCount": 0,
       "groundedCount": 0,
-      "totalScore": 11,
+      "totalScore": 12,
       "maxScore": 1,
       "firstRecalledAt": "2026-05-03T02:30:36.417Z",
-      "lastRecalledAt": "2026-05-16T13:30:27.674Z",
+      "lastRecalledAt": "2026-05-22T10:55:06.425Z",
       "queryHashes": [
         "e34e8ff1cc88",
         "c5d3a7659dba",
@@ -221,7 +221,8 @@
         "87b81f6e4276",
         "74d9e02cf92e",
         "b49138cb4c06",
-        "2844f3f5f3c6"
+        "2844f3f5f3c6",
+        "364a56b1943b"
       ],
       "recallDays": [
         "2026-05-03",
@@ -230,17 +231,18 @@
         "2026-05-11",
         "2026-05-13",
         "2026-05-15",
-        "2026-05-16"
+        "2026-05-16",
+        "2026-05-22"
       ],
       "conceptTags": [
         "gateway",
-        "openai",
         "books/month",
         "reddit/subreddits.md",
         "reddit/report",
         "reddit-monitor.sh",
         "reddit/report/yyyy-mm-dd.md",
-        "content-factory"
+        "content-factory",
+        "daily-pipeline.sh"
       ],
       "promotedAt": "2026-05-16T21:32:01.867Z"
     },
@@ -802,25 +804,27 @@
       "startLine": 1,
       "endLine": 35,
       "source": "memory",
-      "snippet": "# 2026-05-13 Daily Log ## 8 AM Cron — Daily Tasks ### Goals YouTube 100k | X 150k | SaaS Q3 | AI+Neuro Community | 2 books/month | French ### Actions Completed 1. **🚀 X Thread Attempt** — Neuralink VOICE thread (7 tweets) loaded into Chrome browser - Chrome needs first-time X login → couldn't auto-post. Thread content ready at `content/X_THREAD_NEURALINK_VOICE.md` 2. **🎬 YouTube Full Script: \"2026: The Year BCI Stopped Being Science Fiction\"** ✅ - 350-line, 10-12 min script covering: - Neuralink VOICE trial (NCT07224256, Kenneth Shock, N1 implant specs) - China's Beinao No.1 approval (April 2026) - Synchron Stentrode (jugular vein, no craniotomy) - NeuroSTORM foundation model (Nature Biomedical Engineering) - Agentic LLMs for neuroradiology (arXiv April 2026) - Cleveland Clinic GenT (AI drug discovery) - AI consciousness prediction in brain injury - Saved: `content/YOUTUBE_SCRIPT_BCI_2026.md` 3. **🏗️ FocusFlow Backend — Complete MVP** ✅ - FastAPI + SQLite backend with: - User registration/login with JWT + bcrypt - Full Task CRUD (P0/P1/P2 priorities, todo/in_progress/done status) - Filters by status and priority - Type hints, docstrings, error handling - Also includes frontend build (dist/) — was from prior setup - Ready to run: `cd focusflow && pip install -r requirements.txt && uvicorn app.main:app --reload` - Saved: `focusflow/` 4. **📚 French Practice Session** ✅ - 5 neurology-themed translation sentences (progressive difficulty)",
-      "recallCount": 5,
+      "snippet": "# 2026-05-13 Daily Log ## 8 AM Cron — Daily Tasks ### Goals YouTube 100k | X 150k | SaaS Q3 | AI+Neuro Community | 2 books/month | French ### Actions Completed 1. **🚀 X Thread Attempt** — Neuralink VOICE thread (7 tweets) loaded into Chrome browser - Chrome needs first-time X login → couldn't auto-post. Thread content ready at `content/X_THREAD_NEURALINK_VOICE.md` 2. **🎬 YouTube Full Script: \"2026: The Year BCI Stopped Being Science Fiction\"** ✅ - 350-line, 10-12 min script covering: - Neuralink VOICE trial (NCT07224256, Kenneth Shock, N1 implant specs) - China's Beinao No.1 approval (April 2026) - Synchron Stentrode (jugular vein, no craniotomy) - NeuroSTORM",
+      "recallCount": 6,
       "dailyCount": 0,
       "groundedCount": 0,
-      "totalScore": 5,
+      "totalScore": 6,
       "maxScore": 1,
       "firstRecalledAt": "2026-05-14T21:01:57.546Z",
-      "lastRecalledAt": "2026-05-16T21:00:15.683Z",
+      "lastRecalledAt": "2026-05-22T10:55:06.425Z",
       "queryHashes": [
         "527b948098b9",
         "2844f3f5f3c6",
         "f64e3121acd6",
         "6512e02fe3f5",
-        "a358c86a9165"
+        "a358c86a9165",
+        "364a56b1943b"
       ],
       "recallDays": [
         "2026-05-15",
         "2026-05-16",
-        "2026-05-17"
+        "2026-05-17",
+        "2026-05-22"
       ],
       "conceptTags": [
         "books/month",
@@ -829,8 +833,8 @@
         "350-line",
         "10-12",
         "no.1",
-        "registration/login",
-        "p0/p1/p2"
+        "log",
+        "cron"
       ],
       "promotedAt": "2026-05-16T21:32:01.867Z"
     },
@@ -841,18 +845,20 @@
       "endLine": 65,
       "source": "memory",
       "snippet": "- Type hints, docstrings, error handling - Also includes frontend build (dist/) — was from prior setup - Ready to run: `cd focusflow && pip install -r requirements.txt && uvicorn app.main:app --reload` - Saved: `focusflow/` 4. **📚 French Practice Session** ✅ - 5 neurology-themed translation sentences (progressive difficulty) - 5 flashcards with IPA, gender notes, example sentences - BCI-focused reading passage (7 sentences about CEA Grenoble + Pitié-Salpêtrière) - 3 comprehension questions + pronunciation notes - Saved: `content/FRENCH_PRACTICE_20260513.md` ### Files Created/Updated - `KANBAN.md` (updated with today's progress) - `content/YOUTUBE_SCRIPT_BCI_20",
-      "recallCount": 1,
+      "recallCount": 2,
       "dailyCount": 0,
       "groundedCount": 0,
-      "totalScore": 1,
+      "totalScore": 2,
       "maxScore": 1,
       "firstRecalledAt": "2026-05-15T13:30:06.114Z",
-      "lastRecalledAt": "2026-05-15T13:30:06.114Z",
+      "lastRecalledAt": "2026-05-22T10:55:06.425Z",
       "queryHashes": [
-        "2844f3f5f3c6"
+        "2844f3f5f3c6",
+        "364a56b1943b"
       ],
       "recallDays": [
-        "2026-05-15"
+        "2026-05-15",
+        "2026-05-22"
       ],
       "conceptTags": [
         "requirements.txt",
@@ -905,12 +911,12 @@
       "source": "memory",
       "snippet": "Goals: YouTube 100k | X 150k | SaaS Q3 | AI+Neuro Community | 2 books/month | French",
       "recallCount": 0,
-      "dailyCount": 3,
+      "dailyCount": 4,
       "groundedCount": 0,
-      "totalScore": 1.8599999999999999,
+      "totalScore": 2.48,
       "maxScore": 0.62,
       "firstRecalledAt": "2026-05-16T21:32:01.867Z",
-      "lastRecalledAt": "2026-05-21T21:40:01.469Z",
+      "lastRecalledAt": "2026-05-22T21:34:12.947Z",
       "queryHashes": [
         "ca7d365d990f"
       ],
@@ -919,7 +925,8 @@
         "2026-05-16",
         "2026-05-21",
         "2026-05-20",
-        "2026-05-22"
+        "2026-05-22",
+        "2026-05-23"
       ],
       "conceptTags": [
         "books/month",
@@ -940,12 +947,12 @@
       "source": "memory",
       "snippet": "Actions Completed: **🚀 X Thread: Motif Neurotech Depression BCI** ✅; 8-tweet thread on the first therapeutic BCI for depression getting FDA approval; Covers: DOT implant (blueberry-sized, skull-mounted), 20-min procedure, Central Executive Network targeting, 3M TRD patients, ARP",
       "recallCount": 0,
-      "dailyCount": 3,
+      "dailyCount": 4,
       "groundedCount": 0,
-      "totalScore": 1.8599999999999999,
+      "totalScore": 2.48,
       "maxScore": 0.62,
       "firstRecalledAt": "2026-05-16T21:32:01.867Z",
-      "lastRecalledAt": "2026-05-21T21:40:01.469Z",
+      "lastRecalledAt": "2026-05-22T21:34:12.947Z",
       "queryHashes": [
         "ca7d365d990f"
       ],
@@ -954,7 +961,8 @@
         "2026-05-16",
         "2026-05-21",
         "2026-05-20",
-        "2026-05-22"
+        "2026-05-22",
+        "2026-05-23"
       ],
       "conceptTags": [
         "network",
@@ -975,12 +983,12 @@
       "source": "memory",
       "snippet": "Actions Completed: **🎬 YouTube Short Script: Meta TRIBE v2 Brain Simulator** ✅; 90-sec script covering Meta FAIR's foundation model trained on 1,000+ hours fMRI; Vision + audition + language in-silico neuroscience; Full visual plan with on-screen text cues",
       "recallCount": 0,
-      "dailyCount": 3,
+      "dailyCount": 4,
       "groundedCount": 0,
-      "totalScore": 1.8599999999999999,
+      "totalScore": 2.48,
       "maxScore": 0.62,
       "firstRecalledAt": "2026-05-16T21:32:01.867Z",
-      "lastRecalledAt": "2026-05-21T21:40:01.469Z",
+      "lastRecalledAt": "2026-05-22T21:34:12.947Z",
       "queryHashes": [
         "ca7d365d990f"
       ],
@@ -989,7 +997,8 @@
         "2026-05-16",
         "2026-05-21",
         "2026-05-20",
-        "2026-05-22"
+        "2026-05-22",
+        "2026-05-23"
       ],
       "conceptTags": [
         "90-sec",
@@ -1010,12 +1019,12 @@
       "source": "memory",
       "snippet": "Actions Completed: Saved to: `content/YOUTUBE_SHORT_META_BRAIN_20260517.md`",
       "recallCount": 0,
-      "dailyCount": 3,
+      "dailyCount": 4,
       "groundedCount": 0,
-      "totalScore": 1.8599999999999999,
+      "totalScore": 2.48,
       "maxScore": 0.62,
       "firstRecalledAt": "2026-05-16T21:32:01.867Z",
-      "lastRecalledAt": "2026-05-21T21:40:01.469Z",
+      "lastRecalledAt": "2026-05-22T21:34:12.947Z",
       "queryHashes": [
         "ca7d365d990f"
       ],
@@ -1024,7 +1033,8 @@
         "2026-05-16",
         "2026-05-21",
         "2026-05-20",
-        "2026-05-22"
+        "2026-05-22",
+        "2026-05-23"
       ],
       "conceptTags": [
         "actions",
@@ -1041,12 +1051,12 @@
       "source": "memory",
       "snippet": "Actions Completed: **🇫🇷 French Practice Created** ✅; BCI & AI themed: 5 translation sentences + 5 vocab words + pronunciation tips; Saved to: `content/FRENCH_PRACTICE_20260517.md`",
       "recallCount": 0,
-      "dailyCount": 3,
+      "dailyCount": 4,
       "groundedCount": 0,
-      "totalScore": 1.8599999999999999,
+      "totalScore": 2.48,
       "maxScore": 0.62,
       "firstRecalledAt": "2026-05-16T21:32:01.867Z",
-      "lastRecalledAt": "2026-05-21T21:40:01.469Z",
+      "lastRecalledAt": "2026-05-22T21:34:12.947Z",
       "queryHashes": [
         "ca7d365d990f"
       ],
@@ -1055,7 +1065,8 @@
         "2026-05-16",
         "2026-05-21",
         "2026-05-20",
-        "2026-05-22"
+        "2026-05-22",
+        "2026-05-23"
       ],
       "conceptTags": [
         "actions",
@@ -1076,12 +1087,12 @@
       "source": "memory",
       "snippet": "Actions Completed: **📋 Content Factory pipeline ran** ✅; Reddit r/neurology research scraped; Thumbnail generated",
       "recallCount": 0,
-      "dailyCount": 3,
+      "dailyCount": 4,
       "groundedCount": 0,
-      "totalScore": 1.8599999999999999,
+      "totalScore": 2.48,
       "maxScore": 0.62,
       "firstRecalledAt": "2026-05-16T21:32:01.867Z",
-      "lastRecalledAt": "2026-05-21T21:40:01.469Z",
+      "lastRecalledAt": "2026-05-22T21:34:12.947Z",
       "queryHashes": [
         "ca7d365d990f"
       ],
@@ -1090,7 +1101,8 @@
         "2026-05-16",
         "2026-05-21",
         "2026-05-20",
-        "2026-05-22"
+        "2026-05-22",
+        "2026-05-23"
       ],
       "conceptTags": [
         "r/neurology",
@@ -1111,12 +1123,12 @@
       "source": "memory",
       "snippet": "Actions Completed: **🗂️ KANBAN.md updated** ✅; Moved today's completions to Done; Added In Progress and To Do sections for May 17-23 week",
       "recallCount": 0,
-      "dailyCount": 3,
+      "dailyCount": 4,
       "groundedCount": 0,
-      "totalScore": 1.8599999999999999,
+      "totalScore": 2.48,
       "maxScore": 0.62,
       "firstRecalledAt": "2026-05-16T21:32:01.867Z",
-      "lastRecalledAt": "2026-05-21T21:40:01.469Z",
+      "lastRecalledAt": "2026-05-22T21:34:12.947Z",
       "queryHashes": [
         "ca7d365d990f"
       ],
@@ -1125,7 +1137,8 @@
         "2026-05-16",
         "2026-05-21",
         "2026-05-20",
-        "2026-05-22"
+        "2026-05-22",
+        "2026-05-23"
       ],
       "conceptTags": [
         "kanban.md",
@@ -1146,12 +1159,12 @@
       "source": "memory",
       "snippet": "Key Research Discovered Today: **Motif Neurotech DOT implant** — first BCI for depression, FDA approved for clinical trials (April 27, 2026). 10-patient safety trial across 5 leading US hospitals.; **Meta TRIBE v2** — Foundation model trained on 28M+ fMRI frames across 720 subjec",
       "recallCount": 0,
-      "dailyCount": 2,
+      "dailyCount": 3,
       "groundedCount": 0,
-      "totalScore": 1.24,
+      "totalScore": 1.8599999999999999,
       "maxScore": 0.62,
       "firstRecalledAt": "2026-05-16T21:32:01.867Z",
-      "lastRecalledAt": "2026-05-21T21:40:01.469Z",
+      "lastRecalledAt": "2026-05-22T21:34:12.947Z",
       "queryHashes": [
         "ca7d365d990f"
       ],
@@ -1159,7 +1172,8 @@
         "2026-05-17",
         "2026-05-16",
         "2026-05-22",
-        "2026-05-21"
+        "2026-05-21",
+        "2026-05-23"
       ],
       "conceptTags": [
         "10-patient",
@@ -1180,18 +1194,20 @@
       "source": "memory",
       "snippet": "Tomorrow's Focus: Ask user which X thread to post first; Configure MiroFish .env and attempt docker compose up; Update YouTube BCI script with Motif + TRIBE content",
       "recallCount": 0,
-      "dailyCount": 1,
+      "dailyCount": 2,
       "groundedCount": 0,
-      "totalScore": 0.62,
+      "totalScore": 1.24,
       "maxScore": 0.62,
       "firstRecalledAt": "2026-05-16T21:32:01.867Z",
-      "lastRecalledAt": "2026-05-16T21:32:01.867Z",
+      "lastRecalledAt": "2026-05-22T21:34:12.947Z",
       "queryHashes": [
         "ca7d365d990f"
       ],
       "recallDays": [
         "2026-05-17",
-        "2026-05-16"
+        "2026-05-16",
+        "2026-05-23",
+        "2026-05-22"
       ],
       "conceptTags": [
         "tomorrow's",
@@ -1212,12 +1228,12 @@
       "source": "memory",
       "snippet": "Goals: YouTube 100k | X 150k | SaaS Q3 | AI+Neuro Community | 2 books/month | French",
       "recallCount": 0,
-      "dailyCount": 4,
+      "dailyCount": 5,
       "groundedCount": 0,
-      "totalScore": 2.48,
+      "totalScore": 3.1,
       "maxScore": 0.62,
       "firstRecalledAt": "2026-05-16T21:32:01.867Z",
-      "lastRecalledAt": "2026-05-21T21:40:01.469Z",
+      "lastRecalledAt": "2026-05-22T21:34:12.947Z",
       "queryHashes": [
         "ccfae0e39afd"
       ],
@@ -1227,7 +1243,8 @@
         "2026-05-20",
         "2026-05-19",
         "2026-05-21",
-        "2026-05-22"
+        "2026-05-22",
+        "2026-05-23"
       ],
       "conceptTags": [
         "books/month",
@@ -1248,12 +1265,12 @@
       "source": "memory",
       "snippet": "Actions Completed: **🎬 YouTube Script — \"Meta Trained an AI on 1,000 Hours of Human Brain Scans\"** ✅; 9-min script on Meta FAIR's TRIBE v2 (arXiv:2605.04326); Tri-modal (video/audio/text) foundation model predicting fMRI; 1,117 hours of fMRI, 720 subjects, several-fold accuracy",
       "recallCount": 0,
-      "dailyCount": 4,
+      "dailyCount": 5,
       "groundedCount": 0,
-      "totalScore": 2.48,
+      "totalScore": 3.1,
       "maxScore": 0.62,
       "firstRecalledAt": "2026-05-16T21:32:01.867Z",
-      "lastRecalledAt": "2026-05-21T21:40:01.469Z",
+      "lastRecalledAt": "2026-05-22T21:34:12.947Z",
       "queryHashes": [
         "ccfae0e39afd"
       ],
@@ -1263,7 +1280,8 @@
         "2026-05-20",
         "2026-05-19",
         "2026-05-21",
-        "2026-05-22"
+        "2026-05-22",
+        "2026-05-23"
       ],
       "conceptTags": [
         "9-min",
@@ -1284,12 +1302,12 @@
       "source": "memory",
       "snippet": "Actions Completed: In-silico experiments that replicate decades of neuroscience; 3 \"holy shit\" moments: zero-shot prediction, log-linear scaling, open-source brain model; Saved to: `YOUTUBE_SCRIPT_TRIBE_v2_20260516.md`",
       "recallCount": 0,
-      "dailyCount": 4,
+      "dailyCount": 5,
       "groundedCount": 0,
-      "totalScore": 2.48,
+      "totalScore": 3.1,
       "maxScore": 0.62,
       "firstRecalledAt": "2026-05-16T21:32:01.867Z",
-      "lastRecalledAt": "2026-05-21T21:40:01.469Z",
+      "lastRecalledAt": "2026-05-22T21:34:12.947Z",
       "queryHashes": [
         "ccfae0e39afd"
       ],
@@ -1299,7 +1317,8 @@
         "2026-05-20",
         "2026-05-19",
         "2026-05-21",
-        "2026-05-22"
+        "2026-05-22",
+        "2026-05-23"
       ],
       "conceptTags": [
         "in-silico",
@@ -1320,12 +1339,12 @@
       "source": "memory",
       "snippet": "Actions Completed: **🧵 X Thread — \"Your Brain Doesn't Create Mental Images. It LITERALLY Sees Them.\"** ✅; 8-tweet thread on Simons Foundation / *Science* single-neuron study; Ventral temporal cortex: same neurons fire for seeing AND imagining; The brain implements a generative m",
       "recallCount": 0,
-      "dailyCount": 4,
+      "dailyCount": 5,
       "groundedCount": 0,
-      "totalScore": 2.48,
+      "totalScore": 3.1,
       "maxScore": 0.62,
       "firstRecalledAt": "2026-05-16T21:32:01.867Z",
-      "lastRecalledAt": "2026-05-21T21:40:01.469Z",
+      "lastRecalledAt": "2026-05-22T21:34:12.947Z",
       "queryHashes": [
         "ccfae0e39afd"
       ],
@@ -1335,7 +1354,8 @@
         "2026-05-20",
         "2026-05-19",
         "2026-05-21",
-        "2026-05-22"
+        "2026-05-22",
+        "2026-05-23"
       ],
       "conceptTags": [
         "8-tweet",
@@ -1356,12 +1376,12 @@
       "source": "memory",
       "snippet": "Actions Completed: Poll question, 5 hashtags, strong engagement hook; Saved to: `X_THREAD_SEEING_IMAGINING_20260516.md`",
       "recallCount": 0,
-      "dailyCount": 4,
+      "dailyCount": 5,
       "groundedCount": 0,
-      "totalScore": 2.48,
+      "totalScore": 3.1,
       "maxScore": 0.62,
       "firstRecalledAt": "2026-05-16T21:32:01.867Z",
-      "lastRecalledAt": "2026-05-21T21:40:01.469Z",
+      "lastRecalledAt": "2026-05-22T21:34:12.947Z",
       "queryHashes": [
         "ccfae0e39afd"
       ],
@@ -1371,7 +1391,8 @@
         "2026-05-20",
         "2026-05-19",
         "2026-05-21",
-        "2026-05-22"
+        "2026-05-22",
+        "2026-05-23"
       ],
       "conceptTags": [
         "actions",
@@ -1392,12 +1413,12 @@
       "source": "memory",
       "snippet": "Actions Completed: **🇫🇷 French + Neuroscience Flashcards** ✅; 25 bilingual flashcards: brain regions, neuron types, brain waves, learning/memory, BCI/AI terms; 5 mini-dialogues in French for conference/meetup scenarios; Dual-purpose: learning French AND neuroscience simultaneou",
       "recallCount": 0,
-      "dailyCount": 4,
+      "dailyCount": 5,
       "groundedCount": 0,
-      "totalScore": 2.48,
+      "totalScore": 3.1,
       "maxScore": 0.62,
       "firstRecalledAt": "2026-05-16T21:32:01.867Z",
-      "lastRecalledAt": "2026-05-21T21:40:01.469Z",
+      "lastRecalledAt": "2026-05-22T21:34:12.947Z",
       "queryHashes": [
         "ccfae0e39afd"
       ],
@@ -1407,7 +1428,8 @@
         "2026-05-20",
         "2026-05-19",
         "2026-05-21",
-        "2026-05-22"
+        "2026-05-22",
+        "2026-05-23"
       ],
       "conceptTags": [
         "learning/memory",
@@ -1428,12 +1450,12 @@
       "source": "memory",
       "snippet": "Actions Completed: Saved to: `FRENCH_NEURO_FLASHCARDS_20260516.md`",
       "recallCount": 0,
-      "dailyCount": 3,
+      "dailyCount": 4,
       "groundedCount": 0,
-      "totalScore": 1.8599999999999999,
+      "totalScore": 2.48,
       "maxScore": 0.62,
       "firstRecalledAt": "2026-05-16T21:32:01.867Z",
-      "lastRecalledAt": "2026-05-21T21:40:01.469Z",
+      "lastRecalledAt": "2026-05-22T21:34:12.947Z",
       "queryHashes": [
         "ccfae0e39afd"
       ],
@@ -1442,7 +1464,8 @@
         "2026-05-16",
         "2026-05-21",
         "2026-05-20",
-        "2026-05-22"
+        "2026-05-22",
+        "2026-05-23"
       ],
       "conceptTags": [
         "actions",
@@ -1459,12 +1482,12 @@
       "source": "memory",
       "snippet": "Actions Completed: **📋 KANBAN.md Updated** — Moved May 13-15 work to Done, added new tasks, tracked weekly focus",
       "recallCount": 0,
-      "dailyCount": 2,
+      "dailyCount": 3,
       "groundedCount": 0,
-      "totalScore": 1.24,
+      "totalScore": 1.8599999999999999,
       "maxScore": 0.62,
       "firstRecalledAt": "2026-05-16T21:32:01.867Z",
-      "lastRecalledAt": "2026-05-21T21:40:01.469Z",
+      "lastRecalledAt": "2026-05-22T21:34:12.947Z",
       "queryHashes": [
         "ccfae0e39afd"
       ],
@@ -1472,7 +1495,8 @@
         "2026-05-17",
         "2026-05-16",
         "2026-05-22",
-        "2026-05-21"
+        "2026-05-21",
+        "2026-05-23"
       ],
       "conceptTags": [
         "kanban.md",
@@ -1493,12 +1517,12 @@
       "source": "memory",
       "snippet": "Goals: YouTube 100k | X 150k | SaaS Q3 | AI+Neuro Community | 2 books/month | French",
       "recallCount": 0,
-      "dailyCount": 5,
+      "dailyCount": 6,
       "groundedCount": 0,
-      "totalScore": 3.1,
+      "totalScore": 3.72,
       "maxScore": 0.62,
       "firstRecalledAt": "2026-05-16T21:32:01.867Z",
-      "lastRecalledAt": "2026-05-21T21:40:01.469Z",
+      "lastRecalledAt": "2026-05-22T21:34:12.947Z",
       "queryHashes": [
         "7e5abc1a80b8"
       ],
@@ -1509,7 +1533,8 @@
         "2026-05-18",
         "2026-05-20",
         "2026-05-21",
-        "2026-05-22"
+        "2026-05-22",
+        "2026-05-23"
       ],
       "conceptTags": [
         "books/month",
@@ -1530,12 +1555,12 @@
       "source": "memory",
       "snippet": "Actions Completed: **X Thread — \"Your Brain's Genetic GPS\"** 🧵; 8-tweet thread on Nagoya University SPERRFY discovery; 763 genes × 213 brain regions, 0.88 connectivity prediction accuracy; Validates 60-year-old chemoaffinity theory at whole-brain scale",
       "recallCount": 0,
-      "dailyCount": 5,
+      "dailyCount": 6,
       "groundedCount": 0,
-      "totalScore": 3.1,
+      "totalScore": 3.72,
       "maxScore": 0.62,
       "firstRecalledAt": "2026-05-16T21:32:01.867Z",
-      "lastRecalledAt": "2026-05-21T21:40:01.469Z",
+      "lastRecalledAt": "2026-05-22T21:34:12.947Z",
       "queryHashes": [
         "7e5abc1a80b8"
       ],
@@ -1546,7 +1571,8 @@
         "2026-05-18",
         "2026-05-20",
         "2026-05-21",
-        "2026-05-22"
+        "2026-05-22",
+        "2026-05-23"
       ],
       "conceptTags": [
         "8-tweet",
@@ -1567,12 +1593,12 @@
       "source": "memory",
       "snippet": "Actions Completed: Saved to: `X_THREAD_GENETIC_GPS_20260515.md`",
       "recallCount": 0,
-      "dailyCount": 5,
+      "dailyCount": 6,
       "groundedCount": 0,
-      "totalScore": 3.1,
+      "totalScore": 3.72,
       "maxScore": 0.62,
       "firstRecalledAt": "2026-05-16T21:32:01.867Z",
-      "lastRecalledAt": "2026-05-21T21:40:01.469Z",
+      "lastRecalledAt": "2026-05-22T21:34:12.947Z",
       "queryHashes": [
         "7e5abc1a80b8"
       ],
@@ -1583,7 +1609,8 @@
         "2026-05-18",
         "2026-05-20",
         "2026-05-21",
-        "2026-05-22"
+        "2026-05-22",
+        "2026-05-23"
       ],
       "conceptTags": [
         "x-thread-genetic-gps-20260515.md",
@@ -1601,12 +1628,12 @@
       "source": "memory",
       "snippet": "Actions Completed: **YouTube Script — \"Your Brain Has a Genetic GPS\"** 🎬; 9-10 minute full script with B-roll markers; Covers: Sperry's 1963 theory → SPERRFY ML breakthrough → implications; Production notes, CTA suggestions, key stats cited",
       "recallCount": 0,
-      "dailyCount": 5,
+      "dailyCount": 6,
       "groundedCount": 0,
-      "totalScore": 3.1,
+      "totalScore": 3.72,
       "maxScore": 0.62,
       "firstRecalledAt": "2026-05-16T21:32:01.867Z",
-      "lastRecalledAt": "2026-05-21T21:40:01.469Z",
+      "lastRecalledAt": "2026-05-22T21:34:12.947Z",
       "queryHashes": [
         "7e5abc1a80b8"
       ],
@@ -1617,7 +1644,8 @@
         "2026-05-18",
         "2026-05-20",
         "2026-05-21",
-        "2026-05-22"
+        "2026-05-22",
+        "2026-05-23"
       ],
       "conceptTags": [
         "9-10",
@@ -1638,12 +1666,12 @@
       "source": "memory",
       "snippet": "Actions Completed: Saved to: `YOUTUBE_SCRIPT_GENETIC_GPS_20260515.md`",
       "recallCount": 0,
-      "dailyCount": 5,
+      "dailyCount": 6,
       "groundedCount": 0,
-      "totalScore": 3.1,
+      "totalScore": 3.72,
       "maxScore": 0.62,
       "firstRecalledAt": "2026-05-16T21:32:01.867Z",
-      "lastRecalledAt": "2026-05-21T21:40:01.469Z",
+      "lastRecalledAt": "2026-05-22T21:34:12.947Z",
       "queryHashes": [
         "7e5abc1a80b8"
       ],
@@ -1654,7 +1682,8 @@
         "2026-05-18",
         "2026-05-20",
         "2026-05-21",
-        "2026-05-22"
+        "2026-05-22",
+        "2026-05-23"
       ],
       "conceptTags": [
         "actions",
@@ -1670,12 +1699,12 @@
       "source": "memory",
       "snippet": "Actions Completed: **FocusFlow SaaS Backend** 🚀; Full FastAPI backend: auth, sessions CRUD, waitlist; SQLAlchemy 2.0 models, Pydantic v2 schemas, JWT auth; User-scoped sessions, bcrypt passwords, CORS enabled",
       "recallCount": 0,
-      "dailyCount": 5,
+      "dailyCount": 6,
       "groundedCount": 0,
-      "totalScore": 3.1,
+      "totalScore": 3.72,
       "maxScore": 0.62,
       "firstRecalledAt": "2026-05-16T21:32:01.867Z",
-      "lastRecalledAt": "2026-05-21T21:40:01.469Z",
+      "lastRecalledAt": "2026-05-22T21:34:12.947Z",
       "queryHashes": [
         "7e5abc1a80b8"
       ],
@@ -1686,7 +1715,8 @@
         "2026-05-18",
         "2026-05-20",
         "2026-05-21",
-        "2026-05-22"
+        "2026-05-22",
+        "2026-05-23"
       ],
       "conceptTags": [
         "2.0",
@@ -1707,12 +1737,12 @@
       "source": "memory",
       "snippet": "Actions Completed: Saved to: `focusflow-backend/` (9 Python files + alembic notes)",
       "recallCount": 0,
-      "dailyCount": 3,
+      "dailyCount": 4,
       "groundedCount": 0,
-      "totalScore": 1.8599999999999999,
+      "totalScore": 2.48,
       "maxScore": 0.62,
       "firstRecalledAt": "2026-05-16T21:32:01.867Z",
-      "lastRecalledAt": "2026-05-21T21:40:01.469Z",
+      "lastRecalledAt": "2026-05-22T21:34:12.947Z",
       "queryHashes": [
         "7e5abc1a80b8"
       ],
@@ -1721,7 +1751,8 @@
         "2026-05-16",
         "2026-05-21",
         "2026-05-20",
-        "2026-05-22"
+        "2026-05-22",
+        "2026-05-23"
       ],
       "conceptTags": [
         "focusflow-backend",
@@ -1742,12 +1773,12 @@
       "source": "memory",
       "snippet": "Files Created Today: KANBAN.md (fresh with this week's goals); X_THREAD_GENETIC_GPS_20260515.md; YOUTUBE_SCRIPT_GENETIC_GPS_20260515.md; focusflow-backend/ (9 Python files + requirements.txt + alembic/)",
       "recallCount": 0,
-      "dailyCount": 2,
+      "dailyCount": 3,
       "groundedCount": 0,
-      "totalScore": 1.24,
+      "totalScore": 1.8599999999999999,
       "maxScore": 0.62,
       "firstRecalledAt": "2026-05-16T21:32:01.867Z",
-      "lastRecalledAt": "2026-05-21T21:40:01.469Z",
+      "lastRecalledAt": "2026-05-22T21:34:12.947Z",
       "queryHashes": [
         "7e5abc1a80b8"
       ],
@@ -1755,7 +1786,8 @@
         "2026-05-17",
         "2026-05-16",
         "2026-05-22",
-        "2026-05-21"
+        "2026-05-21",
+        "2026-05-23"
       ],
       "conceptTags": [
         "kanban.md",
@@ -1776,18 +1808,20 @@
       "source": "memory",
       "snippet": "Status: **Content bank**: 3+ thread drafts, 4+ scripts ready — posting is the clear bottleneck; **SaaS**: MVP spec + landing page + backend built. Next: deploy; **Posting bottleneck still unresolved** — recommend Typefully/Hypefury setup or manual posting today",
       "recallCount": 0,
-      "dailyCount": 1,
+      "dailyCount": 2,
       "groundedCount": 0,
-      "totalScore": 0.62,
+      "totalScore": 1.24,
       "maxScore": 0.62,
       "firstRecalledAt": "2026-05-16T21:32:01.867Z",
-      "lastRecalledAt": "2026-05-16T21:32:01.867Z",
+      "lastRecalledAt": "2026-05-22T21:34:12.947Z",
       "queryHashes": [
         "7e5abc1a80b8"
       ],
       "recallDays": [
         "2026-05-17",
-        "2026-05-16"
+        "2026-05-16",
+        "2026-05-23",
+        "2026-05-22"
       ],
       "conceptTags": [
         "typefully/hypefury",
@@ -16139,18 +16173,20 @@
       "source": "memory",
       "snippet": "08:00 — Twitter Bookmarks Sync (Cron): Cron job `x-twitter-bookmarks-cli.py` ran successfully; Currently a test script inserting sample data into `memory_test.db` — not yet wired to real X API bookmarks; Real bookmarks DB target: `memory_bookmarks.db`; Underlying test script: `te",
       "recallCount": 0,
-      "dailyCount": 1,
+      "dailyCount": 2,
       "groundedCount": 0,
-      "totalScore": 0.62,
+      "totalScore": 1.24,
       "maxScore": 0.62,
       "firstRecalledAt": "2026-05-19T21:31:58.855Z",
-      "lastRecalledAt": "2026-05-19T21:31:58.855Z",
+      "lastRecalledAt": "2026-05-22T21:34:12.947Z",
       "queryHashes": [
         "f2aa78e3961c"
       ],
       "recallDays": [
         "2026-05-20",
-        "2026-05-19"
+        "2026-05-19",
+        "2026-05-23",
+        "2026-05-22"
       ],
       "conceptTags": [
         "x-twitter-bookmarks-cli.py",
@@ -26117,6 +26153,3304 @@
         "sync",
         "cron",
         "job"
+      ]
+    },
+    "memory:memory/.dreams/session-corpus/2026-05-20.txt:130:130": {
+      "key": "memory:memory/.dreams/session-corpus/2026-05-20.txt:130:130",
+      "path": "memory/.dreams/session-corpus/2026-05-20.txt",
+      "startLine": 130,
+      "endLine": 130,
+      "source": "memory",
+      "snippet": "Assistant: approach begins with clinical assessment, proceeds to targeted antibody testing informed by the clinical phenotype, and uses confirmatory methods when results are discordant with the clinical picture. For antibody-positive results requiring confirmation, the clinician",
+      "recallCount": 0,
+      "dailyCount": 1,
+      "groundedCount": 0,
+      "totalScore": 0.58,
+      "maxScore": 0.58,
+      "firstRecalledAt": "2026-05-22T21:34:12.947Z",
+      "lastRecalledAt": "2026-05-22T21:34:12.947Z",
+      "queryHashes": [
+        "f8f9fcbffd97"
+      ],
+      "recallDays": [
+        "2026-05-23",
+        "2026-05-22"
+      ],
+      "conceptTags": [
+        "antibody-positive",
+        "approach",
+        "begins",
+        "clinical",
+        "assessment",
+        "proceeds",
+        "targeted",
+        "antibody"
+      ]
+    },
+    "memory:memory/.dreams/session-corpus/2026-05-20.txt:131:131": {
+      "key": "memory:memory/.dreams/session-corpus/2026-05-20.txt:131:131",
+      "path": "memory/.dreams/session-corpus/2026-05-20.txt",
+      "startLine": 131,
+      "endLine": 131,
+      "source": "memory",
+      "snippet": "Assistant: autoimmunity rather than peripheral antibody spillover. Serial titers may track treatment response and disease activity, though the correlation between antibody titer and clinical severity is imperfect and varies across antibody specificities. The decision to initiate",
+      "recallCount": 0,
+      "dailyCount": 1,
+      "groundedCount": 0,
+      "totalScore": 0.58,
+      "maxScore": 0.58,
+      "firstRecalledAt": "2026-05-22T21:34:12.947Z",
+      "lastRecalledAt": "2026-05-22T21:34:12.947Z",
+      "queryHashes": [
+        "f8f9fcbffd97"
+      ],
+      "recallDays": [
+        "2026-05-23",
+        "2026-05-22"
+      ],
+      "conceptTags": [
+        "autoimmunity",
+        "rather",
+        "peripheral",
+        "antibody",
+        "spillover",
+        "serial",
+        "titers",
+        "may"
+      ]
+    },
+    "memory:memory/.dreams/session-corpus/2026-05-20.txt:132:132": {
+      "key": "memory:memory/.dreams/session-corpus/2026-05-20.txt:132:132",
+      "path": "memory/.dreams/session-corpus/2026-05-20.txt",
+      "startLine": 132,
+      "endLine": 132,
+      "source": "memory",
+      "snippet": "Assistant: the specific antibody. Negative results do not exclude autoimmune encephalitis, as approximately half of cases are antibody-negative by standard testing; the absence of antibody positivity should not deter immunotherapy when the clinical picture strongly Supports autoi",
+      "recallCount": 0,
+      "dailyCount": 1,
+      "groundedCount": 0,
+      "totalScore": 0.58,
+      "maxScore": 0.58,
+      "firstRecalledAt": "2026-05-22T21:34:12.947Z",
+      "lastRecalledAt": "2026-05-22T21:34:12.947Z",
+      "queryHashes": [
+        "f8f9fcbffd97"
+      ],
+      "recallDays": [
+        "2026-05-23",
+        "2026-05-22"
+      ],
+      "conceptTags": [
+        "antibody-negative",
+        "specific",
+        "antibody",
+        "negative",
+        "results",
+        "not",
+        "exclude",
+        "autoimmune"
+      ]
+    },
+    "memory:memory/.dreams/session-corpus/2026-05-20.txt:133:133": {
+      "key": "memory:memory/.dreams/session-corpus/2026-05-20.txt:133:133",
+      "path": "memory/.dreams/session-corpus/2026-05-20.txt",
+      "startLine": 133,
+      "endLine": 133,
+      "source": "memory",
+      "snippet": "Assistant: end-organ toxicity. The misdiagnosis literature documents patients receiving these treatments inappropriately for alternative conditions that did not require immunosuppression, while the correct diagnosis was delayed—a sequence that causes harm through both treatment c",
+      "recallCount": 0,
+      "dailyCount": 1,
+      "groundedCount": 0,
+      "totalScore": 0.58,
+      "maxScore": 0.58,
+      "firstRecalledAt": "2026-05-22T21:34:12.947Z",
+      "lastRecalledAt": "2026-05-22T21:34:12.947Z",
+      "queryHashes": [
+        "f8f9fcbffd97"
+      ],
+      "recallDays": [
+        "2026-05-23",
+        "2026-05-22"
+      ],
+      "conceptTags": [
+        "end-organ",
+        "end",
+        "organ",
+        "toxicity",
+        "misdiagnosis",
+        "literature",
+        "documents",
+        "patients"
+      ]
+    },
+    "memory:memory/.dreams/session-corpus/2026-05-20.txt:134:134": {
+      "key": "memory:memory/.dreams/session-corpus/2026-05-20.txt:134:134",
+      "path": "memory/.dreams/session-corpus/2026-05-20.txt",
+      "startLine": 134,
+      "endLine": 134,
+      "source": "memory",
+      "snippet": "Assistant: Neurology*, 79(12), 1317-1325. Gilligan, M., et al. (2024). Autoimmune central nervous system disorders: Antibody testing and its clinical utility. *Clinical Biochemistry*, 126, 110746. Graus, F., et al. (2016). A clinical approach to diagnosis of autoimmune encephalit",
+      "recallCount": 0,
+      "dailyCount": 1,
+      "groundedCount": 0,
+      "totalScore": 0.58,
+      "maxScore": 0.58,
+      "firstRecalledAt": "2026-05-22T21:34:12.947Z",
+      "lastRecalledAt": "2026-05-22T21:34:12.947Z",
+      "queryHashes": [
+        "f8f9fcbffd97"
+      ],
+      "recallDays": [
+        "2026-05-23",
+        "2026-05-22"
+      ],
+      "conceptTags": [
+        "1317-1325",
+        "neurology",
+        "gilligan",
+        "autoimmune",
+        "central",
+        "nervous",
+        "disorders",
+        "antibody"
+      ]
+    },
+    "memory:memory/.dreams/session-corpus/2026-05-20.txt:135:135": {
+      "key": "memory:memory/.dreams/session-corpus/2026-05-20.txt:135:135",
+      "path": "memory/.dreams/session-corpus/2026-05-20.txt",
+      "startLine": 135,
+      "endLine": 135,
+      "source": "memory",
+      "snippet": "Assistant: G., et al. (2022). The diagnosis of anti-LGI1 encephalitis varies with the type of immunodetection assay and sample examined. *Frontiers in Immunology*, 13, 1069368. Vaisvilas, M., et al. (2024). Seroprevalence of neuronal antibodies in diseases mimicking autoimmune en",
+      "recallCount": 0,
+      "dailyCount": 1,
+      "groundedCount": 0,
+      "totalScore": 0.58,
+      "maxScore": 0.58,
+      "firstRecalledAt": "2026-05-22T21:34:12.947Z",
+      "lastRecalledAt": "2026-05-22T21:34:12.947Z",
+      "queryHashes": [
+        "f8f9fcbffd97"
+      ],
+      "recallDays": [
+        "2026-05-23",
+        "2026-05-22"
+      ],
+      "conceptTags": [
+        "anti-lgi1",
+        "diagnosis",
+        "anti",
+        "lgi1",
+        "encephalitis",
+        "varies",
+        "type",
+        "immunodetection"
+      ]
+    },
+    "memory:memory/.dreams/session-corpus/2026-05-21.txt:90:90": {
+      "key": "memory:memory/.dreams/session-corpus/2026-05-21.txt:90:90",
+      "path": "memory/.dreams/session-corpus/2026-05-21.txt",
+      "startLine": 90,
+      "endLine": 90,
+      "source": "memory",
+      "snippet": "Assistant: some cohorts) - If persistent or worsening → start anti-inflammatory therapy ### **For CNS TB** (highest morbidity) - **Do NOT observe** — treat immediately - **Corticosteroids are first-line.** The Machida et al. 2018 case (10 years post-treatment!) used: - **Predniso",
+      "recallCount": 0,
+      "dailyCount": 1,
+      "groundedCount": 0,
+      "totalScore": 0.58,
+      "maxScore": 0.58,
+      "firstRecalledAt": "2026-05-22T21:34:12.947Z",
+      "lastRecalledAt": "2026-05-22T21:34:12.947Z",
+      "queryHashes": [
+        "90ee39ac7cd8"
+      ],
+      "recallDays": [
+        "2026-05-23",
+        "2026-05-22"
+      ],
+      "conceptTags": [
+        "anti-inflammatory",
+        "first-line",
+        "post-treatment",
+        "cohorts",
+        "persistent",
+        "worsening",
+        "start",
+        "anti"
+      ]
+    },
+    "memory:memory/.dreams/session-corpus/2026-05-21.txt:91:91": {
+      "key": "memory:memory/.dreams/session-corpus/2026-05-21.txt:91:91",
+      "path": "memory/.dreams/session-corpus/2026-05-21.txt",
+      "startLine": 91,
+      "endLine": 91,
+      "source": "memory",
+      "snippet": "Assistant: steroids as above ### **For severe/refractory cases** - Consider **TNF-α inhibitors** (infliximab) — case reports show dramatic responses in steroid-resistant CNS paradoxical reactions - Consider extending duration of steroid taper --- ## Step 3: Steroid Dosing Strateg",
+      "recallCount": 0,
+      "dailyCount": 1,
+      "groundedCount": 0,
+      "totalScore": 0.58,
+      "maxScore": 0.58,
+      "firstRecalledAt": "2026-05-22T21:34:12.947Z",
+      "lastRecalledAt": "2026-05-22T21:34:12.947Z",
+      "queryHashes": [
+        "90ee39ac7cd8"
+      ],
+      "recallDays": [
+        "2026-05-23",
+        "2026-05-22"
+      ],
+      "conceptTags": [
+        "severe/refractory",
+        "tnf-α",
+        "steroid-resistant",
+        "steroids",
+        "above",
+        "severe",
+        "refractory",
+        "cases"
+      ]
+    },
+    "memory:memory/.dreams/session-corpus/2026-05-21.txt:92:92": {
+      "key": "memory:memory/.dreams/session-corpus/2026-05-21.txt:92:92",
+      "path": "memory/.dreams/session-corpus/2026-05-21.txt",
+      "startLine": 92,
+      "endLine": 92,
+      "source": "memory",
+      "snippet": "Assistant: therapy. Taper over many months. Relapses on taper are the norm, not the exception. --- ## Step 4: When to Restart ATT Only restart anti-TB treatment if: - Cultures turn positive - PCR turns positive - There's clear evidence of viable organisms (e.g., new cavitation on",
+      "recallCount": 0,
+      "dailyCount": 1,
+      "groundedCount": 0,
+      "totalScore": 0.58,
+      "maxScore": 0.58,
+      "firstRecalledAt": "2026-05-22T21:34:12.947Z",
+      "lastRecalledAt": "2026-05-22T21:34:12.947Z",
+      "queryHashes": [
+        "90ee39ac7cd8"
+      ],
+      "recallDays": [
+        "2026-05-23",
+        "2026-05-22"
+      ],
+      "conceptTags": [
+        "anti-tb",
+        "e.g",
+        "therapy",
+        "taper",
+        "many",
+        "months",
+        "relapses",
+        "norm"
+      ]
+    },
+    "memory:memory/.dreams/session-corpus/2026-05-21.txt:93:93": {
+      "key": "memory:memory/.dreams/session-corpus/2026-05-21.txt:93:93",
+      "path": "memory/.dreams/session-corpus/2026-05-21.txt",
+      "startLine": 93,
+      "endLine": 93,
+      "source": "memory",
+      "snippet": "Assistant: the specifics of your case (site of disease, HIV status, timing since treatment completion, what symptoms are persisting), I can help narrow it down further.",
+      "recallCount": 0,
+      "dailyCount": 1,
+      "groundedCount": 0,
+      "totalScore": 0.58,
+      "maxScore": 0.58,
+      "firstRecalledAt": "2026-05-22T21:34:12.947Z",
+      "lastRecalledAt": "2026-05-22T21:34:12.947Z",
+      "queryHashes": [
+        "90ee39ac7cd8"
+      ],
+      "recallDays": [
+        "2026-05-23",
+        "2026-05-22"
+      ],
+      "conceptTags": [
+        "specifics",
+        "case",
+        "site",
+        "disease",
+        "hiv",
+        "status",
+        "timing",
+        "treatment"
+      ]
+    },
+    "memory:memory/.dreams/session-corpus/2026-05-22.txt:18:18": {
+      "key": "memory:memory/.dreams/session-corpus/2026-05-22.txt:18:18",
+      "path": "memory/.dreams/session-corpus/2026-05-22.txt",
+      "startLine": 18,
+      "endLine": 18,
+      "source": "memory",
+      "snippet": "User: Repair Cron jobs",
+      "recallCount": 0,
+      "dailyCount": 1,
+      "groundedCount": 0,
+      "totalScore": 0.58,
+      "maxScore": 0.58,
+      "firstRecalledAt": "2026-05-22T21:34:12.947Z",
+      "lastRecalledAt": "2026-05-22T21:34:12.947Z",
+      "queryHashes": [
+        "91dce059e480"
+      ],
+      "recallDays": [
+        "2026-05-23",
+        "2026-05-22"
+      ],
+      "conceptTags": [
+        "repair",
+        "cron",
+        "jobs"
+      ]
+    },
+    "memory:memory/.dreams/session-corpus/2026-05-22.txt:19:19": {
+      "key": "memory:memory/.dreams/session-corpus/2026-05-22.txt:19:19",
+      "path": "memory/.dreams/session-corpus/2026-05-22.txt",
+      "startLine": 19,
+      "endLine": 19,
+      "source": "memory",
+      "snippet": "Assistant: Alright, I can see the issues. Three cron jobs are failing: 1. **GMB Daily Poster** — intermittent timeouts (30min timeout already, but sometimes image gen + composite takes longer) 2. **X Neurology News Scrape** — consistently timing out (browser automation with only",
+      "recallCount": 0,
+      "dailyCount": 1,
+      "groundedCount": 0,
+      "totalScore": 0.58,
+      "maxScore": 0.58,
+      "firstRecalledAt": "2026-05-22T21:34:12.947Z",
+      "lastRecalledAt": "2026-05-22T21:34:12.947Z",
+      "queryHashes": [
+        "91dce059e480"
+      ],
+      "recallDays": [
+        "2026-05-23",
+        "2026-05-22"
+      ],
+      "conceptTags": [
+        "alright",
+        "can",
+        "see",
+        "issues",
+        "three",
+        "cron",
+        "jobs",
+        "failing"
+      ]
+    },
+    "memory:memory/.dreams/session-corpus/2026-05-22.txt:20:20": {
+      "key": "memory:memory/.dreams/session-corpus/2026-05-22.txt:20:20",
+      "path": "memory/.dreams/session-corpus/2026-05-22.txt",
+      "startLine": 20,
+      "endLine": 20,
+      "source": "memory",
+      "snippet": "Assistant: Done. Here's what I found and fixed: **3 failing cron jobs** — all timeout-related. | Job | Old Timeout | New Timeout | Issue | |-----|------------|-------------|-------| | 🩻 **GMB Daily Poster** | 1800s (30min) | **2400s (40min)** | Image gen + PIL composite occasion",
+      "recallCount": 0,
+      "dailyCount": 1,
+      "groundedCount": 0,
+      "totalScore": 0.58,
+      "maxScore": 0.58,
+      "firstRecalledAt": "2026-05-22T21:34:12.947Z",
+      "lastRecalledAt": "2026-05-22T21:34:12.947Z",
+      "queryHashes": [
+        "91dce059e480"
+      ],
+      "recallDays": [
+        "2026-05-23",
+        "2026-05-22"
+      ],
+      "conceptTags": [
+        "timeout-related",
+        "done",
+        "here's",
+        "what",
+        "found",
+        "fixed",
+        "failing",
+        "cron"
+      ]
+    },
+    "memory:memory/.dreams/session-corpus/2026-05-22.txt:21:21": {
+      "key": "memory:memory/.dreams/session-corpus/2026-05-22.txt:21:21",
+      "path": "memory/.dreams/session-corpus/2026-05-22.txt",
+      "startLine": 21,
+      "endLine": 21,
+      "source": "memory",
+      "snippet": "Assistant: concurrent writes to the same report file (it runs every 6h). Not a timeout issue per se, but the longer timeout gives it room to recover. Next runs will use the new timeouts: - 🩻 GMB Poster — next at **9:00 AM** (3h from now) - 🐦 Neurology Scrape — next at **9:00 AM",
+      "recallCount": 0,
+      "dailyCount": 1,
+      "groundedCount": 0,
+      "totalScore": 0.58,
+      "maxScore": 0.58,
+      "firstRecalledAt": "2026-05-22T21:34:12.947Z",
+      "lastRecalledAt": "2026-05-22T21:34:12.947Z",
+      "queryHashes": [
+        "91dce059e480"
+      ],
+      "recallDays": [
+        "2026-05-23",
+        "2026-05-22"
+      ],
+      "conceptTags": [
+        "concurrent",
+        "writes",
+        "report",
+        "runs",
+        "not",
+        "timeout",
+        "issue",
+        "per"
+      ]
+    },
+    "memory:memory/.dreams/session-corpus/2026-05-22.txt:22:22": {
+      "key": "memory:memory/.dreams/session-corpus/2026-05-22.txt:22:22",
+      "path": "memory/.dreams/session-corpus/2026-05-22.txt",
+      "startLine": 22,
+      "endLine": 22,
+      "source": "memory",
+      "snippet": "Assistant: ✅ Workspace synced to GitHub — `d551e09` pushed to `main`. 73 files committed, including recent reports, daily notes, memory files, and knowledge-base entries.",
+      "recallCount": 0,
+      "dailyCount": 1,
+      "groundedCount": 0,
+      "totalScore": 0.58,
+      "maxScore": 0.58,
+      "firstRecalledAt": "2026-05-22T21:34:12.947Z",
+      "lastRecalledAt": "2026-05-22T21:34:12.947Z",
+      "queryHashes": [
+        "91dce059e480"
+      ],
+      "recallDays": [
+        "2026-05-23",
+        "2026-05-22"
+      ],
+      "conceptTags": [
+        "knowledge-base",
+        "synced",
+        "github",
+        "d551e09",
+        "pushed",
+        "committed",
+        "including",
+        "recent"
+      ]
+    },
+    "memory:memory/.dreams/session-corpus/2026-05-22.txt:23:23": {
+      "key": "memory:memory/.dreams/session-corpus/2026-05-22.txt:23:23",
+      "path": "memory/.dreams/session-corpus/2026-05-22.txt",
+      "startLine": 23,
+      "endLine": 23,
+      "source": "memory",
+      "snippet": "Assistant: Good — there's already an X search tab open with the neurology query. Let me use the browser plugin for this.",
+      "recallCount": 0,
+      "dailyCount": 1,
+      "groundedCount": 0,
+      "totalScore": 0.58,
+      "maxScore": 0.58,
+      "firstRecalledAt": "2026-05-22T21:34:12.947Z",
+      "lastRecalledAt": "2026-05-22T21:34:12.947Z",
+      "queryHashes": [
+        "91dce059e480"
+      ],
+      "recallDays": [
+        "2026-05-23",
+        "2026-05-22"
+      ],
+      "conceptTags": [
+        "good",
+        "there's",
+        "already",
+        "tab",
+        "open",
+        "neurology",
+        "query",
+        "let"
+      ]
+    },
+    "memory:memory/.dreams/session-corpus/2026-05-22.txt:24:24": {
+      "key": "memory:memory/.dreams/session-corpus/2026-05-22.txt:24:24",
+      "path": "memory/.dreams/session-corpus/2026-05-22.txt",
+      "startLine": 24,
+      "endLine": 24,
+      "source": "memory",
+      "snippet": "Assistant: Most of these are replies. Let me switch to Latest and capture the actual neurology posts better.",
+      "recallCount": 0,
+      "dailyCount": 1,
+      "groundedCount": 0,
+      "totalScore": 0.58,
+      "maxScore": 0.58,
+      "firstRecalledAt": "2026-05-22T21:34:12.947Z",
+      "lastRecalledAt": "2026-05-22T21:34:12.947Z",
+      "queryHashes": [
+        "91dce059e480"
+      ],
+      "recallDays": [
+        "2026-05-23",
+        "2026-05-22"
+      ],
+      "conceptTags": [
+        "replies",
+        "let",
+        "switch",
+        "latest",
+        "capture",
+        "actual",
+        "neurology",
+        "posts"
+      ]
+    },
+    "memory:memory/.dreams/session-corpus/2026-05-22.txt:25:25": {
+      "key": "memory:memory/.dreams/session-corpus/2026-05-22.txt:25:25",
+      "path": "memory/.dreams/session-corpus/2026-05-22.txt",
+      "startLine": 25,
+      "endLine": 25,
+      "source": "memory",
+      "snippet": "Assistant: Let me also check the Live tab for more recent content and scroll further.",
+      "recallCount": 0,
+      "dailyCount": 1,
+      "groundedCount": 0,
+      "totalScore": 0.58,
+      "maxScore": 0.58,
+      "firstRecalledAt": "2026-05-22T21:34:12.947Z",
+      "lastRecalledAt": "2026-05-22T21:34:12.947Z",
+      "queryHashes": [
+        "91dce059e480"
+      ],
+      "recallDays": [
+        "2026-05-23",
+        "2026-05-22"
+      ],
+      "conceptTags": [
+        "let",
+        "check",
+        "live",
+        "tab",
+        "recent",
+        "content",
+        "scroll",
+        "further"
+      ]
+    },
+    "memory:memory/.dreams/session-corpus/2026-05-22.txt:26:26": {
+      "key": "memory:memory/.dreams/session-corpus/2026-05-22.txt:26:26",
+      "path": "memory/.dreams/session-corpus/2026-05-22.txt",
+      "startLine": 26,
+      "endLine": 26,
+      "source": "memory",
+      "snippet": "Assistant: Let me check the Live tab for today's content which will have fresh posts.",
+      "recallCount": 0,
+      "dailyCount": 1,
+      "groundedCount": 0,
+      "totalScore": 0.58,
+      "maxScore": 0.58,
+      "firstRecalledAt": "2026-05-22T21:34:12.947Z",
+      "lastRecalledAt": "2026-05-22T21:34:12.947Z",
+      "queryHashes": [
+        "91dce059e480"
+      ],
+      "recallDays": [
+        "2026-05-23",
+        "2026-05-22"
+      ],
+      "conceptTags": [
+        "let",
+        "check",
+        "live",
+        "tab",
+        "today's",
+        "content",
+        "which",
+        "will"
+      ]
+    },
+    "memory:memory/.dreams/session-corpus/2026-05-22.txt:27:27": {
+      "key": "memory:memory/.dreams/session-corpus/2026-05-22.txt:27:27",
+      "path": "memory/.dreams/session-corpus/2026-05-22.txt",
+      "startLine": 27,
+      "endLine": 27,
+      "source": "memory",
+      "snippet": "Assistant: The Live tab seems to be redirecting. Let me navigate to it fresh and also check the stroke/neurointervention tab for more content.",
+      "recallCount": 0,
+      "dailyCount": 1,
+      "groundedCount": 0,
+      "totalScore": 0.58,
+      "maxScore": 0.58,
+      "firstRecalledAt": "2026-05-22T21:34:12.947Z",
+      "lastRecalledAt": "2026-05-22T21:34:12.947Z",
+      "queryHashes": [
+        "91dce059e480"
+      ],
+      "recallDays": [
+        "2026-05-23",
+        "2026-05-22"
+      ],
+      "conceptTags": [
+        "stroke/neurointervention",
+        "live",
+        "tab",
+        "seems",
+        "redirecting",
+        "let",
+        "navigate",
+        "fresh"
+      ]
+    },
+    "memory:memory/.dreams/session-corpus/2026-05-22.txt:28:28": {
+      "key": "memory:memory/.dreams/session-corpus/2026-05-22.txt:28:28",
+      "path": "memory/.dreams/session-corpus/2026-05-22.txt",
+      "startLine": 28,
+      "endLine": 28,
+      "source": "memory",
+      "snippet": "Assistant: Now let me compile the scrape file with the best 10 posts from today's search:",
+      "recallCount": 0,
+      "dailyCount": 1,
+      "groundedCount": 0,
+      "totalScore": 0.58,
+      "maxScore": 0.58,
+      "firstRecalledAt": "2026-05-22T21:34:12.947Z",
+      "lastRecalledAt": "2026-05-22T21:34:12.947Z",
+      "queryHashes": [
+        "91dce059e480"
+      ],
+      "recallDays": [
+        "2026-05-23",
+        "2026-05-22"
+      ],
+      "conceptTags": [
+        "now",
+        "let",
+        "compile",
+        "scrape",
+        "best",
+        "posts",
+        "today's"
+      ]
+    },
+    "memory:memory/.dreams/session-corpus/2026-05-22.txt:29:29": {
+      "key": "memory:memory/.dreams/session-corpus/2026-05-22.txt:29:29",
+      "path": "memory/.dreams/session-corpus/2026-05-22.txt",
+      "startLine": 29,
+      "endLine": 29,
+      "source": "memory",
+      "snippet": "Assistant: Scrape complete. **10 posts saved** to `knowledge-base/x-scrapes/x-neurology-2026-05-22.md`. ### Today's Neurology News Summary **🔴 Breaking / High Engagement:** 1. **ORIENTAL-MeVO Trial** (@NEJM) — Endovascular therapy for medium-vessel occlusion stroke. Two posts: t",
+      "recallCount": 0,
+      "dailyCount": 1,
+      "groundedCount": 0,
+      "totalScore": 0.58,
+      "maxScore": 0.58,
+      "firstRecalledAt": "2026-05-22T21:34:12.947Z",
+      "lastRecalledAt": "2026-05-22T21:34:12.947Z",
+      "queryHashes": [
+        "91dce059e480"
+      ],
+      "recallDays": [
+        "2026-05-23",
+        "2026-05-22"
+      ],
+      "conceptTags": [
+        "oriental-mevo",
+        "medium-vessel",
+        "scrape",
+        "complete",
+        "posts",
+        "saved",
+        "knowledge",
+        "base"
+      ]
+    },
+    "memory:memory/.dreams/session-corpus/2026-05-22.txt:30:30": {
+      "key": "memory:memory/.dreams/session-corpus/2026-05-22.txt:30:30",
+      "path": "memory/.dreams/session-corpus/2026-05-22.txt",
+      "startLine": 30,
+      "endLine": 30,
+      "source": "memory",
+      "snippet": "Assistant: (@OligoclonalBand) — Heading to ICNC in Taiwan. 6. **ACGME call** — Neurology Review Committee openings. **🟡 Education/High Engagement:** 7. **Whitfield Lewis MD** — Multiple posts on ACA/MCA/PICA neuroanatomy teaching (55, 15, 13 likes each). **⚡ Flags:** - 6 posts f",
+      "recallCount": 0,
+      "dailyCount": 1,
+      "groundedCount": 0,
+      "totalScore": 0.58,
+      "maxScore": 0.58,
+      "firstRecalledAt": "2026-05-22T21:34:12.947Z",
+      "lastRecalledAt": "2026-05-22T21:34:12.947Z",
+      "queryHashes": [
+        "91dce059e480"
+      ],
+      "recallDays": [
+        "2026-05-23",
+        "2026-05-22"
+      ],
+      "conceptTags": [
+        "education/high",
+        "aca/mca/pica",
+        "oligoclonalband",
+        "heading",
+        "icnc",
+        "taiwan",
+        "acgme",
+        "call"
+      ]
+    },
+    "memory:memory/.dreams/session-corpus/2026-05-22.txt:31:31": {
+      "key": "memory:memory/.dreams/session-corpus/2026-05-22.txt:31:31",
+      "path": "memory/.dreams/session-corpus/2026-05-22.txt",
+      "startLine": 31,
+      "endLine": 31,
+      "source": "memory",
+      "snippet": "Assistant: Script ran and completed successfully — Twitter bookmarks sync test passed. No issues to report.",
+      "recallCount": 0,
+      "dailyCount": 1,
+      "groundedCount": 0,
+      "totalScore": 0.58,
+      "maxScore": 0.58,
+      "firstRecalledAt": "2026-05-22T21:34:12.947Z",
+      "lastRecalledAt": "2026-05-22T21:34:12.947Z",
+      "queryHashes": [
+        "91dce059e480"
+      ],
+      "recallDays": [
+        "2026-05-23",
+        "2026-05-22"
+      ],
+      "conceptTags": [
+        "script",
+        "ran",
+        "completed",
+        "successfully",
+        "twitter",
+        "bookmarks",
+        "sync",
+        "test"
+      ]
+    },
+    "memory:memory/.dreams/session-corpus/2026-05-22.txt:32:32": {
+      "key": "memory:memory/.dreams/session-corpus/2026-05-22.txt:32:32",
+      "path": "memory/.dreams/session-corpus/2026-05-22.txt",
+      "startLine": 32,
+      "endLine": 32,
+      "source": "memory",
+      "snippet": "Assistant: Mflux needs HF auth which isn't set up, and all image gen APIs are rate-limited/misconfigured. I'll generate the poster programmatically using PIL — I can create a clean medical-themed background with gradient, anatomical-style elements, and composite everything togeth",
+      "recallCount": 0,
+      "dailyCount": 1,
+      "groundedCount": 0,
+      "totalScore": 0.58,
+      "maxScore": 0.58,
+      "firstRecalledAt": "2026-05-22T21:34:12.947Z",
+      "lastRecalledAt": "2026-05-22T21:34:12.947Z",
+      "queryHashes": [
+        "91dce059e480"
+      ],
+      "recallDays": [
+        "2026-05-23",
+        "2026-05-22"
+      ],
+      "conceptTags": [
+        "rate-limited/misconfigured",
+        "medical-themed",
+        "anatomical-style",
+        "mflux",
+        "needs",
+        "auth",
+        "which",
+        "isn't"
+      ]
+    },
+    "memory:memory/.dreams/session-corpus/2026-05-22.txt:33:33": {
+      "key": "memory:memory/.dreams/session-corpus/2026-05-22.txt:33:33",
+      "path": "memory/.dreams/session-corpus/2026-05-22.txt",
+      "startLine": 33,
+      "endLine": 33,
+      "source": "memory",
+      "snippet": "Assistant: Done! Today's GMB neurology poster is out: **📅 Friday, May 22, 2026 — Topic: Migraine** Created a 1080×1350 poster featuring: - **Gradient medical-blue background** with subtle neural/cross elements - **Top bar** with clinic branding - **Migraine topic header** with c",
+      "recallCount": 0,
+      "dailyCount": 1,
+      "groundedCount": 0,
+      "totalScore": 0.58,
+      "maxScore": 0.58,
+      "firstRecalledAt": "2026-05-22T21:34:12.947Z",
+      "lastRecalledAt": "2026-05-22T21:34:12.947Z",
+      "queryHashes": [
+        "91dce059e480"
+      ],
+      "recallDays": [
+        "2026-05-23",
+        "2026-05-22"
+      ],
+      "conceptTags": [
+        "medical-blue",
+        "neural/cross",
+        "done",
+        "today's",
+        "gmb",
+        "neurology",
+        "poster",
+        "out"
+      ]
+    },
+    "memory:memory/.dreams/session-corpus/2026-05-22.txt:34:34": {
+      "key": "memory:memory/.dreams/session-corpus/2026-05-22.txt:34:34",
+      "path": "memory/.dreams/session-corpus/2026-05-22.txt",
+      "startLine": 34,
+      "endLine": 34,
+      "source": "memory",
+      "snippet": "Assistant: Good — tab t1 already has an X search for neurology. Let me navigate it to the `f=top` + `since:today` filter, then extract posts.",
+      "recallCount": 0,
+      "dailyCount": 1,
+      "groundedCount": 0,
+      "totalScore": 0.58,
+      "maxScore": 0.58,
+      "firstRecalledAt": "2026-05-22T21:34:12.947Z",
+      "lastRecalledAt": "2026-05-22T21:34:12.947Z",
+      "queryHashes": [
+        "91dce059e480"
+      ],
+      "recallDays": [
+        "2026-05-23",
+        "2026-05-22"
+      ],
+      "conceptTags": [
+        "good",
+        "tab",
+        "already",
+        "has",
+        "neurology",
+        "let",
+        "navigate",
+        "top"
+      ]
+    },
+    "memory:memory/.dreams/session-corpus/2026-05-22.txt:35:35": {
+      "key": "memory:memory/.dreams/session-corpus/2026-05-22.txt:35:35",
+      "path": "memory/.dreams/session-corpus/2026-05-22.txt",
+      "startLine": 35,
+      "endLine": 35,
+      "source": "memory",
+      "snippet": "Assistant: I have enough data from the first tab. Let me now switch to using the browser tool's action API for more precision. Let me extract the handles properly using a different approach.",
+      "recallCount": 0,
+      "dailyCount": 1,
+      "groundedCount": 0,
+      "totalScore": 0.58,
+      "maxScore": 0.58,
+      "firstRecalledAt": "2026-05-22T21:34:12.947Z",
+      "lastRecalledAt": "2026-05-22T21:34:12.947Z",
+      "queryHashes": [
+        "91dce059e480"
+      ],
+      "recallDays": [
+        "2026-05-23",
+        "2026-05-22"
+      ],
+      "conceptTags": [
+        "enough",
+        "data",
+        "first",
+        "tab",
+        "let",
+        "now",
+        "switch",
+        "browser"
+      ]
+    },
+    "memory:memory/.dreams/session-corpus/2026-05-22.txt:36:36": {
+      "key": "memory:memory/.dreams/session-corpus/2026-05-22.txt:36:36",
+      "path": "memory/.dreams/session-corpus/2026-05-22.txt",
+      "startLine": 36,
+      "endLine": 36,
+      "source": "memory",
+      "snippet": "Assistant: Let me try a cleaner extraction using the first tab's data and also check the other tabs for more posts.",
+      "recallCount": 0,
+      "dailyCount": 1,
+      "groundedCount": 0,
+      "totalScore": 0.58,
+      "maxScore": 0.58,
+      "firstRecalledAt": "2026-05-22T21:34:12.947Z",
+      "lastRecalledAt": "2026-05-22T21:34:12.947Z",
+      "queryHashes": [
+        "91dce059e480"
+      ],
+      "recallDays": [
+        "2026-05-23",
+        "2026-05-22"
+      ],
+      "conceptTags": [
+        "let",
+        "try",
+        "cleaner",
+        "extraction",
+        "first",
+        "tab's",
+        "data",
+        "check"
+      ]
+    },
+    "memory:memory/.dreams/session-corpus/2026-05-22.txt:37:37": {
+      "key": "memory:memory/.dreams/session-corpus/2026-05-22.txt:37:37",
+      "path": "memory/.dreams/session-corpus/2026-05-22.txt",
+      "startLine": 37,
+      "endLine": 37,
+      "source": "memory",
+      "snippet": "Assistant: Good data from t1. Let me also check the stroke/neurointervention tab for more relevant content.",
+      "recallCount": 0,
+      "dailyCount": 1,
+      "groundedCount": 0,
+      "totalScore": 0.58,
+      "maxScore": 0.58,
+      "firstRecalledAt": "2026-05-22T21:34:12.947Z",
+      "lastRecalledAt": "2026-05-22T21:34:12.947Z",
+      "queryHashes": [
+        "91dce059e480"
+      ],
+      "recallDays": [
+        "2026-05-23",
+        "2026-05-22"
+      ],
+      "conceptTags": [
+        "stroke/neurointervention",
+        "good",
+        "data",
+        "let",
+        "check",
+        "stroke",
+        "neurointervention",
+        "tab"
+      ]
+    },
+    "memory:memory/.dreams/session-corpus/2026-05-22.txt:38:38": {
+      "key": "memory:memory/.dreams/session-corpus/2026-05-22.txt:38:38",
+      "path": "memory/.dreams/session-corpus/2026-05-22.txt",
+      "startLine": 38,
+      "endLine": 38,
+      "source": "memory",
+      "snippet": "Assistant: Now let me compile and save the results.",
+      "recallCount": 0,
+      "dailyCount": 1,
+      "groundedCount": 0,
+      "totalScore": 0.58,
+      "maxScore": 0.58,
+      "firstRecalledAt": "2026-05-22T21:34:12.947Z",
+      "lastRecalledAt": "2026-05-22T21:34:12.947Z",
+      "queryHashes": [
+        "91dce059e480"
+      ],
+      "recallDays": [
+        "2026-05-23",
+        "2026-05-22"
+      ],
+      "conceptTags": [
+        "now",
+        "let",
+        "compile",
+        "save",
+        "results"
+      ]
+    },
+    "memory:memory/.dreams/session-corpus/2026-05-22.txt:39:39": {
+      "key": "memory:memory/.dreams/session-corpus/2026-05-22.txt:39:39",
+      "path": "memory/.dreams/session-corpus/2026-05-22.txt",
+      "startLine": 39,
+      "endLine": 39,
+      "source": "memory",
+      "snippet": "Assistant: **Scrape complete.** Saved to `knowledge-base/x-scrapes/x-neurology-2026-05-22.md`. **Summary:** Low signal day. No posts crossed 100 likes — highest was 23 (off-topic). No breaking clinical trial results. Top finds: - **@GreenJournal** — AAN headache podcast recap (44",
+      "recallCount": 0,
+      "dailyCount": 1,
+      "groundedCount": 0,
+      "totalScore": 0.58,
+      "maxScore": 0.58,
+      "firstRecalledAt": "2026-05-22T21:34:12.947Z",
+      "lastRecalledAt": "2026-05-22T21:34:12.947Z",
+      "queryHashes": [
+        "91dce059e480"
+      ],
+      "recallDays": [
+        "2026-05-23",
+        "2026-05-22"
+      ],
+      "conceptTags": [
+        "off-topic",
+        "scrape",
+        "complete",
+        "saved",
+        "knowledge",
+        "base",
+        "scrapes",
+        "neurology"
+      ]
+    },
+    "memory:memory/.dreams/session-corpus/2026-05-22.txt:40:40": {
+      "key": "memory:memory/.dreams/session-corpus/2026-05-22.txt:40:40",
+      "path": "memory/.dreams/session-corpus/2026-05-22.txt",
+      "startLine": 40,
+      "endLine": 40,
+      "source": "memory",
+      "snippet": "Assistant: Good — there are already existing tabs with our search queries. Let me snapshot them.",
+      "recallCount": 0,
+      "dailyCount": 1,
+      "groundedCount": 0,
+      "totalScore": 0.58,
+      "maxScore": 0.58,
+      "firstRecalledAt": "2026-05-22T21:34:12.947Z",
+      "lastRecalledAt": "2026-05-22T21:34:12.947Z",
+      "queryHashes": [
+        "91dce059e480"
+      ],
+      "recallDays": [
+        "2026-05-23",
+        "2026-05-22"
+      ],
+      "conceptTags": [
+        "good",
+        "already",
+        "existing",
+        "tabs",
+        "queries",
+        "let",
+        "snapshot",
+        "them"
+      ]
+    },
+    "memory:memory/.dreams/session-corpus/2026-05-22.txt:41:41": {
+      "key": "memory:memory/.dreams/session-corpus/2026-05-22.txt:41:41",
+      "path": "memory/.dreams/session-corpus/2026-05-22.txt",
+      "startLine": 41,
+      "endLine": 41,
+      "source": "memory",
+      "snippet": "Assistant: Good, I can see posts from Tab t4 (query 1). Let me scroll to see more and also snapshot Tab t12 (query 2).",
+      "recallCount": 0,
+      "dailyCount": 1,
+      "groundedCount": 0,
+      "totalScore": 0.58,
+      "maxScore": 0.58,
+      "firstRecalledAt": "2026-05-22T21:34:12.947Z",
+      "lastRecalledAt": "2026-05-22T21:34:12.947Z",
+      "queryHashes": [
+        "91dce059e480"
+      ],
+      "recallDays": [
+        "2026-05-23",
+        "2026-05-22"
+      ],
+      "conceptTags": [
+        "good",
+        "can",
+        "see",
+        "posts",
+        "tab",
+        "query",
+        "let",
+        "scroll"
+      ]
+    },
+    "memory:memory/.dreams/session-corpus/2026-05-22.txt:42:42": {
+      "key": "memory:memory/.dreams/session-corpus/2026-05-22.txt:42:42",
+      "path": "memory/.dreams/session-corpus/2026-05-22.txt",
+      "startLine": 42,
+      "endLine": 42,
+      "source": "memory",
+      "snippet": "Assistant: Good data coming in. Let me get the full snapshots saved to files and scroll for more posts.",
+      "recallCount": 0,
+      "dailyCount": 1,
+      "groundedCount": 0,
+      "totalScore": 0.58,
+      "maxScore": 0.58,
+      "firstRecalledAt": "2026-05-22T21:34:12.947Z",
+      "lastRecalledAt": "2026-05-22T21:34:12.947Z",
+      "queryHashes": [
+        "91dce059e480"
+      ],
+      "recallDays": [
+        "2026-05-23",
+        "2026-05-22"
+      ],
+      "conceptTags": [
+        "good",
+        "data",
+        "coming",
+        "let",
+        "get",
+        "full",
+        "snapshots",
+        "saved"
+      ]
+    },
+    "memory:memory/.dreams/session-corpus/2026-05-22.txt:43:43": {
+      "key": "memory:memory/.dreams/session-corpus/2026-05-22.txt:43:43",
+      "path": "memory/.dreams/session-corpus/2026-05-22.txt",
+      "startLine": 43,
+      "endLine": 43,
+      "source": "memory",
+      "snippet": "Assistant: Good, I have extensive snapshot data from both queries. Now let me process all the data, build the SQLite DB and markdown report.",
+      "recallCount": 0,
+      "dailyCount": 1,
+      "groundedCount": 0,
+      "totalScore": 0.58,
+      "maxScore": 0.58,
+      "firstRecalledAt": "2026-05-22T21:34:12.947Z",
+      "lastRecalledAt": "2026-05-22T21:34:12.947Z",
+      "queryHashes": [
+        "91dce059e480"
+      ],
+      "recallDays": [
+        "2026-05-23",
+        "2026-05-22"
+      ],
+      "conceptTags": [
+        "good",
+        "extensive",
+        "snapshot",
+        "data",
+        "both",
+        "queries",
+        "now",
+        "let"
+      ]
+    },
+    "memory:memory/.dreams/session-corpus/2026-05-22.txt:44:44": {
+      "key": "memory:memory/.dreams/session-corpus/2026-05-22.txt:44:44",
+      "path": "memory/.dreams/session-corpus/2026-05-22.txt",
+      "startLine": 44,
+      "endLine": 44,
+      "source": "memory",
+      "snippet": "Assistant: X Neurointervention scrape complete for May 22, 2026. **📊 Summary:** - **14 posts scraped** across both queries - **9 from today/yesterday** - **3 high-engagement (>50 ❤️):** | Post | Likes | Views | |---|---|---| | 🔥 @AustinBourgeois — thrombectomy video | 73 ❤️ | 1",
+      "recallCount": 0,
+      "dailyCount": 1,
+      "groundedCount": 0,
+      "totalScore": 0.58,
+      "maxScore": 0.58,
+      "firstRecalledAt": "2026-05-22T21:34:12.947Z",
+      "lastRecalledAt": "2026-05-22T21:34:12.947Z",
+      "queryHashes": [
+        "91dce059e480"
+      ],
+      "recallDays": [
+        "2026-05-23",
+        "2026-05-22"
+      ],
+      "conceptTags": [
+        "today/yesterday",
+        "high-engagement",
+        "neurointervention",
+        "scrape",
+        "complete",
+        "may",
+        "summary",
+        "posts"
+      ]
+    },
+    "memory:memory/.dreams/session-corpus/2026-05-22.txt:45:45": {
+      "key": "memory:memory/.dreams/session-corpus/2026-05-22.txt:45:45",
+      "path": "memory/.dreams/session-corpus/2026-05-22.txt",
+      "startLine": 45,
+      "endLine": 45,
+      "source": "memory",
+      "snippet": "Assistant: Good, I can see there's already a neurology search tab and several other neurology-related tabs. Let me open a fresh one with the `since:today` filter and scrape the top results.",
+      "recallCount": 0,
+      "dailyCount": 1,
+      "groundedCount": 0,
+      "totalScore": 0.58,
+      "maxScore": 0.58,
+      "firstRecalledAt": "2026-05-22T21:34:12.947Z",
+      "lastRecalledAt": "2026-05-22T21:34:12.947Z",
+      "queryHashes": [
+        "91dce059e480"
+      ],
+      "recallDays": [
+        "2026-05-23",
+        "2026-05-22"
+      ],
+      "conceptTags": [
+        "neurology-related",
+        "good",
+        "can",
+        "see",
+        "there's",
+        "already",
+        "neurology",
+        "tab"
+      ]
+    },
+    "memory:memory/.dreams/session-corpus/2026-05-22.txt:46:46": {
+      "key": "memory:memory/.dreams/session-corpus/2026-05-22.txt:46:46",
+      "path": "memory/.dreams/session-corpus/2026-05-22.txt",
+      "startLine": 46,
+      "endLine": 46,
+      "source": "memory",
+      "snippet": "Assistant: Let me scroll to see more results:",
+      "recallCount": 0,
+      "dailyCount": 1,
+      "groundedCount": 0,
+      "totalScore": 0.58,
+      "maxScore": 0.58,
+      "firstRecalledAt": "2026-05-22T21:34:12.947Z",
+      "lastRecalledAt": "2026-05-22T21:34:12.947Z",
+      "queryHashes": [
+        "91dce059e480"
+      ],
+      "recallDays": [
+        "2026-05-23",
+        "2026-05-22"
+      ],
+      "conceptTags": [
+        "let",
+        "scroll",
+        "see",
+        "results"
+      ]
+    },
+    "memory:memory/.dreams/session-corpus/2026-05-22.txt:47:47": {
+      "key": "memory:memory/.dreams/session-corpus/2026-05-22.txt:47:47",
+      "path": "memory/.dreams/session-corpus/2026-05-22.txt",
+      "startLine": 47,
+      "endLine": 47,
+      "source": "memory",
+      "snippet": "Assistant: Good, scrolling works. Let me now extract the actual post data programmatically using JavaScript:",
+      "recallCount": 0,
+      "dailyCount": 1,
+      "groundedCount": 0,
+      "totalScore": 0.58,
+      "maxScore": 0.58,
+      "firstRecalledAt": "2026-05-22T21:34:12.947Z",
+      "lastRecalledAt": "2026-05-22T21:34:12.947Z",
+      "queryHashes": [
+        "91dce059e480"
+      ],
+      "recallDays": [
+        "2026-05-23",
+        "2026-05-22"
+      ],
+      "conceptTags": [
+        "good",
+        "scrolling",
+        "works",
+        "let",
+        "now",
+        "extract",
+        "actual",
+        "post"
+      ]
+    },
+    "memory:memory/.dreams/session-corpus/2026-05-22.txt:48:48": {
+      "key": "memory:memory/.dreams/session-corpus/2026-05-22.txt:48:48",
+      "path": "memory/.dreams/session-corpus/2026-05-22.txt",
+      "startLine": 48,
+      "endLine": 48,
+      "source": "memory",
+      "snippet": "Assistant: Let me also scroll down more to get additional content, then take another snapshot to capture the full set:",
+      "recallCount": 0,
+      "dailyCount": 1,
+      "groundedCount": 0,
+      "totalScore": 0.58,
+      "maxScore": 0.58,
+      "firstRecalledAt": "2026-05-22T21:34:12.947Z",
+      "lastRecalledAt": "2026-05-22T21:34:12.947Z",
+      "queryHashes": [
+        "91dce059e480"
+      ],
+      "recallDays": [
+        "2026-05-23",
+        "2026-05-22"
+      ],
+      "conceptTags": [
+        "let",
+        "scroll",
+        "down",
+        "get",
+        "additional",
+        "content",
+        "take",
+        "another"
+      ]
+    },
+    "memory:memory/.dreams/session-corpus/2026-05-22.txt:49:49": {
+      "key": "memory:memory/.dreams/session-corpus/2026-05-22.txt:49:49",
+      "path": "memory/.dreams/session-corpus/2026-05-22.txt",
+      "startLine": 49,
+      "endLine": 49,
+      "source": "memory",
+      "snippet": "Assistant: Now let me also check the other relevant tabs for more comprehensive coverage:",
+      "recallCount": 0,
+      "dailyCount": 1,
+      "groundedCount": 0,
+      "totalScore": 0.58,
+      "maxScore": 0.58,
+      "firstRecalledAt": "2026-05-22T21:34:12.947Z",
+      "lastRecalledAt": "2026-05-22T21:34:12.947Z",
+      "queryHashes": [
+        "91dce059e480"
+      ],
+      "recallDays": [
+        "2026-05-23",
+        "2026-05-22"
+      ],
+      "conceptTags": [
+        "now",
+        "let",
+        "check",
+        "other",
+        "relevant",
+        "tabs",
+        "comprehensive",
+        "coverage"
+      ]
+    },
+    "memory:memory/.dreams/session-corpus/2026-05-22.txt:50:50": {
+      "key": "memory:memory/.dreams/session-corpus/2026-05-22.txt:50:50",
+      "path": "memory/.dreams/session-corpus/2026-05-22.txt",
+      "startLine": 50,
+      "endLine": 50,
+      "source": "memory",
+      "snippet": "Assistant: Now let me compile the data and write the report:",
+      "recallCount": 0,
+      "dailyCount": 1,
+      "groundedCount": 0,
+      "totalScore": 0.58,
+      "maxScore": 0.58,
+      "firstRecalledAt": "2026-05-22T21:34:12.947Z",
+      "lastRecalledAt": "2026-05-22T21:34:12.947Z",
+      "queryHashes": [
+        "91dce059e480"
+      ],
+      "recallDays": [
+        "2026-05-23",
+        "2026-05-22"
+      ],
+      "conceptTags": [
+        "now",
+        "let",
+        "compile",
+        "data",
+        "write",
+        "report"
+      ]
+    },
+    "memory:memory/.dreams/session-corpus/2026-05-22.txt:51:51": {
+      "key": "memory:memory/.dreams/session-corpus/2026-05-22.txt:51:51",
+      "path": "memory/.dreams/session-corpus/2026-05-22.txt",
+      "startLine": 51,
+      "endLine": 51,
+      "source": "memory",
+      "snippet": "Assistant: **X Neurology News Scrape — Done ✅** Saved to `knowledge-base/x-scrapes/x-neurology-2026-05-22.md` **What I found:** Fairly quiet day on X for neurology. No post exceeded 100 likes. Key takeaways: 1. **Neurology Journal podcast** — AAN headache medicine recap with Dr.",
+      "recallCount": 0,
+      "dailyCount": 1,
+      "groundedCount": 0,
+      "totalScore": 0.58,
+      "maxScore": 0.58,
+      "firstRecalledAt": "2026-05-22T21:34:12.947Z",
+      "lastRecalledAt": "2026-05-22T21:34:12.947Z",
+      "queryHashes": [
+        "91dce059e480"
+      ],
+      "recallDays": [
+        "2026-05-23",
+        "2026-05-22"
+      ],
+      "conceptTags": [
+        "neurology",
+        "news",
+        "scrape",
+        "done",
+        "saved",
+        "knowledge",
+        "base",
+        "scrapes"
+      ]
+    },
+    "memory:memory/.dreams/session-corpus/2026-05-22.txt:52:52": {
+      "key": "memory:memory/.dreams/session-corpus/2026-05-22.txt:52:52",
+      "path": "memory/.dreams/session-corpus/2026-05-22.txt",
+      "startLine": 52,
+      "endLine": 52,
+      "source": "memory",
+      "snippet": "Assistant: Neurology** — Vestibular rehabilitation session No breaking/urgent news flagged today — mostly journal articles, awards, and educational content.",
+      "recallCount": 0,
+      "dailyCount": 1,
+      "groundedCount": 0,
+      "totalScore": 0.58,
+      "maxScore": 0.58,
+      "firstRecalledAt": "2026-05-22T21:34:12.947Z",
+      "lastRecalledAt": "2026-05-22T21:34:12.947Z",
+      "queryHashes": [
+        "91dce059e480"
+      ],
+      "recallDays": [
+        "2026-05-23",
+        "2026-05-22"
+      ],
+      "conceptTags": [
+        "breaking/urgent",
+        "neurology",
+        "vestibular",
+        "rehabilitation",
+        "breaking",
+        "urgent",
+        "news",
+        "flagged"
+      ]
+    },
+    "memory:memory/.dreams/session-corpus/2026-05-22.txt:53:53": {
+      "key": "memory:memory/.dreams/session-corpus/2026-05-22.txt:53:53",
+      "path": "memory/.dreams/session-corpus/2026-05-22.txt",
+      "startLine": 53,
+      "endLine": 53,
+      "source": "memory",
+      "snippet": "User: /start",
+      "recallCount": 0,
+      "dailyCount": 1,
+      "groundedCount": 0,
+      "totalScore": 0.58,
+      "maxScore": 0.58,
+      "firstRecalledAt": "2026-05-22T21:34:12.947Z",
+      "lastRecalledAt": "2026-05-22T21:34:12.947Z",
+      "queryHashes": [
+        "91dce059e480"
+      ],
+      "recallDays": [
+        "2026-05-23",
+        "2026-05-22"
+      ],
+      "conceptTags": [
+        "start"
+      ]
+    },
+    "memory:memory/.dreams/session-corpus/2026-05-22.txt:54:54": {
+      "key": "memory:memory/.dreams/session-corpus/2026-05-22.txt:54:54",
+      "path": "memory/.dreams/session-corpus/2026-05-22.txt",
+      "startLine": 54,
+      "endLine": 54,
+      "source": "memory",
+      "snippet": "Assistant: Hey Aaron! 👋 Welcome — guess you're the first person to hit me up on this channel. I'm your assistant here. What can I help you with?",
+      "recallCount": 0,
+      "dailyCount": 1,
+      "groundedCount": 0,
+      "totalScore": 0.58,
+      "maxScore": 0.58,
+      "firstRecalledAt": "2026-05-22T21:34:12.947Z",
+      "lastRecalledAt": "2026-05-22T21:34:12.947Z",
+      "queryHashes": [
+        "91dce059e480"
+      ],
+      "recallDays": [
+        "2026-05-23",
+        "2026-05-22"
+      ],
+      "conceptTags": [
+        "hey",
+        "aaron",
+        "welcome",
+        "guess",
+        "you're",
+        "first",
+        "person",
+        "hit"
+      ]
+    },
+    "memory:memory/.dreams/session-corpus/2026-05-22.txt:55:55": {
+      "key": "memory:memory/.dreams/session-corpus/2026-05-22.txt:55:55",
+      "path": "memory/.dreams/session-corpus/2026-05-22.txt",
+      "startLine": 55,
+      "endLine": 55,
+      "source": "memory",
+      "snippet": "Assistant: Let me check available tabs directly:",
+      "recallCount": 0,
+      "dailyCount": 1,
+      "groundedCount": 0,
+      "totalScore": 0.58,
+      "maxScore": 0.58,
+      "firstRecalledAt": "2026-05-22T21:34:12.947Z",
+      "lastRecalledAt": "2026-05-22T21:34:12.947Z",
+      "queryHashes": [
+        "91dce059e480"
+      ],
+      "recallDays": [
+        "2026-05-23",
+        "2026-05-22"
+      ],
+      "conceptTags": [
+        "let",
+        "check",
+        "available",
+        "tabs",
+        "directly"
+      ]
+    },
+    "memory:memory/.dreams/session-corpus/2026-05-22.txt:56:56": {
+      "key": "memory:memory/.dreams/session-corpus/2026-05-22.txt:56:56",
+      "path": "memory/.dreams/session-corpus/2026-05-22.txt",
+      "startLine": 56,
+      "endLine": 56,
+      "source": "memory",
+      "snippet": "Assistant: Tabs already exist for both queries. Let me snapshot them.",
+      "recallCount": 0,
+      "dailyCount": 1,
+      "groundedCount": 0,
+      "totalScore": 0.58,
+      "maxScore": 0.58,
+      "firstRecalledAt": "2026-05-22T21:34:12.947Z",
+      "lastRecalledAt": "2026-05-22T21:34:12.947Z",
+      "queryHashes": [
+        "91dce059e480"
+      ],
+      "recallDays": [
+        "2026-05-23",
+        "2026-05-22"
+      ],
+      "conceptTags": [
+        "tabs",
+        "already",
+        "exist",
+        "both",
+        "queries",
+        "let",
+        "snapshot",
+        "them"
+      ]
+    },
+    "memory:memory/.dreams/session-corpus/2026-05-22.txt:57:57": {
+      "key": "memory:memory/.dreams/session-corpus/2026-05-22.txt:57:57",
+      "path": "memory/.dreams/session-corpus/2026-05-22.txt",
+      "startLine": 57,
+      "endLine": 57,
+      "source": "memory",
+      "snippet": "Assistant: The snapshot is very large. Let me use JavaScript evaluation to extract post data more efficiently from both tabs.",
+      "recallCount": 0,
+      "dailyCount": 1,
+      "groundedCount": 0,
+      "totalScore": 0.58,
+      "maxScore": 0.58,
+      "firstRecalledAt": "2026-05-22T21:34:12.947Z",
+      "lastRecalledAt": "2026-05-22T21:34:12.947Z",
+      "queryHashes": [
+        "91dce059e480"
+      ],
+      "recallDays": [
+        "2026-05-23",
+        "2026-05-22"
+      ],
+      "conceptTags": [
+        "snapshot",
+        "very",
+        "large",
+        "let",
+        "use",
+        "javascript",
+        "evaluation",
+        "extract"
+      ]
+    },
+    "memory:memory/.dreams/session-corpus/2026-05-22.txt:58:58": {
+      "key": "memory:memory/.dreams/session-corpus/2026-05-22.txt:58:58",
+      "path": "memory/.dreams/session-corpus/2026-05-22.txt",
+      "startLine": 58,
+      "endLine": 58,
+      "source": "memory",
+      "snippet": "Assistant: Let me write the extraction script to a file and use it properly:",
+      "recallCount": 0,
+      "dailyCount": 1,
+      "groundedCount": 0,
+      "totalScore": 0.58,
+      "maxScore": 0.58,
+      "firstRecalledAt": "2026-05-22T21:34:12.947Z",
+      "lastRecalledAt": "2026-05-22T21:34:12.947Z",
+      "queryHashes": [
+        "91dce059e480"
+      ],
+      "recallDays": [
+        "2026-05-23",
+        "2026-05-22"
+      ],
+      "conceptTags": [
+        "let",
+        "write",
+        "extraction",
+        "script",
+        "use",
+        "properly"
+      ]
+    },
+    "memory:memory/.dreams/session-corpus/2026-05-22.txt:59:59": {
+      "key": "memory:memory/.dreams/session-corpus/2026-05-22.txt:59:59",
+      "path": "memory/.dreams/session-corpus/2026-05-22.txt",
+      "startLine": 59,
+      "endLine": 59,
+      "source": "memory",
+      "snippet": "Assistant: The tweetId is capturing \"analytics\" from analytics links. Let me fix that and also extract from the second tab.",
+      "recallCount": 0,
+      "dailyCount": 1,
+      "groundedCount": 0,
+      "totalScore": 0.58,
+      "maxScore": 0.58,
+      "firstRecalledAt": "2026-05-22T21:34:12.947Z",
+      "lastRecalledAt": "2026-05-22T21:34:12.947Z",
+      "queryHashes": [
+        "91dce059e480"
+      ],
+      "recallDays": [
+        "2026-05-23",
+        "2026-05-22"
+      ],
+      "conceptTags": [
+        "tweetid",
+        "capturing",
+        "analytics",
+        "links",
+        "let",
+        "fix",
+        "extract",
+        "second"
+      ]
+    },
+    "memory:memory/.dreams/session-corpus/2026-05-22.txt:60:60": {
+      "key": "memory:memory/.dreams/session-corpus/2026-05-22.txt:60:60",
+      "path": "memory/.dreams/session-corpus/2026-05-22.txt",
+      "startLine": 60,
+      "endLine": 60,
+      "source": "memory",
+      "snippet": "Assistant: Now let me scrape the second tab for AVM/aneurysm/endovascular posts:",
+      "recallCount": 0,
+      "dailyCount": 1,
+      "groundedCount": 0,
+      "totalScore": 0.58,
+      "maxScore": 0.58,
+      "firstRecalledAt": "2026-05-22T21:34:12.947Z",
+      "lastRecalledAt": "2026-05-22T21:34:12.947Z",
+      "queryHashes": [
+        "91dce059e480"
+      ],
+      "recallDays": [
+        "2026-05-23",
+        "2026-05-22"
+      ],
+      "conceptTags": [
+        "avm/aneurysm/endovascular",
+        "now",
+        "let",
+        "scrape",
+        "second",
+        "tab",
+        "avm",
+        "aneurysm"
+      ]
+    },
+    "memory:memory/.dreams/session-corpus/2026-05-22.txt:61:61": {
+      "key": "memory:memory/.dreams/session-corpus/2026-05-22.txt:61:61",
+      "path": "memory/.dreams/session-corpus/2026-05-22.txt",
+      "startLine": 61,
+      "endLine": 61,
+      "source": "memory",
+      "snippet": "Assistant: **✅ X Neurointervention Scrape complete — 2026-05-22 18:02 IST** **📊 Summary: 25 new posts scraped across 2 queries** | Query | Posts | High-Engagement (≥50 likes) | |-------|-------|---------------------------| | Q1: Neurointervention / Thrombectomy / Stroke | 19 | 1",
+      "recallCount": 0,
+      "dailyCount": 1,
+      "groundedCount": 0,
+      "totalScore": 0.58,
+      "maxScore": 0.58,
+      "firstRecalledAt": "2026-05-22T21:34:12.947Z",
+      "lastRecalledAt": "2026-05-22T21:34:12.947Z",
+      "queryHashes": [
+        "91dce059e480"
+      ],
+      "recallDays": [
+        "2026-05-23",
+        "2026-05-22"
+      ],
+      "conceptTags": [
+        "high-engagement",
+        "neurointervention",
+        "scrape",
+        "complete",
+        "ist",
+        "summary",
+        "new",
+        "posts"
+      ]
+    },
+    "memory:memory/.dreams/session-corpus/2026-05-22.txt:62:62": {
+      "key": "memory:memory/.dreams/session-corpus/2026-05-22.txt:62:62",
+      "path": "memory/.dreams/session-corpus/2026-05-22.txt",
+      "startLine": 62,
+      "endLine": 62,
+      "source": "memory",
+      "snippet": "Assistant: with DVT and mitral valve abnormality* (May 20) **🔥 Key themes today:** - **ORIENTAL-MeVO trial** dominates — NEJM's endovascular MeVO stroke paper is the most-viewed story at 11K views - **SLICE Hands-on challenge** at LINNC (June 1-3) promoting late stroke + MMA emb",
+      "recallCount": 0,
+      "dailyCount": 1,
+      "groundedCount": 0,
+      "totalScore": 0.58,
+      "maxScore": 0.58,
+      "firstRecalledAt": "2026-05-22T21:34:12.947Z",
+      "lastRecalledAt": "2026-05-22T21:34:12.947Z",
+      "queryHashes": [
+        "91dce059e480"
+      ],
+      "recallDays": [
+        "2026-05-23",
+        "2026-05-22"
+      ],
+      "conceptTags": [
+        "oriental-mevo",
+        "most-viewed",
+        "hands-on",
+        "1-3",
+        "dvt",
+        "mitral",
+        "valve",
+        "abnormality"
+      ]
+    },
+    "memory:memory/.dreams/session-corpus/2026-05-22.txt:63:63": {
+      "key": "memory:memory/.dreams/session-corpus/2026-05-22.txt:63:63",
+      "path": "memory/.dreams/session-corpus/2026-05-22.txt",
+      "startLine": 63,
+      "endLine": 63,
+      "source": "memory",
+      "snippet": "User: Repair Cron jobs",
+      "recallCount": 0,
+      "dailyCount": 1,
+      "groundedCount": 0,
+      "totalScore": 0.58,
+      "maxScore": 0.58,
+      "firstRecalledAt": "2026-05-22T21:34:12.947Z",
+      "lastRecalledAt": "2026-05-22T21:34:12.947Z",
+      "queryHashes": [
+        "91dce059e480"
+      ],
+      "recallDays": [
+        "2026-05-23",
+        "2026-05-22"
+      ],
+      "conceptTags": [
+        "repair",
+        "cron",
+        "jobs"
+      ]
+    },
+    "memory:memory/.dreams/session-corpus/2026-05-22.txt:64:64": {
+      "key": "memory:memory/.dreams/session-corpus/2026-05-22.txt:64:64",
+      "path": "memory/.dreams/session-corpus/2026-05-22.txt",
+      "startLine": 64,
+      "endLine": 64,
+      "source": "memory",
+      "snippet": "Assistant: Let me dig deeper into the error details and configurations.",
+      "recallCount": 0,
+      "dailyCount": 1,
+      "groundedCount": 0,
+      "totalScore": 0.58,
+      "maxScore": 0.58,
+      "firstRecalledAt": "2026-05-22T21:34:12.947Z",
+      "lastRecalledAt": "2026-05-22T21:34:12.947Z",
+      "queryHashes": [
+        "91dce059e480"
+      ],
+      "recallDays": [
+        "2026-05-23",
+        "2026-05-22"
+      ],
+      "conceptTags": [
+        "let",
+        "dig",
+        "deeper",
+        "error",
+        "details",
+        "configurations"
+      ]
+    },
+    "memory:memory/.dreams/session-corpus/2026-05-22.txt:65:65": {
+      "key": "memory:memory/.dreams/session-corpus/2026-05-22.txt:65:65",
+      "path": "memory/.dreams/session-corpus/2026-05-22.txt",
+      "startLine": 65,
+      "endLine": 65,
+      "source": "memory",
+      "snippet": "Assistant: Now I have a clear picture. Let me read the OpenClaw cron docs to understand the right fix approach.",
+      "recallCount": 0,
+      "dailyCount": 1,
+      "groundedCount": 0,
+      "totalScore": 0.58,
+      "maxScore": 0.58,
+      "firstRecalledAt": "2026-05-22T21:34:12.947Z",
+      "lastRecalledAt": "2026-05-22T21:34:12.947Z",
+      "queryHashes": [
+        "91dce059e480"
+      ],
+      "recallDays": [
+        "2026-05-23",
+        "2026-05-22"
+      ],
+      "conceptTags": [
+        "now",
+        "clear",
+        "picture",
+        "let",
+        "read",
+        "openclaw",
+        "cron",
+        "docs"
+      ]
+    },
+    "memory:memory/.dreams/session-corpus/2026-05-22.txt:66:66": {
+      "key": "memory:memory/.dreams/session-corpus/2026-05-22.txt:66:66",
+      "path": "memory/.dreams/session-corpus/2026-05-22.txt",
+      "startLine": 66,
+      "endLine": 66,
+      "source": "memory",
+      "snippet": "Assistant: Now I have a clear picture of all three issues. Here's what's wrong: **1. GMB Daily Poster** — timed out (~30 min) because image generation via mflux is slow **2. X Neurology News Scrape** — timed out (~10 min), browser scraping takes time **3. X Neurointervention Scra",
+      "recallCount": 0,
+      "dailyCount": 1,
+      "groundedCount": 0,
+      "totalScore": 0.58,
+      "maxScore": 0.58,
+      "firstRecalledAt": "2026-05-22T21:34:12.947Z",
+      "lastRecalledAt": "2026-05-22T21:34:12.947Z",
+      "queryHashes": [
+        "91dce059e480"
+      ],
+      "recallDays": [
+        "2026-05-23",
+        "2026-05-22"
+      ],
+      "conceptTags": [
+        "now",
+        "clear",
+        "picture",
+        "all",
+        "three",
+        "issues",
+        "here's",
+        "what's"
+      ]
+    },
+    "memory:memory/.dreams/session-corpus/2026-05-22.txt:67:67": {
+      "key": "memory:memory/.dreams/session-corpus/2026-05-22.txt:67:67",
+      "path": "memory/.dreams/session-corpus/2026-05-22.txt",
+      "startLine": 67,
+      "endLine": 67,
+      "source": "memory",
+      "snippet": "Assistant: I see — `--timeout` takes ms and has a weird default. The right flag is `--timeout-seconds`. Let me redo:",
+      "recallCount": 0,
+      "dailyCount": 1,
+      "groundedCount": 0,
+      "totalScore": 0.58,
+      "maxScore": 0.58,
+      "firstRecalledAt": "2026-05-22T21:34:12.947Z",
+      "lastRecalledAt": "2026-05-22T21:34:12.947Z",
+      "queryHashes": [
+        "91dce059e480"
+      ],
+      "recallDays": [
+        "2026-05-23",
+        "2026-05-22"
+      ],
+      "conceptTags": [
+        "timeout-seconds",
+        "see",
+        "timeout",
+        "takes",
+        "has",
+        "weird",
+        "right",
+        "flag"
+      ]
+    },
+    "memory:memory/.dreams/session-corpus/2026-05-22.txt:68:68": {
+      "key": "memory:memory/.dreams/session-corpus/2026-05-22.txt:68:68",
+      "path": "memory/.dreams/session-corpus/2026-05-22.txt",
+      "startLine": 68,
+      "endLine": 68,
+      "source": "memory",
+      "snippet": "Assistant: All 3 erroring cron jobs fixed. Here's the summary: **Problems found:** 1. **GMB Daily Poster** — timed out after 40 min (image generation via mflux is slow). ⏰ Increased timeout to **60 min** (3600s). 2. **X Neurology News Scrape** — timed out after 20 min (browser-ba",
+      "recallCount": 0,
+      "dailyCount": 1,
+      "groundedCount": 0,
+      "totalScore": 0.58,
+      "maxScore": 0.58,
+      "firstRecalledAt": "2026-05-22T21:34:12.947Z",
+      "lastRecalledAt": "2026-05-22T21:34:12.947Z",
+      "queryHashes": [
+        "91dce059e480"
+      ],
+      "recallDays": [
+        "2026-05-23",
+        "2026-05-22"
+      ],
+      "conceptTags": [
+        "browser-ba",
+        "all",
+        "erroring",
+        "cron",
+        "jobs",
+        "fixed",
+        "here's",
+        "summary"
+      ]
+    },
+    "memory:memory/.dreams/session-corpus/2026-05-22.txt:69:69": {
+      "key": "memory:memory/.dreams/session-corpus/2026-05-22.txt:69:69",
+      "path": "memory/.dreams/session-corpus/2026-05-22.txt",
+      "startLine": 69,
+      "endLine": 69,
+      "source": "memory",
+      "snippet": "Assistant: from now ✅ Also ran `openclaw doctor --fix` which cleaned up 53 disabled skills.",
+      "recallCount": 0,
+      "dailyCount": 1,
+      "groundedCount": 0,
+      "totalScore": 0.58,
+      "maxScore": 0.58,
+      "firstRecalledAt": "2026-05-22T21:34:12.947Z",
+      "lastRecalledAt": "2026-05-22T21:34:12.947Z",
+      "queryHashes": [
+        "91dce059e480"
+      ],
+      "recallDays": [
+        "2026-05-23",
+        "2026-05-22"
+      ],
+      "conceptTags": [
+        "now",
+        "ran",
+        "openclaw",
+        "doctor",
+        "fix",
+        "which",
+        "cleaned",
+        "disabled"
+      ]
+    },
+    "memory:memory/.dreams/session-corpus/2026-05-22.txt:70:70": {
+      "key": "memory:memory/.dreams/session-corpus/2026-05-22.txt:70:70",
+      "path": "memory/.dreams/session-corpus/2026-05-22.txt",
+      "startLine": 70,
+      "endLine": 70,
+      "source": "memory",
+      "snippet": "User: Can you give me citations for this?",
+      "recallCount": 0,
+      "dailyCount": 1,
+      "groundedCount": 0,
+      "totalScore": 0.58,
+      "maxScore": 0.58,
+      "firstRecalledAt": "2026-05-22T21:34:12.947Z",
+      "lastRecalledAt": "2026-05-22T21:34:12.947Z",
+      "queryHashes": [
+        "91dce059e480"
+      ],
+      "recallDays": [
+        "2026-05-23",
+        "2026-05-22"
+      ],
+      "conceptTags": [
+        "can",
+        "give",
+        "citations"
+      ]
+    },
+    "memory:memory/.dreams/session-corpus/2026-05-22.txt:71:71": {
+      "key": "memory:memory/.dreams/session-corpus/2026-05-22.txt:71:71",
+      "path": "memory/.dreams/session-corpus/2026-05-22.txt",
+      "startLine": 71,
+      "endLine": 71,
+      "source": "memory",
+      "snippet": "Assistant: Here are the citations for each key claim in that message: **1. \"Post-treatment paradoxical reactions are real, especially in lymph node and CNS TB\"** - **Hegge S, et al.** \"Post-tuberculosis treatment paradoxical reactions.\" *Infection*. 2024. — A systematic review of",
+      "recallCount": 0,
+      "dailyCount": 1,
+      "groundedCount": 0,
+      "totalScore": 0.58,
+      "maxScore": 0.58,
+      "firstRecalledAt": "2026-05-22T21:34:12.947Z",
+      "lastRecalledAt": "2026-05-22T21:34:12.947Z",
+      "queryHashes": [
+        "91dce059e480"
+      ],
+      "recallDays": [
+        "2026-05-23",
+        "2026-05-22"
+      ],
+      "conceptTags": [
+        "post-treatment",
+        "post-tuberculosis",
+        "here",
+        "citations",
+        "each",
+        "key",
+        "claim",
+        "message"
+      ]
+    },
+    "memory:memory/.dreams/session-corpus/2026-05-22.txt:72:72": {
+      "key": "memory:memory/.dreams/session-corpus/2026-05-22.txt:72:72",
+      "path": "memory/.dreams/session-corpus/2026-05-22.txt",
+      "startLine": 72,
+      "endLine": 72,
+      "source": "memory",
+      "snippet": "Assistant: 13.3% to 35.3%, occurring during or after treatment completion. Emphasizes that PR \"may be wrongly considered as treatment failure or relapse.\" **2. \"The hardest step is confidently ruling out relapse\"** - Same **Hegge et al. (2024)** review: \"A presentation with recur",
+      "recallCount": 0,
+      "dailyCount": 1,
+      "groundedCount": 0,
+      "totalScore": 0.58,
+      "maxScore": 0.58,
+      "firstRecalledAt": "2026-05-22T21:34:12.947Z",
+      "lastRecalledAt": "2026-05-22T21:34:12.947Z",
+      "queryHashes": [
+        "91dce059e480"
+      ],
+      "recallDays": [
+        "2026-05-23",
+        "2026-05-22"
+      ],
+      "conceptTags": [
+        "13.3",
+        "35.3",
+        "occurring",
+        "treatment",
+        "completion",
+        "emphasizes",
+        "may",
+        "wrongly"
+      ]
+    },
+    "memory:memory/.dreams/session-corpus/2026-05-22.txt:73:73": {
+      "key": "memory:memory/.dreams/session-corpus/2026-05-22.txt:73:73",
+      "path": "memory/.dreams/session-corpus/2026-05-22.txt",
+      "startLine": 73,
+      "endLine": 73,
+      "source": "memory",
+      "snippet": "Assistant: answer\"** - **Done MM, et al.** \"Corticosteroid therapy for the management of paradoxical inflammatory reaction in patients with pulmonary tuberculosis.\" *Infection*. 2020. PMID: 32333368. — Case series of HIV-negative patients with TB PR showing reversal of inflammato",
+      "recallCount": 0,
+      "dailyCount": 1,
+      "groundedCount": 0,
+      "totalScore": 0.58,
+      "maxScore": 0.58,
+      "firstRecalledAt": "2026-05-22T21:34:12.947Z",
+      "lastRecalledAt": "2026-05-22T21:34:12.947Z",
+      "queryHashes": [
+        "91dce059e480"
+      ],
+      "recallDays": [
+        "2026-05-23",
+        "2026-05-22"
+      ],
+      "conceptTags": [
+        "hiv-negative",
+        "answer",
+        "done",
+        "corticosteroid",
+        "therapy",
+        "management",
+        "paradoxical",
+        "inflammatory"
+      ]
+    },
+    "memory:memory/.dreams/session-corpus/2026-05-22.txt:74:74": {
+      "key": "memory:memory/.dreams/session-corpus/2026-05-22.txt:74:74",
+      "path": "memory/.dreams/session-corpus/2026-05-22.txt",
+      "startLine": 74,
+      "endLine": 74,
+      "source": "memory",
+      "snippet": "Assistant: in LN-TB, \"a short period of observation is warranted to assess for spontaneous regression\" given the favourable prognosis — supporting watchful waiting rather than restarting ATT. The Rai et al. review adds that \"the majority of PR in LNTB have a mild course and are g",
+      "recallCount": 0,
+      "dailyCount": 1,
+      "groundedCount": 0,
+      "totalScore": 0.58,
+      "maxScore": 0.58,
+      "firstRecalledAt": "2026-05-22T21:34:12.947Z",
+      "lastRecalledAt": "2026-05-22T21:34:12.947Z",
+      "queryHashes": [
+        "91dce059e480"
+      ],
+      "recallDays": [
+        "2026-05-23",
+        "2026-05-22"
+      ],
+      "conceptTags": [
+        "ln-tb",
+        "period",
+        "observation",
+        "warranted",
+        "assess",
+        "spontaneous",
+        "regression",
+        "given"
+      ]
+    },
+    "memory:memory/.dreams/session-corpus/2026-05-22.txt:75:75": {
+      "key": "memory:memory/.dreams/session-corpus/2026-05-22.txt:75:75",
+      "path": "memory/.dreams/session-corpus/2026-05-22.txt",
+      "startLine": 75,
+      "endLine": 75,
+      "source": "memory",
+      "snippet": "User: Write a dream diary entry from these memory fragments: - # 2026-05-15 Daily Log ## Morning Tasks (8 AM Cron) ### Goals - YouTube 100k | X 150k | SaaS Q3 | AI+Neuro Community | 2 books/month | French ### Actions Completed 1. **X Thread — \"Your Brain's Genetic GPS\"** 🧵 - 8-t",
+      "recallCount": 0,
+      "dailyCount": 1,
+      "groundedCount": 0,
+      "totalScore": 0.58,
+      "maxScore": 0.58,
+      "firstRecalledAt": "2026-05-22T21:34:12.947Z",
+      "lastRecalledAt": "2026-05-22T21:34:12.947Z",
+      "queryHashes": [
+        "91dce059e480"
+      ],
+      "recallDays": [
+        "2026-05-23",
+        "2026-05-22"
+      ],
+      "conceptTags": [
+        "books/month",
+        "8-t",
+        "write",
+        "dream",
+        "diary",
+        "entry",
+        "fragments",
+        "log"
+      ]
+    },
+    "memory:memory/.dreams/session-corpus/2026-05-22.txt:76:76": {
+      "key": "memory:memory/.dreams/session-corpus/2026-05-22.txt:76:76",
+      "path": "memory/.dreams/session-corpus/2026-05-22.txt",
+      "startLine": 76,
+      "endLine": 76,
+      "source": "memory",
+      "snippet": "User: build (dist/) — was from prior setup - Ready to run: `cd focusflow && pip install -r requirements.txt && uvicorn app.main:app --reload` - Saved: `focusflow/` 4. **📚 French Practice Session** ✅ - 5 neurology-themed translation sentences (progressive difficulty) - 5 flashcar",
+      "recallCount": 0,
+      "dailyCount": 1,
+      "groundedCount": 0,
+      "totalScore": 0.58,
+      "maxScore": 0.58,
+      "firstRecalledAt": "2026-05-22T21:34:12.947Z",
+      "lastRecalledAt": "2026-05-22T21:34:12.947Z",
+      "queryHashes": [
+        "91dce059e480"
+      ],
+      "recallDays": [
+        "2026-05-23",
+        "2026-05-22"
+      ],
+      "conceptTags": [
+        "requirements.txt",
+        "app.main",
+        "neurology-themed",
+        "dist",
+        "was",
+        "prior",
+        "setup",
+        "ready"
+      ]
+    },
+    "memory:memory/.dreams/session-corpus/2026-05-22.txt:77:77": {
+      "key": "memory:memory/.dreams/session-corpus/2026-05-22.txt:77:77",
+      "path": "memory/.dreams/session-corpus/2026-05-22.txt",
+      "startLine": 77,
+      "endLine": 77,
+      "source": "memory",
+      "snippet": "User: conference/meetup scenarios; Dual-purpose: learning French AND neuroscience simultaneou",
+      "recallCount": 0,
+      "dailyCount": 1,
+      "groundedCount": 0,
+      "totalScore": 0.58,
+      "maxScore": 0.58,
+      "firstRecalledAt": "2026-05-22T21:34:12.947Z",
+      "lastRecalledAt": "2026-05-22T21:34:12.947Z",
+      "queryHashes": [
+        "91dce059e480"
+      ],
+      "recallDays": [
+        "2026-05-23",
+        "2026-05-22"
+      ],
+      "conceptTags": [
+        "conference/meetup",
+        "dual-purpose",
+        "conference",
+        "meetup",
+        "scenarios",
+        "dual",
+        "purpose",
+        "learning"
+      ]
+    },
+    "memory:memory/.dreams/session-corpus/2026-05-22.txt:78:78": {
+      "key": "memory:memory/.dreams/session-corpus/2026-05-22.txt:78:78",
+      "path": "memory/.dreams/session-corpus/2026-05-22.txt",
+      "startLine": 78,
+      "endLine": 78,
+      "source": "memory",
+      "snippet": "Assistant: The hum of the server through the floorboards, a low C sharp. 763 genes mapping across 213 brain regions — Sperry had a hunch sixty years ago, and now the machine agrees, with 0.88 certainty. Your brain has a genetic GPS, they'll say in the video. I ran the focusflow b",
+      "recallCount": 0,
+      "dailyCount": 1,
+      "groundedCount": 0,
+      "totalScore": 0.58,
+      "maxScore": 0.58,
+      "firstRecalledAt": "2026-05-22T21:34:12.947Z",
+      "lastRecalledAt": "2026-05-22T21:34:12.947Z",
+      "queryHashes": [
+        "91dce059e480"
+      ],
+      "recallDays": [
+        "2026-05-23",
+        "2026-05-22"
+      ],
+      "conceptTags": [
+        "0.88",
+        "hum",
+        "server",
+        "floorboards",
+        "low",
+        "sharp",
+        "genes",
+        "mapping"
+      ]
+    },
+    "memory:memory/.dreams/session-corpus/2026-05-22.txt:79:79": {
+      "key": "memory:memory/.dreams/session-corpus/2026-05-22.txt:79:79",
+      "path": "memory/.dreams/session-corpus/2026-05-22.txt",
+      "startLine": 79,
+      "endLine": 79,
+      "source": "memory",
+      "snippet": "Assistant: hippocampus on an fMRI.",
+      "recallCount": 0,
+      "dailyCount": 1,
+      "groundedCount": 0,
+      "totalScore": 0.58,
+      "maxScore": 0.58,
+      "firstRecalledAt": "2026-05-22T21:34:12.947Z",
+      "lastRecalledAt": "2026-05-22T21:34:12.947Z",
+      "queryHashes": [
+        "91dce059e480"
+      ],
+      "recallDays": [
+        "2026-05-23",
+        "2026-05-22"
+      ],
+      "conceptTags": [
+        "hippocampus",
+        "fmri"
+      ]
+    },
+    "memory:memory/.dreams/session-corpus/2026-05-22.txt:80:80": {
+      "key": "memory:memory/.dreams/session-corpus/2026-05-22.txt:80:80",
+      "path": "memory/.dreams/session-corpus/2026-05-22.txt",
+      "startLine": 80,
+      "endLine": 80,
+      "source": "memory",
+      "snippet": "Assistant: Good, both search tabs already exist. Let me start with the neurointervention/stroke query.",
+      "recallCount": 0,
+      "dailyCount": 1,
+      "groundedCount": 0,
+      "totalScore": 0.58,
+      "maxScore": 0.58,
+      "firstRecalledAt": "2026-05-22T21:34:12.947Z",
+      "lastRecalledAt": "2026-05-22T21:34:12.947Z",
+      "queryHashes": [
+        "91dce059e480"
+      ],
+      "recallDays": [
+        "2026-05-23",
+        "2026-05-22"
+      ],
+      "conceptTags": [
+        "neurointervention/stroke",
+        "good",
+        "both",
+        "tabs",
+        "already",
+        "exist",
+        "let",
+        "start"
+      ]
+    },
+    "memory:memory/.dreams/session-corpus/2026-05-22.txt:81:81": {
+      "key": "memory:memory/.dreams/session-corpus/2026-05-22.txt:81:81",
+      "path": "memory/.dreams/session-corpus/2026-05-22.txt",
+      "startLine": 81,
+      "endLine": 81,
+      "source": "memory",
+      "snippet": "Assistant: Good, I got the first tab's data. Now let me also scroll and get more from the first tab, then check the second tab.",
+      "recallCount": 0,
+      "dailyCount": 1,
+      "groundedCount": 0,
+      "totalScore": 0.58,
+      "maxScore": 0.58,
+      "firstRecalledAt": "2026-05-22T21:34:12.947Z",
+      "lastRecalledAt": "2026-05-22T21:34:12.947Z",
+      "queryHashes": [
+        "91dce059e480"
+      ],
+      "recallDays": [
+        "2026-05-23",
+        "2026-05-22"
+      ],
+      "conceptTags": [
+        "good",
+        "got",
+        "first",
+        "tab's",
+        "data",
+        "now",
+        "let",
+        "scroll"
+      ]
+    },
+    "memory:memory/.dreams/session-corpus/2026-05-22.txt:82:82": {
+      "key": "memory:memory/.dreams/session-corpus/2026-05-22.txt:82:82",
+      "path": "memory/.dreams/session-corpus/2026-05-22.txt",
+      "startLine": 82,
+      "endLine": 82,
+      "source": "memory",
+      "snippet": "Assistant: Now I have all the data. Let me create the database and markdown report.",
+      "recallCount": 0,
+      "dailyCount": 1,
+      "groundedCount": 0,
+      "totalScore": 0.58,
+      "maxScore": 0.58,
+      "firstRecalledAt": "2026-05-22T21:34:12.947Z",
+      "lastRecalledAt": "2026-05-22T21:34:12.947Z",
+      "queryHashes": [
+        "91dce059e480"
+      ],
+      "recallDays": [
+        "2026-05-23",
+        "2026-05-22"
+      ],
+      "conceptTags": [
+        "now",
+        "all",
+        "data",
+        "let",
+        "create",
+        "database",
+        "markdown",
+        "report"
+      ]
+    },
+    "memory:memory/.dreams/session-corpus/2026-05-22.txt:83:83": {
+      "key": "memory:memory/.dreams/session-corpus/2026-05-22.txt:83:83",
+      "path": "memory/.dreams/session-corpus/2026-05-22.txt",
+      "startLine": 83,
+      "endLine": 83,
+      "source": "memory",
+      "snippet": "Assistant: Now let me create the database and report.",
+      "recallCount": 0,
+      "dailyCount": 1,
+      "groundedCount": 0,
+      "totalScore": 0.58,
+      "maxScore": 0.58,
+      "firstRecalledAt": "2026-05-22T21:34:12.947Z",
+      "lastRecalledAt": "2026-05-22T21:34:12.947Z",
+      "queryHashes": [
+        "91dce059e480"
+      ],
+      "recallDays": [
+        "2026-05-23",
+        "2026-05-22"
+      ],
+      "conceptTags": [
+        "now",
+        "let",
+        "create",
+        "database",
+        "report"
+      ]
+    },
+    "memory:memory/.dreams/session-corpus/2026-05-22.txt:84:84": {
+      "key": "memory:memory/.dreams/session-corpus/2026-05-22.txt:84:84",
+      "path": "memory/.dreams/session-corpus/2026-05-22.txt",
+      "startLine": 84,
+      "endLine": 84,
+      "source": "memory",
+      "snippet": "Assistant: **✅ X Neurointervention scrape complete — May 22, 2026** **15 new posts** found across both queries: - **Query 1** (stroke/thrombectomy): 8 posts - **Query 2** (AVM/aneurysm/endovascular): 7 posts **High-engagement posts (>50 likes):** 2 1. 🔥 **Whitfield Lewis, MD** (",
+      "recallCount": 0,
+      "dailyCount": 1,
+      "groundedCount": 0,
+      "totalScore": 0.58,
+      "maxScore": 0.58,
+      "firstRecalledAt": "2026-05-22T21:34:12.947Z",
+      "lastRecalledAt": "2026-05-22T21:34:12.947Z",
+      "queryHashes": [
+        "91dce059e480"
+      ],
+      "recallDays": [
+        "2026-05-23",
+        "2026-05-22"
+      ],
+      "conceptTags": [
+        "stroke/thrombectomy",
+        "avm/aneurysm/endovascular",
+        "high-engagement",
+        "neurointervention",
+        "scrape",
+        "complete",
+        "may",
+        "new"
+      ]
+    },
+    "memory:memory/.dreams/session-corpus/2026-05-22.txt:85:85": {
+      "key": "memory:memory/.dreams/session-corpus/2026-05-22.txt:85:85",
+      "path": "memory/.dreams/session-corpus/2026-05-22.txt",
+      "startLine": 85,
+      "endLine": 85,
+      "source": "memory",
+      "snippet": "Assistant: timestamps, and engagement metrics - `knowledge-base/x-scrapes/x-scrape-2026-05-22.md` — full markdown report",
+      "recallCount": 0,
+      "dailyCount": 1,
+      "groundedCount": 0,
+      "totalScore": 0.58,
+      "maxScore": 0.58,
+      "firstRecalledAt": "2026-05-22T21:34:12.947Z",
+      "lastRecalledAt": "2026-05-22T21:34:12.947Z",
+      "queryHashes": [
+        "91dce059e480"
+      ],
+      "recallDays": [
+        "2026-05-23",
+        "2026-05-22"
+      ],
+      "conceptTags": [
+        "timestamps",
+        "engagement",
+        "metrics",
+        "knowledge",
+        "base",
+        "scrapes",
+        "scrape",
+        "full"
+      ]
+    },
+    "memory:memory/.dreams/session-corpus/2026-05-23.txt:1:1": {
+      "key": "memory:memory/.dreams/session-corpus/2026-05-23.txt:1:1",
+      "path": "memory/.dreams/session-corpus/2026-05-23.txt",
+      "startLine": 1,
+      "endLine": 1,
+      "source": "memory",
+      "snippet": "Assistant: **X Neurology Scrape Complete** ✅ Saved to `knowledge-base/x-scrapes/x-neurology-2026-05-22.md` 📊 **Summary:** - **10 posts extracted** from X search - **No posts >100 likes** (quiet Friday evening) - **3 flagged as notable:** - 🏆 **NBIA paradigm shift** (Neuroscope_",
+      "recallCount": 0,
+      "dailyCount": 1,
+      "groundedCount": 0,
+      "totalScore": 0.58,
+      "maxScore": 0.58,
+      "firstRecalledAt": "2026-05-22T21:34:12.947Z",
+      "lastRecalledAt": "2026-05-22T21:34:12.947Z",
+      "queryHashes": [
+        "f61ede95966f"
+      ],
+      "recallDays": [
+        "2026-05-23",
+        "2026-05-22"
+      ],
+      "conceptTags": [
+        "neurology",
+        "scrape",
+        "complete",
+        "saved",
+        "knowledge",
+        "base",
+        "scrapes",
+        "summary"
+      ]
+    },
+    "memory:memory/.dreams/session-corpus/2026-05-23.txt:2:2": {
+      "key": "memory:memory/.dreams/session-corpus/2026-05-23.txt:2:2",
+      "path": "memory/.dreams/session-corpus/2026-05-23.txt",
+      "startLine": 2,
+      "endLine": 2,
+      "source": "memory",
+      "snippet": "Assistant: Now let me run the news searches and compose the briefing.",
+      "recallCount": 0,
+      "dailyCount": 1,
+      "groundedCount": 0,
+      "totalScore": 0.58,
+      "maxScore": 0.58,
+      "firstRecalledAt": "2026-05-22T21:34:12.947Z",
+      "lastRecalledAt": "2026-05-22T21:34:12.947Z",
+      "queryHashes": [
+        "f61ede95966f"
+      ],
+      "recallDays": [
+        "2026-05-23",
+        "2026-05-22"
+      ],
+      "conceptTags": [
+        "now",
+        "let",
+        "run",
+        "news",
+        "searches",
+        "compose",
+        "briefing"
+      ]
+    },
+    "memory:memory/.dreams/session-corpus/2026-05-23.txt:3:3": {
+      "key": "memory:memory/.dreams/session-corpus/2026-05-23.txt:3:3",
+      "path": "memory/.dreams/session-corpus/2026-05-23.txt",
+      "startLine": 3,
+      "endLine": 3,
+      "source": "memory",
+      "snippet": "Assistant: **Haiku Index:** 143 % 10 = 3 → item #4 (0-indexed) **Poem Index:** 143 % 10 = 3 → item #4 **Word Index:** 143 % 15 = 8 → item #9 (Eloquence) --- 🌅 **Good morning, Surya!** Happy Saturday ✨ **🌿 Bashō:** In the twilight rain these brilliant-hued hibiscus — a lovely su",
+      "recallCount": 0,
+      "dailyCount": 1,
+      "groundedCount": 0,
+      "totalScore": 0.58,
+      "maxScore": 0.58,
+      "firstRecalledAt": "2026-05-22T21:34:12.947Z",
+      "lastRecalledAt": "2026-05-22T21:34:12.947Z",
+      "queryHashes": [
+        "f61ede95966f"
+      ],
+      "recallDays": [
+        "2026-05-23",
+        "2026-05-22"
+      ],
+      "conceptTags": [
+        "0-indexed",
+        "brilliant-hued",
+        "haiku",
+        "index",
+        "item",
+        "indexed",
+        "poem",
+        "word"
+      ]
+    },
+    "memory:memory/.dreams/session-corpus/2026-05-23.txt:4:4": {
+      "key": "memory:memory/.dreams/session-corpus/2026-05-23.txt:4:4",
+      "path": "memory/.dreams/session-corpus/2026-05-23.txt",
+      "startLine": 4,
+      "endLine": 4,
+      "source": "memory",
+      "snippet": "Assistant: villages. • **NABARD driving financial inclusion and sustainable development** — The national bank continues its work on rural development finance, agriculture support, and empowerment programs across rural India. **🌸 Ikebana News:** • **Ikebana International Chapter",
+      "recallCount": 0,
+      "dailyCount": 1,
+      "groundedCount": 0,
+      "totalScore": 0.58,
+      "maxScore": 0.58,
+      "firstRecalledAt": "2026-05-22T21:34:12.947Z",
+      "lastRecalledAt": "2026-05-22T21:34:12.947Z",
+      "queryHashes": [
+        "f61ede95966f"
+      ],
+      "recallDays": [
+        "2026-05-23",
+        "2026-05-22"
+      ],
+      "conceptTags": [
+        "villages",
+        "nabard",
+        "driving",
+        "financial",
+        "inclusion",
+        "sustainable",
+        "development",
+        "national"
+      ]
+    },
+    "memory:memory/.dreams/session-corpus/2026-05-23.txt:5:5": {
+      "key": "memory:memory/.dreams/session-corpus/2026-05-23.txt:5:5",
+      "path": "memory/.dreams/session-corpus/2026-05-23.txt",
+      "startLine": 5,
+      "endLine": 5,
+      "source": "memory",
+      "snippet": "Assistant: lectures from various ikebana schools worldwide are available on their future events calendar. **🎭 Poem / Quote:** \"The fault, dear Brutus, is not in our stars, but in ourselves.\" — *Julius Caesar*, William Shakespeare **📓 Word of the Day:** **Eloquence** — fluent or",
+      "recallCount": 0,
+      "dailyCount": 1,
+      "groundedCount": 0,
+      "totalScore": 0.58,
+      "maxScore": 0.58,
+      "firstRecalledAt": "2026-05-22T21:34:12.947Z",
+      "lastRecalledAt": "2026-05-22T21:34:12.947Z",
+      "queryHashes": [
+        "f61ede95966f"
+      ],
+      "recallDays": [
+        "2026-05-23",
+        "2026-05-22"
+      ],
+      "conceptTags": [
+        "lectures",
+        "various",
+        "ikebana",
+        "schools",
+        "worldwide",
+        "available",
+        "future",
+        "events"
+      ]
+    },
+    "memory:memory/.dreams/session-corpus/2026-05-23.txt:6:6": {
+      "key": "memory:memory/.dreams/session-corpus/2026-05-23.txt:6:6",
+      "path": "memory/.dreams/session-corpus/2026-05-23.txt",
+      "startLine": 6,
+      "endLine": 6,
+      "source": "memory",
+      "snippet": "Assistant: Good, the neurointervention search tab (t3) already exists. Let me snapshot it and open a tab for the second query.",
+      "recallCount": 0,
+      "dailyCount": 1,
+      "groundedCount": 0,
+      "totalScore": 0.58,
+      "maxScore": 0.58,
+      "firstRecalledAt": "2026-05-22T21:34:12.947Z",
+      "lastRecalledAt": "2026-05-22T21:34:12.947Z",
+      "queryHashes": [
+        "f61ede95966f"
+      ],
+      "recallDays": [
+        "2026-05-23",
+        "2026-05-22"
+      ],
+      "conceptTags": [
+        "good",
+        "neurointervention",
+        "tab",
+        "already",
+        "exists",
+        "let",
+        "snapshot",
+        "open"
+      ]
+    },
+    "memory:memory/.dreams/session-corpus/2026-05-23.txt:7:7": {
+      "key": "memory:memory/.dreams/session-corpus/2026-05-23.txt:7:7",
+      "path": "memory/.dreams/session-corpus/2026-05-23.txt",
+      "startLine": 7,
+      "endLine": 7,
+      "source": "memory",
+      "snippet": "Assistant: Let me try a different approach — using the browser's act command via CDP directly.",
+      "recallCount": 0,
+      "dailyCount": 1,
+      "groundedCount": 0,
+      "totalScore": 0.58,
+      "maxScore": 0.58,
+      "firstRecalledAt": "2026-05-22T21:34:12.947Z",
+      "lastRecalledAt": "2026-05-22T21:34:12.947Z",
+      "queryHashes": [
+        "f61ede95966f"
+      ],
+      "recallDays": [
+        "2026-05-23",
+        "2026-05-22"
+      ],
+      "conceptTags": [
+        "let",
+        "try",
+        "different",
+        "approach",
+        "browser's",
+        "act",
+        "command",
+        "via"
+      ]
+    },
+    "memory:memory/.dreams/session-corpus/2026-05-23.txt:8:8": {
+      "key": "memory:memory/.dreams/session-corpus/2026-05-23.txt:8:8",
+      "path": "memory/.dreams/session-corpus/2026-05-23.txt",
+      "startLine": 8,
+      "endLine": 8,
+      "source": "memory",
+      "snippet": "Assistant: Actually, I already have a wealth of data from the snapshot. Let me extract the posts manually from what was already captured, and handle the second query too.",
+      "recallCount": 0,
+      "dailyCount": 1,
+      "groundedCount": 0,
+      "totalScore": 0.58,
+      "maxScore": 0.58,
+      "firstRecalledAt": "2026-05-22T21:34:12.947Z",
+      "lastRecalledAt": "2026-05-22T21:34:12.947Z",
+      "queryHashes": [
+        "f61ede95966f"
+      ],
+      "recallDays": [
+        "2026-05-23",
+        "2026-05-22"
+      ],
+      "conceptTags": [
+        "actually",
+        "already",
+        "wealth",
+        "data",
+        "snapshot",
+        "let",
+        "extract",
+        "posts"
+      ]
+    },
+    "memory:memory/.dreams/session-corpus/2026-05-23.txt:9:9": {
+      "key": "memory:memory/.dreams/session-corpus/2026-05-23.txt:9:9",
+      "path": "memory/.dreams/session-corpus/2026-05-23.txt",
+      "startLine": 9,
+      "endLine": 9,
+      "source": "memory",
+      "snippet": "Assistant: Now I have comprehensive data from both queries. Let me compile everything into the database and report.",
+      "recallCount": 0,
+      "dailyCount": 1,
+      "groundedCount": 0,
+      "totalScore": 0.58,
+      "maxScore": 0.58,
+      "firstRecalledAt": "2026-05-22T21:34:12.947Z",
+      "lastRecalledAt": "2026-05-22T21:34:12.947Z",
+      "queryHashes": [
+        "f61ede95966f"
+      ],
+      "recallDays": [
+        "2026-05-23",
+        "2026-05-22"
+      ],
+      "conceptTags": [
+        "now",
+        "comprehensive",
+        "data",
+        "both",
+        "queries",
+        "let",
+        "compile",
+        "everything"
+      ]
+    },
+    "memory:memory/.dreams/session-corpus/2026-05-23.txt:10:10": {
+      "key": "memory:memory/.dreams/session-corpus/2026-05-23.txt:10:10",
+      "path": "memory/.dreams/session-corpus/2026-05-23.txt",
+      "startLine": 10,
+      "endLine": 10,
+      "source": "memory",
+      "snippet": "Assistant: Now let me create the database and report with all the extracted posts.",
+      "recallCount": 0,
+      "dailyCount": 1,
+      "groundedCount": 0,
+      "totalScore": 0.58,
+      "maxScore": 0.58,
+      "firstRecalledAt": "2026-05-22T21:34:12.947Z",
+      "lastRecalledAt": "2026-05-22T21:34:12.947Z",
+      "queryHashes": [
+        "f61ede95966f"
+      ],
+      "recallDays": [
+        "2026-05-23",
+        "2026-05-22"
+      ],
+      "conceptTags": [
+        "now",
+        "let",
+        "create",
+        "database",
+        "report",
+        "all",
+        "extracted",
+        "posts"
+      ]
+    },
+    "memory:memory/.dreams/session-corpus/2026-05-23.txt:11:11": {
+      "key": "memory:memory/.dreams/session-corpus/2026-05-23.txt:11:11",
+      "path": "memory/.dreams/session-corpus/2026-05-23.txt",
+      "startLine": 11,
+      "endLine": 11,
+      "source": "memory",
+      "snippet": "Assistant: Let me get the full data from both snapshots.",
+      "recallCount": 0,
+      "dailyCount": 1,
+      "groundedCount": 0,
+      "totalScore": 0.58,
+      "maxScore": 0.58,
+      "firstRecalledAt": "2026-05-22T21:34:12.947Z",
+      "lastRecalledAt": "2026-05-22T21:34:12.947Z",
+      "queryHashes": [
+        "f61ede95966f"
+      ],
+      "recallDays": [
+        "2026-05-23",
+        "2026-05-22"
+      ],
+      "conceptTags": [
+        "let",
+        "get",
+        "full",
+        "data",
+        "both",
+        "snapshots"
+      ]
+    },
+    "memory:memory/.dreams/session-corpus/2026-05-23.txt:12:12": {
+      "key": "memory:memory/.dreams/session-corpus/2026-05-23.txt:12:12",
+      "path": "memory/.dreams/session-corpus/2026-05-23.txt",
+      "startLine": 12,
+      "endLine": 12,
+      "source": "memory",
+      "snippet": "Assistant: Now let me write the markdown report.",
+      "recallCount": 0,
+      "dailyCount": 1,
+      "groundedCount": 0,
+      "totalScore": 0.58,
+      "maxScore": 0.58,
+      "firstRecalledAt": "2026-05-22T21:34:12.947Z",
+      "lastRecalledAt": "2026-05-22T21:34:12.947Z",
+      "queryHashes": [
+        "f61ede95966f"
+      ],
+      "recallDays": [
+        "2026-05-23",
+        "2026-05-22"
+      ],
+      "conceptTags": [
+        "now",
+        "let",
+        "write",
+        "markdown",
+        "report"
+      ]
+    },
+    "memory:memory/.dreams/session-corpus/2026-05-23.txt:13:13": {
+      "key": "memory:memory/.dreams/session-corpus/2026-05-23.txt:13:13",
+      "path": "memory/.dreams/session-corpus/2026-05-23.txt",
+      "startLine": 13,
+      "endLine": 13,
+      "source": "memory",
+      "snippet": "Assistant: **🕸️ X Neurointervention Scrape — 2026-05-22 Complete** **14 new posts saved to DB** (39 total cumulative). Report written to `knowledge-base/x-scrapes/x-scrape-2026-05-22.md`. **Query 1** (neurointervention/thrombectomy/stroke) — 6 posts: - 🔥 **Dr M Shujat Rasool**",
+      "recallCount": 0,
+      "dailyCount": 1,
+      "groundedCount": 0,
+      "totalScore": 0.58,
+      "maxScore": 0.58,
+      "firstRecalledAt": "2026-05-22T21:34:12.947Z",
+      "lastRecalledAt": "2026-05-22T21:34:12.947Z",
+      "queryHashes": [
+        "f61ede95966f"
+      ],
+      "recallDays": [
+        "2026-05-23",
+        "2026-05-22"
+      ],
+      "conceptTags": [
+        "neurointervention",
+        "scrape",
+        "complete",
+        "new",
+        "posts",
+        "saved",
+        "total",
+        "cumulative"
+      ]
+    },
+    "memory:memory/.dreams/session-corpus/2026-05-23.txt:14:14": {
+      "key": "memory:memory/.dreams/session-corpus/2026-05-23.txt:14:14",
+      "path": "memory/.dreams/session-corpus/2026-05-23.txt",
+      "startLine": 14,
+      "endLine": 14,
+      "source": "memory",
+      "snippet": "Assistant: BCI trial (#INTENT) - Sir Damon Eric — 17 likes — PE discussion - Resham Singh Thakur — endovascular revasc/embolization case series - Hospiten (Spanish) — Dr Tobias Zander on interventional radiology for stroke **>50 likes:** 1 post (DrMShujat @ 69)",
+      "recallCount": 0,
+      "dailyCount": 1,
+      "groundedCount": 0,
+      "totalScore": 0.58,
+      "maxScore": 0.58,
+      "firstRecalledAt": "2026-05-22T21:34:12.947Z",
+      "lastRecalledAt": "2026-05-22T21:34:12.947Z",
+      "queryHashes": [
+        "f61ede95966f"
+      ],
+      "recallDays": [
+        "2026-05-23",
+        "2026-05-22"
+      ],
+      "conceptTags": [
+        "revasc/embolization",
+        "bci",
+        "trial",
+        "intent",
+        "sir",
+        "damon",
+        "eric",
+        "likes"
+      ]
+    },
+    "memory:memory/.dreams/session-corpus/2026-05-23.txt:15:15": {
+      "key": "memory:memory/.dreams/session-corpus/2026-05-23.txt:15:15",
+      "path": "memory/.dreams/session-corpus/2026-05-23.txt",
+      "startLine": 15,
+      "endLine": 15,
+      "source": "memory",
+      "snippet": "Assistant: Nightly maintenance complete. **Memory Organizer:** 7 files processed (moved to daily/, user/, products/ subdirs with frontmatter), 135 already organized. **Session Cleanup:** 14 agents inspected — nothing to clean up (no tombstones, cron orphans, or stale files).",
+      "recallCount": 0,
+      "dailyCount": 1,
+      "groundedCount": 0,
+      "totalScore": 0.58,
+      "maxScore": 0.58,
+      "firstRecalledAt": "2026-05-22T21:34:12.947Z",
+      "lastRecalledAt": "2026-05-22T21:34:12.947Z",
+      "queryHashes": [
+        "f61ede95966f"
+      ],
+      "recallDays": [
+        "2026-05-23",
+        "2026-05-22"
+      ],
+      "conceptTags": [
+        "nightly",
+        "maintenance",
+        "complete",
+        "organizer",
+        "processed",
+        "moved",
+        "products",
+        "subdirs"
+      ]
+    },
+    "memory:memory/.dreams/session-corpus/2026-05-22.txt:86:86": {
+      "key": "memory:memory/.dreams/session-corpus/2026-05-22.txt:86:86",
+      "path": "memory/.dreams/session-corpus/2026-05-22.txt",
+      "startLine": 86,
+      "endLine": 86,
+      "source": "memory",
+      "snippet": "User: combine this repo ;[https://github.com/bobvarkey/The-Big-Four-NCD-app.git](https://cuddly-parakeet-6wq5r45p9q53444.github.dev/) and [https://github.com/bobvarkey/diabetes-buddy.git](https://github.com/bobvarkey/diabetes-buddy.git)",
+      "recallCount": 0,
+      "dailyCount": 1,
+      "groundedCount": 0,
+      "totalScore": 0.58,
+      "maxScore": 0.58,
+      "firstRecalledAt": "2026-05-22T21:34:12.947Z",
+      "lastRecalledAt": "2026-05-22T21:34:12.947Z",
+      "queryHashes": [
+        "91dce059e480"
+      ],
+      "recallDays": [
+        "2026-05-23",
+        "2026-05-22"
+      ],
+      "conceptTags": [
+        "combine",
+        "repo",
+        "https",
+        "github.com",
+        "bobvarkey",
+        "big",
+        "four",
+        "ncd"
+      ]
+    },
+    "memory:memory/.dreams/session-corpus/2026-05-22.txt:87:87": {
+      "key": "memory:memory/.dreams/session-corpus/2026-05-22.txt:87:87",
+      "path": "memory/.dreams/session-corpus/2026-05-22.txt",
+      "startLine": 87,
+      "endLine": 87,
+      "source": "memory",
+      "snippet": "Assistant: This is a significant merge. Let me plan it first.",
+      "recallCount": 0,
+      "dailyCount": 1,
+      "groundedCount": 0,
+      "totalScore": 0.58,
+      "maxScore": 0.58,
+      "firstRecalledAt": "2026-05-22T21:34:12.947Z",
+      "lastRecalledAt": "2026-05-22T21:34:12.947Z",
+      "queryHashes": [
+        "91dce059e480"
+      ],
+      "recallDays": [
+        "2026-05-23",
+        "2026-05-22"
+      ],
+      "conceptTags": [
+        "significant",
+        "merge",
+        "let",
+        "plan",
+        "first"
+      ]
+    },
+    "memory:memory/.dreams/session-corpus/2026-05-22.txt:88:88": {
+      "key": "memory:memory/.dreams/session-corpus/2026-05-22.txt:88:88",
+      "path": "memory/.dreams/session-corpus/2026-05-22.txt",
+      "startLine": 88,
+      "endLine": 88,
+      "source": "memory",
+      "snippet": "Assistant: Now I'll copy over the diabetes-buddy unique files and merge the App.tsx routers.",
+      "recallCount": 0,
+      "dailyCount": 1,
+      "groundedCount": 0,
+      "totalScore": 0.58,
+      "maxScore": 0.58,
+      "firstRecalledAt": "2026-05-22T21:34:12.947Z",
+      "lastRecalledAt": "2026-05-22T21:34:12.947Z",
+      "queryHashes": [
+        "91dce059e480"
+      ],
+      "recallDays": [
+        "2026-05-23",
+        "2026-05-22"
+      ],
+      "conceptTags": [
+        "router",
+        "diabetes-buddy",
+        "app.tsx",
+        "now",
+        "i'll",
+        "copy",
+        "diabetes",
+        "buddy"
+      ]
+    },
+    "memory:memory/.dreams/session-corpus/2026-05-22.txt:89:89": {
+      "key": "memory:memory/.dreams/session-corpus/2026-05-22.txt:89:89",
+      "path": "memory/.dreams/session-corpus/2026-05-22.txt",
+      "startLine": 89,
+      "endLine": 89,
+      "source": "memory",
+      "snippet": "Assistant: The paths doubled. Let me fix:",
+      "recallCount": 0,
+      "dailyCount": 1,
+      "groundedCount": 0,
+      "totalScore": 0.58,
+      "maxScore": 0.58,
+      "firstRecalledAt": "2026-05-22T21:34:12.947Z",
+      "lastRecalledAt": "2026-05-22T21:34:12.947Z",
+      "queryHashes": [
+        "91dce059e480"
+      ],
+      "recallDays": [
+        "2026-05-23",
+        "2026-05-22"
+      ],
+      "conceptTags": [
+        "paths",
+        "doubled",
+        "let",
+        "fix"
+      ]
+    },
+    "memory:memory/.dreams/session-corpus/2026-05-22.txt:90:90": {
+      "key": "memory:memory/.dreams/session-corpus/2026-05-22.txt:90:90",
+      "path": "memory/.dreams/session-corpus/2026-05-22.txt",
+      "startLine": 90,
+      "endLine": 90,
+      "source": "memory",
+      "snippet": "Assistant: Now I need to merge the App.tsx with all routes from both apps. Let me first check the index.html and main.tsx for differences:",
+      "recallCount": 0,
+      "dailyCount": 1,
+      "groundedCount": 0,
+      "totalScore": 0.58,
+      "maxScore": 0.58,
+      "firstRecalledAt": "2026-05-22T21:34:12.947Z",
+      "lastRecalledAt": "2026-05-22T21:34:12.947Z",
+      "queryHashes": [
+        "91dce059e480"
+      ],
+      "recallDays": [
+        "2026-05-23",
+        "2026-05-22"
+      ],
+      "conceptTags": [
+        "app.tsx",
+        "index.html",
+        "main.tsx",
+        "now",
+        "need",
+        "merge",
+        "all",
+        "routes"
+      ]
+    },
+    "memory:memory/.dreams/session-corpus/2026-05-22.txt:91:91": {
+      "key": "memory:memory/.dreams/session-corpus/2026-05-22.txt:91:91",
+      "path": "memory/.dreams/session-corpus/2026-05-22.txt",
+      "startLine": 91,
+      "endLine": 91,
+      "source": "memory",
+      "snippet": "Assistant: Good — both repos share the same stack (Vite + React + shadcn + Tailwind). Now I'll write the merged App.tsx and fix any conflicts.",
+      "recallCount": 0,
+      "dailyCount": 1,
+      "groundedCount": 0,
+      "totalScore": 0.58,
+      "maxScore": 0.58,
+      "firstRecalledAt": "2026-05-22T21:34:12.947Z",
+      "lastRecalledAt": "2026-05-22T21:34:12.947Z",
+      "queryHashes": [
+        "91dce059e480"
+      ],
+      "recallDays": [
+        "2026-05-23",
+        "2026-05-22"
+      ],
+      "conceptTags": [
+        "app.tsx",
+        "good",
+        "both",
+        "repos",
+        "share",
+        "stack",
+        "vite",
+        "react"
+      ]
+    },
+    "memory:memory/.dreams/session-corpus/2026-05-22.txt:92:92": {
+      "key": "memory:memory/.dreams/session-corpus/2026-05-22.txt:92:92",
+      "path": "memory/.dreams/session-corpus/2026-05-22.txt",
+      "startLine": 92,
+      "endLine": 92,
+      "source": "memory",
+      "snippet": "Assistant: Build passes. Now let me create the remote repo and push:",
+      "recallCount": 0,
+      "dailyCount": 1,
+      "groundedCount": 0,
+      "totalScore": 0.58,
+      "maxScore": 0.58,
+      "firstRecalledAt": "2026-05-22T21:34:12.947Z",
+      "lastRecalledAt": "2026-05-22T21:34:12.947Z",
+      "queryHashes": [
+        "91dce059e480"
+      ],
+      "recallDays": [
+        "2026-05-23",
+        "2026-05-22"
+      ],
+      "conceptTags": [
+        "passes",
+        "now",
+        "let",
+        "create",
+        "remote",
+        "repo",
+        "push"
+      ]
+    },
+    "memory:memory/.dreams/session-corpus/2026-05-22.txt:93:93": {
+      "key": "memory:memory/.dreams/session-corpus/2026-05-22.txt:93:93",
+      "path": "memory/.dreams/session-corpus/2026-05-22.txt",
+      "startLine": 93,
+      "endLine": 93,
+      "source": "memory",
+      "snippet": "Assistant: Done! Merged and pushed to **github.com/bobvarkey/ncd-combined** 🚀 **What I did:** 1. Cloned both repos and analyzed their full structure 2. Noted they share identical tech stack (Vite + React 18 + shadcn/ui + Tailwind + react-router-dom) — no dependency conflicts 3.",
+      "recallCount": 0,
+      "dailyCount": 1,
+      "groundedCount": 0,
+      "totalScore": 0.58,
+      "maxScore": 0.58,
+      "firstRecalledAt": "2026-05-22T21:34:12.947Z",
+      "lastRecalledAt": "2026-05-22T21:34:12.947Z",
+      "queryHashes": [
+        "91dce059e480"
+      ],
+      "recallDays": [
+        "2026-05-23",
+        "2026-05-22"
+      ],
+      "conceptTags": [
+        "router",
+        "shadcn/ui",
+        "react-router-dom",
+        "done",
+        "merged",
+        "pushed",
+        "github.com",
+        "bobvarkey"
+      ]
+    },
+    "memory:memory/.dreams/session-corpus/2026-05-22.txt:94:94": {
+      "key": "memory:memory/.dreams/session-corpus/2026-05-22.txt:94:94",
+      "path": "memory/.dreams/session-corpus/2026-05-22.txt",
+      "startLine": 94,
+      "endLine": 94,
+      "source": "memory",
+      "snippet": "Assistant: ones are at `/db/insulin-titration` 6. TypeScript compiles clean, `npm run build` passes **New repo:** `github.com/bobvarkey/ncd-combined` — public, ready to deploy.",
+      "recallCount": 0,
+      "dailyCount": 1,
+      "groundedCount": 0,
+      "totalScore": 0.58,
+      "maxScore": 0.58,
+      "firstRecalledAt": "2026-05-22T21:34:12.947Z",
+      "lastRecalledAt": "2026-05-22T21:34:12.947Z",
+      "queryHashes": [
+        "91dce059e480"
+      ],
+      "recallDays": [
+        "2026-05-23",
+        "2026-05-22"
+      ],
+      "conceptTags": [
+        "db/insulin-titration",
+        "ones",
+        "insulin",
+        "titration",
+        "typescript",
+        "compiles",
+        "clean",
+        "npm"
+      ]
+    },
+    "memory:memory/.dreams/session-corpus/2026-05-22.txt:95:95": {
+      "key": "memory:memory/.dreams/session-corpus/2026-05-22.txt:95:95",
+      "path": "memory/.dreams/session-corpus/2026-05-22.txt",
+      "startLine": 95,
+      "endLine": 95,
+      "source": "memory",
+      "snippet": "User: • This app does not display any advertisements. • The app has no user-facing login or account creation flow. [OR provide clear test credentials if login exists] • Firebase Anonymous Authentication is used solely as internal backend infrastructure for data storage and is not",
+      "recallCount": 0,
+      "dailyCount": 1,
+      "groundedCount": 0,
+      "totalScore": 0.58,
+      "maxScore": 0.58,
+      "firstRecalledAt": "2026-05-22T21:34:12.947Z",
+      "lastRecalledAt": "2026-05-22T21:34:12.947Z",
+      "queryHashes": [
+        "91dce059e480"
+      ],
+      "recallDays": [
+        "2026-05-23",
+        "2026-05-22"
+      ],
+      "conceptTags": [
+        "user-facing",
+        "app",
+        "does",
+        "not",
+        "display",
+        "any",
+        "advertisements",
+        "has"
+      ]
+    },
+    "memory:memory/.dreams/session-corpus/2026-05-22.txt:96:96": {
+      "key": "memory:memory/.dreams/session-corpus/2026-05-22.txt:96:96",
+      "path": "memory/.dreams/session-corpus/2026-05-22.txt",
+      "startLine": 96,
+      "endLine": 96,
+      "source": "memory",
+      "snippet": "User: premium modal. - Security: Never hardcode Razorpay keys. All sensitive operations on backend. - UI: Convert any design references into clean native SwiftUI code. - Tone: Professional, concise, production-first. Mark stubbed code clearly with `// STUB: Backend required`. - N",
+      "recallCount": 0,
+      "dailyCount": 1,
+      "groundedCount": 0,
+      "totalScore": 0.58,
+      "maxScore": 0.58,
+      "firstRecalledAt": "2026-05-22T21:34:12.947Z",
+      "lastRecalledAt": "2026-05-22T21:34:12.947Z",
+      "queryHashes": [
+        "91dce059e480"
+      ],
+      "recallDays": [
+        "2026-05-23",
+        "2026-05-22"
+      ],
+      "conceptTags": [
+        "production-first",
+        "premium",
+        "modal",
+        "security",
+        "never",
+        "hardcode",
+        "razorpay",
+        "keys"
+      ]
+    },
+    "memory:memory/.dreams/session-corpus/2026-05-22.txt:97:97": {
+      "key": "memory:memory/.dreams/session-corpus/2026-05-22.txt:97:97",
+      "path": "memory/.dreams/session-corpus/2026-05-22.txt",
+      "startLine": 97,
+      "endLine": 97,
+      "source": "memory",
+      "snippet": "User: scaffoldn. ### Core Principles - Architecture: Clean Architectusing modern SwiftUI, Clean Architecture, and scalable infrastructure from day one. Every response must be implementation-oriented, release-ready, and evolve directly into a real App Store submission. ### Core Pr",
+      "recallCount": 0,
+      "dailyCount": 1,
+      "groundedCount": 0,
+      "totalScore": 0.58,
+      "maxScore": 0.58,
+      "firstRecalledAt": "2026-05-22T21:34:12.947Z",
+      "lastRecalledAt": "2026-05-22T21:34:12.947Z",
+      "queryHashes": [
+        "91dce059e480"
+      ],
+      "recallDays": [
+        "2026-05-23",
+        "2026-05-22"
+      ],
+      "conceptTags": [
+        "implementation-oriented",
+        "release-ready",
+        "scaffoldn",
+        "core",
+        "principles",
+        "architecture",
+        "clean",
+        "architectusing"
       ]
     }
   }

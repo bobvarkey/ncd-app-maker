@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Algorithm — Diagnosis of Secondary Hypertension</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Inter', -apple-system, sans-serif;
+    background: #e8e8e8;
+    display: flex;
+    justify-content: center;
+    padding: 40px;
+  }
+
+  .infographic {
+    width: 1400px;
+    background: #f7f5f2;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.15);
+    border-radius: 14px;
+  }
+
+  .infographic::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background-image:
+      linear-gradient(rgba(74, 124, 142, 0.05) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(74, 124, 142, 0.05) 1px, transparent 1px);
+    background-size: 50px 50px;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .content { position: relative; z-index: 1; padding: 32px 36px 28px; }
+
+  /* ===== HEADER ===== */
+  .header {
+    display: flex; justify-content: space-between; align-items: center;
+    margin-bottom: 22px;
+  }
+  .nav-label {
+    font-size: 12px; font-weight: 700; color: #4A7C8E;
+    letter-spacing: 1.5px; text-transform: uppercase;
+    border: 1.5px solid #4A7C8E; padding: 4px 14px; border-radius: 4px;
+  }
+  .page-number {
+    background: #4A7C8E; color: white; font-size: 14px; font-weight: 700;
+    width: 38px; height: 38px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+  }
+
+  .main-title {
+    text-align: center; margin-bottom: 22px;
+  }
+  .main-title h1 {
+    font-size: 38px; font-weight: 900; color: #2D2D2D;
+    letter-spacing: -0.5px; line-height: 1.15;
+  }
+  .main-title .subtitle {
+    display: inline-block; background: #4A7C8E; color: white;
+    padding: 6px 22px; border-radius: 18px;
+    font-size: 14px; font-weight: 600; letter-spacing: 0.5px; margin-top: 6px;
+  }
+
+  /* ===== FLOWCHART ===== */
+  .flowchart {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0;
+  }
+
+  .step {
+    width: 100%;
+    max-width: 800px;
+    text-align: center;
+    padding: 16px 24px;
+    border-radius: 12px;
+    font-weight: 700;
+    font-size: 16px;
+    position: relative;
+    z-index: 2;
+  }
+
+  .step.start {
+    background: #2D2D2D;
+    color: white;
+    font-size: 20px;
+    max-width: 600px;
+    padding: 18px 30px;
+  }
+
+  .step.question {
+    background: #E3F2FD;
+    border: 2.5px solid #1565C0;
+    color: #1565C0;
+    font-size: 16px;
+    padding: 16px 28px;
+  }
+
+  .step.action {
+    background: white;
+    border: 2.5px solid #4A7C8E;
+    color: #2D2D2D;
+    font-size: 15px;
+    font-weight: 600;
+    padding: 16px 28px;
+  }
+
+  .step.action .step-sub {
+    font-weight: 400;
+    font-size: 13px;
+    color: #555;
+    margin-top: 5px;
+  }
+
+  .step.diagnosis {
+    background: #4A7C8E;
+    color: white;
+    font-size: 15px;
+    padding: 14px 22px;
+  }
+
+  .step.diagnosis.liddle {
+    background: linear-gradient(135deg, #D4875E, #E8A87C);
+  }
+
+  .step.diagnosis.warning {
+    background: #E91E63;
+    font-size: 14px;
+  }
+
+  .step.final {
+    background: #1B5E20;
+    color: white;
+    font-size: 17px;
+    max-width: 500px;
+    padding: 16px 28px;
+  }
+
+  .arrow-down {
+    width: 2.5px;
+    height: 28px;
+    background: #666;
+    position: relative;
+    z-index: 1;
+  }
+
+  .arrow-down::after {
+    content: '▼';
+    position: absolute;
+    bottom: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 10px;
+    color: #666;
+  }
+
+  .branch-row {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    width: 100%;
+    margin: 4px 0;
+  }
+
+  .branch-arm {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex: 1;
+    min-width: 0;
+  }
+
+  .branch-arm .arrow-down { height: 20px; }
+
+  .branch-label {
+    font-size: 14px;
+    font-weight: 700;
+    color: #E65100;
+    background: #FFF3E0;
+    padding: 6px 16px;
+    border-radius: 14px;
+    margin: 4px 0;
+    border: 1.5px solid #FFB74D;
+  }
+
+  .branch-label.green { background: #E8F5E9; color: #2E7D32; border-color: #81C784; }
+  .branch-label.purple { background: #F3E5F5; color: #6A1B9A; border-color: #CE93D8; }
+  .branch-label.orange { background: #FFF3E0; color: #E65100; border-color: #FFB74D; }
+  .branch-label.red { background: #FFEBEE; color: #C62828; border-color: #EF9A9A; }
+  .branch-label.teal { background: #E0F2F1; color: #004D40; border-color: #80CBC4; }
+
+  .split-bar-box {
+    width: 100%;
+    text-align: center;
+    margin: 6px 0;
+  }
+
+  .split-bar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0;
+  }
+
+  .split-bar .left-label, .split-bar .right-label {
+    font-size: 12px;
+    font-weight: 700;
+    white-space: nowrap;
+  }
+
+  .split-bar .left-label { color: #C62828; margin-right: 8px; }
+  .split-bar .right-label { color: #2E7D32; margin-left: 8px; }
+
+  .split-bar .bar-line {
+    width: 180px;
+    height: 2.5px;
+    background: #666;
+    position: relative;
+  }
+
+  .split-bar .bar-line::before, .split-bar .bar-line::after {
+    content: '▼';
+    position: absolute;
+    top: -8px;
+    font-size: 10px;
+    color: #666;
+  }
+
+  .split-bar .bar-line::before { left: -4px; }
+  .split-bar .bar-line::after { right: -4px; }
+
+  .legend-box {
+    position: absolute;
+    top: 55px;
+    right: 36px;
+    background: white;
+    border: 1px solid rgba(74,124,142,0.2);
+    border-radius: 10px;
+    padding: 12px 16px;
+    font-size: 13px;
+    line-height: 1.8;
+  }
+
+  .legend-box .legend-title {
+    font-weight: 700; color: #4A7C8E; font-size: 12px;
+    text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 5px;
+  }
+
+  .legend-item { display: flex; align-items: center; gap: 8px; }
+  .legend-sq { width: 14px; height: 14px; border-radius: 3px; flex-shrink: 0; }
+
+  .footer-meta {
+    margin-top: 22px;
+    padding-top: 8px;
+    border-top: 1px solid rgba(74,124,142,0.2);
+    display: flex;
+    justify-content: space-between;
+    font-size: 11px;
+    color: #888;
+    font-weight: 500;
+  }
+
+  .bottom-banner {
+    width: 100%;
+    margin-top: 20px;
+    background: #2D2D2D;
+    border-radius: 12px;
+    padding: 16px 24px;
+    display: flex;
+    gap: 30px;
+    align-items: flex-start;
+  }
+
+  .bottom-banner .col { flex: 1; }
+  .bottom-banner .col-title {
+    font-size: 13px; font-weight: 700; letter-spacing: 0.5px; margin-bottom: 5px;
+  }
+  .bottom-banner .col-body {
+    color: #ccc; font-size: 12px; line-height: 1.7;
+  }
+  .bottom-banner .col-body strong { color: #fff; }
+
+  @media print {
+    body { background: white; padding: 0; }
+    .infographic { box-shadow: none; border-radius: 0; }
+  }
+</style>
+</head>
+<body>
+<div class="infographic">
+  <div class="content">
+    <div class="header">
+      <span class="nav-label">⛭ Navigator</span>
+      <span class="page-number">★</span>
+    </div>
+
+    <div class="main-title">
+      <h1>ALGORITHM — DIAGNOSIS OF SECONDARY HYPERTENSION</h1>
+      <span class="subtitle">Evidence-Based Diagnostic Workup for Identifying Secondary Causes of Hypertension</span>
+    </div>
+
+    <div class="legend-box">
+      <div class="legend-title">Legend</div>
+      <div class="legend-item"><span class="legend-sq" style="background:#1565C0;"></span> Decision point / question</div>
+      <div class="legend-item"><span class="legend-sq" style="background:#4A7C8E;"></span> Recommended action / workup</div>
+      <div class="legend-item"><span class="legend-sq" style="background:#E8A87C;"></span> Liddle / monogenic focus</div>
+      <div class="legend-item"><span class="legend-sq" style="background:#E91E63;"></span> Warning / caution</div>
+      <div class="legend-item"><span class="legend-sq" style="background:#1B5E20;"></span> Definitive diagnosis</div>
+    </div>
+
+    <div class="flowchart">
+
+      <!-- START -->
+      <div class="step start">PATIENT WITH HYPERTENSION</div>
+      <div class="arrow-down"></div>
+
+      <!-- Step 1 -->
+      <div class="step question">Step 1 — SCREEN: Does the patient meet any criteria for secondary HTN?</div>
+      <div class="arrow-down"></div>
+
+      <div class="step action" style="max-width:830px;">
+        <strong>Screen for clinical clues — any present?</strong>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:4px 24px;font-weight:400;font-size:14px;color:#555;margin-top:6px;text-align:left;">
+          <span>• Age &lt; 30 with HTN (no risk factors)</span>
+          <span>• Resistant HTN (≥3 drugs incl. diuretic)</span>
+          <span>• Accelerated / malignant hypertension</span>
+          <span>• Sudden onset or worsening of HTN</span>
+          <span>• Abdominal bruit</span>
+          <span>• Delayed / diminished femoral pulses</span>
+          <span>• Spontaneous or diuretic-induced hypokalemia</span>
+          <span>• Family history of early HTN or renal disease</span>
+        </div>
+      </div>
+
+      <div class="arrow-down"></div>
+
+      <!-- Split -->
+      <div class="split-bar-box">
+        <div class="split-bar">
+          <span class="left-label">▼ CRITERIA PRESENT?</span>
+          <div class="bar-line"></div>
+          <span class="right-label">▼ NO CRITERIA?</span>
+        </div>
+      </div>
+
+      <div class="branch-row" style="margin-top:14px;">
+        <!-- LEFT ARM: Positive screen -->
+        <div class="branch-arm" style="max-width:900px;">
+          <div class="branch-label">Screening criteria present</div>
+          <div class="arrow-down"></div>
+
+          <div class="step question" style="max-width:900px;">Step 2 — INITIAL LABS: BMP + Renin/Aldosterone</div>
+          <div class="arrow-down"></div>
+
+          <div class="step action" style="max-width:900px;font-size:15px;padding:14px 22px;">
+            <strong>Order:</strong> Serum K⁺, HCO₃⁻, Na⁺, Cr/eGFR, urinalysis<br>
+            <strong>Hormonal:</strong> Plasma renin activity (PRA) + aldosterone concentration<br>
+            <span style="color:#888;font-weight:400;font-size:13px;">(Stop spironolactone, β-blockers, ACEi/ARB prior if safe)</span>
+          </div>
+          <div class="arrow-down"></div>
+
+          <div class="split-bar-box">
+            <div class="split-bar">
+              <span class="left-label" style="color:#444;font-size:13px;">▼ BRANCH BY RENIN-ALDOSTERONE</span>
+              <div class="bar-line" style="width:140px;"></div>
+              <span class="right-label" style="color:#444;font-size:13px;">▼ PROFILES</span>
+            </div>
+          </div>
+
+          <!-- 4 sub-branches in two rows -->
+          <div style="display:flex;flex-wrap:wrap;justify-content:center;gap:16px;width:100%;margin-top:8px;">
+            <!-- Branch 1: High renin, high aldo -->
+            <div class="branch-arm" style="max-width:290px;">
+              <div class="branch-label orange" style="font-size:13px;padding:5px 12px;">↑ Renin, ↑ Aldo</div>
+              <div class="arrow-down"></div>
+              <div class="step action" style="max-width:290px;font-size:13px;padding:10px 14px;">
+                <strong>Renovascular HTN</strong>
+                <div class="step-sub" style="font-size:12px;">Renal artery stenosis · Malignant HTN · Reninoma</div>
+              </div>
+              <div class="arrow-down"></div>
+              <div class="step action" style="max-width:290px;font-size:12px;padding:10px 14px;">
+                ⟶ Renal artery duplex / CT angio / MRA<br>
+                ⟶ ACEi/ARB + consider revascularization
+              </div>
+              <div class="arrow-down"></div>
+              <div class="step diagnosis" style="max-width:290px;font-size:13px;padding:10px 14px;">
+                Renovascular HTN confirmed
+              </div>
+            </div>
+
+            <!-- Branch 2: Low renin, HIGH aldo -->
+            <div class="branch-arm" style="max-width:290px;">
+              <div class="branch-label red" style="font-size:13px;padding:5px 12px;">↓ Renin, ↑↑ Aldo</div>
+              <div class="arrow-down"></div>
+              <div class="step action" style="max-width:290px;font-size:13px;padding:10px 14px;">
+                <strong>Primary Hyperaldosteronism</strong>
+                <div class="step-sub" style="font-size:12px;">Conn's syndrome (adrenal adenoma / hyperplasia)</div>
+              </div>
+              <div class="arrow-down"></div>
+              <div class="step action" style="max-width:290px;font-size:12px;padding:10px 14px;">
+                ⟶ Aldosterone-to-renin ratio (ARR) &gt; 20<br>
+                ⟶ Confirm: saline suppression test<br>
+                ⟶ CT adrenals → ± adrenal vein sampling
+              </div>
+              <div class="arrow-down"></div>
+              <div class="step diagnosis" style="max-width:290px;font-size:13px;padding:10px 14px;">
+                Conn's (Primary Hyperaldosteronism)<br>
+                <span style="font-weight:400;font-size:11px;">Treat: Spironolactone / Eplerenone</span>
+              </div>
+            </div>
+
+            <!-- Branch 3: Low renin, LOW aldo ⭐ -->
+            <div class="branch-arm" style="max-width:290px;">
+              <div class="branch-label purple" style="font-size:13px;padding:5px 12px;">↓ Renin, ↓↓ Aldo</div>
+              <div class="arrow-down"></div>
+              <div class="step action" style="max-width:290px;font-size:13px;padding:10px 14px;">
+                <strong>Liddle / Monogenic HTN</strong>
+                <div class="step-sub" style="font-size:12px;">Liddle · Gordon · AME · Cushing · CAH · Licorice</div>
+              </div>
+              <div class="arrow-down"></div>
+              <div class="step action" style="max-width:290px;font-size:12px;padding:10px 14px;">
+                <strong>Workup:</strong><br>
+                • Liddle → Amiloride trial, ENaC gene test<br>
+                • Gordon → hyperkalemia, WNK genes<br>
+                • AME → cortisol/cortisone ratio<br>
+                • Cushing → DST, midnight cortisol<br>
+                • CAH → 17-OHP, 11-deoxycortisol
+              </div>
+              <div class="arrow-down"></div>
+              <div class="step diagnosis liddle" style="max-width:290px;font-size:13px;padding:10px 14px;">
+                LIDDLE / Monogenic HTN identified<br>
+                <span style="font-weight:400;font-size:11px;">Treat: Amiloride / Triamterene ✕ NOT spironolactone</span>
+              </div>
+            </div>
+
+            <!-- Branch 4: Normal renin, normal aldo -->
+            <div class="branch-arm" style="max-width:290px;">
+              <div class="branch-label teal" style="font-size:13px;padding:5px 12px;">↔ Renin, ↔ Aldo</div>
+              <div class="arrow-down"></div>
+              <div class="step action" style="max-width:290px;font-size:13px;padding:10px 14px;">
+                <strong>Other secondary causes</strong>
+                <div class="step-sub" style="font-size:12px;">Pheo · OSA · Coarctation · Drugs · Cushing</div>
+              </div>
+              <div class="arrow-down"></div>
+              <div class="step action" style="max-width:290px;font-size:12px;padding:10px 14px;">
+                <strong>Pursue by clinical clue:</strong><br>
+                • Paroxysmal HTN + palpitations → <strong>metanephrines</strong><br>
+                • Central obesity + striae → <strong>DST</strong><br>
+                • Snoring + obesity → <strong>polysomnography</strong><br>
+                • Arm-leg BP difference → <strong>coarctation w/u</strong><br>
+                • Medications → <strong>review offending agents</strong>
+              </div>
+              <div class="arrow-down"></div>
+              <div class="step diagnosis" style="max-width:290px;font-size:13px;padding:10px 14px;">
+                Secondary cause identified per workup
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- RIGHT ARM: Screen negative -->
+        <div class="branch-arm" style="max-width:360px;">
+          <div class="branch-label green">No screening criteria</div>
+          <div class="arrow-down"></div>
+          <div class="step action" style="max-width:340px;font-size:15px;padding:14px 22px;">
+            <strong>Manage as primary (essential) HTN</strong><br>
+            <span style="font-weight:400;font-size:13px;color:#555;">
+              Lifestyle modification + antihypertensive therapy<br>
+              Reassess periodically for new clues
+            </span>
+          </div>
+          <div class="arrow-down"></div>
+          <div class="step final" style="max-width:300px;font-size:15px;">
+            Essential Hypertension<br>
+            <span style="font-weight:400;font-size:12px;">(diagnosis of exclusion)</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- ===== BOTTOM BANNER ===== -->
+      <div class="bottom-banner">
+        <div class="col">
+          <div class="col-title" style="color:#FFD700;">⚠ KEY PITFALLS</div>
+          <div class="col-body">
+            • <strong>Spironolactone is NOT effective for Liddle</strong> — defect is downstream of aldosterone receptor; use amiloride / triamterene<br>
+            • Stop spironolactone, β-blockers, ACEi/ARB before renin/aldosterone testing (if safe)<br>
+            • Normal imaging does NOT rule out Liddle Syndrome — it's a clinical + genetic diagnosis
+          </div>
+        </div>
+        <div class="col">
+          <div class="col-title" style="color:#4FC3F7;">💡 KEY PEARLS</div>
+          <div class="col-body">
+            • <strong>Liddle</strong> = ↓ renin + ↓ aldosterone (both low!)<br>
+            • <strong>Conn's</strong> = ↓ renin + ↑↑ aldosterone<br>
+            • <strong>Renovascular</strong> = ↑ renin + ↑ aldosterone<br>
+            • Young + HTN + hypokalemia → check renin/aldosterone to distinguish Liddle vs Conn's
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="footer-meta">
+      <span>MED-REF-02 | Diagnostic Algorithm for Secondary Hypertension</span>
+      <span>v1.0 | Board Review Series</span>
+    </div>
+  </div>
+</div>
+</body>
+</html>

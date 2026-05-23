@@ -1,0 +1,605 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Diagnosis of Secondary Hypertension — Including Liddle Syndrome</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800;900&display=swap');
+  
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Inter', -apple-system, sans-serif;
+    background: #f0f0f0;
+    display: flex;
+    justify-content: center;
+    padding: 40px;
+  }
+
+  .infographic {
+    width: 1280px;
+    background: #f7f5f2;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.15);
+    border-radius: 12px;
+  }
+
+  /* Blueprint grid background */
+  .infographic::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background-image:
+      linear-gradient(rgba(74, 124, 142, 0.06) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(74, 124, 142, 0.06) 1px, transparent 1px);
+    background-size: 60px 60px;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .content { position: relative; z-index: 1; padding: 30px 30px 20px; }
+
+  /* ===== HEADER ===== */
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 25px;
+  }
+
+  .nav-label {
+    font-size: 11px;
+    font-weight: 700;
+    color: #4A7C8E;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    border: 1.5px solid #4A7C8E;
+    padding: 4px 12px;
+    border-radius: 4px;
+  }
+
+  .page-number {
+    background: #4A7C8E;
+    color: white;
+    font-size: 13px;
+    font-weight: 700;
+    width: 36px; height: 36px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .main-title {
+    text-align: center;
+    margin-bottom: 8px;
+  }
+
+  .main-title h1 {
+    font-size: 40px;
+    font-weight: 900;
+    color: #2D2D2D;
+    letter-spacing: -0.5px;
+    line-height: 1.1;
+  }
+
+  .main-title .subtitle {
+    display: inline-block;
+    background: #4A7C8E;
+    color: white;
+    padding: 6px 24px;
+    border-radius: 20px;
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    margin-top: 6px;
+  }
+
+  /* ===== COORDINATE LABELS ===== */
+  .coord { font-size: 9px; font-weight: 700; color: #4A7C8E; letter-spacing: 1px; margin-bottom: 4px; }
+
+  /* ===== GRID LAYOUT ===== */
+  .grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 12px;
+    margin-top: 18px;
+  }
+
+  .grid-4 {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    gap: 12px;
+    margin-top: 12px;
+  }
+
+  /* ===== MODULE ===== */
+  .module {
+    background: white;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+    border: 1px solid rgba(74, 124, 142, 0.15);
+  }
+
+  .module.featured {
+    border-color: #E8A87C;
+    box-shadow: 0 0 0 2px rgba(232, 168, 124, 0.25), 0 2px 8px rgba(0,0,0,0.08);
+  }
+
+  .module-header {
+    background: #4A7C8E;
+    color: white;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    padding: 8px 14px;
+  }
+
+  .module-header.featured-header {
+    background: linear-gradient(135deg, #D4875E, #E8A87C);
+  }
+
+  .module-body {
+    padding: 10px 14px 12px;
+    font-size: 12px;
+    color: #2D2D2D;
+    line-height: 1.6;
+  }
+
+  .module-body ul {
+    list-style: none;
+    padding: 0;
+  }
+
+  .module-body ul li {
+    padding: 2px 0;
+    position: relative;
+    padding-left: 14px;
+  }
+
+  .module-body ul li::before {
+    content: '•';
+    position: absolute;
+    left: 0;
+    color: #4A7C8E;
+    font-weight: 700;
+  }
+
+  /* ===== CAUSE CATEGORY GRID ===== */
+  .cause-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 6px;
+  }
+
+  .cause-cat {
+    background: #f0f4f5;
+    border-radius: 6px;
+    padding: 6px 8px;
+    border-left: 3px solid #4A7C8E;
+  }
+
+  .cause-cat .cat-label {
+    font-size: 10px;
+    font-weight: 700;
+    color: #4A7C8E;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    display: block;
+    margin-bottom: 2px;
+  }
+
+  .cause-cat .cat-items {
+    font-size: 10px;
+    line-height: 1.4;
+    color: #444;
+  }
+
+  /* ===== HIGHLIGHT BOX ===== */
+  .highlight-box {
+    background: #FFF9E8;
+    border: 1.5px solid #FFD700;
+    border-radius: 6px;
+    padding: 6px 10px;
+    margin: 6px 0;
+    font-size: 11px;
+    font-weight: 700;
+    color: #2D2D2D;
+  }
+
+  .highlight-box .hl-keyword {
+    background: rgba(255, 215, 0, 0.5);
+    padding: 1px 4px;
+    border-radius: 2px;
+  }
+
+  /* ===== TREATMENT BOXES ===== */
+  .treatment-row {
+    display: flex;
+    gap: 8px;
+    margin-top: 6px;
+  }
+
+  .tx-box {
+    flex: 1;
+    border-radius: 6px;
+    padding: 6px 8px;
+    font-size: 10px;
+    font-weight: 600;
+    text-align: center;
+    line-height: 1.4;
+  }
+
+  .tx-box.green {
+    background: #E8F5E9;
+    border: 1.5px solid #4CAF50;
+    color: #2E7D32;
+  }
+
+  .tx-box.red {
+    background: #FFF0F0;
+    border: 1.5px solid #E91E63;
+    color: #C62828;
+  }
+
+  .tx-box.red .icon-x { color: #E91E63; font-size: 14px; }
+
+  /* ===== LAB FINDINGS ===== */
+  .lab-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px 10px;
+    margin: 4px 0;
+  }
+
+  .lab-item {
+    font-size: 11px;
+    font-weight: 600;
+  }
+
+  .lab-down { color: #C62828; }
+  .lab-up { color: #2E7D32; }
+
+  /* ===== TABLE ===== */
+  .data-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 10px;
+  }
+
+  .data-table th {
+    background: #4A7C8E;
+    color: white;
+    padding: 5px 8px;
+    text-align: left;
+    font-weight: 600;
+    font-size: 10px;
+  }
+
+  .data-table td {
+    padding: 4px 8px;
+    border-bottom: 1px solid #e8e8e8;
+  }
+
+  .data-table tr:last-child td { border-bottom: none; }
+
+  .data-table .highlight-row {
+    background: #FFF8E8;
+    font-weight: 700;
+  }
+
+  .data-table .highlight-row td {
+    color: #C62828;
+  }
+
+  /* ===== PEARL BOX ===== */
+  .pearl-box {
+    background: #E3F2FD;
+    border-left: 3px solid #1565C0;
+    border-radius: 4px;
+    padding: 6px 10px;
+    margin-top: 6px;
+    font-size: 10px;
+    line-height: 1.5;
+  }
+
+  .pearl-box .pearl-label {
+    font-weight: 700;
+    color: #1565C0;
+    text-transform: uppercase;
+    font-size: 9px;
+    letter-spacing: 0.5px;
+  }
+
+  /* ===== FEATURES LIST (for featured module) ===== */
+  .feature-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+    margin: 4px 0;
+  }
+
+  .feature-pill {
+    background: #FFF3E0;
+    border: 1px solid #FFB74D;
+    border-radius: 12px;
+    padding: 2px 8px;
+    font-size: 10px;
+    font-weight: 600;
+    color: #E65100;
+  }
+
+  /* ===== BOTTOM FOUR-COLUMN SECTION ===== */
+  .grid-4 .module-body { font-size: 11px; }
+  .grid-4 .module-body ul li { font-size: 11px; }
+
+  /* ===== METADATA ===== */
+  .footer-meta {
+    margin-top: 14px;
+    padding: 6px 0 0;
+    border-top: 1px solid rgba(74, 124, 142, 0.2);
+    display: flex;
+    justify-content: flex-end;
+    font-size: 9px;
+    color: #888;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+  }
+
+  /* ===== RESPONSIVE ===== */
+  @media print {
+    body { background: white; padding: 0; }
+    .infographic { box-shadow: none; border-radius: 0; }
+  }
+</style>
+</head>
+<body>
+<div class="infographic">
+  <div class="content">
+    <!-- HEADER -->
+    <div class="header">
+      <span class="nav-label">⛭ Navigator</span>
+      <span class="page-number">1/1</span>
+    </div>
+
+    <div class="main-title">
+      <h1>DIAGNOSIS OF SECONDARY HYPERTENSION</h1>
+      <span class="subtitle">Including Liddle Syndrome (Pseudo-hyperaldosteronism)</span>
+    </div>
+
+    <!-- TOP ROW: 3 MODULES -->
+    <div class="grid">
+      <!-- A-01: SCREENING -->
+      <div class="module">
+        <div class="coord">A-01</div>
+        <div class="module-header">SECONDARY HTN — SCREENING</div>
+        <div class="module-body">
+          <ul>
+            <li>Age &lt; 30 with hypertension, no risk factors</li>
+            <li>Resistant HTN (≥3 drugs including diuretic)</li>
+            <li>Accelerated / malignant hypertension</li>
+            <li>Sudden onset or worsening of HTN</li>
+            <li>Abdominal bruit or delayed femoral pulses</li>
+            <li>Hypokalemia (spontaneous or diuretic-induced)</li>
+            <li>Family history of early HTN or renal disease</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- B-01: CAUSES BY CATEGORY -->
+      <div class="module">
+        <div class="coord">B-01</div>
+        <div class="module-header">CAUSES BY CATEGORY</div>
+        <div class="module-body">
+          <div class="cause-grid">
+            <div class="cause-cat">
+              <span class="cat-label">🫘 RENAL</span>
+              <span class="cat-items">Renovascular HTN (high renin/aldosterone, bruit) · Renal parenchymal disease</span>
+            </div>
+            <div class="cause-cat">
+              <span class="cat-label">🧪 ENDOCRINE</span>
+              <span class="cat-items">Conn's (low renin, HIGH aldo) · Pheochromocytoma · Cushing · Thyroid · HyperPTH</span>
+            </div>
+            <div class="cause-cat">
+              <span class="cat-label">🫀 VASCULAR</span>
+              <span class="cat-items">Coarctation (arm BP &gt; leg, delayed femoral pulses, rib notching)</span>
+            </div>
+            <div class="cause-cat">
+              <span class="cat-label">💤 SLEEP</span>
+              <span class="cat-items">OSA (snoring, obesity, nocturnal hypoxia)</span>
+            </div>
+            <div class="cause-cat">
+              <span class="cat-label">💊 DRUG-INDUCED</span>
+              <span class="cat-items">NSAIDs · OCPs · Steroids · Decongestants · Licorice · EPO</span>
+            </div>
+            <div class="cause-cat">
+              <span class="cat-label">🧬 MONOGENIC</span>
+              <span class="cat-items">Liddle · Gordon · AME · GRA · CAH</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- C-01: LIDDLE SYNDROME FEATURED -->
+      <div class="module featured">
+        <div class="coord" style="color:#D4875E;">C-01</div>
+        <div class="module-header featured-header">⭐ LIDDLE SYNDROME — Pseudo-hyperaldosteronism</div>
+        <div class="module-body">
+          <p style="font-size:11px;font-weight:600;margin-bottom:4px;">Autosomal dominant · Gain-of-function ENaC mutation (collecting duct)</p>
+          
+          <div class="feature-list">
+            <span class="feature-pill">Early-onset HTN</span>
+            <span class="feature-pill">Hypokalemic metabolic alkalosis</span>
+            <span class="feature-pill">No edema</span>
+            <span class="feature-pill">Family history present</span>
+          </div>
+
+          <div class="highlight-box">
+            KEY HALLMARK: <span class="hl-keyword">↓ LOW Renin + ↓ LOW Aldosterone</span> (both suppressed!)
+          </div>
+
+          <div style="display:flex;gap:10px;margin:4px 0;">
+            <div style="flex:1;">
+              <span style="font-size:10px;font-weight:700;">Labs:</span>
+              <div class="lab-row">
+                <span class="lab-item lab-down">↓K⁺</span>
+                <span class="lab-item lab-up">↑HCO₃⁻</span>
+                <span class="lab-item lab-down">↓Renin</span>
+                <span class="lab-item lab-down">↓Aldo</span>
+                <span class="lab-item">N↗Na⁺</span>
+                <span class="lab-item">N AG</span>
+              </div>
+            </div>
+            <div style="flex:1;">
+              <span style="font-size:10px;font-weight:700;">Urine:</span>
+              <div style="font-size:10px;">High Na⁺ · High K⁺</div>
+              <span style="font-size:10px;font-weight:700;">Imaging:</span>
+              <div style="font-size:10px;">Usually normal</div>
+            </div>
+          </div>
+
+          <div class="treatment-row">
+            <div class="tx-box green">✅ Amiloride / Triamterene<br><span style="font-weight:400;font-size:9px;">Direct ENaC blockers</span></div>
+            <div class="tx-box red"><span class="icon-x">✕</span> Spironolactone<br><span style="font-weight:400;font-size:9px;">NOT effective (defect ↓stream)</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- BOTTOM ROW: 4 MODULES -->
+    <div class="grid-4">
+      <!-- D-01: RENIN-ALDOSTERONE ALGORITHM -->
+      <div class="module">
+        <div class="coord">D-01</div>
+        <div class="module-header">RENIN-ALDOSTERONE ALGORITHM</div>
+        <div class="module-body" style="padding-bottom:8px;">
+          <table class="data-table">
+            <tr>
+              <th>Renin</th><th>Aldosterone</th><th>→ Diagnosis</th>
+            </tr>
+            <tr>
+              <td style="color:#C62828;font-weight:700;">↑ High</td>
+              <td style="color:#C62828;font-weight:700;">↑ High</td>
+              <td>Renovascular HTN · Malignant HTN</td>
+            </tr>
+            <tr>
+              <td style="color:#E65100;font-weight:700;">↓ Low</td>
+              <td style="color:#C62828;font-weight:900;">↑↑ HIGH</td>
+              <td><strong>Primary hyperaldosteronism (Conn's)</strong></td>
+            </tr>
+            <tr class="highlight-row">
+              <td style="color:#C62828;font-weight:700;">↓ LOW</td>
+              <td style="color:#C62828;font-weight:700;">↓ LOW</td>
+              <td><strong>LIDDLE Syndrome</strong> · Gordon · AME · Licorice · CAH · Cushing</td>
+            </tr>
+            <tr>
+              <td>↔ Normal</td>
+              <td>↔ Normal</td>
+              <td>Essential HTN · Renal parenchymal</td>
+            </tr>
+          </table>
+
+          <div class="pearl-box">
+            <span class="pearl-label">💡 Clinical Pearl:</span>
+            Liddle is the <strong>only</strong> cause where BOTH renin AND aldosterone are LOW despite HTN and hypokalemia.
+          </div>
+        </div>
+      </div>
+
+      <!-- E-01: TREATMENT PEARLS -->
+      <div class="module">
+        <div class="coord">E-01</div>
+        <div class="module-header">TREATMENT PEARLS</div>
+        <div class="module-body">
+          <table class="data-table">
+            <tr><th>Condition</th><th>Treatment</th></tr>
+            <tr>
+              <td style="font-weight:700;">Liddle Syndrome</td>
+              <td>Amiloride / Triamterene (ENaC blockers)</td>
+            </tr>
+            <tr>
+              <td style="font-weight:700;">Conn's</td>
+              <td>Spironolactone / Eplerenone</td>
+            </tr>
+            <tr>
+              <td>Renovascular HTN</td>
+              <td>Revascularization + ACEi/ARB</td>
+            </tr>
+            <tr>
+              <td>Pheochromocytoma</td>
+              <td>α-blockade → β-blockade → surgery</td>
+            </tr>
+            <tr>
+              <td>OSA</td>
+              <td>CPAP · Weight loss</td>
+            </tr>
+            <tr>
+              <td>Coarctation</td>
+              <td>Surgical repair / Angioplasty</td>
+            </tr>
+          </table>
+        </div>
+      </div>
+
+      <!-- F-01: OTHER MONOGENIC -->
+      <div class="module">
+        <div class="coord">F-01</div>
+        <div class="module-header">OTHER MONOGENIC HTN</div>
+        <div class="module-body">
+          <ul>
+            <li><strong>Gordon syndrome</strong> — Hyperkalemic HTN, WNK mutations</li>
+            <li><strong>AME</strong> (Apparent Mineralocorticoid Excess) — 11β-HSD2 deficiency. Licorice mimics this</li>
+            <li><strong>GRA</strong> (Glucocorticoid-remediable Aldosteronism) — High aldosterone, responds to dexamethasone</li>
+            <li><strong>CAH</strong> (11β-OH / 17α-OH deficiency)</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- G-01: KEY DIFFERENTIAL -->
+      <div class="module">
+        <div class="coord">G-01</div>
+        <div class="module-header">LIDDLE vs CONN'S — QUICK DIFF</div>
+        <div class="module-body">
+          <table class="data-table">
+            <tr><th></th><th>Liddle</th><th>Conn's</th></tr>
+            <tr>
+              <td style="font-weight:700;">Renin</td>
+              <td style="color:#C62828;">↓</td>
+              <td style="color:#C62828;">↓</td>
+            </tr>
+            <tr>
+              <td style="font-weight:700;">Aldosterone</td>
+              <td style="color:#C62828;">↓ LOW</td>
+              <td style="color:#C62828;font-weight:900;">↑↑ HIGH</td>
+            </tr>
+            <tr>
+              <td style="font-weight:700;">Mechanism</td>
+              <td>ENaC mutation</td>
+              <td>Adrenal adenoma/hyperplasia</td>
+            </tr>
+            <tr>
+              <td style="font-weight:700;">Treatment</td>
+              <td>Amiloride</td>
+              <td>Spironolactone</td>
+            </tr>
+          </table>
+          
+          <div class="highlight-box" style="margin-top:6px;">
+            ⚠ Spironolactone works for Conn's but NOT for Liddle — defect is downstream of the aldosterone receptor.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- FOOTER -->
+    <div class="footer-meta">
+      MED-REF-01 &nbsp;|&nbsp; v1.0 &nbsp;|&nbsp; Board Review Series
+    </div>
+  </div>
+</div>
+</body>
+</html>
