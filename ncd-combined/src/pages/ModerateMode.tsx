@@ -17,12 +17,12 @@ function ModeNav() {
   return (
     <div className="flex items-center justify-between mb-6 px-1">
       <Button variant="ghost" size="sm" onClick={() => navigate("/")}>
-        <ArrowLeft className="h-4 w-4 mr-1" /> Back
+        <ArrowLeft className="h-4 w-4 mr-1" /> Home
       </Button>
       <div className="flex items-center gap-1.5 bg-muted/50 rounded-lg p-1">
         <button onClick={() => navigate("/easy")} className="px-3 py-1.5 text-xs font-semibold rounded-md text-muted-foreground hover:bg-muted">Easy</button>
         <button onClick={() => navigate("/moderate")} className="px-3 py-1.5 text-xs font-semibold rounded-md bg-orange-500/15 text-orange-600 border border-orange-500/30">Moderate</button>
-        <button onClick={() => navigate("/hard")} className="px-3 py-1.5 text-xs font-semibold rounded-md text-muted-foreground hover:bg-muted">Hard</button>
+        <button onClick={() => navigate("/home")} className="px-3 py-1.5 text-xs font-semibold rounded-md text-muted-foreground hover:bg-muted">Complex</button>
       </div>
     </div>
   );
@@ -416,6 +416,16 @@ export default function ModerateMode() {
         </div>
         <p className="text-center text-xs text-muted-foreground/60 mt-6">Guidelines: ADA 2026 · ESC/ESH 2024 · LAI 2023 · ACC/AHA</p>
       </div>
+
+      {/* Bottom nav */}
+      <div className="fixed bottom-0 left-0 right-0 border-t border-border bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 py-2 px-4 flex items-center justify-center gap-3 z-50">
+        <button onClick={() => window.location.href = "/"} className="px-3 py-1.5 text-xs font-semibold rounded-md bg-primary/10 text-primary hover:bg-primary/20 transition-colors">🏠 Homepage</button>
+        <span className="text-[10px] text-muted-foreground/40">|</span>
+        <button onClick={() => window.location.href = "/easy"} className="px-3 py-1.5 text-xs font-semibold rounded-md text-muted-foreground hover:bg-muted transition-colors">🟢 Easy</button>
+        <button onClick={() => window.location.href = "/moderate"} className="px-3 py-1.5 text-xs font-semibold rounded-md bg-orange-500/15 text-orange-600 border border-orange-500/30 hover:bg-orange-500/25 transition-colors">🟠 Moderate</button>
+        <button onClick={() => window.location.href = "/home"} className="px-3 py-1.5 text-xs font-semibold rounded-md text-muted-foreground hover:bg-muted transition-colors">🔴 Complex</button>
+      </div>
+      <div className="h-14" />
     </div>
   );
 }
