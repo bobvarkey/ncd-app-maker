@@ -70,6 +70,8 @@ import SlidingScalePage from "@/pages/SlidingScaleInsulin";
 import HypoRiskPage from "@/pages/HypoRiskCalculator";
 import RenalDosePage from "@/pages/RenalDoseAdjustment";
 import RespiratoryPage from "@/pages/Respiratory";
+import RespiratorySimple from "@/pages/RespiratorySimple";
+import RespiratoryModerate from "@/pages/RespiratoryModerate";
 import PrediabetesAlgorithm from "@/pages/PrediabetesAlgorithm";
 import CKDGuideline from "@/pages/CKDGuideline";
 import GLP1Administration from "@/pages/GLP1Administration";
@@ -168,6 +170,8 @@ const App = () => (
           <Route path="/sliding-scale" element={<><TabNavigation /><SlidingScaleInsulinCalc /></>} />
           <Route path="/hypo-risk" element={<><TabNavigation /><HypoRiskCalculatorCalc /></>} />
           <Route path="/renal-dosing" element={<><TabNavigation /><RenalDoseAdjustmentCalc /></>} />
+          <Route path="/respiratory/simple" element={<><ModeNavSimple /><RespiratorySimple /></>} />
+          <Route path="/respiratory/moderate" element={<><ModeNavSimple /><RespiratoryModerate /></>} />
           <Route path="/respiratory" element={<><TabNavigation /><RespiratoryPage /></>} />
           <Route path="/diabetes/medication-algorithm" element={<><TabNavigation /><DiabetesMedicationAlgorithmCalc /></>} />
           <Route path="/lipid-panel" element={<><TabNavigation /><LipidPanelCalc /></>} />
