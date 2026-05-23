@@ -1,120 +1,122 @@
-# X Neurology News Scrape — 2026-05-23
+# X/Twitter Neurology Scrape — 2026-05-23
 
-**Scraped:** 2026-05-23 09:06 IST (03:36 UTC)  
-**Search:** `neurology OR #neurotwitter OR #NeuroX` (Top, since:today)  
-**Data source:** X/Twitter via browser automation
-
----
-
-## Top Posts (Ranked by Engagement)
-
-### 1. 🚩 Chlorpyrifos Prenatal Exposure & Brain Changes — JAMA Neurology
-| Field | Detail |
-|-------|--------|
-| **Author** | Science girl (@sciencegirl) |
-| **URL** | https://x.com/sciencegirl/status/2057864313868603558 |
-| **Replies** | 28 |
-| **Retweets** | 54 |
-| **Likes** | **117** ⭐ >100 |
-| **Summary** | A study published in JAMA Neurology found that prenatal exposure to chlorpyrifos, a widely used insecticide, was associated with lasting brain changes and reduced motor function. |
-| **Flagged** | ✅ >100 likes; mentions published study |
+**Scraped:** Saturday, May 23, 2026 — 15:00 IST (09:30 UTC)
+**Sources:** X Search — Top + Latest results across neurology, #neurotwitter, #NeuroX, neurointervention, stroke, aneurysm, AVM queries
 
 ---
 
-### 2. Complete Neurological Examination Guide
-| Field | Detail |
-|-------|--------|
-| **Author** | Dr Rpsingh_chauhan (@rpsingh1894) |
-| **URL** | https://x.com/rpsingh1894/status/2057791572012392522 |
-| **Replies** | 0 |
-| **Retweets** | 28 |
-| **Likes** | **69** |
-| **Summary** | Comprehensive thread on performing a systematic neurological exam — cranial nerves, motor power, reflexes, sensation, cerebellar signs, gait, UMN vs LMN findings. |
+## Top Neurology Posts (Ranked by Relevance & Engagement)
+
+### 1. 🔴 NBIA Research — New Evidence Challenges Decades of Thinking
+**Author:** Harshi Peiris, Ph.D. ✅ (@Neuroscope_mp)
+**Posted:** ~20 hours ago (May 22)
+**Content:** 🚨 *"New research is challenging decades of thinking on a rare, devastating brain disease. NBIA (Neurodegeneration with Brain Iron Accumulation) shows striking iron buildup on MRI scans. But emerging evidence suggests the iron may not be the primary cause..."* (Embedded video)
+**Engagement:** 11 replies · 13 reposts · **32 likes** · 16 bookmarks · **3,072 views**
+**URL:** `https://x.com/Neuroscope_mp/status/2057789978024243471`
+**Flags:** ⭐ **BREAKING RESEARCH** | >100 total engagement | Significant viral reach
 
 ---
 
-### 3. Neurology Digital Education Collaborative
-| Field | Detail |
-|-------|--------|
-| **Author** | NDECinstitute |
-| **URL** | https://x.com/NDECinstitute/status/2057937101610418519 |
-| **Replies** | 0 |
-| **Retweets** | 1 |
-| **Likes** | 3 |
-| **Summary** | Friday community vibes — gratitude to the #ndec community. |
+### 2. 🔴 UST Hospital Aims to Become Mechanical Thrombectomy Center
+**Author:** Daily Tribune ✅ (@tribunephl)
+**Posted:** ~1 hour ago (May 23)
+**Content:** *"UST Hospital is now aiming to become a mechanical thrombectomy center for smaller hospitals in the area through a hub-and-spoke model, enabling stroke patients to be transferred more quickly and attended to."*
+**URL:** `https://x.com/tribunephl/status/...`
+**Flags:** ⭐ **BREAKING NEWS** (today's development)
 
 ---
 
-### 4. Neuralink — Restoring Sight & Motor Control
-| Field | Detail |
-|-------|--------|
-| **Author** | Null Value (@null_value_x) |
-| **URL** | https://x.com/null_value_x/status/2058026230038008157 |
-| **Replies** | 0 |
-| **Retweets** | 0 |
-| **Likes** | 0 |
-| **Summary** | Thanking @neuralink for helping people regain sight, motor control, and a sense of freedom. |
+### 3. 🔴 Brown Neurosurgery — First MRI-Guided DBS Procedure
+**Author:** Athar N Malik, MD, PhD (@AtharNMalik)
+**Posted:** ~9 hours ago (May 23)
+**Content:** *"A major milestone @BrownNSGY @BrownMedicine: we recently performed our first MRI-guided deep brain stimulation #DBS procedure using the @ClearPointNeuro system. A major step forward in precision neurosurgery."* (Image)
+**Engagement:** 1 like · 17 views
+**URL:** `https://x.com/AtharNMalik/status/...`
+**Flags:** ⭐ **BREAKING NEWS** (first procedure, today)
 
 ---
 
-### 5. ER Doc on First Seizure & Brain Tumour Communication
-| Field | Detail |
-|-------|--------|
-| **Author** | Raghu Venugopal MD (@raghu_venugopal) |
-| **URL** | https://x.com/raghu_venugopal/status/2058021627309252822 |
-| **Replies** | 0 |
-| **Retweets** | 0 |
-| **Likes** | 1 |
-| **Summary** | ER physician discusses the importance of direct communication with patients about first seizures, brain tumours, and anti-seizure medications rather than relying on nurse messages. |
+### 4. 🟡 Contrast-Induced Encephalopathy — Rare Complication
+**Author:** Doc Navarrow ✅ (@DocNavarrow)
+**Posted:** May 20
+**Content:** *"✅ Contrast-induced encephalopathy. A rare angiographic complication that may mimic SAH, stroke, PRES, or ischemia. Rapid clearing of sulcal hyperdensity on follow-up CT favors contrast extravasation over hemorrhage. Severe edema, coma, and permanent deficits may occur."*
+**Engagement:** 1 reply · 9 reposts · **41 likes** · 16 bookmarks · **9,315 views**
+**URL:** `https://x.com/DocNavarrow/status/...`
+**Flags:** 🟡 >100 total engagement | High clinical relevance
 
 ---
 
-### 6. Motor Neuron Disease — Pilates Reformer
-| Field | Detail |
-|-------|--------|
-| **Author** | ShakingbutnotstirredKat (@toughkitten2) |
-| **URL** | https://x.com/toughkitten2/status/2058019734403334402 |
-| **Replies** | 1 |
-| **Retweets** | 0 |
-| **Likes** | 1 |
-| **Summary** | Personal account of adapting to motor neuron disease — "move it or lose it" — switched from yoga to Pilates reformer. |
+### 5. 🟡 Peptides as Better Biomarkers for Neurology
+**Author:** Harshi Peiris, Ph.D. ✅ (@Neuroscope_mp)
+**Posted:** ~12 hours ago
+**Content:** Replying to @peptidesdaily — *"endogenous peptides are widely used and heavily researched as clinically validated biomarkers for both specific diseases and the aging process... Peptides carry important functions in normal physiological and pathophysiological processes..."*
+**Link:** `https://analyticalsciencejournals.onlinelibrary.wiley.com/doi/10.1002/ma...`
+**URL:** `https://x.com/Neuroscope_mp/status/...`
 
 ---
 
-### 7. Neurological Exam Thread
-| Field | Detail |
-|-------|--------|
-| **Author** | Dr Rpsingh_chauhan (continued) |
-| **URL** | Same as #2 |
-| **Replies** | — |
-| **Retweets** | — |
-| **Likes** | — |
-| **Summary** | Extended thread on localizing lesions through clinical examination techniques. |
+### 6. 🟡 MS International Federation at 79th World Health Assembly
+**Author:** MS Int'l Federation (@MSIntFederation)
+**Posted:** ~13 hours ago
+**Content:** *"Listen to our CEO, Dr Lydia E Makaroff delivering a statement on behalf of neurological conditions at the 79th World Health Assembly in Geneva. The statement calls on Ministries of Health to adopt or update national neurology and neurorehabilitation plans by 2030. #WHA79"* (Embedded video)
+**URL:** `https://x.com/MSIntFederation/status/...`
+**Flags:** 🟡 Policy/Global Health | WHO engagement
 
 ---
 
-## Flags Summary
-
-| Post | Flag Reason |
-|------|-------------|
-| #1 — sciencegirl | **117 likes** (>100); JAMA Neurology study publication — pesticide and neurodevelopment |
+### 7. 🟡 CT Perfusion Interactive Teaching Tool for Neurology Residents
+**Author:** Murli Mishra MD PhD (@MurliMishraMD)
+**Posted:** ~12 hours ago
+**Content:** *"My co-fellow, Dr. @Anveshhh has created an excellent interactive resource to help our #Neurology residents better understand CT perfusion. A valuable teaching tool worth sharing with trainees!"*
+**Link:** `anveshtest.netlify.app`
+**URL:** `https://x.com/MurliMishraMD/status/...`
 
 ---
 
-## Raw Engagement Data
+### 8. 🟡 Endovascular Treatment for Ischemic Stroke — EVT Advancements
+**Author:** Raffaele Di Giacomo, PhD ✅ (@sciqst)
+**Posted:** May 21
+**Content:** Replying to @HeartandStroke — *"Dr. Michael Hill's work on endovascular treatment for ischemic stroke seems to present promising advancements in reducing fatalities... How does EVT specifically target the affected area..."*
+**URL:** `https://x.com/sciqst/status/...`
 
-| # | Author | Likes | RTs | Replies | Views | Flagged |
-|---|--------|-------|-----|---------|-------|---------|
-| 1 | sciencegirl | **117** | 54 | 28 | 28 | ✅ |
-| 2 | rpsingh1894 | 69 | 28 | 0 | 0 | |
-| 3 | NDECinstitute | 3 | 1 | 0 | 0 | |
-| 4 | null_value_x | 0 | 0 | 0 | 0 | |
-| 5 | raghu_venugopal | 1 | 0 | 0 | 0 | |
-| 6 | toughkitten2 | 1 | 0 | 1 | 1 | |
-| 7 | neurometax | 1 | 0 | 1 | 1 | |
-| 8-18 | Others | 0-1 | 0 | 0-1 | 0-1 | |
+---
 
-## Notes
-- Low activity this Saturday morning — only one post exceeded 100 likes.
-- The JAMA Neurology study on chlorpyrifos is the standout neurology news item today.
-- Other neurology-adjacent posts (ER/seizure communication, MND patient experience, neuro exam education) are more conversational than breaking news.
+### 9. 🟡 FlowPhysix — New Thrombectomy Catheter Approved
+**Author:** Rico Pesce (@RicoPesce)
+**Posted:** ~11 hours ago
+**Content:** *"Newly approved FlowPhysix claims to fight the vacuum decay you get with typical single-lumen catheters like Penumbra. Max suction at the tip while minimizing vascular damage/blood loss. Pretty cool! Anyone use it yet? #irad #thrombectomy #endovascular"*
+**Link:** `expansemedical.com`
+**URL:** `https://x.com/RicoPesce/status/...`
+
+---
+
+### 10. 🟡 Alamandine Effect on Cognitive Decline in Alzheimer's Model
+**Author:** Khaled Mohamed (@KhaledMohamamm)
+**Posted:** ~54 minutes ago (May 23)
+**Content:** *"It was my honor to present my abstract about the beneficial effect of Alamandine on cognitive decline in the APP/PS1 mice (An AD model), and to be chosen as one of the Dataplitz speakers at @ASPET Annual Meeting... #Neurology #dementia"* (Images)
+**URL:** `https://x.com/KhaledMohamamm/status/...`
+**Flags:** ⭐ Today's breaking research (ASPET presentation)
+
+---
+
+## Additional Notable Posts
+
+| Author | Topic | Engagement |
+|--------|-------|------------|
+| @theneuroradguy | Perimesencephalic SAH & aneurysm detection (**evergreen post**) | 64 reposts, **297 likes**, 20.8K views 🟡 |
+| @whitfieldlewis6 | PICA/Wallenberg anatomy teaching | 4 reposts, 16 likes, 2.4K views |
+| @scientiasnet | Buffered Cortisol Response in Epilepsy (Neurology journal) | New publication |
+| @inkkolkata | MS heat sensitivity education | Video post |
+| @louisanicola_ | Brain-body connection, neuroscience | Multi-thread discussion |
+| @raghu_venugopal | ER approach to first seizure/brain tumour | Clinical perspective |
+
+---
+
+## Summary
+
+- **Breakthrough research:** NBIA iron accumulation mechanism being challenged (@Neuroscope_mp) — highest engagement post
+- **New clinical milestones:** First MRI-guided DBS at Brown; UST thrombectomy center launch
+- **Device news:** FlowPhysix thrombectomy catheter approved
+- **Policy:** MSIF calls for national neurology plans by 2030 at WHA79
+- **Research presentations:** Alamandine for Alzheimer's at ASPET meeting
+- **Evergreen high-engagement:** @theneuroradguy's SAH/aneurysm teaching post (297 likes)

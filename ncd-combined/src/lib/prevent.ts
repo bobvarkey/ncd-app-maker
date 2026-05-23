@@ -55,7 +55,7 @@ function mgdlToMmol(mgdl: number): number {
   return mgdl * 0.02586;
 }
 
-interface PreventInput {
+export interface PreventInput {
   age: number;       // 30–79
   sex: "male" | "female";
   sbp: number;       // 90–180 mmHg
@@ -140,12 +140,13 @@ export function calculatePrevent(p: PreventInput): PreventResult {
     pct >= 5 ? "Borderline" :
     "Low";
 
-  const nextSteps = getNextSteps(category, p);
+  const nextSteps = getNextSteps(pct, category, p);
 
   return { risk10yr: risk, riskPct, category, nextSteps, valid: true, warnings: [] };
 }
 
 function getNextSteps(
+  pct: number,
   category: PreventResult["category"],
   p: PreventInput
 ): string[] {
