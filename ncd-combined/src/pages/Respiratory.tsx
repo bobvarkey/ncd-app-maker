@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { 
   Wind, AlertTriangle, CheckCircle, XCircle, Activity, 
-  Thermometer, Lung, Pill, Info, ArrowRight,
+  Thermometer, Wind, Pill, Info, ArrowRight,
   FileText, Scale
 } from "lucide-react";
 import { Card } from "@/components/ui/card";
@@ -208,7 +208,7 @@ export default function RespiratoryTab() {
         <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6">
           <TabsList className="grid w-full grid-cols-2 h-auto p-1 bg-muted/50">
             <TabsTrigger value="copd" className="flex items-center gap-2 py-3 data-[state=active]:bg-cyan-500/10 data-[state=active]:text-cyan-600">
-              <Lung className="h-4 w-4" /><span>COPD</span>
+              <Wind className="h-4 w-4" /><span>COPD</span>
             </TabsTrigger>
             <TabsTrigger value="asthma" className="flex items-center gap-2 py-3 data-[state=active]:bg-amber-500/10 data-[state=active]:text-amber-600">
               <Wind className="h-4 w-4" /><span>Asthma</span>
@@ -300,7 +300,7 @@ export default function RespiratoryTab() {
             <SectionCard title="SABA Over-reliance Warning" icon={<AlertTriangle className="h-4 w-4" />} tone="danger" collapsible={false}>
               <div className="p-4 bg-amber-50/50 rounded-lg border border-amber-200/30">
                 <p className="text-sm text-amber-800">
-                  <strong>Red flag:</strong> Using SABA >2 times/week (excluding PRN for exercise) indicates uncontrolled asthma.
+                  <strong>Red flag:</strong> Using SABA &gt;2 times/week (excluding PRN for exercise) indicates uncontrolled asthma.
                 </p>
                 <ul className="mt-3 space-y-2 text-sm text-amber-700">
                   <li className="flex items-center gap-2">
