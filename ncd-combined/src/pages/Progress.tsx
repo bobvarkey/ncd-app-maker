@@ -87,19 +87,19 @@ const Progress = () => {
         <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
           <div>
             <Label className="text-xs text-muted-foreground">Date</Label>
-            <Input type="date" value={newEntry.date} onChange={e => setNewEntry(p => ({ ...p, date: e.target.value }))} className="h-9" />
+            <Input type="date" value={newEntry.date} onChange={e => setNewEntry(p => ({ ...p, date: e.target.value }))} className="h-10 px-3 rounded-lg border-border/60 focus:ring-2 focus:ring-primary/50 focus:border-primary transition-all" />
           </div>
           <div>
             <Label className="text-xs text-muted-foreground">Weight (kg)</Label>
-            <Input type="number" value={newEntry.weight || ""} onChange={e => setNewEntry(p => ({ ...p, weight: parseFloat(e.target.value) || 0 }))} className="h-9" step={0.1} />
+            <Input type="number" value={newEntry.weight || ""} onChange={e => setNewEntry(p => ({ ...p, weight: parseFloat(e.target.value) || 0 }))} className="h-10 px-3 rounded-lg border-border/60 focus:ring-2 focus:ring-primary/50 focus:border-primary transition-all" step={0.1} />
           </div>
           <div>
             <Label className="text-xs text-muted-foreground">FBS (mg/dL)</Label>
-            <Input type="number" value={newEntry.fbs || ""} onChange={e => setNewEntry(p => ({ ...p, fbs: parseInt(e.target.value) || 0 }))} className="h-9" />
+            <Input type="number" value={newEntry.fbs || ""} onChange={e => setNewEntry(p => ({ ...p, fbs: parseInt(e.target.value) || 0 }))} className="h-10 px-3 rounded-lg border-border/60 focus:ring-2 focus:ring-primary/50 focus:border-primary transition-all" />
           </div>
           <div>
             <Label className="text-xs text-muted-foreground">RBS (mg/dL)</Label>
-            <Input type="number" value={newEntry.rbs || ""} onChange={e => setNewEntry(p => ({ ...p, rbs: parseInt(e.target.value) || 0 }))} className="h-9" />
+            <Input type="number" value={newEntry.rbs || ""} onChange={e => setNewEntry(p => ({ ...p, rbs: parseInt(e.target.value) || 0 }))} className="h-10 px-3 rounded-lg border-border/60 focus:ring-2 focus:ring-primary/50 focus:border-primary transition-all" />
           </div>
         </div>
         <Button className="mt-3" size="sm" onClick={addEntry}>

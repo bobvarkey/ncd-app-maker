@@ -714,7 +714,7 @@ function ComprehensivePrescriptionGenerator() {
               value={patientName}
               onChange={(e) => setPatientName(e.target.value)}
               placeholder="e.g., John Doe"
-              className="h-9"
+              className="h-10 px-3 rounded-lg border-border/60 focus:ring-2 focus:ring-primary/50 focus:border-primary transition-all"
             />
           </div>
           <div className="space-y-2">
@@ -723,7 +723,7 @@ function ComprehensivePrescriptionGenerator() {
               value={patientId}
               onChange={(e) => setPatientId(e.target.value)}
               placeholder="e.g., P12345"
-              className="h-9"
+              className="h-10 px-3 rounded-lg border-border/60 focus:ring-2 focus:ring-primary/50 focus:border-primary transition-all"
             />
           </div>
           <div className="space-y-2">
@@ -733,7 +733,7 @@ function ComprehensivePrescriptionGenerator() {
               value={age}
               onChange={(e) => setAge(e.target.value)}
               placeholder="50"
-              className="h-9"
+              className="h-10 px-3 rounded-lg border-border/60 focus:ring-2 focus:ring-primary/50 focus:border-primary transition-all"
             />
           </div>
           <div className="space-y-2">
@@ -743,7 +743,7 @@ function ComprehensivePrescriptionGenerator() {
               value={weight}
               onChange={(e) => setWeight(e.target.value)}
               placeholder="70"
-              className="h-9"
+              className="h-10 px-3 rounded-lg border-border/60 focus:ring-2 focus:ring-primary/50 focus:border-primary transition-all"
             />
           </div>
         </div>
@@ -758,7 +758,7 @@ function ComprehensivePrescriptionGenerator() {
               value={hba1c}
               onChange={(e) => setHba1c(e.target.value)}
               placeholder="7.0"
-              className="h-9"
+              className="h-10 px-3 rounded-lg border-border/60 focus:ring-2 focus:ring-primary/50 focus:border-primary transition-all"
             />
           </div>
           <div className="space-y-2">
@@ -768,7 +768,7 @@ function ComprehensivePrescriptionGenerator() {
               value={fbg}
               onChange={(e) => setFbg(e.target.value)}
               placeholder="120"
-              className="h-9"
+              className="h-10 px-3 rounded-lg border-border/60 focus:ring-2 focus:ring-primary/50 focus:border-primary transition-all"
             />
           </div>
           <div className="space-y-2">
@@ -798,7 +798,7 @@ function ComprehensivePrescriptionGenerator() {
               value={ldl}
               onChange={(e) => setLdl(e.target.value)}
               placeholder="100"
-              className="h-9"
+              className="h-10 px-3 rounded-lg border-border/60 focus:ring-2 focus:ring-primary/50 focus:border-primary transition-all"
             />
           </div>
         </div>
@@ -811,7 +811,7 @@ function ComprehensivePrescriptionGenerator() {
               value={hdl}
               onChange={(e) => setHdl(e.target.value)}
               placeholder="40"
-              className="h-9"
+              className="h-10 px-3 rounded-lg border-border/60 focus:ring-2 focus:ring-primary/50 focus:border-primary transition-all"
             />
           </div>
           <div className="space-y-2">
@@ -821,7 +821,7 @@ function ComprehensivePrescriptionGenerator() {
               value={tg}
               onChange={(e) => setTg(e.target.value)}
               placeholder="150"
-              className="h-9"
+              className="h-10 px-3 rounded-lg border-border/60 focus:ring-2 focus:ring-primary/50 focus:border-primary transition-all"
             />
           </div>
           <div className="space-y-2">
@@ -832,13 +832,13 @@ function ComprehensivePrescriptionGenerator() {
               value={creatinine}
               onChange={(e) => setCreatinine(e.target.value)}
               placeholder="1.0"
-              className="h-9"
+              className="h-10 px-3 rounded-lg border-border/60 focus:ring-2 focus:ring-primary/50 focus:border-primary transition-all"
             />
           </div>
           <div className="space-y-2">
             <Label className="text-xs">Sex</Label>
             <Select value={sex} onValueChange={(v: "male" | "female") => setSex(v)}>
-              <SelectTrigger className="h-9">
+              <SelectTrigger className="h-10 px-3 rounded-lg border-border/60 focus:ring-2 focus:ring-primary/50 focus:border-primary transition-all">
                 <SelectValue />
               </SelectTrigger>
               <SelectContent>
@@ -870,7 +870,7 @@ function ComprehensivePrescriptionGenerator() {
               value={bmi}
               onChange={(e) => setBmi(e.target.value)}
               placeholder="25"
-              className="h-9"
+              className="h-10 px-3 rounded-lg border-border/60 focus:ring-2 focus:ring-primary/50 focus:border-primary transition-all"
             />
           </div>
         </div>

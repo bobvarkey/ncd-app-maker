@@ -290,11 +290,11 @@ export default function LipidsAssessment({ onClassificationChange, onNavigateToT
       {/* ─── Patient & Labs ─── */}
       <SectionCard title="Patient Data" icon={<User className="h-4 w-4" />} tone="primary" collapsible={false}>
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
-          <div><Label className="text-xs">Name</Label><Input value={name} onChange={e => setName(e.target.value)} className="h-9" /></div>
-          <div><Label className="text-xs">Age</Label><Input type="number" value={age} onChange={e => setAge(e.target.value)} className="h-9" /></div>
+          <div><Label className="text-xs">Name</Label><Input value={name} onChange={e => setName(e.target.value)} className="h-10 px-3 rounded-lg border-border/60 focus:ring-2 focus:ring-primary/50 focus:border-primary transition-all" /></div>
+          <div><Label className="text-xs">Age</Label><Input type="number" value={age} onChange={e => setAge(e.target.value)} className="h-10 px-3 rounded-lg border-border/60 focus:ring-2 focus:ring-primary/50 focus:border-primary transition-all" /></div>
           <div><Label className="text-xs">Sex</Label>
             <Select value={sex} onValueChange={setSex}>
-              <SelectTrigger className="h-9"><SelectValue /></SelectTrigger>
+              <SelectTrigger className="h-10 px-3 rounded-lg border-border/60 focus:ring-2 focus:ring-primary/50 focus:border-primary transition-all"><SelectValue /></SelectTrigger>
               <SelectContent>
                 <SelectItem value="male">Male</SelectItem><SelectItem value="female">Female</SelectItem>
               </SelectContent>
@@ -302,10 +302,10 @@ export default function LipidsAssessment({ onClassificationChange, onNavigateToT
           </div>
         </div>
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mt-3">
-          <div><Label className="text-xs">LDL (mg/dL)</Label><Input type="number" value={ldl} onChange={e => setLdl(e.target.value)} className="h-9" /></div>
-          <div><Label className="text-xs">HDL (mg/dL)</Label><Input type="number" value={hdl} onChange={e => setHdl(e.target.value)} className="h-9" /></div>
-          <div><Label className="text-xs">TG (mg/dL)</Label><Input type="number" value={tg} onChange={e => setTg(e.target.value)} className="h-9" /></div>
-          <div><Label className="text-xs">Non-HDL</Label><Input type="number" value={nonHdl} onChange={e => setNonHdl(e.target.value)} className="h-9" /></div>
+          <div><Label className="text-xs">LDL (mg/dL)</Label><Input type="number" value={ldl} onChange={e => setLdl(e.target.value)} className="h-10 px-3 rounded-lg border-border/60 focus:ring-2 focus:ring-primary/50 focus:border-primary transition-all" /></div>
+          <div><Label className="text-xs">HDL (mg/dL)</Label><Input type="number" value={hdl} onChange={e => setHdl(e.target.value)} className="h-10 px-3 rounded-lg border-border/60 focus:ring-2 focus:ring-primary/50 focus:border-primary transition-all" /></div>
+          <div><Label className="text-xs">TG (mg/dL)</Label><Input type="number" value={tg} onChange={e => setTg(e.target.value)} className="h-10 px-3 rounded-lg border-border/60 focus:ring-2 focus:ring-primary/50 focus:border-primary transition-all" /></div>
+          <div><Label className="text-xs">Non-HDL</Label><Input type="number" value={nonHdl} onChange={e => setNonHdl(e.target.value)} className="h-10 px-3 rounded-lg border-border/60 focus:ring-2 focus:ring-primary/50 focus:border-primary transition-all" /></div>
         </div>
       </SectionCard>
 
@@ -351,10 +351,10 @@ export default function LipidsAssessment({ onClassificationChange, onNavigateToT
       <SectionCard title="AHA PREVENT 10-Year Risk" icon={<TrendingUp className="h-4 w-4" />} tone="neutral" collapsible={false}>
         <p className="text-xs text-muted-foreground mb-3">Calculates 10-year ASCVD risk per AHA PREVENT equations (Khan et al. 2024). Required: age 30-79, TC, HDL, SBP, BMI, eGFR.</p>
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-          <div><Label className="text-xs">Total Chol (mg/dL)</Label><Input type="number" value={totalChol} onChange={e => setTotalChol(e.target.value)} className="h-9" /></div>
-          <div><Label className="text-xs">SBP (mmHg)</Label><Input type="number" value={sbp} onChange={e => setSbp(e.target.value)} className="h-9" /></div>
-          <div><Label className="text-xs">BMI (kg/m²)</Label><Input type="number" step="0.1" value={bmi} onChange={e => setBmi(e.target.value)} className="h-9" /></div>
-          <div><Label className="text-xs">eGFR</Label><Input type="number" value={egfr} onChange={e => setEgfr(e.target.value)} className="h-9" /></div>
+          <div><Label className="text-xs">Total Chol (mg/dL)</Label><Input type="number" value={totalChol} onChange={e => setTotalChol(e.target.value)} className="h-10 px-3 rounded-lg border-border/60 focus:ring-2 focus:ring-primary/50 focus:border-primary transition-all" /></div>
+          <div><Label className="text-xs">SBP (mmHg)</Label><Input type="number" value={sbp} onChange={e => setSbp(e.target.value)} className="h-10 px-3 rounded-lg border-border/60 focus:ring-2 focus:ring-primary/50 focus:border-primary transition-all" /></div>
+          <div><Label className="text-xs">BMI (kg/m²)</Label><Input type="number" step="0.1" value={bmi} onChange={e => setBmi(e.target.value)} className="h-10 px-3 rounded-lg border-border/60 focus:ring-2 focus:ring-primary/50 focus:border-primary transition-all" /></div>
+          <div><Label className="text-xs">eGFR</Label><Input type="number" value={egfr} onChange={e => setEgfr(e.target.value)} className="h-10 px-3 rounded-lg border-border/60 focus:ring-2 focus:ring-primary/50 focus:border-primary transition-all" /></div>
         </div>
         <div className="flex flex-wrap gap-3 mt-2">
           <label className="flex items-center gap-2 cursor-pointer"><input type="checkbox" checked={bpMed} onChange={e => setBpMed(e.target.checked)} className="rounded" /><span className="text-xs">BP Meds</span></label>

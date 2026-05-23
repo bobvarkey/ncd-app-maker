@@ -133,8 +133,8 @@ export function SectionCard({
     <Collapsible open={open} onOpenChange={setOpen}>
       <Card className={`overflow-hidden shadow-sm ${t.card}`}>
         <CollapsibleTrigger className="w-full text-left">{Header}</CollapsibleTrigger>
-        <CollapsibleContent>
-          <div className="px-5 pb-5 pt-3 bg-card">{children}</div>
+        <CollapsibleContent className="animate-in slide-in-from-top-2 fade-in duration-200">
+          <div className="px-5 pb-5 pt-3">{children}</div>
         </CollapsibleContent>
       </Card>
     </Collapsible>
