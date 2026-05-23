@@ -1,12 +1,15 @@
 import { useState, useMemo } from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { BookOpen, Calculator, Pill, ArrowLeft, ArrowRight, Home } from "lucide-react";
+import { BookOpen, Calculator, Pill, Wind, ArrowLeft, ArrowRight, Home, AlertTriangle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { useNavigate, Link } from "react-router-dom";
+import { AbbreviationHover, AbbrText } from "@/components/AbbreviationHover";
 import LipidsOverview from "./LipidsOverview";
 import LipidsAssessment from "./LipidsAssessment";
 import LipidsTreatment from "./LipidsTreatment";
+import RenalDoseAdjustment from "../RenalDoseAdjustment";
+// import Respiratory from "../Respiratory";
 
 export type LAIResult = {
   cat: "EHR" | "VHR" | "HR" | "MOD" | "LOW";
@@ -26,6 +29,7 @@ export default function LipidsTab() {
   const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState("overview");
   const [laiResult, setLaiResult] = useState<LAIResult | null>(null);
+  const [egfr, setEgfr] = useState<string>("");
 
   const NavHome = () => (
     <div className="flex items-center justify-between mb-4">
@@ -65,26 +69,35 @@ export default function LipidsTab() {
         </div>
 
         <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6">
-          <TabsList className="grid w-full grid-cols-3 h-auto p-1 bg-muted/50">
-            <TabsTrigger value="overview" className="flex items-center gap-2 py-3 data-[state=active]:bg-blue-500/10 data-[state=active]:text-blue-600">
+          <TabsList className="grid w-full grid-cols-5 h-auto p-1 bg-muted/50">
+            <TabsTrigger value="overview" className="flex items-center gap-1.5 py-2 text-xs data-[state=active]:bg-blue-500/10 data-[state=active]:text-blue-600">
               <BookOpen className="h-4 w-4" /><span>Overview</span>
             </TabsTrigger>
-            <TabsTrigger value="assessment" className="flex items-center gap-2 py-3 data-[state=active]:bg-blue-500/10 data-[state=active]:text-blue-600">
-              <Calculator className="h-4 w-4" /><span>Risk Assessment</span>
+            <TabsTrigger value="assessment" className="flex items-center gap-1.5 py-2 text-xs data-[state=active]:bg-blue-500/10 data-[state=active]:text-blue-600">
+              <Calculator className="h-4 w-4" /><span>Risk Calc</span>
             </TabsTrigger>
-            <TabsTrigger value="treatment" disabled={!laiResult} className="flex items-center gap-2 py-3 data-[state=active]:bg-blue-500/10 data-[state=active]:text-blue-600">
-              <Pill className="h-4 w-4" /><span>Treatment</span>
+            <TabsTrigger value="treatment" disabled={!laiResult} className="flex items-center gap-1.5 py-2 text-xs data-[state=active]:bg-blue-500/10 data-[state=active]:text-blue-600">
+              <Pill className="h-4 w-4" /><span>Rx</span>
+            </TabsTrigger>
+            <TabsTrigger value="copd" className="flex items-center gap-1.5 py-2 text-xs data-[state=active]:bg-cyan-500/10 data-[state=active]:text-cyan-600">
+              <Wind className="h-4 w-4" /><span>COPD/Asthma</span>
+            </TabsTrigger>
+            <TabsTrigger value="renal" className="flex items-center gap-1.5 py-2 text-xs data-[state=active]:bg-amber-500/10 data-[state=active]:text-amber-600">
+              <AlertTriangle className="h-4 w-4" /><span>Renal</span>
             </TabsTrigger>
           </TabsList>
 
+          {/* Tab 1: Overview */}
           <TabsContent value="overview" className="mt-0">
             <LipidsOverview />
           </TabsContent>
 
+          {/* Tab 2: Risk Assessment */}
           <TabsContent value="assessment" className="mt-0">
             <LipidsAssessment onClassificationChange={setLaiResult} onNavigateToTreatment={() => setActiveTab("treatment")} />
           </TabsContent>
 
+          {/* Tab 3: Treatment */}
           <TabsContent value="treatment" className="mt-0">
             {laiResult ? (
               <LipidsTreatment laiResult={laiResult} onBackToAssessment={() => setActiveTab("assessment")} />
@@ -97,6 +110,16 @@ export default function LipidsTab() {
                 </Button>
               </div>
             )}
+          </TabsContent>
+
+          {/* Tab 4: COPD/Asthma */}
+          <TabsContent value="copd" className="mt-0">
+            <div className='p-8'>Coming soon: Respiratory</div>
+          </TabsContent>
+
+          {/* Tab 5: Renal Dose Adjustment */}
+          <TabsContent value="renal" className="mt-0">
+            <RenalDoseAdjustment />
           </TabsContent>
         </Tabs>
 

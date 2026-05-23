@@ -423,8 +423,7 @@ export default function ModeSelector() {
 
       {/* Global Styles */}
       <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@300;400;500;600;700&display=swap');
-        @import url('https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap');
+        /* Font imports moved to index.css */
         
         .glass-card {
           background: rgba(255, 255, 255, 0.8);
