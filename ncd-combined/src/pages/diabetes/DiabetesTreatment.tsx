@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { AbbreviationHover } from "@/components/AbbreviationHover";
 import { Link } from "react-router-dom";
 import { Pill, Syringe, ChevronRight, ChevronDown, ArrowRight, CheckCircle2, AlertTriangle, Heart, Activity, Scale, Brain, ArrowDown, FileText, BookOpen } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";

@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { AbbreviationHover } from "@/components/AbbreviationHover";
 import { useNavigate } from "react-router-dom";
 import { Syringe, Heart, Dna, Scale, Activity, ArrowLeft, Calculator, Info } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";

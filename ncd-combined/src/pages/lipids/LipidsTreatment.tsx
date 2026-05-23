@@ -1,4 +1,5 @@
 import { Button } from "@/components/ui/button";
+import { AbbreviationHover } from "@/components/AbbreviationHover";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { SectionCard } from "@/components/ui/section-card";

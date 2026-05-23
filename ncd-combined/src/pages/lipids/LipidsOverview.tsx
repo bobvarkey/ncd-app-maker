@@ -1,4 +1,5 @@
 import { Card } from "@/components/ui/card";
+import { AbbreviationHover } from "@/components/AbbreviationHover";
 import {
   Heart,
   TrendingUp,
