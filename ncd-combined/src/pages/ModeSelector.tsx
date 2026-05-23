@@ -1,14 +1,41 @@
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { Activity, Heart, Syringe, Scale, ArrowRight, Users, BookOpen, Shield, Zap, Star, CheckCircle } from "lucide-react";
 
-// Floating orbs animation
-function FloatingOrbs() {
+// Material Symbol Icon component
+function Icon({ name, filled = false }: { name: string; filled?: boolean }) {
   return (
-    <>
-      <div className="fixed top-20 left-0 w-[600px] h-[600px] rounded-full bg-[#e91e63]/5 blur-[120px] pointer-events-none animate-float" />
-      <div className="fixed bottom-40 right-0 w-[500px] h-[500px] rounded-full bg-[#7c5cfc]/5 blur-[100px] pointer-events-none animate-float-reverse" />
-    </>
+    <span 
+      className="material-symbols-outlined" 
+      style={{ fontVariationSettings: filled ? "'FILL' 1" : "'FILL' 0" }}
+    >
+      {name}
+    </span>
+  );
+}
+
+// Floating gradient orbs
+function MeshGradientBg({ children }: { children: React.ReactNode }) {
+  return (
+    <div className="mesh-gradient-bg">
+      {children}
+      <style>{`
+        .mesh-gradient-bg {
+          background-color: #fbf8ff;
+          background-image: 
+            radial-gradient(at 0% 0%, hsla(336, 100%, 96%, 1) 0, transparent 50%), 
+            radial-gradient(at 100% 100%, hsla(253, 64%, 94%, 1) 0, transparent 50%);
+        }
+      `}</style>
+    </div>
+  );
+}
+
+// Glass Card wrapper
+function GlassCard({ children, className = "", hover = true }: { children: React.ReactNode; className?: string; hover?: boolean }) {
+  return (
+    <div className={`glass-card ${hover ? 'group hover:shadow-xl transition-all' : ''} ${className}`}>
+      {children}
+    </div>
   );
 }
 
@@ -17,29 +44,29 @@ function Navbar() {
   const navigate = useNavigate();
   
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 backdrop-blur-xl bg-white/80 border-b border-[#e4bdc2]/30">
-      <div className="max-w-6xl mx-auto px-4 md:px-6 h-16 flex items-center justify-between">
-        <div className="flex items-center gap-2">
-          <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-[#e91e63] to-[#7c5cfc] flex items-center justify-center shadow-lg shadow-[#e91e63]/20">
-            <Activity className="h-4 w-4 text-white" />
+    <header className="bg-white/80 backdrop-blur-xl fixed top-0 left-0 right-0 z-50 border-b border-glass-stroke shadow-sm h-20">
+      <nav className="flex justify-between items-center w-full px-12 h-full max-w-6xl mx-auto">
+        <div className="flex items-center gap-2 cursor-pointer" onClick={() => navigate("/")}>
+          <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-[#b80049] to-[#5f3add] flex items-center justify-center shadow-lg shadow-[#b80049]/20">
+            <Icon name="favorite" />
           </div>
-          <span className="font-['Space_Grotesk'] font-bold text-lg text-[#191a2a]">NCD Toolkit</span>
+          <span className="text-xl font-bold text-[#191a2a]" style={{ fontFamily: 'Space Grotesk' }}>NCD Toolkit</span>
         </div>
         
-        <div className="hidden md:flex items-center gap-8 text-sm font-medium text-[#5b3f43]">
-          <a href="#features" className="hover:text-[#e91e63] transition-colors">Features</a>
-          <a href="#modes" className="hover:text-[#e91e63] transition-colors">Modes</a>
-          <a href="#testimonials" className="hover:text-[#e91e63] transition-colors">Testimonials</a>
+        <div className="hidden md:flex items-center gap-8 text-sm font-semibold text-[#5b3f43]">
+          <a className="text-[#b80049] border-b-2 border-[#b80049] relative" href="#features">Features</a>
+          <a className="hover:text-[#b80049] transition-colors" href="#methodology">Methodology</a>
+          <a className="hover:text-[#b80049] transition-colors" href="#pricing">Pricing</a>
         </div>
 
         <button 
           onClick={() => navigate("/simple")}
-          className="hidden md:block px-5 py-2.5 text-sm font-semibold rounded-lg bg-[#e91e63] text-white hover:shadow-lg hover:shadow-[#e91e63]/30 hover:scale-[1.02] transition-all"
+          className="bg-[#b80049] text-white px-6 py-2.5 rounded-full font-semibold text-sm hover:shadow-lg hover:shadow-[#b80049]/20 primary-btn-hover transition-all active:scale-95"
         >
           Get Started
         </button>
-      </div>
-    </nav>
+      </nav>
+    </header>
   );
 }
 
@@ -53,282 +80,297 @@ function Hero() {
   }, []);
 
   return (
-    <section className="pt-32 pb-20 px-4">
-      <FloatingOrbs />
-      
-      <div className="max-w-5xl mx-auto text-center relative z-10">
-        {/* Badge */}
-        <div className={`transition-all duration-700 ${loaded ? 'opacity-100' : 'opacity-0 translate-y-4'}`}>
-          <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm font-semibold bg-[#fff1f5] text-[#e91e63] border border-[#e4bdc2]">
-            <span className="w-2 h-2 rounded-full bg-[#e91e63] animate-pulse" />
-            Powered by 2026 Clinical Guidelines
-          </span>
+    <section className="max-w-6xl mx-auto px-12 py-24 flex flex-col md:flex-row items-center gap-8 relative">
+      {/* Left Content */}
+      <div className={`w-full md:w-1/2 space-y-8 z-10 transition-all duration-700 ${loaded ? 'opacity-100' : 'opacity-0 translate-y-4'}`}>
+        <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#fff1f5] text-[#b80049] font-semibold text-sm border border-[#b80049]/10">
+          <Icon name="favorite" filled />
+          CARDIOVASCULAR RISK
         </div>
-
-        {/* Headline */}
-        <h1 className={`mt-8 text-4xl md:text-6xl font-['Space_Grotesk'] font-bold text-[#191a2a] leading-tight transition-all duration-700 delay-100 ${loaded ? 'opacity-100' : 'opacity-0 translate-y-4'}`}>
-          Clinical Decision Support
+        
+        <h1 className="text-5xl font-bold leading-tight text-[#191a2a]" style={{ fontFamily: 'Space Grotesk', letterSpacing: '-0.02em' }}>
+          NCD Clinical
           <br />
-          <span className="text-transparent bg-gradient-to-r from-[#e91e63] to-[#7c5cfc] bg-clip-text">
-            Made Simple
-          </span>
+          <span className="text-[#b80049] italic">Decision Support</span>
         </h1>
-
-        {/* Subtitle */}
-        <p className={`mt-6 text-lg text-[#5b3f43] max-w-2xl mx-auto leading-relaxed transition-all duration-700 delay-200 ${loaded ? 'opacity-100' : 'opacity-0 translate-y-4'}`}>
-          Three tiers of evidence-based decision support for diabetes, hypertension, dyslipidemia, and obesity. 
-          From quick bedside calculators to full clinical workflow integration.
+        
+        <p className="text-lg text-[#4b5563] max-w-lg leading-relaxed">
+          An intuitive, clinician-designed toolkit for diabetes, hypertension, dyslipidemia, and obesity management. Leverage evidence-based protocols to deliver guideline-concordant patient care.
         </p>
-
-        {/* CTAs */}
-        <div className={`flex flex-col sm:flex-row items-center justify-center gap-4 mt-10 transition-all duration-700 delay-300 ${loaded ? 'opacity-100' : 'opacity-0 translate-y-4'}`}>
+        
+        <div className="flex flex-col sm:flex-row gap-4 pt-4">
           <button 
             onClick={() => navigate("/simple")}
-            className="px-8 py-3.5 rounded-lg bg-[#e91e63] text-white font-semibold text-sm hover:shadow-xl hover:shadow-[#e91e63]/30 hover:scale-[1.02] transition-all"
+            className="bg-[#b80049] text-white px-8 py-4 rounded-2xl flex items-center justify-center gap-3 font-semibold text-sm shadow-lg shadow-[#b80049]/20 primary-btn-hover group"
           >
-            Start Free
+            Get Started
+            <Icon name="arrow_forward" />
           </button>
           <button 
             onClick={() => navigate("/home")}
-            className="px-8 py-3.5 rounded-lg bg-white text-[#191a2a] font-semibold text-sm border border-[#e4bdc2] hover:border-[#e91e63] hover:text-[#e91e63] transition-all"
+            className="bg-white text-[#191a2a] border-2 border-[#e2e0f7] px-8 py-4 rounded-2xl flex items-center justify-center gap-3 font-semibold text-sm hover:border-[#b80049] hover:bg-[#fff1f5] transition-colors"
           >
-            View Documentation
+            Full Suite
+            <Icon name="analytics" />
           </button>
         </div>
+      </div>
 
-        {/* Stats Row */}
-        <div className={`grid grid-cols-3 gap-8 max-w-xl mx-auto mt-16 transition-all duration-700 delay-500 ${loaded ? 'opacity-100' : 'opacity-0 translate-y-4'}`}>
-          {[
-            { value: "4", label: "NCD Conditions" },
-            { value: "170+", label: "Drug References" },
-            { value: "2026", label: "Latest Guidelines" },
-          ].map((stat, i) => (
-            <div key={i} className="text-center">
-              <div className="text-3xl md:text-4xl font-['Space_Grotesk'] font-bold text-[#e91e63]">{stat.value}</div>
-              <div className="text-sm text-[#5b3f43] mt-1">{stat.label}</div>
+      {/* Right - Dashboard Preview */}
+      <div className={`w-full md:w-1/2 relative transition-all duration-700 delay-300 ${loaded ? 'opacity-100' : 'opacity-0 translate-y-4'}`}>
+        <div className="relative rounded-2xl overflow-hidden shadow-2xl">
+          <div className="bg-gradient-to-br from-[#eeecff] to-[#f5f2ff] p-8 aspect-[4/3] flex flex-col items-center justify-center">
+            {/* Fake Dashboard UI */}
+            <div className="grid grid-cols-2 gap-4 w-full">
+              {/* Card 1 */}
+              <div className="bg-white/60 backdrop-blur p-4 rounded-xl border border-white/40">
+                <Icon name="favorite" className="text-[#b80049] mb-2" />
+                <div className="text-xs text-[#5b3f43]">Diabetes</div>
+                <div className="text-lg font-bold text-[#191a2a]">HbA1c: 7.2%</div>
+              </div>
+              {/* Card 2 */}
+              <div className="bg-white/60 backdrop-blur p-4 rounded-xl border border-white/40">
+                <Icon name="monitoring" className="text-[#5f3add] mb-2" />
+                <div className="text-xs text-[#5b3f43]">Hypertension</div>
+                <div className="text-lg font-bold text-[#191a2a]">Stage 1</div>
+              </div>
+              {/* Card 3 */}
+              <div className="bg-white/60 backdrop-blur p-4 rounded-xl border border-white/40">
+                <Icon name="science" className="text-[#00694d] mb-2" />
+                <div className="text-xs text-[#5b3f43]">Lipids</div>
+                <div className="text-lg font-bold text-[#191a2a]">LDL: 98</div>
+              </div>
+              {/* Card 4 */}
+              <div className="bg-white/60 backdrop-blur p-4 rounded-xl border border-white/40">
+                <Icon name="scale" className="text-[#4b5563] mb-2" />
+                <div className="text-xs text-[#5b3f43]">Obesity</div>
+                <div className="text-lg font-bold text-[#191a2a]">BMI: 27.4</div>
+              </div>
             </div>
-          ))}
+          </div>
+        </div>
+        
+        {/* Floating Micro-Metric */}
+        <div className="absolute -bottom-6 -left-6 glass-card p-5 flex items-center gap-4 animate-bounce-subtle">
+          <div className="w-12 h-12 rounded-full bg-[#fff1f5] flex items-center justify-center text-[#b80049]">
+            <Icon name="monitoring" />
+          </div>
+          <div>
+            <div className="text-xs text-[#4b5563]">Active Mode</div>
+            <div className="text-lg font-bold text-[#b80049]">Simple</div>
+          </div>
         </div>
       </div>
     </section>
   );
 }
 
-// Feature Card
-function FeatureCard({ icon: Icon, title, description, delay }: { icon: any; title: string; description: string; delay: number }) {
-  const [visible, setVisible] = useState(false);
-
-  useEffect(() => {
-    const timer = setTimeout(() => setVisible(true), delay);
-    return () => clearTimeout(timer);
-  }, [delay]);
-
-  return (
-    <div className={`group p-8 rounded-3xl bg-white/80 backdrop-blur-xl border border-white/40 shadow-[0_20px_40px_rgba(10,11,26,0.05)] hover:shadow-xl hover:shadow-[#e91e63]/10 transition-all duration-500 hover:-translate-y-1 ${visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
-      <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-[#e91e63]/10 to-[#7c5cfc]/10 flex items-center justify-center mb-5 group-hover:from-[#e91e63]/20 group-hover:to-[#7c5cfc]/20 transition-all">
-        <Icon className="w-7 h-7 text-[#e91e63]" />
-      </div>
-      <h3 className="font-['Space_Grotesk'] font-bold text-xl text-[#191a2a] mb-2">{title}</h3>
-      <p className="text-[#5b3f43] leading-relaxed">{description}</p>
-    </div>
-  );
-}
-
-// Features Section
+// Features / Bento Grid Section
 function Features() {
   const features = [
-    { icon: Heart, title: "Diabetes Management", description: "FBG, HbA1c tracking with guideline-based treatment recommendations and insulin titration protocols." },
-    { icon: Activity, title: "Blood Pressure Control", description: "ESC/ESH 2024 classifications, JNC-style staging, and drug combination calculators." },
-    { icon: Syringe, title: "Lipid Profiles", description: "ASCVD risk scoring, LAI 2023 classification, and statin intensity mapping." },
-    { icon: Scale, title: "Obesity Metrics", description: "BMI categories, waist circumference risk, and GLP-1 eligibility screening." },
+    { icon: "favorite", title: "Diabetes Management", items: ["FBG tracking", "HbA1c calculation", "Insulin titration"] },
+    { icon: "monitoring", title: "Blood Pressure", items: ["JNC staging", "ESC/ESH 2024", "Drug combinations"] },
+    { icon: "science", title: "Lipid Profiles", items: ["ASCVD risk score", "LAI 2023 classification", "Statin mapping"] },
+    { icon: "scale", title: "Obesity Metrics", items: ["BMI categories", "Waist risk", "GLP-1 eligibility"] },
   ];
 
   return (
-    <section id="features" className="py-20 px-4 bg-[#f5f2ff]">
-      <div className="max-w-6xl mx-auto">
-        <div className="text-center mb-12">
-          <span className="inline-block px-4 py-2 rounded-full text-sm font-semibold bg-[#fff1f5] text-[#e91e63] border border-[#e4bdc2]">
-            Features
-          </span>
-          <h2 className="mt-6 text-3xl md:text-4xl font-['Space_Grotesk'] font-bold text-[#191a2a]">
-            Everything You Need
-          </h2>
-          <p className="mt-3 text-[#5b3f43] max-w-xl mx-auto">
-            Comprehensive tools for managing the four major non-communicable diseases.
-          </p>
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          {features.map((feature, i) => (
-            <FeatureCard key={i} {...feature} delay={200 + i * 100} />
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-}
-
-// Mode Card
-function ModeCard({ title, description, features, price, highlight, icon: Icon, route, delay }: { 
-  title: string; 
-  description: string; 
-  features: string[]; 
-  price: string; 
-  highlight?: boolean; 
-  icon: any; 
-  route: string;
-  delay: number;
-}) {
-  const navigate = useNavigate();
-  const [visible, setVisible] = useState(false);
-
-  useEffect(() => {
-    const timer = setTimeout(() => setVisible(true), delay);
-    return () => clearTimeout(timer);
-  }, [delay]);
-
-  return (
-    <div className={`relative p-8 rounded-3xl transition-all duration-500 ${visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'} ${highlight ? 'bg-gradient-to-b from-[#fff1f5] to-white border-2 border-[#e91e63]/30 shadow-xl shadow-[#e91e63]/10 scale-105' : 'bg-white/80 backdrop-blur-xl border border-white/40 shadow-[0_20px_40px_rgba(10,11,26,0.05)]'}`}>
-      {highlight && (
-        <span className="absolute -top-4 left-1/2 -translate-x-1/2 px-4 py-1 rounded-full text-xs font-bold bg-gradient-to-r from-[#e91e63] to-[#7c5cfc] text-white">
-          Most Popular
+    <section id="features" className="max-w-6xl mx-auto px-12 py-20">
+      <div className="text-center mb-12">
+        <span className="inline-block px-4 py-2 rounded-full text-sm font-semibold bg-[#fff1f5] text-[#b80049] border border-[#b80049]/10">
+          Features
         </span>
-      )}
-      
-      <div className={`w-14 h-14 rounded-2xl flex items-center justify-center mb-5 ${highlight ? 'bg-[#e91e63]' : 'bg-gradient-to-br from-[#e91e63]/10 to-[#7c5cfc]/10'}`}>
-        <Icon className={`w-7 h-7 ${highlight ? 'text-white' : 'text-[#e91e63]'}`} />
+        <h2 className="text-3xl font-bold text-[#191a2a] mt-6" style={{ fontFamily: 'Space Grotesk' }}>
+          Precision Risk Assessment
+        </h2>
+        <p className="text-[#4b5563] max-w-2xl mx-auto mt-4">
+          Real-time data visualization based on the latest ADA, ESC/ESH, and ACC/AHA guidelines.
+        </p>
       </div>
-      
-      <h3 className="font-['Space_Grotesk'] font-bold text-2xl text-[#191a2a] mb-2">{title}</h3>
-      <p className="text-[#5b3f43] text-sm mb-6">{description}</p>
-      
-      <div className="mb-6">
-        <span className="text-4xl font-['Space_Grotesk'] font-bold text-[#191a2a]">{price}</span>
-        {price !== "Free" && <span className="text-[#5b3f43] text-sm">/month</span>}
+
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        {/* Main Glass Card - spans 2 */}
+        <GlassCard className="p-8 md:col-span-2">
+          <div className="flex flex-col md:flex-row gap-12 items-center">
+            <div className="relative w-40 h-40 flex items-center justify-center">
+              <svg className="w-full h-full transform -rotate-90">
+                <circle className="text-[#e2e0f7]" cx="80" cy="80" fill="transparent" r="70" stroke="currentColor" strokeWidth="10"></circle>
+                <circle className="text-[#b80049]" cx="80" cy="80" fill="transparent" r="70" stroke="currentColor" strokeDasharray="440" strokeDashoffset="110" strokeWidth="10" style={{ transition: 'stroke-dashoffset 1s ease-out' }}></circle>
+              </svg>
+              <div className="absolute inset-0 flex flex-col items-center justify-center">
+                <span className="text-3xl font-bold text-[#b80049]" style={{ fontFamily: 'Space Grotesk' }}>7.5%</span>
+                <span className="text-xs text-[#4b5563]">ASCVD Risk</span>
+              </div>
+            </div>
+            <div className="flex-1 space-y-4">
+              <h3 className="text-xl font-bold text-[#191a2a]" style={{ fontFamily: 'Space Grotesk' }}>Interactive Risk Calculator</h3>
+              <p className="text-[#4b5563]">Based on LDL-C, age, BP, and systemic factors. Real-time 10-year risk estimation.</p>
+              <div className="flex flex-wrap gap-2 pt-2">
+                <span className="px-3 py-1 bg-[#b80049]/10 text-[#b80049] rounded-full text-xs font-semibold">Statins Indicated</span>
+                <span className="px-3 py-1 bg-[#5f3add]/10 text-[#5f3add] rounded-full text-xs font-semibold">Lifestyle Rx</span>
+              </div>
+            </div>
+          </div>
+        </GlassCard>
+
+        {/* Small Glass Card */}
+        <GlassCard className="p-6 flex flex-col justify-between">
+          <div>
+            <Icon name="science" className="text-[#b80049] text-2xl mb-3" />
+            <h3 className="text-lg font-bold text-[#191a2a]" style={{ fontFamily: 'Space Grotesk' }}>Lab Markers</h3>
+            <ul className="space-y-3 mt-4">
+              <li className="flex justify-between border-b border-[#e2e0f7]/30 pb-2">
+                <span>LDL-C</span>
+                <span className="font-semibold text-[#b80049]">98 mg/dL</span>
+              </li>
+              <li className="flex justify-between border-b border-[#e2e0f7]/30 pb-2">
+                <span>HDL-C</span>
+                <span className="font-semibold text-[#5f3add]">52 mg/dL</span>
+              </li>
+              <li className="flex justify-between">
+                <span>TG</span>
+                <span className="font-semibold">142 mg/dL</span>
+              </li>
+            </ul>
+          </div>
+        </GlassCard>
+
+        {/* Recommendations Card */}
+        <GlassCard className="p-6 bg-[#191a2a] text-white md:col-span-1">
+          <h3 className="text-lg font-bold mb-4" style={{ fontFamily: 'Space Grotesk' }}>Recommendations</h3>
+          <div className="space-y-4">
+            <div className="flex gap-3">
+              <Icon name="check_circle" className="text-[#06d6a0]" />
+              <p className="text-sm text-[#e2e0f7]">Initiate moderate-intensity statin therapy.</p>
+            </div>
+            <div className="flex gap-3">
+              <Icon name="check_circle" className="text-[#06d6a0]" />
+              <p className="text-sm text-[#e2e0f7]"> Mediterranean diet referral.</p>
+            </div>
+            <div className="flex gap-3">
+              <Icon name="check_circle" className="text-[#06d6a0]" />
+              <p className="text-sm text-[#e2e0f7]">Re-evaluate in 6 months.</p>
+            </div>
+          </div>
+        </GlassCard>
+
+        {/* Action Card */}
+        <GlassCard className="p-6 md:col-span-2 flex items-center justify-between">
+          <div>
+            <h3 className="text-lg font-bold text-[#191a2a] mb-2" style={{ fontFamily: 'Space Grotesk' }}>Clinic Dashboard</h3>
+            <p className="text-sm text-[#4b5563] mb-4">Manage patient cohorts and export clinical documentation instantly.</p>
+            <button className="bg-[#b80049] text-white px-6 py-3 rounded-xl font-semibold text-sm shadow-lg shadow-[#b80049]/20 primary-btn-hover">
+              Open Analytics
+            </button>
+          </div>
+          <div className="hidden lg:block opacity-20">
+            <Icon name="database" className="text-[#b80049] text-[120px] rotate-12" />
+          </div>
+        </GlassCard>
       </div>
-      
-      <ul className="space-y-3 mb-8">
-        {features.map((feat, j) => (
-          <li key={j} className="flex items-center gap-3 text-sm text-[#191a2a]">
-            <CheckCircle className="w-4 h-4 text-[#06d6a0]" />
-            {feat}
-          </li>
-        ))}
-      </ul>
-      
-      <button 
-        onClick={() => navigate(route)}
-        className={`w-full py-3.5 rounded-lg font-semibold text-sm transition-all ${highlight ? 'bg-[#e91e63] text-white hover:shadow-lg hover:shadow-[#e91e63]/30' : 'bg-white text-[#191a2a] border border-[#e4bdc2] hover:border-[#e91e63] hover:text-[#e91e63]'}`}
-      >
-        Get Started
-      </button>
-    </div>
+    </section>
   );
 }
 
-// Modes/Pricing Section
-function Modes() {
-  const modes = [
-    {
-      title: "Simple",
-      description: "Essential calculators",
-      price: "Free",
-      features: ["All 4 NCD calculators", "Basic BMI & BP classification", "Simple drug recommendations", "Mobile-responsive"],
-      icon: Zap,
-      route: "/simple",
-    },
-    {
-      title: "Moderate",
-      description: "Advanced decision support",
-      price: "$9",
-      features: ["Everything in Simple", "ASCVD 10-year risk score", "Drug interaction checker", "Insulin titration guide", "GLP-1 eligibility"],
-      icon: Shield,
-      route: "/moderate",
-      highlight: true,
-    },
-    {
-      title: "Complex",
-      description: "Full clinical suite",
-      price: "$29",
-      features: ["Everything in Moderate", "Prescription generator", "OCR lab upload", "LAI 2023 classification", "PREVENT risk score", "Priority support"],
-      icon: BookOpen,
-      route: "/home",
-    },
+// Methodology Section
+function Methodology() {
+  const methods = [
+    { icon: "menu_book", title: "ADA/ESC Guidelines", desc: "Strict adherence to 2024 diabetes and cardiology guidelines." },
+    { icon: "analytics", title: "Validated Algorithms", desc: "Pooled Cohort Equations and PREVENT for risk estimation." },
+    { icon: "security", title: "Clinical Precision", desc: "HIPAA-compliant architecture for maximum security." },
+    { icon: "refresh", title: "Real-time Updates", desc: "Logic engine updated within 24h of new consensus statements." },
   ];
 
   return (
-    <section id="modes" className="py-20 px-4">
-      <div className="max-w-6xl mx-auto">
-        <div className="text-center mb-12">
-          <span className="inline-block px-4 py-2 rounded-full text-sm font-semibold bg-[#fff1f5] text-[#e91e63] border border-[#e4bdc2]">
-            Modes & Pricing
-          </span>
-          <h2 className="mt-6 text-3xl md:text-4xl font-['Space_Grotesk'] font-bold text-[#191a2a]">
-            Choose Your Tier
-          </h2>
-          <p className="mt-3 text-[#5b3f43]">Start free, upgrade when you need more.</p>
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
-          {modes.map((mode, i) => (
-            <ModeCard key={i} {...mode} delay={300 + i * 150} />
-          ))}
+    <section id="methodology" className="bg-[#f5f2ff] py-20">
+      <div className="max-w-6xl mx-auto px-12">
+        <div className="flex flex-col lg:flex-row gap-16">
+          <div className="lg:w-1/3">
+            <h2 className="text-3xl font-bold text-[#191a2a]" style={{ fontFamily: 'Space Grotesk' }}>
+              Clinical Methodology
+            </h2>
+            <p className="text-[#4b5563] mt-4 mb-6 leading-relaxed">
+              Our platform leverages a proprietary aggregation of verified clinical trials and academic frameworks, ensuring every prediction is backed by peer-reviewed science.
+            </p>
+            <a className="text-[#b80049] font-semibold flex items-center gap-2 group" href="#">
+              Read Documentation 
+              <Icon name="open_in_new" />
+            </a>
+          </div>
+          
+          <div className="lg:w-2/3 grid grid-cols-1 sm:grid-cols-2 gap-6">
+            {methods.map((m, i) => (
+              <div key={i} className="p-6 rounded-2xl border border-glass-stroke bg-white/40">
+                <div className="w-12 h-12 rounded-full bg-[#e6deff] flex items-center justify-center text-[#5f3add] mb-4">
+                  <Icon name={m.icon} />
+                </div>
+                <h4 className="font-bold text-[#191a2a]" style={{ fontFamily: 'Space Grotesk' }}>{m.title}</h4>
+                <p className="text-xs text-[#4b5563] mt-2">{m.desc}</p>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
     </section>
   );
 }
 
-// Testimonial
-function Testimonial({ quote, author, role, delay }: { quote: string; author: string; role: string; delay: number }) {
-  const [visible, setVisible] = useState(false);
-
-  useEffect(() => {
-    const timer = setTimeout(() => setVisible(true), delay);
-    return () => clearTimeout(timer);
-  }, [delay]);
-
-  return (
-    <div className={`p-6 rounded-2xl bg-white/60 backdrop-blur-xl border border-white/40 transition-all duration-500 ${visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
-      <div className="flex gap-1 mb-4">
-        {[...Array(5)].map((_, i) => (
-          <Star key={i} className="w-4 h-4 fill-[#e91e63] text-[#e91e63]" />
-        ))}
-      </div>
-      <p className="text-[#191a2a] italic mb-4">"{quote}"</p>
-      <div>
-        <div className="font-semibold text-[#191a2a]">{author}</div>
-        <div className="text-sm text-[#5b3f43]">{role}</div>
-      </div>
-    </div>
-  );
-}
-
-// Testimonials Section
-function Testimonials() {
-  const testimonials = [
-    { quote: "Incredibly useful for quick bedside calculations. My residents love it.", author: "Dr. Sarah Chen", role: "Endocrinologist, Boston Medical" },
-    { quote: "The drug interaction checker saved me twice this week alone. Essential tool.", author: "Dr. Michael Roberts", role: "General Practitioner, UK NHS" },
-    { quote: "Finally, a clinical app that looks good and works well. My patients love the simple mode.", author: "Dr. Priya Sharma", role: "Family Physician, Mumbai" },
+// Pricing / CTA Section
+function Pricing() {
+  const navigate = useNavigate();
+  const tiers = [
+    { name: "Simple", price: "Free", desc: "Essential calculators", features: ["All 4 NCD calculators", "Basic classification", "Mobile-responsive"] },
+    { name: "Moderate", price: "$9/mo", desc: "Advanced features", highlight: true, features: ["ASCVD risk score", "Drug interactions", "Insulin titration", "GLP-1 eligibility"] },
+    { name: "Complex", price: "$29/mo", desc: "Full clinical suite", features: ["Prescription generator", "OCR upload", "LAI classification", "PREVENT risk", "Priority support"] },
   ];
 
   return (
-    <section id="testimonials" className="py-20 px-4 bg-[#f5f2ff]">
-      <div className="max-w-6xl mx-auto">
-        <div className="text-center mb-12">
-          <span className="inline-block px-4 py-2 rounded-full text-sm font-semibold bg-[#fff1f5] text-[#e91e63] border border-[#e4bdc2]">
-            Testimonials
-          </span>
-          <h2 className="mt-6 text-3xl md:text-4xl font-['Space_Grotesk'] font-bold text-[#191a2a]">
-            Loved by Clinicians
-          </h2>
-        </div>
+    <section id="pricing" className="max-w-6xl mx-auto px-12 py-20">
+      <div className="text-center mb-12">
+        <span className="inline-block px-4 py-2 rounded-full text-sm font-semibold bg-[#fff1f5] text-[#b80049] border border-[#b80049]/10">
+          Pricing
+        </span>
+        <h2 className="text-3xl font-bold text-[#191a2a] mt-6" style={{ fontFamily: 'Space Grotesk' }}>
+          Choose Your Tier
+        </h2>
+      </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          {testimonials.map((t, i) => (
-            <Testimonial key={i} {...t} delay={400 + i * 150} />
-          ))}
-        </div>
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        {tiers.map((tier, i) => (
+          <div 
+            key={i}
+            className={`relative p-8 rounded-3xl transition-all hover:shadow-xl ${tier.highlight ? 'bg-gradient-to-b from-[#fff1f5] to-white border-2 border-[#b80049]/30 shadow-xl' : 'bg-white/80 backdrop-blur-xl border border-white/40 shadow-lg'}`}
+          >
+            {tier.highlight && (
+              <span className="absolute -top-4 left-1/2 -translate-x-1/2 px-4 py-1 rounded-full text-xs font-bold bg-gradient-to-r from-[#b80049] to-[#5f3add] text-white">
+                Popular
+              </span>
+            )}
+            
+            <h3 className="text-xl font-bold text-[#191a2a]" style={{ fontFamily: 'Space Grotesk' }}>{tier.name}</h3>
+            <div className="mt-2 text-[#5b3f43] text-sm">{tier.desc}</div>
+            
+            <div className="my-6">
+              <span className="text-4xl font-bold text-[#191a2a]">{tier.price}</span>
+            </div>
+            
+            <ul className="space-y-3 mb-6">
+              {tier.features.map((f, j) => (
+                <li key={j} className="flex items-center gap-3 text-sm text-[#191a2a]">
+                  <Icon name="check_circle" className="text-[#06d6a0]" />
+                  {f}
+                </li>
+              ))}
+            </ul>
+            
+            <button 
+              onClick={() => navigate(i === 0 ? "/simple" : i === 1 ? "/moderate" : "/home")}
+              className={`w-full py-3.5 rounded-xl font-semibold text-sm transition-all ${tier.highlight ? 'bg-[#b80049] text-white hover:shadow-lg hover:shadow-[#b80049]/30' : 'bg-white text-[#191a2a] border border-[#e2e0f7] hover:border-[#b80049]'}`}
+            >
+              Get Started
+            </button>
+          </div>
+        ))}
       </div>
     </section>
   );
@@ -336,77 +378,82 @@ function Testimonials() {
 
 // Footer
 function Footer() {
-  const links = {
-    Product: ["Features", "Pricing", "Documentation", "Changelog"],
-    Company: ["About", "Blog", "Careers", "Contact"],
-    Legal: ["Privacy", "Terms", "Disclaimers", "HIPAA"],
-    Support: ["FAQ", "Help Center", "API Docs", "Status"],
-  };
-
   return (
-    <footer className="py-16 px-4 border-t border-[#e4bdc2]/30">
-      <div className="max-w-6xl mx-auto">
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-8 mb-12">
-          {Object.entries(links).map(([category, items]) => (
-            <div key={category}>
-              <h4 className="font-['Space_Grotesk'] font-bold text-[#191a2a] mb-4">{category}</h4>
-              <ul className="space-y-2">
-                {items.map((item) => (
-                  <li key={item}>
-                    <a href="#" className="text-sm text-[#5b3f43] hover:text-[#e91e63] transition-colors">{item}</a>
-                  </li>
-                ))}
-              </ul>
+    <footer className="bg-[#f5f2ff] py-12 px-12 border-t border-[#e2e0f7]/30">
+      <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+        <div>
+          <div className="flex items-center gap-2 mb-2">
+            <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-[#b80049] to-[#5f3add] flex items-center justify-center">
+              <Icon name="favorite" className="text-white text-sm" />
             </div>
-          ))}
-        </div>
-
-        <div className="flex flex-col md:flex-row items-center justify-between pt-8 border-t border-[#e4bdc2]/30">
-          <div className="flex items-center gap-2 mb-4 md:mb-0">
-            <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-[#e91e63] to-[#7c5cfc] flex items-center justify-center">
-              <Activity className="h-4 w-4 text-white" />
-            </div>
-            <span className="font-['Space_Grotesk'] font-bold text-[#191a2a]">NCD Toolkit</span>
+            <span className="font-bold text-[#191a2a]" style={{ fontFamily: 'Space Grotesk' }}>NCD Toolkit</span>
           </div>
-          <p className="text-sm text-[#5b3f43]">
-            © 2026 NCD Toolkit. All rights reserved.
-          </p>
+          <p className="text-sm text-[#5b3f43] max-w-sm">© 2026 NCD Toolkit. Clinician-designed for precision.</p>
+        </div>
+        
+        <div className="grid grid-cols-2 gap-8 md:justify-end text-sm">
+          <div className="flex flex-col gap-2">
+            <a className="text-[#5b3f43] hover:text-[#b80049] transition-colors" href="#">Privacy Policy</a>
+            <a className="text-[#5b3f43] hover:text-[#b80049] transition-colors" href="#">Terms of Service</a>
+          </div>
+          <div className="flex flex-col gap-2">
+            <a className="text-[#5b3f43] hover:text-[#b80049] transition-colors" href="#">Contact Support</a>
+            <a className="text-[#5b3f43] hover:text-[#b80049] transition-colors" href="#">Documentation</a>
+          </div>
         </div>
       </div>
     </footer>
   );
 }
 
-// Main Component
+// Main export
 export default function ModeSelector() {
   return (
-    <div className="min-h-screen bg-[#fbf8ff] text-[#191a2a] font-['Inter']">
-      <Navbar />
-      <Hero />
-      <Features />
-      <Modes />
-      <Testimonials />
-      <Footer />
+    <div className="text-[#191a2a] font-sans" style={{ fontFamily: 'Inter, sans-serif' }}>
+      <MeshGradientBg>
+        <Navbar />
+        <main className="pt-20">
+          <Hero />
+          <Features />
+          <Methodology />
+          <Pricing />
+        </main>
+        <Footer />
+      </MeshGradientBg>
 
-      {/* Embedded CSS for animations */}
+      {/* Global Styles */}
       <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@300;400;500;600;700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap');
         
-        @keyframes float {
-          0%, 100% { transform: translate(0, 0); }
-          50% { transform: translate(20px, -20px); }
+        .glass-card {
+          background: rgba(255, 255, 255, 0.8);
+          backdrop-filter: blur(12px);
+          border: 1px solid rgba(255, 255, 255, 0.4);
+          box-shadow: 0px 20px 40px rgba(10, 11, 26, 0.05);
+          border-radius: 24px;
         }
         
-        @keyframes float-reverse {
-          0%, 100% { transform: translate(0, 0); }
-          50% { transform: translate(-15px, 15px); }
+        .border-glass-stroke {
+          border-color: rgba(255, 255, 255, 0.4);
         }
         
-        .animate-float { animation: float 18s ease-in-out infinite; }
-        .animate-float-reverse { animation: float-reverse 22s ease-in-out infinite; }
+        .primary-btn-hover:hover {
+          transform: scale(1.02);
+          transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
         
+        @keyframes bounce-subtle {
+          0%, 100% { transform: translateY(0); }
+          50% { transform: translateY(-8px); }
+        }
+        
+        .animate-bounce-subtle {
+          animation: bounce-subtle 3s ease-in-out infinite;
+        }
+
         ::selection {
-          background: #e91e63;
+          background: #b80049;
           color: white;
         }
       `}</style>
