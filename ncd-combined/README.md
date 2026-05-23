@@ -1,73 +1,74 @@
-# Welcome to your Lovable project
+# NCD Rx — Clinical Decision Support Toolkit
 
-## Project info
+**Three difficulty modes** for Diabetes, Hypertension, Lipids, and Obesity management.
 
-**URL**: https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID
+## Live
 
-## How can I edit this code?
+- **Vercel**: https://ncd-combined.vercel.app
+- **Mode Selector**: `/` → choose Easy, Moderate, or Complex
 
-There are several ways of editing your application.
+## Modes
 
-**Use Lovable**
+| Mode | Route | What it does |
+|------|-------|-------------|
+| 🟢 **Easy** | `/easy` | Simple 4-NCD calculator. Few inputs, clear outputs. |
+| 🟠 **Moderate** | `/moderate` | Guideline-integrated with risk stratification and comorbidity-based branching. |
+| 🔴 **Complex** | `/home` | Full app: prescription generator, OCR upload, all calculators, LAI 2023 classification, PREVENT risk, treatment plans with US/India drug names. |
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID) and start prompting.
+## Architecture
 
-Changes made via Lovable will be committed automatically to this repo.
+The project has **57 pages, 16 calculators, 8 routes, and 25+ shared components** organized in a dependency graph.
 
-**Use your preferred IDE**
+> Open **[ARCHITECTURE.html](./ARCHITECTURE.html)** in your browser for an interactive clickable map.
+> Every node is drillable — click a page to see its sub-components, click a calculator to see what imports it.
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+![Architecture preview](architecture-preview.png)
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+### Key structure
 
-Follow these steps:
+```
+src/
+├── App.tsx                  # Root routing (React Router)
+├── pages/
+│   ├── ModeSelector.tsx     # Landing page (3 mode cards)
+│   ├── EasyMode.tsx         # Easy: 4 inline calculators
+│   ├── ModerateMode.tsx     # Moderate: 4 guideline-integrated
+│   ├── Home.tsx             # Complex: full dashboard
+│   ├── diabetes/
+│   │   ├── DiabetesTab.tsx, DiabetesOverview.tsx
+│   │   ├── DiabetesAssessment.tsx, DiabetesTreatment.tsx
+│   ├── hypertension/
+│   │   ├── HypertensionTab.tsx, HypertensionOverview.tsx
+│   │   ├── HypertensionAssessment.tsx, HypertensionTreatment.tsx
+│   ├── lipids/
+│   │   ├── LipidsTab.tsx, LipidsOverview.tsx
+│   │   ├── LipidsAssessment.tsx (LAI 2023), LipidsTreatment.tsx
+├── calculators/
+│   ├── diabetes/   (Insulin titration, hypo risk, sliding scale, renal dosing, DM algorithm)
+│   ├── htn/        (GFR, drug interactions, treatment algorithm, potency table)
+│   ├── lipids/     (ASCVD risk, lipid panel)
+│   ├── obesity/    (BMI, waist-height, GLP-1 algorithm)
+├── components/
+│   ├── TabNavigation.tsx    # Complex mode nav (Home/Diabetes/HTN/Lipids)
+│   ├── AbbreviationHover.tsx # 171 medical abbreviations with hover definitions
+│   ├── calculator/          # CAC-LDL guide, education section
+│   ├── med/                 # GLP-1 algorithm, clinical guidelines
+│   └── ui/                  # shadcn-based: section-card, risk-factor-chip, lab-input
+├── lib/
+│   ├── clinicalConstants.ts # All ASCVD/CKD/TOD/FH criteria, LAI risk modifiers
+│   ├── prevent.ts           # AHA PREVENT 10-year ASCVD risk equations
+│   └── patient-data.ts      # Patient data helper
+```
+
+## Running locally
 
 ```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
-
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
-
-# Step 3: Install the necessary dependencies.
 npm i
-
-# Step 4: Start the development server with auto-reloading and an instant preview.
 npm run dev
 ```
 
-**Edit a file directly in GitHub**
+## Deploy
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
-
-**Use GitHub Codespaces**
-
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
-
-## What technologies are used for this project?
-
-This project is built with:
-
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
-
-## How can I deploy this project?
-
-Simply open [Lovable](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID) and click on Share -> Publish.
-
-## Can I connect a custom domain to my Lovable project?
-
-Yes, you can!
-
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
-
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/features/custom-domain#custom-domain)
+```sh
+npx vercel deploy --prod
+```

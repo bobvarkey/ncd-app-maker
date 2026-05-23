@@ -1,4 +1,5 @@
 import { useState, useMemo, useCallback, useEffect } from "react";
+import { AbbreviationHover } from "@/components/AbbreviationHover";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -432,14 +433,14 @@ export default function LipidsAssessment({ onClassificationChange, onNavigateToT
               </tr>
             </thead>
             <tbody className="text-foreground">
-              <tr className="border-b border-border/50"><td className="py-2 pr-2 font-bold text-red-600">EHR-A</td><td className="py-2 pr-2">ASCVD only</td><td className="py-2 pr-2 font-bold">&lt; 55</td><td className="py-2">High statin + Ezetimibe</td></tr>
-              <tr className="border-b border-border/50"><td className="py-2 pr-2 font-bold text-red-600">EHR-B</td><td className="py-2 pr-2">ASCVD + 1 high-risk feature</td><td className="py-2 pr-2 font-bold">&lt; 55</td><td className="py-2">+ PCSK9i</td></tr>
-              <tr className="border-b border-border/50"><td className="py-2 pr-2 font-bold text-red-600">EHR-C</td><td className="py-2 pr-2">ASCVD + ≥2 high-risk features</td><td className="py-2 pr-2 font-bold">&lt; 55</td><td className="py-2">Max triple therapy</td></tr>
-              <tr className="border-b border-border/50"><td className="py-2 pr-2 font-bold text-orange-600">VHR-A</td><td className="py-2 pr-2">ASCVD equivalent</td><td className="py-2 pr-2 font-bold">&lt; 55</td><td className="py-2">High statin</td></tr>
-              <tr className="border-b border-border/50"><td className="py-2 pr-2 font-bold text-orange-600">VHR-B</td><td className="py-2 pr-2">DM + TOD</td><td className="py-2 pr-2 font-bold">&lt; 55</td><td className="py-2">Statin + Ezetimibe</td></tr>
-              <tr className="border-b border-border/50"><td className="py-2 pr-2 font-bold text-orange-600">VHR-C</td><td className="py-2 pr-2">CKD/FH/LDL ≥190</td><td className="py-2 pr-2 font-bold">&lt; 55</td><td className="py-2">Triple ± PCSK9i</td></tr>
-              <tr className="border-b border-border/50"><td className="py-2 pr-2 font-bold text-amber-600">HR</td><td className="py-2 pr-2">Multiple RF, DM alone, LDL 160-189</td><td className="py-2 pr-2 font-bold">&lt; 70</td><td className="py-2">High statin</td></tr>
-              <tr className="border-b border-border/50"><td className="py-2 pr-2 font-bold text-yellow-600">MOD</td><td className="py-2 pr-2">Age ≥40 + enhancer, LDL 130-159</td><td className="py-2 pr-2 font-bold">&lt; 100</td><td className="py-2">Moderate statin</td></tr>
+              <tr className="border-b border-border/50"><td className="py-2 pr-2 font-bold text-red-600">EHR-A</td><td className="py-2 pr-2"><AbbreviationHover term="ASCVD">ASCVD</AbbreviationHover> only</td><td className="py-2 pr-2 font-bold">&lt; 55</td><td className="py-2">High statin + Ezetimibe</td></tr>
+              <tr className="border-b border-border/50"><td className="py-2 pr-2 font-bold text-red-600">EHR-B</td><td className="py-2 pr-2"><AbbreviationHover term="ASCVD">ASCVD</AbbreviationHover> + 1 high-risk feature</td><td className="py-2 pr-2 font-bold">&lt; 55</td><td className="py-2">+ <AbbreviationHover term="PCSK9i">PCSK9i</AbbreviationHover></td></tr>
+              <tr className="border-b border-border/50"><td className="py-2 pr-2 font-bold text-red-600">EHR-C</td><td className="py-2 pr-2"><AbbreviationHover term="ASCVD">ASCVD</AbbreviationHover> + ≥2 high-risk features</td><td className="py-2 pr-2 font-bold">&lt; 55</td><td className="py-2">Max triple therapy</td></tr>
+              <tr className="border-b border-border/50"><td className="py-2 pr-2 font-bold text-orange-600">VHR-A</td><td className="py-2 pr-2"><AbbreviationHover term="ASCVD">ASCVD</AbbreviationHover> equivalent</td><td className="py-2 pr-2 font-bold">&lt; 55</td><td className="py-2">High statin</td></tr>
+              <tr className="border-b border-border/50"><td className="py-2 pr-2 font-bold text-orange-600">VHR-B</td><td className="py-2 pr-2"><AbbreviationHover term="DM">DM</AbbreviationHover> + <AbbreviationHover term="TOD">TOD</AbbreviationHover></td><td className="py-2 pr-2 font-bold">&lt; 55</td><td className="py-2">Statin + Ezetimibe</td></tr>
+              <tr className="border-b border-border/50"><td className="py-2 pr-2 font-bold text-orange-600">VHR-C</td><td className="py-2 pr-2"><AbbreviationHover term="CKD">CKD</AbbreviationHover>/<AbbreviationHover term="FH">FH</AbbreviationHover>/<AbbreviationHover term="LDL">LDL</AbbreviationHover> ≥190</td><td className="py-2 pr-2 font-bold">&lt; 55</td><td className="py-2">Triple ± <AbbreviationHover term="PCSK9i">PCSK9i</AbbreviationHover></td></tr>
+              <tr className="border-b border-border/50"><td className="py-2 pr-2 font-bold text-amber-600">HR</td><td className="py-2 pr-2">Multiple RF, <AbbreviationHover term="DM">DM</AbbreviationHover> alone, <AbbreviationHover term="LDL">LDL</AbbreviationHover> 160-189</td><td className="py-2 pr-2 font-bold">&lt; 70</td><td className="py-2">High statin</td></tr>
+              <tr className="border-b border-border/50"><td className="py-2 pr-2 font-bold text-yellow-600">MOD</td><td className="py-2 pr-2">Age ≥40 + enhancer, <AbbreviationHover term="LDL">LDL</AbbreviationHover> 130-159</td><td className="py-2 pr-2 font-bold">&lt; 100</td><td className="py-2">Moderate statin</td></tr>
               <tr><td className="py-2 pr-2 font-bold text-green-600">LOW</td><td className="py-2 pr-2">No major risk factors</td><td className="py-2 pr-2 font-bold">&lt; 130</td><td className="py-2">Lifestyle</td></tr>
             </tbody>
           </table>
