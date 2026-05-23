@@ -42,8 +42,9 @@ export function TabNavigation() {
   const currentPath = location.pathname;
 
   return (
-    <nav className="sticky top-0 z-50 w-full border-b border-border/40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-      <div className="max-w-6xl mx-auto px-6">
+    <>
+      <nav className="sticky top-0 z-50 w-full border-b border-border/40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+        <div className="max-w-6xl mx-auto px-6">
         <div className="flex h-14 items-center justify-between">
           {/* Logo */}
           <Link to="/home" className="flex items-center gap-2 mr-8">
@@ -106,7 +107,9 @@ export function TabNavigation() {
         </div>
       </div>
     </nav>
-    <BottomNav />
+      <BottomNav />
+      <div className="h-14" />
+    </>
   );
 }
 
