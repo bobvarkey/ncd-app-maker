@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { AbbreviationHover } from "@/components/AbbreviationHover";
+import { AbbreviationHover, AbbrText } from "@/components/AbbreviationHover";
 import { Link } from "react-router-dom";
 import { Pill, Syringe, ChevronRight, ChevronDown, ArrowRight, CheckCircle2, AlertTriangle, Heart, Activity, Scale, Brain, ArrowDown, FileText, BookOpen } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -70,10 +70,10 @@ const AlgorithmStep = ({ step, title, description, criteria, medications, icon, 
                     <div key={i} className="flex items-start gap-2 p-2 rounded bg-background/50">
                       <CheckCircle2 className="h-3 w-3 text-emerald-500 mt-0.5 shrink-0" />
                       <div>
-                        <p className="text-sm font-medium">{med.name}</p>
-                        <p className="text-xs text-muted-foreground">{med.class}</p>
+                        <p className="text-sm font-medium"><AbbrText text={med.name} /></p>
+                        <p className="text-xs text-muted-foreground"><AbbrText text={med.class} /></p>
                         {med.notes && (
-                          <p className="text-xs text-primary mt-0.5">{med.notes}</p>
+                          <p className="text-xs text-primary mt-0.5"><AbbrText text={med.notes} /></p>
                         )}
                       </div>
                     </div>
@@ -202,14 +202,14 @@ const InsulinReferenceSection = () => (
                     </div>
                     <div>
                       <p className="text-[10px] text-muted-foreground uppercase font-semibold mb-0.5">US Brand</p>
-                      <p className="text-foreground">{item.usBrand}</p>
+                      <p className="text-foreground"><AbbrText text={item.usBrand} /></p>
                     </div>
                     <div>
                       <p className="text-[10px] text-muted-foreground uppercase font-semibold mb-0.5">🇮🇳 India</p>
-                      <p className="text-foreground">{item.indianBrands.join(", ")}</p>
+                      <p className="text-foreground"><AbbrText text={item.indianBrands.join(", ")} /></p>
                     </div>
                   </div>
-                  <p className="text-xs text-muted-foreground mt-1.5">{item.note}</p>
+                  <p className="text-xs text-muted-foreground mt-1.5"><AbbrText text={item.note} /></p>
                 </div>
               ))}
             </div>
@@ -605,24 +605,24 @@ const DrugClassesComparison = () => {
           {drugClasses.map((drug, i) => (
             <div key={i} className="p-3 rounded-lg bg-muted/30 border border-border/50">
               <div className="flex items-center justify-between mb-2">
-                <p className="font-medium">{drug.class}</p>
+                <p className="font-medium"><AbbrText text={drug.class} /></p>
                 <div className="flex gap-2">
                   <Badge variant="outline" className="text-xs">A1c ↓ {drug.a1cReduction}</Badge>
                   <Badge variant={drug.hypoRisk === "Low" ? "secondary" : "destructive"} className="text-xs">
                     Hypo: {drug.hypoRisk}
                   </Badge>
                 </div>
-              </div>              <p className="text-xs text-muted-foreground mb-2">{drug.mechanism}</p>
+              </div>              <p className="text-xs text-muted-foreground mb-2"><AbbrText text={drug.mechanism} /></p>
               <div className="grid grid-cols-2 gap-2 text-xs">
                 <div>
                   <span className="text-muted-foreground">Weight: </span>
                   <span className={cn(
                     drug.weight.includes("Loss") ? "text-success" : drug.weight.includes("Gain") ? "text-warning" : ""
-                  )}>{drug.weight}</span>
+                  )}><AbbrText text={drug.weight} /></span>
                 </div>
                 <div>
                   <span className="text-muted-foreground">Weight: </span>
-                  <span>{drug.weight}</span>
+                  <span><AbbrText text={drug.weight} /></span>
                 </div>
               </div>
               <div className="mt-2 grid grid-cols-2 gap-2">

@@ -215,3 +215,51 @@ export function AbbreviationHoverInline({ children, definition }: { children: Re
 }
 
 export default AbbreviationHover;
+
+// ─── Auto-replace abbreviations in any text string ───
+// Sorts by length (longest first) to avoid partial replacements
+const SORTED_TERMS = Object.keys(ABBREVIATIONS).sort((a, b) => b.length - a.length);
+
+/**
+ * AbbrText: Takes a plain text string and auto-wraps every known abbreviation
+ * with an AbbreviationHover component. Handles abbreviations in any position
+ * — standalone, parenthesized, followed by punctuation, etc.
+ *
+ * Example: "ACEi/ARB are recommended for CKD with HTN"
+ * → <span><AbbreviationHover term="ACEi">ACEi</AbbreviationHover>/
+ *      <AbbreviationHover term="ARB">ARB</AbbreviationHover> are recommended for
+ *      <AbbreviationHover term="CKD">CKD</AbbreviationHover> with
+ *      <AbbreviationHover term="HTN">HTN</AbbreviationHover></span>
+ */
+export function AbbrText({ text, className }: { text: string; className?: string }) {
+  if (!text) return <span className={className} />;
+
+  // Build regex pattern: match any known abbreviation as a whole word
+  // (preceded by start/whitespace/paren/slash, followed by end/whitespace/paren/slash/punctuation)
+  const escapedTerms = SORTED_TERMS.map(t => t.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'));
+  const pattern = new RegExp(`(${escapedTerms.join('|')})(?=[\s\.,;:/\\)\\]\\!\\?\\-\\+]|$)`, 'g');
+
+  const parts: React.ReactNode[] = [];
+  let lastIndex = 0;
+  let match: RegExpExecArray | null;
+  let key = 0;
+
+  const regex = new RegExp(pattern.source, 'g');
+  while ((match = regex.exec(text)) !== null) {
+    // Add text before the match
+    if (match.index > lastIndex) {
+      parts.push(<span key={key++}>{text.slice(lastIndex, match.index)}</span>);
+    }
+    // Add the abbreviation as hoverable
+    const abbr = match[1];
+    parts.push(<AbbreviationHover key={key++} term={abbr}>{abbr}</AbbreviationHover>);
+    lastIndex = match.index + abbr.length;
+  }
+  // Add remaining text
+  if (lastIndex < text.length) {
+    parts.push(<span key={key++}>{text.slice(lastIndex)}</span>);
+  }
+
+  if (parts.length === 0) return <span className={className}>{text}</span>;
+  return <span className={className}>{parts}</span>;
+}

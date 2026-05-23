@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { AbbreviationHover } from "@/components/AbbreviationHover";
+import { AbbreviationHover, AbbrText } from "@/components/AbbreviationHover";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -555,7 +555,7 @@ export default function HypertensionAssessment() {
                       onCheckedChange={() => toggleDrug(drug.id)}
                       className="h-4 w-4"
                     />
-                    <span>{drug.name}</span>
+                    <span><AbbrText text={drug.name} /></span>
                   </label>
                 ))}
               </div>

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { AbbreviationHover } from "@/components/AbbreviationHover";
+import { AbbreviationHover, AbbrText } from "@/components/AbbreviationHover";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -455,7 +455,7 @@ export default function HypertensionTreatment() {
                   {currentNode.recommendation.firstLine.map((drug, i) => (
                     <li key={i} className="flex items-start gap-2 text-sm">
                       <div className="w-2 h-2 rounded-full mt-1.5 flex-shrink-0" style={{ backgroundColor: categoryColors.accent }} />
-                      <span className="text-foreground">{drug}</span>
+                      <span className="text-foreground"><AbbrText text={drug} /></span>
                     </li>
                   ))}
                 </ul>
@@ -472,7 +472,7 @@ export default function HypertensionTreatment() {
                     {currentNode.recommendation.secondLine.map((drug, i) => (
                       <li key={i} className="flex items-start gap-2 text-sm">
                         <div className="w-2 h-2 rounded-full bg-muted-foreground/50 mt-1.5 flex-shrink-0" />
-                        <span className="text-foreground">{drug}</span>
+                        <span className="text-foreground"><AbbrText text={drug} /></span>
                       </li>
                     ))}
                   </ul>
@@ -490,7 +490,7 @@ export default function HypertensionTreatment() {
                     {currentNode.recommendation.avoid.map((drug, i) => (
                       <li key={i} className="flex items-start gap-2 text-sm">
                         <div className="w-2 h-2 rounded-full bg-destructive mt-1.5 flex-shrink-0" />
-                        <span className="text-foreground">{drug}</span>
+                        <span className="text-foreground"><AbbrText text={drug} /></span>
                       </li>
                     ))}
                   </ul>
@@ -502,7 +502,7 @@ export default function HypertensionTreatment() {
                 <div className="p-3 rounded-lg bg-muted/50 border border-border">
                   <p className="text-xs text-muted-foreground">
                     <span className="font-semibold text-foreground">📚 Evidence & Notes: </span>
-                    {currentNode.recommendation.notes}
+                    <AbbrText text={currentNode.recommendation.notes} />
                   </p>
                 </div>
               )}

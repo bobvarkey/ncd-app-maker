@@ -4,7 +4,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 import { cn } from "@/lib/utils";
-import { AbbreviationHover } from "@/components/AbbreviationHover";
+import { AbbreviationHover, AbbrText } from "@/components/AbbreviationHover";
 
 // Pathophysiology Section
 const PathophysiologySection = () => (
@@ -131,8 +131,8 @@ const DiagnosticCriteriaSection = () => {
             {criteria.map((c, i) => (
               <div key={i} className="flex items-center gap-3 p-3 rounded-lg bg-destructive/5 border border-destructive/20">
                 <div className="flex-1">
-                  <p className="text-sm font-medium">{c.test}</p>
-                  <p className="text-xs text-muted-foreground">{c.notes}</p>
+                  <p className="text-sm font-medium"><AbbrText text={c.test} /></p>
+                  <p className="text-xs text-muted-foreground"><AbbrText text={c.notes} /></p>
                 </div>
                 <Badge variant="destructive" className="text-xs">{c.threshold}</Badge>
               </div>
@@ -157,7 +157,7 @@ const DiagnosticCriteriaSection = () => {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
             {prediabetes.map((p, i) => (
               <div key={i} className="p-3 rounded-lg bg-warning/5 border border-warning/20">
-                <p className="text-sm font-medium">{p.test}</p>
+                <p className="text-sm font-medium"><AbbrText text={p.test} /></p>
                 <p className="text-lg font-semibold text-warning mt-1">{p.range}</p>
               </div>
             ))}
@@ -249,7 +249,7 @@ const RiskStratificationSection = () => {
                   i < 2 ? "bg-destructive" : i < 4 ? "bg-warning" : "bg-success"
                 )} />
                 <div>
-                  <p className="text-sm font-medium">{rf.factor}</p>
+                  <p className="text-sm font-medium"><AbbrText text={rf.factor} /></p>
                   <p className="text-xs text-muted-foreground">{rf.impact}</p>
                 </div>
               </div>
@@ -274,7 +274,7 @@ const RiskStratificationSection = () => {
               { metric: "Non-HDL-C", target: "< 130", note: "Alternative target if TG elevated" },
             ].map((t, i) => (
               <div key={i} className="p-3 rounded-lg bg-success/5 border border-success/20 text-center">
-                <p className="text-xs text-muted-foreground">{t.metric}</p>
+                <p className="text-xs text-muted-foreground"><AbbrText text={t.metric} /></p>
                 <p className="text-lg font-bold text-success">{t.target}</p>
                 <p className="text-[10px] text-muted-foreground mt-1">{t.note}</p>
               </div>

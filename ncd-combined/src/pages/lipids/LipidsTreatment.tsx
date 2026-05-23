@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { AbbreviationHover } from "@/components/AbbreviationHover";
+import { AbbreviationHover, AbbrText } from "@/components/AbbreviationHover";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { SectionCard } from "@/components/ui/section-card";
@@ -198,13 +198,13 @@ export default function LipidsTreatment({ laiResult, onBackToAssessment }: Props
         <div className="space-y-4">
           <div className="p-4 rounded-lg border border-primary/20 bg-primary/5">
             <p className="text-sm font-bold text-foreground mb-1">{rec.title}</p>
-            <p className="text-sm text-foreground">{rec.drug}</p>
+            <p className="text-sm text-foreground"><AbbrText text={rec.drug} /></p>
           </div>
           <div>
             <p className="text-xs font-semibold text-muted-foreground mb-1">Rationale</p>
-            <p className="text-sm text-foreground">{rec.rationale}</p>
+            <p className="text-sm text-foreground"><AbbrText text={rec.rationale} /></p>
           </div>
-          <p className="text-xs text-muted-foreground/80 leading-relaxed">{rec.mechanism}</p>
+          <p className="text-xs text-muted-foreground/80 leading-relaxed"><AbbrText text={rec.mechanism} /></p>
         </div>
       </SectionCard>
 
@@ -214,7 +214,7 @@ export default function LipidsTreatment({ laiResult, onBackToAssessment }: Props
           {(TREATMENT_RECS[key]?.targets || []).map((t, i) => (
             <li key={i} className="flex items-start gap-2 p-2 rounded-lg bg-muted/30">
               <span className={`w-1.5 h-1.5 rounded-full mt-2 ${cat === "EHR" ? "bg-red-500" : cat === "VHR" ? "bg-orange-500" : "bg-primary"}`} />
-              <span className="text-sm text-foreground">{t}</span>
+              <span className="text-sm text-foreground"><AbbrText text={t} /></span>
             </li>
           ))}
         </ul>
@@ -223,14 +223,14 @@ export default function LipidsTreatment({ laiResult, onBackToAssessment }: Props
       {/* ─── Follow-up & Monitoring ─── */}
       <SectionCard title="Follow-Up & Monitoring" icon={<Activity className="h-4 w-4" />} tone="emerald" collapsible={false}>
         <div className="space-y-3">
-          <div><p className="text-xs font-semibold text-muted-foreground mb-1">Follow-Up</p><p className="text-sm text-foreground">{rec.followUp}</p></div>
+          <div><p className="text-xs font-semibold text-muted-foreground mb-1">Follow-Up</p><p className="text-sm text-foreground"><AbbrText text={rec.followUp} /></p></div>
           <div><p className="text-xs font-semibold text-muted-foreground mb-1">Safety Monitoring</p><p className="text-sm text-foreground whitespace-pre-line">{SAFETY_NOTE}</p></div>
         </div>
       </SectionCard>
 
       {/* ─── Alternative Options ─── */}
       <SectionCard title="Alternative Options" icon={<Stethoscope className="h-4 w-4" />} tone="amber" collapsible={false}>
-        <p className="text-sm text-foreground">{rec.alternative}</p>
+        <p className="text-sm text-foreground"><AbbrText text={rec.alternative} /></p>
       </SectionCard>
 
       {/* ─── Statin Potency Reference ─── */}
@@ -247,7 +247,7 @@ export default function LipidsTreatment({ laiResult, onBackToAssessment }: Props
             <tbody className="text-foreground">
               {STATIN_TABLE.map((row, i) => (
                 <tr key={i} className="border-b border-border/50">
-                  <td className="py-1.5 pr-3">{row.drug}</td>
+                  <td className="py-1.5 pr-3"><AbbrText text={row.drug} /></td>
                   <td className="py-1.5 pr-3">{row.potency}</td>
                   <td className="py-1.5">{row.ldlReduction}</td>
                 </tr>
