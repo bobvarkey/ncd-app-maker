@@ -16,7 +16,29 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 
-function ModeNav() {
+const GLP_COMORBIDITIES = ["Type 2 Diabetes (HbA1c ≥ 7%)", "Hypertension (BP ≥ 130/80)", "CVD / ASCVD history", "CKD (eGFR ≥ 25)", "Heart Failure (HFrEF)", "NAFLD / MASLD", "OSA (Obstructive Sleep Apnea)"];
+
+function TooltipGLP({ text }: { text: string }) {
+  return (
+    <span className="group relative inline-block">
+      <span className="text-foreground font-medium underline decoration-dotted decoration-primary/40 cursor-help">{text}</span>
+      <div className="absolute left-0 bottom-full mb-2 w-56 hidden group-hover:block z-50">
+        <div className="bg-popover text-popover-foreground text-xs p-3 rounded-lg shadow-xl border border-border">
+          <p className="font-semibold text-primary mb-1.5">GLP-1 RA indicated for:</p>
+          <ul className="space-y-0.5">
+            {GLP_COMORBIDITIES.map((c, i) => (
+              <li key={i} className="flex items-start gap-1.5">
+                <span className="text-green-500 mt-0.5">•</span>
+                <span>{c}</span>
+              </li>
+            ))}
+          </ul>
+          <p className="text-[10px] text-muted-foreground mt-2 italic">Semaglutide 0.25 mg → 1.0 mg weekly / Tirzepatide 2.5 mg → 15 mg weekly</p>
+        </div>
+      </div>
+    </span>
+  );
+}
   const navigate = useNavigate();
   return (
     <div className="flex items-center justify-between mb-6 px-1">
@@ -302,23 +324,42 @@ function LipidsCalc() {
 function ObesityCalc() {
   const [weight, setWeight] = useState("");
   const [height, setHeight] = useState("");
-  const [result, setResult] = useState<string | null>(null);
+  const [result, setResult] = useState<React.ReactNode>(null);
+
+  const GLP_COMORBS = ["Type 2 Diabetes", "Hypertension (BP ≥ 130/80)", "CVD / ASCVD", "CKD (eGFR ≥ 25)", "Heart Failure", "NAFLD / MASLD", "OSA", "Metabolic syndrome"];
+
+  const GLP_HOVER = (
+    <span className="group relative inline-block">
+      <span className="text-foreground font-medium underline decoration-dotted decoration-primary/40 cursor-help">GLP-1 RA</span>
+      <div className="absolute left-0 bottom-full mb-2 w-56 hidden group-hover:block z-50">
+        <div className="bg-popover text-popover-foreground text-xs p-3 rounded-lg shadow-xl border border-border">
+          <p className="font-semibold text-primary mb-1.5">GLP-1 RA indicated for:</p>
+          <ul className="space-y-0.5">
+            {GLP_COMORBS.map((c, i) => (
+              <li key={i} className="flex items-start gap-1.5"><span className="text-green-500 mt-0.5">•</span><span>{c}</span></li>
+            ))}
+          </ul>
+          <p className="text-[10px] text-muted-foreground mt-2 italic">Semaglutide 0.25→1.0 mg/wk or Tirzepatide 2.5→15 mg/wk</p>
+        </div>
+      </div>
+    </span>
+  );
 
   const calculate = () => {
     const w = parseFloat(weight);
     const h = parseFloat(height);
-    if (!w || !h) { setResult("Enter weight and height"); return; }
+    if (!w || !h) { setResult(<span className="text-muted-foreground">Enter weight and height</span>); return; }
 
     const bmi = w / ((h / 100) * (h / 100));
     let category: string;
-    let rec: string;
+    let rec: React.ReactNode;
 
-    if (bmi < 18.5) { category = "Underweight"; rec = "Rule out eating disorder, malnutrition, or hyperthyroidism."; }
+    if (bmi < 18.5) { category = "Underweight"; rec = "Rule out malnutrition or hyperthyroidism."; }
     else if (bmi < 23) { category = "Normal"; rec = "Maintain healthy lifestyle."; }
     else if (bmi < 25) { category = "Overweight (Indian: At risk)"; rec = "Lifestyle advice. Screen for metabolic syndrome."; }
-    else if (bmi < 30) { category = "Obese Class I"; rec = "Diet (500 kcal deficit) + exercise 150 min/week. Consider GLP-1 RA if comorbidities."; }
-    else if (bmi < 35) { category = "Obese Class II"; rec = "Pharmacotherapy (GLP-1 RA). Consider bariatric referral if BMI ≥ 32.5 with diabetes."; }
-    else { category = "Obese Class III"; rec = "Refer for bariatric evaluation. GLP-1 RA (Semaglutide 2.4 mg weekly)."; }
+    else if (bmi < 30) { category = "Obese Class I"; rec = <>Diet (500 kcal deficit) + exercise 150 min/week. Consider {GLP_HOVER} if comorbidities.</>; }
+    else if (bmi < 35) { category = "Obese Class II"; rec = <>Pharmacotherapy ({GLP_HOVER}). Consider bariatric referral if BMI ≥ 32.5 with diabetes.</>; }
+    else { category = "Obese Class III"; rec = <>Refer for bariatric evaluation. {GLP_HOVER} (Semaglutide 2.4 mg weekly).</>; }
 
     const lines: string[] = [];
     lines.push(`📊 BMI: ${bmi.toFixed(1)} kg/m²`);
