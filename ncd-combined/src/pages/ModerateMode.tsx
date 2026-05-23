@@ -21,7 +21,7 @@ function ModeNav() {
         <ArrowLeft className="h-4 w-4 mr-1" /> Home
       </Button>
       <div className="flex items-center gap-1.5 bg-muted/50 rounded-lg p-1">
-        <button onClick={() => navigate("/easy")} className="px-3 py-1.5 text-xs font-semibold rounded-md text-muted-foreground hover:bg-muted">Easy</button>
+        <button onClick={() => navigate("/simple")} className="px-3 py-1.5 text-xs font-semibold rounded-md text-muted-foreground hover:bg-muted">Simple</button>
         <button onClick={() => navigate("/moderate")} className="px-3 py-1.5 text-xs font-semibold rounded-md bg-orange-500/15 text-orange-600 border border-orange-500/30">Moderate</button>
         <button onClick={() => navigate("/home")} className="px-3 py-1.5 text-xs font-semibold rounded-md text-muted-foreground hover:bg-muted">Complex</button>
       </div>
@@ -40,7 +40,7 @@ function DiabetesModerate() {
   const [hasCKD, setHasCKD] = useState(false);
   const [hasHF, setHasHF] = useState(false);
   const [currentDose, setCurrentDose] = useState("");
-  const [result, setResult] = useState<string | null>(null);
+  const [result, setResult] = useState<React.ReactNode>(null);
   const [insulinRec, setInsulinRec] = useState<string | null>(null);
 
   const calculate = () => {
@@ -50,59 +50,55 @@ function DiabetesModerate() {
     const gfr = parseFloat(egfr) || 60;
     const w = parseFloat(weight);
 
-    const lines: string[] = [];
-    lines.push("📊 Risk-Stratified Recommendations:");
-    lines.push("");
+    const lines: React.ReactNode[] = [];
+    lines.push(<span><span className="font-medium">📊 Risk-Stratified Recommendations:</span></span>);
 
     // Metformin decision
     if (gfr >= 30) {
       const maxMetformin = gfr >= 45 ? "2000 mg/day" : "1000 mg/day";
-      lines.push(`✅ Metformin: Start 500 mg BID (max ${maxMetformin}${gfr < 45 ? " — eGFR 30-44" : ""})`);
+      lines.push(<span>✅ Metformin: Start 500 mg BID (max {maxMetformin}{gfr < 45 ? " — eGFR 30-44" : ""})</span>);
     } else {
-      lines.push("❌ Metformin: Contraindicated (eGFR < 30)");
+      lines.push(<span>❌ Metformin: Contraindicated (<AbbreviationHover term="eGFR">eGFR</AbbreviationHover> &lt; 30)</span>);
     }
 
     // SGLT2i / GLP-1 based on comorbidities
     if (hasCVD || hasCKD || hasHF) {
       if (gfr >= 25) {
-        lines.push("✅ SGLT2i (Empagliflozin 10 mg / Dapagliflozin 10 mg): CV + renal protection");
-        if (hasHF) lines.push("   Dapagliflozin preferred for HF (DELIVER/DAPA-HF)");
+        lines.push(<span>✅ <AbbreviationHover term="SGLT2i">SGLT2i</AbbreviationHover> (Empagliflozin 10 mg / Dapagliflozin 10 mg): <AbbreviationHover term="CV">CV</AbbreviationHover> + renal protection</span>);
+        if (hasHF) lines.push(<span>   Dapagliflozin preferred for <AbbreviationHover term="HF">HF</AbbreviationHover> (DELIVER/DAPA-HF)</span>);
       }
     }
     if ((hasCVD && a1c >= 7) || (w && w > 70)) {
-      lines.push("✅ GLP-1 RA (Semaglutide 0.25 mg → 0.5 mg weekly): CV benefit + weight loss");
+      lines.push(<span>✅ <AbbreviationHover term="GLP-1">GLP-1</AbbreviationHover> RA (Semaglutide 0.25 mg → 0.5 mg weekly): <AbbreviationHover term="CV">CV</AbbreviationHover> benefit + weight loss</span>);
     }
 
     // Insulin titration suggestion
     if (a1c >= 7.5 || dose > 0) {
-      lines.push("");
-      lines.push("💉 Insulin Assessment:");
-
       if (a1c >= 9 || f >= 200) {
-        lines.push("   HbA1c ≥ 9% or FBG ≥ 200: Start basal insulin");
+        lines.push(<span><span className="font-medium">💉 Insulin Assessment:</span></span>);
+        lines.push(<span>   <AbbreviationHover term="HbA1c">HbA1c</AbbreviationHover> ≥ 9% or <AbbreviationHover term="FBG">FBG</AbbreviationHover> ≥ 200: Start basal insulin</span>);
         const startingDose = w ? Math.round(w * 0.2) : 10;
-        lines.push(`   Glargine ${startingDose} U SC bedtime (0.2 U/kg/day)`);
+        lines.push(<span>   Glargine {startingDose} U SC bedtime (0.2 U/kg/day)</span>);
       }
 
       if (dose > 0 && f > 0) {
         const avgReading = f;
         if (avgReading > 130) {
           const increase = avgReading > 180 ? 4 : 2;
-          lines.push(`   Current ${dose} U → increase by ${increase} U to ${dose + increase} U`);
-          lines.push(`   Reason: FBG ${avgReading} > target (70-130 mg/dL)`);
+          lines.push(<span>   Current {dose} U → increase by {increase} U to {dose + increase} U</span>);
+          lines.push(<span>   Reason: <AbbreviationHover term="FBG">FBG</AbbreviationHover> {avgReading} &gt; target (70-130 mg/dL)</span>);
         } else if (avgReading < 70) {
           const decrease = avgReading < 54 ? 4 : 2;
-          lines.push(`   Current ${dose} U → DECREASE by ${decrease} U to ${Math.max(0, dose - decrease)} U`);
-          lines.push(`   ⚠ Hypoglycemia detected (FBG ${avgReading})`);
+          lines.push(<span>   Current {dose} U → DECREASE by {decrease} U to {Math.max(0, dose - decrease)} U</span>);
+          lines.push(<span>   ⚠ Hypoglycemia detected (<AbbreviationHover term="FBG">FBG</AbbreviationHover> {avgReading})</span>);
         } else {
-          lines.push(`   Current ${dose} U — At target. Maintain dose.`);
+          lines.push(<span>   Current {dose} U — At target. Maintain dose.</span>);
         }
       }
     }
 
-    lines.push("");
-    lines.push("Targets: HbA1c < 7.0% · FBG < 130 · TBG < 180 mg/dL");
-    setResult(lines.join("\n"));
+    lines.push(<span className="pt-1">Targets: <AbbreviationHover term="HbA1c">HbA1c</AbbreviationHover> &lt; 7.0% · <AbbreviationHover term="FBG">FBG</AbbreviationHover> &lt; 130 · TBG &lt; 180 mg/dL</span>);
+    setResult(<div className="space-y-1">{lines}</div>);
   };
 
   return (
@@ -137,42 +133,40 @@ function HypertensionModerate() {
   const [hasDM, setHasDM] = useState(false);
   const [hasCAD, setHasCAD] = useState(false);
   const [currentMeds, setCurrentMeds] = useState("");
-  const [result, setResult] = useState<string | null>(null);
+  const [result, setResult] = useState<React.ReactNode>(null);
 
   const calculate = () => {
     const s = parseInt(sbp);
     const d = parseInt(dbp);
-    const lines: string[] = [];
+    const lines: React.ReactNode[] = [];
 
     let grade = gradeHTN(s, d);
-    lines.push(`📊 BP: ${s}/${d} mmHg — ${grade}`);
+    lines.push(<span><span className="font-medium">📊 <AbbreviationHover term="BP">BP</AbbreviationHover>: {s}/{d} mmHg — {grade.replace("HTN", "HTN")}</span></span>);
 
     if (grade === "Normal" || grade === "High-Normal") {
-      lines.push("✅ At target. Continue lifestyle measures.");
+      lines.push(<span>✅ At target. Continue lifestyle measures.</span>);
     } else {
-      lines.push("");
-      lines.push("🔄 Treatment Algorithm:");
+      lines.push(<span><span className="font-medium">🔄 Treatment Algorithm:</span></span>);
 
       if (hasCKD || hasDM) {
-        lines.push("Step 1: ACEi/ARB (Ramipril 2.5-5 mg / Losartan 50 mg)");
-        if (s >= 140) lines.push("Step 2: Add CCB (Amlodipine 5-10 mg)");
-        if (s >= 150) lines.push("Step 3: Add Thiazide diuretic (Chlorthalidone 12.5-25 mg)");
-        if (hasCKD) lines.push("Note: Monitor K+ and Cr within 2 weeks of ACEi/ARB start");
+        lines.push(<span>Step 1: <AbbreviationHover term="ACEi">ACEi</AbbreviationHover>/<AbbreviationHover term="ARB">ARB</AbbreviationHover> (Ramipril 2.5-5 mg / Losartan 50 mg)</span>);
+        if (s >= 140) lines.push(<span>Step 2: Add <AbbreviationHover term="CCB">CCB</AbbreviationHover> (Amlodipine 5-10 mg)</span>);
+        if (s >= 150) lines.push(<span>Step 3: Add Thiazide diuretic (Chlorthalidone 12.5-25 mg)</span>);
+        if (hasCKD) lines.push(<span>Note: Monitor K+ and Cr within 2 weeks of <AbbreviationHover term="ACEi">ACEi</AbbreviationHover>/<AbbreviationHover term="ARB">ARB</AbbreviationHover> start</span>);
       } else {
-        lines.push("Step 1: CCB (Amlodipine 5 mg) OR Thiazide (Chlorthalidone 12.5 mg)");
-        if (s >= 150) lines.push("Step 2: Add second agent from another class");
-        if (s >= 160) lines.push("Step 3: Triple therapy — ACEi/ARB + CCB + Thiazide");
+        lines.push(<span>Step 1: <AbbreviationHover term="CCB">CCB</AbbreviationHover> (Amlodipine 5 mg) OR Thiazide (Chlorthalidone 12.5 mg)</span>);
+        if (s >= 150) lines.push(<span>Step 2: Add second agent from another class</span>);
+        if (s >= 160) lines.push(<span>Step 3: Triple therapy — <AbbreviationHover term="ACEi">ACEi</AbbreviationHover>/<AbbreviationHover term="ARB">ARB</AbbreviationHover> + <AbbreviationHover term="CCB">CCB</AbbreviationHover> + Thiazide</span>);
       }
 
-      lines.push("");
-      lines.push("⚠ Drug Interaction Check:");
-      if (currentMeds.toLowerCase().includes("nsaid")) lines.push("  NSAIDs: Reduce antihypertensive efficacy. Limit use.");
-      if (currentMeds.toLowerCase().includes("steroid") || currentMeds.toLowerCase().includes("pred")) lines.push("  Steroids: May cause fluid retention & BP elevation.");
-      if (currentMeds.toLowerCase().includes("spiro") || currentMeds.toLowerCase().includes("epler")) lines.push("  Monitor K+ with ACEi/ARB + K-sparing diuretic.");
+      lines.push(<span><span className="font-medium">⚠ Drug Interaction Check:</span></span>);
+      if (currentMeds.toLowerCase().includes("nsaid")) lines.push(<span>  NSAIDs: Reduce antihypertensive efficacy. Limit use.</span>);
+      if (currentMeds.toLowerCase().includes("steroid") || currentMeds.toLowerCase().includes("pred")) lines.push(<span>  Steroids: May cause fluid retention &amp; <AbbreviationHover term="BP">BP</AbbreviationHover> elevation.</span>);
+      if (currentMeds.toLowerCase().includes("spiro") || currentMeds.toLowerCase().includes("epler")) lines.push(<span>  Monitor K+ with <AbbreviationHover term="ACEi">ACEi</AbbreviationHover>/<AbbreviationHover term="ARB">ARB</AbbreviationHover> + K-sparing diuretic.</span>);
 
-      lines.push("\nTarget: < 130/80 mmHg");
+      lines.push(<span className="pt-1">Target: &lt; 130/80 mmHg</span>);
     }
-    setResult(lines.join("\n"));
+    setResult(<div className="space-y-1">{lines}</div>);
   };
 
   const gradeHTN = (s: number, d: number): string => {
@@ -216,12 +210,12 @@ function LipidsModerate() {
   const [hasCKD, setHasCKD] = useState(false);
   const [smoker, setSmoker] = useState(false);
   const [htn, setHtn] = useState(false);
-  const [result, setResult] = useState<string | null>(null);
+  const [result, setResult] = useState<React.ReactNode>(null);
 
   // Live risk computation
   const getRisk = () => {
     if (hasASCVD) return { cat: "Very High Risk", target: "< 55 mg/dL", intensity: "High", color: "text-red-600 bg-red-50 border-red-200" };
-    if (hasDM && (smoker || hasHTN || hasCKD)) return { cat: "Very High Risk", target: "< 55 mg/dL", intensity: "High", color: "text-red-600 bg-red-50 border-red-200" };
+    if (hasDM && (smoker || htn || hasCKD)) return { cat: "Very High Risk", target: "< 55 mg/dL", intensity: "High", color: "text-red-600 bg-red-50 border-red-200" };
     if (hasDM || hasCKD) return { cat: "High Risk", target: "< 70 mg/dL", intensity: "High", color: "text-orange-600 bg-orange-50 border-orange-200" };
     const s = getScore();
     if (s >= 3) return { cat: "High Risk", target: "< 70 mg/dL", intensity: "High", color: "text-orange-600 bg-orange-50 border-orange-200" };
@@ -252,38 +246,37 @@ function LipidsModerate() {
     const h = parseFloat(hdl);
     const t = parseFloat(tg);
 
-    const lines: string[] = [];
+    const lines: React.ReactNode[] = [];
 
-    lines.push(`📊 Risk Category: ${riskPreview.cat} (Risk factors: ${score})`);
-    lines.push(`   LDL: ${l || "?"} · HDL: ${h || "?"} · TG: ${t || "?"}`);
-    lines.push(`   Target LDL: ${riskPreview.target}`);
-    lines.push("");
+    lines.push(<span><span className="font-medium">📊 Risk Category: {riskPreview.cat} (Risk factors: {score})</span></span>);
+    lines.push(<span className="text-muted-foreground">   <AbbreviationHover term="LDL">LDL</AbbreviationHover>: {l || "?"} · <AbbreviationHover term="HDL">HDL</AbbreviationHover>: {h || "?"} · <AbbreviationHover term="TG">TG</AbbreviationHover>: {t || "?"}</span>);
+    lines.push(<span className="text-muted-foreground">   Target <AbbreviationHover term="LDL">LDL</AbbreviationHover>: {riskPreview.target}</span>);
 
     if (!isNaN(l)) {
       const targetNum = parseInt(riskPreview.target.replace(/[< >mg/dL]/g, ""));
       if (l <= targetNum) {
-        lines.push("✅ LDL at target. Continue current therapy.");
+        lines.push(<span>✅ <AbbreviationHover term="LDL">LDL</AbbreviationHover> at target. Continue current therapy.</span>);
       } else {
-        lines.push(`⚠ ${l - targetNum} mg/dL above target (LDL ${l}, target ${riskPreview.target})`);
-        lines.push(`➡️ Start: ${riskPreview.intensity}`);
-        if (riskPreview.intensity === "High") lines.push("   Atorvastatin 40-80 mg OD or Rosuvastatin 20-40 mg OD");
-        else if (riskPreview.intensity === "Moderate") lines.push("   Atorvastatin 10-20 mg OD or Rosuvastatin 5-10 mg OD");
-        if (hasASCVD && l >= 70) lines.push("➡️ Consider adding Ezetimibe 10 mg");
+        lines.push(<span><span className="text-amber-600">⚠ {l - targetNum} mg/dL above target</span> (<AbbreviationHover term="LDL">LDL</AbbreviationHover> {l}, target {riskPreview.target})</span>);
+        lines.push(<span>➡️ Start: {riskPreview.intensity}</span>);
+        if (riskPreview.intensity === "High") lines.push(<span>   Atorvastatin 40-80 mg OD or Rosuvastatin 20-40 mg OD</span>);
+        else if (riskPreview.intensity === "Moderate") lines.push(<span>   Atorvastatin 10-20 mg OD or Rosuvastatin 5-10 mg OD</span>);
+        if (hasASCVD && l >= 70) lines.push(<span>➡️ Consider adding Ezetimibe 10 mg</span>);
       }
     }
 
     if (t >= 500) {
-      lines.push("⚠ TG ≥ 500: Fenofibrate 145 mg for pancreatitis prevention");
-      lines.push("   Avoid Gemfibrozil with statins (myopathy risk)");
+      lines.push(<span><span className="text-amber-600 font-medium">⚠ <AbbreviationHover term="TG">TG</AbbreviationHover> ≥ 500:</span> Fenofibrate 145 mg for pancreatitis prevention</span>);
+      lines.push(<span>   Avoid Gemfibrozil with statins (myopathy risk)</span>);
     }
     if (t >= 200 && t < 500 && hasDM && hasASCVD) {
-      lines.push("    Icosapent ethyl (Vascepa) 2 g BID for CV risk reduction (REDUCE-IT)");
+      lines.push(<span>   Icosapent ethyl (Vascepa) 2 g BID for <AbbreviationHover term="CV">CV</AbbreviationHover> risk reduction (<AbbreviationHover term="ASCVD">ASCVD</AbbreviationHover>-IT)</span>);
     }
 
-    lines.push("\nLp(a): Consider testing if early ASCVD or family history");
-    lines.push("Monitoring: Lipids at 6 weeks, then 6-12 monthly once at target");
+    lines.push(<span className="text-xs text-muted-foreground pt-1"><AbbreviationHover term="LDL">Lp(a)</AbbreviationHover>: Consider testing if early <AbbreviationHover term="ASCVD">ASCVD</AbbreviationHover> or family history</span>);
+    lines.push(<span className="text-xs text-muted-foreground">Monitoring: Lipids at 6 weeks, then 6-12 monthly once at target</span>);
 
-    setResult(lines.join("\n"));
+    setResult(<div className="space-y-1">{lines}</div>);
   };
 
   return (
@@ -321,7 +314,7 @@ function LipidsModerate() {
         </div>
 
         <Button size="sm" onClick={calculate} className="w-full"><Calculator className="h-3.5 w-3.5 mr-1.5" /> Calculate Risk & Treatment</Button>
-        {result && <div className="p-3 bg-muted rounded-lg text-sm whitespace-pre-wrap leading-relaxed">{result}</div>}
+        {result && <div className="p-3 bg-muted rounded-lg text-sm leading-relaxed">{result}</div>}
       </div>
     </SectionCard>
   );
@@ -335,7 +328,7 @@ function ObesityModerate() {
   const [hasDM, setHasDM] = useState(false);
   const [hasHTN, setHasHTN] = useState(false);
   const [hasOSA, setHasOSA] = useState(false);
-  const [result, setResult] = useState<string | null>(null);
+  const [result, setResult] = useState<React.ReactNode>(null);
 
   const calculate = () => {
     const w = parseFloat(weight);
@@ -345,39 +338,45 @@ function ObesityModerate() {
     const bmi = w / ((h / 100) * (h / 100));
     const whr = wa ? wa / (h / 100) : null;
 
-    const lines: string[] = [];
-    lines.push(`📊 BMI: ${bmi.toFixed(1)} kg/m²`);
-    if (whr) lines.push(`   Waist-Height Ratio: ${whr.toFixed(2)} ${whr >= 0.5 ? "⚠ Elevated" : "✅ Normal"}`);
+    const lines: React.ReactNode[] = [];
+    if (whr) {
+      lines.push(<span>📊 <AbbreviationHover term="BMI">BMI</AbbreviationHover>: {bmi.toFixed(1)} kg/m² — Waist-Height Ratio: {whr.toFixed(2)} {whr >= 0.5 ? <span className="text-amber-600">⚠ Elevated</span> : <span className="text-green-600">✅ Normal</span>}</span>);
+    } else {
+      lines.push(<span>📊 <AbbreviationHover term="BMI">BMI</AbbreviationHover>: {bmi.toFixed(1)} kg/m²</span>);
+    }
 
     let cat: string;
     let rx: string;
-    let med: string[] = [];
+    let med: React.ReactNode[] = [];
 
     if (bmi < 23) {
       cat = "Normal (Indian)"; rx = "Maintain lifestyle.";
     } else if (bmi < 25) {
       cat = "Overweight — At risk"; rx = "Diet + exercise. Screen for MetS.";
-      if (hasDM || hasHTN) med.push("Consider GLP-1 RA (Semaglutide 1.0 mg)");
+      if (hasDM || hasHTN) med.push(<span>Consider <AbbreviationHover term="GLP-1">GLP-1</AbbreviationHover> RA (Semaglutide 1.0 mg)</span>);
     } else if (bmi < 30) {
       cat = "Obese Class I"; rx = "500 kcal deficit + 150 min exercise/week";
-      med.push("GLP-1 RA: Semaglutide 0.25 mg → 2.4 mg weekly");
+      med.push(<span><AbbreviationHover term="GLP-1">GLP-1</AbbreviationHover> RA: Semaglutide 0.25 mg → 2.4 mg weekly</span>);
     } else if (bmi < 35) {
       cat = "Obese Class II"; rx = "Structured weight program";
-      med.push("GLP-1 RA: Semaglutide 2.4 mg weekly");
-      med.push("Consider Tirzepatide 2.5 mg → 15 mg weekly (superior weight loss)");
-      if (hasDM) med.push("Bariatric referral if BMI ≥ 32.5 with diabetes");
+      med.push(<span><AbbreviationHover term="GLP-1">GLP-1</AbbreviationHover> RA: Semaglutide 2.4 mg weekly</span>);
+      med.push(<span>Consider Tirzepatide 2.5 mg → 15 mg weekly (superior weight loss)</span>);
+      if (hasDM) med.push(<span>Bariatric referral if <AbbreviationHover term="BMI">BMI</AbbreviationHover> ≥ 32.5 with diabetes</span>);
     } else {
       cat = "Obese Class III"; rx = "Refer bariatric surgery evaluation";
-      med.push("Pre-op: GLP-1 RA (Semaglutide 2.4 mg / Tirzepatide 15 mg)");
-      med.push("BMI ≥ 40: Surgery + medical therapy");
+      med.push(<span>Pre-op: <AbbreviationHover term="GLP-1">GLP-1</AbbreviationHover> RA (Semaglutide 2.4 mg / Tirzepatide 15 mg)</span>);
+      med.push(<span><AbbreviationHover term="BMI">BMI</AbbreviationHover> ≥ 40: Surgery + medical therapy</span>);
     }
 
-    lines.push(`   Category: ${cat}`);
-    lines.push(`   Plan: ${rx}`);
-    if (med.length > 0) { lines.push(""); lines.push("💊 Medications:"); med.forEach(m => lines.push(`   • ${m}`)); }
+    lines.push(<span>   Category: {cat}</span>);
+    lines.push(<span>   Plan: {rx}</span>);
+    if (med.length > 0) {
+      lines.push(<span><span className="font-medium">💊 Medications:</span></span>);
+      med.forEach(m => lines.push(<span>   • {m}</span>));
+    }
 
-    lines.push("\nTarget: 5-10% weight loss over 6 months");
-    setResult(lines.join("\n"));
+    lines.push(<span className="pt-1">Target: 5-10% weight loss over 6 months</span>);
+    setResult(<div className="space-y-1">{lines}</div>);
   };
 
   return (
@@ -394,7 +393,7 @@ function ObesityModerate() {
           <label className="flex items-center gap-2 cursor-pointer"><input type="checkbox" checked={hasOSA} onChange={e => setHasOSA(e.target.checked)} className="rounded" /><span className="text-xs">OSA</span></label>
         </div>
         <Button size="sm" onClick={calculate} className="w-full"><Calculator className="h-3.5 w-3.5 mr-1.5" /> Assess & Recommend</Button>
-        {result && <div className="p-3 bg-muted rounded-lg text-sm whitespace-pre-wrap leading-relaxed">{result}</div>}
+        {result && <div className="p-3 bg-muted rounded-lg text-sm leading-relaxed">{result}</div>}
       </div>
     </SectionCard>
   );
@@ -422,7 +421,7 @@ export default function ModerateMode() {
       <div className="fixed bottom-0 left-0 right-0 border-t border-border bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 py-2 px-4 flex items-center justify-center gap-3 z-50">
         <button onClick={() => window.location.href = "/"} className="px-3 py-1.5 text-xs font-semibold rounded-md bg-primary/10 text-primary hover:bg-primary/20 transition-colors">🏠 Homepage</button>
         <span className="text-[10px] text-muted-foreground/40">|</span>
-        <button onClick={() => window.location.href = "/easy"} className="px-3 py-1.5 text-xs font-semibold rounded-md text-muted-foreground hover:bg-muted transition-colors">🟢 Easy</button>
+        <button onClick={() => window.location.href = "/simple"} className="px-3 py-1.5 text-xs font-semibold rounded-md text-muted-foreground hover:bg-muted transition-colors">🟢 Simple</button>
         <button onClick={() => window.location.href = "/moderate"} className="px-3 py-1.5 text-xs font-semibold rounded-md bg-orange-500/15 text-orange-600 border border-orange-500/30 hover:bg-orange-500/25 transition-colors">🟠 Moderate</button>
         <button onClick={() => window.location.href = "/home"} className="px-3 py-1.5 text-xs font-semibold rounded-md text-muted-foreground hover:bg-muted transition-colors">🔴 Complex</button>
       </div>

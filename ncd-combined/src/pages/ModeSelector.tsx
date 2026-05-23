@@ -5,8 +5,8 @@ import { Badge } from "@/components/ui/badge";
 
 const modes = [
   {
-    id: "easy",
-    title: "Easy Mode",
+    id: "simple",
+    title: "Simple Mode",
     tagline: "Quick Clinical Calculator",
     description: "Simple input, straightforward output for all 4 NCDs. Just the essentials — perfect for fast bedside reference or a quick second opinion.",
     icon: Sparkles,
@@ -15,7 +15,7 @@ const modes = [
     accent: "from-green-500 to-emerald-600",
     features: ["Diabetes: FBG + HbA1c → tx rec", "Hypertension: BP + age → class + drug", "Lipids: LDL/HDL → risk + statin", "Obesity: Wt/Ht → BMI + category"],
     color: "green",
-    route: "/easy",
+    route: "/simple",
   },
   {
     id: "moderate",

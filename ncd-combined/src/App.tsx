@@ -9,7 +9,7 @@ import { AppSidebar } from "@/components/AppSidebar";
 
 // Mode Pages
 import ModeSelector from "@/pages/ModeSelector";
-import EasyMode from "@/pages/EasyMode";
+import SimpleMode from "@/pages/SimpleMode";
 import ModerateMode from "@/pages/ModerateMode";
 
 // Big Four NCD Pages
@@ -133,7 +133,7 @@ const App = () => (
         <Routes>
           {/* Mode Selector — landing */}
           <Route path="/" element={<ModeSelector />} />
-          <Route path="/easy" element={<EasyMode />} />
+          <Route path="/simple" element={<SimpleMode />} />
           <Route path="/moderate" element={<ModerateMode />} />
           <Route path="/hard" element={<Navigate to="/home" replace />} />
 

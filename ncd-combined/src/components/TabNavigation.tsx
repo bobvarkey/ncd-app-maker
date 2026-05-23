@@ -118,7 +118,7 @@ export function BottomNav() {
     <div className="fixed bottom-0 left-0 right-0 border-t border-border bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 py-2 px-4 flex items-center justify-center gap-3 z-50">
       <Link to="/" className="px-3 py-1.5 text-xs font-semibold rounded-md bg-primary/10 text-primary hover:bg-primary/20 transition-colors">🏠 Homepage</Link>
       <span className="text-[10px] text-muted-foreground/40">|</span>
-      <Link to="/easy" className="px-3 py-1.5 text-xs font-semibold rounded-md text-muted-foreground hover:bg-muted transition-colors">🟢 Easy</Link>
+      <Link to="/simple" className="px-3 py-1.5 text-xs font-semibold rounded-md text-muted-foreground hover:bg-muted transition-colors">🟢 Simple</Link>
       <Link to="/moderate" className="px-3 py-1.5 text-xs font-semibold rounded-md text-muted-foreground hover:bg-muted transition-colors">🟠 Moderate</Link>
       <Link to="/home" className="px-3 py-1.5 text-xs font-semibold rounded-md bg-purple-500/15 text-purple-600 border border-purple-500/30 hover:bg-purple-500/25 transition-colors">🔴 Complex</Link>
     </div>
