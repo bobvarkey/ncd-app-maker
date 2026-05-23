@@ -4,6 +4,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 import { cn } from "@/lib/utils";
+import { AbbreviationHover } from "@/components/AbbreviationHover";
 
 // Pathophysiology Section
 const PathophysiologySection = () => (

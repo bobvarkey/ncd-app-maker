@@ -1,6 +1,6 @@
 import React, { useState, useMemo } from "react";
 import { Link } from "react-router-dom";
-import { Calculator, Activity, AlertTriangle, TrendingUp, TrendingDown, Syringe, Droplets, FileText, ChevronRight } from "lucide-react";
+import { Calculator, Activity, AlertTriangle, TrendingUp, TrendingDown, Syringe, Droplets, FileText, ChevronRight, Scale } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -10,6 +10,118 @@ import { Separator } from "@/components/ui/separator";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Switch } from "@/components/ui/switch";
 import { cn } from "@/lib/utils";
+import { AbbreviationHover } from "@/components/AbbreviationHover";
+
+// BMI Calculator Component
+const BMICalculator = () => {
+  const [weight, setWeight] = useState("");
+  const [height, setHeight] = useState("");
+
+  const bmi = useMemo(() => {
+    const w = parseFloat(weight);
+    const h = parseFloat(height);
+    if (isNaN(w) || isNaN(h) || h <= 0) return null;
+    return w / ((h / 100) * (h / 100));
+  }, [weight, height]);
+
+  const category = useMemo(() => {
+    if (bmi === null) return null;
+    if (bmi < 18.5) return { label: "Underweight", color: "text-yellow-500", bgColor: "bg-yellow-500/10", borderColor: "border-yellow-500/30" };
+    if (bmi < 23) return { label: "Normal", color: "text-success", bgColor: "bg-success/10", borderColor: "border-success/30" };
+    if (bmi < 25) return { label: "Overweight (At Risk)", color: "text-warning", bgColor: "bg-warning/10", borderColor: "border-warning/30" };
+    if (bmi < 30) return { label: "Obese Class I", color: "text-orange-400", bgColor: "bg-orange-400/10", borderColor: "border-orange-400/30" };
+    return { label: "Obese Class II", color: "text-destructive", bgColor: "bg-destructive/10", borderColor: "border-destructive/30" };
+  }, [bmi]);
+
+  const referenceRanges = [
+    { range: "< 18.5", category: "Underweight", class: "text-yellow-500" },
+    { range: "18.5 — 23", category: "Normal", class: "text-success" },
+    { range: "23 — 25", category: "Overweight (At Risk)", class: "text-warning" },
+    { range: "25 — 30", category: "Obese Class I", class: "text-orange-400" },
+    { range: "> 30", category: "Obese Class II", class: "text-destructive" },
+  ];
+
+  return (
+    <Card className="clinical-card">
+      <CardHeader className="pb-3">
+        <div className="flex items-center gap-2">
+          <div className="w-8 h-8 rounded-lg bg-purple-500/10 flex items-center justify-center">
+            <Scale className="h-4 w-4 text-purple-500" />
+          </div>
+          <CardTitle className="text-base">BMI Calculator</CardTitle>
+        </div>
+      </CardHeader>
+      <CardContent className="space-y-4">
+        <div className="grid grid-cols-2 gap-3">
+          <div>
+            <Label htmlFor="bmi-weight" className="text-xs text-muted-foreground mb-1.5 block">
+              Weight (kg)
+            </Label>
+            <Input
+              id="bmi-weight"
+              type="number"
+              step="0.1"
+              value={weight}
+              onChange={(e) => setWeight(e.target.value)}
+              placeholder="e.g., 75"
+            />
+          </div>
+          <div>
+            <Label htmlFor="bmi-height" className="text-xs text-muted-foreground mb-1.5 block">
+              Height (cm)
+            </Label>
+            <Input
+              id="bmi-height"
+              type="number"
+              value={height}
+              onChange={(e) => setHeight(e.target.value)}
+              placeholder="e.g., 170"
+            />
+          </div>
+        </div>
+
+        {bmi !== null && category && (
+          <div className={cn("p-4 rounded-lg border", category.borderColor, category.bgColor)}>
+            <div className="text-center">
+              <p className="text-sm text-muted-foreground">BMI</p>
+              <p className="text-3xl font-bold">{bmi.toFixed(1)} kg/m²</p>
+              <p className={cn("text-lg font-semibold mt-1", category.color)}>{category.label}</p>
+            </div>
+            <div className="mt-3 h-2 rounded-full bg-muted overflow-hidden">
+              <div
+                className="h-full rounded-full transition-all duration-500"
+                style={{
+                  width: `${Math.min(((bmi - 10) / 30) * 100, 100)}%`,
+                  background: `linear-gradient(to right, #22c55e, #eab308, #ef4444)`,
+                }}
+              />
+            </div>
+            <div className="flex justify-between text-[10px] text-muted-foreground mt-1">
+              <span>10</span>
+              <span>18.5</span>
+              <span>23</span>
+              <span>25</span>
+              <span>30</span>
+              <span>40</span>
+            </div>
+          </div>
+        )}
+
+        <div>
+          <p className="text-sm font-medium mb-2">Indian BMI Cutoffs</p>
+          <div className="space-y-1">
+            {referenceRanges.map((r, i) => (
+              <div key={i} className="flex items-center justify-between p-2 rounded-lg bg-muted/30">
+                <span className="text-sm">{r.range}</span>
+                <span className={cn("text-sm font-medium", r.class)}>{r.category}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+      </CardContent>
+    </Card>
+  );
+};
 
 // HbA1c Interpretation Component
 const HbA1cInterpretation = () => {
@@ -49,14 +161,14 @@ const HbA1cInterpretation = () => {
           <div className="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center">
             <Activity className="h-4 w-4 text-primary" />
           </div>
-          <CardTitle className="text-base">HbA1c Interpretation</CardTitle>
+          <CardTitle className="text-base"><AbbreviationHover term="HbA1c">HbA1c</AbbreviationHover> Interpretation</CardTitle>
         </div>
       </CardHeader>
       <CardContent className="space-y-4">
         <div className="flex gap-3">
           <div className="flex-1">
             <Label htmlFor="hba1c-input" className="text-xs text-muted-foreground mb-1.5 block">
-              HbA1c (%)
+              <AbbreviationHover term="HbA1c">HbA1c</AbbreviationHover> (%)
             </Label>
             <Input
               id="hba1c-input"
@@ -79,7 +191,7 @@ const HbA1cInterpretation = () => {
                 <p className={cn("text-lg font-semibold", interpretation.color)}>{interpretation.category}</p>
               </div>
               <div className="text-right">
-                <p className="text-sm text-muted-foreground">Estimated Average Glucose</p>
+                <p className="text-sm text-muted-foreground"><AbbreviationHover term="eAG">eAG</AbbreviationHover></p>
                 <p className="text-lg font-semibold">{estimatedAvgGlucose} mg/dL</p>
               </div>
             </div>
@@ -193,7 +305,7 @@ const InsulinDosingCalculator = () => {
             />
           </div>
           <div>
-            <Label className="text-xs text-muted-foreground mb-1.5 block">HbA1c (%)</Label>
+            <Label className="text-xs text-muted-foreground mb-1.5 block"><AbbreviationHover term="HbA1c">HbA1c</AbbreviationHover> (%)</Label>
             <Input
               type="number"
               step="0.1"
@@ -210,7 +322,7 @@ const InsulinDosingCalculator = () => {
             <Switch checked={isInsulinNaive} onCheckedChange={setIsInsulinNaive} />
           </label>
           <label className="flex items-center justify-between p-2.5 rounded-lg border border-border bg-muted/20">
-            <span className="text-sm">CKD (eGFR &lt; 60)</span>
+            <span className="text-sm"><AbbreviationHover term="CKD">CKD</AbbreviationHover> (<AbbreviationHover term="eGFR">eGFR</AbbreviationHover> &lt; 60)</span>
             <Switch checked={hasCkd} onCheckedChange={setHasCkd} />
           </label>
           <label className="flex items-center justify-between p-2.5 rounded-lg border border-border bg-muted/20">
@@ -251,7 +363,7 @@ const InsulinDosingCalculator = () => {
             <li>• Glargine (Lantus/Basaglar): Start once daily, same time</li>
             <li>• Detemir (Levemir): 1-2x daily</li>
             <li>• Degludec (Tresiba): Once daily, flexible timing</li>
-            <li>• NPH: Bedtime dosing (higher hypoglycemia risk)</li>
+            <li>• <AbbreviationHover term="NPH">NPH</AbbreviationHover>: Bedtime dosing (higher hypoglycemia risk)</li>
           </ul>
         </div>
       </CardContent>
@@ -378,6 +490,7 @@ export default function DiabetesAssessment() {
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+        <BMICalculator />
         <QuickCalculatorLinks />
         <GlucoseMonitoringGuide />
       </div>
