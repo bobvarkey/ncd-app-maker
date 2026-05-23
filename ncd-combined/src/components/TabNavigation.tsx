@@ -1,6 +1,6 @@
 import React from "react";
 import { Link, useLocation } from "react-router-dom";
-import { Home, Heart, Syringe, Dna, Activity } from "lucide-react";
+import { Home, Heart, Syringe, Dna, Activity, Wind, Kidney } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 interface TabItem {
@@ -34,6 +34,18 @@ const tabs: TabItem[] = [
     label: "Lipids",
     icon: <Dna className="h-4 w-4" />,
     color: "text-blue-500",
+  },
+  {
+    path: "/respiratory",
+    label: "COPD/Asthma",
+    icon: <svg className="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M12 2v20M2 12h20"/><circle cx="12" cy="12" r="8"/></svg>,
+    color: "text-cyan-500",
+  },
+  {
+    path: "/renal-dosing",
+    label: "Renal",
+    icon: <svg className="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M12 2v20M2 12h20"/><circle cx="12" cy="12" r="3"/></svg>,
+    color: "text-amber-500",
   },
 ];
 
@@ -86,7 +98,9 @@ export function TabNavigation() {
                         tab.path === "/home" && "bg-primary",
                         tab.path === "/diabetes" && "bg-red-500",
                         tab.path === "/hypertension" && "bg-orange-500",
-                        tab.path === "/lipids" && "bg-blue-500"
+                        tab.path === "/lipids" && "bg-blue-500",
+                        tab.path === "/respiratory" && "bg-cyan-500",
+                        tab.path === "/renal-dosing" && "bg-amber-500"
                       )}
                     />
                   )}
