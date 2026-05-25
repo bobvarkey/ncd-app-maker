@@ -277,6 +277,18 @@ const secondaryHtnChecklist: SecondaryHtnItem[] = [
     feature: "Asymmetric kidney size (> 1.5 cm difference)",
     workup: "Doppler ultrasound or MRA for RAS",
   },
+  {
+    id: "liddle",
+    category: "Genetic",
+    feature: "Early-onset HTN + hypokalemic metabolic alkalosis + low renin & low aldosterone (Liddle's syndrome)",
+    workup: "Genetic testing for ENaC gain-of-function mutation (SCNN1A/B/G); treat with amiloride or triamterene (spironolactone NOT effective)",
+  },
+  {
+    id: "family_hx_htn",
+    category: "History",
+    feature: "Strong family history of early-onset HTN or unexplained hypokalemia",
+    workup: "Consider monogenic HTN (Liddle's, GRA, AME, Gordon syndrome)",
+  },
 ];
 
 export default function HypertensionAssessment() {
