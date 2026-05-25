@@ -547,7 +547,7 @@ export default function LipidsAssessment() {
       {/* ASCVD Risk Calculator */}
       <SectionCard
         title="ASCVD Risk Calculator"
-        tone="blue"
+        tone="cyan"
         icon={<TrendingUp className="h-4 w-4" />}
         collapsible={false}
       >
