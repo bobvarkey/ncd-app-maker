@@ -947,6 +947,9 @@ export default function LipidCalculator() {
               </p>
             </div>
 
+            {/* ASCVD Info Card */}
+            <AscvdInfoCard />
+
             {/* Quick Link */}
             <Card className="border-border bg-card p-3.5 no-print">
               <div className="flex items-center justify-between">
