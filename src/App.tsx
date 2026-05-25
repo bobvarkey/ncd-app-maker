@@ -153,22 +153,22 @@ const App = () => (
                   <Route path="/asthma-copd" element={<ErrorBoundary><AsthmaCopd /></ErrorBoundary>} />
                   <Route path="/renal" element={<ErrorBoundary><RenalDisease /></ErrorBoundary>} />
                   {/* Diabetes Sub-pages */}
-                  <Route path="/diabetes/assessment" element={<DiabetesAssessment />} />
-                  <Route path="/diabetes/overview" element={<DiabetesOverview />} />
-                  <Route path="/diabetes/tab" element={<DiabetesTab />} />
-                  <Route path="/diabetes/treatment" element={<DiabetesTreatment />} />
-                  <Route path="/diabetes/insulin-guide" element={<InsulinGuide />} />
+                  <Route path="/diabetes/assessment" element={<ErrorBoundary><DiabetesAssessment /></ErrorBoundary>} />
+                  <Route path="/diabetes/overview" element={<ErrorBoundary><DiabetesOverview /></ErrorBoundary>} />
+                  <Route path="/diabetes/tab" element={<ErrorBoundary><DiabetesTab /></ErrorBoundary>} />
+                  <Route path="/diabetes/treatment" element={<ErrorBoundary><DiabetesTreatment /></ErrorBoundary>} />
+                  <Route path="/diabetes/insulin-guide" element={<ErrorBoundary><InsulinGuide /></ErrorBoundary>} />
                   {/* Hypertension Sub-pages */}
-                  <Route path="/hypertension/assessment" element={<HypertensionAssessment />} />
-                  <Route path="/hypertension/medication-guide" element={<HypertensionMedicationGuide />} />
-                  <Route path="/hypertension/overview" element={<HypertensionOverview />} />
-                  <Route path="/hypertension/tab" element={<HypertensionTab />} />
-                  <Route path="/hypertension/treatment" element={<HypertensionTreatment />} />
+                  <Route path="/hypertension/assessment" element={<ErrorBoundary><HypertensionAssessment /></ErrorBoundary>} />
+                  <Route path="/hypertension/medication-guide" element={<ErrorBoundary><HypertensionMedicationGuide /></ErrorBoundary>} />
+                  <Route path="/hypertension/overview" element={<ErrorBoundary><HypertensionOverview /></ErrorBoundary>} />
+                  <Route path="/hypertension/tab" element={<ErrorBoundary><HypertensionTab /></ErrorBoundary>} />
+                  <Route path="/hypertension/treatment" element={<ErrorBoundary><HypertensionTreatment /></ErrorBoundary>} />
                   {/* Lipids Sub-pages */}
-                  <Route path="/lipids/assessment" element={<LipidsAssessment />} />
-                  <Route path="/lipids/overview" element={<LipidsOverview />} />
-                  <Route path="/lipids/tab" element={<LipidsTab />} />
-                  <Route path="/lipids/treatment" element={<LipidsTreatment />} />
+                  <Route path="/lipids/assessment" element={<ErrorBoundary><LipidsAssessment /></ErrorBoundary>} />
+                  <Route path="/lipids/overview" element={<ErrorBoundary><LipidsOverview /></ErrorBoundary>} />
+                  <Route path="/lipids/tab" element={<ErrorBoundary><LipidsTab /></ErrorBoundary>} />
+                  <Route path="/lipids/treatment" element={<ErrorBoundary><LipidsTreatment /></ErrorBoundary>} />
                   {/* Diabetes Calculators */}
                   <Route path="/insulin-titration" element={<InsulinTitrationCalc />} />
                   <Route path="/sliding-scale" element={<SlidingScaleInsulinCalc />} />
