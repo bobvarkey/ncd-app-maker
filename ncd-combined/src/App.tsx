@@ -136,7 +136,7 @@ const App = () => (
       <BrowserRouter>
         <Routes>
           {/* Mode Selector — landing */}
-          <Route path="/" element={<ModeSelector />} />
+          <Route path="/" element={<LandingPage />} />
           <Route path="/simple" element={<SimpleMode />} />
           <Route path="/moderate" element={<ModerateMode />} />
           <Route path="/hard" element={<Navigate to="/home" replace />} />

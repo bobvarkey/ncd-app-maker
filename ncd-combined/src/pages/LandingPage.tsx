@@ -1,225 +1,208 @@
 import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
-import { FileText, Pill, ArrowRight } from 'lucide-react';
+import { ArrowRight, Sparkles, Heart, Activity, Syringe, Dna, Scale, Wind } from 'lucide-react';
 
 export default function LandingPage() {
   const navigate = useNavigate();
 
   return (
-    <div className="min-h-screen bg-black text-white">
-      {/* Header Badge */}
-      <header className="pt-5 pb-3 px-4">
-        <div className="flex justify-center">
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-gradient-to-r from-pink-500 to-rose-500 text-white text-xs font-semibold tracking-wider">
-            DIABETES CARE
-          </div>
+    <div className="min-h-screen bg-[#0a0a0f] text-white overflow-x-hidden">
+      {/* ─── FULL-BLEED HERO ─── */}
+      <section className="relative min-h-[85vh] flex items-center">
+        {/* Background image with overlays */}
+        <div className="absolute inset-0">
+          <img
+            src="/doctor-monitors.jpg"
+            alt=""
+            className="w-full h-full object-cover"
+          />
+          {/* Dark gradient overlay — darker at bottom */}
+          <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-black/50 to-[#0a0a0f]" />
+          {/* Pink/purple ambient glow */}
+          <div className="absolute top-1/3 left-1/4 w-[40vw] h-[40vw] rounded-full bg-pink-500/15 blur-[120px]" />
+          <div className="absolute bottom-1/4 right-1/4 w-[30vw] h-[30vw] rounded-full bg-purple-500/15 blur-[100px]" />
         </div>
-      </header>
 
-      {/* Hero */}
-      <section className="px-4 pb-4">
-        <div className="max-w-md mx-auto">
-          <h1 className="text-4xl font-bold mb-3 text-center">
-            Diabetes Risk <span className="italic text-pink-500">Predictor</span>
+        {/* Content */}
+        <div className="relative z-10 max-w-4xl mx-auto px-6 pt-20 pb-10">
+          {/* Badge */}
+          <div className="flex justify-center mb-6">
+            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-gradient-to-r from-pink-500/20 to-purple-500/20 border border-pink-500/30 text-pink-300 text-xs font-semibold tracking-wider backdrop-blur">
+              <Sparkles className="h-3 w-3" />
+              CLINICAL DECISION SUPPORT
+            </div>
+          </div>
+
+          {/* Headline */}
+          <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold text-center leading-tight mb-4">
+            NCD
+            <span className="bg-gradient-to-r from-pink-400 via-purple-400 to-cyan-400 bg-clip-text text-transparent"> Rx</span>
           </h1>
-          
-          <p className="text-gray-400 text-sm mb-6 text-center leading-relaxed">
-            An intuitive, clinician-designed tool for diabetes care. Leverage evidence-based protocols to deliver guideline-concordant patient care.
+          <p className="text-lg md:text-xl text-gray-400 text-center max-w-2xl mx-auto mb-8 leading-relaxed">
+            Evidence-based management for diabetes, hypertension, lipids, obesity, and more —
+            powered by the latest international guidelines.
           </p>
 
-          {/* Horizontal Buttons */}
-          <div className="flex gap-3 mb-6">
-            <Button 
-              onClick={() => navigate('/app')}
-              className="flex-1 bg-gradient-to-r from-pink-500 to-rose-500 hover:from-pink-600 hover:to-rose-600 text-white font-semibold py-5"
+          {/* CTA Buttons */}
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-3 mb-10">
+            <Button
+              onClick={() => navigate('/home')}
+              className="w-full sm:w-auto bg-gradient-to-r from-pink-500 to-purple-600 hover:from-pink-600 hover:to-purple-700 text-white font-semibold px-8 py-6 text-base rounded-xl shadow-lg shadow-pink-500/25"
             >
-              Get Started
+              Launch App
+              <ArrowRight className="ml-2 h-4 w-4" />
             </Button>
-            <Button 
+            <Button
               variant="outline"
-              className="flex-1 border border-white/30 text-white hover:bg-white/10 py-5"
-              onClick={() => navigate('/diabetes')}
+              className="w-full sm:w-auto border border-white/20 text-white hover:bg-white/10 px-8 py-6 text-base rounded-xl backdrop-blur"
+              onClick={() => navigate('/simple')}
             >
-              Clinic Tool
+              Quick Start
             </Button>
           </div>
 
-          {/* Hero Image - Doctor with Monitors */}
-          <div className="relative rounded-2xl overflow-hidden mb-6 aspect-video bg-gradient-to-br from-pink-600/40 via-purple-500/30 to-rose-500/40 flex items-center justify-center">
-            <img
-              src="/doctor-monitors.jpg"
-              alt="Clinical Decision Support"
-              className="absolute inset-0 w-full h-full object-cover"
-            />
-            <div className="absolute top-1/3 left-1/4 w-24 h-24 rounded-full bg-pink-500/30 blur-2xl" />
-            <div className="absolute bottom-1/3 right-1/4 w-20 h-20 rounded-full bg-purple-500/30 blur-2xl" />
-          </div>
-        </div>
-      </section>
-
-      {/* Trust Bars */}
-      <section className="py-6 border-y border-white/10">
-        <div className="max-w-md mx-auto px-4">
-          <div className="grid grid-cols-3 gap-3">
-            <div className="text-center">
-              <p className="text-2xl font-bold text-pink-400">180+</p>
-              <p className="text-xs text-gray-500">Medications</p>
-            </div>
-            <div className="text-center">
-              <p className="text-2xl font-bold text-emerald-400">98.4%</p>
-              <p className="text-xs text-gray-500">Accuracy</p>
-            </div>
-            <div className="text-center">
-              <p className="text-2xl font-bold text-cyan-400">ADA 2024</p>
-              <p className="text-xs text-gray-500">guidelines</p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* ★ COMPREHENSIVE PRESCRIPTION GENERATOR - TOP FEATURE ★ */}
-      <section className="py-6 px-4">
-        <div className="max-w-md mx-auto">
-          <h2 className="text-lg font-bold mb-4 ml-1">Comprehensive Prescription Generator</h2>
-          
-          {/* Featured Card - Top of list */}
-          <Card 
-            className="bg-gradient-to-r from-pink-500/20 to-purple-500/20 border-pink-500/40 cursor-pointer hover:from-pink-500/30 hover:to-purple-500/30 transition-all"
-            onClick={() => navigate('/summary')}
-          >
-            <CardContent className="p-5">
-              <div className="flex items-start gap-4">
-                <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-pink-500 to-purple-500 flex items-center justify-center">
-                  <FileText className="h-6 w-6 text-white" />
-                </div>
-                <div className="flex-1">
-                  <p className="font-bold text-lg">Integrated Prescriptions</p>
-                  <p className="text-xs text-gray-400 mt-1">
-                    Generate comprehensive prescriptions for all four NCDs — Diabetes, Hypertension, Lipids, and Obesity. 
-                    Combined or condition-specific Rx with dosage, frequency, duration, and clinical notes.
-                  </p>
-                  <div className="flex items-center gap-2 mt-2">
-                    <span className="text-xs bg-white/10 px-2 py-0.5 rounded">Diabetes</span>
-                    <span className="text-xs bg-white/10 px-2 py-0.5 rounded">HTN</span>
-                    <span className="text-xs bg-white/10 px-2 py-0.5 rounded">Lipids</span>
-                    <span className="text-xs bg-white/10 px-2 py-0.5 rounded">Obesity</span>
-                  </div>
-                </div>
-                <ArrowRight className="h-5 w-5 text-pink-400 mt-2" />
+          {/* Stats strip */}
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-2xl mx-auto">
+            {[
+              { label: "Guidelines", value: "ADA · ESC · KDIGO" },
+              { label: "Conditions", value: "5+ NCDs" },
+              { label: "Calculators", value: "15+" },
+              { label: "Drug Database", value: "200+" },
+            ].map((s) => (
+              <div key={s.label} className="text-center p-2 rounded-lg bg-white/5 border border-white/10">
+                <p className="text-xs text-gray-500">{s.label}</p>
+                <p className="text-sm font-semibold text-pink-300">{s.value}</p>
               </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ─── MODE SELECTION ─── */}
+      <section className="px-6 py-16 max-w-5xl mx-auto">
+        <div className="text-center mb-10">
+          <h2 className="text-2xl md:text-3xl font-bold mb-3">
+            Choose Your <span className="text-pink-400">Mode</span>
+          </h2>
+          <p className="text-gray-500 text-sm max-w-xl mx-auto">
+            Progressive complexity — start simple and go deeper as needed
+          </p>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          {/* Simple */}
+          <Card
+            className="bg-white/5 border-white/10 hover:border-green-500/40 cursor-pointer transition-all group hover:shadow-lg hover:shadow-green-500/10"
+            onClick={() => navigate('/simple')}
+          >
+            <CardContent className="p-6 text-center">
+              <div className="w-12 h-12 rounded-xl bg-green-500/10 flex items-center justify-center mx-auto mb-4 group-hover:bg-green-500/20 transition-colors">
+                <Activity className="h-6 w-6 text-green-400" />
+              </div>
+              <h3 className="text-lg font-bold mb-2">Simple</h3>
+              <p className="text-sm text-gray-500 mb-4">
+                Quick screening, basic classification, and lifestyle recommendations
+              </p>
+              <Button variant="ghost" className="text-green-400 group-hover:gap-2 transition-all">
+                Enter <ArrowRight className="h-3 w-3 ml-1" />
+              </Button>
+            </CardContent>
+          </Card>
+
+          {/* Moderate */}
+          <Card
+            className="bg-white/5 border-white/10 hover:border-orange-500/40 cursor-pointer transition-all group hover:shadow-lg hover:shadow-orange-500/10"
+            onClick={() => navigate('/moderate')}
+          >
+            <CardContent className="p-6 text-center">
+              <div className="w-12 h-12 rounded-xl bg-orange-500/10 flex items-center justify-center mx-auto mb-4 group-hover:bg-orange-500/20 transition-colors">
+                <Heart className="h-6 w-6 text-orange-400" />
+              </div>
+              <h3 className="text-lg font-bold mb-2">Moderate</h3>
+              <p className="text-sm text-gray-500 mb-4">
+                Guideline-integrated recommendations with risk stratification
+              </p>
+              <Button variant="ghost" className="text-orange-400 group-hover:gap-2 transition-all">
+                Enter <ArrowRight className="h-3 w-3 ml-1" />
+              </Button>
+            </CardContent>
+          </Card>
+
+          {/* Complex */}
+          <Card
+            className="bg-white/5 border-white/10 hover:border-purple-500/40 cursor-pointer transition-all group hover:shadow-lg hover:shadow-purple-500/10"
+            onClick={() => navigate('/home')}
+          >
+            <CardContent className="p-6 text-center">
+              <div className="w-12 h-12 rounded-xl bg-purple-500/10 flex items-center justify-center mx-auto mb-4 group-hover:bg-purple-500/20 transition-colors">
+                <Dna className="h-6 w-6 text-purple-400" />
+              </div>
+              <h3 className="text-lg font-bold mb-2">Complex</h3>
+              <p className="text-sm text-gray-500 mb-4">
+                Full clinical toolkit — labs, calculators, algorithms, and guidelines
+              </p>
+              <Button variant="ghost" className="text-purple-400 group-hover:gap-2 transition-all">
+                Enter <ArrowRight className="h-3 w-3 ml-1" />
+              </Button>
             </CardContent>
           </Card>
         </div>
       </section>
 
-      {/* Diagnostic Arsenal */}
-      <section className="py-6 px-4 border-t border-white/10">
-        <div className="max-w-md mx-auto">
-          <h2 className="text-lg font-bold mb-4 ml-1">Diagnostic Arsenal</h2>
-          
-          <div className="grid gap-2.5">
-            <Card className="bg-white/5 border-white/10 hover:bg-white/10 transition-colors cursor-pointer" onClick={() => navigate('/diabetes')}>
-              <CardContent className="p-4 flex items-center justify-between">
-                <div>
-                  <p className="font-semibold">Insulin Titration</p>
-                  <p className="text-xs text-gray-500">Correction doses & basal rates</p>
+      {/* ─── CLINICAL AREAS ─── */}
+      <section className="px-6 py-16 border-t border-white/5 bg-white/[0.02]">
+        <div className="max-w-5xl mx-auto">
+          <div className="text-center mb-10">
+            <h2 className="text-2xl md:text-3xl font-bold mb-3">
+              Clinical <span className="text-pink-400">Areas</span>
+            </h2>
+            <p className="text-gray-500 text-sm">Comprehensive management for major non-communicable diseases</p>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+            {[
+              { name: "Diabetes", icon: Syringe, color: "text-red-400", desc: "Insulin titration, GLP-1 dosing, HbA1c targets" },
+              { name: "Hypertension", icon: Heart, color: "text-orange-400", desc: "BP classification, drug selection, emergency protocols" },
+              { name: "Lipids", icon: Dna, color: "text-blue-400", desc: "ASCVD risk, LDL targets, statin intensity" },
+              { name: "Obesity", icon: Scale, color: "text-violet-400", desc: "BMI calculator, weight loss algorithms, GLP-1" },
+              { name: "COPD/Asthma", icon: Wind, color: "text-cyan-400", desc: "GINA/GOLD guidelines, step-up therapy" },
+              { name: "Renal", icon: Kidney, color: "text-amber-400", desc: "eGFR-based dosing, CKD management" },
+            ].map((area) => (
+              <div
+                key={area.name}
+                className="flex items-start gap-3 p-4 rounded-xl bg-white/5 border border-white/10 hover:bg-white/[0.08] transition-colors cursor-pointer group"
+                onClick={() => navigate('/home')}
+              >
+                <div className="w-10 h-10 rounded-lg bg-white/5 flex items-center justify-center shrink-0 group-hover:bg-white/10 transition-colors">
+                  <area.icon className={`h-5 w-5 ${area.color}`} />
                 </div>
-                <span className="text-gray-500">→</span>
-              </CardContent>
-            </Card>
-            
-            <Card className="bg-white/5 border-white/10 hover:bg-white/10 transition-colors cursor-pointer" onClick={() => navigate('/diabetes')}>
-              <CardContent className="p-4 flex items-center justify-between">
-                <div>
-                  <p className="font-semibold">HbA1c Tracker</p>
-                  <p className="text-xs text-gray-500">Glycemic trends</p>
+                <div className="min-w-0">
+                  <p className="text-sm font-semibold">{area.name}</p>
+                  <p className="text-xs text-gray-500 mt-0.5">{area.desc}</p>
                 </div>
-                <span className="text-gray-500">→</span>
-              </CardContent>
-            </Card>
-            
-            <Card className="bg-white/5 border-white/10 hover:bg-white/10 transition-colors cursor-pointer" onClick={() => navigate('/diabetes')}>
-              <CardContent className="p-4 flex items-center justify-between">
-                <div>
-                  <p className="font-semibold">GLP-1 Dosing</p>
-                  <p className="text-xs text-gray-500">Semaglutide, tirzepatide</p>
-                </div>
-                <span className="text-gray-500">→</span>
-              </CardContent>
-            </Card>
-            
-            <Card className="bg-white/5 border-white/10 hover:bg-white/10 transition-colors cursor-pointer" onClick={() => navigate('/db/medications')}>
-              <CardContent className="p-4 flex items-center justify-between">
-                <div>
-                  <p className="font-semibold">Medication Optimizer</p>
-                  <p className="text-xs text-gray-500">Drug selection</p>
-                </div>
-                <span className="text-gray-500">→</span>
-              </CardContent>
-            </Card>
-            
-            <Card className="bg-white/5 border-white/10 hover:bg-white/10 transition-colors cursor-pointer" onClick={() => navigate('/db/ckd-guideline')}>
-              <CardContent className="p-4 flex items-center justify-between">
-                <div>
-                  <p className="font-semibold">CKD Guidelines</p>
-                  <p className="text-xs text-gray-500">Renal dose adjustment</p>
-                </div>
-                <span className="text-gray-500">→</span>
-              </CardContent>
-            </Card>
-            
-            <Card className="bg-white/5 border-white/10 hover:bg-white/10 transition-colors cursor-pointer" onClick={() => navigate('/db/daily-management')}>
-              <CardContent className="p-4 flex items-center justify-between">
-                <div>
-                  <p className="font-semibold">Clinical Guides</p>
-                  <p className="text-xs text-gray-500">References</p>
-                </div>
-                <span className="text-gray-500">→</span>
-              </CardContent>
-            </Card>
+              </div>
+            ))}
           </div>
         </div>
       </section>
 
-      {/* Data Driven / CTA */}
-      <section className="py-6 px-4 border-t border-white/10">
-        <div className="max-w-md mx-auto text-center">
-          <h2 className="text-lg font-bold mb-3">Data-Driven Decision Support</h2>
-          <p className="text-gray-400 text-sm mb-5">
-            Precision medicine at your fingertips.
+      {/* ─── FOOTER ─── */}
+      <footer className="px-6 py-8 text-center border-t border-white/5">
+        <div className="max-w-2xl mx-auto">
+          <div className="flex items-center justify-center gap-2 mb-4">
+            <div className="w-6 h-6 rounded bg-gradient-to-br from-pink-500/20 to-purple-500/20 flex items-center justify-center border border-white/10">
+              <Activity className="h-3 w-3 text-pink-400" />
+            </div>
+            <span className="text-sm font-serif font-semibold">NCD Rx</span>
+          </div>
+          <p className="text-xs text-gray-600 mb-3">
+            Based on ADA 2026 · ESC/ESH 2024 · LAI 2023 · ACC/AHA · KDIGO · GINA/GOLD guidelines
           </p>
-          
-          <div className="grid grid-cols-2 gap-2 text-sm text-left mb-6">
-            <div className="bg-white/5 rounded-lg p-3 flex items-center gap-2">
-              <span className="text-pink-400">✓</span> LDL-C Targets
-            </div>
-            <div className="bg-white/5 rounded-lg p-3 flex items-center gap-2">
-              <span className="text-pink-400">✓</span> Non-HDL-C
-            </div>
-            <div className="bg-white/5 rounded-lg p-3 flex items-center gap-2">
-              <span className="text-pink-400">✓</span> ApoB
-            </div>
-            <div className="bg-white/5 rounded-lg p-3 flex items-center gap-2">
-              <span className="text-pink-400">✓</span> eGFR
-            </div>
-          </div>
-
-          <Button 
-            onClick={() => navigate('/app')}
-            className="w-full bg-gradient-to-r from-pink-500 to-rose-500 hover:from-pink-600 hover:to-rose-600 text-white font-semibold py-5"
-          >
-            Start Assessment
-          </Button>
+          <p className="text-xs text-gray-600">
+            For educational and clinical decision support use only. Always consult current guidelines and clinical judgment.
+          </p>
         </div>
-      </section>
-
-      {/* Footer Disclaimer */}
-      <footer className="py-5 px-4 text-center border-t border-white/10">
-        <p className="text-xs text-gray-600 mb-2">Based on ADA Standards of Care 2024 & AACE Guidelines</p>
-        <p className="text-xs text-gray-600">
-          For educational and clinical decision support use only. Always consult current guidelines and clinical judgment.
-        </p>
       </footer>
     </div>
   );
