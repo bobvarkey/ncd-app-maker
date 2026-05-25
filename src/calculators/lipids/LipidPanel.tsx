@@ -25,7 +25,7 @@ import {
   Dna, Sparkles, Bone, FlameKindling,
   Flame, GitBranch, Network, Layers, Cloud, Bug,
   Donut, Soup, Eye, Repeat, AlertOctagon, Syringe,
-  ShieldQuestion,
+  ShieldQuestion, HelpCircle, Info,
 } from "lucide-react";
 import {
   LabInput,
