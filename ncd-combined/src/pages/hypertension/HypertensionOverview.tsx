@@ -17,6 +17,7 @@ import {
   Activity,
   CheckCircle,
   Info,
+  Stethoscope,
 } from "lucide-react";
 
 // Category colors for hypertension (orange theme)
@@ -215,6 +216,7 @@ const secondaryCauses = [
 
 interface OverviewProps {
   onNavigateToEmergencies?: () => void;
+  onNavigateToAssessment?: () => void;
 }
 
 export default function HypertensionOverview({ onNavigateToEmergencies }: OverviewProps) {
@@ -476,7 +478,17 @@ export default function HypertensionOverview({ onNavigateToEmergencies }: Overvi
               <li>• Renovascular disease: Consider if sudden onset, flash pulmonary edema, or asymmetric kidneys</li>
               <li>• Pheochromocytoma: Screen if episodic symptoms, family history, or adrenal mass</li>
               <li>• Cushing's: Screen if central obesity, purple striae, proximal myopathy</li>
+              <li>• Liddle's syndrome: Screen if early-onset HTN with hypokalemia but normal aldosterone</li>
             </ul>
+            {onNavigateToAssessment && (
+              <button
+                onClick={onNavigateToAssessment}
+                className="mt-3 flex items-center gap-2 text-xs text-primary hover:underline font-medium"
+              >
+                <Stethoscope className="h-3.5 w-3.5" />
+                Full Secondary Hypertension Assessment
+              </button>
+            )}
           </div>
         </CardContent>
       </Card>

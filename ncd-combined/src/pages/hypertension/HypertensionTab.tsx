@@ -95,7 +95,7 @@ export default function HypertensionTab() {
           </TabsList>
 
           <TabsContent value="overview" className="space-y-6">
-            <HypertensionOverview onNavigateToEmergencies={() => setActiveTab("treatment")} />
+            <HypertensionOverview onNavigateToEmergencies={() => setActiveTab("treatment")} onNavigateToAssessment={() => setActiveTab("assessment")} />
           </TabsContent>
 
           <TabsContent value="assessment" className="space-y-6">
