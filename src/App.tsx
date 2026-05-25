@@ -170,23 +170,23 @@ const App = () => (
                   <Route path="/lipids/tab" element={<ErrorBoundary><LipidsTab /></ErrorBoundary>} />
                   <Route path="/lipids/treatment" element={<ErrorBoundary><LipidsTreatment /></ErrorBoundary>} />
                   {/* Diabetes Calculators */}
-                  <Route path="/insulin-titration" element={<InsulinTitrationCalc />} />
-                  <Route path="/sliding-scale" element={<SlidingScaleInsulinCalc />} />
-                  <Route path="/hypo-risk" element={<HypoRiskCalculatorCalc />} />
-                  <Route path="/renal-dosing" element={<RenalDoseAdjustmentCalc />} />
-                  <Route path="/diabetes/medication-algorithm" element={<DiabetesMedicationAlgorithmCalc />} />
+                  <Route path="/insulin-titration" element={<ErrorBoundary><InsulinTitrationCalc /></ErrorBoundary>} />
+                  <Route path="/sliding-scale" element={<ErrorBoundary><SlidingScaleInsulinCalc /></ErrorBoundary>} />
+                  <Route path="/hypo-risk" element={<ErrorBoundary><HypoRiskCalculatorCalc /></ErrorBoundary>} />
+                  <Route path="/renal-dosing" element={<ErrorBoundary><RenalDoseAdjustmentCalc /></ErrorBoundary>} />
+                  <Route path="/diabetes/medication-algorithm" element={<ErrorBoundary><DiabetesMedicationAlgorithmCalc /></ErrorBoundary>} />
                   {/* Lipid Calculators */}
-                  <Route path="/lipid-panel" element={<LipidPanelCalc />} />
-                  <Route path="/ascvd-risk" element={<AscvdEmrCalc />} />
+                  <Route path="/lipid-panel" element={<ErrorBoundary><LipidPanelCalc /></ErrorBoundary>} />
+                  <Route path="/ascvd-risk" element={<ErrorBoundary><AscvdEmrCalc /></ErrorBoundary>} />
                   {/* Hypertension Calculators */}
-                  <Route path="/gfr-calculator" element={<GfrCalculatorCalc />} />
-                  <Route path="/drug-interactions" element={<DrugInteractionCheckerCalc />} />
-                  <Route path="/htn/treatment-algorithm" element={<AntihypertensiveTreatmentAlgorithmCalc />} />
-                  <Route path="/htn/potency-table" element={<AntihypertensivePotencyTableCalc />} />
+                  <Route path="/gfr-calculator" element={<ErrorBoundary><GfrCalculatorCalc /></ErrorBoundary>} />
+                  <Route path="/drug-interactions" element={<ErrorBoundary><DrugInteractionCheckerCalc /></ErrorBoundary>} />
+                  <Route path="/htn/treatment-algorithm" element={<ErrorBoundary><AntihypertensiveTreatmentAlgorithmCalc /></ErrorBoundary>} />
+                  <Route path="/htn/potency-table" element={<ErrorBoundary><AntihypertensivePotencyTableCalc /></ErrorBoundary>} />
                   {/* Obesity Calculators */}
-                  <Route path="/obesity/bmi-calculator" element={<BmiCalculatorCalc />} />
-                  <Route path="/obesity/waist-height-ratio" element={<WaistHeightRatioCalc />} />
-                  <Route path="/obesity/glp1-algorithm" element={<GLP1ObesityAlgorithmCalc />} />
+                  <Route path="/obesity/bmi-calculator" element={<ErrorBoundary><BmiCalculatorCalc /></ErrorBoundary>} />
+                  <Route path="/obesity/waist-height-ratio" element={<ErrorBoundary><WaistHeightRatioCalc /></ErrorBoundary>} />
+                  <Route path="/obesity/glp1-algorithm" element={<ErrorBoundary><GLP1ObesityAlgorithmCalc /></ErrorBoundary>} />
                   <Route path="*" element={<NotFound />} />
                 </Routes>
               </>
