@@ -19,9 +19,10 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 import {
   GitBranch,
-  ChevronRight,
+  ChevronRight, ChevronDown,
   RotateCcw,
   Activity,
   Heart,
@@ -365,6 +366,7 @@ const strokeProtocol = {
 
 export default function HypertensionTreatment() {
   const [algorithmHistory, setAlgorithmHistory] = useState<string[]>(["start"]);
+  const [potencyOpen, setPotencyOpen] = useState(false);
 
   const currentId = algorithmHistory[algorithmHistory.length - 1];
   const currentNode = algorithmNodes.find((n) => n.id === currentId);
@@ -516,13 +518,26 @@ export default function HypertensionTreatment() {
 
       {/* Drug Potency Table */}
       <Card>
-        <CardHeader>
+        <Collapsible open={potencyOpen} onOpenChange={setPotencyOpen}>
+        <CollapsibleTrigger asChild>
+        <CardHeader className="cursor-pointer hover:bg-muted/30 transition-colors">
+          <div className="flex items-center justify-between">
           <div className="flex items-center gap-2">
             <Gauge className="h-5 w-5" style={{ color: categoryColors.accent }} />
             <CardTitle className="text-lg">Antihypertensive Drug Potency</CardTitle>
           </div>
+          <Button variant="ghost" size="sm" className="h-8 w-8 p-0">
+            {potencyOpen ? (
+              <ChevronDown className="h-4 w-4 text-muted-foreground" />
+            ) : (
+              <ChevronRight className="h-4 w-4 text-muted-foreground" />
+            )}
+          </Button>
+          </div>
           <p className="text-xs text-muted-foreground">Drug efficacy comparison for clinical decision-making</p>
         </CardHeader>
+        </CollapsibleTrigger>
+        <CollapsibleContent>
         <CardContent>
           {/* Key Considerations Alert */}
           <Alert className="mb-4 border-amber-500/30 bg-amber-500/5">
@@ -604,6 +619,8 @@ export default function HypertensionTreatment() {
             </AccordionItem>
           </Accordion>
         </CardContent>
+      </CollapsibleContent>
+        </Collapsible>
       </Card>
 
       {/* Recurrent Stroke Prevention Protocol */}
