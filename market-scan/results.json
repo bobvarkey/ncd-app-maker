@@ -1,52 +1,37 @@
 {
-  "scan_date": "2026-05-22T08:00:18.137151",
-  "stocks_scanned": 9,
+  "scan_date": "2026-05-25T08:00:14.077756",
+  "stocks_scanned": 8,
   "opportunities": [
     {
-      "ticker": "NTPC.BSE",
-      "name": "NTPC",
-      "price": 388.95,
-      "change": -0.9171,
-      "signals": [
-        {
-          "type": "volatility",
-          "value": 2.0246027678113734,
-          "reason": "Range: 2.0%"
-        }
-      ],
-      "prediction_score": 10,
-      "recommendation": "NEUTRAL"
-    },
-    {
-      "ticker": "APOLLOHOSP.BSE",
-      "name": "APOLLOHOSP",
-      "price": 8304.1,
-      "change": 2.5368,
+      "ticker": "ICICIBANK.BSE",
+      "name": "ICICIBANK",
+      "price": 1264.9,
+      "change": 1.7701,
       "signals": [
         {
           "type": "price_rally",
-          "value": 2.5368,
-          "reason": "Rally: +2.5%"
+          "value": 1.7701,
+          "reason": "Rally: +1.8%"
         },
         {
           "type": "volatility",
-          "value": 4.057218116631299,
-          "reason": "Range: 4.1%"
+          "value": 2.220613082307499,
+          "reason": "Range: 2.2%"
         }
       ],
       "prediction_score": 25,
       "recommendation": "NEUTRAL"
     },
     {
-      "ticker": "KOTAKBANK.BSE",
-      "name": "KOTAKBANK",
-      "price": 380.75,
-      "change": -0.6264,
+      "ticker": "COLPAL.BSE",
+      "name": "COLPAL",
+      "price": 2157.5,
+      "change": -0.3188,
       "signals": [
         {
           "type": "volatility",
-          "value": 2.2467532467532556,
-          "reason": "Range: 2.2%"
+          "value": 2.6706231454005933,
+          "reason": "Range: 2.7%"
         }
       ],
       "prediction_score": 10,
@@ -55,21 +40,36 @@
     {
       "ticker": "HINDUNILVR.BSE",
       "name": "HINDUNILVR",
-      "price": 2178.8,
-      "change": -1.3694,
+      "price": 2202.0,
+      "change": 1.0648,
       "signals": [
         {
-          "type": "price_drop",
-          "value": -1.3694,
-          "reason": "Drop: -1.4%"
+          "type": "price_rally",
+          "value": 1.0648,
+          "reason": "Rally: +1.1%"
         },
         {
           "type": "volatility",
-          "value": 2.2364864864864704,
+          "value": 2.2054103622191614,
           "reason": "Range: 2.2%"
         }
       ],
       "prediction_score": 25,
+      "recommendation": "NEUTRAL"
+    },
+    {
+      "ticker": "PIDILITIND.BSE",
+      "name": "PIDILITIND",
+      "price": 1480.1,
+      "change": 0.6118,
+      "signals": [
+        {
+          "type": "volatility",
+          "value": 2.3194323582569174,
+          "reason": "Range: 2.3%"
+        }
+      ],
+      "prediction_score": 10,
       "recommendation": "NEUTRAL"
     }
   ],

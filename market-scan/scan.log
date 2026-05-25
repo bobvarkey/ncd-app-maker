@@ -798,3 +798,28 @@ Top Movers:
   Gainers: APOLLOHOSP.BSE:+2.5%, SUNPHARMA.BSE:+0.6%, CIPLA.BSE:+0.2%
   Losers: HINDUNILVR.BSE:-1.4%, NTPC.BSE:-0.9%, KOTAKBANK.BSE:-0.6%
 =======================================================
+Starting Enhanced Market Scan...
+Fetching 10 quotes...
+  ✅ ICICIBANK: ₹1264.90 (+1.77%)
+  ⚠️ SBIN: Failed
+  ✅ BHARTIARTL: ₹1871.40 (-0.73%)
+  ⚠️ LT: Failed
+  ✅ COLPAL: ₹2157.50 (-0.32%)
+  ✅ KOTAKBANK: ₹384.20 (+0.91%)
+  ✅ HINDUNILVR: ₹2202.00 (+1.06%)
+  ✅ PIDILITIND: ₹1480.10 (+0.61%)
+  ✅ TITAN: ₹4080.95 (-0.07%)
+  ✅ ADANIPOWER: ₹219.30 (-0.05%)
+
+=======================================================
+MARKET SCAN - 2026-05-25 08:00
+=======================================================
+Sensitivity: high | Macro: neutral
+Thresholds: Drop <-1.0%, Rally >1.0%
+Scanned: 8 stocks | Opportunities: 4
+
+
+Top Movers:
+  Gainers: ICICIBANK.BSE:+1.8%, HINDUNILVR.BSE:+1.1%, KOTAKBANK.BSE:+0.9%
+  Losers: BHARTIARTL.BSE:-0.7%, COLPAL.BSE:-0.3%, TITAN.BSE:-0.1%
+=======================================================
