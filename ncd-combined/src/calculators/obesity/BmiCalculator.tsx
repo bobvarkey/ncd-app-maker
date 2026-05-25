@@ -124,7 +124,7 @@ export default function BmiCalculator() {
               </Button>
             </div>
           </div>
-          <div className="flex gap-0.5 pb-2 overflow-x-auto no-print">
+          <div className="flex gap-0.5 pb-2 overflow-x-auto no-print flex-wrap">
             {TABS.map((tab) => (
               <button
                 key={tab.key}
@@ -143,7 +143,7 @@ export default function BmiCalculator() {
         </div>
       </div>
 
-      <main className="mx-auto max-w-2xl px-4 py-6 space-y-6">
+      <main className="mx-auto w-full max-w-2xl px-4 py-6 space-y-6">
         {activeTab === "calculator" && (
           <>
             <Card className="clinical-card border-primary/20">
@@ -376,7 +376,7 @@ export default function BmiCalculator() {
                                     <p className="text-xs text-muted-foreground">{agent.class}</p>
                                   </CardHeader>
                                   <CardContent className="space-y-2 text-sm">
-                                    <div className="grid grid-cols-2 gap-2">
+                                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
                                       <div>
                                         <span className="text-muted-foreground">Dosage:</span>
                                         <p>{agent.dosage}</p>
@@ -417,7 +417,7 @@ export default function BmiCalculator() {
                                   {METABOLIC_SURGERY.map((surgery, i) => (
                                     <div key={i} className="p-3 rounded-lg bg-card/50 border border-border">
                                       <p className="font-medium text-foreground">{surgery.procedure}</p>
-                                      <div className="grid grid-cols-2 gap-2 mt-2 text-sm">
+                                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 mt-2 text-sm">
                                         <div>
                                           <span className="text-muted-foreground">1-year WL:</span>
                                           <p>{surgery.weightLoss1yr}</p>

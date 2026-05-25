@@ -140,7 +140,7 @@ function HypertensionModerate() {
     const d = parseInt(dbp);
     const lines: React.ReactNode[] = [];
 
-    let grade = gradeHTN(s, d);
+    const grade = gradeHTN(s, d);
     lines.push(<span><span className="font-medium">📊 <AbbreviationHover term="BP">BP</AbbreviationHover>: {s}/{d} mmHg — {grade.replace("HTN", "HTN")}</span></span>);
 
     if (grade === "Normal" || grade === "High-Normal") {
@@ -347,7 +347,7 @@ function ObesityModerate() {
 
     let cat: string;
     let rx: string;
-    let med: React.ReactNode[] = [];
+    const med: React.ReactNode[] = [];
 
     if (bmi < 23) {
       cat = "Normal (Indian)"; rx = "Maintain lifestyle.";

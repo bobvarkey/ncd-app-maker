@@ -23,7 +23,11 @@ const InsulinTherapy = () => {
 
   const toggleSection = (section: string) => {
     const newSet = new Set(expandedSections);
-    newSet.has(section) ? newSet.delete(section) : newSet.add(section);
+    if (newSet.has(section)) {
+      newSet.delete(section);
+    } else {
+      newSet.add(section);
+    }
     setExpandedSections(newSet);
   };
 

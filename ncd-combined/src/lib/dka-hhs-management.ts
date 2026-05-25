@@ -305,7 +305,7 @@ export function generateDKA_HHS_ManagementPlan(input: DKA_HHS_Input): DKA_HHS_Ma
   // === POTASSIUM MANAGEMENT (CRITICAL - INSULIN GATED) ===
   let potassium_action = "";
   let potassium_monitoring = "";
-  let potassium_alerts: string[] = [];
+  const potassium_alerts: string[] = [];
 
   if (labs.potassium_meq_l < 3.3) {
     potassium_action = `K+ ${labs.potassium_meq_l} mEq/L — CRITICAL: HOLD ALL INSULIN. Replace K+ to ≥3.3 immediately. Use 40 mEq KCl/L in IV fluids (max 40 mEq/L peripheral, 10 mEq/hr) or 20 mEq/hr via central line. Recheck q1-2h.`;

@@ -47,10 +47,11 @@ export default function LandingPage() {
 
           {/* Hero Image - Doctor with Monitors */}
           <div className="relative rounded-2xl overflow-hidden mb-6 aspect-video bg-gradient-to-br from-pink-600/40 via-purple-500/30 to-rose-500/40 flex items-center justify-center">
-            <div className="text-center">
-              <div className="text-7xl mb-2">👨‍⚕️</div>
-              <p className="text-sm text-gray-300 font-medium">Clinical Decision Support</p>
-            </div>
+            <img
+              src="/doctor-monitors.jpg"
+              alt="Clinical Decision Support"
+              className="absolute inset-0 w-full h-full object-cover"
+            />
             <div className="absolute top-1/3 left-1/4 w-24 h-24 rounded-full bg-pink-500/30 blur-2xl" />
             <div className="absolute bottom-1/3 right-1/4 w-20 h-20 rounded-full bg-purple-500/30 blur-2xl" />
           </div>

@@ -1,0 +1,651 @@
+import { useState } from "react";
+import { AbbreviationHover } from "@/components/AbbreviationHover";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { Alert, AlertDescription } from "@/components/ui/alert";
+import { Separator } from "@/components/ui/separator";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
+import {
+  Activity,
+  AlertTriangle,
+  AlertCircle,
+  Brain,
+  Baby,
+  Heart,
+  Gauge,
+  Info,
+  Kidney,
+  Search,
+  Stethoscope,
+  CheckCircle2,
+  XCircle,
+  Ban,
+} from "lucide-react";
+
+// ─── Color tokens ───
+const accent = "#fb923c";
+const accentBg = "rgba(251,146,60,0.12)";
+const accentBorder = "rgba(251,146,60,0.2)";
+
+// ─── Tabs ───
+const CARD_TABS = [
+  { id: "secondary", label: "Secondary HTN Workup" },
+  { id: "treatment", label: "Treatment Guide" },
+  { id: "emergencies", label: "Hypertensive Emergencies" },
+];
+
+// ═══════════════════════════════════════════════════════════════════════════
+// 1. SECONDARY HYPERTENSION WORKUP
+// ═══════════════════════════════════════════════════════════════════════════
+
+const BP_CLASSIFICATION = [
+  { label: "Normal", sbp: "<120", dbp: "<80", color: "text-emerald-400" },
+  { label: "Elevated", sbp: "120–129", dbp: "<80", color: "text-yellow-400" },
+  { label: "Stage 1 HTN", sbp: "130–139", dbp: "80–89", color: "text-orange-400" },
+  { label: "Stage 2 HTN", sbp: "≥140", dbp: "≥90", color: "text-red-400" },
+  { label: "Crisis", sbp: "≥180", dbp: "≥120", color: "text-rose-400" },
+];
+
+const RED_FLAGS = [
+  { flag: "Age <30 or >55 years at onset", icon: <Activity className="h-3 w-3" /> },
+  { flag: "Resistant HTN (≥3 drugs including diuretic)", icon: <AlertTriangle className="h-3 w-3" /> },
+  { flag: "Sudden worsening of previously controlled BP", icon: <Gauge className="h-3 w-3" /> },
+  { flag: "Severe HTN (≥180/120) at presentation", icon: <AlertCircle className="h-3 w-3" /> },
+  { flag: "Unprovoked or severe hypokalemia", icon: <Stethoscope className="h-3 w-3" /> },
+  { flag: "Episodic symptoms (palpitations, sweating, headache)", icon: <Brain className="h-3 w-3" /> },
+  { flag: "Cushingoid appearance", icon: <Search className="h-3 w-3" /> },
+  { flag: "Abdominal bruit", icon: <Stethoscope className="h-3 w-3" /> },
+  { flag: "Discrepant limb BPs (coarctation)", icon: <Activity className="h-3 w-3" /> },
+];
+
+const CHAPLETS_MNEMONIC: { letter: string; stands: string }[] = [
+  { letter: "C", stands: "Coarctation, Cushing's, Congenital adrenal hyperplasia" },
+  { letter: "H", stands: "Hyperparathyroidism, Hyperthyroidism/Hypothyroidism" },
+  { letter: "A", stands: "Acromegaly, Alcohol, Anxiety, Appetite suppressants" },
+  { letter: "P", stands: "Pheochromocytoma, Pregnancy, Primary aldosteronism" },
+  { letter: "L", stands: "Lead, Licorice, Liddle syndrome" },
+  { letter: "E", stands: "End-stage renal disease, Estrogen (OCPs)" },
+  { letter: "T", stands: "Thyroid disease" },
+  { letter: "S", stands: "Sleep apnea, Stenosis (renal artery)" },
+];
+
+const SECONDARY_WORKUP: { category: string; tests: { name: string; required: boolean }[] }[] = [
+  {
+    category: "History / Information",
+    tests: [
+      { name: "Drug inventory review", required: true },
+      { name: "OSA screening (STOP-BANG)", required: true },
+      { name: "Adrenal CT/MRI", required: false },
+    ],
+  },
+  {
+    category: "Obstructive Sleep Apnea",
+    tests: [
+      { name: "Polysomnography", required: true },
+      { name: "Home sleep study", required: true },
+    ],
+  },
+  {
+    category: "Renal Parenchymal Disease",
+    tests: [
+      { name: "Renal ultrasound", required: true },
+      { name: "Quantitative proteinuria", required: true },
+      { name: "Glomerular filtration rate", required: true },
+    ],
+  },
+  {
+    category: "Renal Artery Stenosis",
+    tests: [
+      { name: "Renal Doppler ultrasound", required: true },
+      { name: "CTA/MRA", required: true },
+      { name: "ACEi/ARB trial", required: false },
+    ],
+  },
+  {
+    category: "Primary Aldosteronism",
+    tests: [
+      { name: "Plasma aldosterone/renin ratio", required: true },
+      { name: "Confirmatory saline suppression test", required: true },
+      { name: "Adrenal vein sampling", required: false },
+    ],
+  },
+  {
+    category: "Thyroid Disorders",
+    tests: [
+      { name: "TSH, Free T4, Free T3", required: true },
+      { name: "Thyroid antibodies", required: false },
+    ],
+  },
+  {
+    category: "Cushing's Syndrome",
+    tests: [
+      { name: "24-hour urinary free cortisol", required: true },
+      { name: "Late-night salivary cortisol", required: true },
+      { name: "Dexamethasone suppression test", required: true },
+    ],
+  },
+  {
+    category: "Pheochromocytoma",
+    tests: [
+      { name: "Plasma/urine metanephrines", required: true },
+      { name: "CT/MRI abdomen", required: true },
+    ],
+  },
+  {
+    category: "Coarctation of Aorta",
+    tests: [
+      { name: "CT angiography", required: true },
+      { name: "Cardiac catheterization", required: false },
+    ],
+  },
+];
+
+// ═══════════════════════════════════════════════════════════════════════════
+// 2. TREATMENT GUIDE
+// ═══════════════════════════════════════════════════════════════════════════
+
+const COMBINATION_TABLE = [
+  { combo: "ACEi/ARB + Thiazide", safe: true, note: "Preferred" },
+  { combo: "ACEi/ARB + DHP-CCB", safe: true, note: "Preferred" },
+  { combo: "ACEi/ARB + BB", safe: false, note: "Not ideal for uncomplicated" },
+  { combo: "Thiazide + BB", safe: false, note: "May cause metabolic issues" },
+  { combo: "ACEi + ARB", safe: false, note: "AVOID — ONTARGET trial showed harm" },
+  { combo: "BB + Non-DHP CCB", safe: false, note: "AVOID — bradycardia risk" },
+];
+
+interface DrugProfile {
+  name: string;
+  class: string;
+  dosing: string;
+  pearls: string;
+  caution?: string;
+}
+
+const ANTIHYPERTENSIVE_DRUGS: DrugProfile[] = [
+  { name: "Chlorthalidone", class: "Thiazide-like", dosing: "12.5–25 mg OD", pearls: "Preferred thiazide — longer T½, stronger CV outcome data vs HCTZ", caution: "Monitor K+, Na+, uric acid" },
+  { name: "Spironolactone", class: "Aldosterone antagonist", dosing: "12.5–50 mg OD", pearls: "Fourth-line in resistant HTN (PATHWAY-2). Also for HF, primary aldosteronism.", caution: "K+ monitoring essential. Gynecomastia." },
+  { name: "Triamterene", class: "K-sparing", dosing: "50–100 mg OD", pearls: "Weak diuretic alone. Used in combo with HCTZ (Dyazide). Caution with ACEi/ARB.", caution: "Monitor K+." },
+  { name: "Benazepril", class: "ACEi", dosing: "5–40 mg/day", pearls: "Prodrug — hepatically activated. Adjust dose in CKD.", caution: "Cough, angioedema (rare). Avoid in pregnancy." },
+  { name: "Moexipril", class: "ACEi", dosing: "7.5–30 mg/day", pearls: "Less cough vs other ACEi? Limited data.", caution: "Same ACEi class effects." },
+  { name: "Labetalol", class: "α/β blocker", dosing: "100–2400 mg/day BID", pearls: "IV: 10 mg over 2 min for emergencies (e.g., aortic dissection, eclampsia). β:α blockade ~3:1 oral, 7:1 IV.", caution: "Avoid in asthma. Don't use in pheochromocytoma alone." },
+  { name: "Carvedilol", class: "α/β blocker", dosing: "6.25–25 mg BID", pearls: "Preferred BB in HFrEF (CAPRICORN, COPERNICUS).", caution: "Titrate slowly. Avoid in asthma." },
+  { name: "Amlodipine", class: "DHP-CCB", dosing: "2.5–10 mg OD", pearls: "Long T½ (30-50h) — OD dosing. Vasoselective. Peripheral edema common.", caution: "Lower extremity edema." },
+  { name: "Nifedipine", class: "DHP-CCB", dosing: "SR: 30–90 mg OD", pearls: "Short-acting IR never use (reflex tachycardia, CV risk). SR/ER/Long-acting only.", caution: "Short-acting form contraindicated." },
+  { name: "Diltiazem", class: "Non-DHP CCB", dosing: "CD: 120–360 mg OD", pearls: "Both BP and rate control — use in AF + HTN.", caution: "Avoid with BB (bradycardia). Negative inotrope." },
+  { name: "Hydralazine", class: "Direct vasodilator", dosing: "25–100 mg TID", pearls: "Use with BB + diuretic (pseudo-tolerance). A-HeFT: reduces mortality in African-Americans with HF.", caution: "Reflex tachycardia, SLE-like syndrome." },
+  { name: "Clonidine", class: "α₂-agonist", dosing: "0.1–0.8 mg BID", pearls: "Useful in HTN + anxiety/opioid withdrawal. IV used for severe HTN.", caution: "Rebound HTN on abrupt stop. Sedation, dry mouth." },
+  { name: "Methyldopa", class: "α₂-agonist", dosing: "250–1000 mg BID", pearls: "Preferred in pregnancy (decades of safety data).", caution: "Sedation, positive Coombs, hemolytic anemia." },
+  { name: "Prazosin", class: "α₁-blocker", dosing: "1–10 mg TID", pearls: "Useful for pheochromocytoma + BPH symptoms. Start at bedtime (syncope risk).", caution: "First-dose syncope. Not 1st-line for HTN." },
+  { name: "Doxazosin", class: "α₁-blocker", dosing: "1–8 mg OD", pearls: "Preferred α-blocker in ALLHAT + ASCOT? Not 1st-line per ESC/ACC.", caution: "No longer 1st line (ALLHAT)." },
+  { name: "Minoxidil", class: "Vasodilator", dosing: "2.5–40 mg BID/TID", pearls: "Most potent oral agent. Requires loop diuretic + BB combo.", caution: "Pericardial effusion. Hirsutism." },
+];
+
+const IV_AGENTS: DrugProfile[] = [
+  { name: "Nitroprusside", class: "NO donor", dosing: "0.25–10 µg/kg/min", pearls: "Gold standard for crisis. Rapid onset/offset.", caution: "Cyanide/thiocyanate toxicity >72h or CKD" },
+  { name: "Fenoldopam", class: "DA₁ agonist", dosing: "0.1–1.6 µg/kg/min", pearls: "Renal vasodilation — preserves GFR. No toxic metabolites.", caution: "Monitor for hypotension" },
+  { name: "Nicardipine", class: "DHP-CCB IV", dosing: "5–15 mg/h", pearls: "No negative inotrope. Used in stroke, encephalopathy.", caution: "May cause reflex tachycardia" },
+  { name: "Clevidipine", class: "DHP-CCB IV", dosing: "1–16 mg/h", pearls: "Ultra-rapid onset/offset — ideal for tight control.", caution: "Lipid emulsion → caution with egg/soy allergy" },
+  { name: "Esmolol", class: "β₁-blocker IV", dosing: "25–300 µg/kg/min", pearls: "Ultra-short T½ (2 min) — titrate minute-to-minute.", caution: "Avoid in decompensated HF" },
+];
+
+// ═══════════════════════════════════════════════════════════════════════════
+// 3. HYPERTENSIVE EMERGENCIES
+// ═══════════════════════════════════════════════════════════════════════════
+
+interface EmergencyProtocol {
+  scenario: string;
+  target: string;
+  timeline: string;
+  preferred: string[];
+  avoid: string[];
+  notes: string;
+}
+
+const EMERGENCIES: EmergencyProtocol[] = [
+  {
+    scenario: "Aortic Dissection",
+    target: "SBP <120 mmHg",
+    timeline: "0–10 min",
+    preferred: ["Esmolol IV", "Labetalol IV", "Nitroprusside (+ BB)"],
+    avoid: ["Hydralazine (reflex tachycardia)"],
+    notes: "Rate control BEFORE vasodilation. β-blockade first to reduce dP/dt, then add vasodilator if needed.",
+  },
+  {
+    scenario: "Acute Pulmonary Edema",
+    target: "MAP ↓ 25%",
+    timeline: "Minutes–1 h",
+    preferred: ["Nitroglycerin IV", "Nitroprusside", "Loop diuretics"],
+    avoid: ["β-blockers (decompensated HF)"],
+    notes: "Preload + afterload reduction. Avoid negative inotropes in acute decompensated HF.",
+  },
+  {
+    scenario: "Acute MI / ACS",
+    target: "SBP <140 mmHg",
+    timeline: "~1 h",
+    preferred: ["Nitroglycerin IV", "Esmolol"],
+    avoid: ["Nitroprusside", "Nifedipine"],
+    notes: "Prevent reflex tachycardia which increases myocardial O₂ demand. Nifedipine increases mortality in ACS.",
+  },
+  {
+    scenario: "Hypertensive Encephalopathy",
+    target: "MAP ↓ 20–25%",
+    timeline: "1 h, then gradual",
+    preferred: ["Labetalol IV", "Nicardipine IV", "Nitroprusside"],
+    avoid: ["Clonidine (sedation)", "Methyldopa"],
+    notes: "Reduce MAP by max 25% in first hour. Over-aggressive reduction → cerebral ischemia.",
+  },
+  {
+    scenario: "Eclampsia / Pre-eclampsia",
+    target: "SBP <160, DBP <110",
+    timeline: "30–60 min",
+    preferred: ["Labetalol IV", "Hydralazine IV", "MgSO₄"],
+    avoid: ["ACEi/ARBs (teratogenic)", "Nitroprusside (fetal cyanide)"],
+    notes: "MgSO₄ for seizure prophylaxis regardless of BP. Delivery definitive treatment.",
+  },
+  {
+    scenario: "Pheochromocytoma Crisis",
+    target: "Normalize BP",
+    timeline: "Minutes",
+    preferred: ["Phentolamine IV", "Nicardipine IV"],
+    avoid: ["β-blockers ALONE (unopposed α-stimulation)"],
+    notes: "α-blockade FIRST, then add β-blocker if needed. Phentolamine 5-10 mg IV push.",
+  },
+  {
+    scenario: "Acute Stroke (Ischemic)",
+    target: "<185/110 (tPA) / <220/120",
+    timeline: "~1 h",
+    preferred: ["Labetalol IV", "Nicardipine IV"],
+    avoid: ["Aggressive lowering (maintain perfusion)"],
+    notes: "If tPA candidate → lower to <185/110. If no tPA → only lower if >220/120 or MAP >130.",
+  },
+  {
+    scenario: "Acute Kidney Injury",
+    target: "MAP ↓ 20–25%",
+    timeline: "Hours",
+    preferred: ["Fenoldopam", "Nicardipine IV", "Clevidipine"],
+    avoid: ["ACEi/ARBs acutely", "Nitroprusside (thiocyanate)"],
+    notes: "Fenoldopam has renoprotective effects (dopamine-1 agonist). Avoid volume depletion.",
+  },
+];
+
+// ═══════════════════════════════════════════════════════════════════════════
+// COMPONENT
+// ═══════════════════════════════════════════════════════════════════════════
+
+export default function HypertensionClinicalCards() {
+  const [activeCard, setActiveCard] = useState("secondary");
+  const [searchDrug, setSearchDrug] = useState("");
+
+  return (
+    <div className="space-y-5 animate-slide-in">
+      <div>
+        <h1 className="text-xl font-heading font-bold flex items-center gap-2">
+          <Heart className="w-5 h-5 text-primary" />
+          Hypertension Clinical Reference
+        </h1>
+        <p className="text-sm text-muted-foreground">
+          Point-of-care clinical cards covering secondary HTN workup, treatment guide, and hypertensive emergencies
+        </p>
+      </div>
+
+      {/* Tab navigation */}
+      <div className="flex flex-wrap items-center gap-2">
+        {CARD_TABS.map((tab) => (
+          <button
+            key={tab.id}
+            onClick={() => setActiveCard(tab.id)}
+            className={`px-4 py-2 rounded-lg text-sm font-semibold transition-all ${
+              activeCard === tab.id
+                ? "bg-primary text-primary-foreground shadow-sm"
+                : "bg-muted/50 text-muted-foreground hover:bg-muted hover:text-foreground"
+            }`}
+          >
+            {tab.label}
+          </button>
+        ))}
+      </div>
+
+      {/* ───── CARD 1: SECONDARY HTN ───── */}
+      {activeCard === "secondary" && (
+        <div className="space-y-5">
+          {/* BP Classification */}
+          <Card className="border-border/50">
+            <CardHeader className="pb-2">
+              <CardTitle className="text-base flex items-center gap-2">
+                <Gauge className="h-4 w-4" />
+                BP Classification (ACC/AHA 2017)
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-2">
+                {BP_CLASSIFICATION.map((bpc) => (
+                  <div key={bpc.label} className="p-2.5 rounded-lg bg-muted/40 text-center border border-border/30">
+                    <p className={`text-sm font-bold ${bpc.color}`}>{bpc.label}</p>
+                    <p className="text-xs text-muted-foreground mt-0.5">
+                      SBP {bpc.sbp}
+                    </p>
+                    <p className="text-xs text-muted-foreground">DBP {bpc.dbp}</p>
+                  </div>
+                ))}
+              </div>
+            </CardContent>
+          </Card>
+
+          {/* Red Flags */}
+          <Card className="border-rose-500/30 bg-rose-500/5">
+            <CardHeader className="pb-1">
+              <CardTitle className="text-base flex items-center gap-2 text-rose-400">
+                <AlertTriangle className="h-4 w-4" />
+                When to Suspect Secondary HTN
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                {RED_FLAGS.map((rf) => (
+                  <div key={rf.flag} className="flex items-start gap-2 text-sm">
+                    <span className="text-rose-400 mt-0.5 shrink-0">{rf.icon}</span>
+                    <span>{rf.flag}</span>
+                  </div>
+                ))}
+              </div>
+            </CardContent>
+          </Card>
+
+          {/* CHAPLETS Mnemonic */}
+          <Card className="border-blue-500/30 bg-blue-500/5">
+            <CardHeader className="pb-1">
+              <CardTitle className="text-base flex items-center gap-2 text-blue-400">
+                <Brain className="h-4 w-4" />
+                CHAPLETS Mnemonic — Causes of Secondary HTN
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 text-sm">
+                {CHAPLETS_MNEMONIC.map((m) => (
+                  <div key={m.letter} className="p-2 rounded bg-blue-500/10 border border-blue-500/20">
+                    <span className="font-bold text-blue-400">{m.letter}</span> — {m.stands}
+                  </div>
+                ))}
+              </div>
+            </CardContent>
+          </Card>
+
+          {/* 5-Step Workup */}
+          <Card className="border-border/50">
+            <CardHeader className="pb-2">
+              <CardTitle className="text-base flex items-center gap-2">
+                <Search className="h-4 w-4" />
+                5-Step Diagnostic Workup
+              </CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-2 text-sm">
+              {[
+                { step: 1, title: "Initial Assessment", desc: "History, exam, proper BP measurement" },
+                { step: 2, title: "Baseline Investigations", desc: "CBC, Cr/eGFR, electrolytes, fasting glucose/HbA1c, lipids, ECG, urinalysis" },
+                { step: 3, title: "Screen for Secondary Causes", desc: "UACR, TSH/fT4, aldosterone/renin ratio, sleep study, renal Doppler" },
+                { step: 4, title: "Confirmatory Testing", desc: "Salt suppression test, CTA/MRA, 24h urine catecholamines, adrenal vein sampling" },
+                { step: 5, title: "Targeted Treatment", desc: "Treat underlying cause, de-escalate antihypertensives, monitor response" },
+              ].map((s) => (
+                <div key={s.step} className="flex items-start gap-3 p-2.5 rounded-lg bg-muted/30 border border-border/30">
+                  <span className="w-6 h-6 rounded-full bg-primary/15 text-primary text-xs font-bold flex items-center justify-center shrink-0 mt-0.5">
+                    {s.step}
+                  </span>
+                  <div>
+                    <p className="font-medium">{s.title}</p>
+                    <p className="text-xs text-muted-foreground mt-0.5">{s.desc}</p>
+                  </div>
+                </div>
+              ))}
+            </CardContent>
+          </Card>
+
+          {/* Detailed Workup Table */}
+          <Card className="border-border/50">
+            <CardHeader className="pb-2">
+              <CardTitle className="text-base flex items-center gap-2">
+                <Stethoscope className="h-4 w-4" />
+                Condition-Specific Workup
+              </CardTitle>
+            </CardHeader>
+            <CardContent className="p-0 overflow-x-auto">
+              <Table>
+                <TableHeader>
+                  <TableRow className="bg-muted/50">
+                    <TableHead className="min-w-[150px]">Condition</TableHead>
+                    <TableHead className="min-w-[180px]">Required</TableHead>
+                    <TableHead className="min-w-[180px]">Recommended</TableHead>
+                  </TableRow>
+                </TableHeader>
+                <TableBody>
+                  {SECONDARY_WORKUP.map((cat) => (
+                    <TableRow key={cat.category}>
+                      <TableCell className="font-medium">{cat.category}</TableCell>
+                      <TableCell>
+                        <div className="space-y-1">
+                          {cat.tests.filter(t => t.required).map((t) => (
+                            <Badge key={t.name} variant="secondary" className="text-xs mr-1 bg-purple-500/15 text-purple-400 border-purple-500/30">
+                              {t.name}
+                            </Badge>
+                          ))}
+                        </div>
+                      </TableCell>
+                      <TableCell>
+                        <div className="space-y-1">
+                          {cat.tests.filter(t => !t.required).map((t) => (
+                            <Badge key={t.name} variant="outline" className="text-xs mr-1 bg-emerald-500/10 text-emerald-400 border-emerald-500/30">
+                              {t.name}
+                            </Badge>
+                          ))}
+                        </div>
+                      </TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            </CardContent>
+          </Card>
+        </div>
+      )}
+
+      {/* ───── CARD 2: TREATMENT GUIDE ───── */}
+      {activeCard === "treatment" && (
+        <div className="space-y-5">
+          {/* Combination Therapy */}
+          <Card className="border-border/50">
+            <CardHeader className="pb-2">
+              <CardTitle className="text-base flex items-center gap-2">
+                <Heart className="h-4 w-4" />
+                Combination Therapy
+              </CardTitle>
+            </CardHeader>
+            <CardContent className="p-0 overflow-x-auto">
+              <Table>
+                <TableHeader>
+                  <TableRow className="bg-muted/50">
+                    <TableHead>Combination</TableHead>
+                    <TableHead className="text-center">Status</TableHead>
+                    <TableHead>Notes</TableHead>
+                  </TableRow>
+                </TableHeader>
+                <TableBody>
+                  {COMBINATION_TABLE.map((c) => (
+                    <TableRow key={c.combo}>
+                      <TableCell className="font-medium">{c.combo}</TableCell>
+                      <TableCell className="text-center">
+                        {c.safe ? (
+                          <CheckCircle2 className="h-4 w-4 text-emerald-400 inline" />
+                        ) : (
+                          <XCircle className="h-4 w-4 text-rose-400 inline" />
+                        )}
+                      </TableCell>
+                      <TableCell className="text-xs text-muted-foreground">{c.note}</TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            </CardContent>
+          </Card>
+
+          {/* Search */}
+          <div className="relative">
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+            <input
+              type="text"
+              placeholder="Search drugs..."
+              value={searchDrug}
+              onChange={(e) => setSearchDrug(e.target.value)}
+              className="w-full h-10 pl-9 pr-3 rounded-lg border border-input bg-background text-sm"
+            />
+          </div>
+
+          {/* Drug profiles grid */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+            {(searchDrug
+              ? ANTIHYPERTENSIVE_DRUGS.filter(
+                  (d) =>
+                    d.name.toLowerCase().includes(searchDrug.toLowerCase()) ||
+                    d.class.toLowerCase().includes(searchDrug.toLowerCase())
+                )
+              : ANTIHYPERTENSIVE_DRUGS
+            ).map((drug) => (
+              <Card key={drug.name} className="border-l-4" style={{ borderLeftColor: accent }}>
+                <CardHeader className="pb-1">
+                  <div className="flex items-start justify-between gap-1">
+                    <div>
+                      <CardTitle className="text-sm font-bold">{drug.name}</CardTitle>
+                      <p className="text-xs text-muted-foreground">{drug.class}</p>
+                    </div>
+                    <Badge variant="outline" className="shrink-0 text-xs">{drug.dosing}</Badge>
+                  </div>
+                </CardHeader>
+                <CardContent className="text-xs space-y-2">
+                  <p className="text-muted-foreground">{drug.pearls}</p>
+                  {drug.caution && (
+                    <p className="flex items-start gap-1 text-amber-400">
+                      <AlertTriangle className="h-3 w-3 mt-0.5 shrink-0" />
+                      <span>{drug.caution}</span>
+                    </p>
+                  )}
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+
+          {/* IV Agents */}
+          <Card className="border-primary/30 bg-primary/5">
+            <CardHeader className="pb-2">
+              <CardTitle className="text-base flex items-center gap-2">
+                <Activity className="h-4 w-4" />
+                IV Agents for Hypertensive Crisis
+              </CardTitle>
+            </CardHeader>
+            <CardContent className="p-0 overflow-x-auto">
+              <Table>
+                <TableHeader>
+                  <TableRow className="bg-muted/50">
+                    <TableHead>Drug</TableHead>
+                    <TableHead>Class</TableHead>
+                    <TableHead>Dosing</TableHead>
+                    <TableHead>Clinical Pearls</TableHead>
+                  </TableRow>
+                </TableHeader>
+                <TableBody>
+                  {IV_AGENTS.map((d) => (
+                    <TableRow key={d.name}>
+                      <TableCell className="font-medium">{d.name}</TableCell>
+                      <TableCell className="text-xs">{d.class}</TableCell>
+                      <TableCell className="text-xs font-mono">{d.dosing}</TableCell>
+                      <TableCell className="text-xs text-muted-foreground">{d.pearls}</TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            </CardContent>
+          </Card>
+        </div>
+      )}
+
+      {/* ───── CARD 3: HYPERTENSIVE EMERGENCIES ───── */}
+      {activeCard === "emergencies" && (
+        <div className="space-y-5">
+          <p className="text-xs text-muted-foreground">
+            Scenario-specific management algorithms for acute hypertensive crises with timelines, BP targets, preferred drugs, and agents to avoid.
+          </p>
+
+          <div className="space-y-4">
+            {EMERGENCIES.map((em) => (
+              <Card key={em.scenario} className={`border-l-4 ${
+                em.scenario.includes("Aortic Dissection") || em.scenario.includes("Eclampsia")
+                  ? "border-rose-500" 
+                  : em.scenario.includes("Encephalopathy") || em.scenario.includes("Stroke")
+                  ? "border-amber-500"
+                  : "border-primary"
+              }`}>
+                <CardHeader className="pb-2">
+                  <CardTitle className="text-sm flex items-center gap-2">
+                    <Activity className="h-4 w-4 shrink-0" />
+                    {em.scenario}
+                    <Badge className="ml-auto shrink-0 text-[10px]" variant="outline">
+                      {em.timeline}
+                    </Badge>
+                  </CardTitle>
+                </CardHeader>
+                <CardContent className="space-y-2 text-sm">
+                  <div className="flex flex-wrap items-center gap-2">
+                    <span className="text-xs text-muted-foreground">Target:</span>
+                    <Badge variant="secondary" className="text-xs">{em.target}</Badge>
+                  </div>
+
+                  <div className="space-y-1">
+                    <p className="text-xs font-medium flex items-center gap-1">
+                      <CheckCircle2 className="h-3 w-3 text-emerald-400" /> Preferred
+                    </p>
+                    <div className="flex flex-wrap gap-1.5">
+                      {em.preferred.map((d) => (
+                        <Badge key={d} className="text-xs bg-emerald-500/10 text-emerald-400 border-emerald-500/30">
+                          {d}
+                        </Badge>
+                      ))}
+                    </div>
+                  </div>
+
+                  <div className="space-y-1">
+                    <p className="text-xs font-medium flex items-center gap-1">
+                      <Ban className="h-3 w-3 text-rose-400" /> Avoid
+                    </p>
+                    <div className="flex flex-wrap gap-1.5">
+                      {em.avoid.map((d) => (
+                        <Badge key={d} variant="destructive" className="text-xs">
+                          {d}
+                        </Badge>
+                      ))}
+                    </div>
+                  </div>
+
+                  <Alert className="bg-muted/30 border-border/50">
+                    <Info className="h-3 w-3" />
+                    <AlertDescription className="text-xs">{em.notes}</AlertDescription>
+                  </Alert>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}

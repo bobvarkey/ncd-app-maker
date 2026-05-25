@@ -14,6 +14,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { GitHubSyncPanel } from "@/components/GitHubSyncPanel";
 import {
   Collapsible,
   CollapsibleContent,
@@ -21,7 +22,6 @@ import {
 } from "@/components/ui/collapsible";
 
 interface PrescriptionState {
-  visible: boolean;
   content: React.ReactNode;
   severity?: string;
 }
@@ -1512,6 +1512,13 @@ export default function Home() {
                 </div>
               </div>
             </Link>
+          </div>
+        </section>
+
+        {/* GitHub Sync Panel */}
+        <section>
+          <div className="max-w-md">
+            <GitHubSyncPanel />
           </div>
         </section>
 

@@ -237,7 +237,7 @@ export function AbbrText({ text, className }: { text: string; className?: string
   // Build regex pattern: match any known abbreviation as a whole word
   // (preceded by start/whitespace/paren/slash, followed by end/whitespace/paren/slash/punctuation)
   const escapedTerms = SORTED_TERMS.map(t => t.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'));
-  const pattern = new RegExp(`(${escapedTerms.join('|')})(?=[\s\.,;:/\\)\\]\\!\\?\\-\\+]|$)`, 'g');
+  const pattern = new RegExp(`(${escapedTerms.join('|')})(?=[\\s.,;:/)\]!?-+]|$)`, 'g');
 
   const parts: React.ReactNode[] = [];
   let lastIndex = 0;

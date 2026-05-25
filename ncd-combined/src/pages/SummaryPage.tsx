@@ -146,7 +146,7 @@ const SummaryPage = () => {
             return (
               <div key={idx} className={`clinical-card border-l-4 p-3 ${categoryColor[group.category]}`}>
                 <button onClick={() => setExpandedMeds(prev => {
-                  const n = new Set(prev); n.has(idx) ? n.delete(idx) : n.add(idx); return n;
+                  const n = new Set(prev); if (n.has(idx)) { n.delete(idx); } else { n.add(idx); } return n;
                 })} className="w-full text-left">
                   <div className="flex items-center justify-between">
                     <div className="min-w-0">
