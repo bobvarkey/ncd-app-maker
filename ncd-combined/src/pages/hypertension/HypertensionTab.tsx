@@ -11,11 +11,13 @@ import {
   Pill,
   BookOpen,
   ChevronRight,
-  Stethoscope
+  Stethoscope,
+  Search
 } from "lucide-react";
 import HypertensionOverview from "./HypertensionOverview";
 import HypertensionAssessment from "./HypertensionAssessment";
 import HypertensionTreatment from "./HypertensionTreatment";
+import HypertensionClinicalCards from "./HypertensionClinicalCards";
 
 // Category colors for hypertension (orange theme)
 const categoryColors = {
@@ -73,21 +75,22 @@ export default function HypertensionTab() {
       {/* Main Content Tabs */}
       <section className="max-w-6xl mx-auto px-6 pb-16">
         <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6">
-          <TabsList className="grid w-full grid-cols-3 lg:grid-cols-4 gap-1">
+          <TabsList className="grid w-full grid-cols-4 gap-1">
             <TabsTrigger value="overview" className="flex items-center gap-2">
               <BookOpen className="h-4 w-4" />
-              <span className="hidden sm:inline">Overview</span>
-              <span className="sm:hidden">Overview</span>
+              <span>Overview</span>
             </TabsTrigger>
             <TabsTrigger value="assessment" className="flex items-center gap-2">
               <Stethoscope className="h-4 w-4" />
-              <span className="hidden sm:inline">Assessment</span>
-              <span className="sm:hidden">Assess</span>
+              <span>Assess</span>
             </TabsTrigger>
             <TabsTrigger value="treatment" className="flex items-center gap-2">
               <Pill className="h-4 w-4" />
-              <span className="hidden sm:inline">Treatment</span>
-              <span className="sm:hidden">Treat</span>
+              <span>Treat</span>
+            </TabsTrigger>
+            <TabsTrigger value="workup" className="flex items-center gap-2">
+              <Search className="h-4 w-4" />
+              <span>Workup</span>
             </TabsTrigger>
           </TabsList>
 
@@ -101,6 +104,9 @@ export default function HypertensionTab() {
 
           <TabsContent value="treatment" className="space-y-6">
             <HypertensionTreatment />
+          </TabsContent>
+          <TabsContent value="workup" className="space-y-6">
+            <HypertensionClinicalCards />
           </TabsContent>
         </Tabs>
       </section>
