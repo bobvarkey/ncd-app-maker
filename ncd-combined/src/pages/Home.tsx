@@ -1185,19 +1185,6 @@ export default function Home() {
           if (values.tg) localStorage.setItem("ocr_tg", values.tg);
         }} />
 
-        {/* Dashboard Cards Grid */}
-        <section>
-          <h2 className="text-lg font-semibold mb-4 flex items-center gap-2">
-            <Activity className="h-5 w-5 text-primary" />
-            Condition Modules
-          </h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
-            {dashboardCards.map((card) => (
-              <DashboardCard key={card.title} {...card} />
-            ))}
-          </div>
-        </section>
-
         {/* Quick Actions */}
         <section>
           <h2 className="text-lg font-semibold mb-4 flex items-center gap-2">
@@ -1207,6 +1194,19 @@ export default function Home() {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
             {quickActions.map((action) => (
               <QuickAction key={action.title} {...action} />
+            ))}
+          </div>
+        </section>
+
+        {/* Dashboard Cards Grid */}
+        <section>
+          <h2 className="text-lg font-semibold mb-4 flex items-center gap-2">
+            <Activity className="h-5 w-5 text-primary" />
+            Condition Modules
+          </h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
+            {dashboardCards.map((card) => (
+              <DashboardCard key={card.title} {...card} />
             ))}
           </div>
         </section>
