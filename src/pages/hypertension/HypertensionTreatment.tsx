@@ -606,6 +606,88 @@ export default function HypertensionTreatment() {
         </AccordionItem>
       </Accordion>
 
+      {/* Antihypertensive Doses */}
+      <Accordion type="single" collapsible className="w-full">
+        <AccordionItem value="doses" className="border-2 border-orange-500/20 rounded-xl bg-card shadow-sm overflow-hidden">
+          <AccordionTrigger className="px-6 py-4 hover:no-underline hover:bg-muted/50">
+            <div className="flex items-center gap-2 text-left">
+              <Gauge className="h-5 w-5" style={{ color: categoryColors.accent }} />
+              <div>
+                <CardTitle className="text-lg">Antihypertensive Doses (Adult)</CardTitle>
+                <p className="text-xs text-muted-foreground mt-0.5">Starting, usual and max oral doses</p>
+              </div>
+            </div>
+          </AccordionTrigger>
+          <AccordionContent className="px-6 pb-6">
+            <div className="overflow-x-auto">
+              <Table>
+                <TableHeader>
+                  <TableRow>
+                    <TableHead>Drug</TableHead>
+                    <TableHead>Class</TableHead>
+                    <TableHead>Start</TableHead>
+                    <TableHead>Usual</TableHead>
+                    <TableHead>Max / day</TableHead>
+                    <TableHead>Freq</TableHead>
+                  </TableRow>
+                </TableHeader>
+                <TableBody>
+                  {[
+                    ["Amlodipine", "DHP CCB", "2.5–5 mg", "5–10 mg", "10 mg", "OD"],
+                    ["Cilnidipine", "DHP CCB", "5 mg", "10 mg", "20 mg", "OD"],
+                    ["Nifedipine SR", "DHP CCB", "30 mg", "30–60 mg", "120 mg", "OD–BD"],
+                    ["Diltiazem SR", "Non-DHP CCB", "120 mg", "180–240 mg", "360 mg", "OD"],
+                    ["Verapamil SR", "Non-DHP CCB", "120 mg", "180–240 mg", "480 mg", "OD–BD"],
+                    ["Enalapril", "ACEi", "5 mg", "10–20 mg", "40 mg", "OD–BD"],
+                    ["Ramipril", "ACEi", "2.5 mg", "5–10 mg", "10 mg", "OD"],
+                    ["Perindopril", "ACEi", "4 mg", "4–8 mg", "16 mg", "OD"],
+                    ["Lisinopril", "ACEi", "5–10 mg", "20–40 mg", "80 mg", "OD"],
+                    ["Captopril", "ACEi", "12.5 mg", "25–50 mg", "150 mg", "BD–TDS"],
+                    ["Losartan", "ARB", "25–50 mg", "50–100 mg", "100 mg", "OD"],
+                    ["Telmisartan", "ARB", "20–40 mg", "40–80 mg", "80 mg", "OD"],
+                    ["Olmesartan", "ARB", "10–20 mg", "20–40 mg", "40 mg", "OD"],
+                    ["Valsartan", "ARB", "80 mg", "160 mg", "320 mg", "OD"],
+                    ["Sacubitril/Valsartan", "ARNI", "24/26–49/51 mg", "97/103 mg", "194/206 mg", "BD"],
+                    ["Hydrochlorothiazide", "Thiazide", "12.5 mg", "12.5–25 mg", "50 mg", "OD"],
+                    ["Chlorthalidone", "Thiazide-like", "12.5 mg", "25 mg", "50 mg", "OD"],
+                    ["Indapamide SR", "Thiazide-like", "1.5 mg", "1.5 mg", "1.5 mg", "OD"],
+                    ["Furosemide", "Loop", "20–40 mg", "40–80 mg", "600 mg", "OD–BD"],
+                    ["Torsemide", "Loop", "5 mg", "10–20 mg", "200 mg", "OD"],
+                    ["Spironolactone", "MRA", "12.5–25 mg", "25–50 mg", "100 mg", "OD"],
+                    ["Eplerenone", "MRA", "25 mg", "50 mg", "100 mg", "OD–BD"],
+                    ["Amiloride", "K-sparing", "5 mg", "5–10 mg", "20 mg", "OD"],
+                    ["Atenolol", "β-blocker", "25–50 mg", "50–100 mg", "100 mg", "OD"],
+                    ["Metoprolol succinate", "β-blocker", "25 mg", "100–200 mg", "400 mg", "OD"],
+                    ["Bisoprolol", "β-blocker", "2.5 mg", "5–10 mg", "20 mg", "OD"],
+                    ["Carvedilol", "α/β-blocker", "3.125 mg", "12.5–25 mg", "50 mg", "BD"],
+                    ["Nebivolol", "β-blocker (NO)", "2.5 mg", "5–10 mg", "40 mg", "OD"],
+                    ["Labetalol", "α/β-blocker", "100 mg", "200–400 mg", "2400 mg", "BD"],
+                    ["Prazosin", "α-blocker", "1 mg HS", "2–10 mg", "20 mg", "BD–TDS"],
+                    ["Doxazosin", "α-blocker", "1 mg HS", "2–8 mg", "16 mg", "OD"],
+                    ["Clonidine", "Central α2", "0.1 mg", "0.2–0.6 mg", "2.4 mg", "BD–TDS"],
+                    ["Methyldopa", "Central α2", "250 mg", "500–1000 mg", "3000 mg", "BD–TDS"],
+                    ["Hydralazine", "Vasodilator", "25 mg", "50–100 mg", "300 mg", "TDS–QID"],
+                    ["Minoxidil", "Vasodilator", "2.5 mg", "10–40 mg", "100 mg", "OD–BD"],
+                  ].map((row, i) => (
+                    <TableRow key={i}>
+                      <TableCell className="font-medium">{row[0]}</TableCell>
+                      <TableCell className="text-xs text-muted-foreground">{row[1]}</TableCell>
+                      <TableCell className="text-xs">{row[2]}</TableCell>
+                      <TableCell className="text-xs">{row[3]}</TableCell>
+                      <TableCell className="text-xs">{row[4]}</TableCell>
+                      <TableCell className="text-xs">{row[5]}</TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            </div>
+            <p className="text-xs text-muted-foreground mt-3">
+              Doses are typical adult oral starting/usual/max ranges. Adjust for renal/hepatic function, age, and comorbidity. Always check current prescribing information.
+            </p>
+          </AccordionContent>
+        </AccordionItem>
+      </Accordion>
+
       {/* Recurrent Stroke Prevention Protocol */}
       <Card>
         <CardHeader>
