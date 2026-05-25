@@ -111,10 +111,11 @@ export default function HypertensionTab() {
         <h2 className="text-sm font-medium text-muted-foreground uppercase tracking-wider mb-4">
           Quick Navigation
         </h2>
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
           {[
             { label: "GFR Calculator", icon: Activity, tab: "assessment" },
             { label: "Drug Interactions", icon: Pill, tab: "assessment" },
+            { label: "Secondary HTN", icon: Stethoscope, tab: "assessment" },
             { label: "Treatment Algorithm", icon: ClipboardList, tab: "treatment" },
             { label: "Potency Table", icon: BookOpen, tab: "treatment" },
           ].map((item) => (

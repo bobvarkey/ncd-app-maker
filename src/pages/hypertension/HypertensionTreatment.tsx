@@ -511,96 +511,100 @@ export default function HypertensionTreatment() {
       </Card>
 
       {/* Drug Potency Table */}
-      <Card>
-        <CardHeader>
-          <div className="flex items-center gap-2">
-            <Gauge className="h-5 w-5" style={{ color: categoryColors.accent }} />
-            <CardTitle className="text-lg">Antihypertensive Drug Potency</CardTitle>
-          </div>
-          <p className="text-xs text-muted-foreground">Drug efficacy comparison for clinical decision-making</p>
-        </CardHeader>
-        <CardContent>
-          {/* Key Considerations Alert */}
-          <Alert className="mb-4 border-amber-500/30 bg-amber-500/5">
-            <Info className="h-4 w-4 text-amber-500" />
-            <AlertDescription className="text-amber-600 text-sm">
-              Potency alone should not drive drug selection — consider comorbidities, side effects, and patient preferences.
-              Thiazide-like diuretics (chlorthalidone, indapamide) preferred over HCTZ for cardiovascular outcomes.
-            </AlertDescription>
-          </Alert>
+      <Accordion type="single" collapsible defaultValue="potency" className="w-full">
+        <AccordionItem value="potency" className="border-2 border-orange-500/20 rounded-xl bg-card shadow-sm overflow-hidden">
+          <AccordionTrigger className="px-6 py-4 hover:no-underline hover:bg-muted/50 rounded-t-xl transition-colors [&[data-state=open]>svg]:rotate-180">
+            <div className="flex flex-col items-start gap-1">
+              <div className="flex items-center gap-2">
+                <Gauge className="h-5 w-5" style={{ color: categoryColors.accent }} />
+                <span className="text-lg font-semibold">Antihypertensive Drug Potency</span>
+              </div>
+              <span className="text-xs text-muted-foreground">Drug efficacy comparison for clinical decision-making</span>
+            </div>
+          </AccordionTrigger>
+          <AccordionContent className="px-6 pb-6">
+            {/* Key Considerations Alert */}
+            <Alert className="mb-4 border-amber-500/30 bg-amber-500/5">
+              <Info className="h-4 w-4 text-amber-500" />
+              <AlertDescription className="text-amber-600 text-sm">
+                Potency alone should not drive drug selection — consider comorbidities, side effects, and patient preferences.
+                Thiazide-like diuretics (chlorthalidone, indapamide) preferred over HCTZ for cardiovascular outcomes.
+              </AlertDescription>
+            </Alert>
 
-          <div className="overflow-x-auto">
-            <Table>
-              <TableHeader>
-                <TableRow>
-                  <TableHead className="w-28">Potency</TableHead>
-                  <TableHead>Drug Class</TableHead>
-                  <TableHead>Examples</TableHead>
-                  <TableHead>Starting Dose</TableHead>
-                  <TableHead className="w-1/3">Best Use</TableHead>
-                </TableRow>
-              </TableHeader>
-              <TableBody>
-                {drugData.map((row, index) => (
-                  <TableRow key={index} className="hover:bg-muted/50">
-                    <TableCell>
-                      <Badge variant="outline" className={getPotencyColor(row.potency)}>
-                        {row.potency}
-                      </Badge>
-                    </TableCell>
-                    <TableCell className="font-medium">{row.drugClass}</TableCell>
-                    <TableCell className="text-sm text-muted-foreground">{row.examples}</TableCell>
-                    <TableCell className="text-sm">{row.startingDose}</TableCell>
-                    <TableCell className="text-sm text-muted-foreground">{row.bestUse}</TableCell>
+            <div className="overflow-x-auto">
+              <Table>
+                <TableHeader>
+                  <TableRow>
+                    <TableHead className="w-28">Potency</TableHead>
+                    <TableHead>Drug Class</TableHead>
+                    <TableHead>Examples</TableHead>
+                    <TableHead>Starting Dose</TableHead>
+                    <TableHead className="w-1/3">Best Use</TableHead>
                   </TableRow>
-                ))}
-              </TableBody>
-            </Table>
-          </div>
+                </TableHeader>
+                <TableBody>
+                  {drugData.map((row, index) => (
+                    <TableRow key={index} className="hover:bg-muted/50">
+                      <TableCell>
+                        <Badge variant="outline" className={getPotencyColor(row.potency)}>
+                          {row.potency}
+                        </Badge>
+                      </TableCell>
+                      <TableCell className="font-medium">{row.drugClass}</TableCell>
+                      <TableCell className="text-sm text-muted-foreground">{row.examples}</TableCell>
+                      <TableCell className="text-sm">{row.startingDose}</TableCell>
+                      <TableCell className="text-sm text-muted-foreground">{row.bestUse}</TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            </div>
 
-          {/* Clinical Pearls */}
-          <Accordion type="single" collapsible className="mt-4">
-            <AccordionItem value="pearls">
-              <AccordionTrigger className="text-sm font-medium">Clinical Pearls</AccordionTrigger>
-              <AccordionContent>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
-                  <div className="space-y-2">
-                    <p className="font-medium">Resistant Hypertension (≥3 drugs)</p>
-                    <p className="text-xs text-muted-foreground">
-                      Confirm adherence, white-coat effect, and secondary causes first. Then add spironolactone 25 mg
-                      — PATHWAY-2 trial showed best add-on efficacy.
-                    </p>
-                  </div>
+            {/* Clinical Pearls */}
+            <Accordion type="single" collapsible className="mt-4">
+              <AccordionItem value="pearls">
+                <AccordionTrigger className="text-sm font-medium">Clinical Pearls</AccordionTrigger>
+                <AccordionContent>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+                    <div className="space-y-2">
+                      <p className="font-medium">Resistant Hypertension (≥3 drugs)</p>
+                      <p className="text-xs text-muted-foreground">
+                        Confirm adherence, white-coat effect, and secondary causes first. Then add spironolactone 25 mg
+                        — PATHWAY-2 trial showed best add-on efficacy.
+                      </p>
+                    </div>
 
-                  <div className="space-y-2">
-                    <p className="font-medium">Thiazide vs Loop Diuretics</p>
-                    <p className="text-xs text-muted-foreground">
-                      Switch to loop diuretics (furosemide, torsemide) when eGFR &lt;30 mL/min/1.73m².
-                      Thiazides lose efficacy at low GFR.
-                    </p>
-                  </div>
+                    <div className="space-y-2">
+                      <p className="font-medium">Thiazide vs Loop Diuretics</p>
+                      <p className="text-xs text-muted-foreground">
+                        Switch to loop diuretics (furosemide, torsemide) when eGFR &lt;30 mL/min/1.73m².
+                        Thiazides lose efficacy at low GFR.
+                      </p>
+                    </div>
 
-                  <div className="space-y-2">
-                    <p className="font-medium">ACEi/ARB Combination</p>
-                    <p className="text-xs text-muted-foreground">
-                      NEVER combine ACEi + ARB (dual RAAS blockade) — increases hyperkalemia and AKI risk
-                      without additional benefit (ONTARGET/ALTITUDE trials).
-                    </p>
-                  </div>
+                    <div className="space-y-2">
+                      <p className="font-medium">ACEi/ARB Combination</p>
+                      <p className="text-xs text-muted-foreground">
+                        NEVER combine ACEi + ARB (dual RAAS blockade) — increases hyperkalemia and AKI risk
+                        without additional benefit (ONTARGET/ALTITUDE trials).
+                      </p>
+                    </div>
 
-                  <div className="space-y-2">
-                    <p className="font-medium">Beta-Blocker Selection</p>
-                    <p className="text-xs text-muted-foreground">
-                      Prefer cardioselective beta-blockers (metoprolol, bisoprolol) or vasodilating beta-blockers
-                      (carvedilol, labetalol). Atenolol has inferior outcomes data.
-                    </p>
+                    <div className="space-y-2">
+                      <p className="font-medium">Beta-Blocker Selection</p>
+                      <p className="text-xs text-muted-foreground">
+                        Prefer cardioselective beta-blockers (metoprolol, bisoprolol) or vasodilating beta-blockers
+                        (carvedilol, labetalol). Atenolol has inferior outcomes data.
+                      </p>
+                    </div>
                   </div>
-                </div>
-              </AccordionContent>
-            </AccordionItem>
-          </Accordion>
-        </CardContent>
-      </Card>
+                </AccordionContent>
+              </AccordionItem>
+            </Accordion>
+          </AccordionContent>
+        </AccordionItem>
+      </Accordion>
 
       {/* Recurrent Stroke Prevention Protocol */}
       <Card>
