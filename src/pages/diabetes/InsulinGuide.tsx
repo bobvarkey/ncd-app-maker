@@ -2,7 +2,8 @@ import React from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
-import { Clock, Activity, AlertCircle, CheckCircle2, Syringe } from "lucide-react";
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
+import { Clock, Activity, AlertCircle, CheckCircle2, Syringe, Globe } from "lucide-react";
 
 // Insulin Types Data
 const insulinTypes = [
@@ -212,6 +213,50 @@ export default function InsulinGuide() {
               </div>
             ))}
           </div>
+
+          {/* Brand names by region (US vs India) */}
+          <Accordion type="single" collapsible className="mt-4">
+            <AccordionItem value="brands" className="border rounded-lg">
+              <AccordionTrigger className="px-4 hover:no-underline">
+                <div className="flex items-center gap-2">
+                  <Globe className="h-4 w-4 text-primary" />
+                  <span className="text-sm font-medium">Insulin Brand Names — US vs India</span>
+                </div>
+              </AccordionTrigger>
+              <AccordionContent className="px-4 pb-4">
+                <div className="overflow-x-auto">
+                  <table className="w-full text-xs border border-border/60 rounded">
+                    <thead className="bg-muted/40">
+                      <tr>
+                        <th className="text-left p-2">Generic</th>
+                        <th className="text-left p-2">Class</th>
+                        <th className="text-left p-2">US brands</th>
+                        <th className="text-left p-2">Indian brands</th>
+                      </tr>
+                    </thead>
+                    <tbody className="[&>tr]:border-t [&>tr]:border-border/40">
+                      <tr><td className="p-2 font-medium">Insulin Lispro</td><td className="p-2">Rapid</td><td className="p-2">Humalog, Admelog, Lyumjev</td><td className="p-2">Humalog, Lispro (Eris)</td></tr>
+                      <tr><td className="p-2 font-medium">Insulin Aspart</td><td className="p-2">Rapid</td><td className="p-2">NovoLog, Fiasp</td><td className="p-2">NovoRapid, NovoMix, Fiasp</td></tr>
+                      <tr><td className="p-2 font-medium">Insulin Glulisine</td><td className="p-2">Rapid</td><td className="p-2">Apidra</td><td className="p-2">Apidra</td></tr>
+                      <tr><td className="p-2 font-medium">Regular insulin</td><td className="p-2">Short</td><td className="p-2">Humulin R, Novolin R</td><td className="p-2">Huminsulin R, Actrapid, Insugen-R, Wosulin-R</td></tr>
+                      <tr><td className="p-2 font-medium">NPH (Isophane)</td><td className="p-2">Intermediate</td><td className="p-2">Humulin N, Novolin N, ReliOn N</td><td className="p-2">Huminsulin N, Insulatard, Insugen-N, Wosulin-N</td></tr>
+                      <tr><td className="p-2 font-medium">Insulin Glargine U-100</td><td className="p-2">Long (basal)</td><td className="p-2">Lantus, Basaglar, Semglee, Rezvoglar</td><td className="p-2">Lantus, Basalog, Glaritus, Basugine</td></tr>
+                      <tr><td className="p-2 font-medium">Insulin Glargine U-300</td><td className="p-2">Ultra-long basal</td><td className="p-2">Toujeo</td><td className="p-2">Toujeo</td></tr>
+                      <tr><td className="p-2 font-medium">Insulin Detemir</td><td className="p-2">Long (basal)</td><td className="p-2">Levemir</td><td className="p-2">Levemir</td></tr>
+                      <tr><td className="p-2 font-medium">Insulin Degludec U-100/200</td><td className="p-2">Ultra-long basal</td><td className="p-2">Tresiba</td><td className="p-2">Tresiba</td></tr>
+                      <tr><td className="p-2 font-medium">Degludec + Aspart</td><td className="p-2">Co-formulation</td><td className="p-2">—</td><td className="p-2">Ryzodeg</td></tr>
+                      <tr><td className="p-2 font-medium">70/30 premix (NPH/Reg)</td><td className="p-2">Premix</td><td className="p-2">Humulin 70/30, Novolin 70/30</td><td className="p-2">Huminsulin 30/70, Mixtard 30/70, Insugen 30/70, Wosulin 30/70</td></tr>
+                      <tr><td className="p-2 font-medium">75/25, 50/50 (Lispro mix)</td><td className="p-2">Premix analog</td><td className="p-2">Humalog Mix 75/25, 50/50</td><td className="p-2">Humalog Mix 25, Mix 50</td></tr>
+                      <tr><td className="p-2 font-medium">70/30 (Aspart mix)</td><td className="p-2">Premix analog</td><td className="p-2">NovoLog Mix 70/30</td><td className="p-2">NovoMix 30, NovoMix 50</td></tr>
+                    </tbody>
+                  </table>
+                </div>
+                <p className="text-[11px] text-muted-foreground mt-2">
+                  Indian brands include biosimilars and locally-manufactured biosimilar insulins (Biocon/Eris/Wockhardt). Confirm strength (U-100 vs U-300/U-200) and device (vial/cartridge/pen) before switching.
+                </p>
+              </AccordionContent>
+            </AccordionItem>
+          </Accordion>
         </CardContent>
       </Card>
 
