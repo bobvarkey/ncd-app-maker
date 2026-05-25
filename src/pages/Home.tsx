@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Activity, Droplets, Heart, Scale, Syringe, Activity as PulseIcon, Dna, FileText, ChevronRight, Info, ChevronDown, Upload, Sparkles, ArrowRight, Calculator, Stethoscope, FileSearch } from "lucide-react";
+import heroDoctor from "@/assets/hero-doctor.png";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -1131,33 +1132,35 @@ export default function Home() {
 
       {/* Header Section */}
       <header className="max-w-6xl mx-auto px-6 pt-8 pb-6">
-        {/* Hero */}
-        <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-6">
-          <div>
-            <h1 className="text-3xl font-serif font-semibold tracking-tight">
+        {/* Hero Banner with Image */}
+        <div className="relative mb-8 rounded-2xl overflow-hidden border border-border shadow-lg">
+          <img
+            src={heroDoctor}
+            alt="Clinician reviewing cardiovascular and metabolic dashboards"
+            className="w-full h-[260px] md:h-[360px] object-cover"
+            loading="eager"
+          />
+          <div className="absolute inset-0 bg-gradient-to-r from-background/95 via-background/60 to-transparent" />
+          <div className="absolute inset-0 flex flex-col justify-center px-6 md:px-10 max-w-2xl">
+            <h1 className="text-3xl md:text-5xl font-serif font-semibold tracking-tight text-foreground">
               NCD Dashboard
             </h1>
-            <p className="text-muted-foreground mt-2 max-w-xl">
-              Comprehensive non-communicable disease management tools — diabetes, hypertension, lipids, and obesity.
-              Access detailed assessment tools, treatment algorithms, and clinical guidelines.
+            <p className="text-sm md:text-base text-muted-foreground mt-3 max-w-md">
+              Evidence-based tools for diabetes, hypertension, lipids, and obesity — assessment, algorithms, and prescribing in one place.
             </p>
-          </div>
-          <div className="flex items-center gap-3 text-sm text-muted-foreground bg-muted/30 px-4 py-3 rounded-lg border border-border">
-            <div className="flex items-center gap-2">
-              <span className="w-2 h-2 rounded-full" style={{ background: categoryColors.diabetes.accent }} />
-              <span>Diabetes</span>
-            </div>
-            <div className="flex items-center gap-2">
-              <span className="w-2 h-2 rounded-full" style={{ background: categoryColors.hypertension.accent }} />
-              <span>HTN</span>
-            </div>
-            <div className="flex items-center gap-2">
-              <span className="w-2 h-2 rounded-full" style={{ background: categoryColors.lipid.accent }} />
-              <span>Lipids</span>
-            </div>
-            <div className="flex items-center gap-2">
-              <span className="w-2 h-2 rounded-full" style={{ background: categoryColors.obesity.accent }} />
-              <span>Obesity</span>
+            <div className="flex flex-wrap items-center gap-2 mt-4">
+              <span className="text-[11px] px-2.5 py-1 rounded-full border border-border bg-background/60 backdrop-blur flex items-center gap-1.5">
+                <span className="w-1.5 h-1.5 rounded-full" style={{ background: categoryColors.diabetes.accent }} />Diabetes
+              </span>
+              <span className="text-[11px] px-2.5 py-1 rounded-full border border-border bg-background/60 backdrop-blur flex items-center gap-1.5">
+                <span className="w-1.5 h-1.5 rounded-full" style={{ background: categoryColors.hypertension.accent }} />Hypertension
+              </span>
+              <span className="text-[11px] px-2.5 py-1 rounded-full border border-border bg-background/60 backdrop-blur flex items-center gap-1.5">
+                <span className="w-1.5 h-1.5 rounded-full" style={{ background: categoryColors.lipid.accent }} />Lipids
+              </span>
+              <span className="text-[11px] px-2.5 py-1 rounded-full border border-border bg-background/60 backdrop-blur flex items-center gap-1.5">
+                <span className="w-1.5 h-1.5 rounded-full" style={{ background: categoryColors.obesity.accent }} />Obesity
+              </span>
             </div>
           </div>
         </div>
