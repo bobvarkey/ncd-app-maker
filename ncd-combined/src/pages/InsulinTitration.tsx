@@ -1,6 +1,6 @@
 import { useState, useMemo } from "react";
 import { loadPatient } from "@/lib/patient-data";
-import { Syringe, Plus, Trash2, TrendingDown, AlertTriangle, CheckCircle, Info, UserX } from "lucide-react";
+import { Syringe, Plus, Trash2, TrendingDown, AlertTriangle, CheckCircle, Info, UserX, ChevronDown, ChevronUp, ChevronRight, Copy } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useNavigate } from "react-router-dom";
@@ -61,6 +61,7 @@ const InsulinTitration = () => {
   const hasPatient = patient && patient.name && patient.age > 0;
   const [currentDose, setCurrentDose] = useState(10);
   const [insulinType, setInsulinType] = useState("Glargine (Lantus/Basaglar)");
+  const [showInsulins, setShowInsulins] = useState(false);
   const [protocol, setProtocol] = useState<Protocol>(
     patient && (patient.age > 65 || patient.eGFR < 30) ? "conservative" : "treat-to-target"
   );
@@ -357,6 +358,76 @@ const InsulinTitration = () => {
           </div>
         </div>
       )}
+
+      {/* Quick Reference: Insulin Brands */}
+      <div className="clinical-card">
+        <button
+          onClick={() => setShowInsulins(!showInsulins)}
+          className="w-full flex items-center justify-between text-left"
+        >
+          <span className="text-sm font-medium flex items-center gap-2">
+            <ChevronRight className={`w-4 h-4 transition-transform ${showInsulins ? "rotate-90" : ""}`} />
+            Insulin Brands (US & India)
+          </span>
+          {showInsulins ? <ChevronUp className="w-4 h-4" /> : <ChevronDown className="w-4 h-4" />}
+        </button>
+
+        {showInsulins && (
+          <div className="mt-3 space-y-3 text-xs">
+            {/* Basal Insulins */}
+            <div className="grid grid-cols-2 gap-2">
+              <div className="p-2 rounded bg-muted/30">
+                <p className="font-semibold text-[10px] uppercase text-muted-foreground mb-1">Long-Acting (Basal)</p>
+                <table className="w-full">
+                  <tbody>
+                    <tr className="border-b border-border/30"><td className="py-1">Glargine</td><td className="text-right">Lantus®, Abasaglar®, Semglee®</td></tr>
+                    <tr className="border-b border-border/30"><td className="py-1">Degludec</td><td className="text-right">Tresiba®</td></tr>
+                    <tr className="border-b border-border/30"><td className="py-1">Detemir</td><td className="text-right">Levemir®</td></tr>
+                    <tr><td className="py-1">NPH</td><td className="text-right">Humulin I®, Insulatard®</td></tr>
+                  </tbody>
+                </table>
+              </div>
+              <div className="p-2 rounded bg-muted/30">
+                <p className="font-semibold text-[10px] uppercase text-muted-foreground mb-1">Rapid-Acting (Bolus)</p>
+                <table className="w-full">
+                  <tbody>
+                    <tr className="border-b border-border/30"><td className="py-1">Aspart</td><td className="text-right">NovoRapid®, Fiasp®, Trurapi®</td></tr>
+                    <tr className="border-b border-border/30"><td className="py-1">Lispro</td><td className="text-right">Humalog®, Lyumjev®</td></tr>
+                    <tr className="border-b border-border/30"><td className="py-1">Glulisine</td><td className="text-right">Apidra®</td></tr>
+                    <tr><td className="py-1">Regular</td><td className="text-right">Actrapid®, Humulin S®</td></tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            {/* Onset/Duration */}
+            <div className="p-2 rounded bg-muted/30">
+              <p className="font-semibold text-[10px] uppercase text-muted-foreground mb-1">Onset & Duration</p>
+              <table className="w-full">
+                <tbody>
+                  <tr className="border-b border-border/30"><td className="py-1">Ultra-Rapid (Bolus)</td><td className="text-right">Onset 4 min · 3-5h</td></tr>
+                  <tr className="border-b border-border/30"><td className="py-1">Rapid (Bolus)</td><td className="text-right">Onset 10-20 min · 3-5h</td></tr>
+                  <tr className="border-b border-border/30"><td className="py-1">Short (Bolus)</td><td className="text-right">Onset 30 min · 6-8h</td></tr>
+                  <tr className="border-b border-border/30"><td className="py-1">NPH (Intermediate)</td><td className="text-right">Onset 1-2h · 12-18h</td></tr>
+                  <tr className="border-b border-border/30"><td className="py-1">Long Acting</td><td className="text-right">Onset 1-2h · 24h</td></tr>
+                  <tr><td className="py-1">Ultra-Long</td><td className="text-right">Onset 1-2h · 42h</td></tr>
+                </tbody>
+              </table>
+            </div>
+
+            {/* Prescribing Safety */}
+            <div className="p-2 rounded bg-amber-500/10 border border-amber-500/30">
+              <p className="font-semibold text-[10px] uppercase text-amber-600 mb-1">Prescribing Safety</p>
+              <ul className="space-y-0.5 text-[10px]">
+                <li>• Always prescribe by <strong>brand name</strong> (not generic)</li>
+                <li>• Write <strong>"units"</strong> in full — never abbreviate</li>
+                <li>• NPH: Resuspend before use (cloudy)</li>
+                <li>• Basal: OD/BD · Bolus: Pre-meal (0-15 min)</li>
+              </ul>
+            </div>
+          </div>
+        )}
+      </div>
 
       {/* Protocol reference */}
       <div className="clinical-card">
