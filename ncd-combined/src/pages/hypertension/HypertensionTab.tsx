@@ -105,7 +105,7 @@ export default function HypertensionTab() {
         </Tabs>
       </section>
 
-      {/* Quick Links */}
+      {/* Quick Navigation */}
       <section className="max-w-6xl mx-auto px-6 pb-16">
         <Separator className="mb-8" />
         <h2 className="text-sm font-medium text-muted-foreground uppercase tracking-wider mb-4">
@@ -117,7 +117,6 @@ export default function HypertensionTab() {
             { label: "Drug Interactions", icon: Pill, tab: "assessment" },
             { label: "Treatment Algorithm", icon: ClipboardList, tab: "treatment" },
             { label: "Potency Table", icon: BookOpen, tab: "treatment" },
-            { label: "Investigation Flowchart", icon: Activity, tab: "overview" },
           ].map((item) => (
             <Button
               key={item.label}
@@ -129,6 +128,34 @@ export default function HypertensionTab() {
               <span className="text-xs font-medium">{item.label}</span>
               <ChevronRight className="h-3 w-3 text-muted-foreground" />
             </Button>
+          ))}
+        </div>
+
+        {/* Investigation Flowchart */}
+        <Separator className="my-8" />
+        <h2 className="text-sm font-medium text-muted-foreground uppercase tracking-wider mb-4">
+          Investigation Flowchart
+        </h2>
+        <p className="text-xs text-muted-foreground mb-4">
+          Systematic approach to secondary hypertension workup
+        </p>
+        <div className="space-y-2.5">
+          {[
+            { step: 1, title: "Initial Assessment", desc: "History & Physical Examination, BP confirmation (×3 readings), Basic metabolic panel, Urinalysis", color: "border-l-blue-500", bg: "bg-blue-500/5" },
+            { step: 2, title: "Baseline Investigations", desc: "Serum creatinine, BUN, eGFR, Serum electrolytes (Na+, K+), Fasting glucose, HbA1c, Lipid profile, ECG, Urinalysis with microalbuminuria", color: "border-l-emerald-500", bg: "bg-emerald-500/5" },
+            { step: 3, title: "Screen for Secondary Causes", desc: "Aldosterone/Renin Ratio, TSH/fT4, Plasma/Urine Metanephrines, Overnight Dexamethasone Suppression, Sleep study (if symptomatic), Renal Doppler Ultrasound", color: "border-l-teal-500", bg: "bg-teal-500/5" },
+            { step: 4, title: "Confirmatory Testing", desc: "Saline Suppression Test (aldosteronism), CT/MRI Adrenals, CTA/MRA Renal Arteries, 24h Urine Cortisol, Adrenal Vein Sampling", color: "border-l-amber-500", bg: "bg-amber-500/5" },
+            { step: 5, title: "Targeted Treatment", desc: "Treat underlying cause, Optimize antihypertensive therapy, Monitor response, Follow-up investigations", color: "border-l-green-500", bg: "bg-green-500/5" },
+          ].map((s) => (
+            <div key={s.step} className={`flex items-start gap-3 p-3 rounded-lg border-l-4 ${s.color} ${s.bg} border border-border/30`}>
+              <div className="w-7 h-7 rounded-full bg-primary/15 text-primary text-xs font-bold flex items-center justify-center shrink-0 mt-0.5">
+                {s.step}
+              </div>
+              <div className="min-w-0">
+                <p className="text-sm font-medium">{s.title}</p>
+                <p className="text-xs text-muted-foreground mt-1 leading-relaxed">{s.desc}</p>
+              </div>
+            </div>
           ))}
         </div>
       </section>
