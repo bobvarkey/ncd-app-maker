@@ -82,7 +82,7 @@ const MODIFIER_GROUPS = [
       { id: "enh_lpa_minor", label: "Lp(a) 20-49 mg/dL", qualifier: "Minor elevation" },
       { id: "enh_autoimmune", label: "RA / Psoriasis / Spondyloarthropathy", qualifier: "Chronic inflammatory condition" },
       { id: "enh_hiv", label: "HIV infection", qualifier: "Viral inflammatory risk" },
-      { id: "enh_pcos", label: "Premature menopause / PCOS / Pre-eclampsia", qualifier: "Women-specific" },
+      { id: "enh_pcos", label: "Premature menopause / PMOS / Pre-eclampsia", qualifier: "Women-specific", dxCriteria: "Rotterdam: ≥2 of 3: oligovulation, hyperandrogenism, polycystic ovaries" },
     ],
   },
 ];

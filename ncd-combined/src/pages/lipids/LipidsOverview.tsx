@@ -135,7 +135,7 @@ const LAI_RISK_MODIFIERS = [
   { id: "hscrp", label: "hsCRP >2 mg/L", category: "Inflammatory" },
   { id: "tg", label: "Triglycerides >150 mg/dL (fasting) or >175 mg/dL (non-fasting)", category: "Lipid" },
   { id: "autoimmune", label: "RA, Psoriasis, Spondyloarthropathies", category: "Inflammatory" },
-  { id: "pregnancy", label: "Premature menopause, Pre-eclampsia, GDM, PCOS", category: "Women's Health" },
+  { id: "pregnancy", label: "Premature menopause, Pre-eclampsia, GDM, PMOS", category: "Women's Health" },
   { id: "prs", label: "High polygenic risk score", category: "Genetic" },
   { id: "pollution", label: "Air pollution exposure", category: "Environmental" },
   { id: "hiv", label: "HIV infection", category: "Infectious" },
