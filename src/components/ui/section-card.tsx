@@ -103,7 +103,7 @@ export function SectionCard({
   collapsible?: boolean;
 }) {
   const [open, setOpen] = useState(defaultOpen);
-  const t = TONE_STYLES[tone];
+  const t = TONE_STYLES[tone] ?? TONE_STYLES.neutral;
 
   const Header = (
     <div className={`flex w-full items-center justify-between px-5 py-3.5 transition-colors ${t.header}`}>
