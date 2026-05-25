@@ -28,7 +28,6 @@ import {
   Heart,
   Gauge,
   Info,
-  Kidney,
   Search,
   Stethoscope,
   CheckCircle2,
@@ -53,34 +52,35 @@ const CARD_TABS = [
 // ═══════════════════════════════════════════════════════════════════════════
 
 const BP_CLASSIFICATION = [
-  { label: "Normal", sbp: "<120", dbp: "<80", color: "text-emerald-400" },
-  { label: "Elevated", sbp: "120–129", dbp: "<80", color: "text-yellow-400" },
-  { label: "Stage 1 HTN", sbp: "130–139", dbp: "80–89", color: "text-orange-400" },
-  { label: "Stage 2 HTN", sbp: "≥140", dbp: "≥90", color: "text-red-400" },
-  { label: "Crisis", sbp: "≥180", dbp: "≥120", color: "text-rose-400" },
+  { label: "Normal", sbp: "<120", dbp: "<80", color: "text-emerald-400", action: "Reassess in 1 year", bg: "bg-green-500/10" },
+  { label: "Elevated", sbp: "120–129", dbp: "<80", color: "text-yellow-400", action: "Lifestyle modification, reassess 3-6 months", bg: "bg-yellow-500/10" },
+  { label: "Stage 1 HTN", sbp: "130–139", dbp: "80–89", color: "text-orange-400", action: "Lifestyle + 1 medication if high CV risk", bg: "bg-orange-500/10" },
+  { label: "Stage 2 HTN", sbp: "≥140", dbp: "≥90", color: "text-red-400", action: "Lifestyle + 2 antihypertensives", bg: "bg-red-500/10" },
+  { label: "Crisis", sbp: ">180", dbp: ">120", color: "text-rose-400", action: "Immediate evaluation + IV therapy", bg: "bg-rose-500/10" },
 ];
 
-const RED_FLAGS = [
-  { flag: "Age <30 or >55 years at onset", icon: <Activity className="h-3 w-3" /> },
-  { flag: "Resistant HTN (≥3 drugs including diuretic)", icon: <AlertTriangle className="h-3 w-3" /> },
-  { flag: "Sudden worsening of previously controlled BP", icon: <Gauge className="h-3 w-3" /> },
-  { flag: "Severe HTN (≥180/120) at presentation", icon: <AlertCircle className="h-3 w-3" /> },
-  { flag: "Unprovoked or severe hypokalemia", icon: <Stethoscope className="h-3 w-3" /> },
-  { flag: "Episodic symptoms (palpitations, sweating, headache)", icon: <Brain className="h-3 w-3" /> },
-  { flag: "Cushingoid appearance", icon: <Search className="h-3 w-3" /> },
-  { flag: "Abdominal bruit", icon: <Stethoscope className="h-3 w-3" /> },
-  { flag: "Discrepant limb BPs (coarctation)", icon: <Activity className="h-3 w-3" /> },
+const RED_FLAGS: { flag: string; icon: React.ReactNode; detail?: string }[] = [
+  { flag: "Age <30 or >55 years at onset", icon: <Activity className="h-3 w-3" />, detail: "New-onset HTN outside typical age range" },
+  { flag: "Resistant HTN", icon: <AlertTriangle className="h-3 w-3" />, detail: "Uncontrolled BP despite ≥3 drugs (including diuretic)" },
+  { flag: "Sudden worsening of previously controlled BP", icon: <Gauge className="h-3 w-3" />, detail: "Previously well-controlled HTN becoming refractory" },
+  { flag: "Severe / malignant HTN (≥180/120)", icon: <AlertCircle className="h-3 w-3" />, detail: "With end-organ damage" },
+  { flag: "Unprovoked or severe hypokalemia", icon: <Stethoscope className="h-3 w-3" />, detail: "K+ <3.5 without diuretic use → think Conn's" },
+  { flag: "Abdominal bruit", icon: <Stethoscope className="h-3 w-3" />, detail: "Suggests renal artery stenosis (especially young female → FMD)" },
+  { flag: "Episodic symptoms (palpitations, sweating, headache)", icon: <Brain className="h-3 w-3" />, detail: "Triad = pheochromocytoma" },
+  { flag: "Cushingoid appearance", icon: <Search className="h-3 w-3" />, detail: "Moon facies, buffalo hump, striae, central obesity" },
+  { flag: "Asymmetric kidney size (>1.5 cm)", icon: <Stethoscope className="h-3 w-3" />, detail: "Suggests renovascular disease" },
+  { flag: "Discrepant limb BP (>20 mmHg)", icon: <Activity className="h-3 w-3" />, detail: "Upper > lower → coarctation of aorta" },
 ];
 
-const CHAPLETS_MNEMONIC: { letter: string; stands: string }[] = [
-  { letter: "C", stands: "Coarctation, Cushing's, Congenital adrenal hyperplasia" },
-  { letter: "H", stands: "Hyperparathyroidism, Hyperthyroidism/Hypothyroidism" },
-  { letter: "A", stands: "Acromegaly, Alcohol, Anxiety, Appetite suppressants" },
-  { letter: "P", stands: "Pheochromocytoma, Pregnancy, Primary aldosteronism" },
-  { letter: "L", stands: "Lead, Licorice, Liddle syndrome" },
-  { letter: "E", stands: "End-stage renal disease, Estrogen (OCPs)" },
-  { letter: "T", stands: "Thyroid disease" },
-  { letter: "S", stands: "Sleep apnea, Stenosis (renal artery)" },
+const CHAPPLES_MNEMONIC: { letter: string; stands: string; color: string }[] = [
+  { letter: "C", stands: "Conn's syndrome, Cushing's, Congenital adrenal hyperplasia", color: "text-rose-400" },
+  { letter: "H", stands: "Hyperparathyroidism, Hyperthyroidism", color: "text-orange-400" },
+  { letter: "A", stands: "Aortic coarctation, Adrenal carcinoma", color: "text-yellow-400" },
+  { letter: "P", stands: "Pheochromocytoma", color: "text-emerald-400" },
+  { letter: "P", stands: "Primary aldosteronism", color: "text-emerald-400" },
+  { letter: "L", stands: "Liddle's syndrome, Licorice", color: "text-cyan-400" },
+  { letter: "E", stands: "Estrogen pills (OCPs), End-stage renal disease", color: "text-blue-400" },
+  { letter: "S", stands: "Sleep apnea, Stenosis (renal artery)", color: "text-teal-400" },
 ];
 
 const SECONDARY_WORKUP: { category: string; tests: { name: string; required: boolean }[] }[] = [
@@ -273,7 +273,7 @@ const EMERGENCIES: EmergencyProtocol[] = [
     notes: "If tPA candidate → lower to <185/110. If no tPA → only lower if >220/120 or MAP >130.",
   },
   {
-    scenario: "Acute Kidney Injury",
+    scenario: "Acute Stethoscope Injury",
     target: "MAP ↓ 20–25%",
     timeline: "Hours",
     preferred: ["Fenoldopam", "Nicardipine IV", "Clevidipine"],
@@ -356,9 +356,12 @@ export default function HypertensionClinicalCards() {
             <CardContent>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
                 {RED_FLAGS.map((rf) => (
-                  <div key={rf.flag} className="flex items-start gap-2 text-sm">
+                  <div key={rf.flag} className="flex items-start gap-2 text-sm p-1.5 rounded-md hover:bg-rose-500/5">
                     <span className="text-rose-400 mt-0.5 shrink-0">{rf.icon}</span>
-                    <span>{rf.flag}</span>
+                    <div>
+                      <span className="font-medium">{rf.flag}</span>
+                      {rf.detail && <p className="text-xs text-muted-foreground mt-0.5">{rf.detail}</p>}
+                    </div>
                   </div>
                 ))}
               </div>
@@ -375,7 +378,7 @@ export default function HypertensionClinicalCards() {
             </CardHeader>
             <CardContent>
               <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 text-sm">
-                {CHAPLETS_MNEMONIC.map((m) => (
+                {CHAPPLES_MNEMONIC.map((m) => (
                   <div key={m.letter} className="p-2 rounded bg-blue-500/10 border border-blue-500/20">
                     <span className="font-bold text-blue-400">{m.letter}</span> — {m.stands}
                   </div>
@@ -389,28 +392,10 @@ export default function HypertensionClinicalCards() {
             <CardHeader className="pb-2">
               <CardTitle className="text-base flex items-center gap-2">
                 <Search className="h-4 w-4" />
-                5-Step Diagnostic Workup
+                Condition-Specific Workup Table
               </CardTitle>
             </CardHeader>
-            <CardContent className="space-y-2 text-sm">
-              {[
-                { step: 1, title: "Initial Assessment", desc: "History, exam, proper BP measurement" },
-                { step: 2, title: "Baseline Investigations", desc: "CBC, Cr/eGFR, electrolytes, fasting glucose/HbA1c, lipids, ECG, urinalysis" },
-                { step: 3, title: "Screen for Secondary Causes", desc: "UACR, TSH/fT4, aldosterone/renin ratio, sleep study, renal Doppler" },
-                { step: 4, title: "Confirmatory Testing", desc: "Salt suppression test, CTA/MRA, 24h urine catecholamines, adrenal vein sampling" },
-                { step: 5, title: "Targeted Treatment", desc: "Treat underlying cause, de-escalate antihypertensives, monitor response" },
-              ].map((s) => (
-                <div key={s.step} className="flex items-start gap-3 p-2.5 rounded-lg bg-muted/30 border border-border/30">
-                  <span className="w-6 h-6 rounded-full bg-primary/15 text-primary text-xs font-bold flex items-center justify-center shrink-0 mt-0.5">
-                    {s.step}
-                  </span>
-                  <div>
-                    <p className="font-medium">{s.title}</p>
-                    <p className="text-xs text-muted-foreground mt-0.5">{s.desc}</p>
-                  </div>
-                </div>
-              ))}
-            </CardContent>
+  
           </Card>
 
           {/* Detailed Workup Table */}
