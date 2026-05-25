@@ -240,7 +240,13 @@ const secondaryHtnChecklist: SecondaryHtnItem[] = [
     id: "hypokalemia",
     category: "Laboratory",
     feature: "Hypokalemia with normal/high sodium",
-    workup: "Aldosterone-renin ratio (ARR)",
+    workup: "Aldosterone-renin ratio (ARR) — consider Liddle syndrome if ARR normal/low",
+  },
+  {
+    id: "liddle",
+    category: "Family",
+    feature: "Early-onset hypertension with low renin & aldosterone, +/- hypokalemia",
+    workup: "Genetic testing for ENaC mutations (SCNN1B/SCNN1G)",
   },
   {
     id: "flash_pulm",
