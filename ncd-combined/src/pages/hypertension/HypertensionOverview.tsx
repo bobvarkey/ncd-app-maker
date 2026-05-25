@@ -213,7 +213,11 @@ const secondaryCauses = [
   },
 ];
 
-export default function HypertensionOverview() {
+interface OverviewProps {
+  onNavigateToEmergencies?: () => void;
+}
+
+export default function HypertensionOverview({ onNavigateToEmergencies }: OverviewProps) {
   const [selectedStage, setSelectedStage] = useState<string | null>(null);
 
   return (
@@ -226,6 +230,16 @@ export default function HypertensionOverview() {
           BP ≥ 180/120 mmHg requires immediate evaluation. If accompanied by acute target organ damage
           (encephalopathy, pulmonary edema, AKI, aortic dissection), treat as hypertensive emergency.
         </AlertDescription>
+        {onNavigateToEmergencies && (
+          <Button
+            variant="outline"
+            size="sm"
+            className="mt-3 border-amber-500/40 text-amber-600 hover:bg-amber-500/10"
+            onClick={onNavigateToEmergencies}
+          >
+            View Emergencies Protocol
+          </Button>
+        )}
       </Alert>
 
       {/* BP Classification Table */}
