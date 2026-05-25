@@ -296,6 +296,36 @@ export default function HypertensionOverview({ onNavigateToEmergencies }: Overvi
         </CardContent>
       </Card>
 
+          <Separator className="my-4" />
+
+          {/* 5-Step Investigation Flowchart */}
+          <div className="mb-4">
+            <p className="text-sm font-medium mb-3" style={{ color: categoryColors.accent }}>
+              5-Step Investigation Flowchart
+            </p>
+            <div className="space-y-2">
+              {[
+                { step: 1, title: "Initial Assessment", desc: "History & Physical Examination, BP confirmation (×3 readings), Basic metabolic panel, Urinalysis", color: "border-l-blue-500" },
+                { step: 2, title: "Baseline Investigations", desc: "Creatinine/eGFR, electrolytes (Na+, K+), Fasting glucose/HbA1c, Lipid profile, ECG, Urinalysis with microalbuminuria", color: "border-l-emerald-500" },
+                { step: 3, title: "Screen Secondary Causes", desc: "Aldosterone/Renin ratio, TSH/fT4, Plasma/Urine metanephrines, Overnight dexamethasone suppression, Sleep study if symptomatic, Renal Doppler", color: "border-l-teal-500" },
+                { step: 4, title: "Confirmatory Testing", desc: "Saline suppression test, CT/MRI adrenals, CTA/MRA renal arteries, 24h urine cortisol, Adrenal vein sampling", color: "border-l-amber-500" },
+                { step: 5, title: "Targeted Treatment", desc: "Treat underlying cause, Optimize antihypertensives, Monitor response, Follow-up", color: "border-l-green-500" },
+              ].map((s) => (
+                <div key={s.step} className={`flex items-start gap-3 p-3 rounded-lg border-l-4 ${s.color} bg-muted/20 border border-border/30`}>
+                  <div className="w-7 h-7 rounded-full bg-primary/15 text-primary text-xs font-bold flex items-center justify-center shrink-0 mt-0.5">
+                    {s.step}
+                  </div>
+                  <div className="min-w-0">
+                    <p className="text-sm font-medium">{s.title}</p>
+                    <p className="text-xs text-muted-foreground mt-0.5 leading-relaxed">{s.desc}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          
+
       {/* Risk Stratification */}
       <Card>
         <CardHeader>
@@ -439,35 +469,7 @@ export default function HypertensionOverview({ onNavigateToEmergencies }: Overvi
             ))}
           </div>
 
-          <Separator className="my-4" />
-
-          {/* 5-Step Investigation Flowchart */}
-          <div className="mb-4">
-            <p className="text-sm font-medium mb-3" style={{ color: categoryColors.accent }}>
-              5-Step Investigation Flowchart
-            </p>
-            <div className="space-y-2">
-              {[
-                { step: 1, title: "Initial Assessment", desc: "History & Physical Examination, BP confirmation (×3 readings), Basic metabolic panel, Urinalysis", color: "border-l-blue-500" },
-                { step: 2, title: "Baseline Investigations", desc: "Creatinine/eGFR, electrolytes (Na+, K+), Fasting glucose/HbA1c, Lipid profile, ECG, Urinalysis with microalbuminuria", color: "border-l-emerald-500" },
-                { step: 3, title: "Screen Secondary Causes", desc: "Aldosterone/Renin ratio, TSH/fT4, Plasma/Urine metanephrines, Overnight dexamethasone suppression, Sleep study if symptomatic, Renal Doppler", color: "border-l-teal-500" },
-                { step: 4, title: "Confirmatory Testing", desc: "Saline suppression test, CT/MRI adrenals, CTA/MRA renal arteries, 24h urine cortisol, Adrenal vein sampling", color: "border-l-amber-500" },
-                { step: 5, title: "Targeted Treatment", desc: "Treat underlying cause, Optimize antihypertensives, Monitor response, Follow-up", color: "border-l-green-500" },
-              ].map((s) => (
-                <div key={s.step} className={`flex items-start gap-3 p-3 rounded-lg border-l-4 ${s.color} bg-muted/20 border border-border/30`}>
-                  <div className="w-7 h-7 rounded-full bg-primary/15 text-primary text-xs font-bold flex items-center justify-center shrink-0 mt-0.5">
-                    {s.step}
-                  </div>
-                  <div className="min-w-0">
-                    <p className="text-sm font-medium">{s.title}</p>
-                    <p className="text-xs text-muted-foreground mt-0.5 leading-relaxed">{s.desc}</p>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          <div className="p-3 rounded-lg bg-amber-500/5 border border-amber-500/20">
+<div className="p-3 rounded-lg bg-amber-500/5 border border-amber-500/20">
             <p className="text-xs font-medium text-amber-700 mb-2">Screening Recommendations</p>
             <ul className="text-xs text-muted-foreground space-y-1">
               <li>• Primary aldosteronism: Screen if hypokalemia, resistant HTN, or adrenal incidentaloma</li>
