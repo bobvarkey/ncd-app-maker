@@ -455,6 +455,8 @@ export default function AscvdEmr() {
           </p>
         </div>
 
+        <AscvdInfoCard />
+
         <SectionCard
           title="Patient Profile"
           tone="cyan"
