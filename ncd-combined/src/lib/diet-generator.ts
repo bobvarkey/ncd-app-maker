@@ -1,5 +1,5 @@
 import { PatientData } from "./patient-data";
-import { FoodItem, KERALA_FOODS, getSoftFoods, getLowSodiumFoods } from "./food-data";
+import { FoodItem, CuisineType, ALL_FOODS, getSoftFoods, getLowSodiumFoods, getFoodsByCuisine } from "./food-data";
 
 export interface Meal {
   name: string;
@@ -20,47 +20,38 @@ export interface DayPlan {
   snacks: { food: FoodItem; servings: number }[];
 }
 
-const MEAL_TEMPLATES: { name: string; time: string; grainIds: string[]; proteinIds: string[]; veggieIds: string[]; dairyIds: string[] }[] = [
-  { name: "Breakfast", time: "7:30 AM", grainIds: ["g2", "g3", "g4", "g5", "g6"], proteinIds: ["p2", "p6", "p4"], veggieIds: ["v1", "v4"], dairyIds: ["d4"] },
-  { name: "Lunch", time: "12:30 PM", grainIds: ["g1", "g5"], proteinIds: ["p1", "p3", "p5", "p6"], veggieIds: ["v1", "v2", "v3", "v5", "v6", "v7", "v8"], dairyIds: ["d1", "d2", "d3"] },
-  { name: "Dinner", time: "7:00 PM", grainIds: ["g1", "g4", "g6"], proteinIds: ["p1", "p3", "p5", "p4"], veggieIds: ["v1", "v2", "v3", "v4", "v6", "v8"], dairyIds: ["d1", "d2"] },
-];
+// Templates no longer needed — cuisineFoods used directly
 
-const foodMap = new Map(KERALA_FOODS.map(f => [f.id, f]));
+const foodMap = new Map(ALL_FOODS.map(f => [f.id, f]));
 
 function pickRandom<T>(arr: T[], count: number = 1): T[] {
   const shuffled = [...arr].sort(() => Math.random() - 0.5);
   return shuffled.slice(0, count);
 }
 
+const MEAL_NAMES = ["Breakfast", "Lunch", "Dinner"];
+const MEAL_TIMES = ["7:30 AM", "12:30 PM", "7:00 PM"];
+
 function buildMeal(
-  template: typeof MEAL_TEMPLATES[0],
+  mealIndex: number,
   patient: PatientData,
-  usedIds: Set<string>
+  usedIds: Set<string>,
+  cuisineFoods: FoodItem[]
 ): Meal {
   const isSoft = patient.postStrokeDysphagia;
   const isLowNa = patient.hfNYHA >= 2;
-  const targetCarbs = template.name === "Breakfast" ? 30 : 35;
 
-  const availableGrains = template.grainIds
-    .map(id => foodMap.get(id))
-    .filter((f): f is FoodItem => !!f && (!isSoft || f.texture === "soft") && (!isLowNa || f.isLowSodium) && !usedIds.has(f.id));
+  const mealName = MEAL_NAMES[mealIndex];
+  const mealTime = MEAL_TIMES[mealIndex];
 
-  const availableProteins = template.proteinIds
-    .map(id => foodMap.get(id))
-    .filter((f): f is FoodItem => !!f && (!isSoft || f.texture === "soft") && !usedIds.has(f.id));
+  const availableGrains = cuisineFoods.filter(f => f.category === "grains" && !usedIds.has(f.id) && (!isSoft || f.texture === "soft") && (!isLowNa || f.isLowSodium));
+  const availableProteins = cuisineFoods.filter(f => f.category === "proteins" && !usedIds.has(f.id) && (!isSoft || f.texture === "soft"));
+  const availableVeggies = cuisineFoods.filter(f => f.category === "veggies" && !usedIds.has(f.id) && (!isSoft || f.texture === "soft"));
+  const availableDairy = cuisineFoods.filter(f => f.category === "dairy" && !usedIds.has(f.id));
 
-  const availableVeggies = template.veggieIds
-    .map(id => foodMap.get(id))
-    .filter((f): f is FoodItem => !!f && (!isSoft || f.texture === "soft") && !usedIds.has(f.id));
-
-  const availableDairy = template.dairyIds
-    .map(id => foodMap.get(id))
-    .filter((f): f is FoodItem => !!f);
-
-  const grain = pickRandom(availableGrains.length ? availableGrains : template.grainIds.map(id => foodMap.get(id)).filter(Boolean) as FoodItem[])[0];
-  const protein = pickRandom(availableProteins.length ? availableProteins : template.proteinIds.map(id => foodMap.get(id)).filter(Boolean) as FoodItem[])[0];
-  const veggies = pickRandom(availableVeggies.length ? availableVeggies : template.veggieIds.map(id => foodMap.get(id)).filter(Boolean) as FoodItem[], 2);
+  const grain = pickRandom(availableGrains)[0];
+  const protein = pickRandom(availableProteins)[0];
+  const veggies = pickRandom(availableVeggies, 2);
   const dairy = pickRandom(availableDairy, 1)[0];
 
   if (grain) usedIds.add(grain.id);
@@ -77,20 +68,25 @@ function buildMeal(
   const totalProtein = foods.reduce((s, f) => s + f.food.proteinG * f.servings, 0);
   const totalSodium = foods.reduce((s, f) => s + f.food.sodiumMg * f.servings, 0);
 
-  return { name: template.name, time: template.time, foods, totalCalories, totalCarbs, totalProtein, totalSodium };
+  return { name: mealName, time: mealTime, foods, totalCalories, totalCarbs, totalProtein, totalSodium };
 }
 
-export function generate7DayPlan(patient: PatientData): DayPlan[] {
+export function generate7DayPlan(patient: PatientData, cuisine: CuisineType = "Kerala"): DayPlan[] {
+  const cuisineFoods = ALL_FOODS.filter(f => {
+    if (cuisine === "Kerala") return f.cuisine === "Kerala";
+    if (cuisine === "Indian") return f.cuisine === "Kerala" || f.cuisine === "North Indian" || f.cuisine === "South Indian";
+    return f.cuisine === cuisine;
+  });
   const days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
-  const snackFoods = KERALA_FOODS.filter(f => 
-    (f.category === "fruits" || f.id === "p7" || f.id === "d1") &&
-    (!patient.postStrokeDysphagia || f.texture === "soft")
-  );
+  const isSoft = patient.postStrokeDysphagia;
+  const isLowNa = patient.hfNYHA >= 2;
+
 
   return days.map(day => {
     const usedIds = new Set<string>();
-    const meals = MEAL_TEMPLATES.map(t => buildMeal(t, patient, usedIds));
-    const snacks = pickRandom(snackFoods, 2).map(f => ({ food: f, servings: 1 }));
+    const meals = [0, 1, 2].map(i => buildMeal(i, patient, usedIds, cuisineFoods));
+    const snackPool = cuisineFoods.filter(f => f.category === "fruits" && (!isSoft || f.texture === "soft") && (!isLowNa || f.isLowSodium));
+    const snacks = pickRandom(snackPool.length ? snackPool : cuisineFoods.filter(f => f.category === "fruits"), 2).map(f => ({ food: f, servings: 1 }));
 
     const totalCalories = meals.reduce((s, m) => s + m.totalCalories, 0) + snacks.reduce((s, sn) => s + sn.food.calories, 0);
     const totalCarbs = meals.reduce((s, m) => s + m.totalCarbs, 0) + snacks.reduce((s, sn) => s + sn.food.carbsG, 0);

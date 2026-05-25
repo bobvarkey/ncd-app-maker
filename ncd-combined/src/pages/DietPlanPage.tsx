@@ -1,5 +1,6 @@
 import { useState, useEffect, useMemo } from "react";
 import { PatientData, EXAMPLE_PATIENT, loadPatient } from "@/lib/patient-data";
+import { CuisineType } from "@/lib/food-data";
 import { generate7DayPlan, DayPlan } from "@/lib/diet-generator";
 import { RefreshCw, ChevronDown, ChevronUp } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -8,6 +9,7 @@ const DietPlanPage = () => {
   const [patient, setPatient] = useState<PatientData>(EXAMPLE_PATIENT);
   const [plan, setPlan] = useState<DayPlan[]>([]);
   const [expandedDay, setExpandedDay] = useState<number>(0);
+  const [cuisine, setCuisine] = useState<CuisineType>("Kerala");
 
   useEffect(() => {
     const saved = loadPatient();
@@ -15,10 +17,10 @@ const DietPlanPage = () => {
   }, []);
 
   useEffect(() => {
-    setPlan(generate7DayPlan(patient));
-  }, [patient]);
+    setPlan(generate7DayPlan(patient, cuisine));
+  }, [patient, cuisine]);
 
-  const regenerate = () => setPlan(generate7DayPlan(patient));
+  const regenerate = () => setPlan(generate7DayPlan(patient, cuisine));
 
   const weeklyAvg = useMemo(() => {
     if (!plan.length) return { cal: 0, carb: 0, prot: 0 };
@@ -34,11 +36,28 @@ const DietPlanPage = () => {
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-xl font-heading font-bold">7-Day Diet Plan</h1>
-          <p className="text-sm text-muted-foreground">Kochi foods · 1600-1800 cal · 30-45g carb/meal</p>
+          <p className="text-sm text-muted-foreground">{cuisine} cuisine · 1600-1800 cal · 30-45g carb/meal</p>
         </div>
         <Button variant="outline" size="sm" onClick={regenerate}>
           <RefreshCw className="w-3.5 h-3.5 mr-1" /> Regenerate
         </Button>
+      </div>
+
+      {/* Cuisine selector */}
+      <div className="flex flex-wrap gap-1.5">
+        {(["Kerala", "Indian", "European", "Japanese", "Chinese", "Korean", "American"] as CuisineType[]).map((c) => (
+          <button
+            key={c}
+            onClick={() => setCuisine(c)}
+            className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-all ${
+              cuisine === c
+                ? "bg-primary text-primary-foreground shadow-sm"
+                : "bg-muted/50 text-muted-foreground hover:bg-muted hover:text-foreground"
+            }`}
+          >
+            {c === "Kerala" ? "🇮🇳 Kerala" : c === "Indian" ? "🇮🇳 Indian" : c === "European" ? "🇪🇺 European" : c === "Japanese" ? "🇯🇵 Japanese" : c === "Chinese" ? "🇨🇳 Chinese" : c === "Korean" ? "🇰🇷 Korean" : "🇺🇸 American"}
+          </button>
+        ))}
       </div>
 
       {/* Constraints */}

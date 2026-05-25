@@ -373,8 +373,8 @@ function DashboardCard({ title, icon, color, bgColor, borderColor, quickStats, f
   );
 }
 
-// Comprehensive Prescription Generator Component
-function ComprehensivePrescriptionGenerator() {
+// Prescription Engine Component
+function PrescriptionEngine() {
   const [patientName, setPatientName] = useState("");
   const [patientId, setPatientId] = useState("");
   const [age, setAge] = useState("");
@@ -699,7 +699,7 @@ function ComprehensivePrescriptionGenerator() {
             <FileText className="h-5 w-5 text-primary" />
           </div>
           <div>
-            <h2 className="text-lg font-semibold">Comprehensive Prescription Generator</h2>
+            <h2 className="text-lg font-semibold">Prescription Engine</h2>
             <p className="text-sm text-muted-foreground">Generate integrated prescriptions for all four NCDs</p>
           </div>
         </div>
@@ -948,7 +948,7 @@ function ComprehensivePrescriptionGenerator() {
         <div className="flex gap-3">
           <Button onClick={handleGenerate} className="flex-1">
             <FileText className="h-4 w-4 mr-2" />
-            Generate Comprehensive Prescription
+            Generate Prescription
           </Button>
 
           {generatedRx && (
@@ -1202,8 +1202,8 @@ export default function Home() {
           </div>
         </section>
 
-        {/* Prescription Generator */}
-        <ComprehensivePrescriptionGenerator />
+        {/* Prescription Engine */}
+        <PrescriptionEngine />
 
         {/* Condition Modules Detail */}
         <section className="mt-8">

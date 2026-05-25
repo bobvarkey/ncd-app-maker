@@ -13,13 +13,13 @@ export interface FoodItem {
   texture: "regular" | "soft" | "pureed";
   isLowSodium: boolean;
   glycemicIndex: "low" | "medium" | "high";
-  cuisine: "American" | "European" | "Chinese" | "North Indian" | "South Indian" | "Kerala" | "Japanese" | "Other";
+  cuisine: "American" | "European" | "Chinese" | "North Indian" | "South Indian" | "Kerala" | "Japanese" | "Korean" | "Other";
   dietType: "vegetarian" | "non-vegetarian" | "vegan" | "pescatarian" | "eggetarian";
 }
 
 export type FoodCategory = "veggies" | "fruits" | "proteins" | "grains" | "dairy";
 
-export type CuisineType = "American" | "European" | "Chinese" | "North Indian" | "South Indian" | "Kerala" | "Japanese" | "Other";
+export type CuisineType = "American" | "European" | "Chinese" | "North Indian" | "South Indian" | "Kerala" | "Japanese" | "Korean" | "Other";
 
 export type DietType = "vegetarian" | "non-vegetarian" | "vegan" | "pescatarian" | "eggetarian";
 
@@ -107,6 +107,150 @@ export const ALL_FOODS: FoodItem[] = [
   { id: "d3", name: "Greek Yogurt", serving: "100g", calories: 59, carbsG: 3.3, proteinG: 10, fatG: 0.4, fiberG: 0, sodiumMg: 75, category: "dairy", texture: "soft", isLowSodium: false, glycemicIndex: "low", cuisine: "American", dietType: "vegetarian" },
   { id: "d4", name: "Cottage Cheese", serving: "100g", calories: 98, carbsG: 3.5, proteinG: 11, fatG: 5, fiberG: 0, sodiumMg: 390, category: "dairy", texture: "soft", isLowSodium: false, glycemicIndex: "low", cuisine: "American", dietType: "vegetarian" },
   { id: "d5", name: "Almond Milk (unsweetened)", serving: "240ml", calories: 30, carbsG: 1, proteinG: 1, fatG: 2.5, fiberG: 0, sodiumMg: 170, category: "dairy", texture: "soft", isLowSodium: false, glycemicIndex: "low", cuisine: "American", dietType: "vegan" },
+
+  // JAPANESE FOODS
+  // Veggies
+  { id: "ja_v2", name: "Sunomono (Cucumber Salad)", serving: "100g", calories: 35, carbsG: 5, proteinG: 1, fatG: 1.5, fiberG: 0.5, sodiumMg: 180, category: "veggies", texture: "regular", isLowSodium: false, glycemicIndex: "low", cuisine: "Japanese", dietType: "vegan" },
+  { id: "ja_v3", name: "Hijiki Seaweed Salad", serving: "80g", calories: 60, carbsG: 10, proteinG: 1, fatG: 2, fiberG: 5, sodiumMg: 350, category: "veggies", texture: "soft", isLowSodium: false, glycemicIndex: "low", cuisine: "Japanese", dietType: "vegan" },
+  { id: "ja_v4", name: "Zaru Soba Greens", serving: "100g", calories: 40, carbsG: 4, proteinG: 2, fatG: 2, fiberG: 2, sodiumMg: 120, category: "veggies", texture: "soft", isLowSodium: false, glycemicIndex: "low", cuisine: "Japanese", dietType: "vegan" },
+  // Proteins
+  { id: "ja_p2", name: "Grilled Mackerel (Saba)", serving: "100g", calories: 230, carbsG: 0, proteinG: 22, fatG: 14, fiberG: 0, sodiumMg: 85, category: "proteins", texture: "soft", isLowSodium: true, glycemicIndex: "low", cuisine: "Japanese", dietType: "pescatarian" },
+  { id: "ja_p3", name: "Salmon Sashimi", serving: "100g", calories: 172, carbsG: 0, proteinG: 21, fatG: 9, fiberG: 0, sodiumMg: 45, category: "proteins", texture: "regular", isLowSodium: true, glycemicIndex: "low", cuisine: "Japanese", dietType: "pescatarian" },
+  { id: "ja_p4", name: "Edamame (Steamed)", serving: "100g (pod)", calories: 120, carbsG: 7, proteinG: 11, fatG: 5, fiberG: 5, sodiumMg: 200, category: "proteins", texture: "soft", isLowSodium: false, glycemicIndex: "low", cuisine: "Japanese", dietType: "vegan" },
+  { id: "ja_p5", name: "Yakitori (Chicken Skewer)", serving: "80g (2 skewers)", calories: 140, carbsG: 5, proteinG: 20, fatG: 5, fiberG: 0, sodiumMg: 320, category: "proteins", texture: "soft", isLowSodium: false, glycemicIndex: "low", cuisine: "Japanese", dietType: "non-vegetarian" },
+  { id: "ja_p6", name: "Tofu Miso Soup", serving: "200ml", calories: 55, carbsG: 5, proteinG: 5, fatG: 2, fiberG: 1, sodiumMg: 380, category: "proteins", texture: "soft", isLowSodium: false, glycemicIndex: "low", cuisine: "Japanese", dietType: "vegan" },
+  // Grains
+  { id: "ja_g2", name: "Soba (Buckwheat Noodles)", serving: "100g cooked", calories: 130, carbsG: 25, proteinG: 5, fatG: 0.5, fiberG: 3, sodiumMg: 350, category: "grains", texture: "soft", isLowSodium: false, glycemicIndex: "medium", cuisine: "Japanese", dietType: "vegan" },
+  { id: "ja_g3", name: "Udon Noodles", serving: "100g cooked", calories: 155, carbsG: 32, proteinG: 4, fatG: 0.5, fiberG: 1.5, sodiumMg: 420, category: "grains", texture: "soft", isLowSodium: false, glycemicIndex: "medium", cuisine: "Japanese", dietType: "vegan" },
+
+  // CHINESE FOODS (expanded)
+  // Veggies
+  { id: "ch_v3", name: "Stir-fried Snow Peas", serving: "120g", calories: 55, carbsG: 8, proteinG: 3, fatG: 2, fiberG: 2.5, sodiumMg: 180, category: "veggies", texture: "soft", isLowSodium: false, glycemicIndex: "low", cuisine: "Chinese", dietType: "vegan" },
+  { id: "ch_v4", name: "Chinese Broccoli (Gai Lan)", serving: "120g", calories: 65, carbsG: 8, proteinG: 4, fatG: 2, fiberG: 3, sodiumMg: 200, category: "veggies", texture: "soft", isLowSodium: false, glycemicIndex: "low", cuisine: "Chinese", dietType: "vegan" },
+  // Proteins
+  { id: "ch_p1", name: "Steamed Fish with Ginger", serving: "120g", calories: 145, carbsG: 2, proteinG: 26, fatG: 4, fiberG: 0, sodiumMg: 250, category: "proteins", texture: "soft", isLowSodium: false, glycemicIndex: "low", cuisine: "Chinese", dietType: "pescatarian" },
+  { id: "ch_p2", name: "Kung Pao Chicken (light)", serving: "120g", calories: 195, carbsG: 8, proteinG: 24, fatG: 9, fiberG: 1, sodiumMg: 380, category: "proteins", texture: "soft", isLowSodium: false, glycemicIndex: "low", cuisine: "Chinese", dietType: "non-vegetarian" },
+  { id: "ch_p3", name: "Mapo Tofu (light)", serving: "150g", calories: 110, carbsG: 8, proteinG: 8, fatG: 6, fiberG: 1.5, sodiumMg: 450, category: "proteins", texture: "soft", isLowSodium: false, glycemicIndex: "low", cuisine: "Chinese", dietType: "vegan" },
+  { id: "ch_p4", name: "Steamed Pork Dumplings (2)", serving: "80g", calories: 140, carbsG: 14, proteinG: 8, fatG: 6, fiberG: 0.5, sodiumMg: 340, category: "proteins", texture: "soft", isLowSodium: false, glycemicIndex: "medium", cuisine: "Chinese", dietType: "non-vegetarian" },
+  // Grains
+  { id: "ch_g2", name: "Steamed Jasmine Rice", serving: "⅔ cup cooked (130g)", calories: 195, carbsG: 42, proteinG: 4, fatG: 0.5, fiberG: 0.3, sodiumMg: 2, category: "grains", texture: "soft", isLowSodium: true, glycemicIndex: "high", cuisine: "Chinese", dietType: "vegan" },
+
+  // EUROPEAN FOODS (expanded)
+  // Veggies
+  { id: "eu_v3", name: "Ratatouille", serving: "200g", calories: 80, carbsG: 12, proteinG: 2, fatG: 3.5, fiberG: 3.5, sodiumMg: 100, category: "veggies", texture: "soft", isLowSodium: true, glycemicIndex: "low", cuisine: "European", dietType: "vegan" },
+  { id: "eu_v4", name: "Green Bean Almondine", serving: "150g", calories: 90, carbsG: 8, proteinG: 3, fatG: 5, fiberG: 3, sodiumMg: 85, category: "veggies", texture: "soft", isLowSodium: true, glycemicIndex: "low", cuisine: "European", dietType: "vegan" },
+  { id: "eu_v5", name: "Roasted Beetroot Salad", serving: "120g", calories: 75, carbsG: 12, proteinG: 2, fatG: 3, fiberG: 3, sodiumMg: 240, category: "veggies", texture: "soft", isLowSodium: false, glycemicIndex: "medium", cuisine: "European", dietType: "vegan" },
+  // Proteins
+  { id: "eu_p1", name: "Grilled Chicken Breast (Herbed)", serving: "120g", calories: 185, carbsG: 1, proteinG: 36, fatG: 4, fiberG: 0, sodiumMg: 140, category: "proteins", texture: "soft", isLowSodium: true, glycemicIndex: "low", cuisine: "European", dietType: "non-vegetarian" },
+  { id: "eu_p2", name: "Baked Salmon with Dill", serving: "120g", calories: 240, carbsG: 0, proteinG: 26, fatG: 14, fiberG: 0, sodiumMg: 90, category: "proteins", texture: "soft", isLowSodium: true, glycemicIndex: "low", cuisine: "European", dietType: "pescatarian" },
+  { id: "eu_p3", name: "Mediterranean Lentil Salad", serving: "150g", calories: 165, carbsG: 20, proteinG: 10, fatG: 5, fiberG: 6, sodiumMg: 180, category: "proteins", texture: "soft", isLowSodium: false, glycemicIndex: "low", cuisine: "European", dietType: "vegan" },
+  // Grains
+  { id: "eu_g1", name: "Couscous (Whole Wheat)", serving: "½ cup cooked (100g)", calories: 120, carbsG: 22, proteinG: 4, fatG: 0.5, fiberG: 3, sodiumMg: 5, category: "grains", texture: "soft", isLowSodium: true, glycemicIndex: "medium", cuisine: "European", dietType: "vegan" },
+  { id: "eu_g2", name: "Sourdough Bread (1 slice)", serving: "40g", calories: 100, carbsG: 18, proteinG: 3.5, fatG: 1.5, fiberG: 1, sodiumMg: 180, category: "grains", texture: "soft", isLowSodium: false, glycemicIndex: "medium", cuisine: "European", dietType: "vegan" },
+
+  // AMERICAN FOODS (expanded)
+  // Proteins
+  { id: "am_p1", name: "Grilled Chicken Caesar (no croutons)", serving: "150g", calories: 220, carbsG: 5, proteinG: 35, fatG: 8, fiberG: 1, sodiumMg: 420, category: "proteins", texture: "soft", isLowSodium: false, glycemicIndex: "low", cuisine: "American", dietType: "non-vegetarian" },
+  { id: "am_p2", name: "Turkey Burger (no bun)", serving: "120g patty", calories: 175, carbsG: 0, proteinG: 26, fatG: 8, fiberG: 0, sodiumMg: 310, category: "proteins", texture: "soft", isLowSodium: false, glycemicIndex: "low", cuisine: "American", dietType: "non-vegetarian" },
+  { id: "am_p3", name: "Grilled Shrimp Salad", serving: "150g", calories: 130, carbsG: 4, proteinG: 22, fatG: 3, fiberG: 1.5, sodiumMg: 270, category: "proteins", texture: "soft", isLowSodium: false, glycemicIndex: "low", cuisine: "American", dietType: "pescatarian" },
+
+  // KOREAN FOODS
+  // Veggies
+  { id: "kr_v1", name: "Kimchi (Napa Cabbage)", serving: "100g", calories: 55, carbsG: 7, proteinG: 3, fatG: 1, fiberG: 4.5, sodiumMg: 680, category: "veggies", texture: "soft", isLowSodium: false, glycemicIndex: "low", cuisine: "Korean", dietType: "vegan" },
+  { id: "kr_v2", name: "Kongnamul (Seasoned Bean Sprouts)", serving: "120g", calories: 65, carbsG: 6, proteinG: 3, fatG: 3, fiberG: 2, sodiumMg: 220, category: "veggies", texture: "soft", isLowSodium: false, glycemicIndex: "low", cuisine: "Korean", dietType: "vegan" },
+  { id: "kr_v3", name: "Sigeumchi Namul (Spinach)", serving: "100g", calories: 40, carbsG: 4, proteinG: 3, fatG: 2, fiberG: 2.5, sodiumMg: 180, category: "veggies", texture: "soft", isLowSodium: false, glycemicIndex: "low", cuisine: "Korean", dietType: "vegan" },
+  { id: "kr_v4", name: "Bokkeum (Stir-fried Zucchini)", serving: "120g", calories: 55, carbsG: 7, proteinG: 2, fatG: 3, fiberG: 1.5, sodiumMg: 160, category: "veggies", texture: "soft", isLowSodium: false, glycemicIndex: "low", cuisine: "Korean", dietType: "vegan" },
+  { id: "kr_v5", name: "Mu Namul (Radish Salad)", serving: "100g", calories: 45, carbsG: 10, proteinG: 1, fatG: 0.5, fiberG: 2, sodiumMg: 200, category: "veggies", texture: "soft", isLowSodium: false, glycemicIndex: "low", cuisine: "Korean", dietType: "vegan" },
+  { id: "kr_v6", name: "Baechu Geotjeori (Fresh Kimchi)", serving: "100g", calories: 50, carbsG: 6, proteinG: 2, fatG: 1, fiberG: 3.5, sodiumMg: 620, category: "veggies", texture: "soft", isLowSodium: false, glycemicIndex: "low", cuisine: "Korean", dietType: "vegan" },
+
+  // Proteins
+  { id: "kr_p1", name: "Bulgogi (Lean Beef)", serving: "100g cooked", calories: 210, carbsG: 8, proteinG: 24, fatG: 10, fiberG: 0, sodiumMg: 420, category: "proteins", texture: "soft", isLowSodium: false, glycemicIndex: "low", cuisine: "Korean", dietType: "non-vegetarian" },
+  { id: "kr_p2", name: "Dak Bulgogi (Lean Chicken)", serving: "100g cooked", calories: 165, carbsG: 7, proteinG: 28, fatG: 4, fiberG: 0, sodiumMg: 380, category: "proteins", texture: "soft", isLowSodium: false, glycemicIndex: "low", cuisine: "Korean", dietType: "non-vegetarian" },
+  { id: "kr_p3", name: "Doenjang Jjigae (Soybean Paste Stew)", serving: "200ml", calories: 75, carbsG: 8, proteinG: 6, fatG: 2.5, fiberG: 2, sodiumMg: 580, category: "proteins", texture: "soft", isLowSodium: false, glycemicIndex: "low", cuisine: "Korean", dietType: "vegan" },
+  { id: "kr_p4", name: "Yukgaejang (Spicy Beef Soup)", serving: "200ml", calories: 130, carbsG: 6, proteinG: 18, fatG: 5, fiberG: 1.5, sodiumMg: 600, category: "proteins", texture: "soft", isLowSodium: false, glycemicIndex: "low", cuisine: "Korean", dietType: "non-vegetarian" },
+  { id: "kr_p5", name: "Japchae (Glass Noodles + Veggies)", serving: "150g", calories: 160, carbsG: 22, proteinG: 5, fatG: 6, fiberG: 2, sodiumMg: 350, category: "proteins", texture: "soft", isLowSodium: false, glycemicIndex: "medium", cuisine: "Korean", dietType: "vegan" },
+
+  // Grains
+  { id: "kr_g1", name: "Bap (Steamed Rice)", serving: "⅔ cup cooked (130g)", calories: 195, carbsG: 42, proteinG: 4, fatG: 0.5, fiberG: 0.4, sodiumMg: 2, category: "grains", texture: "soft", isLowSodium: true, glycemicIndex: "high", cuisine: "Korean", dietType: "vegan" },
+  { id: "kr_g2", name: "Kongbap (Rice + Beans)", serving: "⅔ cup cooked (130g)", calories: 180, carbsG: 35, proteinG: 8, fatG: 1, fiberG: 4, sodiumMg: 2, category: "grains", texture: "soft", isLowSodium: true, glycemicIndex: "medium", cuisine: "Korean", dietType: "vegan" },
+  { id: "kr_g3", name: "Japgokbap (Multigrain Rice)", serving: "⅔ cup cooked (130g)", calories: 170, carbsG: 32, proteinG: 6, fatG: 1.5, fiberG: 4.5, sodiumMg: 2, category: "grains", texture: "soft", isLowSodium: true, glycemicIndex: "low", cuisine: "Korean", dietType: "vegan" },
+
+
+
+
+
+  // JAPANESE FOODS
+  // Veggies
+  { id: "ja_v2", name: "Sunomono (Cucumber Salad)", serving: "100g", calories: 35, carbsG: 5, proteinG: 1, fatG: 1.5, fiberG: 0.5, sodiumMg: 180, category: "veggies", texture: "regular", isLowSodium: false, glycemicIndex: "low", cuisine: "Japanese", dietType: "vegan" },
+  { id: "ja_v3", name: "Hijiki Seaweed Salad", serving: "80g", calories: 60, carbsG: 10, proteinG: 1, fatG: 2, fiberG: 5, sodiumMg: 350, category: "veggies", texture: "soft", isLowSodium: false, glycemicIndex: "low", cuisine: "Japanese", dietType: "vegan" },
+  { id: "ja_v4", name: "Zaru Soba Greens", serving: "100g", calories: 40, carbsG: 4, proteinG: 2, fatG: 2, fiberG: 2, sodiumMg: 120, category: "veggies", texture: "soft", isLowSodium: false, glycemicIndex: "low", cuisine: "Japanese", dietType: "vegan" },
+  // Proteins
+  { id: "ja_p2", name: "Grilled Mackerel (Saba)", serving: "100g", calories: 230, carbsG: 0, proteinG: 22, fatG: 14, fiberG: 0, sodiumMg: 85, category: "proteins", texture: "soft", isLowSodium: true, glycemicIndex: "low", cuisine: "Japanese", dietType: "pescatarian" },
+  { id: "ja_p3", name: "Salmon Sashimi", serving: "100g", calories: 172, carbsG: 0, proteinG: 21, fatG: 9, fiberG: 0, sodiumMg: 45, category: "proteins", texture: "regular", isLowSodium: true, glycemicIndex: "low", cuisine: "Japanese", dietType: "pescatarian" },
+  { id: "ja_p4", name: "Edamame (Steamed)", serving: "100g (pod)", calories: 120, carbsG: 7, proteinG: 11, fatG: 5, fiberG: 5, sodiumMg: 200, category: "proteins", texture: "soft", isLowSodium: false, glycemicIndex: "low", cuisine: "Japanese", dietType: "vegan" },
+  { id: "ja_p5", name: "Yakitori (Chicken Skewer)", serving: "80g (2 skewers)", calories: 140, carbsG: 5, proteinG: 20, fatG: 5, fiberG: 0, sodiumMg: 320, category: "proteins", texture: "soft", isLowSodium: false, glycemicIndex: "low", cuisine: "Japanese", dietType: "non-vegetarian" },
+  { id: "ja_p6", name: "Tofu Miso Soup", serving: "200ml", calories: 55, carbsG: 5, proteinG: 5, fatG: 2, fiberG: 1, sodiumMg: 380, category: "proteins", texture: "soft", isLowSodium: false, glycemicIndex: "low", cuisine: "Japanese", dietType: "vegan" },
+  // Grains
+  { id: "ja_g2", name: "Soba (Buckwheat Noodles)", serving: "100g cooked", calories: 130, carbsG: 25, proteinG: 5, fatG: 0.5, fiberG: 3, sodiumMg: 350, category: "grains", texture: "soft", isLowSodium: false, glycemicIndex: "medium", cuisine: "Japanese", dietType: "vegan" },
+  { id: "ja_g3", name: "Udon Noodles", serving: "100g cooked", calories: 155, carbsG: 32, proteinG: 4, fatG: 0.5, fiberG: 1.5, sodiumMg: 420, category: "grains", texture: "soft", isLowSodium: false, glycemicIndex: "medium", cuisine: "Japanese", dietType: "vegan" },
+
+  // CHINESE FOODS (expanded)
+  // Veggies
+  { id: "ch_v3", name: "Stir-fried Snow Peas", serving: "120g", calories: 55, carbsG: 8, proteinG: 3, fatG: 2, fiberG: 2.5, sodiumMg: 180, category: "veggies", texture: "soft", isLowSodium: false, glycemicIndex: "low", cuisine: "Chinese", dietType: "vegan" },
+  { id: "ch_v4", name: "Chinese Broccoli (Gai Lan)", serving: "120g", calories: 65, carbsG: 8, proteinG: 4, fatG: 2, fiberG: 3, sodiumMg: 200, category: "veggies", texture: "soft", isLowSodium: false, glycemicIndex: "low", cuisine: "Chinese", dietType: "vegan" },
+  // Proteins
+  { id: "ch_p1", name: "Steamed Fish with Ginger", serving: "120g", calories: 145, carbsG: 2, proteinG: 26, fatG: 4, fiberG: 0, sodiumMg: 250, category: "proteins", texture: "soft", isLowSodium: false, glycemicIndex: "low", cuisine: "Chinese", dietType: "pescatarian" },
+  { id: "ch_p2", name: "Kung Pao Chicken (light)", serving: "120g", calories: 195, carbsG: 8, proteinG: 24, fatG: 9, fiberG: 1, sodiumMg: 380, category: "proteins", texture: "soft", isLowSodium: false, glycemicIndex: "low", cuisine: "Chinese", dietType: "non-vegetarian" },
+  { id: "ch_p3", name: "Mapo Tofu (light)", serving: "150g", calories: 110, carbsG: 8, proteinG: 8, fatG: 6, fiberG: 1.5, sodiumMg: 450, category: "proteins", texture: "soft", isLowSodium: false, glycemicIndex: "low", cuisine: "Chinese", dietType: "vegan" },
+  { id: "ch_p4", name: "Steamed Pork Dumplings (2)", serving: "80g", calories: 140, carbsG: 14, proteinG: 8, fatG: 6, fiberG: 0.5, sodiumMg: 340, category: "proteins", texture: "soft", isLowSodium: false, glycemicIndex: "medium", cuisine: "Chinese", dietType: "non-vegetarian" },
+  // Grains
+  { id: "ch_g2", name: "Steamed Jasmine Rice", serving: "⅔ cup cooked (130g)", calories: 195, carbsG: 42, proteinG: 4, fatG: 0.5, fiberG: 0.3, sodiumMg: 2, category: "grains", texture: "soft", isLowSodium: true, glycemicIndex: "high", cuisine: "Chinese", dietType: "vegan" },
+
+  // EUROPEAN FOODS (expanded)
+  // Veggies
+  { id: "eu_v3", name: "Ratatouille", serving: "200g", calories: 80, carbsG: 12, proteinG: 2, fatG: 3.5, fiberG: 3.5, sodiumMg: 100, category: "veggies", texture: "soft", isLowSodium: true, glycemicIndex: "low", cuisine: "European", dietType: "vegan" },
+  { id: "eu_v4", name: "Green Bean Almondine", serving: "150g", calories: 90, carbsG: 8, proteinG: 3, fatG: 5, fiberG: 3, sodiumMg: 85, category: "veggies", texture: "soft", isLowSodium: true, glycemicIndex: "low", cuisine: "European", dietType: "vegan" },
+  { id: "eu_v5", name: "Roasted Beetroot Salad", serving: "120g", calories: 75, carbsG: 12, proteinG: 2, fatG: 3, fiberG: 3, sodiumMg: 240, category: "veggies", texture: "soft", isLowSodium: false, glycemicIndex: "medium", cuisine: "European", dietType: "vegan" },
+  // Proteins
+  { id: "eu_p1", name: "Grilled Chicken Breast (Herbed)", serving: "120g", calories: 185, carbsG: 1, proteinG: 36, fatG: 4, fiberG: 0, sodiumMg: 140, category: "proteins", texture: "soft", isLowSodium: true, glycemicIndex: "low", cuisine: "European", dietType: "non-vegetarian" },
+  { id: "eu_p2", name: "Baked Salmon with Dill", serving: "120g", calories: 240, carbsG: 0, proteinG: 26, fatG: 14, fiberG: 0, sodiumMg: 90, category: "proteins", texture: "soft", isLowSodium: true, glycemicIndex: "low", cuisine: "European", dietType: "pescatarian" },
+  { id: "eu_p3", name: "Mediterranean Lentil Salad", serving: "150g", calories: 165, carbsG: 20, proteinG: 10, fatG: 5, fiberG: 6, sodiumMg: 180, category: "proteins", texture: "soft", isLowSodium: false, glycemicIndex: "low", cuisine: "European", dietType: "vegan" },
+  // Grains
+  { id: "eu_g1", name: "Couscous (Whole Wheat)", serving: "½ cup cooked (100g)", calories: 120, carbsG: 22, proteinG: 4, fatG: 0.5, fiberG: 3, sodiumMg: 5, category: "grains", texture: "soft", isLowSodium: true, glycemicIndex: "medium", cuisine: "European", dietType: "vegan" },
+  { id: "eu_g2", name: "Sourdough Bread (1 slice)", serving: "40g", calories: 100, carbsG: 18, proteinG: 3.5, fatG: 1.5, fiberG: 1, sodiumMg: 180, category: "grains", texture: "soft", isLowSodium: false, glycemicIndex: "medium", cuisine: "European", dietType: "vegan" },
+
+  // AMERICAN FOODS (expanded)
+  // Proteins
+  { id: "am_p1", name: "Grilled Chicken Caesar (no croutons)", serving: "150g", calories: 220, carbsG: 5, proteinG: 35, fatG: 8, fiberG: 1, sodiumMg: 420, category: "proteins", texture: "soft", isLowSodium: false, glycemicIndex: "low", cuisine: "American", dietType: "non-vegetarian" },
+  { id: "am_p2", name: "Turkey Burger (no bun)", serving: "120g patty", calories: 175, carbsG: 0, proteinG: 26, fatG: 8, fiberG: 0, sodiumMg: 310, category: "proteins", texture: "soft", isLowSodium: false, glycemicIndex: "low", cuisine: "American", dietType: "non-vegetarian" },
+  { id: "am_p3", name: "Grilled Shrimp Salad", serving: "150g", calories: 130, carbsG: 4, proteinG: 22, fatG: 3, fiberG: 1.5, sodiumMg: 270, category: "proteins", texture: "soft", isLowSodium: false, glycemicIndex: "low", cuisine: "American", dietType: "pescatarian" },
+
+  // KOREAN FOODS
+  // Veggies
+  { id: "kr_v1", name: "Kimchi (Napa Cabbage)", serving: "100g", calories: 55, carbsG: 7, proteinG: 3, fatG: 1, fiberG: 4.5, sodiumMg: 680, category: "veggies", texture: "soft", isLowSodium: false, glycemicIndex: "low", cuisine: "Korean", dietType: "vegan" },
+  { id: "kr_v2", name: "Kongnamul (Seasoned Bean Sprouts)", serving: "120g", calories: 65, carbsG: 6, proteinG: 3, fatG: 3, fiberG: 2, sodiumMg: 220, category: "veggies", texture: "soft", isLowSodium: false, glycemicIndex: "low", cuisine: "Korean", dietType: "vegan" },
+  { id: "kr_v3", name: "Sigeumchi Namul (Spinach)", serving: "100g", calories: 40, carbsG: 4, proteinG: 3, fatG: 2, fiberG: 2.5, sodiumMg: 180, category: "veggies", texture: "soft", isLowSodium: false, glycemicIndex: "low", cuisine: "Korean", dietType: "vegan" },
+  { id: "kr_v4", name: "Bokkeum (Stir-fried Zucchini)", serving: "120g", calories: 55, carbsG: 7, proteinG: 2, fatG: 3, fiberG: 1.5, sodiumMg: 160, category: "veggies", texture: "soft", isLowSodium: false, glycemicIndex: "low", cuisine: "Korean", dietType: "vegan" },
+  { id: "kr_v5", name: "Mu Namul (Radish Salad)", serving: "100g", calories: 45, carbsG: 10, proteinG: 1, fatG: 0.5, fiberG: 2, sodiumMg: 200, category: "veggies", texture: "soft", isLowSodium: false, glycemicIndex: "low", cuisine: "Korean", dietType: "vegan" },
+  { id: "kr_v6", name: "Baechu Geotjeori (Fresh Kimchi)", serving: "100g", calories: 50, carbsG: 6, proteinG: 2, fatG: 1, fiberG: 3.5, sodiumMg: 620, category: "veggies", texture: "soft", isLowSodium: false, glycemicIndex: "low", cuisine: "Korean", dietType: "vegan" },
+
+  // Proteins
+  { id: "kr_p1", name: "Bulgogi (Lean Beef)", serving: "100g cooked", calories: 210, carbsG: 8, proteinG: 24, fatG: 10, fiberG: 0, sodiumMg: 420, category: "proteins", texture: "soft", isLowSodium: false, glycemicIndex: "low", cuisine: "Korean", dietType: "non-vegetarian" },
+  { id: "kr_p2", name: "Dak Bulgogi (Lean Chicken)", serving: "100g cooked", calories: 165, carbsG: 7, proteinG: 28, fatG: 4, fiberG: 0, sodiumMg: 380, category: "proteins", texture: "soft", isLowSodium: false, glycemicIndex: "low", cuisine: "Korean", dietType: "non-vegetarian" },
+  { id: "kr_p3", name: "Doenjang Jjigae (Soybean Paste Stew)", serving: "200ml", calories: 75, carbsG: 8, proteinG: 6, fatG: 2.5, fiberG: 2, sodiumMg: 580, category: "proteins", texture: "soft", isLowSodium: false, glycemicIndex: "low", cuisine: "Korean", dietType: "vegan" },
+  { id: "kr_p4", name: "Yukgaejang (Spicy Beef Soup)", serving: "200ml", calories: 130, carbsG: 6, proteinG: 18, fatG: 5, fiberG: 1.5, sodiumMg: 600, category: "proteins", texture: "soft", isLowSodium: false, glycemicIndex: "low", cuisine: "Korean", dietType: "non-vegetarian" },
+  { id: "kr_p5", name: "Japchae (Glass Noodles + Veggies)", serving: "150g", calories: 160, carbsG: 22, proteinG: 5, fatG: 6, fiberG: 2, sodiumMg: 350, category: "proteins", texture: "soft", isLowSodium: false, glycemicIndex: "medium", cuisine: "Korean", dietType: "vegan" },
+
+  // Grains
+  { id: "kr_g1", name: "Bap (Steamed Rice)", serving: "⅔ cup cooked (130g)", calories: 195, carbsG: 42, proteinG: 4, fatG: 0.5, fiberG: 0.4, sodiumMg: 2, category: "grains", texture: "soft", isLowSodium: true, glycemicIndex: "high", cuisine: "Korean", dietType: "vegan" },
+  { id: "kr_g2", name: "Kongbap (Rice + Beans)", serving: "⅔ cup cooked (130g)", calories: 180, carbsG: 35, proteinG: 8, fatG: 1, fiberG: 4, sodiumMg: 2, category: "grains", texture: "soft", isLowSodium: true, glycemicIndex: "medium", cuisine: "Korean", dietType: "vegan" },
+  { id: "kr_g3", name: "Japgokbap (Multigrain Rice)", serving: "⅔ cup cooked (130g)", calories: 170, carbsG: 32, proteinG: 6, fatG: 1.5, fiberG: 4.5, sodiumMg: 2, category: "grains", texture: "soft", isLowSodium: true, glycemicIndex: "low", cuisine: "Korean", dietType: "vegan" },
+
+  // Dairy / Soups
+  { id: "kr_d1", name: "Miyeokguk (Seaweed Soup)", serving: "200ml", calories: 40, carbsG: 5, proteinG: 3, fatG: 1.5, fiberG: 1, sodiumMg: 400, category: "dairy", texture: "soft", isLowSodium: false, glycemicIndex: "low", cuisine: "Korean", dietType: "vegan" },
+  { id: "kr_d2", name: "Kongguksu (Soy Milk Noodle Soup)", serving: "200ml", calories: 90, carbsG: 12, proteinG: 5, fatG: 3, fiberG: 1, sodiumMg: 150, category: "dairy", texture: "soft", isLowSodium: false, glycemicIndex: "medium", cuisine: "Korean", dietType: "vegan" },
+
+
 ];
 
 export const KERALA_FOODS = ALL_FOODS.filter(f => f.cuisine === "Kerala");
