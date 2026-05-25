@@ -47,6 +47,7 @@ import {
   RISK_MODIFIERS_LAI, HIGH_RISK_FEATURES_LAI,
   RISK_ENHANCERS_2019,
   PMOS_DIAGNOSTIC_CRITERIA, PMOS_ADULT_VS_ADOLESCENT, PMOS_METABOLIC_SCREENING,
+  SUBCLINICAL_ITEMS,
 } from "@/lib/clinicalConstants";
 
 // ─── Visual mapping: per-item tone + icon for risk-factor chips ───
