@@ -117,6 +117,7 @@ export default function HypertensionTab() {
             { label: "Drug Interactions", icon: Pill, tab: "assessment" },
             { label: "Treatment Algorithm", icon: ClipboardList, tab: "treatment" },
             { label: "Potency Table", icon: BookOpen, tab: "treatment" },
+            { label: "Investigation Flowchart", icon: Activity, tab: "overview" },
           ].map((item) => (
             <Button
               key={item.label}
