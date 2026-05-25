@@ -102,6 +102,9 @@ export default function DiabetesTab() {
     },
   ];
 
+  // Order: Treatment first, then Assessment, then Overview at bottom
+  const sectionOrder = ["assessment", "treatment", "overview"];
+
   return (
     <div className="min-h-screen bg-background">
       {/* Grain Overlay */}
@@ -160,19 +163,22 @@ export default function DiabetesTab() {
 
       {/* Sections */}
       <section className="max-w-6xl mx-auto px-6 pb-16 space-y-4">
-        {sections.map((section) => (
-          <Section
-            key={section.id}
-            id={section.id}
-            title={section.title}
-            icon={section.icon}
-            description={section.description}
-            isOpen={openSections.has(section.id)}
-            onToggle={() => toggleSection(section.id)}
-          >
-            {section.component}
-          </Section>
-        ))}
+        {sectionOrder.map((id) => {
+          const section = sections.find(s => s.id === id)!;
+          return (
+            <Section
+              key={section.id}
+              id={section.id}
+              title={section.title}
+              icon={section.icon}
+              description={section.description}
+              isOpen={openSections.has(section.id)}
+              onToggle={() => toggleSection(section.id)}
+            >
+              {section.component}
+            </Section>
+          );
+        })}
       </section>
     </div>
   );
