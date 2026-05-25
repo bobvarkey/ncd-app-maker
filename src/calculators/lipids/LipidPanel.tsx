@@ -155,13 +155,26 @@ function AscvdInfoCard({ inline = false }: { inline?: boolean }) {
           <CollapsibleContent>
             <div className="mt-1.5 space-y-2 rounded-b-lg border-x border-b border-rose-200/60 dark:border-rose-800/30 bg-white/40 dark:bg-rose-950/20 px-3 py-2.5">
               {ASCVD_ESTABLISHED.map((item) => (
-                <div key={item.id} className="flex gap-2">
-                  <div className="mt-0.5 h-1.5 w-1.5 shrink-0 rounded-full bg-rose-500" />
-                  <div>
-                    <p className="text-[11px] font-semibold text-foreground">{item.label}</p>
-                    <p className="text-[10px] text-muted-foreground leading-snug">{item.qualifier}</p>
-                  </div>
-                </div>
+                <HoverCard key={item.id} openDelay={100} closeDelay={100}>
+                  <HoverCardTrigger asChild>
+                    <button type="button" className="flex w-full gap-2 text-left rounded-md hover:bg-rose-100/40 dark:hover:bg-rose-900/20 transition-colors px-1 py-0.5 -mx-1 cursor-help">
+                      <div className="mt-0.5 h-1.5 w-1.5 shrink-0 rounded-full bg-rose-500" />
+                      <div className="flex-1 min-w-0">
+                        <p className="text-[11px] font-semibold text-foreground inline-flex items-center gap-1">
+                          {item.label}
+                          <Info className="h-3 w-3 text-rose-500/70" />
+                        </p>
+                        <p className="text-[10px] text-muted-foreground leading-snug">{item.qualifier}</p>
+                      </div>
+                    </button>
+                  </HoverCardTrigger>
+                  <HoverCardContent side="top" align="start" className="w-72 border-rose-200 dark:border-rose-800/40 bg-popover">
+                    <div className="space-y-1.5">
+                      <p className="text-xs font-bold text-rose-700 dark:text-rose-400">{item.label}</p>
+                      <p className="text-[11px] text-muted-foreground leading-relaxed">{item.qualifier}</p>
+                    </div>
+                  </HoverCardContent>
+                </HoverCard>
               ))}
             </div>
           </CollapsibleContent>
