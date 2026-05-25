@@ -1141,7 +1141,7 @@ export default function Home() {
         <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-6">
           <div>
             <h1 className="text-3xl font-serif font-semibold tracking-tight">
-              NCD Dashboard
+              Prescription Engine
             </h1>
             <p className="text-muted-foreground mt-2 max-w-xl">
               Comprehensive non-communicable disease management tools — diabetes, hypertension, lipids, and obesity.
