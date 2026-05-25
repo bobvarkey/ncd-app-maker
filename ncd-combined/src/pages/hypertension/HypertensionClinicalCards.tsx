@@ -83,115 +83,115 @@ const CHAPPLES_MNEMONIC: { letter: string; stands: string; color: string }[] = [
   { letter: "S", stands: "Sleep apnea, Stenosis (renal artery)", color: "text-teal-400" },
 ];
 
-const SECONDARY_WORKUP: { category: string; tests: { name: string; required: boolean }[] }[] = [
+interface WorkupTest {
+  name: string;
+  tag: "screening" | "confirmatory" | "localization" | "history" | "monitoring";
+  reference?: string;
+  detail?: string;
+}
+
+interface WorkupCategory {
+  category: string;
+  group: "Endocrine" | "Renal" | "Vascular" | "Lifestyle" | "Other";
+  tests: WorkupTest[];
+}
+
+const SECONDARY_WORKUP: WorkupCategory[] = [
   {
-    category: "History / Information",
+    category: "Primary Aldosteronism",
+    group: "Endocrine",
     tests: [
-      { name: "Drug inventory review", required: true },
-      { name: "OSA screening (STOP-BANG)", required: true },
-      { name: "Adrenal CT/MRI", required: false },
+      { name: "Aldosterone/renin ratio", tag: "screening", reference: "ARR >20 ng/dL per ng/mL/h", detail: "Initial screening only; positive if ARR >20" },
+      { name: "Saline suppression test", tag: "confirmatory", reference: "Aldosterone >10 ng/dL after saline infusion", detail: "Gold standard confirmatory test for hyperaldosteronism" },
+      { name: "Adrenal CT/MRI", tag: "localization", detail: "Identify adenoma vs bilateral hyperplasia" },
     ],
   },
   {
     category: "Obstructive Sleep Apnea",
+    group: "Other",
     tests: [
-      { name: "Polysomnography", required: true },
-      { name: "Home sleep study", required: true },
+      { name: "Sleep study (polysomnography)", tag: "confirmatory", reference: "AHI >5 events/hour", detail: "Gold standard for diagnosis" },
+      { name: "Epworth sleepiness scale", tag: "screening", reference: "Score >10 suggests excessive daytime sleepiness", detail: "Subjective daytime sleepiness assessment" },
+      { name: "Overnight oximetry", tag: "screening", reference: "SpO2 <90% for >1% of sleep time", detail: "Screens for nocturnal hypoxemia" },
     ],
   },
   {
-    category: "Renal Parenchymal Disease",
+    category: "Alcohol Use",
+    group: "Lifestyle",
     tests: [
-      { name: "Renal ultrasound", required: true },
-      { name: "Quantitative proteinuria", required: true },
-      { name: "Glomerular filtration rate", required: true },
+      { name: "Detailed alcohol history", tag: "history", detail: "Quantify intake; >2 drinks/day linked to HTN" },
+      { name: "AUDIT questionnaire", tag: "screening", reference: "Score >8 suggests hazardous use", detail: "Standardized alcohol use assessment" },
+      { name: "GGT, AST, ALT levels", tag: "monitoring", reference: "GGT >30 U/L, AST/ALT ratio >2", detail: "Liver enzymes elevated with chronic use" },
+    ],
+  },
+  {
+    category: "NSAID Use",
+    group: "Lifestyle",
+    tests: [
+      { name: "Medication history review", tag: "history", detail: "Include Rx, OTC, and herbal supplements" },
+      { name: "OTC medication assessment", tag: "history", detail: "NSAIDs can raise BP by 3-5 mmHg" },
+      { name: "Drug interaction check", tag: "monitoring", detail: "NSAIDs reduce efficacy of antihypertensives" },
+    ],
+  },
+  {
+    category: "Renovascular Disease",
+    group: "Renal",
+    tests: [
+      { name: "Renal ultrasound", tag: "screening", reference: "Renal size difference >1.5 cm suggests RAS", detail: "Assess kidney size and asymmetry" },
+      { name: "Serum creatinine", tag: "screening", reference: "Cr >1.5 mg/dL men, >1.3 mg/dL women", detail: "Monitor renal function" },
+      { name: "BUN", tag: "screening", reference: ">20 mg/dL", detail: "Assess renal perfusion" },
+      { name: "Urinalysis", tag: "screening", detail: "Assess proteinuria or hematuria" },
     ],
   },
   {
     category: "Renal Artery Stenosis",
+    group: "Vascular",
     tests: [
-      { name: "Renal Doppler ultrasound", required: true },
-      { name: "CTA/MRA", required: true },
-      { name: "ACEi/ARB trial", required: false },
-    ],
-  },
-  {
-    category: "Primary Aldosteronism",
-    tests: [
-      { name: "Plasma aldosterone/renin ratio", required: true },
-      { name: "Confirmatory saline suppression test", required: true },
-      { name: "Adrenal vein sampling", required: false },
+      { name: "Renal artery Doppler", tag: "screening", reference: "PSV >180 cm/s suggests >60% stenosis", detail: "Non-invasive; detect flow velocity changes" },
+      { name: "CT angiography", tag: "confirmatory", reference: ">50% luminal narrowing", detail: "High sensitivity for detecting stenosis" },
+      { name: "MR angiography", tag: "confirmatory", detail: "Avoids contrast nephropathy risk" },
+      { name: "ACE inhibitor test", tag: "screening", detail: "Excessive rise in Cr suggests bilateral RAS" },
     ],
   },
   {
     category: "Thyroid Disorders",
+    group: "Endocrine",
     tests: [
-      { name: "TSH, Free T4, Free T3", required: true },
-      { name: "Thyroid antibodies", required: false },
+      { name: "TSH", tag: "screening", reference: "<0.4 or >4.0 mIU/L", detail: "First-line thyroid function test" },
+      { name: "Free T3", tag: "confirmatory", reference: "2.3-4.2 pg/mL", detail: "Active thyroid hormone level" },
+      { name: "Free T4", tag: "confirmatory", reference: "0.8-1.8 ng/dL", detail: "Unbound thyroxine level" },
+      { name: "Thyroid antibodies", tag: "confirmatory", detail: "TPO Ab, Tg Ab for autoimmune thyroiditis" },
     ],
   },
   {
     category: "Cushing's Syndrome",
+    group: "Endocrine",
     tests: [
-      { name: "24-hour urinary free cortisol", required: true },
-      { name: "Late-night salivary cortisol", required: true },
-      { name: "Dexamethasone suppression test", required: true },
+      { name: "24-hour urine cortisol", tag: "screening", reference: ">3x upper limit suggests Cushing's", detail: "Measures total cortisol excretion" },
+      { name: "Dexamethasone suppression test", tag: "confirmatory", reference: "Cortisol >1.8 µg/dL after dex", detail: "Tests lack of suppression of cortisol" },
+      { name: "Late-night salivary cortisol", tag: "screening", reference: ">0.15 µg/dL (indicates loss of nadir)", detail: "Used to check circadian rhythm" },
+    ],
+  },
+  {
+    category: "Substance Abuse & Polycythemia",
+    group: "Other",
+    tests: [
+      { name: "Urine toxicology screen", tag: "screening", detail: "Cocaine, amphetamines cause acute HTN" },
+      { name: "Complete blood count", tag: "screening", detail: "Routine hematology assessment" },
+      { name: "Hematocrit", tag: "screening", reference: ">50% (men), >48% (women)", detail: "Elevated in polycythemia" },
+      { name: "EPO levels", tag: "confirmatory", reference: "4-24 mU/mL", detail: "Distinguish primary vs secondary polycythemia" },
     ],
   },
   {
     category: "Pheochromocytoma",
+    group: "Endocrine",
     tests: [
-      { name: "Plasma/urine metanephrines", required: true },
-      { name: "CT/MRI abdomen", required: true },
+      { name: "24-hour urine metanephrines", tag: "screening", reference: "Metanephrines >400 µg/24h", detail: "High sensitivity screening test" },
+      { name: "Plasma metanephrines", tag: "screening", reference: "Normetanephrines >0.9 nmol/L", detail: "Preferred if high clinical suspicion" },
+      { name: "CT/MRI adrenal glands", tag: "localization", detail: "MRI preferred; 10% rule (extra-adrenal, bilateral)" },
+      { name: "MIBG scan if positive", tag: "localization", detail: "Localize catecholamine-secreting tissue" },
     ],
   },
-  {
-    category: "Coarctation of Aorta",
-    tests: [
-      { name: "CT angiography", required: true },
-      { name: "Cardiac catheterization", required: false },
-    ],
-  },
-];
-
-// ═══════════════════════════════════════════════════════════════════════════
-// 2. TREATMENT GUIDE
-// ═══════════════════════════════════════════════════════════════════════════
-
-const COMBINATION_TABLE = [
-  { combo: "ACEi/ARB + Thiazide", safe: true, note: "Preferred" },
-  { combo: "ACEi/ARB + DHP-CCB", safe: true, note: "Preferred" },
-  { combo: "ACEi/ARB + BB", safe: false, note: "Not ideal for uncomplicated" },
-  { combo: "Thiazide + BB", safe: false, note: "May cause metabolic issues" },
-  { combo: "ACEi + ARB", safe: false, note: "AVOID — ONTARGET trial showed harm" },
-  { combo: "BB + Non-DHP CCB", safe: false, note: "AVOID — bradycardia risk" },
-];
-
-interface DrugProfile {
-  name: string;
-  class: string;
-  dosing: string;
-  pearls: string;
-  caution?: string;
-}
-
-const ANTIHYPERTENSIVE_DRUGS: DrugProfile[] = [
-  { name: "Chlorthalidone", class: "Thiazide-like", dosing: "12.5–25 mg OD", pearls: "Preferred thiazide — longer T½, stronger CV outcome data vs HCTZ", caution: "Monitor K+, Na+, uric acid" },
-  { name: "Spironolactone", class: "Aldosterone antagonist", dosing: "12.5–50 mg OD", pearls: "Fourth-line in resistant HTN (PATHWAY-2). Also for HF, primary aldosteronism.", caution: "K+ monitoring essential. Gynecomastia." },
-  { name: "Triamterene", class: "K-sparing", dosing: "50–100 mg OD", pearls: "Weak diuretic alone. Used in combo with HCTZ (Dyazide). Caution with ACEi/ARB.", caution: "Monitor K+." },
-  { name: "Benazepril", class: "ACEi", dosing: "5–40 mg/day", pearls: "Prodrug — hepatically activated. Adjust dose in CKD.", caution: "Cough, angioedema (rare). Avoid in pregnancy." },
-  { name: "Moexipril", class: "ACEi", dosing: "7.5–30 mg/day", pearls: "Less cough vs other ACEi? Limited data.", caution: "Same ACEi class effects." },
-  { name: "Labetalol", class: "α/β blocker", dosing: "100–2400 mg/day BID", pearls: "IV: 10 mg over 2 min for emergencies (e.g., aortic dissection, eclampsia). β:α blockade ~3:1 oral, 7:1 IV.", caution: "Avoid in asthma. Don't use in pheochromocytoma alone." },
-  { name: "Carvedilol", class: "α/β blocker", dosing: "6.25–25 mg BID", pearls: "Preferred BB in HFrEF (CAPRICORN, COPERNICUS).", caution: "Titrate slowly. Avoid in asthma." },
-  { name: "Amlodipine", class: "DHP-CCB", dosing: "2.5–10 mg OD", pearls: "Long T½ (30-50h) — OD dosing. Vasoselective. Peripheral edema common.", caution: "Lower extremity edema." },
-  { name: "Nifedipine", class: "DHP-CCB", dosing: "SR: 30–90 mg OD", pearls: "Short-acting IR never use (reflex tachycardia, CV risk). SR/ER/Long-acting only.", caution: "Short-acting form contraindicated." },
-  { name: "Diltiazem", class: "Non-DHP CCB", dosing: "CD: 120–360 mg OD", pearls: "Both BP and rate control — use in AF + HTN.", caution: "Avoid with BB (bradycardia). Negative inotrope." },
-  { name: "Hydralazine", class: "Direct vasodilator", dosing: "25–100 mg TID", pearls: "Use with BB + diuretic (pseudo-tolerance). A-HeFT: reduces mortality in African-Americans with HF.", caution: "Reflex tachycardia, SLE-like syndrome." },
-  { name: "Clonidine", class: "α₂-agonist", dosing: "0.1–0.8 mg BID", pearls: "Useful in HTN + anxiety/opioid withdrawal. IV used for severe HTN.", caution: "Rebound HTN on abrupt stop. Sedation, dry mouth." },
-  { name: "Methyldopa", class: "α₂-agonist", dosing: "250–1000 mg BID", pearls: "Preferred in pregnancy (decades of safety data).", caution: "Sedation, positive Coombs, hemolytic anemia." },
-  { name: "Prazosin", class: "α₁-blocker", dosing: "1–10 mg TID", pearls: "Useful for pheochromocytoma + BPH symptoms. Start at bedtime (syncope risk).", caution: "First-dose syncope. Not 1st-line for HTN." },
-  { name: "Doxazosin", class: "α₁-blocker", dosing: "1–8 mg OD", pearls: "Preferred α-blocker in ALLHAT + ASCOT? Not 1st-line per ESC/ACC.", caution: "No longer 1st line (ALLHAT)." },
-  { name: "Minoxidil", class: "Vasodilator", dosing: "2.5–40 mg BID/TID", pearls: "Most potent oral agent. Requires loop diuretic + BB combo.", caution: "Pericardial effusion. Hirsutism." },
 ];
 
 const IV_AGENTS: DrugProfile[] = [
@@ -289,6 +289,19 @@ const EMERGENCIES: EmergencyProtocol[] = [
 export default function HypertensionClinicalCards() {
   const [activeCard, setActiveCard] = useState("secondary");
   const [searchDrug, setSearchDrug] = useState("");
+  const [checkedTests, setCheckedTests] = useState<Set<string>>(new Set());
+
+  const toggleTest = (name: string) => {
+    setCheckedTests(prev => {
+      const next = new Set(prev);
+      if (next.has(name)) next.delete(name);
+      else next.add(name);
+      return next;
+    });
+  };
+
+  const totalTests = SECONDARY_WORKUP.reduce((acc, cat) => acc + cat.tests.length, 0);
+  const completedTests = checkedTests.size;
 
   return (
     <div className="space-y-5 animate-slide-in">

@@ -77,13 +77,6 @@ export default function DiabetesTab() {
 
   const sections = [
     {
-      id: "overview",
-      title: "Overview & Education",
-      icon: <BookOpen />,
-      description: "Pathophysiology, diagnostic criteria, and risk stratification",
-      component: <DiabetesOverview />,
-    },
-    {
       id: "assessment",
       title: "Assessment Tools",
       icon: <Stethoscope />,
@@ -96,6 +89,13 @@ export default function DiabetesTab() {
       icon: <Pill />,
       description: "Medication algorithms, GLP-1 guide, and management protocols",
       component: <DiabetesTreatment />,
+    },
+    {
+      id: "overview",
+      title: "Overview & Education",
+      icon: <BookOpen />,
+      description: "Pathophysiology, diagnostic criteria, and risk stratification",
+      component: <DiabetesOverview />,
     },
   ];
 
