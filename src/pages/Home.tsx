@@ -1183,7 +1183,7 @@ export default function Home() {
           <div className="absolute inset-0 bg-gradient-to-r from-background/95 via-background/60 to-transparent" />
           <div className="absolute inset-0 flex flex-col justify-center px-6 md:px-10 max-w-2xl">
             <h1 className="text-3xl md:text-5xl font-serif font-semibold tracking-tight text-foreground">
-              NCD Dashboard
+              NCD Prescription Engine
             </h1>
             <p className="text-sm md:text-base text-muted-foreground mt-3 max-w-md">
               Evidence-based tools for diabetes, hypertension, lipids, obesity, asthma/COPD and renal disease — assessment, algorithms, and prescribing in one place.
