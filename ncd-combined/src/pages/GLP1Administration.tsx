@@ -226,6 +226,23 @@ const GLP1Administration = () => {
       {/* Medications */}
       <Card className="p-6 bg-card border border-border">
         <h2 className="text-3xl font-heading font-bold mb-4 text-foreground">GLP-1 Medications & Dosing</h2>
+
+        {/* Expand All / Collapse All */}
+        <div className="flex gap-2 mb-3">
+          <button
+            onClick={() => setExpandedMed(glp1Medications[0]?.id || null)}
+            className="text-xs px-3 py-1.5 rounded-lg bg-muted/50 hover:bg-muted"
+          >
+            Expand All
+          </button>
+          <button
+            onClick={() => setExpandedMed(null)}
+            className="text-xs px-3 py-1.5 rounded-lg bg-muted/50 hover:bg-muted"
+          >
+            Collapse All
+          </button>
+        </div>
+
         <div className="space-y-3">
           {glp1Medications.map((med) => (
             <div

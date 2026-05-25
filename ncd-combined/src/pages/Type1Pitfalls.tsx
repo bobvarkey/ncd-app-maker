@@ -132,6 +132,22 @@ const Type1Pitfalls = () => {
         <p className="text-sm text-primary-foreground/80">Over-titration, poor timing, inadequate education, and technical errors. Seven critical prescribing risks to avoid.</p>
       </div>
 
+      {/* Expand All / Collapse All */}
+      <div className="flex gap-2 mb-3">
+        <button
+          onClick={() => setExpanded(sections[sections.length - 1]?.id || null)}
+          className="text-xs px-3 py-1.5 rounded-lg bg-muted/50 hover:bg-muted"
+        >
+          Expand All
+        </button>
+        <button
+          onClick={() => setExpanded(null)}
+          className="text-xs px-3 py-1.5 rounded-lg bg-muted/50 hover:bg-muted"
+        >
+          Collapse All
+        </button>
+      </div>
+
       {/* Expandable Sections */}
       <div className="space-y-3">
         {sections.map(section => {

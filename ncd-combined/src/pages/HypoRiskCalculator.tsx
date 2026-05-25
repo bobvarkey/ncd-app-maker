@@ -215,6 +215,22 @@ const HypoRiskCalculator = () => {
         </div>
       )}
 
+      {/* Expand All / Collapse All */}
+      <div className="flex gap-2">
+        <button
+          onClick={() => setExpandedCats(new Set(["demographic", "clinical", "medication", "history"]))}
+          className="text-xs px-3 py-1.5 rounded-lg bg-muted/50 hover:bg-muted"
+        >
+          Expand All
+        </button>
+        <button
+          onClick={() => setExpandedCats(new Set())}
+          className="text-xs px-3 py-1.5 rounded-lg bg-muted/50 hover:bg-muted"
+        >
+          Collapse All
+        </button>
+      </div>
+
       {/* Manual patient factor inputs */}
       <div className="clinical-card">
         <h3 className="section-title mb-3">Manual Patient Inputs</h3>

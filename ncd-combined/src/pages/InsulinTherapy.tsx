@@ -270,6 +270,22 @@ const InsulinTherapy = () => {
         </div>
       </div>
 
+      {/* Expand All / Collapse All */}
+      <div className="flex gap-2 mb-3">
+        <button
+          onClick={() => setExpandedSections(new Set(sections.map(s => s.id)))}
+          className="text-xs px-3 py-1.5 rounded-lg bg-muted/50 hover:bg-muted text-muted-foreground"
+        >
+          Expand All
+        </button>
+        <button
+          onClick={() => setExpandedSections(new Set())}
+          className="text-xs px-3 py-1.5 rounded-lg bg-muted/50 hover:bg-muted text-muted-foreground"
+        >
+          Collapse All
+        </button>
+      </div>
+
       {/* Expandable Sections */}
       <div className="space-y-3">
         {sections.map(section => {
