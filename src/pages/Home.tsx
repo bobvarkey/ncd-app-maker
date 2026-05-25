@@ -1207,6 +1207,9 @@ export default function Home() {
       </header>
 
       <main className="max-w-6xl mx-auto px-6 pb-16 space-y-8">
+        {/* Prescription Generator */}
+        <ComprehensivePrescriptionGenerator />
+
         {/* OCR Upload */}
         <OCRUpload onValuesExtracted={(values) => {
           // Store values in localStorage for use across the app
@@ -1245,8 +1248,6 @@ export default function Home() {
           </div>
         </section>
 
-        {/* Prescription Generator */}
-        <ComprehensivePrescriptionGenerator />
 
         {/* Condition Modules Detail */}
         <section className="mt-8">
