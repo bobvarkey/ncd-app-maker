@@ -17,6 +17,11 @@ import {
   CollapsibleTrigger,
 } from "@/components/ui/collapsible";
 import {
+  HoverCard,
+  HoverCardContent,
+  HoverCardTrigger,
+} from "@/components/ui/hover-card";
+import {
   Heart, AlertTriangle, ShieldCheck, RotateCcw, Activity,
   Printer, Target, Copy, ClipboardCheck, TrendingUp, User,
   TestTube, ChevronDown, Stethoscope, FileText, Home,
