@@ -7,7 +7,12 @@ import {
   CollapsibleContent,
   CollapsibleTrigger,
 } from "@/components/ui/collapsible";
-import { ClipboardCopy, ArrowLeft, AlertTriangle, Heart, ChevronDown, User, TestTube, FileText, TrendingUp, ShieldQuestion } from "lucide-react";
+import {
+  HoverCard,
+  HoverCardContent,
+  HoverCardTrigger,
+} from "@/components/ui/hover-card";
+import { ClipboardCopy, ArrowLeft, AlertTriangle, Heart, ChevronDown, User, TestTube, FileText, TrendingUp, ShieldQuestion, HeartPulse, Info, HelpCircle } from "lucide-react";
 import { SectionCard } from "@/components/ui/section-card";
 import { RiskFactorChip } from "@/components/ui/risk-factor-chip";
 import { useNavigate } from "react-router-dom";
