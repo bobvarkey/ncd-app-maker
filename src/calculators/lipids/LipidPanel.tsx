@@ -1462,6 +1462,21 @@ export default function LipidCalculator() {
                             </button>
                           </CollapsibleTrigger>
                           <CollapsibleContent className="space-y-3 rounded-b-lg border-x border-b border-border bg-muted/30 p-3 pt-2">
+                            {/* Classic Rotterdam Criteria — quick reference */}
+                            <div className="rounded-md border border-rose-300/40 bg-rose-50/40 dark:bg-rose-950/20 p-3">
+                              <p className="text-[11px] font-bold text-rose-700 dark:text-rose-400 uppercase tracking-wide mb-2">
+                                Classic Rotterdam Criteria (need ≥2 of 3)
+                              </p>
+                              <ol className="space-y-1.5 text-[11px] text-foreground leading-snug list-decimal pl-4">
+                                <li><strong>Oligo- / anovulation</strong> (irregular periods)</li>
+                                <li><strong>Hyperandrogenism</strong> — clinical (hirsutism / acne) <em>or</em> biochemical (↑ testosterone)</li>
+                                <li><strong>Polycystic ovaries on USG</strong> — "string of pearls" appearance (≥12 follicles 2–9 mm, or ovarian volume &gt;10 mL)</li>
+                              </ol>
+                              <p className="text-[11px] mt-2"><strong>Labs:</strong> ↑ LH:FSH ratio, ↑ testosterone, ↑ insulin, abnormal glucose tolerance.</p>
+                              <p className="text-[11px] mt-1 px-2 py-1 rounded bg-amber-400/20 text-amber-800 dark:text-amber-300"><strong>⚠ Anovulation + hirsutism = PMOs/PCOS until proven otherwise.</strong></p>
+                              <p className="text-[10px] text-muted-foreground mt-1 italic">Exclude mimics: thyroid disease, hyperprolactinemia, non-classic CAH, Cushing's, androgen-secreting tumour.</p>
+                            </div>
+
                             <p className="text-[11px] text-muted-foreground leading-snug">
                               The PMOS (Polyendocrine Metabolic Ovarian Syndrome) diagnostic framework maintains the core "two-out-of-three" Rotterdam structure with updated biochemical thresholds and follicle counting. At least two of three criteria must be met <strong className="text-foreground">after excluding other mimics</strong> (thyroid disease, hyperprolactinemia, non-classic CAH).
                             </p>
