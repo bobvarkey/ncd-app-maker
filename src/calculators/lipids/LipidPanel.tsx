@@ -111,6 +111,144 @@ const SUB_TONE_BY_PARENT: Record<string, LabTone> = {
 import EducationSection from "@/components/calculator/EducationSection";
 import { calculatePrevent, type PreventResult } from "@/lib/prevent";
 
+// ─── ASCVD Info Card ───
+function AscvdInfoCard({ inline = false }: { inline?: boolean }) {
+  const [open, setOpen] = useState(false);
+  const [subtypeOpen, setSubtypeOpen] = useState<Record<string, boolean>>({
+    established: true,
+    subclinical: false,
+    equivalents: false,
+  });
+  const toggleSubtype = (key: string) =>
+    setSubtypeOpen((prev) => ({ ...prev, [key]: !prev[key] }));
+
+  const wrapper = (
+    <div className={`rounded-xl border border-rose-200 dark:border-rose-800/40 bg-rose-50/60 dark:bg-rose-950/20 p-4 space-y-3 ${inline ? "" : "mt-2"}`}>
+      <div className="flex items-start gap-2.5">
+        <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg bg-rose-100 dark:bg-rose-900/40 text-rose-600 dark:text-rose-400">
+          <HeartPulse className="h-4 w-4" />
+        </span>
+        <div className="min-w-1 flex-1">
+          <h4 className="text-xs font-bold text-foreground">What is ASCVD?</h4>
+          <p className="mt-1 text-[11px] leading-relaxed text-muted-foreground">
+            <strong className="text-foreground">Atherosclerotic Cardiovascular Disease (ASCVD)</strong> is the
+            broad term for conditions caused by atherosclerotic plaque buildup in arterial walls, leading to
+            reduced blood flow, thrombosis, and end-organ ischemia.
+          </p>
+          <p className="mt-1.5 text-[11px] leading-relaxed text-muted-foreground">
+            In lipid-guideline context, “established ASCVD” means a prior documented event or revascularization
+            due to atherosclerosis — this upgrades the patient to <strong className="text-foreground">secondary prevention</strong> with
+            aggressive LDL-C targets.
+          </p>
+        </div>
+      </div>
+
+      {/* Collapsible Subtypes */}
+      <div className="space-y-2 pt-1">
+        {/* Established */}
+        <Collapsible open={subtypeOpen.established} onOpenChange={() => toggleSubtype("established")}>
+          <CollapsibleTrigger className="flex w-full items-center justify-between rounded-lg border border-rose-200/60 dark:border-rose-800/30 bg-white/60 dark:bg-rose-950/30 px-3 py-2.5 transition-colors hover:bg-white dark:hover:bg-rose-950/40">
+            <span className="text-xs font-bold text-rose-700 dark:text-rose-400">Established ASCVD Subtypes</span>
+            <ChevronDown className={`h-4 w-4 text-rose-500 transition-transform ${subtypeOpen.established ? "rotate-180" : ""}`} />
+          </CollapsibleTrigger>
+          <CollapsibleContent>
+            <div className="mt-1.5 space-y-2 rounded-b-lg border-x border-b border-rose-200/60 dark:border-rose-800/30 bg-white/40 dark:bg-rose-950/20 px-3 py-2.5">
+              {ASCVD_ESTABLISHED.map((item) => (
+                <div key={item.id} className="flex gap-2">
+                  <div className="mt-0.5 h-1.5 w-1.5 shrink-0 rounded-full bg-rose-500" />
+                  <div>
+                    <p className="text-[11px] font-semibold text-foreground">{item.label}</p>
+                    <p className="text-[10px] text-muted-foreground leading-snug">{item.qualifier}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </CollapsibleContent>
+        </Collapsible>
+
+        {/* Subclinical */}
+        <Collapsible open={subtypeOpen.subclinical} onOpenChange={() => toggleSubtype("subclinical")}>
+          <CollapsibleTrigger className="flex w-full items-center justify-between rounded-lg border border-indigo-200/60 dark:border-indigo-800/30 bg-white/60 dark:bg-indigo-950/20 px-3 py-2.5 transition-colors hover:bg-white dark:hover:bg-indigo-950/30">
+            <span className="text-xs font-bold text-indigo-700 dark:text-indigo-400">Subclinical Atherosclerosis</span>
+            <ChevronDown className={`h-4 w-4 text-indigo-500 transition-transform ${subtypeOpen.subclinical ? "rotate-180" : ""}`} />
+          </CollapsibleTrigger>
+          <CollapsibleContent>
+            <div className="mt-1.5 space-y-2 rounded-b-lg border-x border-b border-indigo-200/60 dark:border-indigo-800/30 bg-white/40 dark:bg-indigo-950/20 px-3 py-2.5">
+              {SUBCLINICAL_ITEMS.map((item) => (
+                <div key={item.id} className="flex gap-2">
+                  <div className="mt-1 h-1.5 w-1.5 shrink-0 rounded-full bg-indigo-500" />
+                  <div>
+                    <p className="text-[11px] font-semibold text-foreground">{item.label}</p>
+                    <p className="text-[10px] text-muted-foreground leading-snug">{item.qualifier}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </CollapsibleContent>
+        </Collapsible>
+
+        {/* Equivalents */}
+        <Collapsible open={subtypeOpen.equivalents} onOpenChange={() => toggleSubtype("equivalents")}>
+          <CollapsibleTrigger className="flex w-full items-center justify-between rounded-lg border border-amber-200/60 dark:border-amber-800/30 bg-white/60 dark:bg-amber-950/20 px-3 py-2.5 transition-colors hover:bg-white dark:hover:bg-amber-950/30">
+            <span className="text-xs font-bold text-amber-700 dark:text-amber-400">ASCVD Risk Equivalents</span>
+            <ChevronDown className={`h-4 w-4 text-amber-500 transition-transform ${subtypeOpen.equivalents ? "rotate-180" : ""}`} />
+          </CollapsibleTrigger>
+          <CollapsibleContent>
+            <div className="mt-1.5 space-y-2 rounded-b-lg border-x border-b border-amber-200/60 dark:border-amber-800/30 bg-white/40 dark:bg-amber-950/20 px-3 py-2.5 text-[11px] text-muted-foreground leading-snug">
+              <p>
+                <strong className="text-foreground">Diabetes + Target Organ Damage (TOD):</strong> Retinopathy,
+                nephropathy (UACR ≥30), neuropathy, LVH, or subclinical atherosclerosis.
+              </p>
+              <p>
+                <strong className="text-foreground">Familial Hypercholesterolemia (FH):</strong> Dutch Lipid Clinic
+                Network definite/probable FH, pathogenic LDLR/APOB/PCSK9 mutation, or phenotype with LDL-C ≥190 mg/dL
+                plus tendon xanthomas / corneal arcus &lt;45 y.
+              </p>
+              <p>
+                <strong className="text-foreground">CKD Stage 3B/4:</strong> eGFR 30–44 (3B) or 15–29 (4) mL/min/1.73 m²,
+                especially with albuminuria (UACR ≥30 mg/g).
+              </p>
+              <p>
+                <strong className="text-foreground">Polyvascular disease:</strong> Atherosclerotic disease in ≥2 arterial
+                territories (coronary, cerebrovascular, peripheral).
+              </p>
+              <p>
+                <strong className="text-foreground">High CAC / Plaque burden:</strong> CAC ≥100 AU or ≥75th percentile,
+                or multi-territory plaque on imaging.
+              </p>
+            </div>
+          </CollapsibleContent>
+        </Collapsible>
+      </div>
+
+      <p className="text-[10px] text-muted-foreground italic">
+        Ref: 2018 AHA/ACC Cholesterol Guideline; 2026 ACC/AHA Dyslipidemia Guideline.
+      </p>
+    </div>
+  );
+
+  if (inline) {
+    return (
+      <Collapsible open={open} onOpenChange={setOpen}>
+        <div className="flex items-center gap-1">
+          {wrapper}
+        </div>
+      </Collapsible>
+    );
+  }
+
+  return (
+    <Collapsible open={open} onOpenChange={setOpen}>
+      <CollapsibleTrigger className="flex w-full items-center gap-2 rounded-lg border border-rose-200 dark:border-rose-800/40 bg-rose-50 dark:bg-rose-950/30 px-3 py-2.5 text-xs font-bold text-rose-700 dark:text-rose-400 hover:bg-rose-100 dark:hover:bg-rose-950/40 transition-colors cursor-pointer">
+        <HelpCircle className="h-4 w-4" />
+        What counts as ASCVD? Click to see criteria & subtypes
+        <ChevronDown className={`ml-auto h-4 w-4 transition-transform ${open ? "rotate-180" : ""}`} />
+      </CollapsibleTrigger>
+      <CollapsibleContent>{wrapper}</CollapsibleContent>
+    </Collapsible>
+  );
+}
+
 type TabKey = "calculator" | "education";
 
 const TABS: { key: TabKey; label: string; icon: React.ReactNode }[] = [
