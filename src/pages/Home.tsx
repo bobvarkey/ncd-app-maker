@@ -1248,8 +1248,6 @@ export default function Home() {
           </div>
         </section>
 
-        {/* Prescription Generator */}
-        <ComprehensivePrescriptionGenerator />
 
         {/* Condition Modules Detail */}
         <section className="mt-8">
