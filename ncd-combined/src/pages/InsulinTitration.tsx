@@ -174,9 +174,23 @@ const InsulinTitration = () => {
                 <SelectItem value="Degludec (Tresiba)">Degludec (Tresiba)</SelectItem>
                 <SelectItem value="Detemir (Levemir)">Detemir (Levemir)</SelectItem>
                 <SelectItem value="NPH (Humulin N)">NPH (Humulin N)</SelectItem>
+                <SelectItem value="Meal Bolus">Meal Bolus</SelectItem>
               </SelectContent>
             </Select>
           </div>
+          {insulinType === "Meal Bolus" && (
+            <div>
+              <Label className="text-xs text-muted-foreground">Bolus Insulin Name</Label>
+              <div className="flex gap-2 mt-1">
+                {["Aspart (NovoLog)", "Lispro (Humalog)", "Glulisine (Apidra)", "Regular (Humulin R)"].map((name) => (
+                  <label key={name} className="flex items-center gap-1.5 text-xs cursor-pointer">
+                    <input type="radio" name="bolusName" defaultChecked={name === "Aspart (NovoLog)"} className="accent-primary" />
+                    {name}
+                  </label>
+                ))}
+              </div>
+            </div>
+          )}
           <div>
             <Label className="text-xs text-muted-foreground">Current Dose (units)</Label>
             <Input
