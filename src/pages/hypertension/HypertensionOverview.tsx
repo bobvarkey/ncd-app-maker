@@ -221,11 +221,115 @@ export default function HypertensionOverview() {
       <Alert className="border-amber-500/40 bg-amber-500/5">
         <AlertTriangle className="h-4 w-4 text-amber-500" />
         <AlertTitle className="text-amber-700">Hypertensive Crisis Threshold</AlertTitle>
-        <AlertDescription className="text-amber-600 text-sm">
-          BP ≥ 180/120 mmHg requires immediate evaluation. If accompanied by acute target organ damage
-          (encephalopathy, pulmonary edema, AKI, aortic dissection), treat as hypertensive emergency.
+        <AlertDescription className="text-amber-600 text-sm space-y-2">
+          <p>
+            BP ≥ 180/120 mmHg requires immediate evaluation. If accompanied by acute target organ damage
+            (encephalopathy, pulmonary edema, AKI, aortic dissection), treat as hypertensive emergency.
+          </p>
+          <a href="#htn-crisis-management" className="inline-flex items-center gap-1 text-sm font-medium text-amber-700 underline underline-offset-2 hover:text-amber-900">
+            → Jump to Hypertensive Crisis Management (grades & IV agents)
+          </a>
         </AlertDescription>
       </Alert>
+
+      {/* 5-Step Investigation Flowchart */}
+      <Card>
+        <CardHeader>
+          <div className="flex items-center gap-2">
+            <Activity className="h-5 w-5" style={{ color: categoryColors.accent }} />
+            <CardTitle className="text-lg">5-Step Investigation Flowchart</CardTitle>
+          </div>
+          <p className="text-xs text-muted-foreground">
+            Stepwise work-up of newly-diagnosed or uncontrolled hypertension (ESC 2024)
+          </p>
+        </CardHeader>
+        <CardContent>
+          <ol className="space-y-3">
+            {[
+              { step: 1, title: "Confirm diagnosis", detail: "≥2 office readings on ≥2 visits; confirm with HBPM (≥135/85) or ABPM (24h ≥130/80, daytime ≥135/85, night ≥120/70). Exclude white-coat / masked HTN." },
+              { step: 2, title: "History & examination", detail: "Onset, family hx, lifestyle (salt, alcohol, OSA), drugs (NSAIDs, OCP, decongestants, licorice, steroids, stimulants). Exam: BMI, waist, bilateral BP, fundoscopy, carotid/abdominal bruits, peripheral pulses, signs of Cushing/thyroid/CoA." },
+              { step: 3, title: "Basic labs & ECG", detail: "Na, K, Cr, eGFR, fasting glucose / HbA1c, lipid panel, TSH, uric acid, urinalysis (protein/blood), urine ACR, Hb, 12-lead ECG." },
+              { step: 4, title: "Target organ damage assessment", detail: "Echo (LVH, diastolic function), carotid USG (IMT, plaque), ABI, urine ACR, fundoscopy (Keith-Wagener), cognitive screen if elderly." },
+              { step: 5, title: "Secondary HTN screen (if indicated)", detail: "Trigger: onset <30 or >55y, resistant HTN, abrupt worsening, hypokalemia, malignant HTN, suggestive features. → Aldo/renin ratio, plasma/urine metanephrines, renal artery Doppler/CTA, overnight dex suppression, polysomnography. See Secondary HTN Checklist in Assessment tab." },
+            ].map((s) => (
+              <li key={s.step} className="flex gap-3 p-3 rounded-lg border border-border/60 hover:border-orange-500/30 transition-colors">
+                <div className="flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold text-white" style={{ background: categoryColors.accent }}>
+                  {s.step}
+                </div>
+                <div className="flex-1">
+                  <p className="text-sm font-semibold text-foreground">{s.title}</p>
+                  <p className="text-xs text-muted-foreground mt-1">{s.detail}</p>
+                </div>
+              </li>
+            ))}
+          </ol>
+        </CardContent>
+      </Card>
+
+      {/* Hypertensive Crisis Management */}
+      <Card id="htn-crisis-management" className="border-amber-500/40 scroll-mt-24">
+        <CardHeader>
+          <div className="flex items-center gap-2">
+            <AlertTriangle className="h-5 w-5 text-amber-500" />
+            <CardTitle className="text-lg">Hypertensive Crisis: Grades, Classification & Management</CardTitle>
+          </div>
+          <p className="text-xs text-muted-foreground">
+            ESC 2024 / ACC 2017 — distinguish urgency from emergency to guide rate and route of BP lowering
+          </p>
+        </CardHeader>
+        <CardContent className="space-y-4">
+          <div>
+            <p className="text-sm font-medium mb-2">HTN Grades (ESC)</p>
+            <div className="overflow-x-auto">
+              <table className="w-full text-xs border border-border/60 rounded">
+                <thead className="bg-muted/40">
+                  <tr><th className="text-left p-2">Grade</th><th className="text-center p-2">SBP</th><th className="text-center p-2">DBP</th></tr>
+                </thead>
+                <tbody>
+                  <tr className="border-t border-border/40"><td className="p-2">Grade 1 (mild)</td><td className="text-center">140–159</td><td className="text-center">90–99</td></tr>
+                  <tr className="border-t border-border/40"><td className="p-2">Grade 2 (moderate)</td><td className="text-center">160–179</td><td className="text-center">100–109</td></tr>
+                  <tr className="border-t border-border/40"><td className="p-2">Grade 3 (severe)</td><td className="text-center">≥180</td><td className="text-center">≥110</td></tr>
+                  <tr className="border-t border-border/40 bg-amber-500/5"><td className="p-2 font-medium">Hypertensive crisis</td><td className="text-center" colSpan={2}>≥180/120</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+            <div className="p-3 rounded-lg border border-amber-500/30 bg-amber-500/5">
+              <p className="text-sm font-semibold text-amber-700 mb-1">Hypertensive Urgency</p>
+              <p className="text-xs text-muted-foreground mb-2">SBP ≥180 and/or DBP ≥120 <strong>without</strong> acute target-organ damage.</p>
+              <p className="text-xs"><strong>Goal:</strong> reduce BP gradually over 24–48h with PO agents. Outpatient / observation.</p>
+              <p className="text-xs mt-2"><strong>Oral options:</strong> Captopril 25mg PO, Labetalol 200–400mg PO, Clonidine 0.1–0.2mg PO, Amlodipine 5–10mg PO, Prazosin 1–2mg PO.</p>
+            </div>
+            <div className="p-3 rounded-lg border border-red-500/40 bg-red-500/5">
+              <p className="text-sm font-semibold text-red-700 mb-1">Hypertensive Emergency</p>
+              <p className="text-xs text-muted-foreground mb-2">Severe HTN <strong>with</strong> acute end-organ damage (encephalopathy, ICH, ACS, pulm. edema, aortic dissection, AKI, eclampsia, retinal hemorrhage).</p>
+              <p className="text-xs"><strong>Goal:</strong> reduce MAP by ≤25% in 1st hour, then to 160/100 over 2–6h. Aortic dissection: SBP &lt;120 in 20 min. Ischemic stroke: do NOT lower unless &gt;220/120 or thrombolysis planned. ICU + arterial line + IV agent.</p>
+            </div>
+          </div>
+
+          <div>
+            <p className="text-sm font-medium mb-2">First-line IV Agents</p>
+            <div className="overflow-x-auto">
+              <table className="w-full text-xs border border-border/60 rounded">
+                <thead className="bg-muted/40">
+                  <tr><th className="text-left p-2">Agent</th><th className="text-left p-2">Dose</th><th className="text-left p-2">Preferred indication</th></tr>
+                </thead>
+                <tbody className="[&>tr]:border-t [&>tr]:border-border/40">
+                  <tr><td className="p-2 font-medium">Labetalol</td><td className="p-2">10–20 mg IV bolus q10 min (max 300 mg) or 0.5–2 mg/min</td><td className="p-2">Most emergencies, pregnancy, ICH</td></tr>
+                  <tr><td className="p-2 font-medium">Nicardipine</td><td className="p-2">5 mg/h IV, titrate by 2.5 mg/h q5–15 min (max 15)</td><td className="p-2">Most emergencies, ICH, ischemic stroke</td></tr>
+                  <tr><td className="p-2 font-medium">Esmolol</td><td className="p-2">500 µg/kg load, then 50–300 µg/kg/min</td><td className="p-2">Aortic dissection (with vasodilator), peri-op</td></tr>
+                  <tr><td className="p-2 font-medium">Nitroglycerin</td><td className="p-2">5–200 µg/min IV</td><td className="p-2">ACS, acute pulmonary edema</td></tr>
+                  <tr><td className="p-2 font-medium">Nitroprusside</td><td className="p-2">0.25–10 µg/kg/min IV</td><td className="p-2">Aortic dissection, refractory (cyanide risk)</td></tr>
+                  <tr><td className="p-2 font-medium">Hydralazine</td><td className="p-2">5–10 mg IV q20 min</td><td className="p-2">Eclampsia / pre-eclampsia</td></tr>
+                  <tr><td className="p-2 font-medium">Phentolamine</td><td className="p-2">5–15 mg IV bolus</td><td className="p-2">Catecholamine excess (pheo, cocaine, MAOI)</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </CardContent>
+      </Card>
 
       {/* BP Classification Table */}
       <Card>
