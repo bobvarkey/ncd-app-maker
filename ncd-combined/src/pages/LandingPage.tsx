@@ -36,12 +36,16 @@ export default function LandingPage() {
 
           {/* Headline */}
           <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold text-center leading-tight mb-4">
-            NCD
-            <span className="bg-gradient-to-r from-pink-400 via-purple-400 to-cyan-400 bg-clip-text text-transparent"> Rx</span>
+            Prevent and treat
+            <br />
+            <span className="bg-gradient-to-r from-pink-400 via-purple-400 to-cyan-400 bg-clip-text text-transparent"> non-communicable diseases</span>
           </h1>
+          {/* Subtitle */}
+          <p className="text-sm text-gray-500 text-center mb-3">
+            Global health · WHO data
+          </p>
           <p className="text-lg md:text-xl text-gray-400 text-center max-w-2xl mx-auto mb-8 leading-relaxed">
-            Evidence-based management for diabetes, hypertension, lipids, obesity, and more —
-            powered by the latest international guidelines.
+            NCDs kill 41 million people each year — 74% of all global deaths. Evidence-based management for diabetes, hypertension, lipids, obesity, and more, powered by the latest international guidelines.
           </p>
 
           {/* CTA Buttons */}
