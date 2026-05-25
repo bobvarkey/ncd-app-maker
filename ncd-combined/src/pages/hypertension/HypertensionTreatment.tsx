@@ -31,6 +31,9 @@ import {
   Info,
   Gauge,
   CheckCircle,
+  Ban,
+  Clock,
+  Crosshair,
 } from "lucide-react";
 
 // Category colors for hypertension (orange theme)
@@ -687,6 +690,123 @@ export default function HypertensionTreatment() {
               </ul>
             </div>
           </div>
+        </CardContent>
+      </Card>
+
+      {/* Hypertensive Emergencies */}
+      <Card className="border-2 border-rose-500/20">
+        <CardHeader className="pb-3">
+          <div className="flex items-center gap-2">
+            <AlertTriangle className="h-5 w-5 text-rose-500" />
+            <CardTitle className="text-lg">Hypertensive Emergencies</CardTitle>
+          </div>
+          <p className="text-xs text-muted-foreground">
+            Scenario-specific IV therapy — reduce MAP by 25% in first hour (except aortic dissection)
+          </p>
+        </CardHeader>
+        <CardContent className="space-y-4">
+          {[
+            {
+              scenario: "Aortic Dissection",
+              timeline: "5-10 min",
+              target: "SBP <120 mmHg",
+              preferred: ["Esmolol IV", "Labetalol IV", "Nitroprusside (+ BB)"],
+              avoid: ["Hydralazine (reflex tachycardia)"],
+            },
+            {
+              scenario: "Acute Pulmonary Edema",
+              timeline: "Minutes – 1 h",
+              target: "MAP ↓ 25%",
+              preferred: ["Nitroglycerin IV", "Nitroprusside", "Loop diuretics"],
+              avoid: ["BB (decompensated HF)"],
+            },
+            {
+              scenario: "Acute MI / ACS",
+              timeline: "~1 h",
+              target: "SBP <140 mmHg",
+              preferred: ["Nitroglycerin IV", "Esmolol IV"],
+              avoid: ["Nitroprusside", "Nifedipine"],
+            },
+            {
+              scenario: "Hypertensive Encephalopathy",
+              timeline: "1 h → gradual 24h",
+              target: "MAP ↓ 20-25%",
+              preferred: ["Labetalol IV", "Nicardipine IV", "Nitroprusside"],
+              avoid: ["Clonidine (sedation)", "Methyldopa"],
+            },
+            {
+              scenario: "Eclampsia / Pre-eclampsia",
+              timeline: "30-60 min",
+              target: "SBP <160, DBP <110",
+              preferred: ["Labetalol IV", "Hydralazine IV", "MgSO₄"],
+              avoid: ["ACEi/ARBs (teratogenic)", "Nitroprusside (fetal cyanide)"],
+            },
+            {
+              scenario: "Pheochromocytoma Crisis",
+              timeline: "Minutes",
+              target: "Normalize BP",
+              preferred: ["Phentolamine IV", "Nicardipine IV"],
+              avoid: ["BB ALONE (unopposed α)"],
+            },
+            {
+              scenario: "Acute Stroke (Ischemic)",
+              timeline: "~1 h",
+              target: "<185/110 (tPA); <220/120",
+              preferred: ["Labetalol IV", "Nicardipine IV"],
+              avoid: ["Aggressive lowering (maintain perfusion)"],
+            },
+            {
+              scenario: "Acute Kidney Injury",
+              timeline: "Hours",
+              target: "MAP ↓ 20-25%",
+              preferred: ["Fenoldopam", "Nicardipine IV", "Clevidipine"],
+              avoid: ["ACEi/ARBs acutely", "Nitroprusside (thiocyanate)"],
+            },
+          ].map((em) => (
+            <div
+              key={em.scenario}
+              className="p-4 rounded-lg border border-border/50 hover:border-rose-500/30 transition-colors"
+            >
+              <div className="flex items-start justify-between gap-2 mb-3">
+                <h3 className="text-sm font-semibold">{em.scenario}</h3>
+                <span className="text-[10px] px-2 py-0.5 rounded bg-muted text-muted-foreground whitespace-nowrap">
+                  {em.timeline}
+                </span>
+              </div>
+
+              <div className="flex flex-wrap items-center gap-2 mb-3">
+                <span className="text-xs text-muted-foreground">Target:</span>
+                <Badge variant="secondary" className="text-xs">{em.target}</Badge>
+              </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
+                <div className="p-2.5 rounded-lg bg-emerald-500/5 border border-emerald-500/20">
+                  <p className="font-medium flex items-center gap-1 text-emerald-600 mb-1.5">
+                    <Activity className="h-3 w-3" /> Preferred
+                  </p>
+                  <div className="flex flex-wrap gap-1">
+                    {em.preferred.map((d) => (
+                      <span key={d} className="px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-600 border border-emerald-500/20">
+                        {d}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+                <div className="p-2.5 rounded-lg bg-rose-500/5 border border-destructive/20">
+                  <p className="font-medium flex items-center gap-1 text-rose-600 mb-1.5">
+                    <Ban className="h-3 w-3" /> Avoid
+                  </p>
+                  <div className="flex flex-wrap gap-1">
+                    {em.avoid.map((d) => (
+                      <span key={d} className="px-2 py-0.5 rounded bg-rose-500/10 text-rose-600 border border-rose-500/20">
+                        {d}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </div>
+          ))}
         </CardContent>
       </Card>
     </div>

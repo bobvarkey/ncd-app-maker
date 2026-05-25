@@ -273,7 +273,7 @@ const EMERGENCIES: EmergencyProtocol[] = [
     notes: "If tPA candidate → lower to <185/110. If no tPA → only lower if >220/120 or MAP >130.",
   },
   {
-    scenario: "Acute Stethoscope Injury",
+    scenario: "Acute Kidney Injury",
     target: "MAP ↓ 20–25%",
     timeline: "Hours",
     preferred: ["Fenoldopam", "Nicardipine IV", "Clevidipine"],
