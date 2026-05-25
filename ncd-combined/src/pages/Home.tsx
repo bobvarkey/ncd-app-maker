@@ -1170,6 +1170,9 @@ export default function Home() {
       </header>
 
       <main className="max-w-6xl mx-auto px-6 pb-16 space-y-8">
+        {/* Prescription Engine - TOP */}
+        <PrescriptionEngine />
+
         {/* OCR Upload */}
         <OCRUpload onValuesExtracted={(values) => {
           // Store values in localStorage for use across the app
@@ -1181,9 +1184,6 @@ export default function Home() {
           if (values.hdl) localStorage.setItem("ocr_hdl", values.hdl);
           if (values.tg) localStorage.setItem("ocr_tg", values.tg);
         }} />
-
-        {/* Prescription Engine */}
-        <PrescriptionEngine />
 
         {/* Dashboard Cards Grid */}
         <section>
