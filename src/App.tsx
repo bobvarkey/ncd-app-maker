@@ -6,6 +6,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import { TabNavigation } from "@/components/TabNavigation";
 import { AppSidebar } from "@/components/AppSidebar";
+import { ErrorBoundary } from "@/components/ErrorBoundary";
 
 // Big Four NCD Pages
 import Home from "@/pages/Home";
@@ -145,47 +146,47 @@ const App = () => (
                 <Routes>
                   <Route path="/" element={<Home />} />
                   {/* Tab Pages */}
-                  <Route path="/diabetes" element={<Diabetes />} />
-                  <Route path="/hypertension" element={<Hypertension />} />
-                  <Route path="/lipids" element={<Lipids />} />
-                  <Route path="/obesity" element={<Obesity />} />
-                  <Route path="/asthma-copd" element={<AsthmaCopd />} />
-                  <Route path="/renal" element={<RenalDisease />} />
+                  <Route path="/diabetes" element={<ErrorBoundary><Diabetes /></ErrorBoundary>} />
+                  <Route path="/hypertension" element={<ErrorBoundary><Hypertension /></ErrorBoundary>} />
+                  <Route path="/lipids" element={<ErrorBoundary><Lipids /></ErrorBoundary>} />
+                  <Route path="/obesity" element={<ErrorBoundary><Obesity /></ErrorBoundary>} />
+                  <Route path="/asthma-copd" element={<ErrorBoundary><AsthmaCopd /></ErrorBoundary>} />
+                  <Route path="/renal" element={<ErrorBoundary><RenalDisease /></ErrorBoundary>} />
                   {/* Diabetes Sub-pages */}
-                  <Route path="/diabetes/assessment" element={<DiabetesAssessment />} />
-                  <Route path="/diabetes/overview" element={<DiabetesOverview />} />
-                  <Route path="/diabetes/tab" element={<DiabetesTab />} />
-                  <Route path="/diabetes/treatment" element={<DiabetesTreatment />} />
-                  <Route path="/diabetes/insulin-guide" element={<InsulinGuide />} />
+                  <Route path="/diabetes/assessment" element={<ErrorBoundary><DiabetesAssessment /></ErrorBoundary>} />
+                  <Route path="/diabetes/overview" element={<ErrorBoundary><DiabetesOverview /></ErrorBoundary>} />
+                  <Route path="/diabetes/tab" element={<ErrorBoundary><DiabetesTab /></ErrorBoundary>} />
+                  <Route path="/diabetes/treatment" element={<ErrorBoundary><DiabetesTreatment /></ErrorBoundary>} />
+                  <Route path="/diabetes/insulin-guide" element={<ErrorBoundary><InsulinGuide /></ErrorBoundary>} />
                   {/* Hypertension Sub-pages */}
-                  <Route path="/hypertension/assessment" element={<HypertensionAssessment />} />
-                  <Route path="/hypertension/medication-guide" element={<HypertensionMedicationGuide />} />
-                  <Route path="/hypertension/overview" element={<HypertensionOverview />} />
-                  <Route path="/hypertension/tab" element={<HypertensionTab />} />
-                  <Route path="/hypertension/treatment" element={<HypertensionTreatment />} />
+                  <Route path="/hypertension/assessment" element={<ErrorBoundary><HypertensionAssessment /></ErrorBoundary>} />
+                  <Route path="/hypertension/medication-guide" element={<ErrorBoundary><HypertensionMedicationGuide /></ErrorBoundary>} />
+                  <Route path="/hypertension/overview" element={<ErrorBoundary><HypertensionOverview /></ErrorBoundary>} />
+                  <Route path="/hypertension/tab" element={<ErrorBoundary><HypertensionTab /></ErrorBoundary>} />
+                  <Route path="/hypertension/treatment" element={<ErrorBoundary><HypertensionTreatment /></ErrorBoundary>} />
                   {/* Lipids Sub-pages */}
-                  <Route path="/lipids/assessment" element={<LipidsAssessment />} />
-                  <Route path="/lipids/overview" element={<LipidsOverview />} />
-                  <Route path="/lipids/tab" element={<LipidsTab />} />
-                  <Route path="/lipids/treatment" element={<LipidsTreatment />} />
+                  <Route path="/lipids/assessment" element={<ErrorBoundary><LipidsAssessment /></ErrorBoundary>} />
+                  <Route path="/lipids/overview" element={<ErrorBoundary><LipidsOverview /></ErrorBoundary>} />
+                  <Route path="/lipids/tab" element={<ErrorBoundary><LipidsTab /></ErrorBoundary>} />
+                  <Route path="/lipids/treatment" element={<ErrorBoundary><LipidsTreatment /></ErrorBoundary>} />
                   {/* Diabetes Calculators */}
-                  <Route path="/insulin-titration" element={<InsulinTitrationCalc />} />
-                  <Route path="/sliding-scale" element={<SlidingScaleInsulinCalc />} />
-                  <Route path="/hypo-risk" element={<HypoRiskCalculatorCalc />} />
-                  <Route path="/renal-dosing" element={<RenalDoseAdjustmentCalc />} />
-                  <Route path="/diabetes/medication-algorithm" element={<DiabetesMedicationAlgorithmCalc />} />
+                  <Route path="/insulin-titration" element={<ErrorBoundary><InsulinTitrationCalc /></ErrorBoundary>} />
+                  <Route path="/sliding-scale" element={<ErrorBoundary><SlidingScaleInsulinCalc /></ErrorBoundary>} />
+                  <Route path="/hypo-risk" element={<ErrorBoundary><HypoRiskCalculatorCalc /></ErrorBoundary>} />
+                  <Route path="/renal-dosing" element={<ErrorBoundary><RenalDoseAdjustmentCalc /></ErrorBoundary>} />
+                  <Route path="/diabetes/medication-algorithm" element={<ErrorBoundary><DiabetesMedicationAlgorithmCalc /></ErrorBoundary>} />
                   {/* Lipid Calculators */}
-                  <Route path="/lipid-panel" element={<LipidPanelCalc />} />
-                  <Route path="/ascvd-risk" element={<AscvdEmrCalc />} />
+                  <Route path="/lipid-panel" element={<ErrorBoundary><LipidPanelCalc /></ErrorBoundary>} />
+                  <Route path="/ascvd-risk" element={<ErrorBoundary><AscvdEmrCalc /></ErrorBoundary>} />
                   {/* Hypertension Calculators */}
-                  <Route path="/gfr-calculator" element={<GfrCalculatorCalc />} />
-                  <Route path="/drug-interactions" element={<DrugInteractionCheckerCalc />} />
-                  <Route path="/htn/treatment-algorithm" element={<AntihypertensiveTreatmentAlgorithmCalc />} />
-                  <Route path="/htn/potency-table" element={<AntihypertensivePotencyTableCalc />} />
+                  <Route path="/gfr-calculator" element={<ErrorBoundary><GfrCalculatorCalc /></ErrorBoundary>} />
+                  <Route path="/drug-interactions" element={<ErrorBoundary><DrugInteractionCheckerCalc /></ErrorBoundary>} />
+                  <Route path="/htn/treatment-algorithm" element={<ErrorBoundary><AntihypertensiveTreatmentAlgorithmCalc /></ErrorBoundary>} />
+                  <Route path="/htn/potency-table" element={<ErrorBoundary><AntihypertensivePotencyTableCalc /></ErrorBoundary>} />
                   {/* Obesity Calculators */}
-                  <Route path="/obesity/bmi-calculator" element={<BmiCalculatorCalc />} />
-                  <Route path="/obesity/waist-height-ratio" element={<WaistHeightRatioCalc />} />
-                  <Route path="/obesity/glp1-algorithm" element={<GLP1ObesityAlgorithmCalc />} />
+                  <Route path="/obesity/bmi-calculator" element={<ErrorBoundary><BmiCalculatorCalc /></ErrorBoundary>} />
+                  <Route path="/obesity/waist-height-ratio" element={<ErrorBoundary><WaistHeightRatioCalc /></ErrorBoundary>} />
+                  <Route path="/obesity/glp1-algorithm" element={<ErrorBoundary><GLP1ObesityAlgorithmCalc /></ErrorBoundary>} />
                   <Route path="*" element={<NotFound />} />
                 </Routes>
               </>
