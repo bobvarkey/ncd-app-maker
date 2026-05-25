@@ -1176,6 +1176,9 @@ export default function Home() {
           if (values.tg) localStorage.setItem("ocr_tg", values.tg);
         }} />
 
+        {/* Prescription Engine */}
+        <PrescriptionEngine />
+
         {/* Dashboard Cards Grid */}
         <section>
           <h2 className="text-lg font-semibold mb-4 flex items-center gap-2">
@@ -1201,9 +1204,6 @@ export default function Home() {
             ))}
           </div>
         </section>
-
-        {/* Prescription Engine */}
-        <PrescriptionEngine />
 
         {/* Condition Modules Detail */}
         <section className="mt-8">
