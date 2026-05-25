@@ -22,12 +22,12 @@ export default function LandingPage() {
 
         {/* Headline */}
         <h1 className="text-4xl font-bold text-center mb-6 font-heading z-10">
-          Manage Diabetes. <span className="text-primary neon-text">Smarter</span>.
+          Comprehensive NCD Care. <span className="text-primary neon-text">Smarter</span>.
         </h1>
 
         {/* Subtitle */}
         <p className="text-gray-400 text-center mb-8 max-w-xs z-10">
-          Evidence-based tools for medication optimization, diet planning, and comprehensive diabetes management
+          Evidence-based tools across Diabetes, Hypertension, Lipids, Obesity, Asthma/COPD and Renal disease — calculators, algorithms and prescribing
         </p>
 
         {/* Rating */}
@@ -56,14 +56,17 @@ export default function LandingPage() {
         </div>
       </section>
 
-      {/* Feature Pills Section */}
+      {/* Feature Pills Section — 6 NCD modules */}
       <section className="py-16 px-6 max-w-[390px] mx-auto">
+        <h2 className="text-xl font-bold mb-6 text-center font-heading">All 6 NCD Modules</h2>
         <div className="grid grid-cols-2 gap-4">
           {[
-            { icon: '💊', label: 'Med Optimizer', color: 'bg-yellow-500/10 border-yellow-500/30' },
-            { icon: '📊', label: 'HbA1c Tracking', color: 'bg-cyan-500/10 border-cyan-500/30' },
-            { icon: '🍽️', label: 'Meal Planner', color: 'bg-fuchsia-500/10 border-fuchsia-500/30' },
-            { icon: '🏥', label: 'Clinical Guides', color: 'bg-lime-500/10 border-lime-500/30' },
+            { icon: '💉', label: 'Diabetes', color: 'bg-red-500/10 border-red-500/30' },
+            { icon: '❤️', label: 'Hypertension', color: 'bg-orange-500/10 border-orange-500/30' },
+            { icon: '🧬', label: 'Lipids', color: 'bg-blue-500/10 border-blue-500/30' },
+            { icon: '⚖️', label: 'Obesity', color: 'bg-violet-500/10 border-violet-500/30' },
+            { icon: '🌬️', label: 'Asthma/COPD', color: 'bg-cyan-500/10 border-cyan-500/30' },
+            { icon: '💧', label: 'Renal', color: 'bg-emerald-500/10 border-emerald-500/30' },
           ].map((pill, idx) => (
             <div key={idx} className={`${pill.color} border rounded-lg p-4 text-center`}>
               <div className="text-3xl mb-2">{pill.icon}</div>

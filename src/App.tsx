@@ -12,6 +12,9 @@ import Home from "@/pages/Home";
 import Diabetes from "@/pages/Diabetes";
 import Hypertension from "@/pages/Hypertension";
 import Lipids from "@/pages/Lipids";
+import Obesity from "@/pages/Obesity";
+import AsthmaCopd from "@/pages/AsthmaCopd";
+import RenalDisease from "@/pages/RenalDisease";
 
 // Big Four — Diabetes sub-pages
 import DiabetesAssessment from "@/pages/diabetes/DiabetesAssessment";
@@ -145,6 +148,9 @@ const App = () => (
                   <Route path="/diabetes" element={<Diabetes />} />
                   <Route path="/hypertension" element={<Hypertension />} />
                   <Route path="/lipids" element={<Lipids />} />
+                  <Route path="/obesity" element={<Obesity />} />
+                  <Route path="/asthma-copd" element={<AsthmaCopd />} />
+                  <Route path="/renal" element={<RenalDisease />} />
                   {/* Diabetes Sub-pages */}
                   <Route path="/diabetes/assessment" element={<DiabetesAssessment />} />
                   <Route path="/diabetes/overview" element={<DiabetesOverview />} />

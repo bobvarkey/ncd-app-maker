@@ -1081,6 +1081,46 @@ export default function Home() {
       linkTo: "/obesity/bmi-calculator",
       linkText: "Open BMI Calculator",
     },
+    {
+      title: "Asthma & COPD",
+      icon: <Activity className="h-5 w-5" style={{ color: "#22d3ee" }} />,
+      color: "#22d3ee",
+      bgColor: "rgba(34,211,238,0.12)",
+      borderColor: "rgba(34,211,238,0.2)",
+      quickStats: [
+        { label: "Asthma", value: "GINA 2024" },
+        { label: "COPD", value: "GOLD ABE" },
+      ],
+      features: [
+        "GINA stepwise ladder",
+        "GOLD ABE classification",
+        "Inhaler reference (US + India)",
+        "Exacerbation management",
+        "ACO overlap guide",
+      ],
+      linkTo: "/asthma-copd",
+      linkText: "Open Asthma/COPD Tab",
+    },
+    {
+      title: "Renal Disease",
+      icon: <Activity className="h-5 w-5" style={{ color: "#34d399" }} />,
+      color: "#34d399",
+      bgColor: "rgba(52,211,153,0.12)",
+      borderColor: "rgba(52,211,153,0.2)",
+      quickStats: [
+        { label: "AKI", value: "KDIGO 1–3" },
+        { label: "CKD", value: "GA staging" },
+      ],
+      features: [
+        "AKI / AKD / CKD staging",
+        "eGFR auto-calculator (CKD-EPI 2021)",
+        "Renal dose adjustment table",
+        "Antibiotic renal dosing",
+        "Nephrology referral triggers",
+      ],
+      linkTo: "/renal",
+      linkText: "Open Renal Tab",
+    },
   ];
 
   // Quick Actions data
@@ -1146,21 +1186,21 @@ export default function Home() {
               NCD Dashboard
             </h1>
             <p className="text-sm md:text-base text-muted-foreground mt-3 max-w-md">
-              Evidence-based tools for diabetes, hypertension, lipids, and obesity — assessment, algorithms, and prescribing in one place.
+              Evidence-based tools for diabetes, hypertension, lipids, obesity, asthma/COPD and renal disease — assessment, algorithms, and prescribing in one place.
             </p>
             <div className="flex flex-wrap items-center gap-2 mt-4">
-              <span className="text-[11px] px-2.5 py-1 rounded-full border border-border bg-background/60 backdrop-blur flex items-center gap-1.5">
-                <span className="w-1.5 h-1.5 rounded-full" style={{ background: categoryColors.diabetes.accent }} />Diabetes
-              </span>
-              <span className="text-[11px] px-2.5 py-1 rounded-full border border-border bg-background/60 backdrop-blur flex items-center gap-1.5">
-                <span className="w-1.5 h-1.5 rounded-full" style={{ background: categoryColors.hypertension.accent }} />Hypertension
-              </span>
-              <span className="text-[11px] px-2.5 py-1 rounded-full border border-border bg-background/60 backdrop-blur flex items-center gap-1.5">
-                <span className="w-1.5 h-1.5 rounded-full" style={{ background: categoryColors.lipid.accent }} />Lipids
-              </span>
-              <span className="text-[11px] px-2.5 py-1 rounded-full border border-border bg-background/60 backdrop-blur flex items-center gap-1.5">
-                <span className="w-1.5 h-1.5 rounded-full" style={{ background: categoryColors.obesity.accent }} />Obesity
-              </span>
+              {[
+                { label: "Diabetes", color: categoryColors.diabetes.accent },
+                { label: "Hypertension", color: categoryColors.hypertension.accent },
+                { label: "Lipids", color: categoryColors.lipid.accent },
+                { label: "Obesity", color: categoryColors.obesity.accent },
+                { label: "Asthma/COPD", color: "#22d3ee" },
+                { label: "Renal", color: "#34d399" },
+              ].map((c) => (
+                <span key={c.label} className="text-[11px] px-2.5 py-1 rounded-full border border-border bg-background/60 backdrop-blur flex items-center gap-1.5">
+                  <span className="w-1.5 h-1.5 rounded-full" style={{ background: c.color }} />{c.label}
+                </span>
+              ))}
             </div>
           </div>
         </div>
@@ -1185,7 +1225,7 @@ export default function Home() {
             <Activity className="h-5 w-5 text-primary" />
             Condition Modules
           </h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
             {dashboardCards.map((card) => (
               <DashboardCard key={card.title} {...card} />
             ))}
