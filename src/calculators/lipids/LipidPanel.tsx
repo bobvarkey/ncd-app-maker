@@ -1467,6 +1467,7 @@ export default function LipidCalculator() {
               icon={<Heart className="h-4 w-4" />}
               badge={<span className="ml-2 rounded-full bg-warning/15 px-2 py-0.5 text-xs font-bold text-warning">{rfCount}/4</span>}
             >
+              <AscvdInfoCard inline />
               <p className="mb-3 text-[10px] text-muted-foreground">Age and Low HDL-C are auto-derived from your inputs.</p>
               <div className="space-y-2">
                 {MAJOR_RF_KEYS.map((key) => {
@@ -1709,6 +1710,7 @@ export default function LipidCalculator() {
               tone="danger"
               icon={<Stethoscope className="h-4 w-4" />}
             >
+              <AscvdInfoCard inline />
               <p className="mb-3 text-[10px] text-muted-foreground">
                 Tick all that apply. Auto-classifies C → B → A → VHR.
               </p>
