@@ -101,7 +101,7 @@ const SECONDARY_WORKUP: WorkupCategory[] = [
     group: "Endocrine",
     tests: [
       { name: "Aldosterone/renin ratio", tag: "screening", reference: "ARR >20 ng/dL per ng/mL/h", detail: "Initial screening only; positive if ARR >20" },
-      { name: "Saline suppression test", tag: "confirmatory", reference: "Aldosterone >10 ng/dL after saline infusion", detail: "Gold standard confirmatory test for hyperaldosteronism" },
+      { name: "Saline suppression test", tag: "confirmatory", reference: "Aldosterone >10 ng/dL post-infusion", detail: "Gold standard confirmatory test for hyperaldosteronism" },
       { name: "Adrenal CT/MRI", tag: "localization", detail: "Identify adenoma vs bilateral hyperplasia" },
     ],
   },
@@ -110,7 +110,7 @@ const SECONDARY_WORKUP: WorkupCategory[] = [
     group: "Other",
     tests: [
       { name: "Sleep study (polysomnography)", tag: "confirmatory", reference: "AHI >5 events/hour", detail: "Gold standard for diagnosis" },
-      { name: "Epworth sleepiness scale", tag: "screening", reference: "Score >10 suggests excessive daytime sleepiness", detail: "Subjective daytime sleepiness assessment" },
+      { name: "Epworth sleepiness scale", tag: "screening", reference: "Score >10 suggestive of excessive daytime sleepiness", detail: "Subjective daytime sleepiness assessment" },
       { name: "Overnight oximetry", tag: "screening", reference: "SpO2 <90% for >1% of sleep time", detail: "Screens for nocturnal hypoxemia" },
     ],
   },
@@ -120,7 +120,7 @@ const SECONDARY_WORKUP: WorkupCategory[] = [
     tests: [
       { name: "Detailed alcohol history", tag: "history", detail: "Quantify intake; >2 drinks/day linked to HTN" },
       { name: "AUDIT questionnaire", tag: "screening", reference: "Score >8 suggests hazardous use", detail: "Standardized alcohol use assessment" },
-      { name: "GGT, AST, ALT levels", tag: "monitoring", reference: "GGT >30 U/L, AST/ALT ratio >2", detail: "Liver enzymes elevated with chronic use" },
+      { name: "GGT, AST, ALT levels", tag: "monitoring", reference: "GGT >50 U/L, AST/ALT ratio >2", detail: "Liver enzymes elevated with chronic use" },
     ],
   },
   {
@@ -137,8 +137,8 @@ const SECONDARY_WORKUP: WorkupCategory[] = [
     group: "Renal",
     tests: [
       { name: "Renal ultrasound", tag: "screening", reference: "Renal size difference >1.5 cm suggests RAS", detail: "Assess kidney size and asymmetry" },
-      { name: "Serum creatinine", tag: "screening", reference: "Cr >1.5 mg/dL men, >1.3 mg/dL women", detail: "Monitor renal function" },
-      { name: "BUN", tag: "screening", reference: ">20 mg/dL", detail: "Assess renal perfusion" },
+      { name: "Serum creatinine", tag: "screening", reference: "M: 0.7-1.3 mg/dL, W: 0.6-1.1 mg/dL", detail: "Monitor renal function" },
+      { name: "BUN", tag: "screening", reference: "7-20 mg/dL", detail: "Assess renal perfusion" },
       { name: "Urinalysis", tag: "screening", detail: "Assess proteinuria or hematuria" },
     ],
   },
@@ -147,7 +147,7 @@ const SECONDARY_WORKUP: WorkupCategory[] = [
     group: "Vascular",
     tests: [
       { name: "Renal artery Doppler", tag: "screening", reference: "PSV >180 cm/s suggests >60% stenosis", detail: "Non-invasive; detect flow velocity changes" },
-      { name: "CT angiography", tag: "confirmatory", reference: ">50% luminal narrowing", detail: "High sensitivity for detecting stenosis" },
+      { name: "CT angiography", tag: "confirmatory", reference: "<50% narrow non-sorting", detail: "High sensitivity for detecting stenosis" },
       { name: "MR angiography", tag: "confirmatory", detail: "Avoids contrast nephropathy risk" },
       { name: "ACE inhibitor test", tag: "screening", detail: "Excessive rise in Cr suggests bilateral RAS" },
     ],
@@ -156,9 +156,9 @@ const SECONDARY_WORKUP: WorkupCategory[] = [
     category: "Thyroid Disorders",
     group: "Endocrine",
     tests: [
-      { name: "TSH", tag: "screening", reference: "<0.4 or >4.0 mIU/L", detail: "First-line thyroid function test" },
-      { name: "Free T3", tag: "confirmatory", reference: "2.3-4.2 pg/mL", detail: "Active thyroid hormone level" },
-      { name: "Free T4", tag: "confirmatory", reference: "0.8-1.8 ng/dL", detail: "Unbound thyroxine level" },
+      { name: "TSH", tag: "screening", reference: "0.4 to 4.0 mIU/L", detail: "First-line thyroid function test" },
+      { name: "Free T3", tag: "confirmatory", reference: "2.3-4.1 pg/mL", detail: "Active thyroid hormone level" },
+      { name: "Free T4", tag: "confirmatory", reference: "0.9-1.7 ng/dL", detail: "Unbound thyroxine level" },
       { name: "Thyroid antibodies", tag: "confirmatory", detail: "TPO Ab, Tg Ab for autoimmune thyroiditis" },
     ],
   },
@@ -167,8 +167,8 @@ const SECONDARY_WORKUP: WorkupCategory[] = [
     group: "Endocrine",
     tests: [
       { name: "24-hour urine cortisol", tag: "screening", reference: ">3x upper limit suggests Cushing's", detail: "Measures total cortisol excretion" },
-      { name: "Dexamethasone suppression test", tag: "confirmatory", reference: "Cortisol >1.8 µg/dL after dex", detail: "Tests lack of suppression of cortisol" },
-      { name: "Late-night salivary cortisol", tag: "screening", reference: ">0.15 µg/dL (indicates loss of nadir)", detail: "Used to check circadian rhythm" },
+      { name: "Dexamethasone suppression test", tag: "confirmatory", reference: "Cortisol >1.8 µg/dL at 8am", detail: "Tests lack of suppression of cortisol" },
+      { name: "Late-night salivary cortisol", tag: "screening", reference: ">0.13 µg/dL (normal for late night)", detail: "Used to check circadian rhythm" },
     ],
   },
   {
@@ -177,7 +177,7 @@ const SECONDARY_WORKUP: WorkupCategory[] = [
     tests: [
       { name: "Urine toxicology screen", tag: "screening", detail: "Cocaine, amphetamines cause acute HTN" },
       { name: "Complete blood count", tag: "screening", detail: "Routine hematology assessment" },
-      { name: "Hematocrit", tag: "screening", reference: ">50% (men), >48% (women)", detail: "Elevated in polycythemia" },
+      { name: "Hematocrit", tag: "screening", reference: ">52% (men), >48% (women)", detail: "Elevated in polycythemia" },
       { name: "EPO levels", tag: "confirmatory", reference: "4-24 mU/mL", detail: "Distinguish primary vs secondary polycythemia" },
     ],
   },
