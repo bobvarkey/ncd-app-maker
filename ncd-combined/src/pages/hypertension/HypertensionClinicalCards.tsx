@@ -77,7 +77,7 @@ const CHARLES_MNEMONIC: { letter: string; stands: string; color: string }[] = [
   { letter: "H", stands: "Hyperparathyroidism, Hyperthyroidism", color: "text-orange-400" },
   { letter: "A", stands: "Aortic coarctation, Adrenal carcinoma", color: "text-yellow-400" },
   { letter: "R", stands: "Renovascular hypertension, Reninoma, Renal parenchymal disease", color: "text-amber-400" },
-  { letter: "L", stands: "Liddle's syndrome, Licorice", color: "text-cyan-400" },
+  { letter: "L", stands: "Liddle's syndrome (ENaC gain-of-function), Licorice", color: "text-cyan-400" },
   { letter: "E", stands: "Estrogen pills (OCPs), End-stage renal disease", color: "text-blue-400" },
   { letter: "S", stands: "Sleep apnea, Stenosis (renal artery)", color: "text-teal-400" },
 ];
@@ -189,6 +189,17 @@ const SECONDARY_WORKUP: WorkupCategory[] = [
       { name: "Plasma metanephrines", tag: "screening", reference: "Normetanephrines >0.9 nmol/L", detail: "Preferred if high clinical suspicion" },
       { name: "CT/MRI adrenal glands", tag: "localization", detail: "MRI preferred; 10% rule (extra-adrenal, bilateral)" },
       { name: "MIBG scan if positive", tag: "localization", detail: "Localize catecholamine-secreting tissue" },
+    ],
+  },
+  {
+    category: "Liddle's Syndrome",
+    group: "Endocrine",
+    tests: [
+      { name: "Serum K+ (serial)", tag: "screening", reference: "↓ K+ (<3.5 mEq/L)", detail: "Hypokalemia - key feature" },
+      { name: "Serum aldosterone", tag: "screening", reference: "LOW/NORMAL", detail: "LOW distinguishes from Conn's (HIGH)" },
+      { name: "Plasma renin activity", tag: "screening", reference: "LOW/SUPPRESSED", detail: "Suppressed renin" },
+      { name: "Trial amiloride 5-10mg", tag: "confirmatory", reference: "BP ↓ & K+ normalizes", detail: "DIAGNOSTIC: Amiloride responsive confirms Liddle's" },
+      { name: "Genetic testing (ENaC)", tag: "confirmatory", reference: "SCNN1B or SCNN1G", detail: "Gold standard for definitive diagnosis" },
     ],
   },
 ];

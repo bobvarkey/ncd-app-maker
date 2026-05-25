@@ -249,6 +249,18 @@ const secondaryHtnChecklist: SecondaryHtnItem[] = [
     workup: "Genetic testing for ENaC mutations (SCNN1B/SCNN1G)",
   },
   {
+    id: "liddle_labs",
+    category: "Laboratory",
+    feature: "Hypokalemic metabolic alkalosis + low renin + LOW aldosterone (vs Conn's)",
+    workup: "Serial K+, renin, aldosterone. Trial amiloride responsive — confirms",
+  },
+  {
+    id: "liddle_treatment",
+    category: "Treatment",
+    feature: "Resistant HTN with hypokalemia — spironolactone unresponsive",
+    workup: "Trial amiloride/triamterene (ENaC blocker) — responds if Liddle's",
+  },
+  {
     id: "flash_pulm",
     category: "Clinical",
     feature: "Flash pulmonary edema",
