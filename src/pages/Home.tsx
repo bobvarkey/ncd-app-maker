@@ -1225,7 +1225,7 @@ export default function Home() {
             <Activity className="h-5 w-5 text-primary" />
             Condition Modules
           </h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
             {dashboardCards.map((card) => (
               <DashboardCard key={card.title} {...card} />
             ))}
