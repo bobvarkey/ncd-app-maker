@@ -72,12 +72,11 @@ const RED_FLAGS: { flag: string; icon: React.ReactNode; detail?: string }[] = [
   { flag: "Discrepant limb BP (>20 mmHg)", icon: <Activity className="h-3 w-3" />, detail: "Upper > lower → coarctation of aorta" },
 ];
 
-const CHAPPLES_MNEMONIC: { letter: string; stands: string; color: string }[] = [
+const CHARLES_MNEMONIC: { letter: string; stands: string; color: string }[] = [
   { letter: "C", stands: "Conn's syndrome, Cushing's, Congenital adrenal hyperplasia", color: "text-rose-400" },
   { letter: "H", stands: "Hyperparathyroidism, Hyperthyroidism", color: "text-orange-400" },
   { letter: "A", stands: "Aortic coarctation, Adrenal carcinoma", color: "text-yellow-400" },
-  { letter: "P", stands: "Pheochromocytoma", color: "text-emerald-400" },
-  { letter: "P", stands: "Primary aldosteronism", color: "text-emerald-400" },
+  { letter: "R", stands: "Renovascular hypertension, Reninoma, Renal parenchymal disease", color: "text-amber-400" },
   { letter: "L", stands: "Liddle's syndrome, Licorice", color: "text-cyan-400" },
   { letter: "E", stands: "Estrogen pills (OCPs), End-stage renal disease", color: "text-blue-400" },
   { letter: "S", stands: "Sleep apnea, Stenosis (renal artery)", color: "text-teal-400" },
@@ -381,17 +380,17 @@ export default function HypertensionClinicalCards() {
             </CardContent>
           </Card>
 
-          {/* CHAPLETS Mnemonic */}
+          {/* CHARLES Mnemonic */}
           <Card className="border-blue-500/30 bg-blue-500/5">
             <CardHeader className="pb-1">
               <CardTitle className="text-base flex items-center gap-2 text-blue-400">
                 <Brain className="h-4 w-4" />
-                CHAPLETS Mnemonic — Causes of Secondary HTN
+                CHARLES Mnemonic — Causes of Secondary HTN
               </CardTitle>
             </CardHeader>
             <CardContent>
               <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 text-sm">
-                {CHAPPLES_MNEMONIC.map((m) => (
+                {CHARLES_MNEMONIC.map((m) => (
                   <div key={m.letter} className="p-2 rounded bg-blue-500/10 border border-blue-500/20">
                     <span className="font-bold text-blue-400">{m.letter}</span> — {m.stands}
                   </div>
