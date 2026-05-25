@@ -3,7 +3,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import { useNavigate } from "react-router-dom";
-import { Scale, Calculator, Info, ChevronDown, ChevronUp, Pill, Target, Activity, AlertCircle, BookOpen, RotateCcw, Home } from "lucide-react";
+import { Scale, Calculator, Info, ChevronDown, ChevronUp, Pill, Target, Activity, AlertCircle, BookOpen, RotateCwb, Home, InfoIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -55,6 +55,8 @@ export default function BmiCalculator() {
   const navigate = useNavigate();
   const [result, setResult] = useState<BmiResult | null>(null);
   const [showTreatment, setShowTreatment] = useState(false);
+  const [showCutoffs, setShowCutoffs] = useState(true);
+  const [showGrades, setShowGrades] = useState(false);
   const [treatmentData, setTreatmentData] = useState<ReturnType<typeof getTreatmentGuidelines>>(null);
   const [activeTab, setActiveTab] = useState("calculator");
 
@@ -240,6 +242,100 @@ export default function BmiCalculator() {
                           Using {result.ethnicityName} guidelines
                         </p>
                       </div>
+                    </div>
+
+                    {/* BMI Cut-offs Comparison */}
+                    <div className="rounded-lg border border-border bg-card/50 p-4">
+                      <Button
+                        variant="ghost"
+                        className="w-full flex items-center justify-between p-0 h-auto"
+                        onClick={() => setShowCutoffs(!showCutoffs)}
+                      >
+                        <span className="flex items-center gap-2 font-semibold">
+                          <Info className="h-4 w-4" />
+                          BMI Categories & Cut-offs
+                        </span>
+                        {showCutoffs ? <ChevronUp className="h-4 w-4" /> : <ChevronDown className="h-4 w-4" />}
+                      </Button>
+
+                      {showCutoffs && (
+                        <div className="mt-3 grid grid-cols-2 gap-3">
+                          <div className="rounded-lg bg-muted/30 p-3">
+                            <p className="text-xs font-semibold text-center mb-2">Western (WHO)</p>
+                            <table className="w-full text-xs">
+                              <tbody>
+                                <tr className="border-b border-border"><td className="py-1">&lt;18.5</td><td className="text-right">Underweight</td></tr>
+                                <tr className="border-b border-border"><td className="py-1">18.5-24.9</td><td className="text-right">Normal</td></tr>
+                                <tr className="border-b border-border"><td className="py-1">25-29.9</td><td className="text-right">Overweight</td></tr>
+                                <tr className="border-b border-border"><td className="py-1">30-34.9</td><td className="text-right">Obese I</td></tr>
+                                <tr><td className="py-1">≥35</td><td className="text-right">Obese II/III</td></tr>
+                              </tbody>
+                            </table>
+                          </div>
+                          <div className="rounded-lg bg-muted/30 p-3">
+                            <p className="text-xs font-semibold text-center mb-2">Asian (WHO, 2000)</p>
+                            <table className="w-full text-xs">
+                              <tbody>
+                                <tr className="border-b border-border"><td className="py-1">&lt;18.5</td><td className="text-right">Underweight</td></tr>
+                                <tr className="border-b border-border"><td className="py-1">18.5-22.9</td><td className="text-right">Normal</td></tr>
+                                <tr className="border-b border-border"><td className="py-1">23-24.9</td><td className="text-right">Overweight</td></tr>
+                                <tr className="border-b border-border"><td className="py-1">25-29.9</td><td className="text-right">Obese I</td></tr>
+                                <tr><td className="py-1">≥30</td><td className="text-right">Obese II/III</td></tr>
+                              </tbody>
+                            </table>
+                          </div>
+                        </div>
+                      )}
+                    </div>
+
+                    {/* BMI Grades Collapsible */}
+                    <div className="rounded-lg border border-border bg-card/50 p-4">
+                      <Button
+                        variant="ghost"
+                        className="w-full flex items-center justify-between p-0 h-auto"
+                        onClick={() => setShowGrades(!showGrades)}
+                      >
+                        <span className="flex items-center gap-2 font-semibold">
+                          <Target className="h-4 w-4" />
+                          Obesity Grades & Treatment Targets
+                        </span>
+                        {showGrades ? <ChevronUp className="h-4 w-4" /> : <ChevronDown className="h-4 w-4" />}
+                      </Button>
+
+                      {showGrades && (
+                        <div className="mt-3 space-y-2">
+                          <div className="rounded-lg bg-muted/30 p-3 flex justify-between items-center">
+                            <div>
+                              <p className="font-medium">Grade 1 (Overweight)</p>
+                              <p className="text-xs text-muted-foreground">BMI 25-29.9</p>
+                            </div>
+                            <div className="text-right">
+                              <p className="text-xs font-medium text-primary">Target: ≥3-7% weight loss</p>
+                              <p className="text-xs text-muted-foreground">Grade A</p>
+                            </div>
+                          </div>
+                          <div className="rounded-lg bg-muted/30 p-3 flex justify-between items-center">
+                            <div>
+                              <p className="font-medium">Grade 2 (Obesity)</p>
+                              <p className="text-xs text-muted-foreground">BMI 30-34.9</p>
+                            </div>
+                            <div className="text-right">
+                              <p className="text-xs font-medium text-primary">Target: ≥10% weight loss</p>
+                              <p className="text-xs text-muted-foreground">Grade B</p>
+                            </div>
+                          </div>
+                          <div className="rounded-lg bg-muted/30 p-3 flex justify-between items-center">
+                            <div>
+                              <p className="font-medium">Grade 3 (Severe Obesity)</p>
+                              <p className="text-xs text-muted-foreground">BMI ≥35</p>
+                            </div>
+                            <div className="text-right">
+                              <p className="text-xs font-medium text-primary">Target: ≥15-20% weight loss</p>
+                              <p className="text-xs text-muted-foreground">Grade A/B</p>
+                            </div>
+                          </div>
+                        </div>
+                      )}
                     </div>
 
                     {/* ADA 2025 Treatment Guidelines */}

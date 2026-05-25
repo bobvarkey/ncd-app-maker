@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import { Syringe, BookOpen, Stethoscope, Pill, ChevronDown, ChevronUp } from "lucide-react";
+import { useNavigate } from "react-router-dom";
+import { Syringe, BookOpen, Stethoscope, Pill, ChevronDown, ChevronUp, UtensilsCrossed } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
@@ -61,6 +62,8 @@ const Section = ({ id, title, icon, description, isOpen, onToggle, children }: S
 );
 
 export default function DiabetesTab() {
+  const navigate = useNavigate();
+
   const [openSections, setOpenSections] = useState<Set<string>>(new Set(["overview", "assessment", "treatment"]));
 
   const toggleSection = (id: string) => {
@@ -128,7 +131,7 @@ export default function DiabetesTab() {
 
       {/* Expand/Collapse All */}
       <section className="max-w-6xl mx-auto px-6 pb-4">
-        <div className="flex gap-2">
+        <div className="flex flex-wrap gap-2">
           <Button
             variant="outline"
             size="sm"
@@ -142,6 +145,15 @@ export default function DiabetesTab() {
             onClick={() => setOpenSections(new Set())}
           >
             Collapse All
+          </Button>
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={() => navigate('/diet-plan')}
+            className="gap-1.5 border-red-500/30 text-red-500 hover:bg-red-500/10"
+          >
+            <UtensilsCrossed className="h-3.5 w-3.5" />
+            Meal Planner
           </Button>
         </div>
       </section>

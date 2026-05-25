@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { Activity, Droplets, Heart, Scale, Syringe, Activity as PulseIcon, Dna, FileText, ChevronRight, Info, ChevronDown, Upload, Sparkles, ArrowRight, Calculator, Stethoscope, FileSearch } from "lucide-react";
+import { Activity, Droplets, Heart, Scale, Syringe, Activity as PulseIcon, Dna, FileText, ChevronRight, Info, ChevronDown, Upload, Sparkles, ArrowRight, Calculator, Stethoscope, FileSearch, UtensilsCrossed } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -1084,6 +1084,12 @@ export default function Home() {
 
   // Quick Actions data
   const quickActions: QuickActionProps[] = [
+    {
+      title: "Meal Planner",
+      description: "7-day diet plans for Kerala, Indian, Asian, and international cuisines",
+      icon: <UtensilsCrossed className="h-4 w-4 text-red-500" />,
+      to: "/diet-plan",
+    },
     {
       title: "ASCVD Risk Calculator",
       description: "Calculate 10-year cardiovascular risk with LAI 2023 guidelines",
