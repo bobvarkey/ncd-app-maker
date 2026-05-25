@@ -532,6 +532,80 @@ export default function HypertensionAssessment() {
         </CardContent>
       </Card>
 
+      {/* Secondary Hypertension Checklist */}
+      <Card className="border-2 border-orange-500/20">
+        <CardHeader>
+          <div className="flex items-center gap-2">
+            <Stethoscope className="h-5 w-5" style={{ color: categoryColors.accent }} />
+            <CardTitle className="text-lg">Secondary Hypertension Screening Checklist</CardTitle>
+          </div>
+          <p className="text-xs text-muted-foreground">
+            Check features that suggest secondary causes of hypertension
+          </p>
+        </CardHeader>
+        <CardContent>
+          <div className="space-y-2">
+            {secondaryHtnChecklist.map((item) => (
+              <div
+                key={item.id}
+                className={`p-3 rounded-lg border transition-colors cursor-pointer ${
+                  checkedSecondary.has(item.id)
+                    ? "bg-orange-500/5 border-orange-500/30"
+                    : "border-border/50 hover:border-orange-500/20"
+                }`}
+                onClick={() => toggleSecondary(item.id)}
+              >
+                <div className="flex items-start gap-3">
+                  <Checkbox
+                    checked={checkedSecondary.has(item.id)}
+                    onCheckedChange={() => {}}
+                    className="mt-0.5"
+                  />
+                  <div className="flex-1">
+                    <div className="flex items-center gap-2">
+                      <span className="text-xs font-medium text-muted-foreground uppercase">{item.category}</span>
+                    </div>
+                    <p className="text-sm font-medium">{item.feature}</p>
+                    {checkedSecondary.has(item.id) && (
+                      <div className="mt-2 p-2 rounded bg-muted/50 border border-border/50">
+                        <p className="text-xs text-muted-foreground">
+                          <span className="font-medium">Recommended Workup:</span> {item.workup}
+                        </p>
+                      </div>
+                    )}
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          <Separator className="my-4" />
+
+          <div
+            className={`p-4 rounded-lg border ${
+              screeningRecommended
+                ? "bg-destructive/5 border-destructive/30"
+                : "bg-muted/30 border-border/50"
+            }`}
+          >
+            <div className="flex items-center gap-2 mb-2">
+              <Info className="h-4 w-4" style={{ color: screeningRecommended ? "#ef4444" : categoryColors.accent }} />
+              <span className="text-sm font-medium">Assessment Summary</span>
+            </div>
+            <p className="text-sm text-muted-foreground">
+              {checkedCount} features checked. {" "}
+              {screeningRecommended ? (
+                <span className="text-destructive font-medium">
+                  Secondary hypertension screening strongly recommended.
+                </span>
+              ) : (
+                <span>Check more features if clinical suspicion remains.</span>
+              )}
+            </p>
+          </div>
+        </CardContent>
+      </Card>
+
       {/* Drug Interaction Checker */}
       <Card className="border-2 border-orange-500/20">
         <CardHeader className="pb-3">
@@ -613,80 +687,6 @@ export default function HypertensionAssessment() {
               )}
             </div>
           )}
-        </CardContent>
-      </Card>
-
-      {/* Secondary Hypertension Checklist */}
-      <Card className="border-2 border-orange-500/20">
-        <CardHeader>
-          <div className="flex items-center gap-2">
-            <Stethoscope className="h-5 w-5" style={{ color: categoryColors.accent }} />
-            <CardTitle className="text-lg">Secondary Hypertension Screening Checklist</CardTitle>
-          </div>
-          <p className="text-xs text-muted-foreground">
-            Check features that suggest secondary causes of hypertension
-          </p>
-        </CardHeader>
-        <CardContent>
-          <div className="space-y-2">
-            {secondaryHtnChecklist.map((item) => (
-              <div
-                key={item.id}
-                className={`p-3 rounded-lg border transition-colors cursor-pointer ${
-                  checkedSecondary.has(item.id)
-                    ? "bg-orange-500/5 border-orange-500/30"
-                    : "border-border/50 hover:border-orange-500/20"
-                }`}
-                onClick={() => toggleSecondary(item.id)}
-              >
-                <div className="flex items-start gap-3">
-                  <Checkbox
-                    checked={checkedSecondary.has(item.id)}
-                    onCheckedChange={() => {}}
-                    className="mt-0.5"
-                  />
-                  <div className="flex-1">
-                    <div className="flex items-center gap-2">
-                      <span className="text-xs font-medium text-muted-foreground uppercase">{item.category}</span>
-                    </div>
-                    <p className="text-sm font-medium">{item.feature}</p>
-                    {checkedSecondary.has(item.id) && (
-                      <div className="mt-2 p-2 rounded bg-muted/50 border border-border/50">
-                        <p className="text-xs text-muted-foreground">
-                          <span className="font-medium">Recommended Workup:</span> {item.workup}
-                        </p>
-                      </div>
-                    )}
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-
-          <Separator className="my-4" />
-
-          <div
-            className={`p-4 rounded-lg border ${
-              screeningRecommended
-                ? "bg-destructive/5 border-destructive/30"
-                : "bg-muted/30 border-border/50"
-            }`}
-          >
-            <div className="flex items-center gap-2 mb-2">
-              <Info className="h-4 w-4" style={{ color: screeningRecommended ? "#ef4444" : categoryColors.accent }} />
-              <span className="text-sm font-medium">Assessment Summary</span>
-            </div>
-            <p className="text-sm text-muted-foreground">
-              {checkedCount} features checked. {" "}
-              {screeningRecommended ? (
-                <span className="text-destructive font-medium">
-                  Secondary hypertension screening strongly recommended.
-                </span>
-              ) : (
-                <span>Check more features if clinical suspicion remains.</span>
-              )}
-            </p>
-          </div>
         </CardContent>
       </Card>
     </div>
