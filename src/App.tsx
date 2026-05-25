@@ -146,12 +146,12 @@ const App = () => (
                 <Routes>
                   <Route path="/" element={<Home />} />
                   {/* Tab Pages */}
-                  <Route path="/diabetes" element={<Diabetes />} />
-                  <Route path="/hypertension" element={<Hypertension />} />
-                  <Route path="/lipids" element={<Lipids />} />
-                  <Route path="/obesity" element={<Obesity />} />
-                  <Route path="/asthma-copd" element={<AsthmaCopd />} />
-                  <Route path="/renal" element={<RenalDisease />} />
+                  <Route path="/diabetes" element={<ErrorBoundary><Diabetes /></ErrorBoundary>} />
+                  <Route path="/hypertension" element={<ErrorBoundary><Hypertension /></ErrorBoundary>} />
+                  <Route path="/lipids" element={<ErrorBoundary><Lipids /></ErrorBoundary>} />
+                  <Route path="/obesity" element={<ErrorBoundary><Obesity /></ErrorBoundary>} />
+                  <Route path="/asthma-copd" element={<ErrorBoundary><AsthmaCopd /></ErrorBoundary>} />
+                  <Route path="/renal" element={<ErrorBoundary><RenalDisease /></ErrorBoundary>} />
                   {/* Diabetes Sub-pages */}
                   <Route path="/diabetes/assessment" element={<DiabetesAssessment />} />
                   <Route path="/diabetes/overview" element={<DiabetesOverview />} />
