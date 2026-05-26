@@ -1,143 +1,124 @@
-// slide-08.js — Key Takeaways + Content Angles
+// slide-08.js — Side-by-Side Pricing Comparison Table
 const pptxgen = require("pptxgenjs");
 
-const slideConfig = {
-  type: 'summary',
-  index: 8,
-  title: 'Key Takeaways & Content Angles'
-};
+const slideConfig = { type: 'content', index: 8, title: 'Pricing Comparison' };
 
 function createSlide(pres, theme) {
   const slide = pres.addSlide();
   slide.background = { color: theme.bg };
 
-  // Header
+  slide.addText("Pricing Comparison Across All 5 Competitors", {
+    x: 0.5, y: 0.2, w: 9, h: 0.5,
+    fontSize: 22, fontFace: "Georgia", color: theme.primary,
+    bold: true, align: "left", margin: 0
+  });
+
+  slide.addShape(pres.shapes.LINE, {
+    x: 0.5, y: 0.75, w: 1.8, h: 0,
+    line: { color: theme.accent, width: 2 }
+  });
+
+  // Build the table
+  const headerRow = [
+    { text: "Competitor", options: { bold: true, color: "FFFFFF", fill: { color: theme.primary }, fontSize: 10, fontFace: "Calibri", align: "left" } },
+    { text: "Category", options: { bold: true, color: "FFFFFF", fill: { color: theme.primary }, fontSize: 10, fontFace: "Calibri", align: "left" } },
+    { text: "Free Tier", options: { bold: true, color: "FFFFFF", fill: { color: theme.primary }, fontSize: 10, fontFace: "Calibri", align: "center" } },
+    { text: "Paid Entry", options: { bold: true, color: "FFFFFF", fill: { color: theme.primary }, fontSize: 10, fontFace: "Calibri", align: "center" } },
+    { text: "Enterprise", options: { bold: true, color: "FFFFFF", fill: { color: theme.primary }, fontSize: 10, fontFace: "Calibri", align: "center" } },
+    { text: "Notes", options: { bold: true, color: "FFFFFF", fill: { color: theme.primary }, fontSize: 10, fontFace: "Calibri", align: "left" } }
+  ];
+
+  const row1 = [
+    { text: "@hyderabaddoctor", options: { bold: true, fontSize: 9, fontFace: "Calibri", color: theme.primary, fill: { color: "FFFFFF" } } },
+    { text: "Clinician", options: { fontSize: 9, fontFace: "Calibri", color: theme.secondary, fill: { color: "FFFFFF" } } },
+    { text: "—", options: { fontSize: 9, fontFace: "Calibri", color: theme.secondary, align: "center", fill: { color: "FFFFFF" } } },
+    { text: "₹1,200/visit", options: { fontSize: 9, fontFace: "Calibri", color: theme.accent, bold: true, align: "center", fill: { color: "FFFFFF" } } },
+    { text: "—", options: { fontSize: 9, fontFace: "Calibri", color: theme.secondary, align: "center", fill: { color: "FFFFFF" } } },
+    { text: "Per-visit fee, not SaaS", options: { fontSize: 9, fontFace: "Calibri", color: theme.secondary, fill: { color: "FFFFFF" } } }
+  ];
+
+  const row2 = [
+    { text: "@EricTopol", options: { bold: true, fontSize: 9, fontFace: "Calibri", color: theme.primary, fill: { color: theme.light } } },
+    { text: "Newsletter", options: { fontSize: 9, fontFace: "Calibri", color: theme.secondary, fill: { color: theme.light } } },
+    { text: "✓ Free posts", options: { fontSize: 9, fontFace: "Calibri", color: theme.secondary, align: "center", fill: { color: theme.light } } },
+    { text: "$8/mo", options: { fontSize: 9, fontFace: "Calibri", color: theme.accent, bold: true, align: "center", fill: { color: theme.light } } },
+    { text: "—", options: { fontSize: 9, fontFace: "Calibri", color: theme.secondary, align: "center", fill: { color: theme.light } } },
+    { text: "Proceeds fund Scripps Res.", options: { fontSize: 9, fontFace: "Calibri", color: theme.secondary, fill: { color: theme.light } } }
+  ];
+
+  const row3 = [
+    { text: "@theliverdoc", options: { bold: true, fontSize: 9, fontFace: "Calibri", color: theme.primary, fill: { color: "FFFFFF" } } },
+    { text: "Clinician", options: { fontSize: 9, fontFace: "Calibri", color: theme.secondary, fill: { color: "FFFFFF" } } },
+    { text: "—", options: { fontSize: 9, fontFace: "Calibri", color: theme.secondary, align: "center", fill: { color: "FFFFFF" } } },
+    { text: "Varies", options: { fontSize: 9, fontFace: "Calibri", color: theme.accent, bold: true, align: "center", fill: { color: "FFFFFF" } } },
+    { text: "—", options: { fontSize: 9, fontFace: "Calibri", color: theme.secondary, align: "center", fill: { color: "FFFFFF" } } },
+    { text: "Hospital fees only", options: { fontSize: 9, fontFace: "Calibri", color: theme.secondary, fill: { color: "FFFFFF" } } }
+  ];
+
+  const row4 = [
+    { text: "@JAMANeuro", options: { bold: true, fontSize: 9, fontFace: "Calibri", color: theme.primary, fill: { color: theme.light } } },
+    { text: "Journal", options: { fontSize: 9, fontFace: "Calibri", color: theme.secondary, fill: { color: theme.light } } },
+    { text: "—", options: { fontSize: 9, fontFace: "Calibri", color: theme.secondary, align: "center", fill: { color: theme.light } } },
+    { text: "$649/yr", options: { fontSize: 9, fontFace: "Calibri", color: theme.accent, bold: true, align: "center", fill: { color: theme.light } } },
+    { text: "Custom", options: { fontSize: 9, fontFace: "Calibri", color: theme.accent, align: "center", fill: { color: theme.light } } },
+    { text: "APC ~$5K for OA", options: { fontSize: 9, fontFace: "Calibri", color: theme.secondary, fill: { color: theme.light } } }
+  ];
+
+  const row5 = [
+    { text: "@GreenJournal", options: { bold: true, fontSize: 9, fontFace: "Calibri", color: theme.primary, fill: { color: "FFFFFF" } } },
+    { text: "Journal", options: { fontSize: 9, fontFace: "Calibri", color: theme.secondary, fill: { color: "FFFFFF" } } },
+    { text: "—", options: { fontSize: 9, fontFace: "Calibri", color: theme.secondary, align: "center", fill: { color: "FFFFFF" } } },
+    { text: "AAN member incl.", options: { fontSize: 9, fontFace: "Calibri", color: theme.accent, bold: true, align: "center", fill: { color: "FFFFFF" } } },
+    { text: "Custom", options: { fontSize: 9, fontFace: "Calibri", color: theme.accent, align: "center", fill: { color: "FFFFFF" } } },
+    { text: "Non-member: Custom", options: { fontSize: 9, fontFace: "Calibri", color: theme.secondary, fill: { color: "FFFFFF" } } }
+  ];
+
+  slide.addTable([headerRow, row1, row2, row3, row4, row5], {
+    x: 0.4, y: 1.1, w: 9.2,
+    colW: [1.6, 1.0, 0.9, 1.3, 0.9, 2.5],
+    border: { pt: 0.5, color: theme.light },
+    rowH: [0.35, 0.35, 0.35, 0.35, 0.35, 0.35],
+    margin: [2, 4, 2, 4]
+  });
+
+  // Callout box
   slide.addShape(pres.shapes.RECTANGLE, {
-    x: 0, y: 0, w: 10, h: 0.08,
-    fill: { color: theme.primary }
+    x: 0.4, y: 3.4, w: 9.2, h: 1.6,
+    fill: { color: "FFFFFF" },
+    line: { color: theme.light, width: 1 }
   });
 
-  slide.addText("Key Takeaways & Content Angles", {
-    x: 0.5, y: 0.3, w: 9, h: 0.6,
-    fontSize: 30, fontFace: "Arial",
-    color: theme.primary, bold: true,
-    align: "left"
+  slide.addText("Key Pricing Observations", {
+    x: 0.6, y: 3.5, w: 8.8, h: 0.3,
+    fontSize: 14, fontFace: "Georgia", color: theme.primary,
+    bold: true, align: "left", margin: 0
   });
 
-  // LEFT — Key Takeaways
-  slide.addText("Key Takeaways", {
-    x: 0.5, y: 1.1, w: 4.5, h: 0.4,
-    fontSize: 16, fontFace: "Arial",
-    color: theme.primary, bold: true,
-    align: "left"
-  });
-
-  const takeaways = [
-    "2026 AHA/ASA guidelines make TNK Class I-equivalent to alteplase within 4.5h",
-    "TNK 0.4 mg/kg is explicitly NOT recommended",
-    "Basilar artery window expanded to 24h (TRACE-5); ATTENTION-LATE neutral for thrombectomy add-on",
-    "Single IV push + ~$3K cost saving = compelling institutional argument",
-    "US still off-label; globally already standard of care",
-    "Social media sentiment strongly bullish — \"inevitable adoption\" narrative"
+  const obs = [
+    "Only @EricTopol has a true free tier (all core posts) and transparent pricing ($8/mo)",
+    "@JAMANeuro at $649/yr is the most expensive individual option — premium journal pricing",
+    "@GreenJournal bundles journal access into AAN membership — price is opaque for non-members",
+    "None of the five competitors offer a SaaS/product platform — they are journals, newsletters, or clinical practices"
   ];
 
-  takeaways.forEach((t, i) => {
-    const y = 1.55 + i * 0.5;
-    slide.addShape(pres.shapes.OVAL, {
-      x: 0.55, y: y + 0.07, w: 0.22, h: 0.22,
-      fill: { color: theme.secondary }
-    });
-    slide.addText(t, {
-      x: 0.88, y: y, w: 4.1, h: 0.48,
-      fontSize: 11, fontFace: "Arial",
-      color: theme.primary, bold: false,
-      align: "left", valign: "top"
-    });
+  slide.addText(obs.map((o, i) => ({
+    text: o,
+    options: { bullet: { code: "25B6" }, breakLine: i < obs.length - 1, fontSize: 10, color: theme.secondary, bold: false }
+  })), {
+    x: 0.6, y: 3.85, w: 8.8, h: 1.0,
+    fontFace: "Calibri", align: "left", valign: "top",
+    paraSpaceAfter: 3
   });
 
-  // RIGHT — Content Angles
-  slide.addShape(pres.shapes.ROUNDED_RECTANGLE, {
-    x: 5.15, y: 1.1, w: 4.35, h: 3.55,
-    fill: { color: theme.primary },
-    rectRadius: 0.1
-  });
-
-  slide.addText("Content Angles", {
-    x: 5.35, y: 1.25, w: 3.95, h: 0.4,
-    fontSize: 16, fontFace: "Arial",
-    color: "FFFFFF", bold: true,
-    align: "left"
-  });
-
-  // Platform tags
-  const angles = [
-    {
-      platform: "Twitter/X",
-      hook: "\"Tenecteplase is now Class I-equivalent to alteplase — single push, $3K cheaper, at least as effective. Why is UpToDate still bolding alteplase?\""
-    },
-    {
-      platform: "Twitter/X",
-      hook: "\"The 2026 stroke guidelines quietly made 3 huge changes: TNK for all, large core + 24h basilar window, and aggressive BP lowering may actually be harmful.\""
-    },
-    {
-      platform: "LinkedIn",
-      hook: "\"The 2026 AHA/ASA guidelines mark the official end of alteplase's monopoly on thrombolysis. For systems that haven't switched yet, the question isn't 'if' but 'when.'\""
-    }
-  ];
-
-  angles.forEach((a, i) => {
-    const y = 1.75 + i * 1.0;
-    slide.addShape(pres.shapes.ROUNDED_RECTANGLE, {
-      x: 5.35, y, w: 1.2, h: 0.28,
-      fill: { color: theme.accent },
-      rectRadius: 0.14
-    });
-    slide.addText(a.platform, {
-      x: 5.35, y, w: 1.2, h: 0.28,
-      fontSize: 9, fontFace: "Arial",
-      color: "FFFFFF", bold: true,
-      align: "center", valign: "middle"
-    });
-
-    slide.addText(a.hook, {
-      x: 5.35, y: y + 0.32, w: 3.95, h: 0.65,
-      fontSize: 10, fontFace: "Arial",
-      color: theme.light, bold: false,
-      italic: true,
-      align: "left", valign: "top"
-    });
-  });
-
-  // Bottom — Confidence badge
-  slide.addShape(pres.shapes.ROUNDED_RECTANGLE, {
-    x: 0.5, y: 4.78, w: 2.2, h: 0.35,
-    fill: { color: theme.light },
-    rectRadius: 0.05
-  });
-  slide.addText("Confidence: HIGH", {
-    x: 0.5, y: 4.78, w: 2.2, h: 0.35,
-    fontSize: 10, fontFace: "Arial",
-    color: theme.primary, bold: true,
-    align: "center", valign: "middle"
-  });
-
-  slide.addText("Sources: Twitter/X, LinkedIn, Reddit r/neurology, PubMed, AHA Journals | March 2026", {
-    x: 2.85, y: 4.78, w: 6.0, h: 0.35,
-    fontSize: 9, fontFace: "Arial",
-    color: theme.secondary, bold: false,
-    align: "left", valign: "middle"
-  });
-
-  // Page number badge
+  // Page badge
   slide.addShape(pres.shapes.OVAL, {
     x: 9.3, y: 5.1, w: 0.4, h: 0.4,
     fill: { color: theme.accent }
   });
   slide.addText("8", {
     x: 9.3, y: 5.1, w: 0.4, h: 0.4,
-    fontSize: 12, fontFace: "Arial",
-    color: "FFFFFF", bold: true,
-    align: "center", valign: "middle"
+    fontSize: 12, fontFace: "Arial", color: "FFFFFF",
+    bold: true, align: "center", valign: "middle"
   });
 
   return slide;
@@ -146,13 +127,7 @@ function createSlide(pres, theme) {
 if (require.main === module) {
   const pres = new pptxgen();
   pres.layout = 'LAYOUT_16x9';
-  const theme = {
-    primary: "006d77",
-    secondary: "83c5be",
-    accent: "e29578",
-    light: "ffddd2",
-    bg: "edf6f9"
-  };
+  const theme = { primary: "22223b", secondary: "4a4e69", accent: "9a8c98", light: "c9ada7", bg: "f2e9e4" };
   createSlide(pres, theme);
   pres.writeFile({ fileName: "slide-08-preview.pptx" });
 }

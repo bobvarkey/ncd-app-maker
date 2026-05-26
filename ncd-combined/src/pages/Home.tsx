@@ -51,6 +51,12 @@ const categoryColors = {
     border: "rgba(167,139,250,0.2)",
     gradient: "from-violet-500 to-purple-600",
   },
+  anemia: {
+    accent: "#38bdf8",
+    bg: "rgba(56,189,248,0.12)",
+    border: "rgba(56,189,248,0.2)",
+    gradient: "from-sky-500 to-blue-600",
+  },
 };
 
 // Full forms data for abbreviations
@@ -1079,6 +1085,26 @@ export default function Home() {
       ],
       linkTo: "/obesity/bmi-calculator",
       linkText: "Open BMI Calculator",
+    },
+    {
+      title: "Anemia & Hematology",
+      icon: <Droplets className="h-5 w-5" style={{ color: '#38bdf8' }} />,
+      color: '#38bdf8',
+      bgColor: "rgba(56,189,248,0.12)",
+      borderColor: "rgba(56,189,248,0.2)",
+      quickStats: [
+        { label: "Classification", value: "WHO 2024" },
+        { label: "Indices", value: "10+ types" },
+      ],
+      features: [
+        "CBC-based anemia evaluation",
+        "Morphology classification",
+        "Discriminant indices",
+        "Iron therapy dosing",
+        "Thrombocytopenia evaluator",
+      ],
+      linkTo: "/anemia",
+      linkText: "Open Hematology Tools",
     },
   ];
 

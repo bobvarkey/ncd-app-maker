@@ -1,148 +1,168 @@
-// slide-03.js — Trial Evidence Summary (Updated March 29, 2026)
+// slide-03.js — @hyderabaddoctor (Dr Sudhir Kumar)
 const pptxgen = require("pptxgenjs");
 
-const slideConfig = {
-  type: 'content',
-  index: 3,
-  title: 'Trial Evidence at a Glance'
-};
+const slideConfig = { type: 'content', index: 3, title: '@hyderabaddoctor — Dr Sudhir Kumar' };
 
 function createSlide(pres, theme) {
   const slide = pres.addSlide();
   slide.background = { color: theme.bg };
 
-  // Header bar
+  // Top accent bar
   slide.addShape(pres.shapes.RECTANGLE, {
-    x: 0, y: 0, w: 10, h: 0.08,
+    x: 0, y: 0, w: 10, h: 0.06,
+    fill: { color: theme.accent }
+  });
+
+  // Title
+  slide.addText("@hyderabaddoctor", {
+    x: 0.5, y: 0.2, w: 6, h: 0.5,
+    fontSize: 24, fontFace: "Georgia", color: theme.primary,
+    bold: true, align: "left", margin: 0
+  });
+
+  slide.addText("Dr Sudhir Kumar MD DM · Neurologist, Apollo Hospitals Hyderabad", {
+    x: 0.5, y: 0.7, w: 6, h: 0.3,
+    fontSize: 13, fontFace: "Calibri", color: theme.secondary,
+    bold: false, align: "left", margin: 0
+  });
+
+  // Tagline box
+  slide.addShape(pres.shapes.RECTANGLE, {
+    x: 0.5, y: 1.1, w: 9, h: 0.5,
     fill: { color: theme.primary }
   });
-
-  // Slide title
-  slide.addText("Trial Evidence at a Glance", {
-    x: 0.5, y: 0.3, w: 9, h: 0.6,
-    fontSize: 30, fontFace: "Arial",
-    color: theme.primary, bold: true,
-    align: "left"
+  slide.addText('"On a mission to prevent people from becoming patients"', {
+    x: 0.6, y: 1.1, w: 8.8, h: 0.5,
+    fontSize: 12, fontFace: "Calibri", color: theme.light,
+    italic: true, align: "center", valign: "middle"
   });
 
-  // Subtitle
-  slide.addText("Key trials & meta-analyses — updated March 2026", {
-    x: 0.5, y: 0.88, w: 9, h: 0.35,
-    fontSize: 13, fontFace: "Arial",
-    color: theme.secondary, bold: false,
-    align: "left"
+  // Two columns: Left features, Right pricing
+  // Left column — Features
+  slide.addText("Top Features", {
+    x: 0.5, y: 1.8, w: 4.2, h: 0.3,
+    fontSize: 14, fontFace: "Georgia", color: theme.primary,
+    bold: true, align: "left", margin: 0
   });
 
-  const trials = [
-    {
-      name: "AcT Trial",
-      pop: "AIS ≤4.5h",
-      finding: "Tenecteplase non-inferior to alteplase; now standard of care",
-      tag: "Practice-Defining"
-    },
-    {
-      name: "TNK-TPA / NMA",
-      pop: "AIS LVO + EVT",
-      finding: "TNK bridging → better 90d mRS than EVT alone or alteplase+EVT",
-      tag: "LVO Focus"
-    },
-    {
-      name: "TRACE-III",
-      pop: "AIS 4.5–24h",
-      finding: "Improved outcomes in perfusion-mismatch patients",
-      tag: "Late Window"
-    },
-    {
-      name: "TIMELESS",
-      pop: "Late window",
-      finding: "Neutral — no benefit in unselected late window population",
-      tag: "Late Window"
-    },
-    {
-      name: "TRACE-5 (Lancet)",
-      pop: "Basilar occlusion ≤24h",
-      finding: "Improved functional outcomes, no ↑ hemorrhage or mortality",
-      tag: "Basilar"
-    },
-    {
-      name: "New NMA (Stroke 2026)",
-      pop: "4 RCTs, 4.5–24h",
-      finding: "First NMA to separate EVT± settings — TNK benefits late window when context accounted for",
-      tag: "New"
-    }
+  const features = [
+    "26+ years neurology expertise at Apollo Hospitals",
+    "Daily health education via X threads",
+    "Online consultation via Apollo 24/7",
+    "Trusted voice on stroke, epilepsy, headache",
+    "Large engaged following on X"
   ];
 
-  const cols = 3;
-  const cardW = 2.9;
-  const cardH = 1.55;
-  const startX = 0.5;
-  const startY = 1.35;
-  const gapX = 0.2;
-  const gapY = 0.18;
-
-  trials.forEach((t, i) => {
-    const col = i % cols;
-    const row = Math.floor(i / cols);
-    const x = startX + col * (cardW + gapX);
-    const y = startY + row * (cardH + gapY);
-
-    slide.addShape(pres.shapes.ROUNDED_RECTANGLE, {
-      x, y, w: cardW, h: cardH,
-      fill: { color: "FFFFFF" },
-      rectRadius: 0.08,
-      shadow: { type: "outer", blur: 3, offset: 1, angle: 45, color: "000000", opacity: 0.08 }
-    });
-
-    const tagColor = t.tag === "Practice-Defining" ? theme.primary
-      : t.tag === "LVO Focus" ? theme.secondary
-      : t.tag === "New" ? theme.accent
-      : t.tag === "Late Window" ? theme.light
-      : theme.light;
-    const tagTextColor = (t.tag === "Practice-Defining" || t.tag === "LVO Focus" || t.tag === "New") ? "FFFFFF" : theme.primary;
-
-    slide.addShape(pres.shapes.ROUNDED_RECTANGLE, {
-      x: x + 0.12, y: y + 0.12, w: 1.3, h: 0.28,
-      fill: { color: tagColor },
-      rectRadius: 0.14
-    });
-    slide.addText(t.tag, {
-      x: x + 0.12, y: y + 0.12, w: 1.3, h: 0.28,
-      fontSize: 9, fontFace: "Arial",
-      color: tagTextColor, bold: true,
-      align: "center", valign: "middle"
-    });
-
-    slide.addText(t.name, {
-      x: x + 0.12, y: y + 0.46, w: cardW - 0.24, h: 0.32,
-      fontSize: 14, fontFace: "Arial",
-      color: theme.primary, bold: true,
-      align: "left", valign: "middle"
-    });
-
-    slide.addText(t.pop, {
-      x: x + 0.12, y: y + 0.76, w: cardW - 0.24, h: 0.22,
-      fontSize: 10, fontFace: "Arial",
-      color: theme.accent, bold: true,
-      align: "left"
-    });
-
-    slide.addText(t.finding, {
-      x: x + 0.12, y: y + 0.97, w: cardW - 0.24, h: 0.5,
-      fontSize: 10, fontFace: "Arial",
-      color: theme.secondary, bold: false,
-      align: "left", valign: "top"
-    });
+  slide.addText(features.map((f, i) => ({
+    text: f,
+    options: { bullet: { code: "2713" }, breakLine: i < features.length - 1, fontSize: 11, color: theme.secondary, bold: false }
+  })), {
+    x: 0.5, y: 2.2, w: 4.2, h: 2.2,
+    fontFace: "Calibri", align: "left", valign: "top",
+    paraSpaceAfter: 4
   });
 
+  // Right column — Pricing
+  slide.addText("Pricing", {
+    x: 5.2, y: 1.8, w: 4.3, h: 0.3,
+    fontSize: 14, fontFace: "Georgia", color: theme.primary,
+    bold: true, align: "left", margin: 0
+  });
+
+  // Plan card
+  slide.addShape(pres.shapes.RECTANGLE, {
+    x: 5.2, y: 2.2, w: 4.3, h: 1.6,
+    fill: { color: "FFFFFF" },
+    line: { color: theme.light, width: 1 }
+  });
+
+  slide.addText("In-Person Consultation", {
+    x: 5.4, y: 2.3, w: 3.9, h: 0.25,
+    fontSize: 12, fontFace: "Calibri", color: theme.primary,
+    bold: true, align: "left", margin: 0
+  });
+
+  slide.addText("₹1,200 (~$14 USD) per visit", {
+    x: 5.4, y: 2.55, w: 3.9, h: 0.25,
+    fontSize: 11, fontFace: "Calibri", color: theme.accent,
+    bold: true, align: "left", margin: 0
+  });
+
+  slide.addText([
+    { text: "Face-to-face neurological examination", options: { bullet: true, breakLine: true, fontSize: 10, bold: false } },
+    { text: "Prescriptions & follow-up care", options: { bullet: true, breakLine: true, fontSize: 10 } },
+    { text: "Apollo Hospitals diagnostic network", options: { bullet: true, fontSize: 10 } }
+  ], {
+    x: 5.4, y: 2.85, w: 3.9, h: 0.8,
+    fontFace: "Calibri", color: theme.secondary, align: "left", valign: "top",
+    paraSpaceAfter: 2
+  });
+
+  slide.addText("Online Consultation (Apollo 24/7): ₹500–₹1,000 per session", {
+    x: 5.4, y: 3.9, w: 3.9, h: 0.3,
+    fontSize: 10, fontFace: "Calibri", color: theme.secondary,
+    italic: true, align: "left", margin: 0
+  });
+
+  // Bottom: Strengths / Weaknesses
+  slide.addShape(pres.shapes.LINE, {
+    x: 0.5, y: 4.35, w: 9, h: 0,
+    line: { color: theme.light, width: 1 }
+  });
+
+  // Strengths
+  slide.addText("What they do well", {
+    x: 0.5, y: 4.45, w: 4.5, h: 0.25,
+    fontSize: 12, fontFace: "Calibri", color: theme.primary,
+    bold: true, align: "left", margin: 0
+  });
+
+  slide.addText([
+    { text: "Trusted personal brand built over 26+ years", options: { bullet: true, breakLine: true, fontSize: 10, bold: false } },
+    { text: "Massive reach via daily X content", options: { bullet: true, fontSize: 10, bold: false } }
+  ], {
+    x: 0.5, y: 4.7, w: 4.5, h: 0.7,
+    fontFace: "Calibri", color: theme.secondary, align: "left", valign: "top",
+    paraSpaceAfter: 2
+  });
+
+  // Weaknesses
+  slide.addText("Where they're weak", {
+    x: 5.2, y: 4.45, w: 4.3, h: 0.25,
+    fontSize: 12, fontFace: "Calibri", color: theme.primary,
+    bold: true, align: "left", margin: 0
+  });
+
+  slide.addText([
+    { text: "No software/product — pure clinical practice", options: { bullet: true, breakLine: true, fontSize: 10, bold: false } },
+    { text: "Limited geographic scope (India only)", options: { bullet: true, fontSize: 10, bold: false } }
+  ], {
+    x: 5.2, y: 4.7, w: 4.3, h: 0.7,
+    fontFace: "Calibri", color: theme.secondary, align: "left", valign: "top",
+    paraSpaceAfter: 2
+  });
+
+  // Target label
+  slide.addShape(pres.shapes.RECTANGLE, {
+    x: 7.2, y: 0.2, w: 2.3, h: 0.3,
+    fill: { color: theme.accent },
+    rectRadius: 0.15
+  });
+  slide.addText("Individual Clinician", {
+    x: 7.2, y: 0.2, w: 2.3, h: 0.3,
+    fontSize: 10, fontFace: "Calibri", color: "FFFFFF",
+    bold: true, align: "center", valign: "middle"
+  });
+
+  // Page badge
   slide.addShape(pres.shapes.OVAL, {
     x: 9.3, y: 5.1, w: 0.4, h: 0.4,
     fill: { color: theme.accent }
   });
   slide.addText("3", {
     x: 9.3, y: 5.1, w: 0.4, h: 0.4,
-    fontSize: 12, fontFace: "Arial",
-    color: "FFFFFF", bold: true,
-    align: "center", valign: "middle"
+    fontSize: 12, fontFace: "Arial", color: "FFFFFF",
+    bold: true, align: "center", valign: "middle"
   });
 
   return slide;
@@ -151,13 +171,7 @@ function createSlide(pres, theme) {
 if (require.main === module) {
   const pres = new pptxgen();
   pres.layout = 'LAYOUT_16x9';
-  const theme = {
-    primary: "006d77",
-    secondary: "83c5be",
-    accent: "e29578",
-    light: "ffddd2",
-    bg: "edf6f9"
-  };
+  const theme = { primary: "22223b", secondary: "4a4e69", accent: "9a8c98", light: "c9ada7", bg: "f2e9e4" };
   createSlide(pres, theme);
   pres.writeFile({ fileName: "slide-03-preview.pptx" });
 }

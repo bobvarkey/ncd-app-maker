@@ -1,63 +1,61 @@
-// slide-01.js — Cover Page
+// slide-01.js — Cover: Competitive Landscape
 const pptxgen = require("pptxgenjs");
 
-const slideConfig = {
-  type: 'cover',
-  index: 1,
-  title: 'Tenecteplase in Stroke'
-};
+const slideConfig = { type: 'cover', index: 1, title: 'Competitive Landscape' };
 
 function createSlide(pres, theme) {
   const slide = pres.addSlide();
-
-  // Full background — deep teal
   slide.background = { color: theme.primary };
 
-  // Decorative accent bar — left side
-  slide.addShape(pres.shapes.RECTANGLE, {
-    x: 0, y: 0, w: 0.25, h: 5.625,
-    fill: { color: theme.accent }
-  });
-
-  // Decorative horizontal line — coral accent
-  slide.addShape(pres.shapes.RECTANGLE, {
-    x: 0.6, y: 2.9, w: 3.5, h: 0.06,
-    fill: { color: theme.light }
-  });
-
-  // Main title
-  slide.addText("Tenecteplase in Stroke", {
-    x: 0.6, y: 1.6, w: 8.5, h: 1.2,
-    fontSize: 52, fontFace: "Arial",
-    color: "FFFFFF", bold: true,
-    align: "left", valign: "bottom"
-  });
-
-  // Subtitle
-  slide.addText("Social Media Landscape — What's the Buzz?", {
-    x: 0.6, y: 3.0, w: 8.5, h: 0.7,
-    fontSize: 22, fontFace: "Arial",
-    color: theme.light, bold: false,
-    align: "left", valign: "top"
-  });
-
-  // Date / Occasion
-  slide.addText("March 2026", {
-    x: 0.6, y: 4.6, w: 4, h: 0.4,
-    fontSize: 14, fontFace: "Arial",
-    color: theme.accent, bold: false,
-    align: "left"
-  });
-
-  // Bottom right decorative circle
+  // Large decorative circle top-right
   slide.addShape(pres.shapes.OVAL, {
-    x: 8.2, y: 4.0, w: 1.8, h: 1.8,
+    x: 6.5, y: -1.5, w: 5, h: 5,
     fill: { color: theme.secondary, transparency: 60 }
   });
 
+  // Small decorative circle bottom-left
   slide.addShape(pres.shapes.OVAL, {
-    x: 8.6, y: 4.4, w: 1.2, h: 1.2,
-    fill: { color: theme.accent, transparency: 40 }
+    x: -1, y: 3.5, w: 3.5, h: 3.5,
+    fill: { color: theme.secondary, transparency: 70 }
+  });
+
+  // Thin accent line
+  slide.addShape(pres.shapes.LINE, {
+    x: 0.6, y: 0.6, w: 2.5, h: 0,
+    line: { color: theme.accent, width: 3 }
+  });
+
+  // Main title
+  slide.addText("Competitive Landscape", {
+    x: 0.6, y: 1.2, w: 7, h: 1.2,
+    fontSize: 44, fontFace: "Georgia", color: theme.bg,
+    bold: true, align: "left", valign: "middle"
+  });
+
+  // Subtitle
+  slide.addText("[Your Product Name]", {
+    x: 0.6, y: 2.5, w: 7, h: 0.6,
+    fontSize: 28, fontFace: "Calibri", color: theme.light,
+    bold: false, align: "left", valign: "middle"
+  });
+
+  // Date
+  slide.addText("Market Analysis  ·  May 2026", {
+    x: 0.6, y: 3.4, w: 5, h: 0.4,
+    fontSize: 16, fontFace: "Calibri", color: theme.secondary,
+    bold: false, align: "left"
+  });
+
+  // Bottom bar
+  slide.addShape(pres.shapes.RECTANGLE, {
+    x: 0, y: 5.125, w: 10, h: 0.5,
+    fill: { color: theme.secondary }
+  });
+
+  slide.addText("Competitor Analysis: @hyderabaddoctor · @EricTopol · @theliverdoc · @JAMANeuro · @GreenJournal", {
+    x: 0.6, y: 5.125, w: 8.8, h: 0.5,
+    fontSize: 11, fontFace: "Calibri", color: theme.bg,
+    bold: false, align: "left", valign: "middle"
   });
 
   return slide;
@@ -66,13 +64,7 @@ function createSlide(pres, theme) {
 if (require.main === module) {
   const pres = new pptxgen();
   pres.layout = 'LAYOUT_16x9';
-  const theme = {
-    primary: "006d77",
-    secondary: "83c5be",
-    accent: "e29578",
-    light: "ffddd2",
-    bg: "edf6f9"
-  };
+  const theme = { primary: "22223b", secondary: "4a4e69", accent: "9a8c98", light: "c9ada7", bg: "f2e9e4" };
   createSlide(pres, theme);
   pres.writeFile({ fileName: "slide-01-preview.pptx" });
 }

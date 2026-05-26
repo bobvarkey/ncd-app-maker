@@ -18,6 +18,9 @@ import Diabetes from "@/pages/Diabetes";
 import Hypertension from "@/pages/Hypertension";
 import Lipids from "@/pages/Lipids";
 
+// Anemia Page
+import Anemia from "@/pages/Anemia";
+
 // Big Four — Diabetes sub-pages
 import DiabetesAssessment from "@/pages/diabetes/DiabetesAssessment";
 import DiabetesOverview from "@/pages/diabetes/DiabetesOverview";
@@ -153,6 +156,7 @@ const App = () => (
           <Route path="/diabetes" element={<><TabNavigation /><Diabetes /></>} />
           <Route path="/hypertension" element={<><TabNavigation /><Hypertension /></>} />
           <Route path="/lipids" element={<><TabNavigation /><Lipids /></>} />
+          <Route path="/anemia" element={<><TabNavigation /><Anemia /></>} />
           <Route path="/diabetes/assessment" element={<><TabNavigation /><DiabetesAssessment /></>} />
           <Route path="/diabetes/overview" element={<><TabNavigation /><DiabetesOverview /></>} />
           <Route path="/diabetes/tab" element={<><TabNavigation /><DiabetesTab /></>} />

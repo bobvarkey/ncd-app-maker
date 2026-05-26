@@ -823,3 +823,28 @@ Top Movers:
   Gainers: ICICIBANK.BSE:+1.8%, HINDUNILVR.BSE:+1.1%, KOTAKBANK.BSE:+0.9%
   Losers: BHARTIARTL.BSE:-0.7%, COLPAL.BSE:-0.3%, TITAN.BSE:-0.1%
 =======================================================
+Starting Enhanced Market Scan...
+Fetching 10 quotes...
+  ✅ MFSL: ₹1727.75 (+2.85%)
+  ⚠️ DEEPAKNTR: Failed
+  ⚠️ GODREJCP: Failed
+  ✅ MARUTI: ₹13170.70 (+1.41%)
+  ✅ BAJAJ-AUTO: ₹10491.30 (-0.53%)
+  ⚠️ ADANIPOWER: Failed
+  ✅ CONCOR: ₹512.30 (+1.29%)
+  ⚠️ AARTIIND: Failed
+  ✅ HEROMOTOCO: ₹4980.85 (+0.31%)
+  ⚠️ CIPLA: Failed
+
+=======================================================
+MARKET SCAN - 2026-05-26 08:00
+=======================================================
+Sensitivity: high | Macro: neutral
+Thresholds: Drop <-1.0%, Rally >1.0%
+Scanned: 5 stocks | Opportunities: 5
+
+
+Top Movers:
+  Gainers: MFSL.BSE:+2.9%, MARUTI.BSE:+1.4%, CONCOR.BSE:+1.3%
+  Losers: BAJAJ-AUTO.BSE:-0.5%, HEROMOTOCO.BSE:0.3%, CONCOR.BSE:1.3%
+=======================================================

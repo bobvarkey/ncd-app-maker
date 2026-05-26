@@ -1,134 +1,171 @@
-// slide-04.js — 2026 AHA/ASA Guidelines Update
+// slide-04.js — @EricTopol (Ground Truths)
 const pptxgen = require("pptxgenjs");
 
-const slideConfig = {
-  type: 'content',
-  index: 4,
-  title: '2026 AHA/ASA Stroke Guidelines'
-};
+const slideConfig = { type: 'content', index: 4, title: '@EricTopol — Ground Truths' };
 
 function createSlide(pres, theme) {
   const slide = pres.addSlide();
   slide.background = { color: theme.bg };
 
-  // Header
   slide.addShape(pres.shapes.RECTANGLE, {
-    x: 0, y: 0, w: 10, h: 0.08,
+    x: 0, y: 0, w: 10, h: 0.06,
+    fill: { color: theme.accent }
+  });
+
+  slide.addText("@EricTopol", {
+    x: 0.5, y: 0.2, w: 6, h: 0.5,
+    fontSize: 24, fontFace: "Georgia", color: theme.primary,
+    bold: true, align: "left", margin: 0
+  });
+
+  slide.addText("Ground Truths (Substack)  ·  Scripps Research  ·  Author 'Deep Medicine'", {
+    x: 0.5, y: 0.7, w: 6, h: 0.3,
+    fontSize: 13, fontFace: "Calibri", color: theme.secondary,
+    bold: false, align: "left", margin: 0
+  });
+
+  slide.addShape(pres.shapes.RECTANGLE, {
+    x: 0.5, y: 1.1, w: 9, h: 0.5,
     fill: { color: theme.primary }
   });
-
-  slide.addText("2026 AHA/ASA Stroke Guidelines", {
-    x: 0.5, y: 0.3, w: 9, h: 0.6,
-    fontSize: 30, fontFace: "Arial",
-    color: theme.primary, bold: true,
-    align: "left"
+  slide.addText('"Facts, data and analytics about biomedical matters"', {
+    x: 0.6, y: 1.1, w: 8.8, h: 0.5,
+    fontSize: 12, fontFace: "Calibri", color: theme.light,
+    italic: true, align: "center", valign: "middle"
   });
 
-  slide.addText("The biggest change in thrombolysis in a decade", {
-    x: 0.5, y: 0.88, w: 9, h: 0.35,
-    fontSize: 13, fontFace: "Arial",
-    color: theme.secondary, bold: false,
-    align: "left"
+  // Left — Features
+  slide.addText("Top Features", {
+    x: 0.5, y: 1.8, w: 4.2, h: 0.3,
+    fontSize: 14, fontFace: "Georgia", color: theme.primary,
+    bold: true, align: "left", margin: 0
   });
 
-  // Left column — big stat callout
-  slide.addShape(pres.shapes.ROUNDED_RECTANGLE, {
-    x: 0.5, y: 1.4, w: 4.2, h: 2.2,
-    fill: { color: theme.primary },
-    rectRadius: 0.1
-  });
-
-  slide.addText("Class I", {
-    x: 0.5, y: 1.55, w: 4.2, h: 0.9,
-    fontSize: 60, fontFace: "Arial",
-    color: "FFFFFF", bold: true,
-    align: "center", valign: "middle"
-  });
-
-  slide.addText("Equivalent to Alteplase", {
-    x: 0.5, y: 2.45, w: 4.2, h: 0.45,
-    fontSize: 16, fontFace: "Arial",
-    color: theme.light, bold: false,
-    align: "center", valign: "top"
-  });
-
-  slide.addText("TNK 0.25 mg/kg within 4.5 hours", {
-    x: 0.5, y: 2.95, w: 4.2, h: 0.4,
-    fontSize: 11, fontFace: "Arial",
-    color: theme.light, bold: false,
-    align: "center", valign: "top"
-  });
-
-  // Right column — key points
-  const points = [
-    { icon: "●", text: "TNK 0.25 mg/kg (max 25 mg) — standard dose" },
-    { icon: "●", text: "TNK 0.4 mg/kg NOT recommended — higher bleeding risk, no added benefit" },
-    { icon: "●", text: "Major LVO ≤4.5h: Class I — TNK equivalent to alteplase" },
-    { icon: "●", text: "Minor neuro deficit, no major occlusion: Class IIb — TNK may be considered" },
-    { icon: "●", text: "Prehospital (mobile stroke unit): TNK suggested over alteplase (weak rec)" },
-    { icon: "●", text: "Still off-label in the US — but widely adopted globally" }
+  const features = [
+    "In-depth biomedical research analysis",
+    "Weekly newsletter + podcast format",
+    "AI in healthcare coverage (author of Deep Medicine)",
+    "Over 206K free subscribers, 1000+ paid",
+    "Pre-tax proceeds fund Scripps Research"
   ];
 
-  const startY = 1.45;
-  const lineH = 0.55;
-
-  points.forEach((p, i) => {
-    const y = startY + i * lineH;
-    const isWarning = p.text.includes("NOT recommended");
-    const dotColor = isWarning ? theme.accent : theme.secondary;
-
-    slide.addText(p.icon, {
-      x: 4.9, y: y + 0.05, w: 0.2, h: 0.3,
-      fontSize: 8, fontFace: "Arial",
-      color: dotColor, bold: true,
-      align: "center"
-    });
-
-    slide.addText(p.text, {
-      x: 5.1, y: y, w: 4.5, h: 0.5,
-      fontSize: 12, fontFace: "Arial",
-      color: isWarning ? theme.accent : theme.primary,
-      bold: isWarning,
-      align: "left", valign: "top"
-    });
+  slide.addText(features.map((f, i) => ({
+    text: f,
+    options: { bullet: { code: "2713" }, breakLine: i < features.length - 1, fontSize: 11, color: theme.secondary, bold: false }
+  })), {
+    x: 0.5, y: 2.2, w: 4.2, h: 2.2,
+    fontFace: "Calibri", align: "left", valign: "top",
+    paraSpaceAfter: 4
   });
 
-  // Bottom note
+  // Right — Pricing
+  slide.addText("Pricing", {
+    x: 5.2, y: 1.8, w: 4.3, h: 0.3,
+    fontSize: 14, fontFace: "Georgia", color: theme.primary,
+    bold: true, align: "left", margin: 0
+  });
+
+  // Free plan
   slide.addShape(pres.shapes.RECTANGLE, {
-    x: 0.5, y: 3.8, w: 9, h: 0.01,
-    fill: { color: theme.light }
+    x: 5.2, y: 2.2, w: 4.3, h: 0.7,
+    fill: { color: "FFFFFF" },
+    line: { color: theme.light, width: 1 }
+  });
+  slide.addText("Free", {
+    x: 5.4, y: 2.25, w: 1.5, h: 0.25,
+    fontSize: 12, fontFace: "Calibri", color: theme.primary,
+    bold: true, align: "left", margin: 0
+  });
+  slide.addText("$0/month", {
+    x: 7.8, y: 2.25, w: 1.5, h: 0.25,
+    fontSize: 12, fontFace: "Calibri", color: theme.accent,
+    bold: true, align: "right", margin: 0
+  });
+  slide.addText("All core posts delivered to inbox", {
+    x: 5.4, y: 2.5, w: 3.9, h: 0.25,
+    fontSize: 10, fontFace: "Calibri", color: theme.secondary,
+    bold: false, align: "left", margin: 0
   });
 
-  slide.addText("Key Reference: Prabhakaran SM et al., 2026 AHA/ASA Guideline for the Early Management of AIS, Stroke. 2026", {
-    x: 0.5, y: 3.88, w: 9, h: 0.35,
-    fontSize: 9, fontFace: "Arial",
-    color: theme.secondary, bold: false,
-    align: "left"
+  // Paid plan
+  slide.addShape(pres.shapes.RECTANGLE, {
+    x: 5.2, y: 3.0, w: 4.3, h: 0.9,
+    fill: { color: "FFFFFF" },
+    line: { color: theme.accent, width: 1.5 }
+  });
+  slide.addText("Paid (Recommended)", {
+    x: 5.4, y: 3.05, w: 1.8, h: 0.25,
+    fontSize: 12, fontFace: "Calibri", color: theme.primary,
+    bold: true, align: "left", margin: 0
+  });
+  slide.addText("$8/month or $80/year", {
+    x: 7.0, y: 3.05, w: 2.3, h: 0.25,
+    fontSize: 12, fontFace: "Calibri", color: theme.accent,
+    bold: true, align: "right", margin: 0
+  });
+  slide.addText([
+    { text: "Podcast episodes & Q&A sessions", options: { bullet: true, breakLine: true, fontSize: 10, bold: false } },
+    { text: "Recommendations & topic requests", options: { bullet: true, breakLine: true, fontSize: 10 } },
+    { text: "Proceeds support Scripps Research", options: { bullet: true, fontSize: 10 } }
+  ], {
+    x: 5.4, y: 3.3, w: 3.9, h: 0.5,
+    fontFace: "Calibri", color: theme.secondary, align: "left", valign: "top",
+    paraSpaceAfter: 2
   });
 
-  // Source badge
-  slide.addShape(pres.shapes.ROUNDED_RECTANGLE, {
-    x: 0.5, y: 4.28, w: 2.6, h: 0.35,
-    fill: { color: theme.light },
-    rectRadius: 0.05
-  });
-  slide.addText("Published: Jan 26, 2026", {
-    x: 0.5, y: 4.28, w: 2.6, h: 0.35,
-    fontSize: 10, fontFace: "Arial",
-    color: theme.primary, bold: false,
-    align: "center", valign: "middle"
+  // Bottom
+  slide.addShape(pres.shapes.LINE, {
+    x: 0.5, y: 4.35, w: 9, h: 0,
+    line: { color: theme.light, width: 1 }
   });
 
-  // Page number badge
+  slide.addText("What they do well", {
+    x: 0.5, y: 4.45, w: 4.5, h: 0.25,
+    fontSize: 12, fontFace: "Calibri", color: theme.primary,
+    bold: true, align: "left", margin: 0
+  });
+  slide.addText([
+    { text: "Unmatched credibility — top 10 most cited researcher", options: { bullet: true, breakLine: true, fontSize: 10, bold: false } },
+    { text: "Large engaged audience (206K+ subscribers)", options: { bullet: true, fontSize: 10, bold: false } }
+  ], {
+    x: 0.5, y: 4.7, w: 4.5, h: 0.7,
+    fontFace: "Calibri", color: theme.secondary, align: "left", valign: "top",
+    paraSpaceAfter: 2
+  });
+
+  slide.addText("Where they're weak", {
+    x: 5.2, y: 4.45, w: 4.3, h: 0.25,
+    fontSize: 12, fontFace: "Calibri", color: theme.primary,
+    bold: true, align: "left", margin: 0
+  });
+  slide.addText([
+    { text: "No software product — newsletter only", options: { bullet: true, breakLine: true, fontSize: 10, bold: false } },
+    { text: "Read-only content, no interactive tools", options: { bullet: true, fontSize: 10, bold: false } }
+  ], {
+    x: 5.2, y: 4.7, w: 4.3, h: 0.7,
+    fontFace: "Calibri", color: theme.secondary, align: "left", valign: "top",
+    paraSpaceAfter: 2
+  });
+
+  slide.addShape(pres.shapes.RECTANGLE, {
+    x: 7.2, y: 0.2, w: 2.3, h: 0.3,
+    fill: { color: theme.accent },
+    rectRadius: 0.15
+  });
+  slide.addText("Newsletter / Influencer", {
+    x: 7.2, y: 0.2, w: 2.3, h: 0.3,
+    fontSize: 10, fontFace: "Calibri", color: "FFFFFF",
+    bold: true, align: "center", valign: "middle"
+  });
+
   slide.addShape(pres.shapes.OVAL, {
     x: 9.3, y: 5.1, w: 0.4, h: 0.4,
     fill: { color: theme.accent }
   });
   slide.addText("4", {
     x: 9.3, y: 5.1, w: 0.4, h: 0.4,
-    fontSize: 12, fontFace: "Arial",
-    color: "FFFFFF", bold: true,
-    align: "center", valign: "middle"
+    fontSize: 12, fontFace: "Arial", color: "FFFFFF",
+    bold: true, align: "center", valign: "middle"
   });
 
   return slide;
@@ -137,13 +174,7 @@ function createSlide(pres, theme) {
 if (require.main === module) {
   const pres = new pptxgen();
   pres.layout = 'LAYOUT_16x9';
-  const theme = {
-    primary: "006d77",
-    secondary: "83c5be",
-    accent: "e29578",
-    light: "ffddd2",
-    bg: "edf6f9"
-  };
+  const theme = { primary: "22223b", secondary: "4a4e69", accent: "9a8c98", light: "c9ada7", bg: "f2e9e4" };
   createSlide(pres, theme);
   pres.writeFile({ fileName: "slide-04-preview.pptx" });
 }

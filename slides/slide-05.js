@@ -1,139 +1,154 @@
-// slide-05.js — Twitter/X Discourse
+// slide-05.js — @theliverdoc (Dr Cyriac Abby Philips)
 const pptxgen = require("pptxgenjs");
 
-const slideConfig = {
-  type: 'content',
-  index: 5,
-  title: 'Twitter/X: What\'s Hot'
-};
+const slideConfig = { type: 'content', index: 5, title: '@theliverdoc — Dr Cyriac Abby Philips' };
 
 function createSlide(pres, theme) {
   const slide = pres.addSlide();
   slide.background = { color: theme.bg };
 
-  // Header
   slide.addShape(pres.shapes.RECTANGLE, {
-    x: 0, y: 0, w: 10, h: 0.08,
+    x: 0, y: 0, w: 10, h: 0.06,
+    fill: { color: theme.accent }
+  });
+
+  slide.addText("@theliverdoc", {
+    x: 0.5, y: 0.2, w: 6, h: 0.5,
+    fontSize: 24, fontFace: "Georgia", color: theme.primary,
+    bold: true, align: "left", margin: 0
+  });
+
+  slide.addText("Dr Cyriac Abby Philips · Senior Consultant, Rajagiri Hospital Kochi", {
+    x: 0.5, y: 0.7, w: 6, h: 0.3,
+    fontSize: 13, fontFace: "Calibri", color: theme.secondary,
+    bold: false, align: "left", margin: 0
+  });
+
+  slide.addShape(pres.shapes.RECTANGLE, {
+    x: 0.5, y: 1.1, w: 9, h: 0.5,
     fill: { color: theme.primary }
   });
-
-  slide.addText("Twitter/X: What's Trending", {
-    x: 0.5, y: 0.3, w: 9, h: 0.6,
-    fontSize: 30, fontFace: "Arial",
-    color: theme.primary, bold: true,
-    align: "left"
+  slide.addText('"Clinician scientist battling Ayush misinformation, busting medical myths"', {
+    x: 0.6, y: 1.1, w: 8.8, h: 0.5,
+    fontSize: 12, fontFace: "Calibri", color: theme.light,
+    italic: true, align: "center", valign: "middle"
   });
 
-  slide.addText("2026 guidelines dropped in January — the neuro Twitterverse is still buzzing", {
-    x: 0.5, y: 0.88, w: 9, h: 0.35,
-    fontSize: 13, fontFace: "Arial",
-    color: theme.secondary, bold: false,
-    align: "left"
+  // Left — Features
+  slide.addText("Top Features", {
+    x: 0.5, y: 1.8, w: 4.2, h: 0.3,
+    fontSize: 14, fontFace: "Georgia", color: theme.primary,
+    bold: true, align: "left", margin: 0
   });
 
-  // Theme cards — 2 columns
-  const themes = [
-    {
-      title: "2026 Guidelines Reaction",
-      desc: "\"Tenecteplase. Large cores. 24-hour basilar window. No aggressive BP lowering. The 2026 Stroke Guidelines just changed how lives will be saved.\"",
-      type: "Most Viral"
-    },
-    {
-      title: "TNK Adoption Momentum",
-      desc: "\"Tenecteplase is gaining ground. And aggressive BP control may actually harm patients. Here's what changed.\"",
-      type: "High Engagement"
-    },
-    {
-      title: "Anterior LVO + TNK",
-      desc: "\"New evidence suggests patients with anterior circulation large vessel occlusion — IV tenecteplase plus thrombectomy...\"",
-      type: "Clinical"
-    },
-    {
-      title: "Basilar Artery Window",
-      desc: "\"Tenecteplase within 24 hours improves functional outcomes in basilar artery occlusion without increasing hemorrhage or mortality risk — TRACE-5\"",
-      type: "Trial Data"
-    }
+  const features = [
+    "Expert hepatologist — clinical & transplant hepatology",
+    "Leading voice against alternative medicine myths",
+    "Highly published researcher on drug-induced liver injury",
+    "Active YouTube channel for liver health education",
+    "Multi-award winning clinician scientist"
   ];
 
-  const cardW = 4.35;
-  const cardH = 1.5;
-  const startX = 0.5;
-  const startY = 1.35;
-  const gapX = 0.3;
-  const gapY = 0.2;
-
-  themes.forEach((t, i) => {
-    const col = i % 2;
-    const row = Math.floor(i / 2);
-    const x = startX + col * (cardW + gapX);
-    const y = startY + row * (cardH + gapY);
-
-    // Card
-    slide.addShape(pres.shapes.ROUNDED_RECTANGLE, {
-      x, y, w: cardW, h: cardH,
-      fill: { color: "FFFFFF" },
-      rectRadius: 0.08,
-      shadow: { type: "outer", blur: 3, offset: 1, angle: 45, color: "000000", opacity: 0.08 }
-    });
-
-    // Type tag
-    const tagColor = t.type === "Most Viral" ? theme.accent
-      : t.type === "High Engagement" ? theme.primary
-      : theme.secondary;
-
-    slide.addShape(pres.shapes.ROUNDED_RECTANGLE, {
-      x: x + 0.12, y: y + 0.12, w: 1.35, h: 0.26,
-      fill: { color: tagColor },
-      rectRadius: 0.13
-    });
-    slide.addText(t.type, {
-      x: x + 0.12, y: y + 0.12, w: 1.35, h: 0.26,
-      fontSize: 9, fontFace: "Arial",
-      color: "FFFFFF", bold: true,
-      align: "center", valign: "middle"
-    });
-
-    // Title
-    slide.addText(t.title, {
-      x: x + 0.12, y: y + 0.45, w: cardW - 0.24, h: 0.32,
-      fontSize: 14, fontFace: "Arial",
-      color: theme.primary, bold: true,
-      align: "left"
-    });
-
-    // Quote
-    slide.addText(t.desc, {
-      x: x + 0.12, y: y + 0.78, w: cardW - 0.24, h: 0.65,
-      fontSize: 9.5, fontFace: "Arial",
-      color: theme.secondary, bold: false,
-      italic: true,
-      align: "left", valign: "top"
-    });
+  slide.addText(features.map((f, i) => ({
+    text: f,
+    options: { bullet: { code: "2713" }, breakLine: i < features.length - 1, fontSize: 11, color: theme.secondary, bold: false }
+  })), {
+    x: 0.5, y: 2.2, w: 4.2, h: 2.2,
+    fontFace: "Calibri", align: "left", valign: "top",
+    paraSpaceAfter: 4
   });
 
-  // Bottom insight
-  slide.addShape(pres.shapes.ROUNDED_RECTANGLE, {
-    x: 0.5, y: 4.65, w: 9, h: 0.55,
-    fill: { color: theme.primary },
-    rectRadius: 0.06
-  });
-  slide.addText("Key Insight: Prehospital TNK, large core expansion, and basilar window are the 3 hottest discussion threads", {
-    x: 0.65, y: 4.65, w: 8.7, h: 0.55,
-    fontSize: 12, fontFace: "Arial",
-    color: "FFFFFF", bold: false,
-    align: "center", valign: "middle"
+  // Right — Pricing
+  slide.addText("Pricing", {
+    x: 5.2, y: 1.8, w: 4.3, h: 0.3,
+    fontSize: 14, fontFace: "Georgia", color: theme.primary,
+    bold: true, align: "left", margin: 0
   });
 
-  // Page number badge
+  slide.addShape(pres.shapes.RECTANGLE, {
+    x: 5.2, y: 2.2, w: 4.3, h: 1.2,
+    fill: { color: "FFFFFF" },
+    line: { color: theme.light, width: 1 }
+  });
+  slide.addText("In-Person Consultation", {
+    x: 5.4, y: 2.3, w: 3.9, h: 0.25,
+    fontSize: 12, fontFace: "Calibri", color: theme.primary,
+    bold: true, align: "left", margin: 0
+  });
+  slide.addText("Varies — hospital consultation fees at Rajagiri Hospital, Kochi", {
+    x: 5.4, y: 2.55, w: 3.9, h: 0.35,
+    fontSize: 10, fontFace: "Calibri", color: theme.accent,
+    bold: true, align: "left", margin: 0
+  });
+  slide.addText([
+    { text: "Clinical evaluation & diagnostics", options: { bullet: true, breakLine: true, fontSize: 10, bold: false } },
+    { text: "Liver disease management & transplant care", options: { bullet: true, breakLine: true, fontSize: 10 } },
+    { text: "Drug-induced liver injury expertise", options: { bullet: true, fontSize: 10 } }
+  ], {
+    x: 5.4, y: 2.9, w: 3.9, h: 0.6,
+    fontFace: "Calibri", color: theme.secondary, align: "left", valign: "top",
+    paraSpaceAfter: 2
+  });
+
+  slide.addText("No subscription or SaaS product — clinical practice only", {
+    x: 5.4, y: 3.55, w: 3.9, h: 0.25,
+    fontSize: 10, fontFace: "Calibri", color: theme.secondary,
+    italic: true, align: "left", margin: 0
+  });
+
+  // Bottom
+  slide.addShape(pres.shapes.LINE, {
+    x: 0.5, y: 4.35, w: 9, h: 0,
+    line: { color: theme.light, width: 1 }
+  });
+
+  slide.addText("What they do well", {
+    x: 0.5, y: 4.45, w: 4.5, h: 0.25,
+    fontSize: 12, fontFace: "Calibri", color: theme.primary,
+    bold: true, align: "left", margin: 0
+  });
+  slide.addText([
+    { text: "Strong personal brand fighting medical misinformation", options: { bullet: true, breakLine: true, fontSize: 10, bold: false } },
+    { text: "Credible clinical + research background", options: { bullet: true, fontSize: 10, bold: false } }
+  ], {
+    x: 0.5, y: 4.7, w: 4.5, h: 0.7,
+    fontFace: "Calibri", color: theme.secondary, align: "left", valign: "top",
+    paraSpaceAfter: 2
+  });
+
+  slide.addText("Where they're weak", {
+    x: 5.2, y: 4.45, w: 4.3, h: 0.25,
+    fontSize: 12, fontFace: "Calibri", color: theme.primary,
+    bold: true, align: "left", margin: 0
+  });
+  slide.addText([
+    { text: "No product play — purely clinical practice", options: { bullet: true, breakLine: true, fontSize: 10, bold: false } },
+    { text: "Focus on a single specialty (hepatology)", options: { bullet: true, fontSize: 10, bold: false } }
+  ], {
+    x: 5.2, y: 4.7, w: 4.3, h: 0.7,
+    fontFace: "Calibri", color: theme.secondary, align: "left", valign: "top",
+    paraSpaceAfter: 2
+  });
+
+  slide.addShape(pres.shapes.RECTANGLE, {
+    x: 7.2, y: 0.2, w: 2.3, h: 0.3,
+    fill: { color: theme.accent },
+    rectRadius: 0.15
+  });
+  slide.addText("Individual Clinician", {
+    x: 7.2, y: 0.2, w: 2.3, h: 0.3,
+    fontSize: 10, fontFace: "Calibri", color: "FFFFFF",
+    bold: true, align: "center", valign: "middle"
+  });
+
   slide.addShape(pres.shapes.OVAL, {
     x: 9.3, y: 5.1, w: 0.4, h: 0.4,
     fill: { color: theme.accent }
   });
   slide.addText("5", {
     x: 9.3, y: 5.1, w: 0.4, h: 0.4,
-    fontSize: 12, fontFace: "Arial",
-    color: "FFFFFF", bold: true,
-    align: "center", valign: "middle"
+    fontSize: 12, fontFace: "Arial", color: "FFFFFF",
+    bold: true, align: "center", valign: "middle"
   });
 
   return slide;
@@ -142,13 +157,7 @@ function createSlide(pres, theme) {
 if (require.main === module) {
   const pres = new pptxgen();
   pres.layout = 'LAYOUT_16x9';
-  const theme = {
-    primary: "006d77",
-    secondary: "83c5be",
-    accent: "e29578",
-    light: "ffddd2",
-    bg: "edf6f9"
-  };
+  const theme = { primary: "22223b", secondary: "4a4e69", accent: "9a8c98", light: "c9ada7", bg: "f2e9e4" };
   createSlide(pres, theme);
   pres.writeFile({ fileName: "slide-05-preview.pptx" });
 }

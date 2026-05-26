@@ -12,6 +12,7 @@ const navItems = [
   { path: "/obesity/bmi-calculator", label: "Obesity", icon: "⚖️", color: "violet-500" },
   { path: "/respiratory", label: "COPD/Asthma", icon: "🫁", color: "cyan-500" },
   { path: "/renal-dosing", label: "Renal", icon: "🫘", color: "amber-500" },
+  { path: "/anemia", label: "Anemia", icon: "🩸", color: "sky-500" },
 ];
 
 const modeLinks = [

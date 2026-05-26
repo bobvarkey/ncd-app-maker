@@ -1,71 +1,81 @@
 {
-  "scan_date": "2026-05-25T08:00:14.077756",
-  "stocks_scanned": 8,
+  "scan_date": "2026-05-26T08:00:13.785309",
+  "stocks_scanned": 5,
   "opportunities": [
     {
-      "ticker": "ICICIBANK.BSE",
-      "name": "ICICIBANK",
-      "price": 1264.9,
-      "change": 1.7701,
+      "ticker": "MFSL.BSE",
+      "name": "MFSL",
+      "price": 1727.75,
+      "change": 2.8545,
       "signals": [
         {
           "type": "price_rally",
-          "value": 1.7701,
-          "reason": "Rally: +1.8%"
+          "value": 2.8545,
+          "reason": "Rally: +2.9%"
         },
         {
           "type": "volatility",
-          "value": 2.220613082307499,
-          "reason": "Range: 2.2%"
+          "value": 3.6513579671290284,
+          "reason": "Range: 3.7%"
         }
       ],
       "prediction_score": 25,
       "recommendation": "NEUTRAL"
     },
     {
-      "ticker": "COLPAL.BSE",
-      "name": "COLPAL",
-      "price": 2157.5,
-      "change": -0.3188,
+      "ticker": "MARUTI.BSE",
+      "name": "MARUTI",
+      "price": 13170.7,
+      "change": 1.411,
+      "signals": [
+        {
+          "type": "price_rally",
+          "value": 1.411,
+          "reason": "Rally: +1.4%"
+        }
+      ],
+      "prediction_score": 15,
+      "recommendation": "NEUTRAL"
+    },
+    {
+      "ticker": "BAJAJ-AUTO.BSE",
+      "name": "BAJAJ-AUTO",
+      "price": 10491.2998,
+      "change": -0.5262,
       "signals": [
         {
           "type": "volatility",
-          "value": 2.6706231454005933,
-          "reason": "Range: 2.7%"
+          "value": 3.407182906220333,
+          "reason": "Range: 3.4%"
         }
       ],
       "prediction_score": 10,
       "recommendation": "NEUTRAL"
     },
     {
-      "ticker": "HINDUNILVR.BSE",
-      "name": "HINDUNILVR",
-      "price": 2202.0,
-      "change": 1.0648,
+      "ticker": "CONCOR.BSE",
+      "name": "CONCOR",
+      "price": 512.3,
+      "change": 1.2851,
       "signals": [
         {
           "type": "price_rally",
-          "value": 1.0648,
-          "reason": "Rally: +1.1%"
-        },
-        {
-          "type": "volatility",
-          "value": 2.2054103622191614,
-          "reason": "Range: 2.2%"
+          "value": 1.2851,
+          "reason": "Rally: +1.3%"
         }
       ],
-      "prediction_score": 25,
+      "prediction_score": 15,
       "recommendation": "NEUTRAL"
     },
     {
-      "ticker": "PIDILITIND.BSE",
-      "name": "PIDILITIND",
-      "price": 1480.1,
-      "change": 0.6118,
+      "ticker": "HEROMOTOCO.BSE",
+      "name": "HEROMOTOCO",
+      "price": 4980.85,
+      "change": 0.3122,
       "signals": [
         {
           "type": "volatility",
-          "value": 2.3194323582569174,
+          "value": 2.3463698236006114,
           "reason": "Range: 2.3%"
         }
       ],
