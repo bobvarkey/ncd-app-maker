@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Home, Heart, Syringe, Dna, Activity, Wind, Menu, X } from "lucide-react";
 import { useState } from "react";
@@ -26,6 +26,11 @@ export function TabNavigation() {
   const location = useLocation();
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const currentPath = location.pathname;
+
+  useEffect(() => {
+    document.body.classList.add("has-tab-navigation");
+    return () => document.body.classList.remove("has-tab-navigation");
+  }, []);
 
   // Determine active main section
   const activeSection = currentPath.split("/")[1] || "home";
@@ -114,9 +119,6 @@ export function TabNavigation() {
           </nav>
         </div>
       </aside>
-
-      {/* Sidebar spacer - push content right */}
-      <div className="hidden lg:block w-56 shrink-0" />
 
       {/* Mobile overlay */}
       {sidebarOpen && (
