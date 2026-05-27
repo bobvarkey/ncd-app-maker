@@ -699,3 +699,6 @@ export default function HypertensionAssessment() {
       </Card>
 
 
+    </div>
+  );
+}
