@@ -190,6 +190,7 @@ const App = () => (
           <Route path="/obesity/bmi-calculator" element={<><TabNavigation /><BmiCalculatorCalc /></>} />
           <Route path="/obesity/waist-height-ratio" element={<><TabNavigation /><WaistHeightRatioCalc /></>} />
           <Route path="/obesity/glp1-algorithm" element={<><TabNavigation /><GLP1ObesityAlgorithmCalc /></>} />
+          <Route path="/diet-plan" element={<><TabNavigation /><DietPlanPage /></>} />
 
           {/* 404 */}
           <Route path="*" element={<NotFound />} />
