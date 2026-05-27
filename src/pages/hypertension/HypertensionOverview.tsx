@@ -219,7 +219,7 @@ interface OverviewProps {
   onNavigateToAssessment?: () => void;
 }
 
-export default function HypertensionOverview({ onNavigateToEmergencies }: OverviewProps) {
+export default function HypertensionOverview({ onNavigateToEmergencies, onNavigateToAssessment }: OverviewProps) {
   const [selectedStage, setSelectedStage] = useState<string | null>(null);
 
   return (
