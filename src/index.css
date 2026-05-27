@@ -88,6 +88,14 @@
     @apply bg-background text-foreground font-sans antialiased;
     font-family: 'DM Sans', system-ui, sans-serif;
   }
+  @media (min-width: 1024px) {
+    body.has-tab-navigation #root > div:not([role="region"]),
+    body.has-tab-navigation #root > main,
+    body.has-tab-navigation #root > section {
+      margin-left: 14rem;
+      max-width: calc(100vw - 14rem);
+    }
+  }
   h1, h2, h3, h4, h5, h6 {
     font-family: 'Space Grotesk', system-ui, sans-serif;
   }
