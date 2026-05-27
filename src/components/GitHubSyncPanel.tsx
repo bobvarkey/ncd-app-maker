@@ -17,7 +17,7 @@ interface SyncState {
 }
 
 const REPO_OWNER = "bobvarkey";
-const REPO_NAME = "ncd-combined";
+const REPO_NAME = "ncd-app-maker";
 const GITHUB_API = `https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}`;
 const REPO_URL = `https://github.com/${REPO_OWNER}/${REPO_NAME}`;
 
