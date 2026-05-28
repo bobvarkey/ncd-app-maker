@@ -623,7 +623,7 @@ export default function IronReplacementCalculator() {
                   </table>
                 </div>
                 <p className="text-xs text-muted-foreground mt-3">
-                  TSAT = (Serum Iron ÷ TIBC) × 100. TSAT < 20% suggests inadequate iron for erythropoiesis.
+                  TSAT = (Serum Iron ÷ TIBC) × 100. TSAT &lt; 20% suggests inadequate iron for erythropoiesis.
                 </p>
 
                 <h4 className="text-sm font-semibold text-foreground mt-6 mb-3">Condition-Specific Thresholds for Iron Replacement</h4>
