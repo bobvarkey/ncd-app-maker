@@ -16,12 +16,11 @@ const navItems = [
   { path: "/thyroid", label: "Thyroid", icon: "🔬", color: "emerald-500" },
 ];
 
-const modeLinks = [
-  { path: "/", label: "← Mode Selector", icon: "⬅️" },
-  { path: "/simple", label: "🟢 Simple", icon: "🟢" },
-  { path: "/moderate", label: "🟠 Moderate", icon: "🟠" },
-  { path: "/home", label: "🔴 Complex", icon: "🔴" },
-];
+] // End of navItems
+
+// Removed mode switcher: Simple/Moderate/Complex tiers no longer used
+
+export function TabNavigation() {
 
 export function TabNavigation() {
   const location = useLocation();
@@ -103,34 +102,6 @@ export function TabNavigation() {
             );
           })}
         </nav>
-
-        {/* Mode Switcher at bottom */}
-        <div className="absolute bottom-0 left-0 right-0 p-2 border-t border-border">
-          <div className="text-xs font-semibold text-muted-foreground px-2 py-2" id="sidebar-mode-heading">MODE SWITCHER</div>
-          <nav className="space-y-1" aria-labelledby="sidebar-mode-heading">
-            {modeLinks.map((item) => {
-              const isActive = currentPath === item.path || 
-                (item.path === "/home" && currentPath === "/home") ||
-                (item.path === "/" && currentPath === "/");
-              return (
-                <Link
-                  key={item.path}
-                  to={item.path}
-                  onClick={() => setSidebarOpen(false)}
-                  className={cn(
-                    "flex items-center gap-3 px-3 py-2 rounded-lg text-sm transition-all",
-                    isActive 
-                      ? "bg-primary/10 text-primary" 
-                      : "text-muted-foreground hover:bg-muted hover:text-foreground"
-                  )}
-                >
-                  <span aria-hidden="true">{item.icon}</span>
-                  <span>{item.label}</span>
-                </Link>
-              );
-            })}
-          </nav>
-        </div>
       </aside>
 
       {/* Mobile overlay */}
