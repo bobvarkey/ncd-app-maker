@@ -205,7 +205,7 @@ const HypoRiskCalculator = () => {
 
   return (
     <div className="space-y-5 animate-slide-in">
-      <SmartLabelUpload fields={DIABETES_FIELDS.fields} onParse={handleSmartParse} existingValues={manualInputs} />
+      <SmartLabelUpload fields={DIABETES_FIELDS.fields} onParse={handleSmartParse} existingValues={manualInputs as unknown as Record<string, string>} />
       <div>
         <h1 className="text-xl font-heading font-bold">Hypoglycemia Risk Score</h1>
         <p className="text-sm text-muted-foreground">Multi-factor risk assessment — ADA 2026 + clinical evidence</p>
