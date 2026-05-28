@@ -14,7 +14,7 @@ interface UnitToggleProps {
 }
 
 export function UnitToggle({ category, onChange }: UnitToggleProps) {
-  const [units, setUnits] = useLocalStorage<Record<string, "us" | "metric" | "si">("ncd_preferred_units", {
+  const [units, setUnits] = useLocalStorage<Record<string, string>>("ncd_preferred_units", {
     glucose: "mg/dL",
     weight: "kg",
     creatinine: "mg/dL",
