@@ -400,6 +400,8 @@ function PrescriptionEngine() {
   const [bmi, setBmi] = useState("");
   const [hasASCVD, setHasASCVD] = useState(false);
   const [hasCKD, setHasCKD] = useState(false);
+  const [hasCHF, setHasCHF] = useState(false);
+  const [hasBloodDisorder, setHasBloodDisorder] = useState(false);
   const [hasLiverDisease, setHasLiverDisease] = useState(false);
   const [liverSeverity, setLiverSeverity] = useState<"compensated" | "decompensated">("compensated");
   const [hasDiabetes, setHasDiabetes] = useState(false);
@@ -668,6 +670,70 @@ function PrescriptionEngine() {
       prescriptions.push("");
     }
 
+    // RENAL SECTION
+    if (hasCKD || egfrNum < 60 || parseFloat(creatinine) > 1.2) {
+      prescriptions.push("═══════════════════════════════════════════════════");
+      prescriptions.push("║  RENAL / CKD MANAGEMENT                       ║");
+      prescriptions.push("═══════════════════════════════════════════════════");
+      
+      const egfrVal = egfrNum || calculateCKD();
+      let ckdStage = "1";
+      if (egfrVal >= 90) ckdStage = "1";
+      else if (egfrVal >= 60) ckdStage = "2";
+      else if (egfrVal >= 45) ckdStage = "3a";
+      else if (egfrVal >= 30) ckdStage = "3b";
+      else if (egfrVal >= 15) ckdStage = "4";
+      else ckdStage = "5 (ESRD)";
+      
+      prescriptions.push(`eGFR: ${egfrVal?.toFixed(0) || "—"} mL/min/1.73m² (CKD Stage ${ckdStage})`);
+      
+      // CKD management
+      if (egfrVal < 60) {
+        prescriptions.push("1. ACEi/ARB: Continue if on ACEi/ARB (nephroprotective)");
+        prescriptions.push("2. SGLT2i: Consider empagliflozin 10 mg (CKD trial)");
+        prescriptions.push("3. Avoid NSAIDs");
+        prescriptions.push("4. Monitor: Creatinine, eGFR q3mo");
+        if (hasDiabetes) {
+          prescriptions.push("5. Metformin: Use with caution if eGFR >30");
+        }
+      }
+      
+      if (egfrVal < 30) {
+        prescriptions.push("⚠️ eGFR <30: Prepare for nephrology referral");
+        warnings.push("⚠️ Advanced CKD - avoid contrast unless necessary");
+      }
+      
+      prescriptions.push("");
+    }
+
+    // BLOOD DISORDERS SECTION
+    if (hasBloodDisorder || ferritinNum || tsatNum) {
+      prescriptions.push("═══════════════════════════════════════════════════");
+      prescriptions.push("║  BLOOD DISORDERS / ANEMIA                   ║");
+      prescriptions.push("═══════════════════════════════════════════");
+      
+      if (hasBloodDisorder) {
+        if (hbNum < 10) {
+          prescriptions.push("Hemoglobin: ${hbNum.toFixed(1)} g/dL (SEVERE - IV iron indicated)");
+          prescriptions.push("1. Iron studies + ferritin");
+          prescriptions.push("2. IV Iron: 500-1000 mg (Ganzoni formula)");
+          if (hasCKD) prescriptions.push("3. Consider ESA if on dialysis");
+          warnings.push("⚠️ Severe anemia - consider transfusion if symptomatic");
+        } else if (hbNum < 12) {
+          prescriptions.push("Hemoglobin: ${hbNum.toFixed(1)} g/dL (mild-mod)");
+          prescriptions.push("1. Oral iron 325 mg TID or ferrous sulfate");
+          if (hasCHF) prescriptions.push("2. IV iron if CHF (ESC guideline)");
+        } else {
+          prescriptions.push("Hemoglobin: ${hbNum.toFixed(1)} g/dL (normal)");
+          if (ferritinNum < 30) prescriptions.push("Ferritin low - repletion recommended");
+        }
+        
+        prescriptions.push("Monitoring: CBC, ferritin, TSAT q3months");
+      }
+      
+      prescriptions.push("");
+    }
+
     // WARNINGS SECTION
     if (warnings.length > 0) {
       prescriptions.push("╔═══════════════════════════════════════════════════╗");
@@ -706,7 +772,7 @@ function PrescriptionEngine() {
           </div>
           <div>
             <h2 className="text-lg font-semibold">Prescription Engine</h2>
-            <p className="text-sm text-muted-foreground">Generate integrated prescriptions for all four NCDs</p>
+            <p className="text-sm text-muted-foreground">Generate integrated prescriptions for diabetes, hypertension, lipids, obesity, renal, & blood disorders</p>
           </div>
         </div>
       </div>
@@ -901,6 +967,30 @@ function PrescriptionEngine() {
           </div>
           <div className="flex items-center space-x-2">
             <Checkbox
+              id="dys"
+              checked={hasDyslipidemia}
+              onCheckedChange={(checked) => setHasDyslipidemia(checked as boolean)}
+            />
+            <Label htmlFor="dys" className="text-sm cursor-pointer">Dyslipidemia</Label>
+          </div>
+          <div className="flex items-center space-x-2">
+            <Checkbox
+              id="obesity"
+              checked={bmiNum >= 30}
+              onCheckedChange={() => {}}
+            />
+            <Label htmlFor="obesity" className="text-sm cursor-pointer">Obesity (BMI ≥30)</Label>
+          </div>
+          <div className="flex items-center space-x-2">
+            <Checkbox
+              id="ckd"
+              checked={hasCKD}
+              onCheckedChange={(checked) => setHasCKD(checked as boolean)}
+            />
+            <Label htmlFor="ckd" className="text-sm cursor-pointer">CKD / Renal</Label>
+          </div>
+          <div className="flex items-center space-x-2">
+            <Checkbox
               id="ascvd"
               checked={hasASCVD}
               onCheckedChange={(checked) => setHasASCVD(checked as boolean)}
@@ -909,11 +999,19 @@ function PrescriptionEngine() {
           </div>
           <div className="flex items-center space-x-2">
             <Checkbox
-              id="ckd"
-              checked={hasCKD}
-              onCheckedChange={(checked) => setHasCKD(checked as boolean)}
+              id="chf"
+              checked={hasCHF}
+              onCheckedChange={(checked) => setHasCHF(checked as boolean)}
             />
-            <Label htmlFor="ckd" className="text-sm cursor-pointer">CKD</Label>
+            <Label htmlFor="chf" className="text-sm cursor-pointer">Heart Failure</Label>
+          </div>
+          <div className="flex items-center space-x-2">
+            <Checkbox
+              id="blood"
+              checked={hasBloodDisorder}
+              onCheckedChange={(checked) => setHasBloodDisorder(checked as boolean)}
+            />
+            <Label htmlFor="blood" className="text-sm cursor-pointer">Blood Disorder</Label>
           </div>
         </div>
 
