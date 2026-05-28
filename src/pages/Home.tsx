@@ -676,7 +676,7 @@ function PrescriptionEngine() {
       prescriptions.push("║  RENAL / CKD MANAGEMENT                       ║");
       prescriptions.push("═══════════════════════════════════════════════════");
       
-      const egfrVal = egfrNum || calculateCKD();
+      const egfrVal = egfrNum;
       let ckdStage = "1";
       if (egfrVal >= 90) ckdStage = "1";
       else if (egfrVal >= 60) ckdStage = "2";
