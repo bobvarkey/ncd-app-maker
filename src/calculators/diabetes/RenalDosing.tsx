@@ -1,9 +1,13 @@
 import { useState } from "react";
-import { Pill, FlaskConical, Search, AlertTriangle } from "lucide-react";
+import { Pill, FlaskConical, Search, AlertTriangle, Syringe } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import {
   Table, TableHeader, TableBody, TableHead, TableRow, TableCell,
 } from "@/components/ui/table";
+import { ANTIBIOTICS_DATA } from "./antibiotics-data";
+import { cn } from "@/lib/utils";
+
+export type { DoseEntry };
 
 type DoseEntry = {
   drug: string;
@@ -262,10 +266,12 @@ const cellStyle = (val: string) => {
 const RenalDoseAdjustment = () => {
   const [search, setSearch] = useState("");
   const [classFilter, setClassFilter] = useState<string>("all");
+  const [category, setCategory] = useState<"diabetes" | "antibiotics">("diabetes");
 
-  const classes = [...new Set(RENAL_DATA.map(d => d.drugClass))];
+  const activeData = category === "antibiotics" ? ANTIBIOTICS_DATA : RENAL_DATA;
+  const classes = [...new Set(activeData.map(d => d.drugClass))];
 
-  const filtered = RENAL_DATA.filter(d => {
+  const filtered = activeData.filter(d => {
     const matchSearch = !search || d.drug.toLowerCase().includes(search.toLowerCase()) || d.drugClass.toLowerCase().includes(search.toLowerCase());
     const matchClass = classFilter === "all" || d.drugClass === classFilter;
     return matchSearch && matchClass;
@@ -278,7 +284,36 @@ const RenalDoseAdjustment = () => {
           <FlaskConical className="w-5 h-5 text-primary" />
           Renal Dose Adjustment
         </h1>
-        <p className="text-sm text-muted-foreground">eGFR-based dose modifications for diabetes medications (ADA 2026 + KDIGO)</p>
+        <p className="text-sm text-muted-foreground">eGFR-based dose modifications for diabetes medications &amp; antibiotics (ADA 2026 + KDIGO)</p>
+      </div>
+
+      {/* Category Toggle */}
+      <div className="flex gap-2">
+        <button
+          onClick={() => { setCategory("diabetes"); setClassFilter("all"); setSearch(""); }}
+          className={cn(
+            "flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-semibold transition-colors",
+            category === "diabetes"
+              ? "bg-primary text-primary-foreground shadow-sm"
+              : "bg-muted text-muted-foreground hover:bg-muted/80"
+          )}
+        >
+          <Pill className="h-4 w-4" />
+          Diabetes Medications
+        </button>
+        <button
+          onClick={() => { setCategory("antibiotics"); setClassFilter("all"); setSearch(""); }}
+          className={cn(
+            "flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-semibold transition-colors",
+            category === "antibiotics"
+              ? "bg-primary text-primary-foreground shadow-sm"
+              : "bg-muted text-muted-foreground hover:bg-muted/80"
+          )}
+        >
+          <Syringe className="h-4 w-4" />
+          Antibiotics &amp; Anti-infectives
+        </button>
+        <span className="text-xs text-muted-foreground self-center ml-2">{filtered.length} drugs</span>
       </div>
 
       {/* Legend */}
