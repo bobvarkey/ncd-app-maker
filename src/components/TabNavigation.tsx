@@ -43,6 +43,7 @@ export function TabNavigation() {
       <button 
         onClick={() => setSidebarOpen(!sidebarOpen)}
         className="fixed top-3 left-3 z-50 p-2 rounded-lg bg-card border border-border lg:hidden"
+        aria-label={sidebarOpen ? "Close navigation menu" : "Open navigation menu"}
       >
         <Menu className="h-5 w-5" />
       </button>
@@ -54,7 +55,7 @@ export function TabNavigation() {
         sidebarOpen ? "translate-x-0" : "-translate-x-full lg:translate-x-0"
       )}>
         {/* Close button mobile */}
-        <button onClick={() => setSidebarOpen(false)} className="absolute top-3 right-3 p-1 lg:hidden">
+        <button onClick={() => setSidebarOpen(false)} className="absolute top-3 right-3 p-1 lg:hidden" aria-label="Close sidebar">
           <X className="h-4 w-4" />
         </button>
 
@@ -69,8 +70,8 @@ export function TabNavigation() {
         </div>
 
         {/* Main Navigation */}
-        <nav className="p-2 space-y-1">
-          <div className="text-xs font-semibold text-muted-foreground px-2 py-2">CLINICAL AREAS</div>
+        <nav className="p-2 space-y-1" aria-labelledby="sidebar-clinical-heading">
+          <div className="text-xs font-semibold text-muted-foreground px-2 py-2" id="sidebar-clinical-heading">CLINICAL AREAS</div>
           {navItems.map((item) => {
             const isActive = currentPath === item.path || 
               (item.path !== "/home" && currentPath.startsWith(item.path));
@@ -85,6 +86,7 @@ export function TabNavigation() {
                     ? `bg-${item.color}/10 text-${item.color} border-l-2 border-${item.color}` 
                     : "text-muted-foreground hover:bg-muted hover:text-foreground"
                 )}
+                aria-label={`${item.label}${isActive ? " (current page)" : ""}`}
               >
                 <span>{item.icon}</span>
                 <span>{item.label}</span>
@@ -95,8 +97,8 @@ export function TabNavigation() {
 
         {/* Mode Switcher at bottom */}
         <div className="absolute bottom-0 left-0 right-0 p-2 border-t border-border">
-          <div className="text-xs font-semibold text-muted-foreground px-2 py-2">MODE SWITCHER</div>
-          <nav className="space-y-1">
+          <div className="text-xs font-semibold text-muted-foreground px-2 py-2" id="sidebar-mode-heading">MODE SWITCHER</div>
+          <nav className="space-y-1" aria-labelledby="sidebar-mode-heading">
             {modeLinks.map((item) => {
               const isActive = currentPath === item.path || 
                 (item.path === "/home" && currentPath === "/home") ||
@@ -113,7 +115,7 @@ export function TabNavigation() {
                       : "text-muted-foreground hover:bg-muted hover:text-foreground"
                   )}
                 >
-                  <span>{item.icon}</span>
+                  <span aria-hidden="true">{item.icon}</span>
                   <span>{item.label}</span>
                 </Link>
               );
@@ -127,6 +129,8 @@ export function TabNavigation() {
         <div 
           className="fixed inset-0 bg-black/50 z-30 lg:hidden"
           onClick={() => setSidebarOpen(false)}
+          role="presentation"
+          aria-hidden="true"
         />
       )}
 
