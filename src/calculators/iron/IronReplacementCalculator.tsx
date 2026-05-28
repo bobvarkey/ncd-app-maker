@@ -1,4 +1,4 @@
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -232,9 +232,29 @@ const dxColors: Record<string, { bg: string; border: string; text: string; accen
 export default function IronReplacementCalculator() {
   const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState<TabKey>("calculator");
-  const [inputs, setInputs] = useState<PatientInputs>(EMPTY_INPUTS);
-  const [flags, setFlags] = useState<ClinicalFlags>(DEFAULT_FLAGS);
+  
+  // Initialize from localStorage if available
+  const [inputs, setInputs] = useState<PatientInputs>(() => {
+    try {
+      const saved = localStorage.getItem("ncd_inputs_iron");
+      return saved ? JSON.parse(saved) : EMPTY_INPUTS;
+    } catch { return EMPTY_INPUTS; }
+  });
+  const [flags, setFlags] = useState<ClinicalFlags>(() => {
+    try {
+      const saved = localStorage.getItem("ncd_flags_iron");
+      return saved ? JSON.parse(saved) : DEFAULT_FLAGS;
+    } catch { return DEFAULT_FLAGS; }
+  });
   const [calcResult, setCalcResult] = useState<{ tsat: number; dx: DiagnosisResult; rec: RecommendationResult; notes: string[] } | null>(null);
+
+  // Auto-save to localStorage on changes
+  useEffect(() => {
+    localStorage.setItem("ncd_inputs_iron", JSON.stringify(inputs));
+  }, [inputs]);
+  useEffect(() => {
+    localStorage.setItem("ncd_flags_iron", JSON.stringify(flags));
+  }, [flags]);
 
   // Derived TSAT preview
   const previewTSAT = useMemo(() => getTSAT(inputs), [inputs]);
@@ -294,6 +314,8 @@ export default function IronReplacementCalculator() {
     setInputs(EMPTY_INPUTS);
     setFlags(DEFAULT_FLAGS);
     setCalcResult(null);
+    localStorage.removeItem("ncd_inputs_iron");
+    localStorage.removeItem("ncd_flags_iron");
   }
 
   const colors = calcResult ? dxColors[calcResult.dx.label] ?? dxColors.unknown : dxColors.unknown;

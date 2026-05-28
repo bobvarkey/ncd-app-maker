@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -50,12 +50,26 @@ interface GfrCalculatorProps {
 }
 
 export default function GfrCalculator({ onResultChange }: GfrCalculatorProps) {
-  const [creatinine, setCreatinine] = useState("");
-  const [age, setAge] = useState("");
-  const [sex, setSex] = useState<Sex>(null);
-  const [unit, setUnit] = useState<CreatinineUnit>("mgdl");
+  const [creatinine, setCreatinine] = useState(() => {
+    try { return localStorage.getItem("ncd_gfr_creatinine") || ""; } catch { return ""; }
+  });
+  const [age, setAge] = useState(() => {
+    try { return localStorage.getItem("ncd_gfr_age") || ""; } catch { return ""; }
+  });
+  const [sex, setSex] = useState<Sex>(() => {
+    try { return (localStorage.getItem("ncd_gfr_sex") as Sex) || null; } catch { return null; }
+  });
+  const [unit, setUnit] = useState<CreatinineUnit>(() => {
+    try { return (localStorage.getItem("ncd_gfr_unit") as CreatinineUnit) || "mgdl"; } catch { return "mgdl"; }
+  });
   const [result, setResult] = useState<number | null>(null);
   const [errors, setErrors] = useState<Record<string, string>>({});
+
+  // Auto-save
+  useEffect(() => { localStorage.setItem("ncd_gfr_creatinine", creatinine); }, [creatinine]);
+  useEffect(() => { localStorage.setItem("ncd_gfr_age", age); }, [age]);
+  useEffect(() => { sex && localStorage.setItem("ncd_gfr_sex", sex); }, [sex]);
+  useEffect(() => { localStorage.setItem("ncd_gfr_unit", unit); }, [unit]);
 
   const toggleUnit = () => {
     const crVal = parseFloat(creatinine);
