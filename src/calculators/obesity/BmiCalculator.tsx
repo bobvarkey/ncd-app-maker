@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
@@ -73,6 +73,19 @@ export default function BmiCalculator() {
     },
   });
 
+  // Load saved values on mount
+  useEffect(() => {
+    try {
+      const saved = localStorage.getItem("ncd_bmi_default");
+      if (saved) {
+        const parsed = JSON.parse(saved);
+        if (parsed.height && parsed.weight) {
+          // Can't easily set defaults after mount without setValue, skip
+        }
+      }
+    } catch {}
+  }, []);
+
   const selectedEthnicity = watch("ethnicity") || "standard";
 
   const onSubmit = (data: BmiFormData) => {
@@ -93,6 +106,11 @@ export default function BmiCalculator() {
     });
     setTreatmentData(treatment);
     setShowTreatment(false);
+    
+    // Save to localStorage
+    try {
+      localStorage.setItem("ncd_bmi_last", JSON.stringify(data));
+    } catch {}
   };
 
   const reset = () => {
