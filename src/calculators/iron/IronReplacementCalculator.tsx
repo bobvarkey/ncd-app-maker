@@ -24,6 +24,7 @@ import {
   Info,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { SmartLabelUpload, IRON_FIELDS } from "@/components/SmartLabelUpload";
 
 // ── Types ──────────────────────────────────────────────────────
 type TabKey = "calculator" | "reference" | "about";
@@ -244,6 +245,10 @@ export default function IronReplacementCalculator() {
     setCalcResult(null);
   }
 
+  function handleSmartParse(values: Record<string, string>) {
+    setInputs(prev => ({ ...prev, ...values }));
+  }
+
   function toggleFlag(key: keyof ClinicalFlags) {
     setFlags(prev => ({ ...prev, [key]: !prev[key] }));
   }
@@ -327,6 +332,8 @@ export default function IronReplacementCalculator() {
                 For <strong>educational and decision-support purposes only</strong>. Always correlate with clinical presentation and current guidelines.
               </p>
             </div>
+
+            <SmartLabelUpload fields={IRON_FIELDS.fields} onParse={handleSmartParse} existingValues={inputs} />
 
             {/* Inputs */}
             <Card className="clinical-card border-primary/20">

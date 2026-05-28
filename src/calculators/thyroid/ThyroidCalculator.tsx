@@ -24,6 +24,7 @@ import {
   Shield,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { SmartLabelUpload, THYROID_FIELDS } from "@/components/SmartLabelUpload";
 
 type TabKey = "calculator" | "reference" | "about";
 
@@ -294,6 +295,12 @@ export default function ThyroidCalculator() {
     setCalculated(false);
   }
 
+  function handleSmartParse(values: Record<string, string>) {
+    Object.entries(values).forEach(([key, value]) => {
+      handleInput(key as keyof PatientInputs, value);
+    });
+  }
+
   function calculate() {
     setCalculated(true);
   }
@@ -377,6 +384,8 @@ export default function ThyroidCalculator() {
                 For <strong>educational and decision-support purposes only</strong>. Final prescribing depends on local reference ranges, etiology, pregnancy status, arrhythmia risk, and clinical review.
               </p>
             </div>
+
+            <SmartLabelUpload fields={THYROID_FIELDS.fields} onParse={handleSmartParse} existingValues={Object.fromEntries(Object.entries(inputs).map(([k,v]) => [k, String(v)]))} />
 
             {/* Inputs */}
             <Card className="clinical-card border-primary/20">

@@ -63,6 +63,7 @@
     "sonner": "^1.7.4",
     "tailwind-merge": "^2.6.0",
     "tailwindcss-animate": "^1.0.7",
+    "tesseract.js": "^7.0.0",
     "vaul": "^0.9.9",
     "zod": "^3.25.76"
   },
@@ -89,5 +90,5 @@
     "vite": "^5.4.19",
     "vitest": "^3.2.4"
   },
-  "description": "Comprehensive NCD management app \u2014 combining Big Four NCD tools + Diabetes Buddy"
+  "description": "Comprehensive NCD management app — combining Big Four NCD tools + Diabetes Buddy"
 }
