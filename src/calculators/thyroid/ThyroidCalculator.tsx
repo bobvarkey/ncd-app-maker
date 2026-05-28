@@ -24,6 +24,7 @@ import {
   Shield,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { AbbreviationHover, AbbrText } from "@/components/AbbreviationHover";
 import { SmartLabelUpload, THYROID_FIELDS } from "@/components/SmartLabelUpload";
 
 type TabKey = "calculator" | "reference" | "about";
@@ -413,14 +414,14 @@ export default function ThyroidCalculator() {
                     <Input id="ft3" type="number" step="0.01" value={inputs.ft3} onChange={(e) => handleInput("ft3", e.target.value)} />
                   </div>
                   <div className="space-y-2">
-                    <Label htmlFor="tpo">Anti-TPO positive?</Label>
+                    <Label htmlFor="tpo"><AbbreviationHover term="TPO">Anti-TPO</AbbreviationHover> positive?</Label>
                     <select id="tpo" value={inputs.tpo} onChange={(e) => handleInput("tpo", e.target.value)} className="flex h-10 w-full rounded-lg border border-input bg-background px-3 py-2 text-sm ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring">
                       <option value="no">No</option>
                       <option value="yes">Yes</option>
                     </select>
                   </div>
                   <div className="space-y-2">
-                    <Label htmlFor="trab">TRAb / TSI positive?</Label>
+                    <Label htmlFor="trab"><AbbreviationHover term="TRAb">TRAb</AbbreviationHover> / <AbbreviationHover term="TSI">TSI</AbbreviationHover> positive?</Label>
                     <select id="trab" value={inputs.trab} onChange={(e) => handleInput("trab", e.target.value)} className="flex h-10 w-full rounded-lg border border-input bg-background px-3 py-2 text-sm ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring">
                       <option value="no">No</option>
                       <option value="yes">Yes</option>
