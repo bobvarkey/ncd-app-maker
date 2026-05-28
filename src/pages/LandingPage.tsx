@@ -172,7 +172,7 @@ export default function LandingPage() {
               { name: "Obesity", icon: Scale, color: "text-violet-400", desc: "BMI calculator, weight loss algorithms, GLP-1" },
               { name: "COPD/Asthma", icon: Wind, color: "text-cyan-400", desc: "GINA/GOLD guidelines, step-up therapy" },
               { name: "Renal", icon: Droplets, color: "text-amber-400", desc: "eGFR-based dosing, CKD management" },
-              { name: "Blood Diseases", icon: Droplet, color: "text-rose-400", desc: "Anemia & thrombocytopenia evaluation" },
+              { name: "Blood Disorders", icon: Droplet, color: "text-rose-400", desc: "Anemia evaluation, thrombocytopenia, & iron parameters" },
             ].map((area) => (
               <div
                 key={area.name}

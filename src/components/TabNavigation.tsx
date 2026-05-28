@@ -12,9 +12,8 @@ const navItems = [
   { path: "/obesity/bmi-calculator", label: "Obesity", icon: "⚖️", color: "violet-500" },
   { path: "/respiratory", label: "COPD/Asthma", icon: "🫁", color: "cyan-500" },
   { path: "/renal-dosing", label: "Renal", icon: "🫘", color: "amber-500" },
-  { path: "/anemia", label: "Anemia / Thrombocytopenia", icon: "🩸", color: "sky-500" },
+  { path: "/anemia", label: "Blood Disorders", icon: "🩸", color: "sky-500" },
   { path: "/thyroid", label: "Thyroid", icon: "🔬", color: "emerald-500" },
-  { path: "/iron-calculator", label: "Iron Parameters", icon: "💉", color: "sky-600" },
 ];
 
 const modeLinks = [
