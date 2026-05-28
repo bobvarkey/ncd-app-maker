@@ -501,8 +501,8 @@ export default function ThyroidCalculator() {
                         inputs: { TSH: inputs.tsh, FT4: inputs.ft4, FT3: inputs.ft3, "TPO Ab": inputs.tpo, "TRAb": inputs.trab, Age: inputs.age, Weight: inputs.weight },
                         results: {
                           Diagnosis: result.dx.diagnosis,
-                          "Levothyroxine Dose": result.med.levoText,
-                          "Methimazole Dose": result.med.methimazoleText,
+                          "Levothyroxine Dose": result.meds.levoText,
+                          "Methimazole Dose": result.meds.methimazoleText,
                         },
                         recommendations: result.nextSteps,
                         citation: "ATA Guidelines 2023",
