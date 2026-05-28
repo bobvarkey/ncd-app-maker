@@ -707,30 +707,14 @@ function PrescriptionEngine() {
     }
 
     // BLOOD DISORDERS SECTION
-    if (hasBloodDisorder || ferritinNum || tsatNum) {
+    if (hasBloodDisorder) {
       prescriptions.push("═══════════════════════════════════════════════════");
       prescriptions.push("║  BLOOD DISORDERS / ANEMIA                   ║");
       prescriptions.push("═══════════════════════════════════════════");
-      
-      if (hasBloodDisorder) {
-        if (hbNum < 10) {
-          prescriptions.push("Hemoglobin: ${hbNum.toFixed(1)} g/dL (SEVERE - IV iron indicated)");
-          prescriptions.push("1. Iron studies + ferritin");
-          prescriptions.push("2. IV Iron: 500-1000 mg (Ganzoni formula)");
-          if (hasCKD) prescriptions.push("3. Consider ESA if on dialysis");
-          warnings.push("⚠️ Severe anemia - consider transfusion if symptomatic");
-        } else if (hbNum < 12) {
-          prescriptions.push("Hemoglobin: ${hbNum.toFixed(1)} g/dL (mild-mod)");
-          prescriptions.push("1. Oral iron 325 mg TID or ferrous sulfate");
-          if (hasCHF) prescriptions.push("2. IV iron if CHF (ESC guideline)");
-        } else {
-          prescriptions.push("Hemoglobin: ${hbNum.toFixed(1)} g/dL (normal)");
-          if (ferritinNum < 30) prescriptions.push("Ferritin low - repletion recommended");
-        }
-        
-        prescriptions.push("Monitoring: CBC, ferritin, TSAT q3months");
-      }
-      
+      prescriptions.push("1. Order CBC, ferritin, TSAT, B12/folate");
+      prescriptions.push("2. Treat per cause (iron repletion, ESA if CKD on dialysis)");
+      if (hasCHF) prescriptions.push("3. IV iron if CHF with iron deficiency (ESC guideline)");
+      prescriptions.push("Monitoring: CBC, ferritin, TSAT q3months");
       prescriptions.push("");
     }
 
