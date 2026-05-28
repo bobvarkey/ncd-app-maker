@@ -167,7 +167,7 @@ export default function SmartLabelUpload({ fields, onParse, existingValues = {} 
   const reset = useCallback(() => {
     setFreeText("");
     setOcrText("");
-    setOcrTextRef.current = "";
+    ocrTextRef.current = "";
     setExtractedValues([]);
     setShowParser(false);
     setOcrState("idle");
