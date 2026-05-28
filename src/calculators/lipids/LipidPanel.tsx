@@ -27,6 +27,7 @@ import {
   Donut, Soup, Eye, Repeat, AlertOctagon, Syringe,
   ShieldQuestion,
 } from "lucide-react";
+import { SmartLabelUpload, LIPID_FIELDS } from "@/components/SmartLabelUpload";
 import {
   LabInput,
   UNITS_CHOL, UNITS_APOB, UNITS_LPA, UNITS_HBA1C, UNITS_HSCRP,

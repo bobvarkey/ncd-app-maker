@@ -6,6 +6,7 @@ import {
 } from "@/components/ui/table";
 import { ANTIBIOTICS_DATA } from "./antibiotics-data";
 import { cn } from "@/lib/utils";
+import { SmartLabelUpload, RENAL_FIELDS } from "@/components/SmartLabelUpload";
 
 export type { DoseEntry };
 
@@ -276,6 +277,8 @@ const RenalDoseAdjustment = () => {
     const matchClass = classFilter === "all" || d.drugClass === classFilter;
     return matchSearch && matchClass;
   });
+
+  function handleSmartParse(values: Record<string, string>) { if (values.egfr) setSearch(`eGFR ${values.egfr}`); }
 
   return (
     <div className="space-y-5 animate-slide-in">
