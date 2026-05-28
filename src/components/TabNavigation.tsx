@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { Home, Heart, Syringe, Dna, Activity, Wind, Menu, X } from "lucide-react";
+import { Home, Heart, Syringe, Dna, Activity, Wind, Menu, X, Search } from "lucide-react";
 import { useState } from "react";
 import { cn } from "@/lib/utils";
 
@@ -58,14 +58,24 @@ export function TabNavigation() {
           <X className="h-4 w-4" />
         </button>
 
-        {/* Logo */}
+        {/* Logo + Search trigger */}
         <div className="p-4 border-b border-border">
-          <Link to="/home" className="flex items-center gap-2">
-            <div className="w-8 h-8 bg-gradient-to-br from-blue-500/20 to-purple-500/20 rounded-lg flex items-center justify-center border border-white/10">
-              <Activity className="h-4 w-4 text-primary" />
-            </div>
-            <span className="font-serif font-semibold">NCD Rx</span>
-          </Link>
+          <div className="flex items-center justify-between">
+            <Link to="/home" className="flex items-center gap-2">
+              <div className="w-8 h-8 bg-gradient-to-br from-blue-500/20 to-purple-500/20 rounded-lg flex items-center justify-center border border-white/10">
+                <Activity className="h-4 w-4 text-primary" />
+              </div>
+              <span className="font-serif font-semibold">NCD Rx</span>
+            </Link>
+            <button
+              onClick={() => window.dispatchEvent(new KeyboardEvent("keydown", { key: "k", metaKey: true }))}
+              className="flex items-center gap-1.5 px-2 py-1 text-xs text-muted-foreground bg-muted/50 rounded-lg hover:bg-muted transition-colors"
+              aria-label="Quick search (Cmd+K)"
+            >
+              <Search className="h-3 w-3" />
+              <kbd className="hidden sm:inline text-[10px]">⌘K</kbd>
+            </button>
+          </div>
         </div>
 
         {/* Main Navigation */}

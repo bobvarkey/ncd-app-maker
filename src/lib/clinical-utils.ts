@@ -1,0 +1,89 @@
+/** Print-friendly clinical note generation */
+import { toast } from "sonner";
+
+/** Copy result text to clipboard */
+export async function copyToClipboard(text: string, label = "Copied!") {
+  try {
+    await navigator.clipboard.writeText(text);
+    toast.success(label);
+    return true;
+  } catch {
+    toast.error("Failed to copy");
+    return false;
+  }
+}
+
+/** Format calculator result as a clinical note for printing/copying */
+export function formatClinicalNote(params: {
+  title: string;
+  date?: string;
+  patientId?: string;
+  inputs: Record<string, string>;
+  results: Record<string, string | number>;
+  recommendations?: string[];
+  citation?: string;
+}) {
+  const { title, date = new Date().toLocaleDateString(), patientId, inputs, results, recommendations, citation } = params;
+  
+  let note = `# ${title}\n`;
+  note += `Date: ${date}\n`;
+  if (patientId) note += `Patient ID: ${patientId}\n`;
+  note += `\n## Inputs\n`;
+  for (const [key, value] of Object.entries(inputs)) {
+    if (value) note += `- ${key}: ${value}\n`;
+  }
+  note += `\n## Results\n`;
+  for (const [key, value] of Object.entries(results)) {
+    if (value !== undefined) note += `- ${key}: ${value}\n`;
+  }
+  if (recommendations?.length) {
+    note += `\n## Recommendations\n`;
+    recommendations.forEach(r => note += `- ${r}\n`);
+  }
+  if (citation) {
+    note += `\n---\nReference: ${citation}\n`;
+  }
+  
+  return note;
+}
+
+/** Trigger print dialog with print-specific styling */
+export function printResults(elementId: string) {
+  const element = document.getElementById(elementId);
+  if (!element) {
+    toast.error("Nothing to print");
+    return;
+  }
+  
+  // Create temporary print container
+  const printContainer = document.createElement("div");
+  printContainer.id = "print-container";
+  printContainer.innerHTML = element.innerHTML;
+  printContainer.style.cssText = "position: absolute; left: -9999px; font-family: system-ui, sans-serif; padding: 20px; background: white; color: black;";
+  
+  document.body.appendChild(printContainer);
+  window.print();
+  document.body.removeChild(printContainer);
+}
+
+/** Unit conversion utilities */
+export const unitConversions = {
+  glucose: {
+    mgDlToMmoll: (mgDl: number) => mgDl * 0.0555,
+    mmolToMgDl: (mmol: number) => mmol / 0.0555,
+  },
+  weight: {
+    kgToLbs: (kg: number) => kg * 2.20462,
+    lbsToKg: (lbs: number) => lbs / 2.20462,
+  },
+  creatinine: {
+    mgDlToUmol: (mgDl: number) => mgDl * 88.4,
+    umolToMgDl: (umol: number) => umol / 88.4,
+  },
+};
+
+// Preferred unit system stored in localStorage
+export function usePreferredUnits() {
+  const [units, setUnits] = useLocalStorage<"us" | "metric" | "si">("ncd_preferred_units", "metric");
+  return { units, setUnits };
+}
