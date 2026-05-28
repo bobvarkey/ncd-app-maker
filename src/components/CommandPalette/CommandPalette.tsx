@@ -2,6 +2,7 @@
 import { useEffect, useState, useMemo, useCallback } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Search, Calculator, FileText, X, ArrowRight } from "lucide-react";
+import { useLocalStorage } from "@/hooks/useLocalStorage";
 
 interface SearchItem {
   id: string;
