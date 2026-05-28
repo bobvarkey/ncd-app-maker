@@ -22,8 +22,10 @@ import {
   ChevronUp,
   BookOpen,
   Info,
+  Copy,
+  Printer,
 } from "lucide-react";
-import { cn } from "@/lib/utils";
+import { copyToClipboard, formatClinicalNote } from "@/lib/clinical-utils";
 import { SmartLabelUpload, IRON_FIELDS } from "@/components/SmartLabelUpload";
 
 // ── Types ──────────────────────────────────────────────────────
@@ -500,6 +502,37 @@ export default function IronReplacementCalculator() {
             {/* Results */}
             {calcResult && (
               <div id="results" className="space-y-5">
+                {/* Copy/Print toolbar */}
+                <div className="flex items-center justify-end gap-2">
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={() => {
+                      const note = formatClinicalNote({
+                        title: "Iron Replacement Calculator",
+                        inputs: { ferritin: inputs.ferritin, hemoglobin: inputs.hemoglobin, weight: inputs.weight, tsat: inputs.tsat || inputs.serumIron + " / " + inputs.tibc },
+                        results: {
+                          TSAT: calcResult.tsat.toFixed(1) + "%",
+                          Diagnosis: calcResult.dx.diagnosis,
+                          "Route": calcResult.rec.route,
+                          "Deficit (mg)": Math.round(calcResult.rec.deficit).toString(),
+                          "Target Hb": calcResult.rec.targetHb + " g/dL",
+                        },
+                        recommendations: calcResult.notes,
+                        citation: "ACG Clinical Guideline 2023; Ferritin/TSAT Thresholds per KDIGO",
+                      });
+                      copyToClipboard(note, "Results copied to clipboard!");
+                    }}
+                  >
+                    <Copy className="h-4 w-4 mr-2" />
+                    Copy
+                  </Button>
+                  <Button variant="outline" size="sm" onClick={() => window.print()}>
+                    <Printer className="h-4 w-4 mr-2" />
+                    Print
+                  </Button>
+                </div>
+
                 {/* Diagnosis Card */}
                 <div className={cn("rounded-xl border-2 p-5", colors.bg, colors.border)}>
                   <div className="flex items-center justify-between mb-1">

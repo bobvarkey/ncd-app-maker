@@ -22,7 +22,10 @@ import {
   Syringe,
   Baby,
   Shield,
+  Copy,
+  Printer,
 } from "lucide-react";
+import { copyToClipboard, formatClinicalNote } from "@/lib/clinical-utils";
 import { cn } from "@/lib/utils";
 import { AbbreviationHover, AbbrText } from "@/components/AbbreviationHover";
 import { SmartLabelUpload, THYROID_FIELDS } from "@/components/SmartLabelUpload";
@@ -487,6 +490,35 @@ export default function ThyroidCalculator() {
             {/* Results */}
             {result && (
               <div className="space-y-5">
+                {/* Copy/Print toolbar */}
+                <div className="flex items-center justify-end gap-2">
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={() => {
+                      const note = formatClinicalNote({
+                        title: "Thyroid Calculator",
+                        inputs: { TSH: inputs.tsh, FT4: inputs.ft4, FT3: inputs.ft3, "TPO Ab": inputs.tpo, "TRAb": inputs.trab, Age: inputs.age, Weight: inputs.weight },
+                        results: {
+                          Diagnosis: result.dx.diagnosis,
+                          "Levothyroxine Dose": result.med.levoText,
+                          "Methimazole Dose": result.med.methimazoleText,
+                        },
+                        recommendations: result.nextSteps,
+                        citation: "ATA Guidelines 2023",
+                      });
+                      copyToClipboard(note, "Results copied to clipboard!");
+                    }}
+                  >
+                    <Copy className="h-4 w-4 mr-2" />
+                    Copy
+                  </Button>
+                  <Button variant="outline" size="sm" onClick={() => window.print()}>
+                    <Printer className="h-4 w-4 mr-2" />
+                    Print
+                  </Button>
+                </div>
+
                 {/* Diagnosis */}
                 <div className={cn("rounded-xl border-2 p-5", colors.bg, colors.border)}>
                   <div className="flex items-center justify-between mb-1">
