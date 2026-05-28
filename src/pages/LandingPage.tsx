@@ -51,7 +51,7 @@ export default function LandingPage() {
           {/* CTA Buttons */}
           <div className="flex flex-col sm:flex-row items-center justify-center gap-3 mb-10">
             <Button
-              onClick={() => navigate(area.path || '/home')}
+              onClick={() => navigate('/home')}
               className="w-full sm:w-auto bg-gradient-to-r from-pink-500 to-purple-600 hover:from-pink-600 hover:to-purple-700 text-white font-semibold px-8 py-6 text-base rounded-xl shadow-lg shadow-pink-500/25"
             >
               Launch App
@@ -136,7 +136,7 @@ export default function LandingPage() {
           {/* Complex */}
           <Card
             className="bg-white/5 border-white/10 hover:border-purple-500/40 cursor-pointer transition-all group hover:shadow-lg hover:shadow-purple-500/10"
-            onClick={() => navigate(area.path || '/home')}
+            onClick={() => navigate('/home')}
           >
             <CardContent className="p-6 text-center">
               <div className="w-12 h-12 rounded-xl bg-purple-500/10 flex items-center justify-center mx-auto mb-4 group-hover:bg-purple-500/20 transition-colors">
@@ -171,8 +171,8 @@ export default function LandingPage() {
               { name: "Lipids", path: "/lipids", icon: Dna, color: "text-blue-400", desc: "ASCVD risk, LDL targets, statin intensity" },
               { name: "Obesity", path: "/obesity/bmi-calculator", icon: Scale, color: "text-violet-400", desc: "BMI calculator, weight loss algorithms, GLP-1" },
               { name: "COPD/Asthma", path: "/respiratory", icon: Wind, color: "text-cyan-400", desc: "GINA/GOLD guidelines, step-up therapy" },
-              { name: "Renal", path: "/renal-dosing", icon: Droplets, color: "text-amber-400", desc: "eGFR-based dosing, CKD management", path: "/renal-dosing" },
-              { name: "Blood Disorders", path: "/anemia", icon: Droplet, color: "text-rose-400", desc: "Anemia evaluation, thrombocytopenia, & iron parameters", path: "/anemia" },
+              { name: "Renal", path: "/renal-dosing", icon: Droplets, color: "text-amber-400", desc: "eGFR-based dosing, CKD management" },
+              { name: "Blood Disorders", path: "/anemia", icon: Droplet, color: "text-rose-400", desc: "Anemia evaluation, thrombocytopenia, & iron parameters" },
               { name: "Thyroid", icon: Microscope, color: "text-emerald-400", desc: "TSH-guided therapy, thyroid nodules", path: "/thyroid" },
             ].map((area) => (
               <div
