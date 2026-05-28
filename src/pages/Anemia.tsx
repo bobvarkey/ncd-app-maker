@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import type { CBCValues, Sex, EvaluationResult } from './anemia/types';
 import { evaluate } from './anemia/utils/anemia';
 import CBCForm from './anemia/components/CBCForm';
@@ -8,19 +8,28 @@ import CausesPanel from './anemia/components/CausesPanel';
 import ReferenceRanges from './anemia/components/ReferenceRanges';
 import IronTherapy from './anemia/components/IronTherapy';
 import ThrombocytopeniaEvaluator from './anemia/components/ThrombocytopeniaEvaluator';
+import IronReplacementCalculator from '@/calculators/iron/IronReplacementCalculator';
 import TestSuggestionAlgorithm from './anemia/components/TestSuggestionAlgorithm';
-import { Microscope, AlertTriangle, Droplet } from 'lucide-react';
+import { Microscope, AlertTriangle, Droplet, Syringe } from 'lucide-react';
 import { SmartLabelUpload, CBC_FIELDS } from "@/components/SmartLabelUpload";
 
 const EMPTY_CBC: CBCValues = { hgb: '', rbc: '', mcv: '', mch: '', mchc: '', rdw: '', hct: '' };
 
-type Tab = 'anemia' | 'thrombocytopenia';
+type Tab = 'anemia' | 'thrombocytopenia' | 'iron';
 
 export default function Anemia() {
   const [activeTab, setActiveTab] = useState<Tab>('anemia');
-  const [cbc, setCbc] = useState<CBCValues>(EMPTY_CBC);
-  const [sex, setSex] = useState<Sex>('male');
+  const [cbc, setCbc] = useState<CBCValues>(() => {
+    try { const s = localStorage.getItem('ncd_anemia_cbc'); return s ? JSON.parse(s) : EMPTY_CBC; } catch { return EMPTY_CBC; }
+  });
+  const [sex, setSex] = useState<Sex>(() => {
+    try { return (localStorage.getItem('ncd_anemia_sex') as Sex) || 'male'; } catch { return 'male'; }
+  });
   const [result, setResult] = useState<EvaluationResult | null>(null);
+
+  // Auto-save
+  useEffect(() => { localStorage.setItem('ncd_anemia_cbc', JSON.stringify(cbc)); }, [cbc]);
+  useEffect(() => { sex && localStorage.setItem('ncd_anemia_sex', sex); }, [sex]);
 
   function handleChange(field: keyof CBCValues, value: string) {
     setCbc(prev => ({ ...prev, [field]: value }));
@@ -86,6 +95,17 @@ export default function Anemia() {
             >
               <Droplet className="w-4 h-4" />
               Thrombocytopenia
+            </button>
+            <button
+              onClick={() => setActiveTab('iron')}
+              className={`flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
+                activeTab === 'iron'
+                  ? 'bg-orange-600 text-white'
+                  : 'bg-gray-800 text-gray-300 hover:bg-gray-700 border border-gray-700'
+              }`}
+            >
+              <Syringe className="w-4 h-4" />
+              Iron Parameters
             </button>
           </div>
         </div>
@@ -158,6 +178,8 @@ export default function Anemia() {
             {/* Next Test Algorithm */}
             <TestSuggestionAlgorithm />
           </>
+        ) : activeTab === 'iron' ? (
+          <IronReplacementCalculator />
         ) : (
           <ThrombocytopeniaEvaluator />
         )}
