@@ -1,5 +1,6 @@
 /** Print-friendly clinical note generation */
 import { toast } from "sonner";
+import { useLocalStorage } from "@/hooks/useLocalStorage";
 
 /** Copy result text to clipboard */
 export async function copyToClipboard(text: string, label = "Copied!") {
