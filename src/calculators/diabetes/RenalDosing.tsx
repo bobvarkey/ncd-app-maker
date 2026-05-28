@@ -284,7 +284,7 @@ const RenalDoseAdjustment = () => {
     return matchSearch && matchClass;
   });
 
-  function handleSmartParse(values: Record<string, string>) { if (values.egfr) setSearch(`eGFR ${values.egfr}`); }
+  
 
   return (
     <div className="space-y-5 animate-slide-in">

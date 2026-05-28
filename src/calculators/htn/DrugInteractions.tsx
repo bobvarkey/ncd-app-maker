@@ -4,6 +4,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { ShieldAlert, RotateCcw, AlertTriangle, XCircle, Info } from "lucide-react";
+import { SmartLabelUpload, HTN_FIELDS } from "@/components/SmartLabelUpload";
 
 export const drugList = [
   { id: "losartan", name: "Losartan", group: "ARB" },

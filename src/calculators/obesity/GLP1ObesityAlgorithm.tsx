@@ -249,7 +249,7 @@ export default function GLP1ObesityAlgorithm() {
       </div>
 
       <main className="mx-auto max-w-4xl px-4 py-5 space-y-6">
-        <SmartLabelUpload fields={OBESITY_FIELDS.fields} onParse={handleSmartParse} existingValues={patient} />
+        <SmartLabelUpload fields={OBESITY_FIELDS.fields} onParse={handleSmartParse} existingValues={patient as unknown as Record<string, string>} />
         {activeTab === "algorithm" && (
         <>
         {/* Patient Profile Input */}

@@ -100,7 +100,7 @@ export default function Anemia() {
           </p>
         </div>
 
-        <SmartLabelUpload fields={CBC_FIELDS.fields} onParse={handleSmartParse} existingValues={cbc} />
+        <SmartLabelUpload fields={CBC_FIELDS.fields} onParse={handleSmartParse} existingValues={cbc as unknown as Record<string, string>} />
 
         {activeTab === 'anemia' ? (
           <>

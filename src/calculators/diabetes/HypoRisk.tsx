@@ -4,6 +4,7 @@ import { AlertTriangle, Shield, CheckCircle, Info, ChevronDown, ChevronUp } from
 import { Switch } from "@/components/ui/switch";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
+import { SmartLabelUpload, DIABETES_FIELDS } from "@/components/SmartLabelUpload";
 
 interface RiskFactor {
   id: string;

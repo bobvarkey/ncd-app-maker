@@ -333,7 +333,7 @@ export default function IronReplacementCalculator() {
               </p>
             </div>
 
-            <SmartLabelUpload fields={IRON_FIELDS.fields} onParse={handleSmartParse} existingValues={inputs} />
+            <SmartLabelUpload fields={IRON_FIELDS.fields} onParse={handleSmartParse} existingValues={inputs as unknown as Record<string, string>} />
 
             {/* Inputs */}
             <Card className="clinical-card border-primary/20">
