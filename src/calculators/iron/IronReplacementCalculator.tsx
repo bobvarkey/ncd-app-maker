@@ -238,7 +238,11 @@ export default function IronReplacementCalculator() {
 
   const hasRequired = inputs.ferritin && inputs.hemoglobin && inputs.weight;
   const tsatReady = previewTSAT !== null;
-  const canCalculate = hasRequired && tsatReady;
+  const canCalculate = tsatReady;
+
+  // Determine what can be shown
+  const hasHb = !isNaN(parseFloat(inputs.hemoglobin));
+  const hasWeight = !isNaN(parseFloat(inputs.weight)) && parseFloat(inputs.weight) > 0;
 
   function setInput(key: keyof PatientInputs, value: string) {
     setInputs(prev => ({ ...prev, [key]: value }));
@@ -257,15 +261,30 @@ export default function IronReplacementCalculator() {
     const ferritin = parseFloat(inputs.ferritin);
     const hb = parseFloat(inputs.hemoglobin);
     const w = parseFloat(inputs.weight);
-    const tsat = previewTSAT!;
+    const tsat = previewTSAT;
 
-    if (isNaN(ferritin) || isNaN(hb) || isNaN(w) || w <= 0 || tsat === null) return;
+    if (isNaN(ferritin) || tsat === null) return;
 
     const dx = diagnose(ferritin, tsat, flags.inflammation);
-    const rec = recommend(dx, hb, w, flags.pregnancy, flags.ckd, flags.esa, flags.oralIntolerance, flags.rapidCorrection, flags.ongoingBloodLoss);
-    const notes = buildNotes(dx, rec, flags.pregnancy, flags.ckd, flags.esa, flags.oralIntolerance, flags.rapidCorrection, flags.ongoingBloodLoss);
 
-    setCalcResult({ tsat, dx, rec, notes });
+    // If we have Hb + Weight, do full recommendation
+    if (!isNaN(hb) && !isNaN(w) && w > 0) {
+      const rec = recommend(dx, hb, w, flags.pregnancy, flags.ckd, flags.esa, flags.oralIntolerance, flags.rapidCorrection, flags.ongoingBloodLoss);
+      const notes = buildNotes(dx, rec, flags.pregnancy, flags.ckd, flags.esa, flags.oralIntolerance, flags.rapidCorrection, flags.ongoingBloodLoss);
+      setCalcResult({ tsat, dx, rec, notes });
+    } else {
+      // Partial result: diagnosis only, partial recommendation
+      const rec: RecommendationResult = {
+        route: 'Oral iron',
+        isIV: false,
+        deficit: 0,
+        doseText: 'Enter Hemoglobin and Weight to estimate dose.',
+        targetHb: 14
+      };
+      const notes = buildNotes(dx, rec, flags.pregnancy, flags.ckd, flags.esa, flags.oralIntolerance, flags.rapidCorrection, flags.ongoingBloodLoss);
+      notes.unshift('Partial entry: Hemoglobin and/or Weight missing. Dose estimate requires both values.');
+      setCalcResult({ tsat, dx, rec, notes });
+    }
   }
 
   function handleReset() {
@@ -468,7 +487,12 @@ export default function IronReplacementCalculator() {
               </Button>
               {!canCalculate && (
                 <span className="text-xs text-muted-foreground self-center">
-                  {!hasRequired ? "Required: Ferritin, Hemoglobin, Weight" : "Enter TSAT or Serum Iron + TIBC"}
+                  Enter Ferritin and TSAT (or Serum Iron + TIBC) to start
+                </span>
+              )}
+              {canCalculate && (!hasHb || !hasWeight) && (
+                <span className="text-xs text-amber-400 self-center">
+                  ⚡ Diagnosis available now. Add Hemoglobin + Weight for full dose estimate.
                 </span>
               )}
             </div>

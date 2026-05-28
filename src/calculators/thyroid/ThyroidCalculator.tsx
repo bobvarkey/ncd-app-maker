@@ -277,7 +277,8 @@ export default function ThyroidCalculator() {
     const weight = parseFloat(inputs.weight);
     const age = parseInt(inputs.age, 10);
 
-    if (isNaN(tsh) || isNaN(ft4) || isNaN(weight) || isNaN(age)) return null;
+    // Minimum: TSH is enough for partial analysis
+    if (isNaN(tsh)) return null;
 
     const tpo = inputs.tpo === "yes";
     const trab = inputs.trab === "yes";
@@ -285,7 +286,12 @@ export default function ThyroidCalculator() {
     const cardiac = inputs.cardiac === "yes";
 
     const dx = analyze(tsh, ft4, ft3, tpo, trab);
-    const meds = getMedications(dx, tsh, weight, age, cardiac, pregnant, tpo, inputs.severity);
+
+    // Partial: if weight/age missing, still diagnose but give limited meds
+    const hasMeds = !isNaN(weight) && weight > 0 && !isNaN(age);
+    const meds = hasMeds
+      ? getMedications(dx, tsh, weight, age, cardiac, pregnant, tpo, inputs.severity)
+      : { levoDose: 0, levoText: 'Enter weight and age to estimate levothyroxine dose.', methimazoleDose: 0, methimazoleText: 'Enter weight and age to estimate methimazole dose.' };
     const nextSteps = getNextSteps(dx);
 
     return { dx, meds, nextSteps };
