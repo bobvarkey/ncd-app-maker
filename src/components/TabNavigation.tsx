@@ -14,7 +14,7 @@ const navItems = [
   { path: "/renal-dosing", label: "Renal", icon: "🫘", color: "amber-500" },
   { path: "/anemia", label: "Anemia / Thrombocytopenia", icon: "🩸", color: "sky-500" },
   { path: "/thyroid", label: "Thyroid", icon: "🔬", color: "emerald-500" },
-  { path: "/iron-calculator", label: "Iron Replacement", icon: "💉", color: "sky-600" },
+  { path: "/iron-calculator", label: "Iron Parameters", icon: "💉", color: "sky-600" },
 ];
 
 const modeLinks = [

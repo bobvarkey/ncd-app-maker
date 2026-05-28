@@ -4,6 +4,7 @@ import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { GitBranch, ChevronRight, RotateCcw, Activity, Heart, Brain, Baby, AlertTriangle, Home } from "lucide-react";
+import { SmartLabelUpload, HTN_FIELDS } from "@/components/SmartLabelUpload";
 
 interface AlgorithmNode {
   id: string;
@@ -229,6 +230,10 @@ export default function AntihypertensiveTreatmentAlgorithm() {
     const option = parent?.options?.find((o) => o.nextId === id);
     return option?.label ?? "";
   }).filter(Boolean);
+
+  function handleSmartParse(values: Record<string, string>) {
+    // This algorithm is decision-tree based, no direct state to set
+  }
 
   return (
     <div className="min-h-screen bg-background">

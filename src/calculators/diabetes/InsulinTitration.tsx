@@ -130,8 +130,19 @@ const InsulinTitration = () => {
     return "text-destructive font-medium";
   };
 
+  function handleSmartParse(values: Record<string, string>) {
+    Object.entries(values).forEach(([key, value]) => {
+      if (key === 'hba1c') setCurrentDose(parseInt(value) || 0);
+    });
+  }
+
   return (
     <div className="space-y-5 animate-slide-in">
+      <SmartLabelUpload fields={DIABETES_FIELDS.fields} onParse={handleSmartParse} existingValues={{
+        age: patient?.age?.toString() || '',
+        weight: patient?.weightKg?.toString() || '',
+        egfr: patient?.eGFR?.toString() || '',
+      }} />
       <div>
         <h1 className="text-xl font-heading font-bold">Insulin Titration Calculator</h1>
         <p className="text-sm text-muted-foreground">ADA basal insulin dose adjustment based on fasting BG</p>

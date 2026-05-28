@@ -5,6 +5,7 @@ import { Label } from "@/components/ui/label";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Calculator, RotateCcw, ArrowLeftRight } from "lucide-react";
+import { SmartLabelUpload, HTN_FIELDS } from "@/components/SmartLabelUpload";
 
 type CreatinineUnit = "mgdl" | "umol";
 type Sex = "male" | "female" | null;
@@ -120,20 +121,34 @@ export default function GfrCalculator({ onResultChange }: GfrCalculatorProps) {
     onResultChange?.(null);
   };
 
+  function handleSmartParse(values: Record<string, string>) {
+    Object.entries(values).forEach(([key, value]) => {
+      if (key === 'egfr') {
+        // Will auto-calculate from creatinine
+      } else if (key === 'creatinine') {
+        setCreatinine(value);
+      } else if (key === 'age') {
+        setAge(value);
+      }
+    });
+  }
+
   const stage = result !== null ? getGfrStage(result) : null;
 
   return (
-    <Card className="border-2 border-primary/20 bg-gradient-to-br from-primary/5 to-muted/5">
-      <CardHeader className="pb-3">
-        <div className="flex items-center justify-between">
-          <div className="flex items-center space-x-2">
-            <Calculator className="h-5 w-5 text-primary" />
-            <CardTitle className="text-xl">GFR Calculator (CKD-EPI 2021)</CardTitle>
-          </div>
-          {result !== null && (
-            <Button variant="ghost" size="sm" onClick={reset} className="text-muted-foreground">
-              <RotateCcw className="h-4 w-4 mr-1" />
-              Reset
+    <>
+      <SmartLabelUpload fields={HTN_FIELDS.fields} onParse={handleSmartParse} existingValues={{ creatinine, age }} />
+      <Card className="border-2 border-primary/20 bg-gradient-to-br from-primary/5 to-muted/5">
+        <CardHeader className="pb-3">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center space-x-2">
+              <Calculator className="h-5 w-5 text-primary" />
+              <CardTitle className="text-xl">GFR Calculator (CKD-EPI 2021)</CardTitle>
+            </div>
+            {result !== null && (
+              <Button variant="ghost" size="sm" onClick={reset} className="text-muted-foreground">
+                <RotateCcw className="h-4 w-4 mr-1" />
+                Reset
             </Button>
           )}
         </div>

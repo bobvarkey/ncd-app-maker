@@ -258,9 +258,15 @@ export default function DrugInteractionChecker({ onSelectionChange }: DrugIntera
     onSelectionChange?.({ selectedDrugNames: names, interactions: results });
   }, [selected]);
 
+  function handleSmartParse(values: Record<string, string>) {
+    // Drug interaction checker - no direct input state for parsed values
+  }
+
   return (
-    <Card className="border-2 border-primary/20 bg-gradient-to-br from-muted/5 to-primary/5">
-      <CardHeader className="pb-3">
+    <>
+      <SmartLabelUpload fields={HTN_FIELDS.fields} onParse={handleSmartParse} existingValues={{}} />
+      <Card className="border-2 border-primary/20 bg-gradient-to-br from-muted/5 to-primary/5">
+        <CardHeader className="pb-3">
         <div className="flex items-center justify-between">
           <div className="flex items-center space-x-2">
             <ShieldAlert className="h-5 w-5 text-primary" />
@@ -345,5 +351,6 @@ export default function DrugInteractionChecker({ onSelectionChange }: DrugIntera
         )}
       </CardContent>
     </Card>
+    </>
   );
 }

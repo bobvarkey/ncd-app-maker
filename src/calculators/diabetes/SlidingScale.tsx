@@ -18,6 +18,7 @@ import { Switch } from "@/components/ui/switch";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Badge } from "@/components/ui/badge";
 import { AlertTriangle, Activity, Syringe, Info, ShieldAlert, CheckCircle2 } from "lucide-react";
+import { SmartLabelUpload, DIABETES_FIELDS } from "@/components/SmartLabelUpload";
 
 const sevColor: Record<string, string> = {
   critical: "bg-destructive/10 text-destructive border-destructive/30",
@@ -73,8 +74,15 @@ export default function SlidingScaleInsulin() {
   const update = <K extends keyof SSIInput>(k: K, v: SSIInput[K]) =>
     setInput((s) => ({ ...s, [k]: v }));
 
+  function handleSmartParse(values: Record<string, string>) {
+    Object.entries(values).forEach(([key, value]) => {
+      update(key as keyof SSIInput, value as any);
+    });
+  }
+
   return (
     <div className="space-y-6 max-w-5xl">
+      <SmartLabelUpload fields={DIABETES_FIELDS.fields} onParse={handleSmartParse} existingValues={input} />
       <div className="flex items-center gap-3">
         <Syringe className="h-7 w-7 text-primary" />
         <div>

@@ -28,6 +28,7 @@ import {
   Target,
   BookOpen,
 } from "lucide-react";
+import { SmartLabelUpload, OBESITY_FIELDS } from "@/components/SmartLabelUpload";
 
 interface GLP1Drug {
   name: string;
@@ -192,6 +193,16 @@ export default function GLP1ObesityAlgorithm() {
     },
   ];
 
+  function handleSmartParse(values: Record<string, string>) {
+    Object.entries(values).forEach(([key, value]) => {
+      if (key === 'hba1c' || key === 'bmi') {
+        setPatient(prev => ({ ...prev, [key]: parseFloat(value) }));
+      } else if (key === 'weight') {
+        setPatient(prev => ({ ...prev, [key]: parseFloat(value) }));
+      }
+    });
+  }
+
   return (
     <div className="min-h-screen bg-background">
       {/* Sticky Header */}
@@ -238,6 +249,7 @@ export default function GLP1ObesityAlgorithm() {
       </div>
 
       <main className="mx-auto max-w-4xl px-4 py-5 space-y-6">
+        <SmartLabelUpload fields={OBESITY_FIELDS.fields} onParse={handleSmartParse} existingValues={patient} />
         {activeTab === "algorithm" && (
         <>
         {/* Patient Profile Input */}

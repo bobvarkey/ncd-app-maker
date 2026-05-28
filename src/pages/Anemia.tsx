@@ -10,6 +10,7 @@ import IronTherapy from './anemia/components/IronTherapy';
 import ThrombocytopeniaEvaluator from './anemia/components/ThrombocytopeniaEvaluator';
 import TestSuggestionAlgorithm from './anemia/components/TestSuggestionAlgorithm';
 import { Microscope, AlertTriangle, Droplet } from 'lucide-react';
+import { SmartLabelUpload, CBC_FIELDS } from "@/components/SmartLabelUpload";
 
 const EMPTY_CBC: CBCValues = { hgb: '', rbc: '', mcv: '', mch: '', mchc: '', rdw: '', hct: '' };
 
@@ -31,6 +32,12 @@ export default function Anemia() {
     setTimeout(() => {
       document.getElementById('results')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }, 50);
+  }
+
+  function handleSmartParse(values: Record<string, string>) {
+    Object.entries(values).forEach(([key, value]) => {
+      handleChange(key as keyof CBCValues, value);
+    });
   }
 
   function handleReset() {
@@ -92,6 +99,8 @@ export default function Anemia() {
             This tool is for <strong>educational and decision-support purposes only</strong>. Always correlate with clinical presentation.
           </p>
         </div>
+
+        <SmartLabelUpload fields={CBC_FIELDS.fields} onParse={handleSmartParse} existingValues={cbc} />
 
         {activeTab === 'anemia' ? (
           <>

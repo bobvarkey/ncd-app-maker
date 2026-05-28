@@ -196,8 +196,15 @@ const HypoRiskCalculator = () => {
     );
   };
 
+  function handleSmartParse(values: Record<string, string>) {
+    Object.entries(values).forEach(([key, value]) => {
+      setManualInputs(prev => ({ ...prev, [key]: value }));
+    });
+  }
+
   return (
     <div className="space-y-5 animate-slide-in">
+      <SmartLabelUpload fields={DIABETES_FIELDS.fields} onParse={handleSmartParse} existingValues={manualInputs} />
       <div>
         <h1 className="text-xl font-heading font-bold">Hypoglycemia Risk Score</h1>
         <p className="text-sm text-muted-foreground">Multi-factor risk assessment — ADA 2026 + clinical evidence</p>

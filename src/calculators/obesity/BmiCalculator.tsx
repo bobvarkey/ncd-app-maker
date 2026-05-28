@@ -4,6 +4,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import { useNavigate } from "react-router-dom";
 import { Scale, Calculator, Info, ChevronDown, ChevronUp, Pill, Target, Activity, AlertCircle, BookOpen, RotateCcw, Home, InfoIcon } from "lucide-react";
+import { SmartLabelUpload, OBESITY_FIELDS } from "@/components/SmartLabelUpload";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -100,6 +101,14 @@ export default function BmiCalculator() {
     setShowTreatment(false);
   };
 
+  function handleSmartParse(values: Record<string, string>) {
+    Object.entries(values).forEach(([key, value]) => {
+      if (key === 'bmi') {
+        // BMI is calculated by the form
+      }
+    });
+  }
+
   return (
     <div className="min-h-screen bg-background">
       {/* Sticky Header */}
@@ -146,6 +155,7 @@ export default function BmiCalculator() {
       </div>
 
       <main className="mx-auto w-full max-w-2xl px-4 py-6 space-y-6">
+        <SmartLabelUpload fields={OBESITY_FIELDS.fields} onParse={handleSmartParse} existingValues={{}} />
         {activeTab === "calculator" && (
           <>
             <Card className="clinical-card border-primary/20">
