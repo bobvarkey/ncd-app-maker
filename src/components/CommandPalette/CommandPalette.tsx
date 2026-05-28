@@ -17,7 +17,7 @@ const SEARCH_ITEMS: SearchItem[] = [
   { id: "diabetes", label: "Diabetes Medication Algorithm", category: "calculator", path: "/diabetes", keywords: ["glucose", "a1c", "metformin", " GLP1", "，降糖药"] },
   { id: "hypo-risk", label: "Hypoglycemia Risk Score", category: "calculator", path: "/diabetes/hypo-risk", keywords: ["hypoglycemia", "低血糖"] },
   { id: "insulin-titration", label: "Insulin Titration", category: "calculator", path: "/diabetes/insulin-titration", keywords: ["insulin", "胰岛素"] },
-  { id: "sliding-scale", label: "Sliding Scale Insulin", category: "calculator", path: "/diabetes/sliding-scale", keywords: ["sliding scale", 滑动量表] },
+  { id: "sliding-scale", label: "Sliding Scale Insulin", category: "calculator", path: "/diabetes/sliding-scale", keywords: ["sliding scale", "滑动量表"] },
   { id: "renal-dosing", label: "Renal Dose Adjustment", category: "calculator", path: "/diabetes/renal-dosing", keywords: ["creatinine", "肾功能", "剂量调整"] },
   { id: "htn", label: "Hypertension Treatment Algorithm", category: "calculator", path: "/hypertension", keywords: ["blood pressure", "bp", "血压"] },
   { id: "gfr", label: "GFR Calculator (CKD-EPI)", category: "calculator", path: "/hypertension/gfr", keywords: ["kidney", "creatinine", "肾小球滤过率"] },
