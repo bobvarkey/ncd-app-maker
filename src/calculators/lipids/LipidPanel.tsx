@@ -832,7 +832,7 @@ export default function LipidCalculator() {
                 </div>
                 <div className="flex gap-1">
                   <Button variant="outline" size="sm" onClick={() => { 
-                    const linesText = `# Lipid Panel Analysis\n${new Date().toLocaleDateString()}\n\n` + lines.join('\n');
+                    const linesText = `# Lipid Panel Analysis\n${new Date().toLocaleDateString()}\n\nCategory: ${result?.category || "—"}\nLDL-C Target: ${result?.ldlTarget || "—"}\nNon-HDL-C Target: ${result?.nonHdlTarget || "—"}\nApoB Target: ${result?.apoBTarget || "—"}`;
                     navigator.clipboard.writeText(linesText);
                     import('sonner').then(m => m.toast.success('Copied to clipboard!'));
                   }} className="gap-1 text-xs h-7">
