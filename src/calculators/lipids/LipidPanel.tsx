@@ -830,9 +830,18 @@ export default function LipidCalculator() {
                   <h3 className="font-display text-xs font-bold text-foreground">ASCVD Risk Assessment & EMR</h3>
                   <p className="text-[10px] text-muted-foreground">ACC/AHA Primary Prevention</p>
                 </div>
-                <Button variant="outline" size="sm" onClick={() => navigate("/ascvd")} className="gap-1.5 text-xs h-7">
-                  Open <Activity className="h-3 w-3" />
-                </Button>
+                <div className="flex gap-1">
+                  <Button variant="outline" size="sm" onClick={() => { 
+                    const linesText = `# Lipid Panel Analysis\n${new Date().toLocaleDateString()}\n\n` + lines.join('\n');
+                    navigator.clipboard.writeText(linesText);
+                    import('sonner').then(m => m.toast.success('Copied to clipboard!'));
+                  }} className="gap-1 text-xs h-7">
+                    <Copy className="h-3 w-3" /> Copy
+                  </Button>
+                  <Button variant="outline" size="sm" onClick={() => navigate("/ascvd")} className="gap-1.5 text-xs h-7">
+                    Open <Activity className="h-3 w-3" />
+                  </Button>
+                </div>
               </div>
             </Card>
 
