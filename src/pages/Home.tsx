@@ -1319,7 +1319,7 @@ export default function Home() {
           </div>
         </section>
 
-        {/* Condition Modules Detail */}
+        {/* Additional Resources Detail */}
         <section className="mt-8">
           <h2 className="text-lg font-semibold mb-4 flex items-center gap-2">
             <Activity className="h-5 w-5 text-primary" />
