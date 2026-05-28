@@ -1,4 +1,4 @@
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -268,8 +268,18 @@ const PATTERN_TABLE = [
 export default function ThyroidCalculator() {
   const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState<TabKey>("calculator");
-  const [inputs, setInputs] = useState<PatientInputs>(DEFAULT_INPUTS);
+  const [inputs, setInputs] = useState<PatientInputs>(() => {
+    try {
+      const saved = localStorage.getItem("ncd_inputs_thyroid");
+      return saved ? JSON.parse(saved) : DEFAULT_INPUTS;
+    } catch { return DEFAULT_INPUTS; }
+  });
   const [calculated, setCalculated] = useState(false);
+
+  // Auto-save
+  useEffect(() => {
+    localStorage.setItem("ncd_inputs_thyroid", JSON.stringify(inputs));
+  }, [inputs]);
 
   // Auto-calc on mount
   const result = useMemo(() => {
@@ -318,6 +328,7 @@ export default function ThyroidCalculator() {
   function resetForm() {
     setInputs(DEFAULT_INPUTS);
     setCalculated(true);
+    localStorage.removeItem("ncd_inputs_thyroid");
   }
 
   function fillHyperthyroid() {
