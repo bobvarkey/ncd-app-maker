@@ -82,39 +82,38 @@ function getTSAT(inputs: PatientInputs): number | null {
 
 function diagnose(ferritin: number, tsat: number, inflammation: boolean): DiagnosisResult {
   const hasInflam = inflammation;
-  const ferritinLow = hasInflam ? ferritin < 100 : ferritin < 30;
-  const ferritinBorderline = !hasInflam && ferritin >= 30 && ferritin < 100;
+  
+  // Exact thresholds per clinical guidelines
+  const ferritinAbsLow = hasInflam ? ferritin < 100 : ferritin < 30;
   const ferritinFunctional = ferritin >= 100 && ferritin < 300;
   const ferritinReplete = ferritin >= 300;
   const tsatLow = tsat < 20;
   const tsatNormal = tsat >= 20;
 
-  if (ferritinLow && tsatNormal)
-    return { diagnosis: "Early / Latent Iron Deficiency", detail: "Depleted iron stores with preserved TSAT. Oral replacement recommended.", label: "early" };
-
-  if (ferritinBorderline && tsatLow)
-    return { diagnosis: "Absolute Iron Deficiency (Borderline Stores)", detail: "Low-normal ferritin with low TSAT — consistent with absolute iron deficiency.", label: "absolute" };
-
-  if (ferritinBorderline && tsatNormal)
-    return { diagnosis: "Borderline Iron Stores, Normal TSAT", detail: "Ferritin 30–100 suggests marginal stores. Monitor; consider oral iron if symptomatic.", label: "borderline" };
-
-  if (ferritinLow && tsatLow)
-    return { diagnosis: "Absolute Iron Deficiency", detail: "Low ferritin and low TSAT — definitive iron deficiency.", label: "absolute" };
+  // Diagnostic logic per reference guidelines
+  if (ferritinAbsLow && tsatLow)
+    return { diagnosis: "Absolute Iron Deficiency", detail: "Ferritin <30 (no inflammation) or <100 (with inflammation) + TSAT <20%. Definitive iron deficiency.", label: "absolute" };
 
   if (ferritinFunctional && tsatLow) {
     if (hasInflam)
-      return { diagnosis: "Functional Iron Deficiency", detail: "Ferritin 100–300 with low TSAT in setting of inflammation — iron trapped in stores.", label: "functional" };
-    return { diagnosis: "Possible Functional Iron Deficiency", detail: "Ferritin 100–300 with low TSAT without obvious inflammation. Consider other causes.", label: "functional" };
+      return { diagnosis: "Functional Iron Deficiency", detail: "Ferritin 100–300 ng/mL with TSAT <20% in setting of inflammation — iron trapped in storage.", label: "functional" };
+    return { diagnosis: "Functional Iron Deficiency (CKD/ESA)", detail: "Ferritin 100–300 with low TSAT — iron available but not utilized.IV iron indicated per guidelines.", label: "functional" };
   }
 
-  if (ferritinFunctional && tsatNormal)
-    return { diagnosis: "No Iron Deficiency", detail: "Adequate iron stores and normal TSAT.", label: "none" };
-
-  if (ferritinReplete && tsatLow)
-    return { diagnosis: "Low TSAT with Replete Ferritin", detail: "Consider other causes: anemia of chronic disease, mixed deficiencies, or lab error.", label: "other" };
+  if (!hasInflam && ferritin >= 30 && ferritin < 100) {
+    if (tsatNormal)
+      return { diagnosis: "Early/Marginal Iron Deficiency", detail: "Ferritin 30–100 with normal TSAT. Low stores, still sufficient for erythropoiesis.Oral iron may benefit.", label: "early" };
+    return { diagnosis: "Absolute Iron Deficiency (Borderline)", detail: "Ferritin 30–100 with low TSAT — consistent with absolute iron deficiency despite borderline ferritin.", label: "absolute" };
+  }
 
   if (ferritinReplete && tsatNormal)
-    return { diagnosis: "Iron Deficiency Unlikely", detail: "Adequate iron stores and normal TSAT.", label: "none" };
+    return { diagnosis: "Iron Deficiency Unlikely", detail: "Ferritin ≥300 ng/mL and TSAT ≥20%. Adequate iron stores.", label: "none" };
+
+  if (ferritinReplete && tsatLow)
+    return { diagnosis: "Low TSAT with Replete Ferritin", detail: "Consider anemia of chronic disease, mixed deficiency, or lab error. Further workup needed.", label: "other" };
+
+  if (ferritinFunctional && tsatNormal)
+    return { diagnosis: "Iron Deficiency Unlikely", detail: "Ferritin 100–300 with normal TSAT — adequate iron for erythropoiesis.", label: "none" };
 
   return { diagnosis: "Unable to Classify", detail: "Check input values.", label: "unknown" };
 }
@@ -141,31 +140,39 @@ function recommend(
   rapid: boolean,
   bloodLoss: boolean
 ): RecommendationResult {
-  const isIV =
-    hb < 10 ||
-    ckd ||
-    dx.label === "functional" ||
-    intolerance ||
-    rapid ||
-    bloodLoss;
+  // IV iron indications per clinical guidelines:
+  // Hb < 10 g/dL (severe anemia),
+  // CKD (especially if on ESA),
+  // Functional iron deficiency (ferritin ≥ 100 but TSAT < 20%),
+  // Intolerance/malabsorption/failure of oral,
+  // Need for rapid correction (preop, symptomatic),
+  // Ongoing heavy blood loss
+  const isIV = hb < 10 || dx.label === "functional" || ckd || esa || intolerance || rapid || bloodLoss;
 
   const targetHb = getTargetHb(weight, pregnancy, ckd);
   const stores = getIronStores(weight);
   const rawDeficit = weight * (targetHb - hb) * 2.4 + stores;
   const deficit = Math.max(0, rawDeficit);
 
+
   let doseText: string;
   if (isIV) {
+    // IV iron dosing per guidelines:
+    // deficit ≤ 500 mg → 500 mg single dose
+    // deficit 500–1000 mg → 1000 mg (single or split)
+    // deficit > 1000 mg → rounded split into 1–2 doses (max 1000–1500 mg/week)
     if (deficit <= 500) {
-      doseText = `${Math.round(deficit)} mg → 500 mg IV (single dose)`;
+      doseText = `${Math.round(deficit)} mg → 500 mg IV iron (single dose)`;
     } else if (deficit <= 1000) {
-      doseText = `${Math.round(deficit)} mg → 1000 mg IV (single or split)`;
+      doseText = `${Math.round(deficit)} mg → 1000 mg IV iron (single or split dose)`;
     } else {
       const rounded = Math.ceil(deficit / 100) * 100;
-      doseText = `${Math.round(deficit)} mg → ${rounded} mg IV, split 1–2 doses (max 1000–1500 mg/week per product)`;
+      doseText = `${Math.round(deficit)} mg → ${rounded} mg IV iron, split over 1–2 doses (max 1000–1500 mg/week per product)`;
     }
   } else {
-    doseText = "40–65 mg elemental iron daily or every other day (e.g., ferrous sulfate 325 mg = 65 mg elemental)";
+    // Oral iron: 40–65 mg elemental iron once daily or every other day
+    // Every-other-day improves absorption and reduces GI side effects
+    doseText = "40–65 mg elemental iron PO daily or every other day (e.g., ferrous sulfate 325 mg = 65 mg elemental)";
   }
 
   return { route: isIV ? "IV iron" : "Oral iron", isIV, deficit, doseText, targetHb };
