@@ -291,6 +291,19 @@ export default function AscvdEmr() {
           Back Home
         </Button>
 
+        <Button variant="ghost" size="sm" onClick={() => navigate("/")} className="gap-1.5">
+          <ArrowLeft className="h-4 w-4" />
+          Back Home
+        </Button>
+
+        <div className="mt-4">
+          <SmartLabelUpload fields={LIPID_FIELDS.fields} onParse={(values) => {
+            Object.entries(values).forEach(([key, value]) => {
+              setPatient(prev => ({ ...prev, [key]: isNaN(Number(value)) ? value : Number(value) }));
+            });
+          }} existingValues={Object.fromEntries(Object.entries(patient).map(([k,v]) => [k, String(v)]))} />
+        </div>
+
         <div className="text-center mb-6">
           <h1 className="font-display text-3xl font-bold tracking-tight text-foreground">
             ASCVD Risk Assessment

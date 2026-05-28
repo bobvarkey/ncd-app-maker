@@ -623,8 +623,39 @@ export default function IronReplacementCalculator() {
                   </table>
                 </div>
                 <p className="text-xs text-muted-foreground mt-3">
-                  TSAT = (Serum Iron ÷ TIBC) × 100. TSAT &lt; 20% suggests inadequate iron for erythropoiesis.
+                  TSAT = (Serum Iron ÷ TIBC) × 100. TSAT < 20% suggests inadequate iron for erythropoiesis.
                 </p>
+
+                <h4 className="text-sm font-semibold text-foreground mt-6 mb-3">Condition-Specific Thresholds for Iron Replacement</h4>
+                <div className="overflow-x-auto rounded-xl border border-border">
+                  <table className="w-full text-sm">
+                    <thead>
+                      <tr className="bg-muted border-b border-border">
+                        <th className="text-left py-3 px-4 text-xs font-semibold text-muted-foreground uppercase tracking-wide">Condition</th>
+                        <th className="text-left py-3 px-4 text-xs font-semibold text-muted-foreground uppercase tracking-wide">Ferritin</th>
+                        <th className="text-left py-3 px-4 text-xs font-semibold text-muted-foreground uppercase tracking-wide">TSAT</th>
+                        <th className="text-left py-3 px-4 text-xs font-semibold text-muted-foreground uppercase tracking-wide">Notes</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {[
+                        ["Restless Legs Syndrome (RLS)", "Target > 75–100", "< 45%", "Treat even without anemia. Target ferritin > 100 µg/L to alleviate neurological symptoms."],
+                        ["Chronic Heart Failure", "< 100, or 100–299 if TSAT low", "< 20%", "IV iron recommended regardless of anemia status (ESC Guidelines). Improves QoL and exercise capacity."],
+                        ["CKD (Non-Dialysis)", "< 100–500", "< 30%", "Higher cutoffs used — inflammation impairs normal iron usage."],
+                        ["CKD on Hemodialysis", "< 200", "< 30%", "Aggressively maintained to support RBC production."],
+                        ["IBD (Crohn's / UC)", "< 100", "< 20%", "IV iron preferred due to malabsorption and intolerance of oral iron."],
+                        ["Pregnancy", "< 30", "< 20%", "Oral first-line unless severe or rapid correction needed."],
+                      ].map((row, i) => (
+                        <tr key={i} className={cn("border-b border-border", i % 2 === 0 ? "" : "bg-muted/30")}>
+                          <td className="py-3 px-4 text-sm font-medium text-foreground">{row[0]}</td>
+                          <td className="py-3 px-4 text-sm text-muted-foreground">{row[1]}</td>
+                          <td className="py-3 px-4 text-sm text-muted-foreground">{row[2]}</td>
+                          <td className="py-3 px-4 text-sm text-muted-foreground">{row[3]}</td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
               </CardContent>
             </Card>
 

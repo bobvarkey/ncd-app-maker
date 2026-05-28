@@ -267,6 +267,12 @@ const cellStyle = (val: string) => {
 const RenalDoseAdjustment = () => {
   const [search, setSearch] = useState("");
   const [classFilter, setClassFilter] = useState<string>("all");
+
+  function handleSmartParse(values: Record<string, string>) {
+    if (values.egfr) setSearch(`eGFR ${values.egfr}`);
+    if (values.creatinine) setSearch(`creatinine ${values.creatinine}`);
+    if (values.weight) setSearch(`weight ${values.weight}`);
+  }
   const [category, setCategory] = useState<"diabetes" | "antibiotics">("diabetes");
 
   const activeData = category === "antibiotics" ? ANTIBIOTICS_DATA : RENAL_DATA;
@@ -325,6 +331,10 @@ const RenalDoseAdjustment = () => {
         <span className="flex items-center gap-1.5"><span className="w-3 h-3 rounded bg-warning/20 border border-warning/30" /> Dose adjustment required</span>
         <span className="flex items-center gap-1.5"><span className="w-3 h-3 rounded bg-muted border border-border" /> Limited data</span>
         <span className="flex items-center gap-1.5"><span className="w-3 h-3 rounded bg-background border border-border" /> No adjustment</span>
+      </div>
+
+      <div className="mt-4">
+        <SmartLabelUpload fields={RENAL_FIELDS.fields} onParse={handleSmartParse} existingValues={{}} />
       </div>
 
       {/* Filters */}

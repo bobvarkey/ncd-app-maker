@@ -265,6 +265,9 @@ export default function AntihypertensiveTreatmentAlgorithm() {
       </div>
 
       <main className="mx-auto max-w-3xl px-4 py-5">
+        <div className="mb-4">
+          <SmartLabelUpload fields={HTN_FIELDS.fields} onParse={() => {}} existingValues={{}} />
+        </div>
         <Card className="border-2 border-primary/20 bg-gradient-to-br from-primary/5 to-accent/5">
           <CardHeader className="pb-3">
             <div className="flex items-center justify-between">
