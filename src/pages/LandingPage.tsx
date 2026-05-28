@@ -45,7 +45,7 @@ export default function LandingPage() {
             Global health · WHO data
           </p>
           <p className="text-lg md:text-xl text-gray-400 text-center max-w-2xl mx-auto mb-8 leading-relaxed">
-            Evidence-based tools for diabetes, hypertension, lipids, obesity, asthma/COPD, renal and blood diseases
+            Evidence-based tools for diabetes, hypertension, lipids, obesity, asthma/COPD, renal, blood and thyroid disorders
           </p>
 
           {/* CTA Buttons */}

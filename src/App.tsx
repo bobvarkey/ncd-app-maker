@@ -60,6 +60,8 @@ import GLP1ObesityAlgorithmCalc from "@/calculators/obesity/GLP1ObesityAlgorithm
 
 // Iron Calculator
 import IronReplacementCalculator from "@/calculators/iron/IronReplacementCalculator";
+// Thyroid Calculator
+import ThyroidCalculator from "@/calculators/thyroid/ThyroidCalculator";
 
 // Diabetes Buddy Pages
 import LandingPage from "@/pages/LandingPage";
@@ -195,6 +197,7 @@ const App = () => (
           <Route path="/obesity/glp1-algorithm" element={<><TabNavigation /><GLP1ObesityAlgorithmCalc /></>} />
           <Route path="/diet-plan" element={<><TabNavigation /><DietPlanPage /></>} />
           <Route path="/iron-calculator" element={<><TabNavigation /><IronReplacementCalculator /></>} />
+          <Route path="/thyroid" element={<><TabNavigation /><ThyroidCalculator /></>} />
 
           {/* 404 */}
           <Route path="*" element={<NotFound />} />
