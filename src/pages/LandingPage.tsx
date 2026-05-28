@@ -1,7 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
-import { ArrowRight, Sparkles, Heart, Activity, Syringe, Dna, Scale, Wind, Droplets, Droplet } from 'lucide-react';
+import { ArrowRight, Sparkles, Heart, Activity, Syringe, Dna, Scale, Wind, Droplets, Droplet, Microscope } from 'lucide-react';
 
 export default function LandingPage() {
   const navigate = useNavigate();
@@ -51,7 +51,7 @@ export default function LandingPage() {
           {/* CTA Buttons */}
           <div className="flex flex-col sm:flex-row items-center justify-center gap-3 mb-10">
             <Button
-              onClick={() => navigate('/home')}
+              onClick={() => navigate(area.path || '/home')}
               className="w-full sm:w-auto bg-gradient-to-r from-pink-500 to-purple-600 hover:from-pink-600 hover:to-purple-700 text-white font-semibold px-8 py-6 text-base rounded-xl shadow-lg shadow-pink-500/25"
             >
               Launch App
@@ -136,7 +136,7 @@ export default function LandingPage() {
           {/* Complex */}
           <Card
             className="bg-white/5 border-white/10 hover:border-purple-500/40 cursor-pointer transition-all group hover:shadow-lg hover:shadow-purple-500/10"
-            onClick={() => navigate('/home')}
+            onClick={() => navigate(area.path || '/home')}
           >
             <CardContent className="p-6 text-center">
               <div className="w-12 h-12 rounded-xl bg-purple-500/10 flex items-center justify-center mx-auto mb-4 group-hover:bg-purple-500/20 transition-colors">
@@ -166,18 +166,19 @@ export default function LandingPage() {
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
             {[
-              { name: "Diabetes", icon: Syringe, color: "text-red-400", desc: "Insulin titration, GLP-1 dosing, HbA1c targets" },
-              { name: "Hypertension", icon: Heart, color: "text-orange-400", desc: "BP classification, drug selection, emergency protocols" },
-              { name: "Lipids", icon: Dna, color: "text-blue-400", desc: "ASCVD risk, LDL targets, statin intensity" },
-              { name: "Obesity", icon: Scale, color: "text-violet-400", desc: "BMI calculator, weight loss algorithms, GLP-1" },
-              { name: "COPD/Asthma", icon: Wind, color: "text-cyan-400", desc: "GINA/GOLD guidelines, step-up therapy" },
-              { name: "Renal", icon: Droplets, color: "text-amber-400", desc: "eGFR-based dosing, CKD management" },
-              { name: "Blood Disorders", icon: Droplet, color: "text-rose-400", desc: "Anemia evaluation, thrombocytopenia, & iron parameters" },
+              { name: "Diabetes", path: "/diabetes", icon: Syringe, color: "text-red-400", desc: "Insulin titration, GLP-1 dosing, HbA1c targets" },
+              { name: "Hypertension", path: "/hypertension", icon: Heart, color: "text-orange-400", desc: "BP classification, drug selection, emergency protocols" },
+              { name: "Lipids", path: "/lipids", icon: Dna, color: "text-blue-400", desc: "ASCVD risk, LDL targets, statin intensity" },
+              { name: "Obesity", path: "/obesity/bmi-calculator", icon: Scale, color: "text-violet-400", desc: "BMI calculator, weight loss algorithms, GLP-1" },
+              { name: "COPD/Asthma", path: "/respiratory", icon: Wind, color: "text-cyan-400", desc: "GINA/GOLD guidelines, step-up therapy" },
+              { name: "Renal", path: "/renal-dosing", icon: Droplets, color: "text-amber-400", desc: "eGFR-based dosing, CKD management", path: "/renal-dosing" },
+              { name: "Blood Disorders", path: "/anemia", icon: Droplet, color: "text-rose-400", desc: "Anemia evaluation, thrombocytopenia, & iron parameters", path: "/anemia" },
+              { name: "Thyroid", icon: Microscope, color: "text-emerald-400", desc: "TSH-guided therapy, thyroid nodules", path: "/thyroid" },
             ].map((area) => (
               <div
                 key={area.name}
                 className="flex items-start gap-3 p-4 rounded-xl bg-white/5 border border-white/10 hover:bg-white/[0.08] transition-colors cursor-pointer group"
-                onClick={() => navigate('/home')}
+                onClick={() => navigate(area.path || '/home')}
               >
                 <div className="w-10 h-10 rounded-lg bg-white/5 flex items-center justify-center shrink-0 group-hover:bg-white/10 transition-colors">
                   <area.icon className={`h-5 w-5 ${area.color}`} />
