@@ -82,7 +82,7 @@ export default function SlidingScaleInsulin() {
 
   return (
     <div className="space-y-6 max-w-5xl">
-      <SmartLabelUpload fields={DIABETES_FIELDS.fields} onParse={handleSmartParse} existingValues={input} />
+      <SmartLabelUpload fields={DIABETES_FIELDS.fields} onParse={handleSmartParse} existingValues={input as unknown as Record<string, string>} />
       <div className="flex items-center gap-3">
         <Syringe className="h-7 w-7 text-primary" />
         <div>

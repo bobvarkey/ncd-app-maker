@@ -269,5 +269,6 @@ export default function GfrCalculator({ onResultChange }: GfrCalculatorProps) {
         )}
       </CardContent>
     </Card>
+    </>
   );
 }

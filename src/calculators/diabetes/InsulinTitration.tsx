@@ -6,6 +6,7 @@ import { Input } from "@/components/ui/input";
 import { useNavigate } from "react-router-dom";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { SmartLabelUpload, DIABETES_FIELDS } from "@/components/SmartLabelUpload";
 
 interface BGReading {
   day: number;
