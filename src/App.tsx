@@ -142,8 +142,8 @@ const App = () => (
     <TooltipProvider>
       <Toaster />
       <Sonner />
-      <CommandPalette />
       <BrowserRouter>
+        <CommandPalette />
         <Routes>
           {/* Mode Selector — landing */}
           <Route path="/" element={<LandingPage />} />
