@@ -58,6 +58,9 @@ import BmiCalculatorCalc from "@/calculators/obesity/BmiCalculator";
 import WaistHeightRatioCalc from "@/calculators/obesity/WaistHeightRatio";
 import GLP1ObesityAlgorithmCalc from "@/calculators/obesity/GLP1ObesityAlgorithm";
 
+// Iron Calculator
+import IronReplacementCalculator from "@/calculators/iron/IronReplacementCalculator";
+
 // Diabetes Buddy Pages
 import LandingPage from "@/pages/LandingPage";
 import AssessmentGrid from "@/pages/AssessmentGrid";
@@ -191,6 +194,7 @@ const App = () => (
           <Route path="/obesity/waist-height-ratio" element={<><TabNavigation /><WaistHeightRatioCalc /></>} />
           <Route path="/obesity/glp1-algorithm" element={<><TabNavigation /><GLP1ObesityAlgorithmCalc /></>} />
           <Route path="/diet-plan" element={<><TabNavigation /><DietPlanPage /></>} />
+          <Route path="/iron-calculator" element={<><TabNavigation /><IronReplacementCalculator /></>} />
 
           {/* 404 */}
           <Route path="*" element={<NotFound />} />
