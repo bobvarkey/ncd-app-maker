@@ -976,7 +976,7 @@ function PrescriptionEngine() {
           <div className="flex items-center space-x-2">
             <Checkbox
               id="obesity"
-              checked={bmiNum >= 30}
+              checked={(parseFloat(bmi) || 0) >= 30}
               onCheckedChange={() => {}}
             />
             <Label htmlFor="obesity" className="text-sm cursor-pointer">Obesity (BMI ≥30)</Label>
