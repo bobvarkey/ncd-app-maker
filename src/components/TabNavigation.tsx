@@ -16,11 +16,7 @@ const navItems = [
   { path: "/thyroid", label: "Thyroid", icon: "🔬", color: "emerald-500" },
 ];
 
-] // End of navItems
-
 // Removed mode switcher: Simple/Moderate/Complex tiers no longer used
-
-export function TabNavigation() {
 
 export function TabNavigation() {
   const location = useLocation();
