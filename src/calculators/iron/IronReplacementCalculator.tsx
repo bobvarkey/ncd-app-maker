@@ -48,10 +48,17 @@ interface PatientInputs {
 }
 
 interface ClinicalFlags {
+  // Comorbidities affecting iron metabolism
   inflammation: boolean;
   pregnancy: boolean;
   ckd: boolean;
   esa: boolean;
+  chf: boolean; // Chronic heart failure
+  ibd: boolean; // Inflammatory bowel disease / chronic GI inflammation
+  rls: boolean; // Restless legs syndrome
+  bariatric: boolean; // Post-bariatric surgery
+  
+  // Clinical scenarios
   oralIntolerance: boolean;
   rapidCorrection: boolean;
   ongoingBloodLoss: boolean;
@@ -215,10 +222,17 @@ const EMPTY_INPUTS: PatientInputs = {
 };
 
 const DEFAULT_FLAGS: ClinicalFlags = {
+  // Comorbidities
   inflammation: false,
   pregnancy: false,
   ckd: false,
   esa: false,
+  chf: false,
+  ibd: false,
+  rls: false,
+  bariatric: false,
+  
+  // Scenarios
   oralIntolerance: false,
   rapidCorrection: false,
   ongoingBloodLoss: false,
@@ -485,13 +499,21 @@ export default function IronReplacementCalculator() {
               <CardContent>
                 <div className="flex flex-wrap gap-2">
                   {[
-                    { key: "inflammation" as keyof ClinicalFlags, label: "Inflammation / Chronic Disease" },
-                    { key: "pregnancy" as keyof ClinicalFlags, label: "Pregnancy" },
-                    { key: "ckd" as keyof ClinicalFlags, label: "CKD" },
-                    { key: "esa" as keyof ClinicalFlags, label: "On ESA" },
-                    { key: "oralIntolerance" as keyof ClinicalFlags, label: "Oral Iron Intolerance / Malabsorption / Failure" },
-                    { key: "rapidCorrection" as keyof ClinicalFlags, label: "Rapid Correction Needed (Preop / Symptomatic)" },
-                    { key: "ongoingBloodLoss" as keyof ClinicalFlags, label: "Ongoing Heavy Blood Loss" },
+                    // Comorbidities
+                    { key: "inflammation" as keyof ClinicalFlags, label: "Inflammation / Chronic Disease", color: "bg-orange-500" },
+                    { key: "rls" as keyof ClinicalFlags, label: "Restless Legs Syndrome", color: "bg-purple-500" },
+                    { key: "ibd" as keyof ClinicalFlags, label: "IBD / Chronic GI Inflammation", color: "bg-pink-500" },
+                    { key: "chf" as keyof ClinicalFlags, label: "Chronic Heart Failure (CHF)", color: "bg-red-500" },
+                    { key: "bariatric" as keyof ClinicalFlags, label: "Post-Bariatric Surgery", color: "bg-indigo-500" },
+                    // Pregnancy
+                    { key: "pregnancy" as keyof ClinicalFlags, label: "Pregnancy", color: "bg-rose-500" },
+                    // CKD/ESA
+                    { key: "ckd" as keyof ClinicalFlags, label: "CKD", color: "bg-amber-500" },
+                    { key: "esa" as keyof ClinicalFlags, label: "On ESA Therapy", color: "bg-amber-600" },
+                    // Scenarios
+                    { key: "oralIntolerance" as keyof ClinicalFlags, label: "Oral Iron Intolerant", color: "bg-cyan-500" },
+                    { key: "rapidCorrection" as keyof ClinicalFlags, label: "Rapid Correction Needed", color: "bg-red-500" },
+                    { key: "ongoingBloodLoss" as keyof ClinicalFlags, label: "Ongoing Blood Loss", color: "bg-red-600" },
                   ].map(({ key, label }) => (
                     <Button
                       key={key}
