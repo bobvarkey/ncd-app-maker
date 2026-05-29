@@ -23,57 +23,61 @@
   :root {
     /* Clean medical theme - slate blue with teal accents */
     --background: 220 20% 8%;
-    --foreground: 210 30% 96%;
+  :root {
+    /* Ocean Deep medical theme — deep navy with teal accents */
+    --background: 213 60% 9%;
+    --foreground: 195 30% 96%;
 
-    --card: 220 18% 11%;
-    --card-foreground: 210 30% 96%;
+    --card: 211 50% 13%;
+    --card-foreground: 195 30% 96%;
 
-    --popover: 220 18% 11%;
-    --popover-foreground: 210 30% 96%;
+    --popover: 211 50% 13%;
+    --popover-foreground: 195 30% 96%;
 
-    --primary: 185 60% 48%;
-    --primary-foreground: 220 20% 8%;
+    --primary: 189 56% 42%;
+    --primary-foreground: 213 69% 10%;
 
-    --secondary: 220 15% 18%;
-    --secondary-foreground: 210 30% 96%;
+    --secondary: 209 45% 18%;
+    --secondary-foreground: 195 30% 96%;
 
-    --muted: 220 15% 16%;
-    --muted-foreground: 215 15% 60%;
+    --muted: 210 40% 16%;
+    --muted-foreground: 200 20% 70%;
 
-    --accent: 175 55% 40%;
-    --accent-foreground: 210 30% 96%;
+    --accent: 178 45% 55%;
+    --accent-foreground: 213 69% 10%;
 
-    --destructive: 0 75% 55%;
-    --destructive-foreground: 210 30% 96%;
+    --destructive: 0 70% 55%;
+    --destructive-foreground: 195 30% 96%;
 
-    --border: 220 15% 22%;
-    --input: 220 15% 20%;
-    --ring: 185 60% 48%;
+    --border: 209 35% 22%;
+    --input: 209 40% 18%;
+    --ring: 189 56% 48%;
 
-    --radius: 0.625rem;
+    --radius: 0.75rem;
 
     /* Clinical result tokens */
-    --success: 152 55% 45%;
-    --success-foreground: 210 30% 96%;
-    --warning: 38 85% 50%;
-    --warning-foreground: 210 30% 96%;
-    --info: 200 65% 55%;
-    --info-foreground: 210 30% 96%;
+    --success: 168 55% 45%;
+    --success-foreground: 213 69% 10%;
+    --warning: 38 90% 55%;
+    --warning-foreground: 213 69% 10%;
+    --info: 200 65% 60%;
+    --info-foreground: 213 69% 10%;
 
     /* Mode accent colors */
-    --mode-simple: 142 50% 45%;
-    --mode-moderate: 32 85% 50%;
-    --mode-complex: 265 60% 55%;
+    --mode-simple: 168 55% 45%;
+    --mode-moderate: 38 90% 55%;
+    --mode-complex: 265 60% 60%;
 
     /* Sidebar tokens */
-    --sidebar-background: 220 20% 6%;
-    --sidebar-foreground: 210 30% 96%;
-    --sidebar-primary: 185 60% 48%;
-    --sidebar-primary-foreground: 220 20% 8%;
-    --sidebar-accent: 220 15% 18%;
-    --sidebar-accent-foreground: 210 30% 96%;
-    --sidebar-border: 220 15% 18%;
-    --sidebar-ring: 185 60% 48%;
+    --sidebar-background: 213 65% 7%;
+    --sidebar-foreground: 195 30% 96%;
+    --sidebar-primary: 189 56% 48%;
+    --sidebar-primary-foreground: 213 69% 10%;
+    --sidebar-accent: 209 45% 16%;
+    --sidebar-accent-foreground: 195 30% 96%;
+    --sidebar-border: 209 35% 18%;
+    --sidebar-ring: 178 45% 55%;
+  }
   }
 }
 
