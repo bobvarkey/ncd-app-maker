@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { Activity, Droplets, Heart, Scale, Syringe, Activity as PulseIcon, Dna, FileText, ChevronRight, Info, ChevronDown, Upload, Sparkles, ArrowRight, Calculator, Stethoscope, FileSearch, UtensilsCrossed } from "lucide-react";
+import { Activity, Droplets, Heart, Scale, Syringe, Activity as PulseIcon, Dna, FileText, ChevronRight, Info, ChevronDown, Upload, Sparkles, Calculator, Stethoscope, FileSearch, UtensilsCrossed } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -317,67 +317,6 @@ function OCRUpload({ onValuesExtracted }: OCRUploadProps) {
   );
 }
 
-// Dashboard Summary Card Component
-interface DashboardCardProps {
-  title: string;
-  icon: React.ReactNode;
-  color: string;
-  bgColor: string;
-  borderColor: string;
-  quickStats: { label: string; value: string }[];
-  features: string[];
-  linkTo: string;
-  linkText: string;
-}
-
-function DashboardCard({ title, icon, color, bgColor, borderColor, quickStats, features, linkTo, linkText }: DashboardCardProps) {
-  return (
-    <Card className="relative overflow-hidden border-border/60 hover:border-border transition-all hover:shadow-md group">
-      <div className="absolute top-0 left-0 right-0 h-1 opacity-60" style={{ background: color }} />
-      <CardHeader className="pb-3">
-        <div className="flex items-center gap-3">
-          <div className="w-10 h-10 rounded-lg flex items-center justify-center" style={{ background: bgColor }}>
-            {icon}
-          </div>
-          <CardTitle className="text-base">{title}</CardTitle>
-        </div>
-      </CardHeader>
-      <CardContent className="space-y-4">
-        {/* Quick Stats */}
-        <div className="grid grid-cols-2 gap-2">
-          {quickStats.map((stat, i) => (
-            <div key={i} className="p-2 rounded-lg bg-muted/30 border border-border/30">
-              <p className="text-[10px] text-muted-foreground uppercase">{stat.label}</p>
-              <p className="text-sm font-semibold" style={{ color }}>{stat.value}</p>
-            </div>
-          ))}
-        </div>
-
-        {/* Features List */}
-        <div className="space-y-1">
-          {features.map((feature, i) => (
-            <div key={i} className="flex items-center gap-2 text-xs text-muted-foreground">
-              <div className="w-1 h-1 rounded-full" style={{ background: color }} />
-              {feature}
-            </div>
-          ))}
-        </div>
-
-        {/* CTA Button */}
-        <Link to={linkTo}>
-          <Button
-            variant="outline"
-            className="w-full text-xs h-9 mt-2 group-hover:bg-primary/5 transition-colors"
-            style={{ borderColor }}
-          >
-            {linkText}
-            <ArrowRight className="h-3.5 w-3.5 ml-1.5 transition-transform group-hover:translate-x-0.5" />
-          </Button>
-        </Link>
-      </CardContent>
-    </Card>
-  );
-}
 
 // Prescription Engine Component
 function PrescriptionEngine() {
@@ -1087,108 +1026,6 @@ export default function Home() {
   const navigate = useNavigate();
 
   // Dashboard data
-  const dashboardCards: DashboardCardProps[] = [
-    {
-      title: "Diabetes Management",
-      icon: <Syringe className="h-5 w-5" style={{ color: categoryColors.diabetes.accent }} />,
-      color: categoryColors.diabetes.accent,
-      bgColor: categoryColors.diabetes.bg,
-      borderColor: categoryColors.diabetes.border,
-      quickStats: [
-        { label: "Target HbA1c", value: "< 7.0%" },
-        { label: "Fasting Glucose", value: "< 130 mg/dL" },
-      ],
-      features: [
-        "Insulin dosing & titration",
-        "Sliding scale reference",
-        "Hypoglycemia risk calculator",
-        "Renal dosing adjustments",
-        "GLP-1 administration guide",
-      ],
-      linkTo: "/diabetes",
-      linkText: "Go to Diabetes Tab",
-    },
-    {
-      title: "Hypertension",
-      icon: <Heart className="h-5 w-5" style={{ color: categoryColors.hypertension.accent }} />,
-      color: categoryColors.hypertension.accent,
-      bgColor: categoryColors.hypertension.bg,
-      borderColor: categoryColors.hypertension.border,
-      quickStats: [
-        { label: "Target BP", value: "< 130/80" },
-        { label: "Classification", value: "ESC 2024" },
-      ],
-      features: [
-        "GFR calculator",
-        "Secondary HTN checklist",
-        "Drug interaction checker",
-        "Treatment algorithm",
-        "Potency tables",
-      ],
-      linkTo: "/hypertension",
-      linkText: "Go to Hypertension Tab",
-    },
-    {
-      title: "Lipid Management",
-      icon: <Dna className="h-5 w-5" style={{ color: categoryColors.lipid.accent }} />,
-      color: categoryColors.lipid.accent,
-      bgColor: categoryColors.lipid.bg,
-      borderColor: categoryColors.lipid.border,
-      quickStats: [
-        { label: "Very High Risk LDL", value: "< 55 mg/dL" },
-        { label: "High Risk LDL", value: "< 70 mg/dL" },
-      ],
-      features: [
-        "ASCVD risk calculator",
-        "LAI 2023 Indian guidelines",
-        "CAC/LDL target guide",
-        "Lp(a) risk stratification",
-        "Statin intensity guide",
-      ],
-      linkTo: "/lipids",
-      linkText: "Go to Lipids Tab",
-    },
-    {
-      title: "Obesity & Weight",
-      icon: <Scale className="h-5 w-5" style={{ color: categoryColors.obesity.accent }} />,
-      color: categoryColors.obesity.accent,
-      bgColor: categoryColors.obesity.bg,
-      borderColor: categoryColors.obesity.border,
-      quickStats: [
-        { label: "BMI Categories", value: "WHO + LAI" },
-        { label: "Indian Cutoff", value: "BMI ≥ 23" },
-      ],
-      features: [
-        "BMI calculator with units",
-        "Waist-height ratio",
-        "GLP-1 obesity algorithm",
-        "Metabolic risk assessment",
-        "Weight management tools",
-      ],
-      linkTo: "/obesity/bmi-calculator",
-      linkText: "Open BMI Calculator",
-    },
-    {
-      title: "Anemia & Hematology",
-      icon: <Droplets className="h-5 w-5" style={{ color: '#38bdf8' }} />,
-      color: '#38bdf8',
-      bgColor: "rgba(56,189,248,0.12)",
-      borderColor: "rgba(56,189,248,0.2)",
-      quickStats: [
-        { label: "Classification", value: "WHO 2024" },
-        { label: "Indices", value: "10+ types" },
-      ],
-      features: [
-        "CBC-based anemia evaluation",
-        "Morphology classification",
-        "Discriminant indices",
-        "Iron therapy dosing",
-        "Thrombocytopenia evaluator",
-      ],
-      linkTo: "/anemia",
-      linkText: "Open Hematology Tools",
-    },
-  ];
 
   // Quick Actions data
   const quickActions: QuickActionProps[] = [
@@ -1306,18 +1143,7 @@ export default function Home() {
           </div>
         </section>
 
-        {/* Dashboard Cards Grid */}
-        <section>
-          <h2 className="text-lg font-semibold mb-4 flex items-center gap-2">
-            <Activity className="h-5 w-5 text-primary" />
-            Condition Modules
-          </h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
-            {dashboardCards.map((card) => (
-              <DashboardCard key={card.title} {...card} />
-            ))}
-          </div>
-        </section>
+        {/* Condition Modules removed — use top tabs to navigate */}
 
         {/* Duplicate Condition Modules section removed */}
 
