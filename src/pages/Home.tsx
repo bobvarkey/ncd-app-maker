@@ -317,67 +317,6 @@ function OCRUpload({ onValuesExtracted }: OCRUploadProps) {
   );
 }
 
-// Dashboard Summary Card Component
-interface DashboardCardProps {
-  title: string;
-  icon: React.ReactNode;
-  color: string;
-  bgColor: string;
-  borderColor: string;
-  quickStats: { label: string; value: string }[];
-  features: string[];
-  linkTo: string;
-  linkText: string;
-}
-
-function DashboardCard({ title, icon, color, bgColor, borderColor, quickStats, features, linkTo, linkText }: DashboardCardProps) {
-  return (
-    <Card className="relative overflow-hidden border-border/60 hover:border-border transition-all hover:shadow-md group">
-      <div className="absolute top-0 left-0 right-0 h-1 opacity-60" style={{ background: color }} />
-      <CardHeader className="pb-3">
-        <div className="flex items-center gap-3">
-          <div className="w-10 h-10 rounded-lg flex items-center justify-center" style={{ background: bgColor }}>
-            {icon}
-          </div>
-          <CardTitle className="text-base">{title}</CardTitle>
-        </div>
-      </CardHeader>
-      <CardContent className="space-y-4">
-        {/* Quick Stats */}
-        <div className="grid grid-cols-2 gap-2">
-          {quickStats.map((stat, i) => (
-            <div key={i} className="p-2 rounded-lg bg-muted/30 border border-border/30">
-              <p className="text-[10px] text-muted-foreground uppercase">{stat.label}</p>
-              <p className="text-sm font-semibold" style={{ color }}>{stat.value}</p>
-            </div>
-          ))}
-        </div>
-
-        {/* Features List */}
-        <div className="space-y-1">
-          {features.map((feature, i) => (
-            <div key={i} className="flex items-center gap-2 text-xs text-muted-foreground">
-              <div className="w-1 h-1 rounded-full" style={{ background: color }} />
-              {feature}
-            </div>
-          ))}
-        </div>
-
-        {/* CTA Button */}
-        <Link to={linkTo}>
-          <Button
-            variant="outline"
-            className="w-full text-xs h-9 mt-2 group-hover:bg-primary/5 transition-colors"
-            style={{ borderColor }}
-          >
-            {linkText}
-            <ArrowRight className="h-3.5 w-3.5 ml-1.5 transition-transform group-hover:translate-x-0.5" />
-          </Button>
-        </Link>
-      </CardContent>
-    </Card>
-  );
-}
 
 // Prescription Engine Component
 function PrescriptionEngine() {
