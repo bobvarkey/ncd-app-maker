@@ -5,7 +5,9 @@ import { useState } from "react";
 import { cn } from "@/lib/utils";
 
 const navItems = [
-  { path: "/home", label: "🏠 Homepage", icon: "🏠", color: "primary" },
+  { path: "/", label: "🏠 NCD Home", icon: "🏠", color: "primary" },
+  { path: "/simple", label: "⚡ Simple", icon: "⚡", color: "blue-500" },
+  { path: "/moderate", label: "🏥 Moderate", icon: "🏥", color: "purple-500" },
   { path: "/diabetes", label: "Diabetes", icon: "💉", color: "red-500" },
   { path: "/hypertension", label: "Hypertension", icon: "❤️", color: "orange-500" },
   { path: "/lipids", label: "Lipids", icon: "💧", color: "blue-500" },
