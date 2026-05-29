@@ -18,7 +18,7 @@ const navItems = [
   { path: "/anemia", label: "🩸 Blood", icon: "🩸", color: "sky-500" },
 ];
 
-const VISIBLE_COLLAPSED = 6;
+const VISIBLE_COLLAPSED = 9;
 
 export function TabNavigation() {
   const location = useLocation();
@@ -48,7 +48,7 @@ export function TabNavigation() {
         {/* Tabs container */}
         <nav className={cn(
           "overflow-x-auto transition-all duration-300",
-          expanded ? "h-24" : "h-12"
+          expanded ? "h-[68px]" : "h-20"
         )}>
           <div className={cn(
             "flex items-center px-2 gap-1 min-w-max h-full",
@@ -79,7 +79,7 @@ export function TabNavigation() {
       </div>
 
       {/* Spacer */}
-      <div className="h-20" />
+      <div className="h-[68px]" />
     </>
   );
 }
