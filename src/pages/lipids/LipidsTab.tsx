@@ -61,7 +61,7 @@ export default function LipidsTab() {
               Comprehensive lipid assessment and treatment with ACC/AHA and LAI 2023 guidelines
             </p>
             {laiResult && (
-              <Badge variant="outline" className={`mt-1 ${laiResult.cat === "EHR" ? "bg-red-500/10 text-red-600 border-red-500/30" : laiResult.cat === "VHR" ? "bg-orange-500/10 text-orange-600 border-orange-500/30" : laiResult.cat === "HR" ? "bg-amber-500/10 text-amber-600 border-amber-500/30" : "bg-green-500/10 text-green-600 border-green-500/30"}`}>
+              <Badge variant="outline" className={`mt-1 ${laiResult.cat === "EHR" ? "bg-red-500/10 text-red-800 border-red-500/30" : laiResult.cat === "VHR" ? "bg-orange-500/10 text-orange-600 border-orange-500/30" : laiResult.cat === "HR" ? "bg-amber-500/10 text-amber-600 border-amber-500/30" : "bg-green-500/10 text-green-800 border-green-500/30"}`}>
                 {laiResult.cat}{laiResult.sub && `-${laiResult.sub}`} — Target LDL {laiResult.ldlTarget}
               </Badge>
             )}

@@ -179,7 +179,7 @@ export default function LipidsTreatment({ laiResult, onBackToAssessment }: Props
               <span className="text-lg font-semibold text-foreground">{laiResult.label}</span>
             </div>
             <div className="flex items-center gap-3 mt-2 text-sm">
-              <span className="text-muted-foreground">Current LDL: <strong className={atTarget ? "text-green-600" : "text-red-600"}>{ldlCurrent || "—"} mg/dL</strong></span>
+              <span className="text-muted-foreground">Current LDL: <strong className={atTarget ? "text-green-800" : "text-red-800"}>{ldlCurrent || "—"} mg/dL</strong></span>
               <span className="text-muted-foreground">Target: <strong>&lt; {ldlTarget} mg/dL</strong></span>
               <Badge variant={atTarget ? "default" : "destructive"} className="text-[10px]">{atTarget ? "At target ✅" : "Above target ⚠"}</Badge>
             </div>

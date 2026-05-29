@@ -365,7 +365,7 @@ export default function LipidsAssessment({ onClassificationChange, onNavigateToT
         {preventResult?.valid ? (
           <div className={`mt-3 p-3 rounded-lg border ${preventResult.category === "High" ? "bg-red-50 border-red-200" : preventResult.category === "Intermediate" ? "bg-amber-50 border-amber-200" : "bg-green-50 border-green-200"}`}>
             <span className="font-semibold text-lg">{preventResult.riskPct}%</span>
-            <span className={`ml-2 text-xs font-semibold ${preventResult.category === "High" ? "text-red-600" : preventResult.category === "Intermediate" ? "text-amber-600" : "text-green-600"}`}>
+            <span className={`ml-2 text-xs font-semibold ${preventResult.category === "High" ? "text-red-800" : preventResult.category === "Intermediate" ? "text-amber-600" : "text-green-800"}`}>
               ({preventResult.category})
             </span>
           </div>
@@ -394,7 +394,7 @@ export default function LipidsAssessment({ onClassificationChange, onNavigateToT
             <p className="text-[10px] text-muted-foreground uppercase font-semibold">LDL Target</p>
             <p className="text-lg font-bold text-foreground">{details.ldl} mg/dL</p>
             <p className="text-xs text-muted-foreground">Current: {ldl || "—"}</p>
-            {ldl && <p className={`text-xs font-semibold ${atTarget ? "text-green-600" : "text-red-600"}`}>{atTarget ? "✅ At target" : "⚠ Above target"}</p>}
+            {ldl && <p className={`text-xs font-semibold ${atTarget ? "text-green-800" : "text-red-800"}`}>{atTarget ? "✅ At target" : "⚠ Above target"}</p>}
           </div>
           <div className="p-3 rounded-lg bg-white/60">
             <p className="text-[10px] text-muted-foreground uppercase font-semibold">Non-HDL Target</p>
@@ -433,15 +433,15 @@ export default function LipidsAssessment({ onClassificationChange, onNavigateToT
               </tr>
             </thead>
             <tbody className="text-foreground">
-              <tr className="border-b border-border/50"><td className="py-2 pr-2 font-bold text-red-600">EHR-A</td><td className="py-2 pr-2"><AbbreviationHover term="ASCVD">ASCVD</AbbreviationHover> only</td><td className="py-2 pr-2 font-bold">&lt; 55</td><td className="py-2">High statin + Ezetimibe</td></tr>
-              <tr className="border-b border-border/50"><td className="py-2 pr-2 font-bold text-red-600">EHR-B</td><td className="py-2 pr-2"><AbbreviationHover term="ASCVD">ASCVD</AbbreviationHover> + 1 high-risk feature</td><td className="py-2 pr-2 font-bold">&lt; 55</td><td className="py-2">+ <AbbreviationHover term="PCSK9i">PCSK9i</AbbreviationHover></td></tr>
-              <tr className="border-b border-border/50"><td className="py-2 pr-2 font-bold text-red-600">EHR-C</td><td className="py-2 pr-2"><AbbreviationHover term="ASCVD">ASCVD</AbbreviationHover> + ≥2 high-risk features</td><td className="py-2 pr-2 font-bold">&lt; 55</td><td className="py-2">Max triple therapy</td></tr>
+              <tr className="border-b border-border/50"><td className="py-2 pr-2 font-bold text-red-800">EHR-A</td><td className="py-2 pr-2"><AbbreviationHover term="ASCVD">ASCVD</AbbreviationHover> only</td><td className="py-2 pr-2 font-bold">&lt; 55</td><td className="py-2">High statin + Ezetimibe</td></tr>
+              <tr className="border-b border-border/50"><td className="py-2 pr-2 font-bold text-red-800">EHR-B</td><td className="py-2 pr-2"><AbbreviationHover term="ASCVD">ASCVD</AbbreviationHover> + 1 high-risk feature</td><td className="py-2 pr-2 font-bold">&lt; 55</td><td className="py-2">+ <AbbreviationHover term="PCSK9i">PCSK9i</AbbreviationHover></td></tr>
+              <tr className="border-b border-border/50"><td className="py-2 pr-2 font-bold text-red-800">EHR-C</td><td className="py-2 pr-2"><AbbreviationHover term="ASCVD">ASCVD</AbbreviationHover> + ≥2 high-risk features</td><td className="py-2 pr-2 font-bold">&lt; 55</td><td className="py-2">Max triple therapy</td></tr>
               <tr className="border-b border-border/50"><td className="py-2 pr-2 font-bold text-orange-600">VHR-A</td><td className="py-2 pr-2"><AbbreviationHover term="ASCVD">ASCVD</AbbreviationHover> equivalent</td><td className="py-2 pr-2 font-bold">&lt; 55</td><td className="py-2">High statin</td></tr>
               <tr className="border-b border-border/50"><td className="py-2 pr-2 font-bold text-orange-600">VHR-B</td><td className="py-2 pr-2"><AbbreviationHover term="DM">DM</AbbreviationHover> + <AbbreviationHover term="TOD">TOD</AbbreviationHover></td><td className="py-2 pr-2 font-bold">&lt; 55</td><td className="py-2">Statin + Ezetimibe</td></tr>
               <tr className="border-b border-border/50"><td className="py-2 pr-2 font-bold text-orange-600">VHR-C</td><td className="py-2 pr-2"><AbbreviationHover term="CKD">CKD</AbbreviationHover>/<AbbreviationHover term="FH">FH</AbbreviationHover>/<AbbreviationHover term="LDL">LDL</AbbreviationHover> ≥190</td><td className="py-2 pr-2 font-bold">&lt; 55</td><td className="py-2">Triple ± <AbbreviationHover term="PCSK9i">PCSK9i</AbbreviationHover></td></tr>
               <tr className="border-b border-border/50"><td className="py-2 pr-2 font-bold text-amber-600">HR</td><td className="py-2 pr-2">Multiple RF, <AbbreviationHover term="DM">DM</AbbreviationHover> alone, <AbbreviationHover term="LDL">LDL</AbbreviationHover> 160-189</td><td className="py-2 pr-2 font-bold">&lt; 70</td><td className="py-2">High statin</td></tr>
               <tr className="border-b border-border/50"><td className="py-2 pr-2 font-bold text-yellow-600">MOD</td><td className="py-2 pr-2">Age ≥40 + enhancer, <AbbreviationHover term="LDL">LDL</AbbreviationHover> 130-159</td><td className="py-2 pr-2 font-bold">&lt; 100</td><td className="py-2">Moderate statin</td></tr>
-              <tr><td className="py-2 pr-2 font-bold text-green-600">LOW</td><td className="py-2 pr-2">No major risk factors</td><td className="py-2 pr-2 font-bold">&lt; 130</td><td className="py-2">Lifestyle</td></tr>
+              <tr><td className="py-2 pr-2 font-bold text-green-800">LOW</td><td className="py-2 pr-2">No major risk factors</td><td className="py-2 pr-2 font-bold">&lt; 130</td><td className="py-2">Lifestyle</td></tr>
             </tbody>
           </table>
         </div>

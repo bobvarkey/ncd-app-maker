@@ -122,7 +122,7 @@ const APOB_POINTS = [
   {
     text: "Young adults with high ApoB but normal LDL-C had a 55% higher risk of developing coronary artery calcification 25 years later.",
     highlight: "55% higher risk",
-    color: "text-amber-500",
+    color: "text-amber-600",
     bold: true,
   },
 ];
@@ -348,7 +348,7 @@ export default function LipidsOverview() {
       <Card className="border-orange-500/30 bg-orange-500/5 p-5">
         <div className="flex items-center gap-3 mb-4">
           <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-gradient-to-br from-orange-500/20 to-amber-500/20 backdrop-blur-md border border-orange-500/30">
-            <Info className="h-5 w-5 text-orange-500" />
+            <Info className="h-5 w-5 text-orange-600" />
           </div>
           <div>
             <h3 className="font-display text-lg font-bold text-foreground">
@@ -381,7 +381,7 @@ export default function LipidsOverview() {
                 key={mod.id}
                 className="flex items-start gap-2 p-2 rounded-lg border border-orange-500/10 bg-orange-500/5"
               >
-                <span className="text-orange-500 mt-0.5">•</span>
+                <span className="text-orange-600 mt-0.5">•</span>
                 <div>
                   <p className="text-sm text-foreground">{mod.label}</p>
                   <p className="text-[10px] text-muted-foreground uppercase">
@@ -508,7 +508,7 @@ export default function LipidsOverview() {
                 {idx === 1 && <Activity className="h-4 w-4 text-blue-500" />}
                 {idx === 2 && <TrendingUp className="h-4 w-4 text-cyan-500" />}
                 {idx === 3 && <Heart className="h-4 w-4 text-emerald-500" />}
-                {idx === 4 && <AlertTriangle className="h-4 w-4 text-amber-500" />}
+                {idx === 4 && <AlertTriangle className="h-4 w-4 text-amber-600" />}
               </div>
               <p className="text-sm text-foreground">
                 {point.text.split(point.highlight).map((part, i, arr) => (
