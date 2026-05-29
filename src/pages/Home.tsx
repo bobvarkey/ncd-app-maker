@@ -1143,18 +1143,7 @@ export default function Home() {
           </div>
         </section>
 
-        {/* Dashboard Cards Grid */}
-        <section>
-          <h2 className="text-lg font-semibold mb-4 flex items-center gap-2">
-            <Activity className="h-5 w-5 text-primary" />
-            Condition Modules
-          </h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
-            {dashboardCards.map((card) => (
-              <DashboardCard key={card.title} {...card} />
-            ))}
-          </div>
-        </section>
+        {/* Condition Modules removed — use top tabs to navigate */}
 
         {/* Duplicate Condition Modules section removed */}
 
