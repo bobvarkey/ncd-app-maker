@@ -1,5 +1,6 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 type NavItem = {
@@ -15,7 +16,7 @@ const navItems: NavItem[] = [
   { path: "/simple",                  label: "Simple",    icon: "⚡", active: "bg-blue-500/10 text-blue-400 border-blue-500/30" },
   { path: "/moderate",                label: "Moderate",  icon: "🏥", active: "bg-purple-500/10 text-purple-400 border-purple-500/30" },
   { path: "/diabetes",                label: "Diabetes",  icon: "💉", active: "bg-red-500/10 text-red-400 border-red-500/30" },
-  { path: "/hypertension",            label: "HTN",       icon: "❤️", active: "bg-orange-500/10 text-orange-400 border-orange-500/30" },
+  { path: "/hypertension",            label: "Hypertension", icon: "❤️", active: "bg-orange-500/10 text-orange-400 border-orange-500/30" },
   { path: "/lipids",                  label: "Lipids",    icon: "💧", active: "bg-blue-500/10 text-blue-400 border-blue-500/30" },
   { path: "/thyroid",                 label: "Thyroid",   icon: "🔬", active: "bg-emerald-500/10 text-emerald-400 border-emerald-500/30" },
   { path: "/obesity/bmi-calculator",  label: "Obesity",   icon: "⚖️", active: "bg-violet-500/10 text-violet-400 border-violet-500/30" },
@@ -27,49 +28,71 @@ const navItems: NavItem[] = [
 export function TabNavigation() {
   const location = useLocation();
   const currentPath = location.pathname;
+  const [collapsed, setCollapsed] = useState(false);
 
   useEffect(() => {
     document.body.classList.add("has-tab-navigation");
     return () => document.body.classList.remove("has-tab-navigation");
   }, []);
 
+  useEffect(() => {
+    document.body.classList.toggle("tab-navigation-collapsed", collapsed);
+    return () => document.body.classList.remove("tab-navigation-collapsed");
+  }, [collapsed]);
+
   return (
-    <>
-      <div className="fixed top-0 left-0 right-0 z-50 bg-card/90 backdrop-blur-md border-b border-border shadow-sm">
-        <nav
-          className="overflow-x-auto scrollbar-thin"
-          aria-label="Primary"
+    <aside
+      className={cn(
+        "fixed top-0 left-0 z-50 h-screen bg-card/95 backdrop-blur-md border-r border-border shadow-sm flex flex-col transition-[width] duration-200",
+        collapsed ? "w-14" : "w-56"
+      )}
+      aria-label="Primary"
+    >
+      <div className="flex items-center justify-between h-12 px-2 border-b border-border shrink-0">
+        {!collapsed && (
+          <span className="text-xs font-semibold text-muted-foreground px-2 truncate">
+            NCD Rx
+          </span>
+        )}
+        <button
+          type="button"
+          onClick={() => setCollapsed((c) => !c)}
+          className="ml-auto inline-flex items-center justify-center h-8 w-8 rounded-md text-muted-foreground hover:bg-muted hover:text-foreground"
+          aria-label={collapsed ? "Expand sidebar" : "Collapse sidebar"}
         >
-          <div className="flex items-center gap-1 px-3 h-12 min-w-max">
-            {navItems.map((item) => {
-              const isActive =
-                currentPath === item.path ||
-                (item.path !== "/home" && currentPath.startsWith(item.path + "/")) ||
-                (item.path !== "/home" && currentPath === item.path);
-              return (
+          {collapsed ? <ChevronRight className="h-4 w-4" /> : <ChevronLeft className="h-4 w-4" />}
+        </button>
+      </div>
+
+      <nav className="flex-1 overflow-y-auto overflow-x-hidden py-2">
+        <ul className="flex flex-col gap-1 px-2">
+          {navItems.map((item) => {
+            const isActive =
+              currentPath === item.path ||
+              (item.path !== "/home" && currentPath.startsWith(item.path + "/"));
+            return (
+              <li key={item.path}>
                 <Link
-                  key={item.path}
                   to={item.path}
+                  title={item.label}
                   className={cn(
-                    "flex items-center gap-1.5 px-3 py-1.5 rounded-md text-xs font-medium whitespace-nowrap transition-all border",
+                    "flex items-center gap-2 px-2 py-2 rounded-md text-sm font-medium transition-all border",
+                    collapsed && "justify-center",
                     isActive
                       ? item.active
                       : "border-transparent text-muted-foreground hover:bg-muted hover:text-foreground"
                   )}
                   aria-current={isActive ? "page" : undefined}
                 >
-                  <span className="text-sm leading-none">{item.icon}</span>
-                  <span>{item.label}</span>
+                  <span className="text-base leading-none">{item.icon}</span>
+                  {!collapsed && <span className="truncate">{item.label}</span>}
                 </Link>
-              );
-            })}
-          </div>
-        </nav>
-      </div>
-
-      {/* Spacer to offset fixed nav */}
-      <div className="h-12" />
-    </>
+              </li>
+            );
+          })}
+        </ul>
+      </nav>
+    </aside>
   );
 }
 
