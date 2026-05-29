@@ -1,7 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
-import { Card, CardContent } from '@/components/ui/card';
-import { ArrowRight, Sparkles, Heart, Activity, Syringe, Dna, Scale, Wind, Droplets, Droplet, Microscope } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { ArrowRight, Sparkles, Activity } from 'lucide-react';
 
 export default function LandingPage() {
   const navigate = useNavigate();
