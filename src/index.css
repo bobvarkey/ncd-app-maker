@@ -90,7 +90,11 @@
   }
   body {
     @apply bg-background text-foreground font-sans antialiased;
-    font-family: 'DM Sans', system-ui, sans-serif;
+    font-family: 'Manrope', system-ui, sans-serif;
+    background-image:
+      radial-gradient(ellipse 80% 60% at 15% 0%, hsl(189 56% 25% / 0.18), transparent 60%),
+      radial-gradient(ellipse 70% 50% at 100% 100%, hsl(178 45% 35% / 0.12), transparent 60%);
+    background-attachment: fixed;
   }
   @media (min-width: 1024px) {
     body.has-tab-navigation #root > div:not([role="region"]),
@@ -101,7 +105,14 @@
     }
   }
   h1, h2, h3, h4, h5, h6 {
-    font-family: 'Space Grotesk', system-ui, sans-serif;
+    font-family: 'Sora', system-ui, sans-serif;
+    letter-spacing: -0.02em;
+  }
+}
+
+@layer components {
+  .clinical-card {
+    @apply rounded-2xl border border-border/70 bg-card/80 backdrop-blur-sm shadow-[0_1px_2px_rgba(0,0,0,0.2),0_8px_24px_-12px_rgba(0,0,0,0.4)] transition-all duration-300 hover:shadow-[0_2px_4px_rgba(0,0,0,0.25),0_16px_40px_-12px_rgba(0,0,0,0.5)] hover:border-primary/30;
   }
 }
 
