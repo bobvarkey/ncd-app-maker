@@ -155,7 +155,7 @@ function analyze(
       diagnosis: "Possible Central Hypothyroidism",
       color: "error",
       rationale: [
-        "A low FT4 without an appropriately elevated TSH suggests pituitary or hypothalamic disease, or severe non-thyroidal illness.",
+        "A low FT4 without an appropriately elevated TSH suggests pituitary or hypothalamic disease, or severe NTI.",
         "This pattern needs clinical correlation and pituitary review; TSH alone is not reliable here.",
       ],
       keyValues: [],
@@ -262,7 +262,8 @@ const PATTERN_TABLE = [
   { pattern: "High TSH + normal FT4", interpretation: "Subclinical hypothyroidism." },
   { pattern: "Low TSH + high FT4 or T3", interpretation: "Overt thyrotoxicosis/hyperthyroidism." },
   { pattern: "Low TSH + normal FT4/FT3", interpretation: "Subclinical hyperthyroidism, early Graves, thyroiditis, or over-replacement." },
-  { pattern: "Low/normal TSH + low FT4", interpretation: "Central hypothyroidism or severe non-thyroidal illness; do not rely on TSH alone." },
+  { pattern: "Low/normal TSH + low FT4", interpretation: "Sick euthyroid (NTI); TSH suppressed by systemic illness; retest after recovery." },
+  { pattern: "Normal TSH + normal FT4", interpretation: "Euthyroid — normal thyroid function." },
 ];
 
 export default function ThyroidCalculator() {
@@ -329,22 +330,6 @@ export default function ThyroidCalculator() {
     setInputs(DEFAULT_INPUTS);
     setCalculated(true);
     localStorage.removeItem("ncd_inputs_thyroid");
-  }
-
-  function fillHyperthyroid() {
-    setInputs({
-      tsh: "0.01",
-      ft4: "2.4",
-      ft3: "5.1",
-      tpo: "no",
-      trab: "yes",
-      pregnant: "no",
-      weight: "62",
-      age: "31",
-      cardiac: "no",
-      severity: "moderate",
-    });
-    setCalculated(true);
   }
 
   const colors = result ? colorClasses[result.dx.color] : colorClasses.primary;
@@ -434,14 +419,14 @@ export default function ThyroidCalculator() {
                     <Input id="ft3" type="number" step="0.01" value={inputs.ft3} onChange={(e) => handleInput("ft3", e.target.value)} />
                   </div>
                   <div className="space-y-2">
-                    <Label htmlFor="tpo"><AbbreviationHover term="TPO">Anti-TPO</AbbreviationHover> positive?</Label>
+                    <Label htmlFor="tpo"><AbbreviationHover term="TPO">Anti-TPO / TgAb</AbbreviationHover> positive?</Label>
                     <select id="tpo" value={inputs.tpo} onChange={(e) => handleInput("tpo", e.target.value)} className="flex h-10 w-full rounded-lg border border-input bg-background px-3 py-2 text-sm ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring">
                       <option value="no">No</option>
                       <option value="yes">Yes</option>
                     </select>
                   </div>
                   <div className="space-y-2">
-                    <Label htmlFor="trab"><AbbreviationHover term="TRAb">TRAb</AbbreviationHover> / <AbbreviationHover term="TSI">TSI</AbbreviationHover> positive?</Label>
+                    <Label htmlFor="trab"><AbbreviationHover term="TRAb">TRAb / TSI</AbbreviationHover> positive?</Label>
                     <select id="trab" value={inputs.trab} onChange={(e) => handleInput("trab", e.target.value)} className="flex h-10 w-full rounded-lg border border-input bg-background px-3 py-2 text-sm ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring">
                       <option value="no">No</option>
                       <option value="yes">Yes</option>
@@ -489,10 +474,6 @@ export default function ThyroidCalculator() {
                   <Button size="lg" onClick={calculate}>
                     <Calculator className="h-4 w-4 mr-2" />
                     Calculate
-                  </Button>
-                  <Button variant="outline" size="lg" onClick={fillHyperthyroid}>
-                    <Activity className="h-4 w-4 mr-2" />
-                    Hyperthyroid Example
                   </Button>
                 </div>
               </CardContent>
