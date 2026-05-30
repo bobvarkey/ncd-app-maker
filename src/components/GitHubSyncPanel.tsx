@@ -147,9 +147,30 @@ export function GitHubSyncPanel({ initialBranch }: GitHubSyncPanelProps) {
           ? "Local build is behind the latest remote commit."
           : "Local build is up to date with the remote repository.",
       });
+      setLastFetched(new Date());
+
+      if (behind) {
+        toast({
+          title: "Behind remote",
+          description: `Latest remote commit (${remoteCommit.hash}) is ahead of this build.`,
+          variant: "default",
+        });
+      } else {
+        toast({
+          title: "Up to date",
+          description: "This build matches the latest remote commit.",
+          variant: "default",
+        });
+      }
     } catch (err: unknown) {
       const msg = err instanceof Error ? err.message : "Unknown error";
       setSync((s) => ({ ...s, status: "error", message: msg }));
+      setLastFetched(new Date());
+      toast({
+        title: "Fetch failed",
+        description: msg,
+        variant: "destructive",
+      });
     }
   }, []);
 
