@@ -8,6 +8,7 @@ import { AbbreviationHover, AbbrText } from "@/components/AbbreviationHover";
 import LipidsOverview from "./LipidsOverview";
 import LipidsAssessment from "./LipidsAssessment";
 import LipidsTreatment from "./LipidsTreatment";
+import { SmartLabelUpload, LIPID_FIELDS } from "@/components/SmartLabelUpload";
 import RenalDoseAdjustment from "../RenalDoseAdjustment";
 // import Respiratory from "../Respiratory";
 
@@ -66,6 +67,13 @@ export default function LipidsTab() {
               </Badge>
             )}
           </div>
+        </div>
+
+        {/* Smart Lab Import */}
+        <div className="mb-6">
+          <SmartLabelUpload fields={LIPID_FIELDS.fields} onParse={(values) => {
+            Object.entries(values).forEach(([key, val]) => localStorage.setItem(`lipid_${key}`, val));
+          }} />
         </div>
 
         <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6">
