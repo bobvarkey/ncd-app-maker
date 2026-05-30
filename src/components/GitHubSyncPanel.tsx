@@ -17,10 +17,6 @@ interface SyncState {
   message: string;
 }
 
-interface FetchResult {
-  status: "up-to-date" | "behind" | "error";
-  message: string;
-}
 
 const REPO_OWNER = "bobvarkey";
 const REPO_NAME = "ncd-app-maker";
