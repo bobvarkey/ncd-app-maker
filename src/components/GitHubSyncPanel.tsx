@@ -248,6 +248,23 @@ export function GitHubSyncPanel({ initialBranch }: GitHubSyncPanelProps) {
           </span>
         </div>
 
+        {/* Last fetched */}
+        <div className="flex items-center justify-between">
+          <span className="text-muted-foreground text-xs">Last checked</span>
+          <span className="text-xs font-medium">
+            {lastFetched
+              ? lastFetched.toLocaleString("en-IN", {
+                  timeZone: "Asia/Kolkata",
+                  day: "numeric",
+                  month: "short",
+                  year: "numeric",
+                  hour: "2-digit",
+                  minute: "2-digit",
+                })
+              : "—"}
+          </span>
+        </div>
+
         {/* Divider */}
         <div className="border-t border-border/40 my-1" />
 
