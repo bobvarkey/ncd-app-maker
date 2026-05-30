@@ -106,6 +106,7 @@ export function GitHubSyncPanel({ initialBranch }: GitHubSyncPanelProps) {
   });
 
   const [branch, setBranch] = useState(initialBranch ?? "main");
+  const [lastFetched, setLastFetched] = useState<Date | null>(null);
 
   // Build timestamp — injected as ISO string during Vite build
   const buildTime = import.meta.env.VITE_BUILD_TIME
