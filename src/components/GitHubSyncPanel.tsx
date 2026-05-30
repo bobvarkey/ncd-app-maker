@@ -211,7 +211,7 @@ export function GitHubSyncPanel({ initialBranch }: GitHubSyncPanelProps) {
           ) : (
             <RefreshCw className="h-3.5 w-3.5" />
           )}
-          Sync now
+          Fetch latest
         </Button>
       </CardHeader>
 
