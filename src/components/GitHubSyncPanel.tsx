@@ -17,6 +17,11 @@ interface SyncState {
   message: string;
 }
 
+interface FetchResult {
+  status: "up-to-date" | "behind" | "error";
+  message: string;
+}
+
 const REPO_OWNER = "bobvarkey";
 const REPO_NAME = "ncd-app-maker";
 const GITHUB_API = `https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}`;
