@@ -4,6 +4,7 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/com
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
+import { toast } from "@/hooks/use-toast";
 
 // ---------------------------------------------------------------------------
 // Types
@@ -15,6 +16,7 @@ interface SyncState {
   behind: boolean;
   message: string;
 }
+
 
 const REPO_OWNER = "bobvarkey";
 const REPO_NAME = "ncd-app-maker";
@@ -104,6 +106,7 @@ export function GitHubSyncPanel({ initialBranch }: GitHubSyncPanelProps) {
   });
 
   const [branch, setBranch] = useState(initialBranch ?? "main");
+  const [lastFetched, setLastFetched] = useState<Date | null>(null);
 
   // Build timestamp — injected as ISO string during Vite build
   const buildTime = import.meta.env.VITE_BUILD_TIME
@@ -144,9 +147,30 @@ export function GitHubSyncPanel({ initialBranch }: GitHubSyncPanelProps) {
           ? "Local build is behind the latest remote commit."
           : "Local build is up to date with the remote repository.",
       });
+      setLastFetched(new Date());
+
+      if (behind) {
+        toast({
+          title: "Behind remote",
+          description: `Latest remote commit (${remoteCommit.hash}) is ahead of this build.`,
+          variant: "default",
+        });
+      } else {
+        toast({
+          title: "Up to date",
+          description: "This build matches the latest remote commit.",
+          variant: "default",
+        });
+      }
     } catch (err: unknown) {
       const msg = err instanceof Error ? err.message : "Unknown error";
       setSync((s) => ({ ...s, status: "error", message: msg }));
+      setLastFetched(new Date());
+      toast({
+        title: "Fetch failed",
+        description: msg,
+        variant: "destructive",
+      });
     }
   }, []);
 
@@ -187,7 +211,7 @@ export function GitHubSyncPanel({ initialBranch }: GitHubSyncPanelProps) {
           ) : (
             <RefreshCw className="h-3.5 w-3.5" />
           )}
-          Sync now
+          Fetch latest
         </Button>
       </CardHeader>
 
@@ -221,6 +245,23 @@ export function GitHubSyncPanel({ initialBranch }: GitHubSyncPanelProps) {
           <span className="text-muted-foreground text-xs">App build time</span>
           <span className="text-xs font-medium">
             {buildTime ?? "—"}
+          </span>
+        </div>
+
+        {/* Last fetched */}
+        <div className="flex items-center justify-between">
+          <span className="text-muted-foreground text-xs">Last checked</span>
+          <span className="text-xs font-medium">
+            {lastFetched
+              ? lastFetched.toLocaleString("en-IN", {
+                  timeZone: "Asia/Kolkata",
+                  day: "numeric",
+                  month: "short",
+                  year: "numeric",
+                  hour: "2-digit",
+                  minute: "2-digit",
+                })
+              : "—"}
           </span>
         </div>
 
