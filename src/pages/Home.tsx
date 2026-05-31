@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { Activity, Droplets, Heart, Scale, Syringe, Activity as PulseIcon, Dna, FileText, ChevronRight, Info, ChevronDown, Upload, Sparkles, Calculator, Stethoscope, FileSearch, UtensilsCrossed } from "lucide-react";
+import { Activity, Droplets, Heart, Scale, Syringe, Activity as PulseIcon, Dna, FileText, ChevronRight, Info, ChevronDown, Upload, Sparkles, Calculator, Stethoscope, FileSearch, UtensilsCrossed, Scan, CheckCircle2, X } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -15,6 +15,10 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { GitHubSyncPanel } from "@/components/GitHubSyncPanel";
+import { useGlobalLabFillAll } from "@/hooks/useGlobalLabFill";
+import { useLabContext } from "@/components/SmartLabelUpload/GlobalLabContext";
+import { DIABETES_FIELDS, HTN_FIELDS, LIPID_FIELDS, OBESITY_FIELDS, THYROID_FIELDS, CBC_FIELDS, RENAL_FIELDS } from "@/components/SmartLabelUpload";
+import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import {
   Collapsible,
   CollapsibleContent,
@@ -56,6 +60,24 @@ const categoryColors = {
     bg: "rgba(56,189,248,0.12)",
     border: "rgba(56,189,248,0.2)",
     gradient: "from-sky-500 to-blue-600",
+  },
+  thyroid: {
+    accent: "#4ade80",
+    bg: "rgba(74,222,128,0.12)",
+    border: "rgba(74,222,128,0.2)",
+    gradient: "from-green-500 to-emerald-600",
+  },
+  renal: {
+    accent: "#e879f9",
+    bg: "rgba(232,121,249,0.12)",
+    border: "rgba(232,121,249,0.2)",
+    gradient: "from-fuchsia-500 to-pink-600",
+  },
+  respiratory: {
+    accent: "#fbbf24",
+    bg: "rgba(251,191,36,0.12)",
+    border: "rgba(251,191,36,0.2)",
+    gradient: "from-amber-500 to-yellow-600",
   },
 };
 
@@ -318,6 +340,271 @@ function OCRUpload({ onValuesExtracted }: OCRUploadProps) {
 }
 
 
+// ── Smart Lab Upload Form (paste text to auto-fill prescription inputs) ──
+interface SmartLabFillSetters {
+  setHbA1c: (v: string) => void;
+  setFbg: (v: string) => void;
+  setWeight: (v: string) => void;
+  setHeight: (v: string) => void;
+  setLdl: (v: string) => void;
+  setHdl: (v: string) => void;
+  setTg: (v: string) => void;
+  setCreatinine: (v: string) => void;
+  setAge: (v: string) => void;
+  setBmi: (v: string) => void;
+  setBpSystolic: (v: string) => void;
+  setBpDiastolic: (v: string) => void;
+  setEgfr: (v: string) => void;
+}
+
+function SmartLabUploadForm() {
+  const [freeText, setFreeText] = useState("");
+  const [parsedValues, setParsedValues] = useState<Record<string, string> | null>(null);
+  const [showParser, setShowParser] = useState(false);
+  const [activeTab, setActiveTab] = useState<"text" | "ocr">("text");
+  const [ocrText, setOcrText] = useState("");
+  const [ocrState, setOcrState] = useState<"idle" | "processing" | "done" | "error">("idle");
+  const fileInputRef = useRef<HTMLInputElement>(null);
+
+  // Merge all relevant fields for parsing
+  const allFields = React.useMemo(() => [
+    ...DIABETES_FIELDS.fields,
+    ...HTN_FIELDS.fields,
+    ...LIPID_FIELDS.fields,
+    ...OBESITY_FIELDS.fields,
+    ...THYROID_FIELDS.fields,
+    ...CBC_FIELDS.fields,
+    ...RENAL_FIELDS.fields,
+  ], []);
+
+  const parseText = (text: string) => {
+    const found: Record<string, string> = {};
+
+    for (const field of allFields) {
+      const match = text.match(field.regex);
+      if (match) {
+        for (let i = 1; i < match.length; i++) {
+          if (match[i] !== undefined) {
+            const val = parseFloat(match[i].replace(/,/g, ""));
+            if (!isNaN(val)) {
+              let finalVal = val;
+              if (field.transform) finalVal = field.transform(val);
+              found[field.key] = String(finalVal);
+              break;
+            }
+          }
+        }
+        continue;
+      }
+
+      for (const kw of field.keywords) {
+        const kwPattern = new RegExp(`${kw}[\\s:=]+([\\d,.]+)`, "i");
+        const kwMatch = text.match(kwPattern);
+        if (kwMatch) {
+          const val = parseFloat(kwMatch[1].replace(/,/g, ""));
+          if (!isNaN(val)) {
+            let finalVal = val;
+            if (field.transform) finalVal = field.transform(val);
+            found[field.key] = String(finalVal);
+            break;
+          }
+        }
+      }
+    }
+
+    if (Object.keys(found).length > 0) {
+      setParsedValues(found);
+    } else {
+      setParsedValues({ __none: "No values could be identified. Try a clearer format like 'HbA1c 7.2%' or 'Weight 70 kg'." });
+    }
+  };
+
+  const handleParseText = () => {
+    if (!freeText.trim()) return;
+    parseText(freeText);
+  };
+
+  const handleFileUpload = async (file: File) => {
+    setOcrState("processing");
+    setOcrText("");
+
+    try {
+      const { createWorker } = await import("tesseract.js");
+      const worker = await createWorker("eng");
+      const { data } = await worker.recognize(file);
+      const text = data.text;
+      await worker.terminate();
+
+      setOcrText(text);
+      parseText(text);
+      setOcrState("done");
+    } catch (err) {
+      setOcrState("error");
+      console.error("OCR error:", err);
+    }
+  };
+
+  const { setParsedValues: setGlobal } = useLabContext();
+
+  const resetAll = () => {
+    setShowParser(false);
+    setFreeText("");
+    setOcrText("");
+    setParsedValues(null);
+    setOcrState("idle");
+  };
+
+  return (
+    <div className="mb-4">
+      {!showParser ? (
+        <button
+          onClick={() => setShowParser(true)}
+          className="w-full flex items-center justify-center gap-2 px-4 py-2.5 rounded-lg border border-primary/30 border-dashed bg-primary/5 hover:bg-primary/10 transition-colors text-sm text-primary"
+        >
+          <Scan className="h-4 w-4" />
+          <span>Paste lab values or upload report to auto-fill inputs</span>
+          <Sparkles className="h-3 w-3 text-muted-foreground" />
+        </button>
+      ) : (
+        <Card className="border-primary/20">
+          <CardHeader className="pb-2 flex-row items-center justify-between">
+            <CardTitle className="text-sm flex items-center gap-2">
+              <Scan className="h-4 w-4 text-primary" />
+              Smart Lab Upload — Auto-Fill
+            </CardTitle>
+            <Button variant="ghost" size="sm" onClick={resetAll}>
+              <X className="h-4 w-4" />
+            </Button>
+          </CardHeader>
+          <CardContent className="space-y-3">
+            <Tabs value={activeTab} onValueChange={(v) => setActiveTab(v as "text" | "ocr")}>
+              <TabsList className="w-full">
+                <TabsTrigger value="text" className="flex-1 gap-2">
+                  <FileText className="h-4 w-4" />
+                  Type or Paste Text
+                </TabsTrigger>
+                <TabsTrigger value="ocr" className="flex-1 gap-2">
+                  <Upload className="h-4 w-4" />
+                  OCR — Upload Image
+                </TabsTrigger>
+              </TabsList>
+
+              {/* ── Text Tab ── */}
+              <TabsContent value="text" className="space-y-3 mt-3">
+                <textarea
+                  value={freeText}
+                  onChange={(e) => setFreeText(e.target.value)}
+                  placeholder={`Paste lab values from any report. Examples:
+
+HbA1c 7.2%
+Fasting Glucose 142 mg/dL
+Weight 72 kg
+LDL 128 mg/dL
+HDL 42 mg/dL
+Triglycerides 156 mg/dL
+Creatinine 1.1 mg/dL
+BP 130/85
+Age 58 years
+
+Also works for: TSH, Free T4, Ferritin, TSAT, Hemoglobin, MCV, eGFR, Potassium, BUN, BMI, Height`}
+                  className="w-full min-h-[140px] rounded-lg border border-input bg-background p-3 text-sm font-mono resize-y focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                />
+                <Button size="sm" onClick={handleParseText} disabled={!freeText.trim()} className="gap-1">
+                  <Scan className="h-3.5 w-3.5" />
+                  Parse Values
+                </Button>
+              </TabsContent>
+
+              {/* ── OCR Tab ── */}
+              <TabsContent value="ocr" className="space-y-3 mt-3">
+                <input
+                  type="file"
+                  ref={fileInputRef}
+                  accept="image/*,.pdf"
+                  className="hidden"
+                  onChange={(e) => {
+                    const file = e.target.files?.[0];
+                    if (file) handleFileUpload(file);
+                  }}
+                />
+                <div
+                  className="border-2 border-dashed border-border rounded-xl p-8 text-center hover:border-primary/40 transition-colors cursor-pointer"
+                  onClick={() => fileInputRef.current?.click()}
+                >
+                  {ocrState === "processing" ? (
+                    <div className="flex flex-col items-center gap-3">
+                      <div className="animate-spin h-8 w-8 border-2 border-primary border-t-transparent rounded-full" />
+                      <p className="text-sm text-muted-foreground">Processing image with OCR...</p>
+                    </div>
+                  ) : (
+                    <div className="flex flex-col items-center gap-3">
+                      <Upload className="h-8 w-8 text-muted-foreground" />
+                      <p className="text-sm font-medium">Click to upload a lab report image</p>
+                      <p className="text-xs text-muted-foreground">JPG, PNG, or PDF</p>
+                    </div>
+                  )}
+                </div>
+                {ocrState === "error" && (
+                  <div className="flex items-center gap-2 text-sm text-destructive bg-destructive/10 rounded-lg p-3">
+                    <AlertTriangle className="h-4 w-4" />
+                    OCR failed. Try pasting the text manually.
+                  </div>
+                )}
+                {ocrText && (
+                  <div className="bg-muted/30 rounded-lg p-3 text-xs font-mono max-h-[120px] overflow-y-auto whitespace-pre-wrap border border-border">
+                    {ocrText}
+                  </div>
+                )}
+              </TabsContent>
+            </Tabs>
+
+            {/* ── Parsed Results ── */}
+            {parsedValues && (
+              <div className="rounded-xl border border-border bg-muted/20 overflow-hidden">
+                <div className="flex items-center justify-between px-4 py-2.5 bg-muted/30 border-b border-border">
+                  <div className="flex items-center gap-2 text-sm">
+                    <CheckCircle2 className="h-4 w-4 text-emerald-400" />
+                    <span className="font-medium">Found {Object.keys(parsedValues).filter(k => k !== "__none").length} value{Object.keys(parsedValues).filter(k => k !== "__none").length !== 1 ? "s" : ""}</span>
+                  </div>
+                  {!parsedValues.__none && (
+                    <Button size="sm" variant="default" onClick={() => {
+                      setGlobal(parsedValues);
+                      resetAll();
+                    }}>
+                      <Upload className="h-3 w-3 mr-1" />
+                      Fill Inputs
+                    </Button>
+                  )}
+                </div>
+                <div className="p-2 space-y-1">
+                  {parsedValues.__none ? (
+                    <div className="px-3 py-2 text-sm text-amber-400">
+                      {parsedValues.__none}
+                    </div>
+                  ) : (
+                    Object.entries(parsedValues).map(([key, val]) => {
+                      const field = allFields.find(f => f.key === key);
+                      return (
+                        <div key={key} className="flex items-center justify-between px-3 py-2 rounded-lg text-sm bg-background border border-border">
+                          <span className="font-medium">{field?.label || key}</span>
+                          <div className="flex items-center gap-2">
+                            <span className="font-mono font-semibold">{val}</span>
+                            {field?.unit && <span className="text-xs text-muted-foreground">{field.unit}</span>}
+                          </div>
+                        </div>
+                      );
+                    })
+                  )}
+                </div>
+              </div>
+            )}
+          </CardContent>
+        </Card>
+      )}
+    </div>
+  );
+}
+
 // Prescription Engine Component
 function PrescriptionEngine() {
   const [patientName, setPatientName] = useState("");
@@ -337,6 +624,16 @@ function PrescriptionEngine() {
   const [sex, setSex] = useState<"male" | "female">("male");
   const [race, setRace] = useState<"black" | "non-black">("non-black");
   const [bmi, setBmi] = useState("");
+  const [tsh, setTsh] = useState("");
+  const [ft4, setFt4] = useState("");
+  const [ft3, setFt3] = useState("");
+  const [ferritin, setFerritin] = useState("");
+  const [serumIron, setSerumIron] = useState("");
+  const [tibc, setTibc] = useState("");
+  const [tsat, setTsat] = useState("");
+
+  // Global Smart Lab auto-fill
+  useGlobalLabFillAll({ hba1c: setHba1c, weight: setWeight, height: setHeight, ldl: setLdl, hdl: setHdl, tg: setTg, egfr: setEgfr, creatinine: setCreatinine, bmi: setBmi, age: setAge, fbg: setFbg, tsh: setTsh, ft4: setFt4, ft3: setFt3, ferritin: setFerritin, serumIron: setSerumIron, tibc: setTibc, tsat: setTsat });
   const [hasASCVD, setHasASCVD] = useState(false);
   const [hasCKD, setHasCKD] = useState(false);
   const [hasCHF, setHasCHF] = useState(false);
@@ -694,8 +991,8 @@ function PrescriptionEngine() {
             <FileText className="h-5 w-5 text-primary" />
           </div>
           <div>
-            <h2 className="text-lg font-semibold">Prescription Engine</h2>
-            <p className="text-sm text-muted-foreground">Generate integrated prescriptions for diabetes, hypertension, lipids, obesity, renal, & blood disorders</p>
+            <h2 className="text-lg font-semibold">Unified Prescription Engine</h2>
+            <p className="text-sm text-muted-foreground">Generate integrated prescriptions for diabetes, hypertension, lipids, obesity, thyroid, respiratory, renal, & blood disorders</p>
           </div>
         </div>
       </div>
@@ -740,6 +1037,17 @@ function PrescriptionEngine() {
               placeholder="70"
               className="h-10 px-3 rounded-lg border-border/60 focus:ring-2 focus:ring-primary/50 focus:border-primary transition-all"
             />
+          </div>
+          <div className="space-y-2">
+            <Label className="text-xs">Height (cm)</Label>
+            <Input
+              type="number"
+              value={height}
+              onChange={(e) => setHeight(e.target.value)}
+              placeholder="170"
+              className="h-10 px-3 rounded-lg border-border/60 focus:ring-2 focus:ring-primary/50 focus:border-primary transition-all"
+            />
+            <p className="text-[10px] text-muted-foreground">auto-calculates BMI</p>
           </div>
         </div>
 
@@ -858,17 +1166,68 @@ function PrescriptionEngine() {
             <p className="text-[10px] text-muted-foreground">CKD-EPI 2021 equation</p>
           </div>
           <div className="space-y-2">
-            <Label className="text-xs">BMI (kg/m²)</Label>
+            <Label className="text-xs flex items-center gap-1">
+              BMI
+              <span className="text-[10px] text-muted-foreground">(kg/m²)</span>
+            </Label>
             <Input
               type="number"
               step="0.1"
               value={bmi}
-              onChange={(e) => setBmi(e.target.value)}
-              placeholder="25"
-              className="h-10 px-3 rounded-lg border-border/60 focus:ring-2 focus:ring-primary/50 focus:border-primary transition-all"
+              readOnly
+              placeholder="auto-calc"
+              className="h-9 bg-muted"
             />
+            <p className="text-[10px] text-muted-foreground">auto-calculated from weight & height</p>
           </div>
         </div>
+
+        {/* ── Thyroid & Iron Labs (Optional) ── */}
+        <Collapsible className="mb-6" defaultOpen>
+          <CollapsibleTrigger asChild>
+            <button className="w-full flex items-center gap-2 px-4 py-2.5 rounded-lg border border-border/40 bg-muted/20 hover:bg-muted/30 transition-colors text-sm text-muted-foreground hover:text-foreground">
+              <span className="w-2 h-2 rounded-full bg-emerald-400 shrink-0" />
+              <span className="w-2 h-2 rounded-full bg-sky-400 shrink-0" />
+              <span className="font-medium">Thyroid & Iron Studies</span>
+              <span className="text-[10px] text-muted-foreground">(optional)</span>
+              <ChevronDown className="h-3.5 w-3.5 ml-auto transition-transform" />
+            </button>
+          </CollapsibleTrigger>
+          <CollapsibleContent className="pt-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-4">
+              <div className="space-y-2">
+                <Label className="text-xs flex items-center gap-1">TSH <span className="text-[10px] text-muted-foreground">(mIU/L)</span></Label>
+                <Input type="number" step="0.01" value={tsh} onChange={(e) => setTsh(e.target.value)} placeholder="2.5" className="h-10 px-3 rounded-lg border-emerald-500/30 focus:ring-2 focus:ring-emerald-500/50 focus:border-emerald-500 transition-all" />
+              </div>
+              <div className="space-y-2">
+                <Label className="text-xs flex items-center gap-1">Free T4 <span className="text-[10px] text-muted-foreground">(ng/dL)</span></Label>
+                <Input type="number" step="0.01" value={ft4} onChange={(e) => setFt4(e.target.value)} placeholder="1.1" className="h-10 px-3 rounded-lg border-emerald-500/30 focus:ring-2 focus:ring-emerald-500/50 focus:border-emerald-500 transition-all" />
+              </div>
+              <div className="space-y-2">
+                <Label className="text-xs flex items-center gap-1">Free T3 <span className="text-[10px] text-muted-foreground">(ng/dL)</span></Label>
+                <Input type="number" step="0.01" value={ft3} onChange={(e) => setFt3(e.target.value)} placeholder="3.5" className="h-10 px-3 rounded-lg border-emerald-500/30 focus:ring-2 focus:ring-emerald-500/50 focus:border-emerald-500 transition-all" />
+              </div>
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+              <div className="space-y-2">
+                <Label className="text-xs flex items-center gap-1">Ferritin <span className="text-[10px] text-muted-foreground">(ng/mL)</span></Label>
+                <Input type="number" value={ferritin} onChange={(e) => setFerritin(e.target.value)} placeholder="100" className="h-10 px-3 rounded-lg border-sky-500/30 focus:ring-2 focus:ring-sky-500/50 focus:border-sky-500 transition-all" />
+              </div>
+              <div className="space-y-2">
+                <Label className="text-xs flex items-center gap-1">Serum Iron <span className="text-[10px] text-muted-foreground">(µg/dL)</span></Label>
+                <Input type="number" value={serumIron} onChange={(e) => setSerumIron(e.target.value)} placeholder="80" className="h-10 px-3 rounded-lg border-sky-500/30 focus:ring-2 focus:ring-sky-500/50 focus:border-sky-500 transition-all" />
+              </div>
+              <div className="space-y-2">
+                <Label className="text-xs flex items-center gap-1">TIBC <span className="text-[10px] text-muted-foreground">(µg/dL)</span></Label>
+                <Input type="number" value={tibc} onChange={(e) => setTibc(e.target.value)} placeholder="300" className="h-10 px-3 rounded-lg border-sky-500/30 focus:ring-2 focus:ring-sky-500/50 focus:border-sky-500 transition-all" />
+              </div>
+              <div className="space-y-2">
+                <Label className="text-xs flex items-center gap-1">TSAT <span className="text-[10px] text-muted-foreground">(%)</span></Label>
+                <Input type="number" step="0.1" value={tsat} onChange={(e) => setTsat(e.target.value)} placeholder="20" className="h-10 px-3 rounded-lg border-sky-500/30 focus:ring-2 focus:ring-sky-500/50 focus:border-sky-500 transition-all" />
+              </div>
+            </div>
+          </CollapsibleContent>
+        </Collapsible>
 
         {/* Comorbidities */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6 p-4 bg-muted/30 rounded-lg">
@@ -970,6 +1329,9 @@ function PrescriptionEngine() {
             </div>
           )}
         </div>
+
+        {/* Smart Lab Upload — Paste text to auto-fill inputs */}
+        <SmartLabUploadForm />
 
         {/* Generate Button */}
         <div className="flex gap-3">
@@ -1089,11 +1451,11 @@ export default function Home() {
               Prescription Engine
             </h1>
             <p className="text-muted-foreground mt-2 max-w-xl">
-              Comprehensive non-communicable disease management tools — diabetes, hypertension, lipids, and obesity.
+              Comprehensive non-communicable disease management tools — diabetes, hypertension, lipids, obesity, thyroid, respiratory (COPD/asthma), renal, and blood disorders.
               Access detailed assessment tools, treatment algorithms, and clinical guidelines.
             </p>
           </div>
-          <div className="flex items-center gap-3 text-sm text-muted-foreground bg-muted/30 px-4 py-3 rounded-lg border border-border">
+          <div className="flex flex-wrap items-center gap-3 text-sm text-muted-foreground bg-muted/30 px-4 py-3 rounded-lg border border-border">
             <div className="flex items-center gap-2">
               <span className="w-2 h-2 rounded-full" style={{ background: categoryColors.diabetes.accent }} />
               <span>Diabetes</span>
@@ -1109,6 +1471,22 @@ export default function Home() {
             <div className="flex items-center gap-2">
               <span className="w-2 h-2 rounded-full" style={{ background: categoryColors.obesity.accent }} />
               <span>Obesity</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <span className="w-2 h-2 rounded-full" style={{ background: categoryColors.thyroid.accent }} />
+              <span>Thyroid</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <span className="w-2 h-2 rounded-full" style={{ background: categoryColors.respiratory.accent }} />
+              <span>COPD/Resp</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <span className="w-2 h-2 rounded-full" style={{ background: categoryColors.renal.accent }} />
+              <span>Renal</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <span className="w-2 h-2 rounded-full" style={{ background: categoryColors.anemia.accent }} />
+              <span>Blood</span>
             </div>
           </div>
         </div>
