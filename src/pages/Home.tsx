@@ -1038,17 +1038,6 @@ function PrescriptionEngine() {
               className="h-10 px-3 rounded-lg border-border/60 focus:ring-2 focus:ring-primary/50 focus:border-primary transition-all"
             />
           </div>
-          <div className="space-y-2">
-            <Label className="text-xs">Height (cm)</Label>
-            <Input
-              type="number"
-              value={height}
-              onChange={(e) => setHeight(e.target.value)}
-              placeholder="170"
-              className="h-10 px-3 rounded-lg border-border/60 focus:ring-2 focus:ring-primary/50 focus:border-primary transition-all"
-            />
-            <p className="text-[10px] text-muted-foreground">auto-calculates BMI</p>
-          </div>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
@@ -1164,6 +1153,19 @@ function PrescriptionEngine() {
               readOnly
             />
             <p className="text-[10px] text-muted-foreground">CKD-EPI 2021 equation</p>
+          </div>
+          <div className="space-y-2">
+            <Label className="text-xs flex items-center gap-1">
+              Height
+              <span className="text-[10px] text-muted-foreground">(cm)</span>
+            </Label>
+            <Input
+              type="number"
+              value={height}
+              onChange={(e) => setHeight(e.target.value)}
+              placeholder="170"
+              className="h-10 px-3 rounded-lg border-border/60 focus:ring-2 focus:ring-primary/50 focus:border-primary transition-all"
+            />
           </div>
           <div className="space-y-2">
             <Label className="text-xs flex items-center gap-1">
