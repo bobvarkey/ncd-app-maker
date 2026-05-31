@@ -30,58 +30,6 @@ interface PrescriptionState {
   severity?: string;
 }
 
-const categoryColors = {
-  diabetes: {
-    accent: "#f87171",
-    bg: "rgba(248,113,113,0.12)",
-    border: "rgba(248,113,113,0.2)",
-    gradient: "from-red-500 to-rose-600",
-  },
-  hypertension: {
-    accent: "#fb923c",
-    bg: "rgba(251,146,60,0.12)",
-    border: "rgba(251,146,60,0.2)",
-    gradient: "from-orange-500 to-amber-600",
-  },
-  lipid: {
-    accent: "#60a5fa",
-    bg: "rgba(96,165,250,0.12)",
-    border: "rgba(96,165,250,0.2)",
-    gradient: "from-blue-500 to-cyan-600",
-  },
-  obesity: {
-    accent: "#a78bfa",
-    bg: "rgba(167,139,250,0.12)",
-    border: "rgba(167,139,250,0.2)",
-    gradient: "from-violet-500 to-purple-600",
-  },
-  anemia: {
-    accent: "#38bdf8",
-    bg: "rgba(56,189,248,0.12)",
-    border: "rgba(56,189,248,0.2)",
-    gradient: "from-sky-500 to-blue-600",
-  },
-  thyroid: {
-    accent: "#4ade80",
-    bg: "rgba(74,222,128,0.12)",
-    border: "rgba(74,222,128,0.2)",
-    gradient: "from-green-500 to-emerald-600",
-  },
-  renal: {
-    accent: "#e879f9",
-    bg: "rgba(232,121,249,0.12)",
-    border: "rgba(232,121,249,0.2)",
-    gradient: "from-fuchsia-500 to-pink-600",
-  },
-  respiratory: {
-    accent: "#fbbf24",
-    bg: "rgba(251,191,36,0.12)",
-    border: "rgba(251,191,36,0.2)",
-    gradient: "from-amber-500 to-yellow-600",
-  },
-};
-
-// Full forms data for abbreviations
 const fullForms: Record<string, string> = {
   // Diabetes
   "FG": "Fasting Glucose",
@@ -1456,40 +1404,6 @@ export default function Home() {
               Comprehensive non-communicable disease management tools — diabetes, hypertension, lipids, obesity, thyroid, respiratory (COPD/asthma), renal, and blood disorders.
               Access detailed assessment tools, treatment algorithms, and clinical guidelines.
             </p>
-          </div>
-          <div className="flex flex-wrap items-center gap-3 text-sm text-muted-foreground bg-muted/30 px-4 py-3 rounded-lg border border-border">
-            <div className="flex items-center gap-2">
-              <span className="w-2 h-2 rounded-full" style={{ background: categoryColors.diabetes.accent }} />
-              <span>Diabetes</span>
-            </div>
-            <div className="flex items-center gap-2">
-              <span className="w-2 h-2 rounded-full" style={{ background: categoryColors.hypertension.accent }} />
-              <span>HTN</span>
-            </div>
-            <div className="flex items-center gap-2">
-              <span className="w-2 h-2 rounded-full" style={{ background: categoryColors.lipid.accent }} />
-              <span>Lipids</span>
-            </div>
-            <div className="flex items-center gap-2">
-              <span className="w-2 h-2 rounded-full" style={{ background: categoryColors.obesity.accent }} />
-              <span>Obesity</span>
-            </div>
-            <div className="flex items-center gap-2">
-              <span className="w-2 h-2 rounded-full" style={{ background: categoryColors.thyroid.accent }} />
-              <span>Thyroid</span>
-            </div>
-            <div className="flex items-center gap-2">
-              <span className="w-2 h-2 rounded-full" style={{ background: categoryColors.respiratory.accent }} />
-              <span>COPD/Resp</span>
-            </div>
-            <div className="flex items-center gap-2">
-              <span className="w-2 h-2 rounded-full" style={{ background: categoryColors.renal.accent }} />
-              <span>Renal</span>
-            </div>
-            <div className="flex items-center gap-2">
-              <span className="w-2 h-2 rounded-full" style={{ background: categoryColors.anemia.accent }} />
-              <span>Blood</span>
-            </div>
           </div>
         </div>
       </header>

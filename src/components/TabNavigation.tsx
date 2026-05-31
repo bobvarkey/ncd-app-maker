@@ -23,6 +23,7 @@ const navItems: NavItem[] = [
   { path: "/respiratory",             label: "COPD",      icon: "🫁", active: "bg-cyan-500/10 text-cyan-400 border-cyan-500/30" },
   { path: "/renal-dosing",            label: "Renal",     icon: "🫘", active: "bg-amber-500/10 text-amber-400 border-amber-500/30" },
   { path: "/anemia",                  label: "Blood",     icon: "🩸", active: "bg-sky-500/10 text-sky-400 border-sky-500/30" },
+  { path: "/fatigue",                label: "Fatigue",   icon: "😴", active: "bg-amber-500/10 text-amber-400 border-amber-500/30" },
 ];
 
 export function TabNavigation() {
