@@ -1,11 +1,12 @@
-import type { AnemiaClassification, Sex } from '../types';
-import { Activity, Beaker, AlertCircle, CheckCircle } from 'lucide-react';
+import type { AnemiaClassification, Sex, DiscriminantResult } from '../types';
+import { Activity, Beaker, AlertCircle, CheckCircle, ArrowRight } from 'lucide-react';
 
 interface Props {
   classification: AnemiaClassification;
   hgb: number;
   mcv: number;
   sex: Sex;
+  discriminantResults?: DiscriminantResult[];
 }
 
 const severityConfig = {
@@ -30,10 +31,12 @@ const sexLabels: Record<Sex, string> = {
   pregnant: 'Pregnant Female',
 };
 
-export default function ClassificationCard({ classification, hgb, mcv, sex }: Props) {
+export default function ClassificationCard({ classification, hgb, mcv, sex, discriminantResults }: Props) {
   const sc = severityConfig[classification.severity] || severityConfig['N/A'];
   const mc = morphologyConfig[classification.morphology] || morphologyConfig['N/A'];
   const Icon = sc.icon;
+
+  const mentzer = discriminantResults?.find(r => r.name === 'Mentzer Index');
 
   return (
     <div className="bg-gray-900 rounded-2xl shadow-sm border border-gray-800 p-6">
@@ -83,6 +86,37 @@ export default function ClassificationCard({ classification, hgb, mcv, sex }: Pr
           <div className="mt-2 text-xs text-gray-400 leading-relaxed">{mc.desc}</div>
         </div>
       </div>
+
+      {mentzer && classification.morphology === 'Microcytic' && (
+        <div className="mt-4 rounded-xl border border-gray-800 bg-gray-800/50 p-4">
+          <div className="flex items-center gap-2 mb-2">
+            <ArrowRight className="w-4 h-4 text-sky-400" />
+            <span className="text-xs font-semibold uppercase tracking-wide text-gray-400">Discriminant Index</span>
+          </div>
+          <div className="flex items-center gap-3 flex-wrap">
+            <div className="text-xl font-bold text-white">
+              Mentzer: {mentzer.value?.toFixed(2) ?? '—'}
+            </div>
+            <span className="text-xs text-gray-500">cutoff &gt; 13</span>
+          </div>
+          <div className="mt-2 flex items-center gap-2">
+            <span className={`text-sm font-semibold px-2.5 py-0.5 rounded-full ${
+              mentzer.interpretation === 'IDA'
+                ? 'bg-amber-900/30 text-amber-400'
+                : mentzer.interpretation === 'Thalassemia'
+                ? 'bg-violet-900/30 text-violet-400'
+                : 'bg-gray-800 text-gray-400'
+            }`}>
+              {mentzer.interpretation === 'IDA' && '→ Iron Deficiency Anemia'}
+              {mentzer.interpretation === 'Thalassemia' && '→ Thalassemia Trait'}
+              {mentzer.interpretation === 'N/A' && 'Inconclusive'}
+            </span>
+          </div>
+          <div className="mt-2 text-xs text-gray-500">
+            {mentzer.direction} — {mentzer.reference}
+          </div>
+        </div>
+      )}
 
       <div className="mt-4 text-xs text-gray-500 bg-gray-800/50 rounded-lg px-3 py-2 border border-gray-800">
         WHO 2024 criteria — Classification based on hemoglobin thresholds for {sexLabels[sex].toLowerCase()}
