@@ -150,6 +150,7 @@ export default function Anemia() {
                     hgb={hgbNum}
                     mcv={mcvNum}
                     sex={sex}
+                    discriminantResults={result.discriminantResults}
                   />
                 )}
 
