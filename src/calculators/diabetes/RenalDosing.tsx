@@ -1,10 +1,11 @@
 import { useState } from "react";
-import { Pill, FlaskConical, Search, AlertTriangle, Syringe } from "lucide-react";
+import { Pill, FlaskConical, Search, AlertTriangle, Syringe, Droplet, Layers } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import {
   Table, TableHeader, TableBody, TableHead, TableRow, TableCell,
 } from "@/components/ui/table";
 import { ANTIBIOTICS_DATA } from "./antibiotics-data";
+import { ANTICOAGULANTS_DATA } from "./anticoagulants-data";
 import { cn } from "@/lib/utils";
 import { SmartLabelUpload, RENAL_FIELDS } from "@/components/SmartLabelUpload";
 
