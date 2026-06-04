@@ -21,6 +21,7 @@ type DoseEntry = {
   eGFR15_29: string;
   eGFRBelow15: string;
   notes: string;
+  hepatic?: string;
 };
 
 const RENAL_DATA: DoseEntry[] = [
