@@ -233,6 +233,37 @@
     color: #000 !important;
   }
 
+  /* ----------------------------------------------------------
+     Higher-specificity LIGHT-BG override.
+     When an element carries BOTH a dark semantic token
+     (e.g. shadcn `bg-card`) AND an explicit light Tailwind bg
+     (e.g. `bg-amber-50`), the visual background is light, so
+     text must be black. These selectors use [class][class] to
+     beat the semantic-token rules above on specificity.
+     ---------------------------------------------------------- */
+  [class*="bg-white"][class],
+  [class*="-50"][class*="bg-"][class], [class*="-100"][class*="bg-"][class],
+  [class*="-200"][class*="bg-"][class], [class*="-300"][class*="bg-"][class],
+  [class*="bg-white"][class] *,
+  [class*="-50"][class*="bg-"][class] *, [class*="-100"][class*="bg-"][class] *,
+  [class*="-200"][class*="bg-"][class] *, [class*="-300"][class*="bg-"][class] * {
+    color: #000 !important;
+  }
+
+  /* Re-assert explicit foreground tokens AFTER the override
+     so colored buttons/badges with text-*-foreground keep their
+     intended color even inside a light-bg ancestor. */
+  [class*="text-primary-foreground"][class],
+  [class*="text-secondary-foreground"][class],
+  [class*="text-accent-foreground"][class],
+  [class*="text-destructive-foreground"][class],
+  [class*="text-card-foreground"][class],
+  [class*="text-popover-foreground"][class],
+  [class*="text-white"][class] {
+    color: inherit;
+  }
+  [class*="text-white"][class][class] { color: #fff !important; }
+
   /* Portal surfaces rendered outside #root (dialogs, dropdowns,
      popovers, tooltips, sonner toasts) — default to readable
      foreground using the theme tokens. */
