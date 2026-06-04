@@ -350,8 +350,13 @@ const cellStyle = (val: string) => {
 };
 
 const RenalDoseAdjustment = () => {
-  const [search, setSearch] = useState("");
+  const [searchParams] = useSearchParams();
+  const [search, setSearch] = useState(searchParams.get("q") || "");
   const [classFilter, setClassFilter] = useState<string>("all");
+  useEffect(() => {
+    const q = searchParams.get("q");
+    if (q !== null) setSearch(q);
+  }, [searchParams]);
 
   function handleSmartParse(values: Record<string, string>) {
     if (values.egfr) setSearch(`eGFR ${values.egfr}`);
