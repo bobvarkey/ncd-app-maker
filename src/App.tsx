@@ -151,6 +151,7 @@ const App = () => (
       <Sonner />
       <BrowserRouter>
         <CommandPalette />
+        <GlobalMedSearch />
         <Routes>
           {/* Mode Selector — landing */}
           <Route path="/" element={<LandingPage />} />
