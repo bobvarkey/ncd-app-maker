@@ -233,6 +233,64 @@
     color: #000 !important;
   }
 
+  /* ----------------------------------------------------------
+     Higher-specificity LIGHT-BG override.
+     When an element carries BOTH a dark semantic token
+     (e.g. shadcn `bg-card`) AND an explicit light Tailwind bg
+     (e.g. `bg-amber-50`), the visual background is light, so
+     text must be black. The [class][class] selector wins on
+     specificity over the semantic-token rules above.
+     ---------------------------------------------------------- */
+  [class*="bg-white"][class],
+  [class*="bg-slate-50"][class],  [class*="bg-slate-100"][class],  [class*="bg-slate-200"][class],  [class*="bg-slate-300"][class],
+  [class*="bg-gray-50"][class],   [class*="bg-gray-100"][class],   [class*="bg-gray-200"][class],   [class*="bg-gray-300"][class],
+  [class*="bg-neutral-50"][class],[class*="bg-neutral-100"][class],[class*="bg-neutral-200"][class],[class*="bg-neutral-300"][class],
+  [class*="bg-zinc-50"][class],   [class*="bg-zinc-100"][class],   [class*="bg-zinc-200"][class],   [class*="bg-zinc-300"][class],
+  [class*="bg-stone-50"][class],  [class*="bg-stone-100"][class],  [class*="bg-stone-200"][class],  [class*="bg-stone-300"][class],
+  [class*="bg-amber-50"][class],  [class*="bg-amber-100"][class],  [class*="bg-amber-200"][class],
+  [class*="bg-yellow-50"][class], [class*="bg-yellow-100"][class], [class*="bg-yellow-200"][class],
+  [class*="bg-blue-50"][class],   [class*="bg-blue-100"][class],   [class*="bg-blue-200"][class],
+  [class*="bg-green-50"][class],  [class*="bg-green-100"][class],  [class*="bg-green-200"][class],
+  [class*="bg-red-50"][class],    [class*="bg-red-100"][class],    [class*="bg-red-200"][class],
+  [class*="bg-orange-50"][class], [class*="bg-orange-100"][class], [class*="bg-orange-200"][class],
+  [class*="bg-cyan-50"][class],   [class*="bg-cyan-100"][class],   [class*="bg-cyan-200"][class],
+  [class*="bg-emerald-50"][class],[class*="bg-emerald-100"][class],[class*="bg-emerald-200"][class],
+  [class*="bg-teal-50"][class],   [class*="bg-teal-100"][class],   [class*="bg-teal-200"][class],
+  [class*="bg-sky-50"][class],    [class*="bg-sky-100"][class],    [class*="bg-sky-200"][class],
+  [class*="bg-indigo-50"][class], [class*="bg-indigo-100"][class], [class*="bg-indigo-200"][class],
+  [class*="bg-violet-50"][class], [class*="bg-violet-100"][class], [class*="bg-violet-200"][class],
+  [class*="bg-purple-50"][class], [class*="bg-purple-100"][class], [class*="bg-purple-200"][class],
+  [class*="bg-pink-50"][class],   [class*="bg-pink-100"][class],   [class*="bg-pink-200"][class],
+  [class*="bg-rose-50"][class],   [class*="bg-rose-100"][class],   [class*="bg-rose-200"][class],
+  [class*="bg-lime-50"][class],   [class*="bg-lime-100"][class],   [class*="bg-lime-200"][class],
+  [class*="bg-white"][class] *,
+  [class*="bg-slate-50"][class] *,  [class*="bg-slate-100"][class] *,  [class*="bg-slate-200"][class] *,  [class*="bg-slate-300"][class] *,
+  [class*="bg-gray-50"][class] *,   [class*="bg-gray-100"][class] *,   [class*="bg-gray-200"][class] *,   [class*="bg-gray-300"][class] *,
+  [class*="bg-neutral-50"][class] *,[class*="bg-neutral-100"][class] *,[class*="bg-neutral-200"][class] *,[class*="bg-neutral-300"][class] *,
+  [class*="bg-zinc-50"][class] *,   [class*="bg-zinc-100"][class] *,   [class*="bg-zinc-200"][class] *,   [class*="bg-zinc-300"][class] *,
+  [class*="bg-stone-50"][class] *,  [class*="bg-stone-100"][class] *,  [class*="bg-stone-200"][class] *,  [class*="bg-stone-300"][class] *,
+  [class*="bg-amber-50"][class] *,  [class*="bg-amber-100"][class] *,  [class*="bg-amber-200"][class] *,
+  [class*="bg-yellow-50"][class] *, [class*="bg-yellow-100"][class] *, [class*="bg-yellow-200"][class] *,
+  [class*="bg-blue-50"][class] *,   [class*="bg-blue-100"][class] *,   [class*="bg-blue-200"][class] *,
+  [class*="bg-green-50"][class] *,  [class*="bg-green-100"][class] *,  [class*="bg-green-200"][class] *,
+  [class*="bg-red-50"][class] *,    [class*="bg-red-100"][class] *,    [class*="bg-red-200"][class] *,
+  [class*="bg-orange-50"][class] *, [class*="bg-orange-100"][class] *, [class*="bg-orange-200"][class] *,
+  [class*="bg-cyan-50"][class] *,   [class*="bg-cyan-100"][class] *,   [class*="bg-cyan-200"][class] *,
+  [class*="bg-emerald-50"][class] *,[class*="bg-emerald-100"][class] *,[class*="bg-emerald-200"][class] *,
+  [class*="bg-teal-50"][class] *,   [class*="bg-teal-100"][class] *,   [class*="bg-teal-200"][class] *,
+  [class*="bg-sky-50"][class] *,    [class*="bg-sky-100"][class] *,    [class*="bg-sky-200"][class] *,
+  [class*="bg-indigo-50"][class] *, [class*="bg-indigo-100"][class] *, [class*="bg-indigo-200"][class] *,
+  [class*="bg-violet-50"][class] *, [class*="bg-violet-100"][class] *, [class*="bg-violet-200"][class] *,
+  [class*="bg-purple-50"][class] *, [class*="bg-purple-100"][class] *, [class*="bg-purple-200"][class] *,
+  [class*="bg-pink-50"][class] *,   [class*="bg-pink-100"][class] *,   [class*="bg-pink-200"][class] *,
+  [class*="bg-rose-50"][class] *,   [class*="bg-rose-100"][class] *,   [class*="bg-rose-200"][class] *,
+  [class*="bg-lime-50"][class] *,   [class*="bg-lime-100"][class] *,   [class*="bg-lime-200"][class] * {
+    color: #000 !important;
+  }
+
+  /* But preserve white text on dark badges/buttons that sit inside light-bg cards */
+  [class*="text-white"][class][class] { color: #fff !important; }
+
   /* Portal surfaces rendered outside #root (dialogs, dropdowns,
      popovers, tooltips, sonner toasts) — default to readable
      foreground using the theme tokens. */
