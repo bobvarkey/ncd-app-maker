@@ -23,28 +23,28 @@
   :root {
     /* Clean medical theme - slate blue with teal accents */
     --background: 220 20% 8%;
-    --foreground: 210 30% 96%;
+    --foreground: 0 0% 100%;
 
     --card: 220 18% 11%;
-    --card-foreground: 210 30% 96%;
+    --card-foreground: 0 0% 100%;
 
     --popover: 220 18% 11%;
-    --popover-foreground: 210 30% 96%;
+    --popover-foreground: 0 0% 100%;
 
     --primary: 185 60% 48%;
-    --primary-foreground: 220 20% 8%;
+    --primary-foreground: 0 0% 0%;
 
     --secondary: 220 15% 18%;
-    --secondary-foreground: 210 30% 96%;
+    --secondary-foreground: 0 0% 100%;
 
     --muted: 220 15% 16%;
-    --muted-foreground: 215 15% 60%;
+    --muted-foreground: 0 0% 85%;
 
     --accent: 175 55% 40%;
-    --accent-foreground: 210 30% 96%;
+    --accent-foreground: 0 0% 0%;
 
     --destructive: 0 75% 55%;
-    --destructive-foreground: 210 30% 96%;
+    --destructive-foreground: 0 0% 100%;
 
     --border: 220 15% 22%;
     --input: 220 15% 20%;
@@ -54,11 +54,11 @@
 
     /* Clinical result tokens */
     --success: 152 55% 45%;
-    --success-foreground: 210 30% 96%;
+    --success-foreground: 0 0% 0%;
     --warning: 38 85% 50%;
-    --warning-foreground: 210 30% 96%;
+    --warning-foreground: 0 0% 0%;
     --info: 200 65% 55%;
-    --info-foreground: 210 30% 96%;
+    --info-foreground: 0 0% 0%;
 
     /* Mode accent colors */
     --mode-simple: 142 50% 45%;
@@ -67,11 +67,11 @@
 
     /* Sidebar tokens */
     --sidebar-background: 220 20% 6%;
-    --sidebar-foreground: 210 30% 96%;
+    --sidebar-foreground: 0 0% 100%;
     --sidebar-primary: 185 60% 48%;
-    --sidebar-primary-foreground: 220 20% 8%;
+    --sidebar-primary-foreground: 0 0% 0%;
     --sidebar-accent: 220 15% 18%;
-    --sidebar-accent-foreground: 210 30% 96%;
+    --sidebar-accent-foreground: 0 0% 100%;
     --sidebar-border: 220 15% 18%;
     --sidebar-ring: 185 60% 48%;
   }
@@ -103,6 +103,56 @@
   }
   h1, h2, h3, h4, h5, h6 {
     font-family: 'Space Grotesk', system-ui, sans-serif;
+  }
+
+  /* Contrast guarantee: light surfaces always get black text, dark surfaces always get white text */
+  [class*="bg-white"],
+  [class*="bg-slate-50"], [class*="bg-slate-100"], [class*="bg-slate-200"],
+  [class*="bg-gray-50"], [class*="bg-gray-100"], [class*="bg-gray-200"],
+  [class*="bg-neutral-50"], [class*="bg-neutral-100"], [class*="bg-neutral-200"],
+  [class*="bg-zinc-50"], [class*="bg-zinc-100"], [class*="bg-zinc-200"],
+  [class*="bg-stone-50"], [class*="bg-stone-100"], [class*="bg-stone-200"],
+  [class*="bg-amber-50"], [class*="bg-amber-100"],
+  [class*="bg-yellow-50"], [class*="bg-yellow-100"],
+  [class*="bg-blue-50"], [class*="bg-blue-100"],
+  [class*="bg-green-50"], [class*="bg-green-100"],
+  [class*="bg-red-50"], [class*="bg-red-100"],
+  [class*="bg-orange-50"], [class*="bg-orange-100"],
+  [class*="bg-cyan-50"], [class*="bg-cyan-100"],
+  [class*="bg-emerald-50"], [class*="bg-emerald-100"],
+  [class*="bg-teal-50"], [class*="bg-teal-100"],
+  [class*="bg-sky-50"], [class*="bg-sky-100"],
+  [class*="bg-indigo-50"], [class*="bg-indigo-100"],
+  [class*="bg-violet-50"], [class*="bg-violet-100"],
+  [class*="bg-purple-50"], [class*="bg-purple-100"],
+  [class*="bg-pink-50"], [class*="bg-pink-100"],
+  [class*="bg-rose-50"], [class*="bg-rose-100"],
+  [class*="bg-lime-50"], [class*="bg-lime-100"] {
+    color: #000 !important;
+  }
+  [class*="bg-white"] *,
+  [class*="bg-slate-50"] *, [class*="bg-slate-100"] *, [class*="bg-slate-200"] *,
+  [class*="bg-gray-50"] *, [class*="bg-gray-100"] *, [class*="bg-gray-200"] *,
+  [class*="bg-neutral-50"] *, [class*="bg-neutral-100"] *, [class*="bg-neutral-200"] *,
+  [class*="bg-zinc-50"] *, [class*="bg-zinc-100"] *, [class*="bg-zinc-200"] *,
+  [class*="bg-stone-50"] *, [class*="bg-stone-100"] *, [class*="bg-stone-200"] *,
+  [class*="bg-amber-50"] *, [class*="bg-amber-100"] *,
+  [class*="bg-yellow-50"] *, [class*="bg-yellow-100"] *,
+  [class*="bg-blue-50"] *, [class*="bg-blue-100"] *,
+  [class*="bg-green-50"] *, [class*="bg-green-100"] *,
+  [class*="bg-red-50"] *, [class*="bg-red-100"] *,
+  [class*="bg-orange-50"] *, [class*="bg-orange-100"] *,
+  [class*="bg-cyan-50"] *, [class*="bg-cyan-100"] *,
+  [class*="bg-emerald-50"] *, [class*="bg-emerald-100"] *,
+  [class*="bg-teal-50"] *, [class*="bg-teal-100"] *,
+  [class*="bg-sky-50"] *, [class*="bg-sky-100"] *,
+  [class*="bg-indigo-50"] *, [class*="bg-indigo-100"] *,
+  [class*="bg-violet-50"] *, [class*="bg-violet-100"] *,
+  [class*="bg-purple-50"] *, [class*="bg-purple-100"] *,
+  [class*="bg-pink-50"] *, [class*="bg-pink-100"] *,
+  [class*="bg-rose-50"] *, [class*="bg-rose-100"] *,
+  [class*="bg-lime-50"] *, [class*="bg-lime-100"] * {
+    color: #000 !important;
   }
 }
 
