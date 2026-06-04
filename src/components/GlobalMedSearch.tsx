@@ -5,8 +5,14 @@ import { cn } from "@/lib/utils";
 import { RENAL_DATA } from "@/calculators/diabetes/RenalDosing";
 import { ANTIBIOTICS_DATA } from "@/calculators/diabetes/antibiotics-data";
 import { ANTICOAGULANTS_DATA } from "@/calculators/diabetes/anticoagulants-data";
+import { ADDITIONAL_MEDS_DATA } from "@/calculators/diabetes/additional-meds-data";
 
-const ALL_MEDS = [...RENAL_DATA, ...ANTIBIOTICS_DATA, ...ANTICOAGULANTS_DATA];
+const ALL_MEDS = [
+  ...RENAL_DATA,
+  ...ANTIBIOTICS_DATA,
+  ...ANTICOAGULANTS_DATA,
+  ...ADDITIONAL_MEDS_DATA,
+];
 
 export function GlobalMedSearch() {
   const [q, setQ] = useState("");

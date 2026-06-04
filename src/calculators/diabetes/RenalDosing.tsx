@@ -7,6 +7,7 @@ import {
 } from "@/components/ui/table";
 import { ANTIBIOTICS_DATA } from "./antibiotics-data";
 import { ANTICOAGULANTS_DATA } from "./anticoagulants-data";
+import { ADDITIONAL_MEDS_DATA } from "./additional-meds-data";
 import { cn } from "@/lib/utils";
 import { SmartLabelUpload, RENAL_FIELDS } from "@/components/SmartLabelUpload";
 
@@ -363,13 +364,14 @@ const RenalDoseAdjustment = () => {
     if (values.creatinine) setSearch(`creatinine ${values.creatinine}`);
     if (values.weight) setSearch(`weight ${values.weight}`);
   }
-  const [category, setCategory] = useState<"all" | "diabetes" | "antibiotics" | "anticoagulants">("all");
+  const [category, setCategory] = useState<"all" | "diabetes" | "antibiotics" | "anticoagulants" | "other">("all");
 
   const activeData =
     category === "antibiotics" ? ANTIBIOTICS_DATA
     : category === "anticoagulants" ? ANTICOAGULANTS_DATA
     : category === "diabetes" ? RENAL_DATA
-    : [...RENAL_DATA, ...ANTIBIOTICS_DATA, ...ANTICOAGULANTS_DATA];
+    : category === "other" ? ADDITIONAL_MEDS_DATA
+    : [...RENAL_DATA, ...ANTIBIOTICS_DATA, ...ANTICOAGULANTS_DATA, ...ADDITIONAL_MEDS_DATA];
   const classes = [...new Set(activeData.map(d => d.drugClass))];
 
   const filtered = activeData.filter(d => {
@@ -468,6 +470,18 @@ const RenalDoseAdjustment = () => {
         >
           <Droplet className="h-4 w-4" />
           Anticoagulants
+        </button>
+        <button
+          onClick={() => { setCategory("other"); setClassFilter("all"); setSearch(""); }}
+          className={cn(
+            "flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-semibold transition-colors",
+            category === "other"
+              ? "bg-primary text-primary-foreground shadow-sm"
+              : "bg-muted text-muted-foreground hover:bg-muted/80"
+          )}
+        >
+          <Layers className="h-4 w-4" />
+          HTN / Lipids / Thyroid / Obesity / Blood
         </button>
         <span className="text-xs text-muted-foreground self-center ml-2">{filtered.length} drugs</span>
       </div>
