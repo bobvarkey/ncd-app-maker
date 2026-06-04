@@ -364,13 +364,14 @@ const RenalDoseAdjustment = () => {
     if (values.creatinine) setSearch(`creatinine ${values.creatinine}`);
     if (values.weight) setSearch(`weight ${values.weight}`);
   }
-  const [category, setCategory] = useState<"all" | "diabetes" | "antibiotics" | "anticoagulants">("all");
+  const [category, setCategory] = useState<"all" | "diabetes" | "antibiotics" | "anticoagulants" | "other">("all");
 
   const activeData =
     category === "antibiotics" ? ANTIBIOTICS_DATA
     : category === "anticoagulants" ? ANTICOAGULANTS_DATA
     : category === "diabetes" ? RENAL_DATA
-    : [...RENAL_DATA, ...ANTIBIOTICS_DATA, ...ANTICOAGULANTS_DATA];
+    : category === "other" ? ADDITIONAL_MEDS_DATA
+    : [...RENAL_DATA, ...ANTIBIOTICS_DATA, ...ANTICOAGULANTS_DATA, ...ADDITIONAL_MEDS_DATA];
   const classes = [...new Set(activeData.map(d => d.drugClass))];
 
   const filtered = activeData.filter(d => {
