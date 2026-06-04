@@ -21,6 +21,7 @@ type DoseEntry = {
   eGFR15_29: string;
   eGFRBelow15: string;
   notes: string;
+  hepatic?: string;
 };
 
 const RENAL_DATA: DoseEntry[] = [
@@ -124,48 +125,64 @@ const RENAL_DATA: DoseEntry[] = [
     notes: "Superior HbA1c and weight reduction (SURPASS trials).",
   },
   {
+    drug: "Alogliptin",
+    drugClass: "DPP-4 Inhibitor",
+    normalDose: "25 mg/day",
+    eGFR60_89: "25 mg/day",
+    eGFR45_59: "12.5 mg/day",
+    eGFR30_44: "12.5 mg/day",
+    eGFR15_29: "6.25 mg/day",
+    eGFRBelow15: "6.25 mg/day",
+    notes: "Renally excreted; dose-adjust by CrCl. FDA boxed warning: HF risk.",
+    hepatic: "No adjustment for mild–moderate (Child–Pugh A/B). Not studied in severe hepatic impairment — avoid.",
+  },
+  {
     drug: "Sitagliptin",
     drugClass: "DPP-4 Inhibitor",
     normalDose: "100 mg/day",
-    eGFR60_89: "No adjustment",
-    eGFR45_59: "50 mg/day",
+    eGFR60_89: "100 mg/day",
+    eGFR45_59: "100 mg/day (50 mg if CrCl <50)",
     eGFR30_44: "50 mg/day",
     eGFR15_29: "25 mg/day",
     eGFRBelow15: "25 mg/day",
-    notes: "Can be used across all stages of CKD with dose adjustment.",
+    notes: "Can be used across all stages of CKD with dose adjustment. Per ESRD label: 25 mg OD.",
+    hepatic: "No adjustment for mild–moderate (Child–Pugh ≤9). Not studied in severe hepatic impairment.",
   },
   {
     drug: "Saxagliptin",
     drugClass: "DPP-4 Inhibitor",
     normalDose: "5 mg/day",
-    eGFR60_89: "No adjustment",
-    eGFR45_59: "2.5 mg/day",
+    eGFR60_89: "5 mg/day",
+    eGFR45_59: "5 mg/day",
     eGFR30_44: "2.5 mg/day",
     eGFR15_29: "2.5 mg/day",
-    eGFRBelow15: "2.5 mg/day",
-    notes: "Caution: associated with HF hospitalization (SAVOR-TIMI 53).",
+    eGFRBelow15: "2.5 mg/day (avoid in ESRD on dialysis)",
+    notes: "Caution: associated with HF hospitalization (SAVOR-TIMI 53). Reduce dose with strong CYP3A4/5 inhibitors.",
+    hepatic: "No adjustment for any degree of hepatic impairment; use with caution in severe.",
   },
   {
     drug: "Linagliptin",
     drugClass: "DPP-4 Inhibitor",
     normalDose: "5 mg/day",
-    eGFR60_89: "No adjustment",
-    eGFR45_59: "No adjustment",
-    eGFR30_44: "No adjustment",
-    eGFR15_29: "No adjustment",
-    eGFRBelow15: "No adjustment",
-    notes: "No renal dose adjustment needed — hepatic elimination.",
+    eGFR60_89: "5 mg/day",
+    eGFR45_59: "5 mg/day",
+    eGFR30_44: "5 mg/day",
+    eGFR15_29: "5 mg/day",
+    eGFRBelow15: "5 mg/day",
+    notes: "No renal dose adjustment needed — primarily biliary/hepatic elimination (<5% renal).",
+    hepatic: "No dose adjustment required in any degree of hepatic impairment.",
   },
   {
     drug: "Vildagliptin",
     drugClass: "DPP-4 Inhibitor",
     normalDose: "50 mg BID",
-    eGFR60_89: "No adjustment",
-    eGFR45_59: "50 mg OD",
-    eGFR30_44: "50 mg OD",
-    eGFR15_29: "50 mg OD",
-    eGFRBelow15: "50 mg OD",
-    notes: "Widely used in India. Monitor LFTs.",
+    eGFR60_89: "50 mg BID (50 mg OD if dual therapy with SU)",
+    eGFR45_59: "50 mg once daily",
+    eGFR30_44: "50 mg once daily",
+    eGFR15_29: "50 mg once daily",
+    eGFRBelow15: "50 mg once daily",
+    notes: "Widely used in India. Monitor LFTs at baseline, q3 months ×1 year, then periodically.",
+    hepatic: "Contraindicated if ALT/AST >3× ULN or any pre-existing hepatic impairment.",
   },
   {
     drug: "Pioglitazone",
@@ -296,10 +313,39 @@ const RenalDoseAdjustment = () => {
       <div>
         <h1 className="text-xl font-heading font-bold flex items-center gap-2">
           <FlaskConical className="w-5 h-5 text-primary" />
-          Renal Dose Adjustment
+          Renal &amp; Hepatic Dose Adjustment
         </h1>
-        <p className="text-sm text-muted-foreground">eGFR-based dose modifications for diabetes meds, antibiotics &amp; anticoagulants (ADA 2026 + KDIGO)</p>
+        <p className="text-sm text-muted-foreground">Search any medication for renal (eGFR) and hepatic dose modifications (ADA 2026 + KDIGO)</p>
       </div>
+
+      {/* Prominent Universal Search */}
+      <div className="clinical-card p-4 border-primary/30 bg-primary/5">
+        <label className="text-xs font-semibold text-primary uppercase tracking-wide mb-2 block">
+          Search any medication
+        </label>
+        <div className="flex flex-col sm:flex-row gap-3">
+          <div className="relative flex-1">
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+            <Input
+              placeholder="Type a drug name or class (e.g. metformin, DPP-4, apixaban, ceftriaxone)…"
+              value={search}
+              onChange={e => setSearch(e.target.value)}
+              className="pl-9 h-11 text-base"
+              autoFocus
+            />
+          </div>
+          <select
+            value={classFilter}
+            onChange={e => setClassFilter(e.target.value)}
+            className="h-11 rounded-md border border-input bg-background px-3 text-sm"
+          >
+            <option value="all">All Classes</option>
+            {classes.map(c => <option key={c} value={c}>{c}</option>)}
+          </select>
+        </div>
+        <p className="text-xs text-muted-foreground mt-2">{filtered.length} medication{filtered.length === 1 ? "" : "s"} matched · shows renal (eGFR) and hepatic adjustments</p>
+      </div>
+
 
       {/* Category Toggle */}
       <div className="flex flex-wrap gap-2">
@@ -366,26 +412,8 @@ const RenalDoseAdjustment = () => {
         <SmartLabelUpload fields={RENAL_FIELDS.fields} onParse={handleSmartParse} existingValues={{}} />
       </div>
 
-      {/* Filters */}
-      <div className="flex flex-col sm:flex-row gap-3">
-        <div className="relative flex-1">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
-          <Input
-            placeholder="Search drug or class..."
-            value={search}
-            onChange={e => setSearch(e.target.value)}
-            className="pl-9"
-          />
-        </div>
-        <select
-          value={classFilter}
-          onChange={e => setClassFilter(e.target.value)}
-          className="h-10 rounded-md border border-input bg-background px-3 text-sm"
-        >
-          <option value="all">All Classes</option>
-          {classes.map(c => <option key={c} value={c}>{c}</option>)}
-        </select>
-      </div>
+      {/* Filters (legacy slot removed — search is at top) */}
+
 
       {/* Table */}
       <div className="clinical-card p-0 overflow-hidden">
@@ -449,7 +477,26 @@ const RenalDoseAdjustment = () => {
           ))}
         </div>
       </div>
+
+      {/* Hepatic Adjustments */}
+      {filtered.some(d => d.hepatic) && (
+        <div className="clinical-card">
+          <div className="flex items-center gap-2 mb-3">
+            <Droplet className="w-4 h-4 text-accent" />
+            <h3 className="section-title">Hepatic Dose Adjustments</h3>
+          </div>
+          <div className="space-y-2">
+            {filtered.filter(d => d.hepatic).map((d, i) => (
+              <div key={i} className="flex items-start gap-2 text-xs">
+                <span className="font-medium text-primary min-w-[100px]">{d.drug}:</span>
+                <span className="text-muted-foreground">{d.hepatic}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
     </div>
+
   );
 };
 
