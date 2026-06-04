@@ -477,7 +477,26 @@ const RenalDoseAdjustment = () => {
           ))}
         </div>
       </div>
+
+      {/* Hepatic Adjustments */}
+      {filtered.some(d => d.hepatic) && (
+        <div className="clinical-card">
+          <div className="flex items-center gap-2 mb-3">
+            <Droplet className="w-4 h-4 text-accent" />
+            <h3 className="section-title">Hepatic Dose Adjustments</h3>
+          </div>
+          <div className="space-y-2">
+            {filtered.filter(d => d.hepatic).map((d, i) => (
+              <div key={i} className="flex items-start gap-2 text-xs">
+                <span className="font-medium text-primary min-w-[100px]">{d.drug}:</span>
+                <span className="text-muted-foreground">{d.hepatic}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
     </div>
+
   );
 };
 
