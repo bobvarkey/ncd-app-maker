@@ -24,7 +24,7 @@ type DoseEntry = {
   hepatic?: string;
 };
 
-const RENAL_DATA: DoseEntry[] = [
+export const RENAL_DATA: DoseEntry[] = [
   {
     drug: "Metformin",
     drugClass: "Biguanide",
