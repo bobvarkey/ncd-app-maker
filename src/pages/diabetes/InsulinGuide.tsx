@@ -238,7 +238,8 @@ export default function InsulinGuide() {
               <img
                 src="/images/insulin-types-graph.png"
                 alt="Insulin Activity Graph"
-                className="w-full rounded-lg border"
+                className="w-full rounded-lg border bg-slate-900"
+                style={{ filter: "invert(1) hue-rotate(180deg) brightness(1.1) contrast(1.05)" }}
               />
               <p className="text-xs text-muted-foreground">
                 Visual graph showing activity intensity over time
