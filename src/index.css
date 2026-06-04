@@ -213,6 +213,61 @@
   [class*="bg-sky-700"][class] *, [class*="bg-sky-800"][class] *, [class*="bg-sky-900"][class] *, [class*="bg-sky-950"][class] * {
     color: #fff !important;
   }
+
+  /* ----------------------------------------------------------
+     Semantic-token surfaces (shadcn) — these are dark in this
+     theme, so all descendants must read as white.
+     ---------------------------------------------------------- */
+  [class~="bg-background"], [class~="bg-card"], [class~="bg-popover"],
+  [class~="bg-muted"], [class~="bg-secondary"], [class~="bg-sidebar"],
+  [class~="bg-sidebar-accent"], [class~="bg-destructive"],
+  [class~="bg-background"] *, [class~="bg-card"] *, [class~="bg-popover"] *,
+  [class~="bg-muted"] *, [class~="bg-secondary"] *, [class~="bg-sidebar"] *,
+  [class~="bg-sidebar-accent"] *, [class~="bg-destructive"] * {
+    color: #fff !important;
+  }
+
+  /* Primary / accent surfaces are bright teal — keep text black */
+  [class~="bg-primary"], [class~="bg-accent"],
+  [class~="bg-primary"] *, [class~="bg-accent"] * {
+    color: #000 !important;
+  }
+
+  /* Portal surfaces rendered outside #root (dialogs, dropdowns,
+     popovers, tooltips, sonner toasts) — default to readable
+     foreground using the theme tokens. */
+  [role="dialog"], [role="menu"], [role="listbox"], [role="tooltip"],
+  [data-radix-popper-content-wrapper], [data-sonner-toaster], [data-sonner-toast],
+  [role="dialog"] *, [role="menu"] *, [role="listbox"] *, [role="tooltip"] *,
+  [data-radix-popper-content-wrapper] *, [data-sonner-toaster] *, [data-sonner-toast] * {
+    color: hsl(var(--popover-foreground)) !important;
+  }
+
+  /* Always keep muted-foreground (gray helper text) visible on dark surfaces */
+  .text-muted-foreground, [class*="text-muted-foreground"] {
+    color: hsl(var(--muted-foreground)) !important;
+  }
+
+  /* Preserve explicit foreground tokens on colored buttons / badges */
+  [class*="text-primary-foreground"]    { color: hsl(var(--primary-foreground)) !important; }
+  [class*="text-secondary-foreground"]  { color: hsl(var(--secondary-foreground)) !important; }
+  [class*="text-accent-foreground"]     { color: hsl(var(--accent-foreground)) !important; }
+  [class*="text-destructive-foreground"]{ color: hsl(var(--destructive-foreground)) !important; }
+  [class*="text-card-foreground"]       { color: hsl(var(--card-foreground)) !important; }
+  [class*="text-popover-foreground"]    { color: hsl(var(--popover-foreground)) !important; }
+
+  /* Form inputs sit on dark bg-background — keep their text white
+     and placeholder readable. */
+  input, textarea, select {
+    color: hsl(var(--foreground));
+  }
+  input::placeholder, textarea::placeholder {
+    color: hsl(var(--muted-foreground)) !important;
+    opacity: 1;
+  }
+
+  /* Tables inherit; ensure header cells on dark surfaces stay white */
+  thead, tbody, tfoot, tr, th, td { color: inherit; }
 }
 
 @layer components {
