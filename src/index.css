@@ -104,6 +104,56 @@
   h1, h2, h3, h4, h5, h6 {
     font-family: 'Space Grotesk', system-ui, sans-serif;
   }
+
+  /* Contrast guarantee: light surfaces always get black text, dark surfaces always get white text */
+  [class*="bg-white"],
+  [class*="bg-slate-50"], [class*="bg-slate-100"], [class*="bg-slate-200"],
+  [class*="bg-gray-50"], [class*="bg-gray-100"], [class*="bg-gray-200"],
+  [class*="bg-neutral-50"], [class*="bg-neutral-100"], [class*="bg-neutral-200"],
+  [class*="bg-zinc-50"], [class*="bg-zinc-100"], [class*="bg-zinc-200"],
+  [class*="bg-stone-50"], [class*="bg-stone-100"], [class*="bg-stone-200"],
+  [class*="bg-amber-50"], [class*="bg-amber-100"],
+  [class*="bg-yellow-50"], [class*="bg-yellow-100"],
+  [class*="bg-blue-50"], [class*="bg-blue-100"],
+  [class*="bg-green-50"], [class*="bg-green-100"],
+  [class*="bg-red-50"], [class*="bg-red-100"],
+  [class*="bg-orange-50"], [class*="bg-orange-100"],
+  [class*="bg-cyan-50"], [class*="bg-cyan-100"],
+  [class*="bg-emerald-50"], [class*="bg-emerald-100"],
+  [class*="bg-teal-50"], [class*="bg-teal-100"],
+  [class*="bg-sky-50"], [class*="bg-sky-100"],
+  [class*="bg-indigo-50"], [class*="bg-indigo-100"],
+  [class*="bg-violet-50"], [class*="bg-violet-100"],
+  [class*="bg-purple-50"], [class*="bg-purple-100"],
+  [class*="bg-pink-50"], [class*="bg-pink-100"],
+  [class*="bg-rose-50"], [class*="bg-rose-100"],
+  [class*="bg-lime-50"], [class*="bg-lime-100"] {
+    color: #000 !important;
+  }
+  [class*="bg-white"] *,
+  [class*="bg-slate-50"] *, [class*="bg-slate-100"] *, [class*="bg-slate-200"] *,
+  [class*="bg-gray-50"] *, [class*="bg-gray-100"] *, [class*="bg-gray-200"] *,
+  [class*="bg-neutral-50"] *, [class*="bg-neutral-100"] *, [class*="bg-neutral-200"] *,
+  [class*="bg-zinc-50"] *, [class*="bg-zinc-100"] *, [class*="bg-zinc-200"] *,
+  [class*="bg-stone-50"] *, [class*="bg-stone-100"] *, [class*="bg-stone-200"] *,
+  [class*="bg-amber-50"] *, [class*="bg-amber-100"] *,
+  [class*="bg-yellow-50"] *, [class*="bg-yellow-100"] *,
+  [class*="bg-blue-50"] *, [class*="bg-blue-100"] *,
+  [class*="bg-green-50"] *, [class*="bg-green-100"] *,
+  [class*="bg-red-50"] *, [class*="bg-red-100"] *,
+  [class*="bg-orange-50"] *, [class*="bg-orange-100"] *,
+  [class*="bg-cyan-50"] *, [class*="bg-cyan-100"] *,
+  [class*="bg-emerald-50"] *, [class*="bg-emerald-100"] *,
+  [class*="bg-teal-50"] *, [class*="bg-teal-100"] *,
+  [class*="bg-sky-50"] *, [class*="bg-sky-100"] *,
+  [class*="bg-indigo-50"] *, [class*="bg-indigo-100"] *,
+  [class*="bg-violet-50"] *, [class*="bg-violet-100"] *,
+  [class*="bg-purple-50"] *, [class*="bg-purple-100"] *,
+  [class*="bg-pink-50"] *, [class*="bg-pink-100"] *,
+  [class*="bg-rose-50"] *, [class*="bg-rose-100"] *,
+  [class*="bg-lime-50"] *, [class*="bg-lime-100"] * {
+    color: #000 !important;
+  }
 }
 
 @layer components {
