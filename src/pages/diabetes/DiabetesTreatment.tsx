@@ -340,14 +340,16 @@ const TreatmentAlgorithm = () => {
         </div>
       </CardHeader>
       <CardContent>
-        <figure className="mb-4 rounded-lg border border-border bg-white p-3 overflow-hidden">
-          <img
-            src={treatmentAlgorithmImage.url}
-            alt="Diabetes treatment algorithm: HbA1c-based stepped approach from monotherapy to dual, triple therapy and insulin"
-            className="w-full h-auto rounded"
-            loading="lazy"
-          />
-          <figcaption className="mt-2 text-xs text-muted-foreground text-center">
+        <figure className="mb-4 rounded-lg border border-border bg-white overflow-hidden">
+          <div className="w-full overflow-x-auto">
+            <img
+              src={treatmentAlgorithmImage.url}
+              alt="Diabetes treatment algorithm: HbA1c-based stepped approach from monotherapy to dual, triple therapy and insulin"
+              className="w-full h-auto min-w-[320px] object-contain rounded-t"
+              loading="lazy"
+            />
+          </div>
+          <figcaption className="px-3 py-2 text-xs text-muted-foreground text-center bg-white">
             Goal therapy: HbA1c &lt;7% (individualised) — stepped pharmacotherapy by entry HbA1c
           </figcaption>
         </figure>
