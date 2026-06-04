@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 import { cn } from "@/lib/utils";
+import treatmentAlgorithmImage from "@/assets/diabetes-treatment-algorithm.png.asset.json";
 
 // Algorithm Step Component
 interface AlgorithmStepProps {
@@ -339,6 +340,17 @@ const TreatmentAlgorithm = () => {
         </div>
       </CardHeader>
       <CardContent>
+        <figure className="mb-4 rounded-lg border border-border bg-white p-3 overflow-hidden">
+          <img
+            src={treatmentAlgorithmImage.url}
+            alt="Diabetes treatment algorithm: HbA1c-based stepped approach from monotherapy to dual, triple therapy and insulin"
+            className="w-full h-auto rounded"
+            loading="lazy"
+          />
+          <figcaption className="mt-2 text-xs text-muted-foreground text-center">
+            Goal therapy: HbA1c &lt;7% (individualised) — stepped pharmacotherapy by entry HbA1c
+          </figcaption>
+        </figure>
         <div className="space-y-2">
           {steps.map((step, index) => (
             <AlgorithmStep
