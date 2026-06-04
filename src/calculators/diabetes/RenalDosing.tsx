@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useSearchParams } from "react-router-dom";
 import { Pill, FlaskConical, Search, AlertTriangle, Syringe, Droplet, Layers } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import {
@@ -24,7 +25,7 @@ type DoseEntry = {
   hepatic?: string;
 };
 
-const RENAL_DATA: DoseEntry[] = [
+export const RENAL_DATA: DoseEntry[] = [
   {
     drug: "Metformin",
     drugClass: "Biguanide",
@@ -349,8 +350,13 @@ const cellStyle = (val: string) => {
 };
 
 const RenalDoseAdjustment = () => {
-  const [search, setSearch] = useState("");
+  const [searchParams] = useSearchParams();
+  const [search, setSearch] = useState(searchParams.get("q") || "");
   const [classFilter, setClassFilter] = useState<string>("all");
+  useEffect(() => {
+    const q = searchParams.get("q");
+    if (q !== null) setSearch(q);
+  }, [searchParams]);
 
   function handleSmartParse(values: Record<string, string>) {
     if (values.egfr) setSearch(`eGFR ${values.egfr}`);
