@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useSearchParams } from "react-router-dom";
 import { Pill, FlaskConical, Search, AlertTriangle, Syringe, Droplet, Layers } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import {
