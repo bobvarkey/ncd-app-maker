@@ -7,6 +7,7 @@ import {
 } from "@/components/ui/table";
 import { ANTIBIOTICS_DATA } from "./antibiotics-data";
 import { ANTICOAGULANTS_DATA } from "./anticoagulants-data";
+import { ADDITIONAL_MEDS_DATA } from "./additional-meds-data";
 import { cn } from "@/lib/utils";
 import { SmartLabelUpload, RENAL_FIELDS } from "@/components/SmartLabelUpload";
 
