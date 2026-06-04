@@ -313,10 +313,39 @@ const RenalDoseAdjustment = () => {
       <div>
         <h1 className="text-xl font-heading font-bold flex items-center gap-2">
           <FlaskConical className="w-5 h-5 text-primary" />
-          Renal Dose Adjustment
+          Renal &amp; Hepatic Dose Adjustment
         </h1>
-        <p className="text-sm text-muted-foreground">eGFR-based dose modifications for diabetes meds, antibiotics &amp; anticoagulants (ADA 2026 + KDIGO)</p>
+        <p className="text-sm text-muted-foreground">Search any medication for renal (eGFR) and hepatic dose modifications (ADA 2026 + KDIGO)</p>
       </div>
+
+      {/* Prominent Universal Search */}
+      <div className="clinical-card p-4 border-primary/30 bg-primary/5">
+        <label className="text-xs font-semibold text-primary uppercase tracking-wide mb-2 block">
+          Search any medication
+        </label>
+        <div className="flex flex-col sm:flex-row gap-3">
+          <div className="relative flex-1">
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+            <Input
+              placeholder="Type a drug name or class (e.g. metformin, DPP-4, apixaban, ceftriaxone)…"
+              value={search}
+              onChange={e => setSearch(e.target.value)}
+              className="pl-9 h-11 text-base"
+              autoFocus
+            />
+          </div>
+          <select
+            value={classFilter}
+            onChange={e => setClassFilter(e.target.value)}
+            className="h-11 rounded-md border border-input bg-background px-3 text-sm"
+          >
+            <option value="all">All Classes</option>
+            {classes.map(c => <option key={c} value={c}>{c}</option>)}
+          </select>
+        </div>
+        <p className="text-xs text-muted-foreground mt-2">{filtered.length} medication{filtered.length === 1 ? "" : "s"} matched · shows renal (eGFR) and hepatic adjustments</p>
+      </div>
+
 
       {/* Category Toggle */}
       <div className="flex flex-wrap gap-2">
