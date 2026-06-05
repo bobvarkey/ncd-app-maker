@@ -318,6 +318,12 @@
     color: #fff !important;
   }
 
+  /* Clinical context chips sit on dark surfaces in both selected and unselected states. */
+  .iron-context-toggle,
+  .iron-context-toggle * {
+    color: hsl(var(--foreground)) !important;
+  }
+
   /* Preserve explicit foreground tokens on colored buttons / badges */
   [class*="text-primary-foreground"]    { color: hsl(var(--primary-foreground)) !important; }
   [class*="text-secondary-foreground"]  { color: hsl(var(--secondary-foreground)) !important; }
