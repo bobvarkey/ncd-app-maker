@@ -313,6 +313,11 @@
     color: hsl(var(--muted-foreground)) !important;
   }
 
+  /* Tabs: keep label white regardless of active/inactive state */
+  [role="tab"], [role="tab"] * {
+    color: #fff !important;
+  }
+
   /* Preserve explicit foreground tokens on colored buttons / badges */
   [class*="text-primary-foreground"]    { color: hsl(var(--primary-foreground)) !important; }
   [class*="text-secondary-foreground"]  { color: hsl(var(--secondary-foreground)) !important; }
