@@ -539,8 +539,8 @@ export default function IronReplacementCalculator() {
                       size="sm"
                       onClick={() => toggleFlag(key)}
                       className={cn(
-                        "text-xs",
-                        flags[key] && "bg-primary text-primary-foreground"
+                        "iron-context-toggle text-xs bg-secondary text-foreground hover:bg-muted hover:text-foreground",
+                        flags[key] && "bg-primary text-foreground"
                       )}
                     >
                       {flags[key] && <CheckCircle2 className="h-3 w-3 mr-1" />}
