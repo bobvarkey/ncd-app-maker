@@ -223,22 +223,50 @@
 
   /* ----------------------------------------------------------
      Semantic-token surfaces (shadcn) — these are dark in this
-     theme, so all descendants must read as white.
+     theme, so all descendants must read as white. Substring
+     match so opacity variants (bg-card/50, bg-foreground/5...)
+     are also covered.
      ---------------------------------------------------------- */
-  [class~="bg-background"], [class~="bg-card"], [class~="bg-popover"],
-  [class~="bg-muted"], [class~="bg-secondary"], [class~="bg-sidebar"],
-  [class~="bg-sidebar-accent"], [class~="bg-destructive"],
-  [class~="bg-background"] *, [class~="bg-card"] *, [class~="bg-popover"] *,
-  [class~="bg-muted"] *, [class~="bg-secondary"] *, [class~="bg-sidebar"] *,
-  [class~="bg-sidebar-accent"] *, [class~="bg-destructive"] * {
+  [class*="bg-background"], [class*="bg-card"], [class*="bg-popover"],
+  [class*="bg-muted"], [class*="bg-secondary"], [class*="bg-sidebar"],
+  [class*="bg-sidebar-accent"], [class*="bg-destructive"], [class*="bg-foreground"],
+  [class*="bg-background"] *, [class*="bg-card"] *, [class*="bg-popover"] *,
+  [class*="bg-muted"] *, [class*="bg-secondary"] *, [class*="bg-sidebar"] *,
+  [class*="bg-sidebar-accent"] *, [class*="bg-destructive"] *, [class*="bg-foreground"] * {
     color: #fff !important;
   }
 
-  /* Primary / accent surfaces are bright teal — keep text black */
+  /* Primary / accent surfaces are bright teal — keep text black for contrast */
   [class~="bg-primary"], [class~="bg-accent"],
   [class~="bg-primary"] *, [class~="bg-accent"] * {
     color: #000 !important;
   }
+
+  /* Any explicit dark text color sitting inside a dark surface
+     must flip to white — overrides text-slate-700/800/900,
+     text-gray-700+, text-black, text-foreground (dark in light
+     ancestors only — here ancestors are dark too). */
+  [class*="bg-background"] [class*="text-slate-7"], [class*="bg-background"] [class*="text-slate-8"], [class*="bg-background"] [class*="text-slate-9"],
+  [class*="bg-card"]       [class*="text-slate-7"], [class*="bg-card"]       [class*="text-slate-8"], [class*="bg-card"]       [class*="text-slate-9"],
+  [class*="bg-muted"]      [class*="text-slate-7"], [class*="bg-muted"]      [class*="text-slate-8"], [class*="bg-muted"]      [class*="text-slate-9"],
+  [class*="bg-secondary"]  [class*="text-slate-7"], [class*="bg-secondary"]  [class*="text-slate-8"], [class*="bg-secondary"]  [class*="text-slate-9"],
+  [class*="bg-popover"]    [class*="text-slate-7"], [class*="bg-popover"]    [class*="text-slate-8"], [class*="bg-popover"]    [class*="text-slate-9"],
+  [class*="bg-background"] [class*="text-gray-7"],  [class*="bg-background"] [class*="text-gray-8"],  [class*="bg-background"] [class*="text-gray-9"],
+  [class*="bg-card"]       [class*="text-gray-7"],  [class*="bg-card"]       [class*="text-gray-8"],  [class*="bg-card"]       [class*="text-gray-9"],
+  [class*="bg-muted"]      [class*="text-gray-7"],  [class*="bg-muted"]      [class*="text-gray-8"],  [class*="bg-muted"]      [class*="text-gray-9"],
+  [class*="bg-secondary"]  [class*="text-gray-7"],  [class*="bg-secondary"]  [class*="text-gray-8"],  [class*="bg-secondary"]  [class*="text-gray-9"],
+  [class*="bg-popover"]    [class*="text-gray-7"],  [class*="bg-popover"]    [class*="text-gray-8"],  [class*="bg-popover"]    [class*="text-gray-9"],
+  [class*="bg-background"] [class*="text-zinc-7"], [class*="bg-background"] [class*="text-zinc-8"], [class*="bg-background"] [class*="text-zinc-9"],
+  [class*="bg-card"]       [class*="text-zinc-7"], [class*="bg-card"]       [class*="text-zinc-8"], [class*="bg-card"]       [class*="text-zinc-9"],
+  [class*="bg-background"] [class*="text-neutral-7"], [class*="bg-background"] [class*="text-neutral-8"], [class*="bg-background"] [class*="text-neutral-9"],
+  [class*="bg-card"]       [class*="text-neutral-7"], [class*="bg-card"]       [class*="text-neutral-8"], [class*="bg-card"]       [class*="text-neutral-9"],
+  [class*="bg-background"] [class*="text-stone-7"], [class*="bg-background"] [class*="text-stone-8"], [class*="bg-background"] [class*="text-stone-9"],
+  [class*="bg-card"]       [class*="text-stone-7"], [class*="bg-card"]       [class*="text-stone-8"], [class*="bg-card"]       [class*="text-stone-9"],
+  [class*="bg-background"] .text-black, [class*="bg-card"] .text-black, [class*="bg-muted"] .text-black,
+  [class*="bg-secondary"] .text-black, [class*="bg-popover"] .text-black, [class*="bg-sidebar"] .text-black {
+    color: #fff !important;
+  }
+
 
   /* ----------------------------------------------------------
      Higher-specificity LIGHT-BG override.
