@@ -65,6 +65,7 @@ export default function BmiCalculator() {
     register,
     handleSubmit,
     watch,
+    setValue,
     formState: { errors },
   } = useForm<BmiFormData>({
     resolver: zodResolver(bmiSchema),
