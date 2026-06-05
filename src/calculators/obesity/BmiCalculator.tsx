@@ -65,6 +65,7 @@ export default function BmiCalculator() {
     register,
     handleSubmit,
     watch,
+    setValue,
     formState: { errors },
   } = useForm<BmiFormData>({
     resolver: zodResolver(bmiSchema),
@@ -191,9 +192,14 @@ export default function BmiCalculator() {
                     <Select
                       value={selectedEthnicity}
                       onValueChange={(value: EthnicityType) => {
-                        // This is handled by react-hook-form
+                        setValue("ethnicity", value, { shouldValidate: true });
+                        // Auto-recalculate if we have height/weight already
+                        const h = Number(watch("height"));
+                        const w = Number(watch("weight"));
+                        if (h > 0 && w > 0) {
+                          handleSubmit(onSubmit)();
+                        }
                       }}
-                      {...register("ethnicity")}
                     >
                       <SelectTrigger id="ethnicity" className="bg-slate-900 border-slate-700">
                         <SelectValue />
