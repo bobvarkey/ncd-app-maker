@@ -36,6 +36,7 @@ import {
   Clock,
   Crosshair,
 } from "lucide-react";
+import tampDcmiImg from "@/assets/tamp-dcmi-resistant-htn.png.asset.json";
 
 // Category colors for hypertension (orange theme)
 const categoryColors = {
