@@ -36,6 +36,7 @@ import {
   Clock,
   Crosshair,
 } from "lucide-react";
+import tampDcmiImg from "@/assets/tamp-dcmi-resistant-htn.png.asset.json";
 
 // Category colors for hypertension (orange theme)
 const categoryColors = {
@@ -385,6 +386,27 @@ export default function HypertensionTreatment() {
 
   return (
     <div className="space-y-6">
+      {/* Resistant HTN Infographic: TAMP-DCMI */}
+      <Card className="border-2 border-orange-500/20 overflow-hidden">
+        <CardHeader className="pb-3">
+          <div className="flex items-center gap-2">
+            <Activity className="h-5 w-5" style={{ color: categoryColors.accent }} />
+            <CardTitle className="text-lg">Stepwise Therapy for Resistant Hypertension — TAMP-DCMI</CardTitle>
+          </div>
+          <p className="text-xs text-muted-foreground">Mnemonic-based escalation guide (tap to open full size)</p>
+        </CardHeader>
+        <CardContent>
+          <a href={tampDcmiImg.url} target="_blank" rel="noopener noreferrer" className="block">
+            <img
+              src={tampDcmiImg.url}
+              alt="Stepwise therapy for resistant hypertension: TAMP-DCMI mnemonic"
+              className="w-full h-auto rounded-md border border-border"
+              loading="lazy"
+            />
+          </a>
+        </CardContent>
+      </Card>
+
       {/* Treatment Algorithm */}
       <Card className="border-2 border-orange-500/20">
         <CardHeader className="pb-3">
