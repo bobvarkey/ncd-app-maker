@@ -318,14 +318,14 @@
     color: hsl(var(--popover-foreground)) !important;
   }
 
-  /* Always keep muted-foreground (gray helper text) visible on dark surfaces */
+  /* Always keep muted-foreground (gray helper text) visible */
   .text-muted-foreground, [class*="text-muted-foreground"] {
     color: hsl(var(--muted-foreground)) !important;
   }
 
-  /* Tabs: keep label white regardless of active/inactive state */
+  /* Tabs: keep label as foreground regardless of active/inactive state */
   [role="tab"], [role="tab"] * {
-    color: #fff !important;
+    color: hsl(var(--foreground)) !important;
   }
 
   /* Clinical context chips sit on dark surfaces in both selected and unselected states. */
