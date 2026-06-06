@@ -369,6 +369,30 @@
     color: hsl(var(--muted-foreground)) !important;
     opacity: 1;
   }
+  /* Form labels default to white on this dark theme */
+  label {
+    color: hsl(var(--foreground));
+  }
+  /* Radix Select trigger value + placeholder */
+  [data-radix-select-trigger], [data-radix-select-value] {
+    color: hsl(var(--foreground)) !important;
+  }
+  [data-placeholder] {
+    color: hsl(var(--muted-foreground)) !important;
+  }
+
+  /* Also flip mid-gray text (600 weight) when nested in dark semantic surfaces */
+  [class*="bg-background"] [class*="text-slate-6"], [class*="bg-card"] [class*="text-slate-6"],
+  [class*="bg-muted"]      [class*="text-slate-6"], [class*="bg-secondary"] [class*="text-slate-6"],
+  [class*="bg-popover"]    [class*="text-slate-6"],
+  [class*="bg-background"] [class*="text-gray-6"],  [class*="bg-card"] [class*="text-gray-6"],
+  [class*="bg-muted"]      [class*="text-gray-6"],  [class*="bg-secondary"] [class*="text-gray-6"],
+  [class*="bg-popover"]    [class*="text-gray-6"],
+  [class*="bg-background"] [class*="text-zinc-6"], [class*="bg-card"] [class*="text-zinc-6"],
+  [class*="bg-background"] [class*="text-neutral-6"], [class*="bg-card"] [class*="text-neutral-6"],
+  [class*="bg-background"] [class*="text-stone-6"], [class*="bg-card"] [class*="text-stone-6"] {
+    color: #fff !important;
+  }
 
   /* Tables inherit; ensure header cells on dark surfaces stay white */
   thead, tbody, tfoot, tr, th, td { color: inherit; }
