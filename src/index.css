@@ -21,59 +21,59 @@
   h4 { @apply text-base md:text-lg font-semibold; }
 
   :root {
-    /* Clean medical theme - slate blue with teal accents */
-    --background: 220 20% 8%;
-    --foreground: 0 0% 100%;
+    /* Clean medical theme - light background with dark text */
+    --background: 0 0% 100%;
+    --foreground: 220 25% 12%;
 
-    --card: 220 18% 11%;
-    --card-foreground: 0 0% 100%;
+    --card: 0 0% 100%;
+    --card-foreground: 220 25% 12%;
 
-    --popover: 220 18% 11%;
-    --popover-foreground: 0 0% 100%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 220 25% 12%;
 
-    --primary: 185 60% 48%;
-    --primary-foreground: 0 0% 0%;
+    --primary: 185 60% 38%;
+    --primary-foreground: 0 0% 100%;
 
-    --secondary: 220 15% 18%;
-    --secondary-foreground: 0 0% 100%;
+    --secondary: 220 15% 94%;
+    --secondary-foreground: 220 25% 12%;
 
-    --muted: 220 15% 16%;
-    --muted-foreground: 0 0% 85%;
+    --muted: 220 15% 96%;
+    --muted-foreground: 220 12% 38%;
 
     --accent: 175 55% 40%;
-    --accent-foreground: 0 0% 0%;
+    --accent-foreground: 0 0% 100%;
 
-    --destructive: 0 75% 55%;
+    --destructive: 0 75% 50%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 220 15% 22%;
-    --input: 220 15% 20%;
-    --ring: 185 60% 48%;
+    --border: 220 15% 88%;
+    --input: 220 15% 90%;
+    --ring: 185 60% 38%;
 
     --radius: 0.625rem;
 
     /* Clinical result tokens */
-    --success: 152 55% 45%;
-    --success-foreground: 0 0% 0%;
-    --warning: 38 85% 50%;
-    --warning-foreground: 0 0% 0%;
-    --info: 200 65% 55%;
-    --info-foreground: 0 0% 0%;
+    --success: 152 55% 40%;
+    --success-foreground: 0 0% 100%;
+    --warning: 38 85% 45%;
+    --warning-foreground: 0 0% 100%;
+    --info: 200 65% 45%;
+    --info-foreground: 0 0% 100%;
 
     /* Mode accent colors */
-    --mode-simple: 142 50% 45%;
-    --mode-moderate: 32 85% 50%;
-    --mode-complex: 265 60% 55%;
+    --mode-simple: 142 50% 40%;
+    --mode-moderate: 32 85% 45%;
+    --mode-complex: 265 60% 50%;
 
     /* Sidebar tokens */
-    --sidebar-background: 220 20% 6%;
-    --sidebar-foreground: 0 0% 100%;
-    --sidebar-primary: 185 60% 48%;
-    --sidebar-primary-foreground: 0 0% 0%;
-    --sidebar-accent: 220 15% 18%;
-    --sidebar-accent-foreground: 0 0% 100%;
-    --sidebar-border: 220 15% 18%;
-    --sidebar-ring: 185 60% 48%;
+    --sidebar-background: 220 20% 98%;
+    --sidebar-foreground: 220 25% 12%;
+    --sidebar-primary: 185 60% 38%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 220 15% 94%;
+    --sidebar-accent-foreground: 220 25% 12%;
+    --sidebar-border: 220 15% 88%;
+    --sidebar-ring: 185 60% 38%;
   }
 }
 
@@ -222,48 +222,30 @@
   }
 
   /* ----------------------------------------------------------
-     Semantic-token surfaces (shadcn) — these are dark in this
-     theme, so all descendants must read as white. Substring
+     Semantic-token surfaces (shadcn) — these are LIGHT in this
+     theme, so all descendants must read as dark. Substring
      match so opacity variants (bg-card/50, bg-foreground/5...)
-     are also covered.
+     are also covered. (bg-foreground is dark — handled by
+     dark-bg block above.)
      ---------------------------------------------------------- */
   [class*="bg-background"], [class*="bg-card"], [class*="bg-popover"],
   [class*="bg-muted"], [class*="bg-secondary"], [class*="bg-sidebar"],
-  [class*="bg-sidebar-accent"], [class*="bg-destructive"], [class*="bg-foreground"],
+  [class*="bg-sidebar-accent"],
   [class*="bg-background"] *, [class*="bg-card"] *, [class*="bg-popover"] *,
   [class*="bg-muted"] *, [class*="bg-secondary"] *, [class*="bg-sidebar"] *,
-  [class*="bg-sidebar-accent"] *, [class*="bg-destructive"] *, [class*="bg-foreground"] * {
+  [class*="bg-sidebar-accent"] * {
+    color: hsl(var(--foreground)) !important;
+  }
+
+  /* Destructive / foreground surfaces are dark — keep text white */
+  [class*="bg-destructive"], [class*="bg-foreground"],
+  [class*="bg-destructive"] *, [class*="bg-foreground"] * {
     color: #fff !important;
   }
 
-  /* Primary / accent surfaces are bright teal — keep text black for contrast */
+  /* Primary / accent surfaces are teal — keep text white for contrast */
   [class~="bg-primary"], [class~="bg-accent"],
   [class~="bg-primary"] *, [class~="bg-accent"] * {
-    color: #000 !important;
-  }
-
-  /* Any explicit dark text color sitting inside a dark surface
-     must flip to white — overrides text-slate-700/800/900,
-     text-gray-700+, text-black, text-foreground (dark in light
-     ancestors only — here ancestors are dark too). */
-  [class*="bg-background"] [class*="text-slate-7"], [class*="bg-background"] [class*="text-slate-8"], [class*="bg-background"] [class*="text-slate-9"],
-  [class*="bg-card"]       [class*="text-slate-7"], [class*="bg-card"]       [class*="text-slate-8"], [class*="bg-card"]       [class*="text-slate-9"],
-  [class*="bg-muted"]      [class*="text-slate-7"], [class*="bg-muted"]      [class*="text-slate-8"], [class*="bg-muted"]      [class*="text-slate-9"],
-  [class*="bg-secondary"]  [class*="text-slate-7"], [class*="bg-secondary"]  [class*="text-slate-8"], [class*="bg-secondary"]  [class*="text-slate-9"],
-  [class*="bg-popover"]    [class*="text-slate-7"], [class*="bg-popover"]    [class*="text-slate-8"], [class*="bg-popover"]    [class*="text-slate-9"],
-  [class*="bg-background"] [class*="text-gray-7"],  [class*="bg-background"] [class*="text-gray-8"],  [class*="bg-background"] [class*="text-gray-9"],
-  [class*="bg-card"]       [class*="text-gray-7"],  [class*="bg-card"]       [class*="text-gray-8"],  [class*="bg-card"]       [class*="text-gray-9"],
-  [class*="bg-muted"]      [class*="text-gray-7"],  [class*="bg-muted"]      [class*="text-gray-8"],  [class*="bg-muted"]      [class*="text-gray-9"],
-  [class*="bg-secondary"]  [class*="text-gray-7"],  [class*="bg-secondary"]  [class*="text-gray-8"],  [class*="bg-secondary"]  [class*="text-gray-9"],
-  [class*="bg-popover"]    [class*="text-gray-7"],  [class*="bg-popover"]    [class*="text-gray-8"],  [class*="bg-popover"]    [class*="text-gray-9"],
-  [class*="bg-background"] [class*="text-zinc-7"], [class*="bg-background"] [class*="text-zinc-8"], [class*="bg-background"] [class*="text-zinc-9"],
-  [class*="bg-card"]       [class*="text-zinc-7"], [class*="bg-card"]       [class*="text-zinc-8"], [class*="bg-card"]       [class*="text-zinc-9"],
-  [class*="bg-background"] [class*="text-neutral-7"], [class*="bg-background"] [class*="text-neutral-8"], [class*="bg-background"] [class*="text-neutral-9"],
-  [class*="bg-card"]       [class*="text-neutral-7"], [class*="bg-card"]       [class*="text-neutral-8"], [class*="bg-card"]       [class*="text-neutral-9"],
-  [class*="bg-background"] [class*="text-stone-7"], [class*="bg-background"] [class*="text-stone-8"], [class*="bg-background"] [class*="text-stone-9"],
-  [class*="bg-card"]       [class*="text-stone-7"], [class*="bg-card"]       [class*="text-stone-8"], [class*="bg-card"]       [class*="text-stone-9"],
-  [class*="bg-background"] .text-black, [class*="bg-card"] .text-black, [class*="bg-muted"] .text-black,
-  [class*="bg-secondary"] .text-black, [class*="bg-popover"] .text-black, [class*="bg-sidebar"] .text-black {
     color: #fff !important;
   }
 
@@ -336,14 +318,14 @@
     color: hsl(var(--popover-foreground)) !important;
   }
 
-  /* Always keep muted-foreground (gray helper text) visible on dark surfaces */
+  /* Always keep muted-foreground (gray helper text) visible */
   .text-muted-foreground, [class*="text-muted-foreground"] {
     color: hsl(var(--muted-foreground)) !important;
   }
 
-  /* Tabs: keep label white regardless of active/inactive state */
+  /* Tabs: keep label as foreground regardless of active/inactive state */
   [role="tab"], [role="tab"] * {
-    color: #fff !important;
+    color: hsl(var(--foreground)) !important;
   }
 
   /* Clinical context chips sit on dark surfaces in both selected and unselected states. */
@@ -381,18 +363,7 @@
     color: hsl(var(--muted-foreground)) !important;
   }
 
-  /* Also flip mid-gray text (600 weight) when nested in dark semantic surfaces */
-  [class*="bg-background"] [class*="text-slate-6"], [class*="bg-card"] [class*="text-slate-6"],
-  [class*="bg-muted"]      [class*="text-slate-6"], [class*="bg-secondary"] [class*="text-slate-6"],
-  [class*="bg-popover"]    [class*="text-slate-6"],
-  [class*="bg-background"] [class*="text-gray-6"],  [class*="bg-card"] [class*="text-gray-6"],
-  [class*="bg-muted"]      [class*="text-gray-6"],  [class*="bg-secondary"] [class*="text-gray-6"],
-  [class*="bg-popover"]    [class*="text-gray-6"],
-  [class*="bg-background"] [class*="text-zinc-6"], [class*="bg-card"] [class*="text-zinc-6"],
-  [class*="bg-background"] [class*="text-neutral-6"], [class*="bg-card"] [class*="text-neutral-6"],
-  [class*="bg-background"] [class*="text-stone-6"], [class*="bg-card"] [class*="text-stone-6"] {
-    color: #fff !important;
-  }
+  /* (light theme: mid-gray text on semantic surfaces is already readable) */
 
   /* Tables inherit; ensure header cells on dark surfaces stay white */
   thead, tbody, tfoot, tr, th, td { color: inherit; }
