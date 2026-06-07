@@ -594,6 +594,8 @@ export default function Infections() {
             </pre>
           </details>
         </section>
+        </>
+        )}
       </div>
     </div>
   );
