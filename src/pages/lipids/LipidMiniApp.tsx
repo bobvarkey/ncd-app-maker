@@ -405,40 +405,91 @@ function buildResult(i: Inputs): Result | null {
 }
 
 /* ---------- UI helpers ---------- */
-function NumField({
+
+// Range buckets — each option's `value` is the midpoint/representative used by the algorithm
+type RangeOpt = { label: string; value: string };
+const RANGES: Record<string, RangeOpt[]> = {
+  ldl: [
+    { label: "< 55 mg/dL", value: "40" },
+    { label: "55 – 69", value: "62" },
+    { label: "70 – 99", value: "85" },
+    { label: "100 – 129", value: "115" },
+    { label: "130 – 159", value: "145" },
+    { label: "160 – 189", value: "175" },
+    { label: "≥ 190", value: "200" },
+  ],
+  hdl: [
+    { label: "< 40 mg/dL (low)", value: "35" },
+    { label: "40 – 59", value: "50" },
+    { label: "≥ 60", value: "65" },
+  ],
+  tg: [
+    { label: "< 150 mg/dL", value: "120" },
+    { label: "150 – 199", value: "175" },
+    { label: "200 – 499", value: "350" },
+    { label: "500 – 999", value: "750" },
+    { label: "≥ 1000", value: "1200" },
+  ],
+  totalChol: [
+    { label: "< 200 mg/dL", value: "180" },
+    { label: "200 – 239", value: "220" },
+    { label: "≥ 240", value: "260" },
+  ],
+  apoB: [
+    { label: "< 80 mg/dL", value: "70" },
+    { label: "80 – 99", value: "90" },
+    { label: "100 – 129", value: "115" },
+    { label: "≥ 130", value: "140" },
+  ],
+  lpa: [
+    { label: "< 30 mg/dL", value: "20" },
+    { label: "30 – 49", value: "40" },
+    { label: "50 – 99", value: "75" },
+    { label: "≥ 100", value: "120" },
+  ],
+  hsCrp: [
+    { label: "< 1 mg/L (low risk)", value: "0.5" },
+    { label: "1 – 2 (avg)", value: "1.5" },
+    { label: "> 2 – 10 (high)", value: "5" },
+    { label: "> 10 (acute/inflammation)", value: "15" },
+  ],
+};
+
+function RangeField({
   label,
+  fieldKey,
   value,
   onChange,
-  placeholder,
-  suffix,
 }: {
   label: string;
+  fieldKey: keyof typeof RANGES;
   value: string;
   onChange: (v: string) => void;
-  placeholder?: string;
-  suffix?: string;
 }) {
+  const opts = RANGES[fieldKey];
+  // Map current numeric value back to a label for display
+  const matched = opts.find((o) => o.value === value);
   return (
     <div className="space-y-1">
       <Label className="text-xs text-muted-foreground">{label}</Label>
-      <div className="relative">
-        <Input
-          type="number"
-          inputMode="decimal"
-          value={value}
-          onChange={(e) => onChange(e.target.value)}
-          placeholder={placeholder}
-          className="h-9"
-        />
-        {suffix && (
-          <span className="absolute right-2 top-1/2 -translate-y-1/2 text-[10px] text-muted-foreground">
-            {suffix}
-          </span>
-        )}
-      </div>
+      <Select value={value} onValueChange={onChange}>
+        <SelectTrigger className="h-9 text-xs">
+          <SelectValue placeholder="Select range">
+            {matched?.label ?? "Select range"}
+          </SelectValue>
+        </SelectTrigger>
+        <SelectContent>
+          {opts.map((o) => (
+            <SelectItem key={o.value} value={o.value} className="text-xs">
+              {o.label}
+            </SelectItem>
+          ))}
+        </SelectContent>
+      </Select>
     </div>
   );
 }
+
 
 function Chip({
   active,
