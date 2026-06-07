@@ -77,55 +77,9 @@ export default function Anemia() {
             </div>
           </div>
 
-          {/* Tabs */}
-          <div className="flex gap-2">
-            <button
-              onClick={() => setActiveTab('anemia')}
-              className={`flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
-                activeTab === 'anemia'
-                  ? 'bg-sky-600 text-white'
-                  : 'bg-gray-800 text-gray-300 hover:bg-gray-700 border border-gray-700'
-              }`}
-            >
-              <Microscope className="w-4 h-4" />
-              Anemia Evaluator
-            </button>
-            <button
-              onClick={() => setActiveTab('thrombocytopenia')}
-              className={`flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
-                activeTab === 'thrombocytopenia'
-                  ? 'bg-rose-600 text-white'
-                  : 'bg-gray-800 text-gray-300 hover:bg-gray-700 border border-gray-700'
-              }`}
-            >
-              <Droplet className="w-4 h-4" />
-              Thrombocytopenia
-            </button>
-            <button
-              onClick={() => setActiveTab('bleeding-clotting')}
-              className={`flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
-                activeTab === 'bleeding-clotting'
-                  ? 'bg-purple-600 text-white'
-                  : 'bg-gray-800 text-gray-300 hover:bg-gray-700 border border-gray-700'
-              }`}
-            >
-              <Activity className="w-4 h-4" />
-              Bleeding / Clotting
-            </button>
-            <button
-              onClick={() => setActiveTab('iron')}
-              className={`flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
-                activeTab === 'iron'
-                  ? 'bg-orange-600 text-white'
-                  : 'bg-gray-800 text-gray-300 hover:bg-gray-700 border border-gray-700'
-              }`}
-            >
-              <Syringe className="w-4 h-4" />
-              Iron Parameters
-            </button>
-          </div>
         </div>
       </header>
+
 
       <main className="max-w-4xl mx-auto px-4 sm:px-6 py-8 space-y-6">
         {/* Disclaimer */}
