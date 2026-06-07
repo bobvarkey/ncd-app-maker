@@ -29,7 +29,7 @@ export type LAIResult = {
 
 export default function LipidsTab() {
   const navigate = useNavigate();
-  const [activeTab, setActiveTab] = useState("miniapp");
+  const [activeTab, setActiveTab] = useState("assessment");
   const [laiResult, setLaiResult] = useState<LAIResult | null>(null);
   const [egfr, setEgfr] = useState<string>("");
 
@@ -70,6 +70,11 @@ export default function LipidsTab() {
           </div>
         </div>
 
+        {/* Mini-App pinned to top */}
+        <div className="mb-6">
+          <LipidMiniApp />
+        </div>
+
         {/* Smart Lab Import */}
         <div className="mb-6">
           <SmartLabelUpload fields={LIPID_FIELDS.fields} onParse={(values) => {
@@ -78,10 +83,7 @@ export default function LipidsTab() {
         </div>
 
         <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6">
-          <TabsList className="grid w-full grid-cols-6 h-auto p-1 bg-muted/50">
-            <TabsTrigger value="miniapp" className="flex items-center gap-1.5 py-2 text-xs data-[state=active]:bg-primary/10 data-[state=active]:text-primary">
-              <Sparkles className="h-4 w-4" /><span>Mini-App</span>
-            </TabsTrigger>
+          <TabsList className="grid w-full grid-cols-5 h-auto p-1 bg-muted/50">
             <TabsTrigger value="assessment" className="flex items-center gap-1.5 py-2 text-xs data-[state=active]:bg-blue-500/10 data-[state=active]:text-blue-600">
               <Calculator className="h-4 w-4" /><span>Risk Calc</span>
             </TabsTrigger>
@@ -99,9 +101,7 @@ export default function LipidsTab() {
             </TabsTrigger>
           </TabsList>
 
-          <TabsContent value="miniapp" className="mt-0">
-            <LipidMiniApp />
-          </TabsContent>
+
 
 
           {/* Tab 1: Overview */}

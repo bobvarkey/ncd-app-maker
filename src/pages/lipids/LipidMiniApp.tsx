@@ -1,10 +1,18 @@
-import { useMemo, useState } from "react";
+import { useMemo, useRef, useState } from "react";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Badge } from "@/components/ui/badge";
 import { SectionCard } from "@/components/ui/section-card";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { toast } from "@/hooks/use-toast";
 import {
   Activity,
   Target,
@@ -15,6 +23,9 @@ import {
   RotateCcw,
   ScanLine,
   Droplet,
+  Printer,
+  Copy,
+  FileText,
 } from "lucide-react";
 
 /* ============================================================
@@ -394,40 +405,91 @@ function buildResult(i: Inputs): Result | null {
 }
 
 /* ---------- UI helpers ---------- */
-function NumField({
+
+// Range buckets — each option's `value` is the midpoint/representative used by the algorithm
+type RangeOpt = { label: string; value: string };
+const RANGES: Record<string, RangeOpt[]> = {
+  ldl: [
+    { label: "< 55 mg/dL", value: "40" },
+    { label: "55 – 69", value: "62" },
+    { label: "70 – 99", value: "85" },
+    { label: "100 – 129", value: "115" },
+    { label: "130 – 159", value: "145" },
+    { label: "160 – 189", value: "175" },
+    { label: "≥ 190", value: "200" },
+  ],
+  hdl: [
+    { label: "< 40 mg/dL (low)", value: "35" },
+    { label: "40 – 59", value: "50" },
+    { label: "≥ 60", value: "65" },
+  ],
+  tg: [
+    { label: "< 150 mg/dL", value: "120" },
+    { label: "150 – 199", value: "175" },
+    { label: "200 – 499", value: "350" },
+    { label: "500 – 999", value: "750" },
+    { label: "≥ 1000", value: "1200" },
+  ],
+  totalChol: [
+    { label: "< 200 mg/dL", value: "180" },
+    { label: "200 – 239", value: "220" },
+    { label: "≥ 240", value: "260" },
+  ],
+  apoB: [
+    { label: "< 80 mg/dL", value: "70" },
+    { label: "80 – 99", value: "90" },
+    { label: "100 – 129", value: "115" },
+    { label: "≥ 130", value: "140" },
+  ],
+  lpa: [
+    { label: "< 30 mg/dL", value: "20" },
+    { label: "30 – 49", value: "40" },
+    { label: "50 – 99", value: "75" },
+    { label: "≥ 100", value: "120" },
+  ],
+  hsCrp: [
+    { label: "< 1 mg/L (low risk)", value: "0.5" },
+    { label: "1 – 2 (avg)", value: "1.5" },
+    { label: "> 2 – 10 (high)", value: "5" },
+    { label: "> 10 (acute/inflammation)", value: "15" },
+  ],
+};
+
+function RangeField({
   label,
+  fieldKey,
   value,
   onChange,
-  placeholder,
-  suffix,
 }: {
   label: string;
+  fieldKey: keyof typeof RANGES;
   value: string;
   onChange: (v: string) => void;
-  placeholder?: string;
-  suffix?: string;
 }) {
+  const opts = RANGES[fieldKey];
+  // Map current numeric value back to a label for display
+  const matched = opts.find((o) => o.value === value);
   return (
     <div className="space-y-1">
       <Label className="text-xs text-muted-foreground">{label}</Label>
-      <div className="relative">
-        <Input
-          type="number"
-          inputMode="decimal"
-          value={value}
-          onChange={(e) => onChange(e.target.value)}
-          placeholder={placeholder}
-          className="h-9"
-        />
-        {suffix && (
-          <span className="absolute right-2 top-1/2 -translate-y-1/2 text-[10px] text-muted-foreground">
-            {suffix}
-          </span>
-        )}
-      </div>
+      <Select value={value} onValueChange={onChange}>
+        <SelectTrigger className="h-9 text-xs">
+          <SelectValue placeholder="Select range">
+            {matched?.label ?? "Select range"}
+          </SelectValue>
+        </SelectTrigger>
+        <SelectContent>
+          {opts.map((o) => (
+            <SelectItem key={o.value} value={o.value} className="text-xs">
+              {o.label}
+            </SelectItem>
+          ))}
+        </SelectContent>
+      </Select>
     </div>
   );
 }
+
 
 function Chip({
   active,
@@ -507,6 +569,92 @@ export default function LipidMiniApp() {
   const showDmBlock = i.scenario === "dm";
   const showTgBlock = i.scenario === "htg";
 
+  // ----- Export helpers -----
+  const buildSummaryText = (): string => {
+    if (!result) return "";
+    const labelFor = (k: keyof typeof RANGES, v: string) =>
+      RANGES[k].find((o) => o.value === v)?.label ?? "—";
+    const labs = [
+      `LDL-C: ${labelFor("ldl", i.ldl)}`,
+      `HDL-C: ${labelFor("hdl", i.hdl)}`,
+      `Triglycerides: ${labelFor("tg", i.tg)}`,
+      `Total cholesterol: ${labelFor("totalChol", i.totalChol)}`,
+      `Apo-B: ${labelFor("apoB", i.apoB)}`,
+      `Lp(a): ${labelFor("lpa", i.lpa)}`,
+      `hsCRP: ${labelFor("hsCrp", i.hsCrp)}`,
+    ].join("\n  ");
+    const date = new Date().toLocaleString();
+    return [
+      `LIPID MANAGEMENT — Clinical Summary`,
+      `Generated: ${date}`,
+      ``,
+      `Scenario: ${i.scenario.toUpperCase()}`,
+      `Risk classification: ${result.groupLabel} [${result.group}]`,
+      ``,
+      `LABS (selected ranges):`,
+      `  ${labs}`,
+      ``,
+      `TARGETS:`,
+      `  LDL-C: ${result.ldlTarget}`,
+      `  Non-HDL-C: ${result.nonHdlTarget}`,
+      `  Apo-B: ${result.apoBTarget}`,
+      ``,
+      `THERAPY INTENSITY:`,
+      `  ${result.intensity}`,
+      ``,
+      `INITIAL Rx:`,
+      ...result.initialRx.map((x) => `  • ${x}`),
+      ``,
+      ...(result.triglycerideTrack?.length
+        ? [`TG-SPECIFIC TRACK:`, ...result.triglycerideTrack.map((x) => `  • ${x}`), ``]
+        : []),
+      `ESCALATION:`,
+      ...result.escalation.map((x) => `  • ${x}`),
+      ``,
+      `FOLLOW-UP:`,
+      ...result.followUp.map((f) => `  ${f.week} — ${f.action}`),
+      ``,
+      ...(result.notes.length ? [`NOTES:`, ...result.notes.map((n) => `  • ${n}`)] : []),
+      ``,
+      `— Per LAI 2023 lipid algorithm. Clinical decision support; verify before prescribing.`,
+    ].join("\n");
+  };
+
+  const handleCopy = async () => {
+    try {
+      await navigator.clipboard.writeText(buildSummaryText());
+      toast({ title: "Copied", description: "Summary copied to clipboard." });
+    } catch {
+      toast({ title: "Copy failed", description: "Clipboard unavailable.", variant: "destructive" });
+    }
+  };
+
+  const handlePrint = () => {
+    if (!result) return;
+    const w = window.open("", "_blank", "width=900,height=1100");
+    if (!w) return;
+    const txt = buildSummaryText()
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;");
+    w.document.write(`<!doctype html><html><head><title>Lipid Plan Summary</title>
+<style>
+  body { font-family: ui-sans-serif, system-ui, -apple-system, "Helvetica Neue", Arial, sans-serif;
+         padding: 32px; color: #0c2340; max-width: 800px; margin: 0 auto; line-height: 1.45; }
+  h1 { font-size: 18px; border-bottom: 2px solid #2d8a9e; padding-bottom: 6px; margin: 0 0 12px; }
+  pre { white-space: pre-wrap; font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 12px; }
+  .meta { color: #5cbdb9; font-size: 11px; margin-bottom: 16px; }
+  @media print { body { padding: 16px; } }
+</style></head><body>
+<h1>Lipid Management — Clinical Summary</h1>
+<div class="meta">Generated ${new Date().toLocaleString()}</div>
+<pre>${txt}</pre>
+<script>window.onload = () => { window.print(); };</script>
+</body></html>`);
+    w.document.close();
+  };
+
+
   return (
     <div className="space-y-5">
       <SectionCard
@@ -561,13 +709,13 @@ export default function LipidMiniApp() {
         {/* Labs — only after scenario chosen */}
         {showLabs && (
           <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-4">
-            <NumField label="LDL-C" value={i.ldl} onChange={(v) => set("ldl", v)} suffix="mg/dL" />
-            <NumField label="HDL-C" value={i.hdl} onChange={(v) => set("hdl", v)} suffix="mg/dL" />
-            <NumField label="Triglycerides" value={i.tg} onChange={(v) => set("tg", v)} suffix="mg/dL" />
-            <NumField label="Total cholesterol" value={i.totalChol} onChange={(v) => set("totalChol", v)} suffix="mg/dL" />
-            <NumField label="Apo-B" value={i.apoB} onChange={(v) => set("apoB", v)} suffix="mg/dL" />
-            <NumField label="Lp(a)" value={i.lpa} onChange={(v) => set("lpa", v)} suffix="mg/dL" />
-            <NumField label="hsCRP" value={i.hsCrp} onChange={(v) => set("hsCrp", v)} suffix="mg/L" />
+            <RangeField label="LDL-C" fieldKey="ldl" value={i.ldl} onChange={(v) => set("ldl", v)} />
+            <RangeField label="HDL-C" fieldKey="hdl" value={i.hdl} onChange={(v) => set("hdl", v)} />
+            <RangeField label="Triglycerides" fieldKey="tg" value={i.tg} onChange={(v) => set("tg", v)} />
+            <RangeField label="Total cholesterol" fieldKey="totalChol" value={i.totalChol} onChange={(v) => set("totalChol", v)} />
+            <RangeField label="Apo-B" fieldKey="apoB" value={i.apoB} onChange={(v) => set("apoB", v)} />
+            <RangeField label="Lp(a)" fieldKey="lpa" value={i.lpa} onChange={(v) => set("lpa", v)} />
+            <RangeField label="hsCRP" fieldKey="hsCrp" value={i.hsCrp} onChange={(v) => set("hsCrp", v)} />
           </div>
         )}
 
@@ -720,6 +868,15 @@ export default function LipidMiniApp() {
           }
         >
           <div className="space-y-4">
+            <div className="flex flex-wrap items-center gap-2 justify-end -mt-1">
+              <Button variant="outline" size="sm" onClick={handleCopy}>
+                <Copy className="h-3.5 w-3.5 mr-1.5" /> Copy summary
+              </Button>
+              <Button variant="outline" size="sm" onClick={handlePrint}>
+                <Printer className="h-3.5 w-3.5 mr-1.5" /> Print / PDF
+              </Button>
+            </div>
+
             <div>
               <p className="text-xs uppercase tracking-wider text-muted-foreground">
                 Risk classification
