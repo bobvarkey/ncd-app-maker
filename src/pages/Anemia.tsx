@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import type { CBCValues, Sex, EvaluationResult } from './anemia/types';
 import { evaluate } from './anemia/utils/anemia';
 import CBCForm from './anemia/components/CBCForm';
