@@ -102,6 +102,9 @@ import NotFound from "@/components/NotFound";
 // Fatigue
 import Fatigue from "@/pages/Fatigue";
 
+// Infections
+import Infections from "@/pages/Infections";
+
 const queryClient = new QueryClient();
 
 const DiabetesBuddyLayout = () => (
@@ -211,6 +214,7 @@ const App = () => (
           <Route path="/iron-calculator" element={<><TabNavigation /><IronReplacementCalculator /></>} />
           <Route path="/thyroid" element={<><TabNavigation /><ThyroidCalculator /></>} />
           <Route path="/fatigue" element={<><TabNavigation /><Fatigue /></>} />
+          <Route path="/infections" element={<><TabNavigation /><Infections /></>} />
 
           {/* 404 */}
           <Route path="*" element={<NotFound />} />
