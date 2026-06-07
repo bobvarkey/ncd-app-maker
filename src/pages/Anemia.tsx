@@ -8,14 +8,15 @@ import CausesPanel from './anemia/components/CausesPanel';
 import ReferenceRanges from './anemia/components/ReferenceRanges';
 import IronTherapy from './anemia/components/IronTherapy';
 import ThrombocytopeniaEvaluator from './anemia/components/ThrombocytopeniaEvaluator';
+import BleedingClottingEvaluator from './anemia/components/BleedingClottingEvaluator';
 import IronReplacementCalculator from '@/calculators/iron/IronReplacementCalculator';
 import TestSuggestionAlgorithm from './anemia/components/TestSuggestionAlgorithm';
-import { Microscope, AlertTriangle, Droplet, Syringe } from 'lucide-react';
+import { Microscope, AlertTriangle, Droplet, Syringe, Activity } from 'lucide-react';
 import { SmartLabelUpload, CBC_FIELDS } from "@/components/SmartLabelUpload";
 
 const EMPTY_CBC: CBCValues = { hgb: '', rbc: '', mcv: '', mch: '', mchc: '', rdw: '', hct: '' };
 
-type Tab = 'anemia' | 'thrombocytopenia' | 'iron';
+type Tab = 'anemia' | 'thrombocytopenia' | 'bleeding-clotting' | 'iron';
 
 export default function Anemia() {
   const [activeTab, setActiveTab] = useState<Tab>('anemia');
