@@ -6,7 +6,8 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Checkbox } from "@/components/ui/checkbox";
-import { Copy, Printer, Activity } from "lucide-react";
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
+import { Copy, Printer, Activity, Settings2, ChevronDown } from "lucide-react";
 import { toast } from "@/hooks/use-toast";
 
 // --- Range dropdown helper ---
@@ -22,7 +23,7 @@ const RANGES: Record<string, Range[]> = {
   platelets:[{label:"<100",value:80},{label:"100-149",value:125},{label:"150-249",value:200},{label:"250-400",value:300},{label:">400",value:450}],
   inr:      [{label:"<1.1",value:1.0},{label:"1.1-1.3",value:1.2},{label:"1.4-1.7",value:1.5},{label:">1.7",value:2.0}],
   bmi:      [{label:"<25",value:23},{label:"25-29.9",value:27},{label:"30-34.9",value:32},{label:"≥35",value:37}],
-  glucose:  [{label:"<100",value:90},{label:"100-125",value:112},{label:"≥126",value:150}],
+  drinks:   [{label:"0",value:0},{label:"1-7/wk",value:4},{label:"8-14/wk",value:11},{label:"15-21/wk",value:18},{label:"22-35/wk",value:28},{label:">35/wk",value:45}],
 };
 
 function RangeOrExact({
@@ -48,34 +49,54 @@ function RangeOrExact({
   );
 }
 
+// --- Cutoff presets ---
+type Cutoffs = {
+  fib4Low: number; fib4High: number; fib4LowElderly: number;
+  apriLow: number; apriHigh: number;
+  nfsLow: number; nfsHigh: number;
+};
+type PresetKey = "aasld" | "easl" | "who" | "custom";
+const PRESETS: Record<Exclude<PresetKey, "custom">, { label: string; cutoffs: Cutoffs; note: string }> = {
+  aasld: {
+    label: "AASLD / AGA (default)",
+    cutoffs: { fib4Low: 1.3, fib4High: 2.67, fib4LowElderly: 2.0, apriLow: 0.5, apriHigh: 1.5, nfsLow: -1.455, nfsHigh: 0.676 },
+    note: "Standard US primary-care thresholds; age-adjusted FIB-4 ≥65y.",
+  },
+  easl: {
+    label: "EASL (MASLD)",
+    cutoffs: { fib4Low: 1.3, fib4High: 2.67, fib4LowElderly: 2.0, apriLow: 0.5, apriHigh: 1.5, nfsLow: -1.455, nfsHigh: 0.676 },
+    note: "EASL CPG 2024 — same FIB-4 cut-offs; refer indeterminate/high to FibroScan.",
+  },
+  who: {
+    label: "WHO (HCV/HBV)",
+    cutoffs: { fib4Low: 1.45, fib4High: 3.25, fib4LowElderly: 2.0, apriLow: 0.5, apriHigh: 2.0, nfsLow: -1.455, nfsHigh: 0.676 },
+    note: "WHO viral-hepatitis guideline — APRI >2 / FIB-4 >3.25 ≈ cirrhosis.",
+  },
+};
+
 // --- Score logic ---
 type Risk = "low" | "indeterminate" | "high" | null;
 
-function classifyFIB4(age: number, ast: number, alt: number, plt: number): { score: number; risk: Risk } {
+function classifyFIB4(age: number, ast: number, alt: number, plt: number, c: Cutoffs): { score: number; risk: Risk } {
   if (!age || !ast || !alt || !plt) return { score: NaN, risk: null };
   const score = (age * ast) / (plt * Math.sqrt(alt));
-  // Age-adjusted: <65 use 1.3/2.67; ≥65 use 2.0/2.67
-  const low = age >= 65 ? 2.0 : 1.3;
-  const high = 2.67;
-  const risk: Risk = score < low ? "low" : score <= high ? "indeterminate" : "high";
+  const low = age >= 65 ? c.fib4LowElderly : c.fib4Low;
+  const risk: Risk = score < low ? "low" : score <= c.fib4High ? "indeterminate" : "high";
   return { score, risk };
 }
-
-function classifyAPRI(ast: number, astULN: number, plt: number): { score: number; risk: Risk } {
+function classifyAPRI(ast: number, astULN: number, plt: number, c: Cutoffs): { score: number; risk: Risk } {
   if (!ast || !astULN || !plt) return { score: NaN, risk: null };
   const score = ((ast / astULN) * 100) / plt;
-  const risk: Risk = score < 0.5 ? "low" : score <= 1.5 ? "indeterminate" : "high";
+  const risk: Risk = score < c.apriLow ? "low" : score <= c.apriHigh ? "indeterminate" : "high";
   return { score, risk };
 }
-
-function classifyNFS(age: number, bmi: number, hyperglycemia: boolean, plt: number, alb: number, ast: number, alt: number): { score: number; risk: Risk } {
+function classifyNFS(age: number, bmi: number, hyperglycemia: boolean, plt: number, alb: number, ast: number, alt: number, c: Cutoffs): { score: number; risk: Risk } {
   if (!age || !bmi || !plt || !alb || !ast || !alt) return { score: NaN, risk: null };
   const ifg = hyperglycemia ? 1 : 0;
   const score = -1.675 + 0.037 * age + 0.094 * bmi + 1.13 * ifg + 0.99 * (ast / alt) - 0.013 * plt - 0.66 * alb;
-  const risk: Risk = score < -1.455 ? "low" : score <= 0.676 ? "indeterminate" : "high";
+  const risk: Risk = score < c.nfsLow ? "low" : score <= c.nfsHigh ? "indeterminate" : "high";
   return { score, risk };
 }
-
 function patternFromLFTs(ast: number, alt: number, alp: number, alpULN = 120): "hepatocellular" | "cholestatic" | "mixed" | "normal" | "unknown" {
   if (!ast && !alt && !alp) return "unknown";
   const altULN = 40;
@@ -95,8 +116,18 @@ const riskBadge = (r: Risk) => {
   return <Badge variant="outline">—</Badge>;
 };
 
+// Alcohol risk tiers (drinks/week, ~14 g per drink)
+function alcoholTier(sex: string, drinksPerWeek: number): { tier: "none" | "low" | "atrisk" | "heavy"; label: string } {
+  if (drinksPerWeek <= 0) return { tier: "none", label: "None reported" };
+  const heavy = sex === "female" ? 8 : 15;
+  const atrisk = sex === "female" ? 4 : 7;
+  if (drinksPerWeek >= heavy) return { tier: "heavy", label: `Heavy use (${drinksPerWeek}/wk)` };
+  if (drinksPerWeek >= atrisk) return { tier: "atrisk", label: `At-risk use (${drinksPerWeek}/wk)` };
+  return { tier: "low", label: `Low-risk use (${drinksPerWeek}/wk)` };
+}
+
 export default function LiverMiniApp() {
-  // Inputs
+  // Labs / patient
   const [age, setAge] = useState("");
   const [sex, setSex] = useState("");
   const [bmi, setBmi] = useState("");
@@ -113,22 +144,39 @@ export default function LiverMiniApp() {
   // Context
   const [diabetes, setDiabetes] = useState(false);
   const [glucoseHigh, setGlucoseHigh] = useState(false);
-  const [alcohol, setAlcohol] = useState(false);
-  const [viral, setViral] = useState(false);
   const [obesity, setObesity] = useState(false);
   const [meds, setMeds] = useState(false);
   const [pregnant, setPregnant] = useState(false);
   const [jaundice, setJaundice] = useState(false);
   const [encephalopathy, setEncephalopathy] = useState(false);
 
+  // Viral hepatitis
+  const [hbv, setHbv] = useState("unknown"); // unknown | negative | exposed | chronic | active
+  const [hcv, setHcv] = useState("unknown"); // unknown | negative | antibody | rna_positive | treated_svr
+
+  // Alcohol
+  const [drinksWk, setDrinksWk] = useState("");
+  const [alcoholDependence, setAlcoholDependence] = useState(false);
+
+  // Cutoffs
+  const [preset, setPreset] = useState<PresetKey>("aasld");
+  const [customCutoffs, setCustomCutoffs] = useState<Cutoffs>(PRESETS.aasld.cutoffs);
+  const [showCutoffs, setShowCutoffs] = useState(false);
+  const cutoffs = preset === "custom" ? customCutoffs : PRESETS[preset].cutoffs;
+  const setCutoff = (k: keyof Cutoffs, v: string) => {
+    setPreset("custom");
+    setCustomCutoffs(c => ({ ...c, [k]: parseFloat(v) || 0 }));
+  };
+
   const n = (s: string) => parseFloat(s) || 0;
 
-  const fib4 = useMemo(() => classifyFIB4(n(age), n(ast), n(alt), n(plt)), [age, ast, alt, plt]);
-  const apri = useMemo(() => classifyAPRI(n(ast), n(astULN), n(plt)), [ast, astULN, plt]);
-  const nfs  = useMemo(() => classifyNFS(n(age), n(bmi), diabetes || glucoseHigh, n(plt), n(alb), n(ast), n(alt)),
-    [age, bmi, diabetes, glucoseHigh, plt, alb, ast, alt]);
+  const fib4 = useMemo(() => classifyFIB4(n(age), n(ast), n(alt), n(plt), cutoffs), [age, ast, alt, plt, cutoffs]);
+  const apri = useMemo(() => classifyAPRI(n(ast), n(astULN), n(plt), cutoffs), [ast, astULN, plt, cutoffs]);
+  const nfs  = useMemo(() => classifyNFS(n(age), n(bmi), diabetes || glucoseHigh, n(plt), n(alb), n(ast), n(alt), cutoffs),
+    [age, bmi, diabetes, glucoseHigh, plt, alb, ast, alt, cutoffs]);
 
   const pattern = useMemo(() => patternFromLFTs(n(ast), n(alt), n(alp)), [ast, alt, alp]);
+  const alcohol = useMemo(() => alcoholTier(sex, n(drinksWk)), [sex, drinksWk]);
 
   const redFlags = useMemo(() => {
     const flags: string[] = [];
@@ -139,53 +187,80 @@ export default function LiverMiniApp() {
     if (n(alt) >= 1000 || n(ast) >= 1000) flags.push("Transaminases >1000 — ischemic, toxic, or viral hepatitis");
     if (encephalopathy) flags.push("Hepatic encephalopathy — urgent referral");
     if (jaundice && n(inr) >= 1.5) flags.push("Jaundice + coagulopathy — ALF criteria, ER referral");
+    if (hbv === "active") flags.push("HBV active flare (HBeAg+ / high DNA) — urgent hepatology for antiviral therapy");
+    if (hcv === "rna_positive" && (fib4.risk === "high" || apri.risk === "high")) flags.push("HCV RNA+ with high fibrosis score — fast-track DAA therapy & cirrhosis work-up");
+    if (alcohol.tier === "heavy" && (n(bili) >= 3 || pattern === "hepatocellular" && n(ast) > 2 * n(alt) && n(ast) > 100))
+      flags.push("Possible alcohol-associated hepatitis (heavy use + AST>2×ALT + hyperbilirubinemia) — Maddrey/MELD assessment");
+    if (alcoholDependence) flags.push("Alcohol dependence — needs withdrawal risk assessment & addiction support");
     return flags;
-  }, [bili, inr, alb, plt, ast, alt, encephalopathy, jaundice]);
+  }, [bili, inr, alb, plt, ast, alt, encephalopathy, jaundice, hbv, hcv, fib4, apri, alcohol, alcoholDependence, pattern]);
 
   const pathway = useMemo(() => {
     const steps: string[] = [];
     if (redFlags.length) {
-      steps.push("URGENT: features of acute liver failure or decompensation — same-day hepatology/ER referral.");
-      return steps;
+      steps.push("URGENT: features of acute liver failure, decompensation, alcohol-hepatitis or active viral flare — same-day hepatology/ER referral.");
     }
-    if (pattern === "normal") {
-      steps.push("LFTs within reference range — no further work-up indicated unless clinical suspicion.");
-      return steps;
+
+    // Viral hepatitis branches
+    if (hbv === "exposed" || hbv === "chronic") {
+      steps.push("HBV: check HBeAg, anti-HBe, HBV DNA, and HDV co-infection. Treat per AASLD if DNA elevated or ALT persistent ≥2× ULN. HCC surveillance with US ± AFP q6 mo if cirrhotic, Asian male >40, Asian female >50, African >20, or family hx HCC.");
+    } else if (hbv === "unknown") {
+      steps.push("Order HBsAg, anti-HBc total, anti-HBs (universal adult screening, USPSTF 2020).");
+    } else if (hbv === "active") {
+      steps.push("HBV active disease — start tenofovir/entecavir per hepatology; daily monitoring if jaundice/coagulopathy.");
     }
-    steps.push(`Pattern: ${pattern.toUpperCase()} injury.`);
+    if (hcv === "unknown") {
+      steps.push("Order anti-HCV antibody (universal adult screening). If positive, reflex HCV RNA.");
+    } else if (hcv === "antibody") {
+      steps.push("HCV antibody+ — confirm with HCV RNA and genotype; if RNA+ proceed to DAA therapy.");
+    } else if (hcv === "rna_positive") {
+      steps.push("HCV RNA+ — initiate pan-genotypic DAA (glecaprevir/pibrentasvir or sofosbuvir/velpatasvir) per AASLD/IDSA; stage fibrosis before therapy.");
+    } else if (hcv === "treated_svr") {
+      steps.push("HCV post-SVR — continue HCC surveillance if cirrhosis was present pre-treatment.");
+    }
+
+    // Alcohol branch
+    if (alcohol.tier === "heavy") {
+      steps.push(`Alcohol — ${alcohol.label}: counsel for abstinence, baclofen/naltrexone, refer to addiction service. AST/ALT ratio >2 with GGT↑ supports alcohol-associated liver disease.`);
+    } else if (alcohol.tier === "atrisk") {
+      steps.push(`Alcohol — ${alcohol.label}: brief intervention (NIAAA), reduce to <14/wk (men) or <7/wk (women).`);
+    }
+
+    // LFT pattern workup
+    if (pattern === "normal" && hbv !== "active" && !redFlags.length) {
+      steps.push("LFTs within reference range — re-screen per risk profile.");
+    }
     if (pattern === "hepatocellular") {
-      steps.push("Step 1 — Reversible causes: stop hepatotoxic meds (statins, NSAIDs, herbals), assess alcohol intake.");
-      steps.push("Step 2 — Viral serologies: HBsAg, anti-HCV, anti-HAV IgM, anti-HEV IgM.");
-      steps.push("Step 3 — Metabolic: fasting glucose/HbA1c, lipids, ferritin/transferrin saturation.");
-      steps.push("Step 4 — Autoimmune (if persistent >6 mo): ANA, ASMA, IgG, anti-LKM.");
-      steps.push("Step 5 — Imaging: abdominal ultrasound for steatosis/structural disease.");
+      steps.push("Hepatocellular work-up: stop hepatotoxic meds, viral panel (HAV IgM, HBV, HCV, HEV IgM), metabolic (HbA1c, lipids, ferritin/TSAT), autoimmune (ANA, ASMA, IgG) if persistent >6 mo, abdominal ultrasound.");
     } else if (pattern === "cholestatic") {
-      steps.push("Step 1 — Confirm hepatic origin: fractionate ALP or check GGT (elevated GGT confirms liver).");
-      steps.push("Step 2 — Abdominal ultrasound to exclude biliary obstruction.");
-      steps.push("Step 3 — If ducts dilated: MRCP / GI referral. If not: AMA (PBC), review drugs.");
+      steps.push("Cholestatic work-up: confirm hepatic origin (GGT or fractionated ALP), abdominal ultrasound; if dilated ducts → MRCP/GI; if not → AMA (PBC), review drugs.");
     } else if (pattern === "mixed") {
-      steps.push("Workup overlaps hepatocellular and cholestatic — pursue both panels and imaging.");
+      steps.push("Mixed pattern — pursue both hepatocellular and cholestatic panels and imaging.");
     }
 
     // Fibrosis triage
     if (!isNaN(fib4.score)) {
+      const label = `FIB-4 = ${fib4.score.toFixed(2)} (cut-offs ${n(age) >= 65 ? cutoffs.fib4LowElderly : cutoffs.fib4Low}/${cutoffs.fib4High})`;
       if (fib4.risk === "low") {
-        steps.push(`FIB-4 = ${fib4.score.toFixed(2)} → LOW fibrosis risk. Address risk factors; recheck FIB-4 in 1–3 years (sooner if T2DM/obesity).`);
+        steps.push(`${label} → LOW fibrosis risk. Recheck in 1–3 y (sooner if T2DM/obesity/alcohol/viral).`);
       } else if (fib4.risk === "indeterminate") {
-        steps.push(`FIB-4 = ${fib4.score.toFixed(2)} → INDETERMINATE. Confirm with secondary test (FibroScan / ELF / NFS).`);
+        steps.push(`${label} → INDETERMINATE. Confirm with secondary test (FibroScan / ELF) — APRI ${isNaN(apri.score)?"n/a":apri.score.toFixed(2)}, NFS ${isNaN(nfs.score)?"n/a":nfs.score.toFixed(2)}.`);
       } else {
-        steps.push(`FIB-4 = ${fib4.score.toFixed(2)} → HIGH fibrosis risk. Refer to hepatology for FibroScan / biopsy.`);
+        steps.push(`${label} → HIGH fibrosis risk. Refer to hepatology for FibroScan/biopsy; start cirrhosis surveillance (US±AFP q6 mo, EGD for varices).`);
       }
     }
     return steps;
-  }, [pattern, fib4, redFlags]);
+  }, [pattern, fib4, apri, nfs, redFlags, hbv, hcv, alcohol, cutoffs, age]);
 
   const buildSummary = () => {
+    const presetLabel = preset === "custom" ? "Custom thresholds" : PRESETS[preset].label;
     const lines = [
       "PRIMARY-CARE LIVER TEST INTERPRETATION",
       "=".repeat(50),
       `Patient: ${sex || "—"}, age ${age || "—"}, BMI ${bmi || "—"}`,
-      `Context: ${[diabetes && "T2DM", alcohol && "Alcohol use", viral && "Viral risk", obesity && "Obesity", meds && "Hepatotoxic meds", pregnant && "Pregnant"].filter(Boolean).join(", ") || "none reported"}`,
+      `Cutoff set: ${presetLabel}`,
+      `Context: ${[diabetes && "T2DM", obesity && "Obesity", meds && "Hepatotoxic meds", pregnant && "Pregnant"].filter(Boolean).join(", ") || "none"}`,
+      `HBV: ${hbv} | HCV: ${hcv} | Alcohol: ${alcohol.label}${alcoholDependence ? " + dependence" : ""}`,
       "",
       "LABS",
       `  AST ${ast || "—"} / ALT ${alt || "—"} / ALP ${alp || "—"} / GGT ${ggt || "—"}`,
@@ -214,7 +289,6 @@ export default function LiverMiniApp() {
     const html = `<!doctype html><html><head><title>Liver Assessment</title>
       <style>body{font-family:system-ui,sans-serif;max-width:780px;margin:2rem auto;padding:0 1.5rem;color:#111;line-height:1.5}
       h1{font-size:18px;border-bottom:2px solid #333;padding-bottom:6px}
-      h2{font-size:14px;margin-top:18px;color:#333}
       pre{white-space:pre-wrap;font-family:inherit;font-size:13px}
       .meta{font-size:11px;color:#666;margin-top:24px;border-top:1px solid #ccc;padding-top:8px}</style></head>
       <body><h1>Primary-Care Liver Test Interpretation</h1>
@@ -234,13 +308,65 @@ export default function LiverMiniApp() {
             <CardTitle className="text-xl">Liver Test Interpretation — Primary Care</CardTitle>
           </div>
           <CardDescription>
-            Abnormal LFT pathway with FIB-4 (primary triage), APRI and NAFLD Fibrosis Score companions. All computation is local.
+            Abnormal LFT pathway with FIB-4 (primary), APRI + NAFLD-FS companions. Configurable cut-offs, viral hepatitis & alcohol logic.
           </CardDescription>
         </CardHeader>
       </Card>
 
+      {/* Cutoff configurator */}
+      <Card>
+        <Collapsible open={showCutoffs} onOpenChange={setShowCutoffs}>
+          <CardHeader className="py-3">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-2">
+                <Settings2 className="h-4 w-4 text-primary" />
+                <CardTitle className="text-sm">Cut-off thresholds</CardTitle>
+                <Badge variant="outline" className="ml-2 text-[10px]">
+                  {preset === "custom" ? "Custom" : PRESETS[preset].label}
+                </Badge>
+              </div>
+              <div className="flex items-center gap-2">
+                <Select value={preset} onValueChange={(v) => setPreset(v as PresetKey)}>
+                  <SelectTrigger className="h-8 w-[200px] text-xs"><SelectValue /></SelectTrigger>
+                  <SelectContent>
+                    {Object.entries(PRESETS).map(([k, p]) => <SelectItem key={k} value={k}>{p.label}</SelectItem>)}
+                    <SelectItem value="custom">Custom (institution)</SelectItem>
+                  </SelectContent>
+                </Select>
+                <CollapsibleTrigger asChild>
+                  <Button size="sm" variant="ghost"><ChevronDown className={`h-4 w-4 transition-transform ${showCutoffs ? "rotate-180" : ""}`} /></Button>
+                </CollapsibleTrigger>
+              </div>
+            </div>
+          </CardHeader>
+          <CollapsibleContent>
+            <CardContent className="pt-0 space-y-3">
+              {preset !== "custom" && (
+                <p className="text-xs text-muted-foreground">{PRESETS[preset as Exclude<PresetKey,"custom">].note} Editing any value below switches to Custom.</p>
+              )}
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+                {([
+                  ["FIB-4 low (<65 y)", "fib4Low"],
+                  ["FIB-4 low (≥65 y)", "fib4LowElderly"],
+                  ["FIB-4 high", "fib4High"],
+                  ["APRI low", "apriLow"],
+                  ["APRI high", "apriHigh"],
+                  ["NFS low", "nfsLow"],
+                  ["NFS high", "nfsHigh"],
+                ] as const).map(([label, key]) => (
+                  <div key={key} className="space-y-1">
+                    <Label className="text-[10px] text-muted-foreground">{label}</Label>
+                    <Input type="number" step="0.01" className="h-8 text-xs" value={cutoffs[key]} onChange={e => setCutoff(key, e.target.value)} />
+                  </div>
+                ))}
+              </div>
+            </CardContent>
+          </CollapsibleContent>
+        </Collapsible>
+      </Card>
+
       <div className="grid lg:grid-cols-2 gap-4">
-        {/* Inputs */}
+        {/* Patient + context */}
         <Card>
           <CardHeader><CardTitle className="text-base">Patient & Context</CardTitle></CardHeader>
           <CardContent className="space-y-3">
@@ -258,13 +384,67 @@ export default function LiverMiniApp() {
               </div>
               <RangeOrExact id="bmi" label="BMI" unit="kg/m²" value={bmi} onChange={setBmi} ranges={RANGES.bmi} />
             </div>
+
+            {/* Viral hepatitis */}
+            <div className="pt-2 border-t space-y-2">
+              <div className="text-xs font-semibold text-muted-foreground">Viral hepatitis</div>
+              <div className="grid grid-cols-2 gap-3">
+                <div className="space-y-1">
+                  <Label className="text-xs">Hepatitis B</Label>
+                  <Select value={hbv} onValueChange={setHbv}>
+                    <SelectTrigger className="h-9"><SelectValue /></SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="unknown">Unknown / not tested</SelectItem>
+                      <SelectItem value="negative">HBsAg negative</SelectItem>
+                      <SelectItem value="exposed">Anti-HBc+ / resolved</SelectItem>
+                      <SelectItem value="chronic">Chronic (HBsAg+ &gt;6 mo)</SelectItem>
+                      <SelectItem value="active">Active flare / HBeAg+</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+                <div className="space-y-1">
+                  <Label className="text-xs">Hepatitis C</Label>
+                  <Select value={hcv} onValueChange={setHcv}>
+                    <SelectTrigger className="h-9"><SelectValue /></SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="unknown">Unknown / not tested</SelectItem>
+                      <SelectItem value="negative">Anti-HCV negative</SelectItem>
+                      <SelectItem value="antibody">Anti-HCV+, RNA pending</SelectItem>
+                      <SelectItem value="rna_positive">HCV RNA positive</SelectItem>
+                      <SelectItem value="treated_svr">Treated, SVR achieved</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+              </div>
+            </div>
+
+            {/* Alcohol */}
+            <div className="pt-2 border-t space-y-2">
+              <div className="text-xs font-semibold text-muted-foreground">Alcohol</div>
+              <div className="grid grid-cols-2 gap-3">
+                <RangeOrExact id="drinks" label="Drinks per week" value={drinksWk} onChange={setDrinksWk} ranges={RANGES.drinks} />
+                <label className="flex items-end gap-2 text-xs cursor-pointer pb-2">
+                  <Checkbox checked={alcoholDependence} onCheckedChange={(v) => setAlcoholDependence(!!v)} />
+                  <span>Suspected dependence / AUDIT ≥8</span>
+                </label>
+              </div>
+              {alcohol.tier !== "none" && (
+                <div className="text-[11px]">
+                  Tier: <span className={
+                    alcohol.tier === "heavy" ? "text-red-400" :
+                    alcohol.tier === "atrisk" ? "text-amber-400" : "text-emerald-400"
+                  }>{alcohol.label}</span>
+                  {sex && <span className="text-muted-foreground"> (threshold {sex === "female" ? "≥8" : "≥15"}/wk heavy)</span>}
+                </div>
+              )}
+            </div>
+
+            {/* Other context */}
             <div className="grid grid-cols-2 gap-x-3 gap-y-2 pt-2 border-t">
               {[
                 ["diabetes","T2DM / pre-diabetes", diabetes, setDiabetes],
                 ["glucoseHigh","Fasting glucose ≥110", glucoseHigh, setGlucoseHigh],
                 ["obesity","Obesity / metabolic syndrome", obesity, setObesity],
-                ["alcohol","Significant alcohol use", alcohol, setAlcohol],
-                ["viral","Viral hepatitis risk", viral, setViral],
                 ["meds","On hepatotoxic medications", meds, setMeds],
                 ["pregnant","Pregnant", pregnant, setPregnant],
                 ["jaundice","Clinical jaundice", jaundice, setJaundice],
@@ -279,6 +459,7 @@ export default function LiverMiniApp() {
           </CardContent>
         </Card>
 
+        {/* Labs */}
         <Card>
           <CardHeader><CardTitle className="text-base">Liver Labs</CardTitle></CardHeader>
           <CardContent className="grid grid-cols-2 gap-3">
@@ -303,7 +484,9 @@ export default function LiverMiniApp() {
         <CardHeader className="flex flex-row items-center justify-between">
           <div>
             <CardTitle className="text-base">Computed Plan</CardTitle>
-            <CardDescription>Pattern, fibrosis triage and next-step pathway</CardDescription>
+            <CardDescription>
+              Using {preset === "custom" ? "custom thresholds" : PRESETS[preset].label} · Pattern, fibrosis triage and next-step pathway
+            </CardDescription>
           </div>
           <div className="flex gap-2">
             <Button size="sm" variant="outline" onClick={handleCopy}><Copy className="h-4 w-4 mr-1" />Copy</Button>
@@ -350,8 +533,8 @@ export default function LiverMiniApp() {
           </div>
 
           <div className="text-[10px] text-muted-foreground">
-            FIB-4 cut-offs: &lt;1.3 low / 1.3–2.67 indeterminate / &gt;2.67 high (use 2.0 lower cut-off if age ≥65).
-            APRI: &lt;0.5 low / 0.5–1.5 indeterminate / &gt;1.5 high. NFS: &lt;−1.455 low / up to 0.676 indeterminate / &gt;0.676 high.
+            Active cut-offs — FIB-4: &lt;{cutoffs.fib4Low} low / up to {cutoffs.fib4High} indeterminate / &gt;{cutoffs.fib4High} high (≥65 y low ={cutoffs.fib4LowElderly}).
+            APRI: &lt;{cutoffs.apriLow} / {cutoffs.apriLow}–{cutoffs.apriHigh} / &gt;{cutoffs.apriHigh}. NFS: &lt;{cutoffs.nfsLow} / up to {cutoffs.nfsHigh} / &gt;{cutoffs.nfsHigh}.
           </div>
         </CardContent>
       </Card>
