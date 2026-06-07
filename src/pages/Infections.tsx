@@ -1,6 +1,7 @@
 import { useMemo, useState } from "react";
-import { AlertTriangle, Pill, Printer, Copy, ShieldAlert, Baby, Activity } from "lucide-react";
+import { AlertTriangle, Pill, Printer, Copy, ShieldAlert, Baby, Activity, Hospital } from "lucide-react";
 import { toast } from "sonner";
+import SeriousInfections from "./infections/SeriousInfections";
 
 type Allergy = "none" | "penicillin-mild" | "penicillin-severe" | "macrolide" | "sulfa";
 type Severity = "mild" | "moderate" | "severe";
@@ -261,6 +262,7 @@ const PILL_INPUT =
   "w-full rounded-md border border-border bg-background px-3 py-2 text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-primary/30";
 
 export default function Infections() {
+  const [tab, setTab] = useState<"primary" | "serious">("primary");
   const [conditionId, setConditionId] = useState<string>("strep");
   const [severity, setSeverity] = useState<Severity>("mild");
   const [pregnant, setPregnant] = useState(false);
@@ -349,13 +351,37 @@ export default function Infections() {
         <header className="space-y-1">
           <h1 className="text-2xl font-heading font-semibold flex items-center gap-2">
             <Pill className="h-6 w-6 text-primary" />
-            Primary Care Infections
+            Infections
           </h1>
           <p className="text-sm text-muted-foreground">
-            Condition picker with adult dose, duration, allergy/pregnancy cautions, and renal/severity escalation flags.
+            Decision-support for primary-care and serious/nosocomial infections.
           </p>
         </header>
 
+        {/* Tabs */}
+        <div className="flex gap-1 border-b border-border print:hidden">
+          <button
+            onClick={() => setTab("primary")}
+            className={`px-3 py-2 text-sm font-medium border-b-2 -mb-px inline-flex items-center gap-1.5 ${
+              tab === "primary" ? "border-primary text-primary" : "border-transparent text-muted-foreground hover:text-foreground"
+            }`}
+          >
+            <Pill className="h-4 w-4" /> Primary care
+          </button>
+          <button
+            onClick={() => setTab("serious")}
+            className={`px-3 py-2 text-sm font-medium border-b-2 -mb-px inline-flex items-center gap-1.5 ${
+              tab === "serious" ? "border-primary text-primary" : "border-transparent text-muted-foreground hover:text-foreground"
+            }`}
+          >
+            <Hospital className="h-4 w-4" /> Serious & nosocomial
+          </button>
+        </div>
+
+        {tab === "serious" ? (
+          <SeriousInfections />
+        ) : (
+        <>
         <div className="rounded-md border border-amber-300 bg-amber-50 px-3 py-2 text-xs text-amber-900 flex gap-2">
           <ShieldAlert className="h-4 w-4 shrink-0 mt-0.5" />
           <div>
@@ -568,6 +594,8 @@ export default function Infections() {
             </pre>
           </details>
         </section>
+        </>
+        )}
       </div>
     </div>
   );
