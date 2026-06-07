@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Timer, TrendingUp, TrendingDown, Activity, Info, ChevronDown, ChevronUp } from 'lucide-react';
+import { Timer, TrendingUp, TrendingDown, Activity, Info, ChevronDown, ChevronUp, AlertTriangle, FlaskConical, ClipboardList, Stethoscope, ArrowRight } from 'lucide-react';
 
 interface ESRRange {
   group: string;
@@ -29,6 +29,64 @@ const LOW_CAUSES = [
   'Low protein levels',
   'Leukemia',
   'Congestive heart failure',
+];
+
+interface NextStep {
+  label: string;
+  urgency: 'routine' | 'urgent' | 'emergency';
+  details?: string;
+}
+
+interface FollowUpLab {
+  name: string;
+  indication: string;
+}
+
+const ELEVATED_NEXT_STEPS: Record<string, NextStep[]> = {
+  'Mild elevation (≤2× upper limit)': [
+    { label: 'Repeat ESR in 4–6 weeks', urgency: 'routine', details: 'Confirm persistence before extensive workup.' },
+    { label: 'Review medications', urgency: 'routine', details: 'Oral contraceptives, steroids, and IVIG can raise ESR.' },
+  ],
+  'Moderate elevation (>2× upper limit)': [
+    { label: 'Order follow-up labs (see below)', urgency: 'routine' },
+    { label: 'Targeted history & physical', urgency: 'routine', details: 'Focus on infection signs, autoimmune symptoms, weight change, and bleeding.' },
+    { label: 'Consider imaging if localized symptoms', urgency: 'routine', details: 'CXR for respiratory symptoms; joint imaging for monoarthritis.' },
+  ],
+  'Marked elevation (>100 mm/hr)': [
+    { label: 'Urgent evaluation for occult infection or malignancy', urgency: 'urgent', details: 'ESR >100 has high positive predictive value for serious disease.' },
+    { label: 'Age-appropriate cancer screening', urgency: 'urgent', details: 'Ensure colonoscopy, mammography, and low-dose CT (if smoker) are up to date.' },
+    { label: 'SPEP / UPEP with immunofixation', urgency: 'urgent', details: 'Rule out plasma cell dyscrasia (multiple myeloma).' },
+  ],
+};
+
+const ELEVATED_FOLLOW_UP_LABS: FollowUpLab[] = [
+  { name: 'C-Reactive Protein (CRP)', indication: 'Confirm inflammatory activity; CRP rises and falls faster than ESR.' },
+  { name: 'CBC with differential', indication: 'Leukocytosis suggests infection; anemia of chronic disease is common.' },
+  { name: 'Comprehensive Metabolic Panel', indication: 'Renal/hepatic dysfunction, hypoalbuminemia, or hyperglobulinemia.' },
+  { name: 'Ferritin', indication: 'Elevated ferritin supports inflammation; low ferritin suggests iron deficiency as cause.' },
+  { name: 'ANA & RF / anti-CCP', indication: 'If autoimmune features (arthralgia, rash, serositis) present.' },
+  { name: 'SPEP / UPEP with immunofixation', indication: 'If ESR >100 or clinical suspicion for plasma cell dyscrasia.' },
+  { name: 'TB testing (IGRA / TST)', indication: 'If risk factors or constitutional symptoms without clear source.' },
+  { name: 'Blood cultures ×2', indication: 'If febrile or hemodynamically unstable.' },
+  { name: 'LDH, uric acid, calcium', indication: 'If malignancy or lymphoma suspected.' },
+];
+
+const LOW_NEXT_STEPS: NextStep[] = [
+  { label: 'Repeat ESR with CBC & peripheral smear', urgency: 'routine', details: 'Confirm low result and assess RBC morphology.' },
+  { label: 'Check hematocrit / hemoglobin', urgency: 'routine', details: 'Elevated Hct supports polycythemia; low Hct with low ESR is unusual.' },
+  { label: 'Serum protein electrophoresis', urgency: 'routine', details: 'If low protein levels suspected clinically.' },
+  { label: 'Review red-cell indices (MCV, MCHC)', urgency: 'routine', details: 'Spherocytosis or sickle cell may show characteristic indices.' },
+];
+
+const RED_FLAGS = [
+  'ESR >100 mm/hr',
+  'Fever >38.3°C or rigors',
+  'Unintentional weight loss >10% in 6 months',
+  'Night sweats',
+  'New focal neurologic deficit',
+  'Severe back pain with fever (possible spinal infection)',
+  'Acute monoarthritis with fever',
+  'Immunocompromised host',
 ];
 
 export default function ESRInterpretation() {
@@ -162,6 +220,119 @@ export default function ESRInterpretation() {
                   {interpretation === 'normal' && 'No acute inflammatory process suggested by ESR alone.'}
                   {interpretation === 'high' && 'Consider infection, inflammation, malignancy, or other causes below.'}
                   {interpretation === 'low' && 'Consider polycythemia, sickle cell disease, low protein, CHF, or leukemia.'}
+                </p>
+              </div>
+            </div>
+          )}
+
+          {/* Red Flags — Urgent Evaluation */}
+          {interpretation && interpretation !== 'normal' && (
+            <div className="bg-red-50 border border-red-200 rounded-xl p-4">
+              <div className="flex items-start gap-3">
+                <AlertTriangle className="w-5 h-5 text-red-600 mt-0.5 flex-shrink-0" />
+                <div className="flex-1">
+                  <p className="text-sm font-semibold text-foreground mb-2">When to Consider Urgent Evaluation</p>
+                  <ul className="space-y-1">
+                    {RED_FLAGS.map((flag) => (
+                      <li key={flag} className="flex items-start gap-2 text-sm text-foreground">
+                        <ArrowRight className="w-3.5 h-3.5 text-red-500 mt-0.5 flex-shrink-0" />
+                        {flag}
+                      </li>
+                    ))}
+                  </ul>
+                  <p className="text-xs text-muted-foreground mt-2">
+                    Any red flag in the setting of an abnormal ESR warrants prompt clinician review and targeted workup.
+                  </p>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* Next Steps */}
+          {interpretation && interpretation !== 'normal' && (
+            <div className="bg-white border border-border rounded-xl overflow-hidden">
+              <div className="p-4 border-b border-border flex items-center gap-2">
+                <ClipboardList className="w-5 h-5 text-primary" />
+                <p className="text-sm font-semibold text-foreground">Recommended Next Steps</p>
+              </div>
+              <div className="p-4 space-y-4">
+                {interpretation === 'high' && (
+                  <>
+                    {(() => {
+                      const severity = esrNum > 100 ? 'Marked elevation (>100 mm/hr)' : esrNum > (normalMax || 0) * 2 ? 'Moderate elevation (>2× upper limit)' : 'Mild elevation (≤2× upper limit)';
+                      const steps = ELEVATED_NEXT_STEPS[severity] || [];
+                      return (
+                        <div>
+                          <p className="text-xs font-medium text-muted-foreground uppercase tracking-wider mb-2">{severity}</p>
+                          <div className="space-y-2">
+                            {steps.map((step, i) => (
+                              <div key={i} className={`rounded-lg border p-3 ${step.urgency === 'urgent' ? 'bg-red-50 border-red-200' : 'bg-gray-50 border-border'}`}>
+                                <div className="flex items-center gap-2">
+                                  <span className={`text-[10px] font-bold uppercase tracking-wider px-1.5 py-0.5 rounded ${step.urgency === 'urgent' ? 'bg-red-200 text-red-800' : 'bg-gray-200 text-gray-700'}`}>
+                                    {step.urgency}
+                                  </span>
+                                  <p className="text-sm font-medium text-foreground">{step.label}</p>
+                                </div>
+                                {step.details && (
+                                  <p className="text-xs text-muted-foreground mt-1 ml-[calc(10px+0.5rem+2px)]">{step.details}</p>
+                                )}
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+                      );
+                    })()}
+                  </>
+                )}
+                {interpretation === 'low' && (
+                  <div className="space-y-2">
+                    {LOW_NEXT_STEPS.map((step, i) => (
+                      <div key={i} className="rounded-lg border border-border bg-gray-50 p-3">
+                        <div className="flex items-center gap-2">
+                          <span className="text-[10px] font-bold uppercase tracking-wider px-1.5 py-0.5 rounded bg-gray-200 text-gray-700">
+                            {step.urgency}
+                          </span>
+                          <p className="text-sm font-medium text-foreground">{step.label}</p>
+                        </div>
+                        {step.details && (
+                          <p className="text-xs text-muted-foreground mt-1 ml-[calc(10px+0.5rem+2px)]">{step.details}</p>
+                        )}
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </div>
+            </div>
+          )}
+
+          {/* Follow-up Labs for Elevated ESR */}
+          {interpretation === 'high' && (
+            <div className="bg-white border border-border rounded-xl overflow-hidden">
+              <div className="p-4 border-b border-border flex items-center gap-2">
+                <FlaskConical className="w-5 h-5 text-primary" />
+                <p className="text-sm font-semibold text-foreground">Suggested Follow-up Labs</p>
+              </div>
+              <div className="p-4">
+                <div className="overflow-x-auto">
+                  <table className="w-full text-sm">
+                    <thead>
+                      <tr className="border-b border-border">
+                        <th className="text-left py-2 px-3 font-semibold text-foreground">Test</th>
+                        <th className="text-left py-2 px-3 font-semibold text-foreground">Rationale</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {ELEVATED_FOLLOW_UP_LABS.map((lab, i) => (
+                        <tr key={i} className="border-b border-border last:border-0">
+                          <td className="py-2 px-3 font-medium text-foreground whitespace-nowrap">{lab.name}</td>
+                          <td className="py-2 px-3 text-muted-foreground">{lab.indication}</td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+                <p className="text-xs text-muted-foreground mt-3">
+                  Order selectively based on clinical context. Not all tests are indicated in every patient.
                 </p>
               </div>
             </div>
