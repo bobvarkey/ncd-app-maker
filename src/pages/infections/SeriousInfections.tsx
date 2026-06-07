@@ -585,7 +585,7 @@ export default function SeriousInfections() {
 
       {/* Output */}
       <section className="rounded-lg border border-border bg-card p-4 space-y-4 print:border-none print:p-0">
-        <div className="flex items-start justify-between gap-2">
+        <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-2">
           <div>
             <h2 className="text-lg font-heading font-semibold flex items-center gap-2">
               {condition.emergency && <Siren className="h-5 w-5 text-red-600" />}
@@ -622,8 +622,8 @@ export default function SeriousInfections() {
         {/* Empiric */}
         <div className="space-y-2">
           <h3 className="text-sm font-semibold">Most common empiric regimens to start</h3>
-          <div className="overflow-hidden rounded-md border border-border">
-            <table className="w-full text-sm">
+          <div className="overflow-x-auto rounded-md border border-border">
+            <table className="w-full text-sm min-w-[480px]">
               <thead className="bg-muted text-xs uppercase text-muted-foreground">
                 <tr>
                   <th className="px-3 py-2 text-left">Drug</th>

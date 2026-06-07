@@ -67,11 +67,21 @@ const navItems: NavItem[] = [
 export function TabNavigation() {
   const location = useLocation();
   const currentPath = location.pathname;
-  const [collapsed, setCollapsed] = useState(false);
+  const [collapsed, setCollapsed] = useState(() =>
+    typeof window !== "undefined" ? window.innerWidth < 768 : false
+  );
 
   useEffect(() => {
     document.body.classList.add("has-tab-navigation");
     return () => document.body.classList.remove("has-tab-navigation");
+  }, []);
+
+  useEffect(() => {
+    const onResize = () => {
+      if (window.innerWidth < 768) setCollapsed(true);
+    };
+    window.addEventListener("resize", onResize);
+    return () => window.removeEventListener("resize", onResize);
   }, []);
 
   useEffect(() => {

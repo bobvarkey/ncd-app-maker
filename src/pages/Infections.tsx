@@ -346,8 +346,8 @@ export default function Infections() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-background text-foreground pl-[var(--tab-nav-width,14rem)] transition-[padding] duration-200">
-      <div className="max-w-5xl mx-auto p-4 md:p-6 space-y-4">
+    <div className="min-h-screen bg-background text-foreground">
+      <div className="max-w-5xl mx-auto p-3 sm:p-4 md:p-6 space-y-4">
         <header className="space-y-1">
           <h1 className="text-2xl font-heading font-semibold flex items-center gap-2">
             <Pill className="h-6 w-6 text-primary" />
@@ -483,7 +483,7 @@ export default function Infections() {
 
         {/* Output */}
         <section className="rounded-lg border border-border bg-card p-4 space-y-4 print:border-none print:p-0">
-          <div className="flex items-start justify-between gap-2">
+          <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-2">
             <div>
               <h2 className="text-lg font-heading font-semibold">{condition.label}</h2>
               <p className="text-xs text-muted-foreground">{condition.category}</p>
@@ -525,8 +525,8 @@ export default function Infections() {
                   <span className="ml-2 text-xs text-amber-700">(adjusted for {allergy.replace("-", " ")})</span>
                 )}
               </h3>
-              <div className="overflow-hidden rounded-md border border-border">
-                <table className="w-full text-sm">
+              <div className="overflow-x-auto rounded-md border border-border">
+                <table className="w-full text-sm min-w-[480px]">
                   <thead className="bg-muted text-xs uppercase text-muted-foreground">
                     <tr>
                       <th className="px-3 py-2 text-left">Drug</th>
