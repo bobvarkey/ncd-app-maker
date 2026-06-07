@@ -846,6 +846,36 @@ export default function LipidMiniApp() {
           </div>
         )}
 
+        {/* Secondary prevention context-aware block */}
+        {showSecondaryBlock && (
+          <div className="mb-4 space-y-3">
+            <div>
+              <Label className="text-xs text-muted-foreground mb-1.5 block">
+                Established atherosclerotic condition
+              </Label>
+              <div className="flex flex-wrap gap-2">
+                <Chip active={i.secondaryType === "stroke"} onClick={() => set("secondaryType", "stroke")}>
+                  Ischemic stroke / TIA
+                </Chip>
+                <Chip active={i.secondaryType === "pad"} onClick={() => set("secondaryType", "pad")}>
+                  PAD (ABI &lt;0.9, claudication, revascularization)
+                </Chip>
+                <Chip active={i.secondaryType === "ascvd"} onClick={() => set("secondaryType", "ascvd")}>
+                  CAD / prior MI / PCI / CABG
+                </Chip>
+              </div>
+            </div>
+            <div className="flex flex-wrap gap-2">
+              <Chip active={i.secondaryPolyvascular} onClick={() => set("secondaryPolyvascular", !i.secondaryPolyvascular)}>
+                Polyvascular disease (≥2 vascular beds)
+              </Chip>
+              <Chip active={i.secondaryRecurrent} onClick={() => set("secondaryRecurrent", !i.secondaryRecurrent)}>
+                Recurrent event despite therapy
+              </Chip>
+            </div>
+          </div>
+        )}
+
         {/* TG explainer */}
         {showTgBlock && (
           <p className="mb-4 text-[11px] text-muted-foreground italic">
