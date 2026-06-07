@@ -31,6 +31,64 @@ const LOW_CAUSES = [
   'Congestive heart failure',
 ];
 
+interface NextStep {
+  label: string;
+  urgency: 'routine' | 'urgent' | 'emergency';
+  details?: string;
+}
+
+interface FollowUpLab {
+  name: string;
+  indication: string;
+}
+
+const ELEVATED_NEXT_STEPS: Record<string, NextStep[]> = {
+  'Mild elevation (≤2× upper limit)': [
+    { label: 'Repeat ESR in 4–6 weeks', urgency: 'routine', details: 'Confirm persistence before extensive workup.' },
+    { label: 'Review medications', urgency: 'routine', details: 'Oral contraceptives, steroids, and IVIG can raise ESR.' },
+  ],
+  'Moderate elevation (>2× upper limit)': [
+    { label: 'Order follow-up labs (see below)', urgency: 'routine' },
+    { label: 'Targeted history & physical', urgency: 'routine', details: 'Focus on infection signs, autoimmune symptoms, weight change, and bleeding.' },
+    { label: 'Consider imaging if localized symptoms', urgency: 'routine', details: 'CXR for respiratory symptoms; joint imaging for monoarthritis.' },
+  ],
+  'Marked elevation (>100 mm/hr)': [
+    { label: 'Urgent evaluation for occult infection or malignancy', urgency: 'urgent', details: 'ESR >100 has high positive predictive value for serious disease.' },
+    { label: 'Age-appropriate cancer screening', urgency: 'urgent', details: 'Ensure colonoscopy, mammography, and low-dose CT (if smoker) are up to date.' },
+    { label: 'SPEP / UPEP with immunofixation', urgency: 'urgent', details: 'Rule out plasma cell dyscrasia (multiple myeloma).' },
+  ],
+};
+
+const ELEVATED_FOLLOW_UP_LABS: FollowUpLab[] = [
+  { name: 'C-Reactive Protein (CRP)', indication: 'Confirm inflammatory activity; CRP rises and falls faster than ESR.' },
+  { name: 'CBC with differential', indication: 'Leukocytosis suggests infection; anemia of chronic disease is common.' },
+  { name: 'Comprehensive Metabolic Panel', indication: 'Renal/hepatic dysfunction, hypoalbuminemia, or hyperglobulinemia.' },
+  { name: 'Ferritin', indication: 'Elevated ferritin supports inflammation; low ferritin suggests iron deficiency as cause.' },
+  { name: 'ANA & RF / anti-CCP', indication: 'If autoimmune features (arthralgia, rash, serositis) present.' },
+  { name: 'SPEP / UPEP with immunofixation', indication: 'If ESR >100 or clinical suspicion for plasma cell dyscrasia.' },
+  { name: 'TB testing (IGRA / TST)', indication: 'If risk factors or constitutional symptoms without clear source.' },
+  { name: 'Blood cultures ×2', indication: 'If febrile or hemodynamically unstable.' },
+  { name: 'LDH, uric acid, calcium', indication: 'If malignancy or lymphoma suspected.' },
+];
+
+const LOW_NEXT_STEPS: NextStep[] = [
+  { label: 'Repeat ESR with CBC & peripheral smear', urgency: 'routine', details: 'Confirm low result and assess RBC morphology.' },
+  { label: 'Check hematocrit / hemoglobin', urgency: 'routine', details: 'Elevated Hct supports polycythemia; low Hct with low ESR is unusual.' },
+  { label: 'Serum protein electrophoresis', urgency: 'routine', details: 'If low protein levels suspected clinically.' },
+  { label: 'Review red-cell indices (MCV, MCHC)', urgency: 'routine', details: 'Spherocytosis or sickle cell may show characteristic indices.' },
+];
+
+const RED_FLAGS = [
+  'ESR >100 mm/hr',
+  'Fever >38.3°C or rigors',
+  'Unintentional weight loss >10% in 6 months',
+  'Night sweats',
+  'New focal neurologic deficit',
+  'Severe back pain with fever (possible spinal infection)',
+  'Acute monoarthritis with fever',
+  'Immunocompromised host',
+];
+
 export default function ESRInterpretation() {
   const [esrValue, setEsrValue] = useState<string>('');
   const [age, setAge] = useState<string>('');
