@@ -39,7 +39,7 @@ export default function AssessmentGrid() {
   const navigate = useNavigate();
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-background to-card text-white overflow-hidden">
+    <div className="min-h-screen bg-gradient-to-b from-background to-card text-foreground overflow-hidden">
       {/* Hero Section */}
       <div className="relative w-full bg-gradient-to-b from-card to-background overflow-hidden pt-8 pb-12">
         {/* Background gradient elements */}
@@ -55,7 +55,7 @@ export default function AssessmentGrid() {
               Get access to all our<br />
               <span className="text-secondary">clinical tools</span>
             </h1>
-            <p className="text-gray-300 text-sm leading-relaxed mb-6">
+            <p className="text-muted-foreground text-sm leading-relaxed mb-6">
               ✅ Hospital-grade medication optimizer with AI recommendations<br/>
               ✅ Real-time glucose management and inpatient protocols<br/>
               ✅ Evidence-based education and clinical decision support
@@ -79,18 +79,18 @@ export default function AssessmentGrid() {
                 <div className={`absolute inset-0 bg-gradient-to-br ${tool.gradient} opacity-90 group-hover:opacity-100 transition-opacity`}></div>
 
                 {/* Dark overlay */}
-                <div className="absolute inset-0 bg-black/30 group-hover:bg-black/20 transition-colors"></div>
+                <div className="absolute inset-0 bg-black/10 group-hover:bg-black/20 transition-colors"></div>
 
                 {/* Content */}
                 <div className="relative z-10 h-full flex flex-col justify-between p-4">
                   <div>
                     <div className="text-4xl mb-2">{tool.emoji}</div>
-                    <h3 className="text-lg font-bold text-white mb-1 text-left">{tool.name}</h3>
-                    <p className="text-xs text-white/80 text-left line-clamp-2">{tool.description}</p>
+                    <h3 className="text-lg font-bold text-foreground mb-1 text-left">{tool.name}</h3>
+                    <p className="text-xs text-foreground/80 text-left line-clamp-2">{tool.description}</p>
                   </div>
                   <div className="flex items-center justify-between">
-                    <span className="text-xs font-medium text-white/70">{tool.category}</span>
-                    <ChevronRight className="w-4 h-4 text-white/60 group-hover:translate-x-1 transition-transform" />
+                    <span className="text-xs font-medium text-foreground/70">{tool.category}</span>
+                    <ChevronRight className="w-4 h-4 text-foreground/60 group-hover:translate-x-1 transition-transform" />
                   </div>
                 </div>
               </button>
@@ -99,7 +99,7 @@ export default function AssessmentGrid() {
 
           {/* Feature Highlights */}
           <div className="mt-12 p-6 bg-gradient-to-r from-primary/10 to-secondary/10 border border-primary/20 rounded-2xl">
-            <h3 className="font-bold text-white mb-4 text-center">Why choose our platform?</h3>
+            <h3 className="font-bold text-foreground mb-4 text-center">Why choose our platform?</h3>
             <div className="space-y-3">
               <div className="flex gap-3 text-sm">
                 <span className="text-secondary font-bold flex-shrink-0">✓</span>
@@ -119,7 +119,7 @@ export default function AssessmentGrid() {
           {/* CTA */}
           <button
             onClick={() => navigate('/patient')}
-            className="w-full mt-8 py-4 bg-gradient-to-r from-primary to-secondary hover:from-primary/90 hover:to-secondary/90 text-white font-bold rounded-xl transition-all duration-300 hover:shadow-lg hover:shadow-teal-500/50"
+            className="w-full mt-8 py-4 bg-gradient-to-r from-primary to-secondary hover:from-primary/90 hover:to-secondary/90 text-foreground font-bold rounded-xl transition-all duration-300 hover:shadow-lg hover:shadow-teal-500/50"
           >
             Start with Patient Input →
           </button>

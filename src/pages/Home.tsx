@@ -936,7 +936,7 @@ function PrescriptionEngine() {
     <section className="border border-border/40 rounded-lg overflow-hidden">
       <div className="w-full px-6 py-4 flex items-center justify-between bg-gradient-to-r from-blue-500/10 to-purple-500/10">
         <div className="flex items-center gap-3">
-          <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-blue-500/20 to-purple-500/20 flex items-center justify-center border border-white/10">
+          <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-blue-500/20 to-purple-500/20 flex items-center justify-center border border-border/40">
             <FileText className="h-5 w-5 text-primary" />
           </div>
           <div>
@@ -1249,7 +1249,7 @@ function PrescriptionEngine() {
         </div>
 
         {/* Liver Disease Section */}
-        <div className="mb-6 p-4 bg-black border border-border/40 rounded-lg">
+        <div className="mb-6 p-4 bg-white border border-border/40 rounded-lg">
           <div className="flex items-center space-x-2 mb-3">
             <Checkbox
               id="liver"
@@ -1257,16 +1257,16 @@ function PrescriptionEngine() {
               onCheckedChange={(checked) => setHasLiverDisease(checked as boolean)}
               className="border-white/50"
             />
-            <Label htmlFor="liver" className="text-sm font-medium cursor-pointer text-white">
+            <Label htmlFor="liver" className="text-sm font-medium cursor-pointer text-foreground">
               Chronic Liver Disease (requires medication adjustments)
             </Label>
           </div>
 
           {hasLiverDisease && (
             <div className="ml-6 space-y-2">
-              <Label className="text-xs text-white/70">Severity:</Label>
+              <Label className="text-xs text-foreground/70">Severity:</Label>
               <Select value={liverSeverity} onValueChange={(v: "compensated" | "decompensated") => setLiverSeverity(v)}>
-                <SelectTrigger className="w-full h-9 bg-black/50 border-white/20 text-white">
+                <SelectTrigger className="w-full h-9 bg-black/10 border-border/60 text-foreground">
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
@@ -1274,7 +1274,7 @@ function PrescriptionEngine() {
                   <SelectItem value="decompensated">Decompensated Cirrhosis/Severe Hepatic Impairment</SelectItem>
                 </SelectContent>
               </Select>
-              <p className="text-xs text-white/60 mt-2">
+              <p className="text-xs text-foreground/60 mt-2">
                 ℹ️ Medications will be adjusted: Lower starting doses, more frequent monitoring, specific contraindications
               </p>
             </div>

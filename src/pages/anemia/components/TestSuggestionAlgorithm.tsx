@@ -158,15 +158,15 @@ export default function TestSuggestionAlgorithm() {
   const [selectedMorphology, setSelectedMorphology] = useState<MorphologyType>(null);
 
   return (
-    <div className="bg-gray-900 rounded-2xl shadow-sm border border-gray-800 overflow-hidden">
-      <div className="p-6 border-b border-gray-800">
+    <div className="bg-white rounded-2xl shadow-sm border border-border overflow-hidden">
+      <div className="p-6 border-b border-border">
         <div className="flex items-center gap-3">
           <div className="w-10 h-10 rounded-xl bg-emerald-900/30 flex items-center justify-center border border-emerald-800">
             <TestTube className="w-5 h-5 text-emerald-400" />
           </div>
           <div>
-            <h2 className="text-lg font-bold text-white">Next Test Algorithm</h2>
-            <p className="text-xs text-gray-400">Select MCV category to see recommended workup</p>
+            <h2 className="text-lg font-bold text-foreground">Next Test Algorithm</h2>
+            <p className="text-xs text-muted-foreground">Select MCV category to see recommended workup</p>
           </div>
         </div>
       </div>
@@ -174,7 +174,7 @@ export default function TestSuggestionAlgorithm() {
       <div className="p-6 space-y-6">
         {/* Morphology Selection */}
         <div>
-          <label className="block text-sm font-medium text-gray-300 mb-3">
+          <label className="block text-sm font-medium text-muted-foreground mb-3">
             Select Morphology / MCV Category
           </label>
           <div className="grid grid-cols-3 gap-3">
@@ -185,15 +185,15 @@ export default function TestSuggestionAlgorithm() {
                 className={`p-4 rounded-xl border transition-all text-left ${
                   selectedMorphology === type
                     ? morphologyInfo[type].bg
-                    : 'bg-gray-800 border-gray-700 hover:border-gray-600'
+                    : 'bg-gray-100 border-border hover:border-gray-600'
                 }`}
               >
                 <div className={`font-semibold text-sm capitalize ${
-                  selectedMorphology === type ? morphologyInfo[type].color : 'text-gray-300'
+                  selectedMorphology === type ? morphologyInfo[type].color : 'text-muted-foreground'
                 }`}>
                   {type}
                 </div>
-                <div className="text-xs text-gray-500 mt-1">
+                <div className="text-xs text-muted-foreground mt-1">
                   {type === 'microcytic' && '< 80 fL'}
                   {type === 'normocytic' && '80-100 fL'}
                   {type === 'macrocytic' && '> 100 fL'}
@@ -211,7 +211,7 @@ export default function TestSuggestionAlgorithm() {
               <h3 className={`font-semibold ${morphologyInfo[selectedMorphology].color}`}>
                 {morphologyInfo[selectedMorphology].title}
               </h3>
-              <p className="text-sm text-gray-400 mt-1">
+              <p className="text-sm text-muted-foreground mt-1">
                 {morphologyInfo[selectedMorphology].description}
               </p>
             </div>
@@ -221,13 +221,13 @@ export default function TestSuggestionAlgorithm() {
               {testRecommendations[selectedMorphology].map((category, idx) => (
                 <div
                   key={category.category}
-                  className="bg-gray-800/50 rounded-xl border border-gray-800 overflow-hidden"
+                  className="bg-gray-100/50 rounded-xl border border-border overflow-hidden"
                 >
                   <div className="p-4">
                     <div className="flex items-center justify-between mb-3">
                       <div className="flex items-center gap-2">
-                        <span className="text-gray-400">{category.icon}</span>
-                        <h4 className="font-semibold text-white text-sm">
+                        <span className="text-muted-foreground">{category.icon}</span>
+                        <h4 className="font-semibold text-foreground text-sm">
                           {idx + 1}. {category.category}
                         </h4>
                       </div>
@@ -237,7 +237,7 @@ export default function TestSuggestionAlgorithm() {
                             ? 'bg-red-900/30 text-red-400 border-red-800'
                             : category.urgency === 'urgent'
                             ? 'bg-amber-900/30 text-amber-400 border-amber-800'
-                            : 'bg-gray-700/50 text-gray-400 border-gray-700'
+                            : 'bg-gray-700/50 text-muted-foreground border-border'
                         }`}
                       >
                         {category.urgency}
@@ -247,9 +247,9 @@ export default function TestSuggestionAlgorithm() {
                       {category.tests.map((test) => (
                         <li
                           key={test}
-                          className="flex items-start gap-2 text-sm text-gray-300"
+                          className="flex items-start gap-2 text-sm text-muted-foreground"
                         >
-                          <ChevronRight className="w-4 h-4 text-gray-500 mt-0.5 flex-shrink-0" />
+                          <ChevronRight className="w-4 h-4 text-muted-foreground mt-0.5 flex-shrink-0" />
                           <span>{test}</span>
                         </li>
                       ))}
@@ -269,7 +269,7 @@ export default function TestSuggestionAlgorithm() {
         )}
 
         {!selectedMorphology && (
-          <div className="text-center py-8 text-gray-500">
+          <div className="text-center py-8 text-muted-foreground">
             <ArrowRight className="w-8 h-8 mx-auto mb-2 opacity-50" />
             <p className="text-sm">Select a morphology category above to view recommended tests</p>
           </div>

@@ -14,14 +14,14 @@ const severityConfig = {
   Mild:     { bg: 'bg-amber-900/30',   border: 'border-amber-800',   text: 'text-amber-400',   badge: 'bg-amber-900/30 text-amber-400',   icon: AlertCircle },
   Moderate: { bg: 'bg-orange-900/30',  border: 'border-orange-800',  text: 'text-orange-400',  badge: 'bg-orange-900/30 text-orange-400', icon: AlertCircle },
   Severe:   { bg: 'bg-red-900/30',     border: 'border-red-800',     text: 'text-red-400',     badge: 'bg-red-900/30 text-red-400',       icon: AlertCircle },
-  'N/A':    { bg: 'bg-gray-900/30',    border: 'border-gray-800',    text: 'text-gray-400',    badge: 'bg-gray-900/30 text-gray-400',     icon: AlertCircle },
+  'N/A':    { bg: 'bg-white/30',    border: 'border-border',    text: 'text-muted-foreground',    badge: 'bg-white/30 text-muted-foreground',     icon: AlertCircle },
 };
 
 const morphologyConfig = {
   Microcytic:  { color: 'text-sky-400',   bg: 'bg-sky-900/30',    desc: 'MCV < 80 fL — Consider iron deficiency, thalassemia, chronic disease' },
   Normocytic:  { color: 'text-blue-400',  bg: 'bg-blue-900/30',   desc: 'MCV 80–100 fL — Consider hemolysis, acute blood loss, chronic disease' },
   Macrocytic:  { color: 'text-violet-400', bg: 'bg-violet-900/30', desc: 'MCV > 100 fL — Consider B12/folate deficiency, liver disease, medications' },
-  'N/A':       { color: 'text-gray-400',  bg: 'bg-gray-900/30',   desc: 'MCV not provided' },
+  'N/A':       { color: 'text-muted-foreground',  bg: 'bg-white/30',   desc: 'MCV not provided' },
 };
 
 const sexLabels: Record<Sex, string> = {
@@ -39,10 +39,10 @@ export default function ClassificationCard({ classification, hgb, mcv, sex, disc
   const mentzer = discriminantResults?.find(r => r.name === 'Mentzer Index');
 
   return (
-    <div className="bg-gray-900 rounded-2xl shadow-sm border border-gray-800 p-6">
+    <div className="bg-white rounded-2xl shadow-sm border border-border p-6">
       <div className="flex items-center gap-2 mb-4">
         <Activity className="w-5 h-5 text-sky-400" />
-        <h2 className="text-lg font-semibold text-white">Anemia Classification</h2>
+        <h2 className="text-lg font-semibold text-foreground">Anemia Classification</h2>
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -50,18 +50,18 @@ export default function ClassificationCard({ classification, hgb, mcv, sex, disc
         <div className={`rounded-xl p-4 border ${sc.bg} ${sc.border}`}>
           <div className="flex items-center gap-2 mb-2">
             <Icon className={`w-4 h-4 ${sc.text}`} />
-            <span className="text-xs font-semibold uppercase tracking-wide text-gray-400">Severity</span>
+            <span className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">Severity</span>
           </div>
           <div className={`text-2xl font-bold ${sc.text}`}>{classification.severity}</div>
           {classification.severity !== 'N/A' && (
-            <div className="mt-1 text-xs text-gray-400">
+            <div className="mt-1 text-xs text-muted-foreground">
               {classification.severity === 'None'
                 ? 'Hemoglobin within normal range'
                 : `Hgb ${hgb.toFixed(1)} g/dL — ${sexLabels[sex]}`}
             </div>
           )}
           {classification.severity !== 'None' && classification.severity !== 'N/A' && (
-            <div className="mt-2 text-xs text-gray-400 space-y-0.5">
+            <div className="mt-2 text-xs text-muted-foreground space-y-0.5">
               <div>Mild: Hgb ≥ {classification.hgbThreshold.mild} g/dL</div>
               <div>Moderate: Hgb ≥ {classification.hgbThreshold.moderate} g/dL</div>
               <div>Severe: Hgb &lt; {classification.hgbThreshold.moderate} g/dL</div>
@@ -70,10 +70,10 @@ export default function ClassificationCard({ classification, hgb, mcv, sex, disc
         </div>
 
         {/* Morphology */}
-        <div className="rounded-xl p-4 border border-gray-800 bg-gray-800/50">
+        <div className="rounded-xl p-4 border border-border bg-gray-100/50">
           <div className="flex items-center gap-2 mb-2">
-            <Beaker className="w-4 h-4 text-gray-400" />
-            <span className="text-xs font-semibold uppercase tracking-wide text-gray-400">Morphology</span>
+            <Beaker className="w-4 h-4 text-muted-foreground" />
+            <span className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">Morphology</span>
           </div>
           <div className={`text-2xl font-bold ${mc.color}`}>{classification.morphology}</div>
           {!isNaN(mcv) && (
@@ -83,21 +83,21 @@ export default function ClassificationCard({ classification, hgb, mcv, sex, disc
               </span>
             </div>
           )}
-          <div className="mt-2 text-xs text-gray-400 leading-relaxed">{mc.desc}</div>
+          <div className="mt-2 text-xs text-muted-foreground leading-relaxed">{mc.desc}</div>
         </div>
       </div>
 
       {mentzer && classification.morphology === 'Microcytic' && (
-        <div className="mt-4 rounded-xl border border-gray-800 bg-gray-800/50 p-4">
+        <div className="mt-4 rounded-xl border border-border bg-gray-100/50 p-4">
           <div className="flex items-center gap-2 mb-2">
             <ArrowRight className="w-4 h-4 text-sky-400" />
-            <span className="text-xs font-semibold uppercase tracking-wide text-gray-400">Discriminant Index</span>
+            <span className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">Discriminant Index</span>
           </div>
           <div className="flex items-center gap-3 flex-wrap">
-            <div className="text-xl font-bold text-white">
+            <div className="text-xl font-bold text-foreground">
               Mentzer: {mentzer.value?.toFixed(2) ?? '—'}
             </div>
-            <span className="text-xs text-gray-500">cutoff &gt; 13</span>
+            <span className="text-xs text-muted-foreground">cutoff &gt; 13</span>
           </div>
           <div className="mt-2 flex items-center gap-2">
             <span className={`text-sm font-semibold px-2.5 py-0.5 rounded-full ${
@@ -105,20 +105,20 @@ export default function ClassificationCard({ classification, hgb, mcv, sex, disc
                 ? 'bg-amber-900/30 text-amber-400'
                 : mentzer.interpretation === 'Thalassemia'
                 ? 'bg-violet-900/30 text-violet-400'
-                : 'bg-gray-800 text-gray-400'
+                : 'bg-gray-100 text-muted-foreground'
             }`}>
               {mentzer.interpretation === 'IDA' && '→ Iron Deficiency Anemia'}
               {mentzer.interpretation === 'Thalassemia' && '→ Thalassemia Trait'}
               {mentzer.interpretation === 'N/A' && 'Inconclusive'}
             </span>
           </div>
-          <div className="mt-2 text-xs text-gray-500">
+          <div className="mt-2 text-xs text-muted-foreground">
             {mentzer.direction} — {mentzer.reference}
           </div>
         </div>
       )}
 
-      <div className="mt-4 text-xs text-gray-500 bg-gray-800/50 rounded-lg px-3 py-2 border border-gray-800">
+      <div className="mt-4 text-xs text-muted-foreground bg-gray-100/50 rounded-lg px-3 py-2 border border-border">
         WHO 2024 criteria — Classification based on hemoglobin thresholds for {sexLabels[sex].toLowerCase()}
       </div>
     </div>
