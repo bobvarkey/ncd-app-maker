@@ -380,9 +380,11 @@ export default function LipidsAssessment({ onClassificationChange, onNavigateToT
           <div>
             <p className="text-xs text-slate-600 uppercase tracking-wide font-semibold mb-0.5">LAI 2023 Classification</p>
             <div className="flex items-center gap-2 flex-wrap">
-              <span className={`text-2xl font-bold px-3 py-1 rounded-lg ${bucketBadgeColor}`}>
-                {classification.cat}{classification.sub && `-${classification.sub}`}
-              </span>
+              <AbbreviationHover term={`${classification.cat}${classification.sub ? "-" + classification.sub : ""}`}>
+                <span className={`text-2xl font-bold px-3 py-1 rounded-lg ${bucketBadgeColor}`}>
+                  {classification.cat}{classification.sub && `-${classification.sub}`}
+                </span>
+              </AbbreviationHover>
               <span className="text-lg font-semibold text-slate-900">{classification.label}</span>
             </div>
           </div>
@@ -433,9 +435,9 @@ export default function LipidsAssessment({ onClassificationChange, onNavigateToT
               </tr>
             </thead>
             <tbody className="text-foreground">
-              <tr className="border-b border-border/50"><td className="py-2 pr-2 font-bold text-red-800">EHR-A</td><td className="py-2 pr-2"><AbbreviationHover term="ASCVD">ASCVD</AbbreviationHover> only</td><td className="py-2 pr-2 font-bold">&lt; 55</td><td className="py-2">High statin + Ezetimibe</td></tr>
-              <tr className="border-b border-border/50"><td className="py-2 pr-2 font-bold text-red-800">EHR-B</td><td className="py-2 pr-2"><AbbreviationHover term="ASCVD">ASCVD</AbbreviationHover> + 1 high-risk feature</td><td className="py-2 pr-2 font-bold">&lt; 55</td><td className="py-2">+ <AbbreviationHover term="PCSK9i">PCSK9i</AbbreviationHover></td></tr>
-              <tr className="border-b border-border/50"><td className="py-2 pr-2 font-bold text-red-800">EHR-C</td><td className="py-2 pr-2"><AbbreviationHover term="ASCVD">ASCVD</AbbreviationHover> + ≥2 high-risk features</td><td className="py-2 pr-2 font-bold">&lt; 55</td><td className="py-2">Max triple therapy</td></tr>
+              <tr className="border-b border-border/50"><td className="py-2 pr-2 font-bold text-red-800"><AbbreviationHover term="EHR-A">EHR-A</AbbreviationHover></td><td className="py-2 pr-2"><AbbreviationHover term="ASCVD">ASCVD</AbbreviationHover> only</td><td className="py-2 pr-2 font-bold">&lt; 55</td><td className="py-2">High statin + Ezetimibe</td></tr>
+              <tr className="border-b border-border/50"><td className="py-2 pr-2 font-bold text-red-800"><AbbreviationHover term="EHR-B">EHR-B</AbbreviationHover></td><td className="py-2 pr-2"><AbbreviationHover term="ASCVD">ASCVD</AbbreviationHover> + 1 high-risk feature</td><td className="py-2 pr-2 font-bold">&lt; 55</td><td className="py-2">+ <AbbreviationHover term="PCSK9i">PCSK9i</AbbreviationHover></td></tr>
+              <tr className="border-b border-border/50"><td className="py-2 pr-2 font-bold text-red-800"><AbbreviationHover term="EHR-C">EHR-C</AbbreviationHover></td><td className="py-2 pr-2"><AbbreviationHover term="ASCVD">ASCVD</AbbreviationHover> + ≥2 high-risk features</td><td className="py-2 pr-2 font-bold">&lt; 55</td><td className="py-2">Max triple therapy</td></tr>
               <tr className="border-b border-border/50"><td className="py-2 pr-2 font-bold text-orange-600">VHR-A</td><td className="py-2 pr-2"><AbbreviationHover term="ASCVD">ASCVD</AbbreviationHover> equivalent</td><td className="py-2 pr-2 font-bold">&lt; 55</td><td className="py-2">High statin</td></tr>
               <tr className="border-b border-border/50"><td className="py-2 pr-2 font-bold text-orange-600">VHR-B</td><td className="py-2 pr-2"><AbbreviationHover term="DM">DM</AbbreviationHover> + <AbbreviationHover term="TOD">TOD</AbbreviationHover></td><td className="py-2 pr-2 font-bold">&lt; 55</td><td className="py-2">Statin + Ezetimibe</td></tr>
               <tr className="border-b border-border/50"><td className="py-2 pr-2 font-bold text-orange-600">VHR-C</td><td className="py-2 pr-2"><AbbreviationHover term="CKD">CKD</AbbreviationHover>/<AbbreviationHover term="FH">FH</AbbreviationHover>/<AbbreviationHover term="LDL">LDL</AbbreviationHover> ≥190</td><td className="py-2 pr-2 font-bold">&lt; 55</td><td className="py-2">Triple ± <AbbreviationHover term="PCSK9i">PCSK9i</AbbreviationHover></td></tr>

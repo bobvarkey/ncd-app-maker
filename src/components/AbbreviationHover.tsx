@@ -181,6 +181,12 @@ const ABBREVIATIONS: Record<string, string> = {
   "KDIGO": "Kidney Disease Improving Global Outcomes — global CKD management guidelines",
   "NICE": "National Institute for Health and Care Excellence — UK clinical guidelines",
   "LAI": "Lipid Association of India — publishes Indian lipid management guidelines",
+
+  // LAI Risk Categories
+  "EHR": "Extreme High Risk — LAI risk category for patients with ASCVD or equivalents; LDL target < 55 mg/dL",
+  "EHR-A": "Extreme High Risk — Category A: ASCVD alone or with minor risk features. Tx: High-intensity statin + Ezetimibe. LDL target < 55 mg/dL",
+  "EHR-B": "Extreme High Risk — Category B: ASCVD + ≥1 high-risk feature or polyvascular disease. Tx: High-intensity statin + Ezetimibe + PCSK9i. LDL target < 55 mg/dL",
+  "EHR-C": "Extreme High Risk — Category C: Recurrent/progressive ASCVD events despite therapy. Tx: Maximal multi-drug therapy (statin + Ezetimibe + PCSK9i + Bempedoic acid). LDL target < 30 mg/dL",
 };
 
 export function AbbreviationHover({ term, children, definition: override }: { term: string; children?: React.ReactNode; definition?: string }) {

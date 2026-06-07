@@ -173,9 +173,11 @@ export default function LipidsTreatment({ laiResult, onBackToAssessment }: Props
         <div className="flex items-start justify-between mb-3">
           <div>
             <div className="flex items-center gap-2">
-              <span className={`text-xl font-bold px-2.5 py-0.5 rounded-lg ${catColor}`}>
-                {cat}{sub && `-${sub}`}
-              </span>
+              <AbbreviationHover term={`${cat}${sub ? "-" + sub : ""}`}>
+                <span className={`text-xl font-bold px-2.5 py-0.5 rounded-lg ${catColor}`}>
+                  {cat}{sub && `-${sub}`}
+                </span>
+              </AbbreviationHover>
               <span className="text-lg font-semibold text-foreground">{laiResult.label}</span>
             </div>
             <div className="flex items-center gap-3 mt-2 text-sm">
