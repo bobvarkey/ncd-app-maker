@@ -24,6 +24,7 @@ import {
   CollapsibleContent,
   CollapsibleTrigger,
 } from "@/components/ui/collapsible";
+import UnifiedPrescriptionMiniApp from "@/components/UnifiedPrescriptionMiniApp";
 
 interface PrescriptionState {
   content: React.ReactNode;
