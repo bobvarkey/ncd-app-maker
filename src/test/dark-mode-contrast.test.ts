@@ -1,21 +1,11 @@
 /**
  * Automated static-analysis "visual regression" guard.
  *
- * The app runs on a dark Ocean Deep theme. Every label, value, and
- * placeholder MUST resolve to white (or muted-foreground) on dark
- * backgrounds. Because jsdom does not compute CSS, we cannot do true
- * pixel diffing inside vitest — instead we scan every component for
- * the patterns that have historically caused dark-on-dark bugs:
- *
- *   1. An element whose className mixes a DARK surface token with an
- *      explicit DARK text color (e.g. bg-slate-900 + text-slate-800).
- *   2. A <Label> / <p> / <span> hard-coding text-black, text-slate-900,
- *      text-gray-900, etc. with no light background sibling.
- *   3. An <Input>/<Textarea> with a placeholder= prop AND a hard-coded
- *      dark text-* class (placeholder would be invisible).
- *
- * If any of these patterns appear, the test fails with a precise list
- * of offending file:line locations so the regression can be fixed.
+ * The app runs on a light theme. Every label, value, and placeholder
+ * MUST resolve to dark black (or muted-foreground) on light backgrounds.
+ * Because jsdom does not compute CSS, we cannot do true pixel diffing
+ * inside vitest — instead we scan every component for the patterns
+ * that have historically caused light-on-light or dark-on-dark bugs.
  */
 import { describe, it, expect } from "vitest";
 import { readdirSync, readFileSync, statSync } from "node:fs";
@@ -28,8 +18,13 @@ const DARK_BG_TOKENS = [
   /\bbg-(?:slate|gray|zinc|neutral|stone)-(?:6|7|8|9)\d{2}\b/,
   /\bbg-(?:blue|indigo|violet|purple|pink|rose|red|orange|emerald|green|teal|cyan|sky)-(?:7|8|9)\d{2}\b/,
   /\bbg-black\b/,
-  // Semantic dark surfaces (this app's theme is dark)
-  /\bbg-(?:background|card|popover|muted|secondary|sidebar|destructive|foreground)(?:\/\d+)?\b/,
+  // Semantic dark surfaces only (destructive & foreground are dark)
+  /\bbg-(?:destructive|foreground)(?:\/\d+)?\b/,
+];
+
+const LIGHT_TEXT_TOKENS = [
+  /\btext-white\b/,
+  /\btext-(?:slate|gray|zinc|neutral|stone)-(?:50|100|200|300)\b/,
 ];
 
 const DARK_TEXT_TOKENS = [
@@ -37,13 +32,11 @@ const DARK_TEXT_TOKENS = [
   /\btext-black\b/,
 ];
 
-// Tokens that explicitly opt into white / theme-foreground text — if any
-// of these appear on the same element, the element is fine.
+// Tokens that explicitly opt into safe theme text — if any of these
+// appear on the same element, the element is fine.
 const SAFE_TEXT_TOKENS = [
-  /\btext-white\b/,
   /\btext-foreground\b/,
   /\btext-(?:primary|secondary|accent|destructive|card|popover|muted)-foreground\b/,
-  /\btext-(?:slate|gray|zinc|neutral|stone)-(?:50|100|200|300)\b/,
 ];
 
 // If the same className ALSO carries a clearly-light bg, the dark text is OK.
@@ -72,7 +65,6 @@ interface Finding {
 }
 
 // Match className="..." OR className={`...`} OR className={cn("...", ...)}.
-// We grab anything inside the quotes; cn() composition still surfaces literal classes.
 const CLASS_ATTR_RE = /class(?:Name)?\s*=\s*(?:"([^"]*)"|'([^']*)'|\{`([^`]*)`\}|\{cn\(([^)]*)\)\})/g;
 
 function scanFile(path: string): Finding[] {
@@ -87,6 +79,22 @@ function scanFile(path: string): Finding[] {
       const classStr = m[1] ?? m[2] ?? m[3] ?? m[4] ?? "";
       if (!classStr) continue;
 
+      // Check for light text on dark bg (light-on-dark is fine, but
+      // light text on light bg is a bug)
+      const hasLightText = LIGHT_TEXT_TOKENS.some((r) => r.test(classStr));
+      const hasDarkBg = DARK_BG_TOKENS.some((r) => r.test(classStr));
+
+      if (hasLightText && !hasDarkBg) {
+        findings.push({
+          file: relative(ROOT, path),
+          line: idx + 1,
+          snippet: classStr.slice(0, 140),
+          reason: "Light text token without dark background token",
+        });
+        continue;
+      }
+
+      // Check for dark text on dark bg (dark-on-dark bug)
       const hasDarkText = DARK_TEXT_TOKENS.some((r) => r.test(classStr));
       if (!hasDarkText) continue;
 
@@ -94,9 +102,6 @@ function scanFile(path: string): Finding[] {
       const hasLightBg = LIGHT_BG_TOKENS.some((r) => r.test(classStr));
       if (hasSafeText || hasLightBg) continue;
 
-      const hasDarkBg = DARK_BG_TOKENS.some((r) => r.test(classStr));
-
-      // Case A: dark bg + dark text on the SAME element — guaranteed bug.
       if (hasDarkBg) {
         findings.push({
           file: relative(ROOT, path),
@@ -107,10 +112,8 @@ function scanFile(path: string): Finding[] {
         continue;
       }
 
-      // Case B: standalone dark text with no light bg context. Allowed only
-      // for known light-card components (we treat .bg-amber-50 etc. siblings
-      // as the parent), so we skip flagging when the file clearly opts into
-      // light surfaces. Heuristic: file references a light bg token anywhere.
+      // Case: standalone dark text with no light bg context — only flag
+      // if the file doesn't reference light surfaces anywhere.
       const fileHasLightBg = LIGHT_BG_TOKENS.some((r) => r.test(src));
       if (!fileHasLightBg) {
         findings.push({
@@ -126,7 +129,7 @@ function scanFile(path: string): Finding[] {
   return findings;
 }
 
-describe("dark-mode contrast regression guard", () => {
+describe("light-mode contrast regression guard", () => {
   const files = walk(ROOT).filter((f) => !f.endsWith("dark-mode-contrast.test.ts"));
 
   it("scans the entire src/ tree", () => {
@@ -149,12 +152,10 @@ describe("dark-mode contrast regression guard", () => {
     expect(offenders).toEqual([]);
   });
 
-  it("inputs/textareas with placeholder= do not hard-code dark text", () => {
+  it("inputs/textareas with placeholder= do not hard-code light text", () => {
     const offenders: Finding[] = [];
     for (const path of files) {
       const src = readFileSync(path, "utf8");
-      const lines = src.split("\n");
-      // crude multi-line element capture: look for <Input ...> spans up to next >
       const elementRe = /<(Input|Textarea|input|textarea)\b[\s\S]*?\/?>/g;
       let m: RegExpExecArray | null;
       while ((m = elementRe.exec(src))) {
@@ -163,16 +164,15 @@ describe("dark-mode contrast regression guard", () => {
         const classMatch = /class(?:Name)?\s*=\s*"([^"]*)"/.exec(el);
         if (!classMatch) continue;
         const cls = classMatch[1];
-        const hasDarkText = DARK_TEXT_TOKENS.some((r) => r.test(cls));
+        const hasLightText = LIGHT_TEXT_TOKENS.some((r) => r.test(cls));
         const hasSafe = SAFE_TEXT_TOKENS.some((r) => r.test(cls));
-        if (hasDarkText && !hasSafe) {
-          // line of match
+        if (hasLightText && !hasSafe) {
           const upto = src.slice(0, m.index).split("\n").length;
           offenders.push({
             file: relative(ROOT, path),
             line: upto,
             snippet: cls.slice(0, 140),
-            reason: "Input with placeholder uses dark text color",
+            reason: "Input with placeholder uses light text color",
           });
         }
       }
@@ -180,17 +180,16 @@ describe("dark-mode contrast regression guard", () => {
     if (offenders.length) {
       const msg = offenders.map((f) => `  ${f.file}:${f.line}  → ${f.snippet}`).join("\n");
       throw new Error(
-        `Found ${offenders.length} placeholder/dark-text regressions:\n${msg}`,
+        `Found ${offenders.length} placeholder/light-text regressions:\n${msg}`,
       );
     }
     expect(offenders).toEqual([]);
   });
 
-  it("index.css still enforces the dark-surface → white-text rule", () => {
+  it("index.css still enforces the light-surface → black-text rule", () => {
     const css = readFileSync(join(ROOT, "index.css"), "utf8");
-    // The rule may live anywhere in the file; just assert the key tokens exist.
     expect(css).toMatch(/bg-card/);
     expect(css).toMatch(/bg-background/);
-    expect(css).toMatch(/color:\s*#fff/i);
+    expect(css).toMatch(/color:\s*#000/i);
   });
 });
