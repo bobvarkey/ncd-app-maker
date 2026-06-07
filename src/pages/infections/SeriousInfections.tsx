@@ -585,7 +585,7 @@ export default function SeriousInfections() {
 
       {/* Output */}
       <section className="rounded-lg border border-border bg-card p-4 space-y-4 print:border-none print:p-0">
-        <div className="flex items-start justify-between gap-2">
+        <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-2">
           <div>
             <h2 className="text-lg font-heading font-semibold flex items-center gap-2">
               {condition.emergency && <Siren className="h-5 w-5 text-red-600" />}
