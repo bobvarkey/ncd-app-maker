@@ -623,13 +623,13 @@ export default function LipidMiniApp() {
         {/* Labs — only after scenario chosen */}
         {showLabs && (
           <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-4">
-            <NumField label="LDL-C" value={i.ldl} onChange={(v) => set("ldl", v)} suffix="mg/dL" />
-            <NumField label="HDL-C" value={i.hdl} onChange={(v) => set("hdl", v)} suffix="mg/dL" />
-            <NumField label="Triglycerides" value={i.tg} onChange={(v) => set("tg", v)} suffix="mg/dL" />
-            <NumField label="Total cholesterol" value={i.totalChol} onChange={(v) => set("totalChol", v)} suffix="mg/dL" />
-            <NumField label="Apo-B" value={i.apoB} onChange={(v) => set("apoB", v)} suffix="mg/dL" />
-            <NumField label="Lp(a)" value={i.lpa} onChange={(v) => set("lpa", v)} suffix="mg/dL" />
-            <NumField label="hsCRP" value={i.hsCrp} onChange={(v) => set("hsCrp", v)} suffix="mg/L" />
+            <RangeField label="LDL-C" fieldKey="ldl" value={i.ldl} onChange={(v) => set("ldl", v)} />
+            <RangeField label="HDL-C" fieldKey="hdl" value={i.hdl} onChange={(v) => set("hdl", v)} />
+            <RangeField label="Triglycerides" fieldKey="tg" value={i.tg} onChange={(v) => set("tg", v)} />
+            <RangeField label="Total cholesterol" fieldKey="totalChol" value={i.totalChol} onChange={(v) => set("totalChol", v)} />
+            <RangeField label="Apo-B" fieldKey="apoB" value={i.apoB} onChange={(v) => set("apoB", v)} />
+            <RangeField label="Lp(a)" fieldKey="lpa" value={i.lpa} onChange={(v) => set("lpa", v)} />
+            <RangeField label="hsCRP" fieldKey="hsCrp" value={i.hsCrp} onChange={(v) => set("hsCrp", v)} />
           </div>
         )}
 
