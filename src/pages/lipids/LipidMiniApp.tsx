@@ -569,6 +569,92 @@ export default function LipidMiniApp() {
   const showDmBlock = i.scenario === "dm";
   const showTgBlock = i.scenario === "htg";
 
+  // ----- Export helpers -----
+  const buildSummaryText = (): string => {
+    if (!result) return "";
+    const labelFor = (k: keyof typeof RANGES, v: string) =>
+      RANGES[k].find((o) => o.value === v)?.label ?? "—";
+    const labs = [
+      `LDL-C: ${labelFor("ldl", i.ldl)}`,
+      `HDL-C: ${labelFor("hdl", i.hdl)}`,
+      `Triglycerides: ${labelFor("tg", i.tg)}`,
+      `Total cholesterol: ${labelFor("totalChol", i.totalChol)}`,
+      `Apo-B: ${labelFor("apoB", i.apoB)}`,
+      `Lp(a): ${labelFor("lpa", i.lpa)}`,
+      `hsCRP: ${labelFor("hsCrp", i.hsCrp)}`,
+    ].join("\n  ");
+    const date = new Date().toLocaleString();
+    return [
+      `LIPID MANAGEMENT — Clinical Summary`,
+      `Generated: ${date}`,
+      ``,
+      `Scenario: ${i.scenario.toUpperCase()}`,
+      `Risk classification: ${result.groupLabel} [${result.group}]`,
+      ``,
+      `LABS (selected ranges):`,
+      `  ${labs}`,
+      ``,
+      `TARGETS:`,
+      `  LDL-C: ${result.ldlTarget}`,
+      `  Non-HDL-C: ${result.nonHdlTarget}`,
+      `  Apo-B: ${result.apoBTarget}`,
+      ``,
+      `THERAPY INTENSITY:`,
+      `  ${result.intensity}`,
+      ``,
+      `INITIAL Rx:`,
+      ...result.initialRx.map((x) => `  • ${x}`),
+      ``,
+      ...(result.triglycerideTrack?.length
+        ? [`TG-SPECIFIC TRACK:`, ...result.triglycerideTrack.map((x) => `  • ${x}`), ``]
+        : []),
+      `ESCALATION:`,
+      ...result.escalation.map((x) => `  • ${x}`),
+      ``,
+      `FOLLOW-UP:`,
+      ...result.followUp.map((f) => `  ${f.week} — ${f.action}`),
+      ``,
+      ...(result.notes.length ? [`NOTES:`, ...result.notes.map((n) => `  • ${n}`)] : []),
+      ``,
+      `— Per LAI 2023 lipid algorithm. Clinical decision support; verify before prescribing.`,
+    ].join("\n");
+  };
+
+  const handleCopy = async () => {
+    try {
+      await navigator.clipboard.writeText(buildSummaryText());
+      toast({ title: "Copied", description: "Summary copied to clipboard." });
+    } catch {
+      toast({ title: "Copy failed", description: "Clipboard unavailable.", variant: "destructive" });
+    }
+  };
+
+  const handlePrint = () => {
+    if (!result) return;
+    const w = window.open("", "_blank", "width=900,height=1100");
+    if (!w) return;
+    const txt = buildSummaryText()
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;");
+    w.document.write(`<!doctype html><html><head><title>Lipid Plan Summary</title>
+<style>
+  body { font-family: ui-sans-serif, system-ui, -apple-system, "Helvetica Neue", Arial, sans-serif;
+         padding: 32px; color: #0c2340; max-width: 800px; margin: 0 auto; line-height: 1.45; }
+  h1 { font-size: 18px; border-bottom: 2px solid #2d8a9e; padding-bottom: 6px; margin: 0 0 12px; }
+  pre { white-space: pre-wrap; font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 12px; }
+  .meta { color: #5cbdb9; font-size: 11px; margin-bottom: 16px; }
+  @media print { body { padding: 16px; } }
+</style></head><body>
+<h1>Lipid Management — Clinical Summary</h1>
+<div class="meta">Generated ${new Date().toLocaleString()}</div>
+<pre>${txt}</pre>
+<script>window.onload = () => { window.print(); };</script>
+</body></html>`);
+    w.document.close();
+  };
+
+
   return (
     <div className="space-y-5">
       <SectionCard
