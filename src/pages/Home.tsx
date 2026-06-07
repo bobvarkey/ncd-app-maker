@@ -1446,14 +1446,6 @@ export default function Home() {
         {/* Duplicate Condition Modules section removed */}
 
 
-        {/* GitHub Sync Panel */}
-        <section>
-          <div className="max-w-md">
-            <GitHubSyncPanel />
-          </div>
-        </section>
-
-        {/* Guidelines Footer */}
         <section className="pt-4 border-t border-border">
           <div className="flex flex-wrap items-center justify-between gap-4">
             <div className="flex items-center gap-6 text-sm text-muted-foreground">
