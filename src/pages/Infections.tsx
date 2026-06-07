@@ -363,6 +363,11 @@ export default function Infections() {
       if (condition.pregnancy.note) lines.push(`Note: ${condition.pregnancy.note}`);
     }
     if (renalWarn) lines.push(`Renal: ${renalWarn}`);
+    if (renalAdjustments.length) {
+      lines.push("");
+      lines.push(`Renal dose adjustment (eGFR ${ctx.egfr}, band ${BAND_LABEL[egfrBand(ctx.egfr!)]})`);
+      renalAdjustments.forEach((a) => lines.push(`  • ${a.drug}: ${a.adjustment}`));
+    }
     lines.push("");
     lines.push(`Escalation: ${condition.severityEscalation}`);
     lines.push(`Red flags: ${condition.redFlags.join("; ")}`);
