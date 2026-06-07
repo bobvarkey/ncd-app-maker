@@ -12,17 +12,18 @@ import ThrombocytopeniaEvaluator from './anemia/components/ThrombocytopeniaEvalu
 import BleedingClottingEvaluator from './anemia/components/BleedingClottingEvaluator';
 import IronReplacementCalculator from '@/calculators/iron/IronReplacementCalculator';
 import TestSuggestionAlgorithm from './anemia/components/TestSuggestionAlgorithm';
-import { Microscope, AlertTriangle, Droplet, Syringe, Activity } from 'lucide-react';
+import ESRInterpretation from './anemia/components/ESRInterpretation';
+import { Microscope, AlertTriangle, Droplet, Syringe, Activity, Timer } from 'lucide-react';
 import { SmartLabelUpload, CBC_FIELDS } from "@/components/SmartLabelUpload";
 
 const EMPTY_CBC: CBCValues = { hgb: '', rbc: '', mcv: '', mch: '', mchc: '', rdw: '', hct: '' };
 
-type Tab = 'anemia' | 'thrombocytopenia' | 'bleeding-clotting' | 'iron';
+type Tab = 'anemia' | 'thrombocytopenia' | 'bleeding-clotting' | 'iron' | 'esr';
 
 export default function Anemia() {
   const [searchParams] = useSearchParams();
   const tabParam = searchParams.get('tab');
-  const validTabs: Tab[] = ['anemia', 'thrombocytopenia', 'bleeding-clotting', 'iron'];
+  const validTabs: Tab[] = ['anemia', 'thrombocytopenia', 'bleeding-clotting', 'iron', 'esr'];
   const activeTab: Tab = validTabs.includes(tabParam as Tab) ? (tabParam as Tab) : 'anemia';
   const [cbc, setCbc] = useState<CBCValues>(() => {
     try { const s = localStorage.getItem('ncd_anemia_cbc'); return s ? JSON.parse(s) : EMPTY_CBC; } catch { return EMPTY_CBC; }
@@ -63,13 +64,13 @@ export default function Anemia() {
   const mcvNum = parseFloat(cbc.mcv);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-black to-gray-900 text-foreground">
+    <div className="min-h-screen bg-background text-foreground">
       {/* Header */}
       <header className="bg-white border-b border-border shadow-sm sticky top-0 z-10">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 py-4">
           <div className="flex items-center gap-3 mb-4">
             <div className="w-9 h-9 rounded-xl bg-sky-600 flex items-center justify-center shadow-sm">
-              <Microscope className="w-5 h-5 text-foreground" />
+              <Microscope className="w-5 h-5 text-white" />
             </div>
             <div>
               <h1 className="text-lg font-bold text-foreground leading-tight">Hematology Evaluators</h1>
@@ -77,6 +78,37 @@ export default function Anemia() {
             </div>
           </div>
 
+          {/* Tab Navigation */}
+          <div className="flex gap-2 overflow-x-auto pb-1">
+            {[
+              { id: 'anemia', label: 'Anemia', icon: <Droplet className="w-4 h-4" /> },
+              { id: 'thrombocytopenia', label: 'Thrombocytopenia', icon: <Activity className="w-4 h-4" /> },
+              { id: 'bleeding-clotting', label: 'Bleeding / Clotting', icon: <Syringe className="w-4 h-4" /> },
+              { id: 'iron', label: 'Iron Replacement', icon: <Droplet className="w-4 h-4" /> },
+              { id: 'esr', label: 'ESR', icon: <Timer className="w-4 h-4" /> },
+            ].map((tab) => {
+              const isActive = activeTab === tab.id;
+              return (
+                <button
+                  key={tab.id}
+                  onClick={() => {
+                    const url = new URL(window.location.href);
+                    url.searchParams.set('tab', tab.id);
+                    window.history.replaceState({}, '', url);
+                    window.dispatchEvent(new PopStateEvent('popstate'));
+                  }}
+                  className={`flex items-center gap-1.5 px-3 py-2 rounded-lg text-sm font-medium border whitespace-nowrap transition-all ${
+                    isActive
+                      ? 'bg-sky-600 text-white border-sky-600'
+                      : 'bg-white text-foreground border-border hover:border-gray-400'
+                  }`}
+                >
+                  {tab.icon}
+                  {tab.label}
+                </button>
+              );
+            })}
+          </div>
         </div>
       </header>
 
@@ -153,6 +185,8 @@ export default function Anemia() {
           <IronReplacementCalculator />
         ) : activeTab === 'bleeding-clotting' ? (
           <BleedingClottingEvaluator />
+        ) : activeTab === 'esr' ? (
+          <ESRInterpretation />
         ) : (
           <ThrombocytopeniaEvaluator />
         )}
