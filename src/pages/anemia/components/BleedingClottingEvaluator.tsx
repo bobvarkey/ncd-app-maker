@@ -1,5 +1,15 @@
 import { useMemo, useState } from "react";
-import { Activity, Droplets, AlertTriangle, ClipboardList, FlaskConical, Stethoscope } from "lucide-react";
+import {
+  Activity,
+  Droplets,
+  AlertTriangle,
+  ClipboardList,
+  FlaskConical,
+  Stethoscope,
+  ArrowRight,
+  RotateCcw,
+  CheckCircle2,
+} from "lucide-react";
 import { SectionCard } from "@/components/ui/section-card";
 import {
   Table,
@@ -10,16 +20,133 @@ import {
   TableRow,
 } from "@/components/ui/table";
 
-type Mode = "bleeding" | "clotting";
+type Mode = "" | "bleeding" | "clotting";
 
-/* ------------------------------- BLEEDING -------------------------------- */
+/* ============================ BLEEDING WIZARD ============================ */
 
-type PtAptt = "" | "normal" | "prolonged";
+type Phenotype = "" | "mucocutaneous" | "deep" | "mixed";
 type PltState = "" | "low" | "normal";
+type PtAptt = "" | "normal" | "prolonged";
 type Schisto = "" | "yes" | "no";
 type MixCorrect = "" | "corrects" | "no";
 
-function BleedingAlgorithm() {
+type Recommendation = {
+  diagnosis: string;
+  tone: "danger" | "warning" | "primary" | "neutral";
+  nextTests: string[];
+  confirmatory: string[];
+};
+
+function buildBleedingRecommendation(s: {
+  phenotype: Phenotype;
+  plt: PltState;
+  pt: PtAptt;
+  aptt: PtAptt;
+  schisto: Schisto;
+  fibrinogenLow: boolean;
+  mix: MixCorrect;
+}): Recommendation | null {
+  const { phenotype, plt, pt, aptt, schisto, fibrinogenLow, mix } = s;
+
+  if (!phenotype || !plt) return null;
+
+  // Low platelet branches
+  if (plt === "low") {
+    if (!schisto) return null;
+    if (schisto === "yes") {
+      if (pt === "prolonged" || aptt === "prolonged" || fibrinogenLow) {
+        return {
+          diagnosis: "DIC — schistocytes + thrombocytopenia + coagulopathy",
+          tone: "danger",
+          nextTests: ["D-dimer", "Fibrinogen trend", "PT/aPTT serial", "Treat underlying trigger (sepsis, malignancy, OB cause)"],
+          confirmatory: ["ISTH DIC score ≥5 = overt DIC", "Falling fibrinogen + rising D-dimer"],
+        };
+      }
+      return {
+        diagnosis: "TTP / HUS likely — MAHA + thrombocytopenia, normal coags",
+        tone: "danger",
+        nextTests: ["LDH", "Haptoglobin", "Indirect bilirubin", "Creatinine", "Reticulocyte count", "Direct Coombs (negative expected)"],
+        confirmatory: ["ADAMTS13 activity (<10% = TTP)", "Shiga toxin / stool culture if HUS suspected", "PLASMIC score for TTP probability"],
+      };
+    }
+    return {
+      diagnosis: "Isolated thrombocytopenia — ITP, drug-induced, marrow failure, hypersplenism",
+      tone: "warning",
+      nextTests: ["Medication review (heparin, quinine, sulfa, vancomycin)", "HIV, HCV serology", "H. pylori", "ANA", "TSH"],
+      confirmatory: ["Bone marrow biopsy if atypical / >60y / pancytopenia", "HIT 4T score + anti-PF4 if heparin exposure", "Spleen imaging if hypersplenism suspected"],
+    };
+  }
+
+  // Normal platelets
+  if (plt === "normal") {
+    if (!pt || !aptt) return null;
+
+    if (pt === "normal" && aptt === "normal") {
+      return {
+        diagnosis: "Normal screen with bleeding — vWD, platelet function disorder, factor XIII, vascular",
+        tone: "warning",
+        nextTests: ["vWF antigen", "vWF activity (Ristocetin cofactor)", "Factor VIII activity", "PFA-100 / closure times"],
+        confirmatory: ["vWF multimer analysis (type 2 subtyping)", "Light transmission aggregometry", "Factor XIII (urea clot solubility) for delayed bleeding", "Skin biopsy if EDS / vascular cause"],
+      };
+    }
+
+    if (pt === "prolonged" && aptt === "normal") {
+      const base: Recommendation = {
+        diagnosis: "Isolated ↑PT — vit K deficiency, warfarin, factor VII deficiency, early liver disease",
+        tone: "primary",
+        nextTests: ["Medication review (warfarin, antibiotics)", "LFTs, albumin", "Vitamin K trial (10 mg IV/PO)"],
+        confirmatory: ["Factor VII assay if PT remains prolonged after vit K", "Mixing study if not done"],
+      };
+      if (mix === "no") {
+        base.diagnosis = "Isolated ↑PT, mixing does NOT correct — inhibitor (rare: anti-VII)";
+        base.tone = "danger";
+        base.confirmatory = ["Factor VII inhibitor titer", "Hematology referral"];
+      }
+      return base;
+    }
+
+    if (pt === "normal" && aptt === "prolonged") {
+      const base: Recommendation = {
+        diagnosis: "Isolated ↑aPTT — heparin, lupus anticoagulant, factor VIII/IX/XI deficiency, vWD",
+        tone: "primary",
+        nextTests: ["Confirm no heparin exposure", "Thrombin time", "vWF panel + factor VIII", "Factor IX, XI assays"],
+        confirmatory: ["Mixing study", "Lupus anticoagulant (DRVVT)", "Specific factor assays after mixing"],
+      };
+      if (mix === "corrects") {
+        base.diagnosis = "↑aPTT corrects on mixing → factor deficiency (VIII / IX / XI / XII or vWD)";
+        base.tone = "primary";
+        base.confirmatory = ["Factor VIII, IX, XI activity", "vWF Ag / activity / multimers", "Family history of hemophilia"];
+      } else if (mix === "no") {
+        base.diagnosis = "↑aPTT does NOT correct → inhibitor (lupus anticoagulant, acquired hemophilia, heparin)";
+        base.tone = "danger";
+        base.confirmatory = ["Lupus anticoagulant panel (DRVVT, dilute aPTT)", "Anti-cardiolipin, anti-β2 GPI", "Factor VIII inhibitor (Bethesda) if bleeding"];
+      }
+      return base;
+    }
+
+    if (pt === "prolonged" && aptt === "prolonged") {
+      const base: Recommendation = {
+        diagnosis: "Both ↑PT and ↑aPTT — severe factor def, DIC, advanced liver disease, massive transfusion, severe vit K deficiency",
+        tone: "danger",
+        nextTests: ["Fibrinogen", "D-dimer", "Platelets + smear", "LFTs, albumin", "Vitamin K trial"],
+        confirmatory: ["Mixing study", "Common pathway factor assays (II, V, X)", "DIC workup if schistocytes / fibrinogen drop"],
+      };
+      if (mix === "corrects") {
+        base.diagnosis = "Both prolonged, corrects on mixing → multi-factor deficiency (liver, vit K, dilution)";
+        base.confirmatory = ["Factor V (low in liver, normal in vit K def)", "Factor VII (low first in vit K def)"];
+      } else if (mix === "no") {
+        base.diagnosis = "Both prolonged, does NOT correct → strong inhibitor or anticoagulant";
+        base.confirmatory = ["Lupus anticoagulant", "Thrombin / reptilase time for heparin / dabigatran", "DOAC drug levels"];
+      }
+      return base;
+    }
+  }
+
+  return null;
+}
+
+function BleedingWizard({ onBack }: { onBack: () => void }) {
+  const [phenotype, setPhenotype] = useState<Phenotype>("");
   const [plt, setPlt] = useState<PltState>("");
   const [pt, setPt] = useState<PtAptt>("");
   const [aptt, setAptt] = useState<PtAptt>("");
@@ -27,205 +154,289 @@ function BleedingAlgorithm() {
   const [fibrinogenLow, setFibrinogenLow] = useState(false);
   const [mix, setMix] = useState<MixCorrect>("");
 
-  const interpretation = useMemo(() => {
-    const lines: { label: string; tone: "danger" | "warning" | "primary" | "neutral" }[] = [];
+  const reset = () => {
+    setPhenotype(""); setPlt(""); setPt(""); setAptt(""); setSchisto(""); setFibrinogenLow(false); setMix("");
+  };
 
-    if (plt === "low") {
-      if (schisto === "yes") {
-        if (pt === "prolonged" || aptt === "prolonged" || fibrinogenLow) {
-          lines.push({ label: "DIC — schistocytes + thrombocytopenia + prolonged PT/aPTT or low fibrinogen.", tone: "danger" });
-          lines.push({ label: "Next: D-dimer, fibrinogen trend, treat underlying cause.", tone: "neutral" });
-        } else {
-          lines.push({ label: "TTP / HUS likely — schistocytes + thrombocytopenia with normal PT/aPTT.", tone: "danger" });
-          lines.push({ label: "Next: LDH, haptoglobin, indirect bilirubin, creatinine, ADAMTS13.", tone: "neutral" });
-        }
-      } else if (schisto === "no") {
-        lines.push({ label: "Isolated thrombocytopenia — ITP, drug-induced, marrow failure, hypersplenism.", tone: "warning" });
-        lines.push({ label: "Next: medication review, HIV/HCV, ANA, marrow studies if indicated.", tone: "neutral" });
-      }
-    } else if (plt === "normal") {
-      if (pt === "prolonged" && aptt === "normal") {
-        lines.push({ label: "Isolated ↑PT — vitamin K deficiency, warfarin, factor VII deficiency, early liver disease.", tone: "primary" });
-      } else if (pt === "normal" && aptt === "prolonged") {
-        lines.push({ label: "Isolated ↑aPTT — heparin, lupus anticoagulant, factor VIII/IX/XI deficiency, vWD.", tone: "primary" });
-      } else if (pt === "prolonged" && aptt === "prolonged") {
-        lines.push({ label: "Both ↑PT and ↑aPTT — severe factor deficiency, DIC, advanced liver disease, massive transfusion, severe vit K deficiency.", tone: "danger" });
-      } else if (pt === "normal" && aptt === "normal") {
-        lines.push({ label: "Normal screen with bleeding — vWD, platelet function disorder, factor XIII deficiency, vascular/connective tissue cause.", tone: "warning" });
-        lines.push({ label: "Next: vWF Ag / activity, factor VIII, PFA-100, factor XIII (urea clot solubility).", tone: "neutral" });
-      }
+  const rec = useMemo(
+    () => buildBleedingRecommendation({ phenotype, plt, pt, aptt, schisto, fibrinogenLow, mix }),
+    [phenotype, plt, pt, aptt, schisto, fibrinogenLow, mix],
+  );
 
-      if ((pt === "prolonged" || aptt === "prolonged") && mix) {
-        if (mix === "corrects") {
-          lines.push({ label: "Mixing study corrects → factor deficiency. Order specific factor assays.", tone: "primary" });
-        } else {
-          lines.push({ label: "Mixing study does NOT correct → inhibitor or anticoagulant effect (e.g., lupus anticoagulant, acquired hemophilia, heparin).", tone: "danger" });
-        }
-      }
-    }
-
-    return lines;
-  }, [plt, pt, aptt, schisto, fibrinogenLow, mix]);
+  const showMix = plt === "normal" && (pt === "prolonged" || aptt === "prolonged");
+  const showSchisto = plt === "low";
+  const showFibrinogen = plt === "low" && schisto === "yes";
 
   return (
     <div className="space-y-4">
-      <SectionCard title="Step 1 — Clinical phenotype" icon={<Stethoscope className="h-4 w-4" />} tone="primary" defaultOpen>
-        <div className="grid gap-3 md:grid-cols-2 text-sm">
-          <div className="rounded-md border border-border bg-card p-3">
-            <p className="font-semibold mb-1">Platelet / vWF pattern</p>
-            <p className="text-muted-foreground">Mucocutaneous bleeding, petechiae, epistaxis, gum bleeding, menorrhagia, immediate post-procedure bleeding.</p>
-          </div>
-          <div className="rounded-md border border-border bg-card p-3">
-            <p className="font-semibold mb-1">Coagulation factor pattern</p>
-            <p className="text-muted-foreground">Deep tissue bleeding, hemarthrosis, muscle hematomas, delayed post-procedure bleeding.</p>
-          </div>
-        </div>
-        <p className="text-xs text-muted-foreground mt-3">
-          ISTH-BAT bleeding score cutoff: ≥3 in males, ≥5 in females, ≥3 in children = abnormal.
-        </p>
-      </SectionCard>
+      <WizardHeader title="Bleeding workup" onBack={onBack} onReset={reset} />
 
-      <SectionCard title="Step 2 — First-line labs" icon={<FlaskConical className="h-4 w-4" />} tone="accent" defaultOpen>
-        <div className="grid gap-3 md:grid-cols-2 text-sm">
-          <Field label="Platelet count">
-            <Select value={plt} onChange={(v) => setPlt(v as PltState)} options={[
-              { value: "", label: "Select…" },
-              { value: "low", label: "Low" },
+      <Step n={1} title="Clinical phenotype" complete={!!phenotype} icon={<Stethoscope className="h-4 w-4" />}>
+        <ChoiceGrid
+          value={phenotype}
+          onChange={(v) => setPhenotype(v as Phenotype)}
+          options={[
+            { value: "mucocutaneous", label: "Mucocutaneous", hint: "Petechiae, epistaxis, gum bleeding, menorrhagia, immediate post-op — suggests platelet / vWF" },
+            { value: "deep", label: "Deep tissue", hint: "Hemarthrosis, muscle hematomas, delayed post-op — suggests coagulation factor" },
+            { value: "mixed", label: "Mixed / unclear", hint: "Features of both or unable to characterize" },
+          ]}
+        />
+      </Step>
+
+      {phenotype && (
+        <Step n={2} title="Platelet count" complete={!!plt} icon={<FlaskConical className="h-4 w-4" />}>
+          <ChoiceGrid
+            value={plt}
+            onChange={(v) => { setPlt(v as PltState); setPt(""); setAptt(""); setSchisto(""); setFibrinogenLow(false); setMix(""); }}
+            options={[
+              { value: "low", label: "Low (< 150 K)" },
               { value: "normal", label: "Normal" },
-            ]} />
-          </Field>
-          <Field label="PT / INR">
-            <Select value={pt} onChange={(v) => setPt(v as PtAptt)} options={[
-              { value: "", label: "Select…" },
-              { value: "normal", label: "Normal" },
-              { value: "prolonged", label: "Prolonged" },
-            ]} />
-          </Field>
-          <Field label="aPTT">
-            <Select value={aptt} onChange={(v) => setAptt(v as PtAptt)} options={[
-              { value: "", label: "Select…" },
-              { value: "normal", label: "Normal" },
-              { value: "prolonged", label: "Prolonged" },
-            ]} />
-          </Field>
-          <Field label="Schistocytes on smear">
-            <Select value={schisto} onChange={(v) => setSchisto(v as Schisto)} options={[
-              { value: "", label: "Select…" },
-              { value: "yes", label: "Present" },
-              { value: "no", label: "Absent" },
-            ]} />
-          </Field>
-          <Field label="Fibrinogen low?">
-            <label className="flex items-center gap-2 text-sm">
+            ]}
+          />
+        </Step>
+      )}
+
+      {showSchisto && (
+        <Step n={3} title="Peripheral smear — schistocytes" complete={!!schisto} icon={<FlaskConical className="h-4 w-4" />}>
+          <ChoiceGrid
+            value={schisto}
+            onChange={(v) => setSchisto(v as Schisto)}
+            options={[
+              { value: "yes", label: "Schistocytes present" },
+              { value: "no", label: "No schistocytes" },
+            ]}
+          />
+          {showFibrinogen && (
+            <label className="mt-3 flex items-center gap-2 rounded-md border border-border bg-card px-3 py-2 text-sm cursor-pointer">
               <input type="checkbox" checked={fibrinogenLow} onChange={(e) => setFibrinogenLow(e.target.checked)} />
-              <span>Yes, fibrinogen below normal</span>
+              <span>Fibrinogen below normal</span>
             </label>
-          </Field>
-          <Field label="Mixing study (if PT/aPTT prolonged)">
-            <Select value={mix} onChange={(v) => setMix(v as MixCorrect)} options={[
-              { value: "", label: "Not done" },
-              { value: "corrects", label: "Corrects" },
-              { value: "no", label: "Does NOT correct" },
-            ]} />
-          </Field>
-        </div>
-      </SectionCard>
+          )}
+          {schisto === "yes" && (
+            <div className="mt-3 grid gap-3 md:grid-cols-2">
+              <Field label="PT">
+                <Select value={pt} onChange={(v) => setPt(v as PtAptt)} options={[
+                  { value: "", label: "Select…" },
+                  { value: "normal", label: "Normal" },
+                  { value: "prolonged", label: "Prolonged" },
+                ]} />
+              </Field>
+              <Field label="aPTT">
+                <Select value={aptt} onChange={(v) => setAptt(v as PtAptt)} options={[
+                  { value: "", label: "Select…" },
+                  { value: "normal", label: "Normal" },
+                  { value: "prolonged", label: "Prolonged" },
+                ]} />
+              </Field>
+            </div>
+          )}
+        </Step>
+      )}
 
-      <SectionCard title="Interpretation" icon={<ClipboardList className="h-4 w-4" />} tone="warning" defaultOpen>
-        {interpretation.length === 0 ? (
-          <p className="text-sm text-muted-foreground">Enter platelet count and PT/aPTT to see interpretation.</p>
-        ) : (
-          <ul className="space-y-2 text-sm">
-            {interpretation.map((l, i) => (
-              <li key={i} className={`rounded-md border px-3 py-2 ${toneClass(l.tone)}`}>{l.label}</li>
-            ))}
-          </ul>
-        )}
-      </SectionCard>
+      {plt === "normal" && (
+        <Step n={3} title="Coagulation screen — PT & aPTT" complete={!!pt && !!aptt} icon={<FlaskConical className="h-4 w-4" />}>
+          <div className="grid gap-3 md:grid-cols-2">
+            <Field label="PT / INR">
+              <Select value={pt} onChange={(v) => { setPt(v as PtAptt); setMix(""); }} options={[
+                { value: "", label: "Select…" },
+                { value: "normal", label: "Normal" },
+                { value: "prolonged", label: "Prolonged" },
+              ]} />
+            </Field>
+            <Field label="aPTT">
+              <Select value={aptt} onChange={(v) => { setAptt(v as PtAptt); setMix(""); }} options={[
+                { value: "", label: "Select…" },
+                { value: "normal", label: "Normal" },
+                { value: "prolonged", label: "Prolonged" },
+              ]} />
+            </Field>
+          </div>
+        </Step>
+      )}
 
-      <SectionCard title="PT/aPTT pattern reference" icon={<ClipboardList className="h-4 w-4" />} tone="neutral" defaultOpen={false}>
-        <Table>
-          <TableHeader>
-            <TableRow>
-              <TableHead>PT</TableHead>
-              <TableHead>aPTT</TableHead>
-              <TableHead>Likely cause</TableHead>
-            </TableRow>
-          </TableHeader>
-          <TableBody>
-            <TableRow><TableCell>↑</TableCell><TableCell>Normal</TableCell><TableCell>Factor VII deficiency, vitamin K deficiency, warfarin, early liver disease</TableCell></TableRow>
-            <TableRow><TableCell>Normal</TableCell><TableCell>↑</TableCell><TableCell>Factor VIII/IX/XI/XII deficiency, vWD, lupus anticoagulant, heparin</TableCell></TableRow>
-            <TableRow><TableCell>↑</TableCell><TableCell>↑</TableCell><TableCell>Vitamin K deficiency, liver disease, DIC, common pathway deficiency</TableCell></TableRow>
-            <TableRow><TableCell>Normal</TableCell><TableCell>Normal</TableCell><TableCell>Platelet disorder, vWD, factor XIII deficiency, vascular cause</TableCell></TableRow>
-          </TableBody>
-        </Table>
-      </SectionCard>
+      {showMix && (
+        <Step n={4} title="Mixing study (1:1 with normal plasma)" complete={!!mix} icon={<FlaskConical className="h-4 w-4" />}>
+          <ChoiceGrid
+            value={mix}
+            onChange={(v) => setMix(v as MixCorrect)}
+            options={[
+              { value: "corrects", label: "Corrects → factor deficiency" },
+              { value: "no", label: "Does NOT correct → inhibitor / anticoagulant" },
+            ]}
+          />
+          <p className="text-xs text-muted-foreground mt-2">Optional — leave blank if not yet done; differential will be broader.</p>
+        </Step>
+      )}
 
-      <SectionCard title="Targeted confirmatory tests" icon={<FlaskConical className="h-4 w-4" />} tone="indigo" defaultOpen={false}>
-        <ul className="list-disc pl-5 text-sm space-y-1">
-          <li>vWD panel — vWF antigen, vWF activity (Ristocetin cofactor), factor VIII</li>
-          <li>Platelet function — PFA-100, light transmission aggregometry</li>
-          <li>Factor assays after mixing study correction</li>
-          <li>Factor XIII — urea clot solubility for delayed bleeding with normal screen</li>
-          <li>DIC workup — D-dimer, fibrinogen, smear, PT/aPTT, platelets</li>
-          <li>Acquired hemophilia — factor VIII inhibitor (Bethesda assay)</li>
-        </ul>
-      </SectionCard>
+      {rec && <RecommendationCard rec={rec} />}
     </div>
   );
 }
 
-/* ------------------------------- CLOTTING -------------------------------- */
+/* ============================ CLOTTING WIZARD ============================ */
 
-function ClottingAlgorithm() {
-  const [age, setAge] = useState(false);
-  const [unusual, setUnusual] = useState(false);
+type Provoked = "" | "provoked" | "unprovoked";
+type Site = "" | "typical" | "unusual";
+type Acuity = "" | "acute_on_anticoag" | "off_anticoag";
+
+function buildClottingRecommendation(s: {
+  provoked: Provoked;
+  site: Site;
+  young: boolean;
+  recurrent: boolean;
+  family: boolean;
+  pregLoss: boolean;
+  splanchnic: boolean;
+  acuity: Acuity;
+}): Recommendation | null {
+  const { provoked, site, young, recurrent, family, pregLoss, splanchnic, acuity } = s;
+
+  if (!provoked || !site || !acuity) return null;
+
+  const score =
+    (young ? 2 : 0) + (recurrent ? 2 : 0) + (family ? 2 : 0) + (pregLoss ? 2 : 0) + (site === "unusual" ? 2 : 0);
+  const indicated = provoked === "unprovoked" || score >= 2;
+
+  if (!indicated) {
+    return {
+      diagnosis: "Thrombophilia workup NOT routinely indicated — provoked event with low risk profile",
+      tone: "neutral",
+      nextTests: ["Standard anticoagulation per VTE guidelines", "Treat / remove provoking factor", "Reassess at end of treatment course"],
+      confirmatory: ["No thrombophilia panel needed unless risk profile changes"],
+    };
+  }
+
+  const next: string[] = [
+    "CBC, PT/INR, aPTT, fibrinogen",
+    "Creatinine, LFTs",
+    "Age-appropriate cancer screening",
+  ];
+  const confirmatory: string[] = [];
+
+  // APS — always check in unprovoked/unusual
+  confirmatory.push(
+    "Lupus anticoagulant (DRVVT + confirmatory)",
+    "Anti-cardiolipin IgG/IgM",
+    "Anti-β2 glycoprotein I IgG/IgM",
+  );
+
+  // Inherited — depending on acuity
+  if (acuity === "acute_on_anticoag") {
+    next.push("Defer protein C, protein S, antithrombin until off anticoagulation (2 weeks off VKA / DOAC)");
+    confirmatory.push(
+      "Factor V Leiden (genetic — reliable on anticoag)",
+      "Prothrombin G20210A (genetic — reliable on anticoag)",
+    );
+  } else {
+    confirmatory.push(
+      "Factor V Leiden / APC resistance",
+      "Prothrombin G20210A",
+      "Antithrombin activity",
+      "Protein C activity",
+      "Protein S free antigen + activity",
+    );
+  }
+
+  if (splanchnic) {
+    next.push("JAK2 V617F — myeloproliferative neoplasm screen");
+    next.push("PNH flow cytometry (CD55/CD59) if cytopenias");
+  }
+
+  if (pregLoss) {
+    confirmatory.push("APS panel repeated at ≥12 weeks for definite APS diagnosis");
+  }
+
+  return {
+    diagnosis: indicated
+      ? `Thrombophilia workup indicated (risk score ${score}${provoked === "unprovoked" ? ", unprovoked" : ""})`
+      : "Selective workup",
+    tone: "primary",
+    nextTests: next,
+    confirmatory,
+  };
+}
+
+function ClottingWizard({ onBack }: { onBack: () => void }) {
+  const [provoked, setProvoked] = useState<Provoked>("");
+  const [site, setSite] = useState<Site>("");
+  const [young, setYoung] = useState(false);
   const [recurrent, setRecurrent] = useState(false);
   const [family, setFamily] = useState(false);
   const [pregLoss, setPregLoss] = useState(false);
-  const [acute, setAcute] = useState(false);
-  const [onAnticoag, setOnAnticoag] = useState(false);
+  const [splanchnic, setSplanchnic] = useState(false);
+  const [acuity, setAcuity] = useState<Acuity>("");
 
-  const score =
-    (age ? 2 : 0) + (unusual ? 2 : 0) + (recurrent ? 2 : 0) + (family ? 2 : 0) + (pregLoss ? 2 : 0);
-  const indicated = score >= 2;
+  const reset = () => {
+    setProvoked(""); setSite(""); setYoung(false); setRecurrent(false);
+    setFamily(false); setPregLoss(false); setSplanchnic(false); setAcuity("");
+  };
+
+  const rec = useMemo(
+    () => buildClottingRecommendation({ provoked, site, young, recurrent, family, pregLoss, splanchnic, acuity }),
+    [provoked, site, young, recurrent, family, pregLoss, splanchnic, acuity],
+  );
 
   return (
     <div className="space-y-4">
-      <SectionCard title="Step 1 — Is thrombophilia workup indicated?" icon={<Stethoscope className="h-4 w-4" />} tone="primary" defaultOpen>
-        <div className="grid gap-2 text-sm md:grid-cols-2">
-          <Check label="Age < 50 at first VTE (+2)" checked={age} onChange={setAge} />
-          <Check label="Unusual site (splanchnic, CVT) (+2)" checked={unusual} onChange={setUnusual} />
-          <Check label="Recurrent VTE (+2)" checked={recurrent} onChange={setRecurrent} />
-          <Check label="Family history of VTE (+2)" checked={family} onChange={setFamily} />
-          <Check label="Recurrent pregnancy loss (+2)" checked={pregLoss} onChange={setPregLoss} />
-        </div>
-        <div className={`mt-3 rounded-md border px-3 py-2 text-sm ${indicated ? toneClass("primary") : toneClass("neutral")}`}>
-          Score: <strong>{score}</strong> — {indicated ? "Thrombophilia testing warranted." : "Testing not strongly indicated. Look for provoking factors first."}
-        </div>
-        <div className="grid gap-2 text-sm md:grid-cols-2 mt-3">
-          <Check label="Currently in acute thrombosis phase" checked={acute} onChange={setAcute} />
-          <Check label="Currently on anticoagulation" checked={onAnticoag} onChange={setOnAnticoag} />
-        </div>
-        {(acute || onAnticoag) && (
-          <div className={`mt-3 rounded-md border px-3 py-2 text-sm ${toneClass("warning")}`}>
-            Defer most thrombophilia tests — acute thrombosis and anticoagulants distort results. APS antibodies and genetic tests (FVL, prothrombin G20210A) are still reliable; defer protein C/S, antithrombin, lupus anticoagulant where possible.
+      <WizardHeader title="Clotting / thrombophilia workup" onBack={onBack} onReset={reset} />
+
+      <Step n={1} title="Was the thrombosis provoked?" complete={!!provoked} icon={<Stethoscope className="h-4 w-4" />}>
+        <ChoiceGrid
+          value={provoked}
+          onChange={(v) => setProvoked(v as Provoked)}
+          options={[
+            { value: "provoked", label: "Provoked", hint: "Surgery, trauma, immobilization, hospitalization, estrogen, pregnancy, active cancer" },
+            { value: "unprovoked", label: "Unprovoked", hint: "No identifiable major trigger" },
+          ]}
+        />
+      </Step>
+
+      {provoked && (
+        <Step n={2} title="Site of thrombosis" complete={!!site} icon={<FlaskConical className="h-4 w-4" />}>
+          <ChoiceGrid
+            value={site}
+            onChange={(v) => { setSite(v as Site); if (v !== "unusual") setSplanchnic(false); }}
+            options={[
+              { value: "typical", label: "Typical (DVT lower limb, PE)" },
+              { value: "unusual", label: "Unusual (splanchnic, CVT, upper limb, retinal)" },
+            ]}
+          />
+          {site === "unusual" && (
+            <label className="mt-3 flex items-center gap-2 rounded-md border border-border bg-card px-3 py-2 text-sm cursor-pointer">
+              <input type="checkbox" checked={splanchnic} onChange={(e) => setSplanchnic(e.target.checked)} />
+              <span>Splanchnic or cerebral venous thrombosis (add JAK2 / PNH screen)</span>
+            </label>
+          )}
+        </Step>
+      )}
+
+      {site && (
+        <Step n={3} title="Risk modifiers" complete icon={<ClipboardList className="h-4 w-4" />}>
+          <div className="grid gap-2 md:grid-cols-2 text-sm">
+            <Check label="Age < 50 at first VTE (+2)" checked={young} onChange={setYoung} />
+            <Check label="Recurrent VTE (+2)" checked={recurrent} onChange={setRecurrent} />
+            <Check label="Family history of VTE (+2)" checked={family} onChange={setFamily} />
+            <Check label="Recurrent pregnancy loss (+2)" checked={pregLoss} onChange={setPregLoss} />
           </div>
-        )}
-      </SectionCard>
+        </Step>
+      )}
 
-      <SectionCard title="Step 2 — Acquired causes to exclude first" icon={<AlertTriangle className="h-4 w-4" />} tone="warning" defaultOpen>
-        <ul className="list-disc pl-5 text-sm space-y-1">
-          <li>Surgery, trauma, immobilization, hospitalization</li>
-          <li>Active malignancy, chemotherapy</li>
-          <li>Pregnancy / postpartum, estrogen exposure (OCP, HRT)</li>
-          <li>Nephrotic syndrome, inflammatory states, infection</li>
-          <li>Myeloproliferative disease (consider JAK2 in splanchnic / cerebral venous thrombosis)</li>
-          <li>Indwelling catheters, mechanical devices</li>
-        </ul>
-      </SectionCard>
+      {site && (
+        <Step n={4} title="Current anticoagulation status" complete={!!acuity} icon={<FlaskConical className="h-4 w-4" />}>
+          <ChoiceGrid
+            value={acuity}
+            onChange={(v) => setAcuity(v as Acuity)}
+            options={[
+              { value: "acute_on_anticoag", label: "Acute event / on anticoagulation", hint: "Defer protein C, S, antithrombin, lupus anticoagulant where possible" },
+              { value: "off_anticoag", label: "Off anticoagulation ≥ 2 weeks", hint: "Full panel reliable" },
+            ]}
+          />
+        </Step>
+      )}
 
-      <SectionCard title="Step 3 — Inherited thrombophilia panel" icon={<FlaskConical className="h-4 w-4" />} tone="indigo" defaultOpen={false}>
+      {rec && <RecommendationCard rec={rec} />}
+
+      <SectionCard title="Inherited thrombophilia reference" icon={<FlaskConical className="h-4 w-4" />} tone="indigo" defaultOpen={false}>
         <Table>
           <TableHeader>
             <TableRow>
@@ -234,7 +445,7 @@ function ClottingAlgorithm() {
             </TableRow>
           </TableHeader>
           <TableBody>
-            <TableRow><TableCell>Factor V Leiden</TableCell><TableCell>4–7× heterozygous</TableCell></TableRow>
+            <TableRow><TableCell>Factor V Leiden (het)</TableCell><TableCell>4–7×</TableCell></TableRow>
             <TableRow><TableCell>Prothrombin G20210A</TableCell><TableCell>2–3×</TableCell></TableRow>
             <TableRow><TableCell>Antithrombin deficiency</TableCell><TableCell>10–20×</TableCell></TableRow>
             <TableRow><TableCell>Protein C deficiency</TableCell><TableCell>5–10×</TableCell></TableRow>
@@ -242,48 +453,90 @@ function ClottingAlgorithm() {
           </TableBody>
         </Table>
       </SectionCard>
-
-      <SectionCard title="Step 4 — Antiphospholipid syndrome (APS) workup" icon={<FlaskConical className="h-4 w-4" />} tone="danger" defaultOpen={false}>
-        <Table>
-          <TableHeader>
-            <TableRow>
-              <TableHead>Test</TableHead>
-              <TableHead>Interpretation</TableHead>
-            </TableRow>
-          </TableHeader>
-          <TableBody>
-            <TableRow><TableCell>Lupus anticoagulant</TableCell><TableCell>Positive = high risk; confirm with DRVVT</TableCell></TableRow>
-            <TableRow><TableCell>Anti-cardiolipin IgG/IgM</TableCell><TableCell>≥ 40 GPL/MPL</TableCell></TableRow>
-            <TableRow><TableCell>Anti-β2 glycoprotein I</TableCell><TableCell>≥ 99th percentile</TableCell></TableRow>
-            <TableRow><TableCell>DRVVT</TableCell><TableCell>Confirmatory for lupus anticoagulant</TableCell></TableRow>
-          </TableBody>
-        </Table>
-        <p className="text-xs text-muted-foreground mt-3">
-          Definite APS = clinical criterion + ≥1 lab positive on 2 occasions ≥ 12 weeks apart.
-        </p>
-      </SectionCard>
-
-      <SectionCard title="Step 5 — Management snapshot" icon={<ClipboardList className="h-4 w-4" />} tone="emerald" defaultOpen={false}>
-        <Table>
-          <TableHeader>
-            <TableRow>
-              <TableHead>Finding</TableHead>
-              <TableHead>Management</TableHead>
-            </TableRow>
-          </TableHeader>
-          <TableBody>
-            <TableRow><TableCell>Factor V Leiden heterozygous</TableCell><TableCell>Anticoagulate if surgery/pregnancy; usual-duration treatment for VTE</TableCell></TableRow>
-            <TableRow><TableCell>Antithrombin deficiency</TableCell><TableCell>3–6 months minimum; consider lifelong if unprovoked/recurrent</TableCell></TableRow>
-            <TableRow><TableCell>Protein C / S deficiency</TableCell><TableCell>Warfarin with heparin bridge (skin necrosis risk); caution in pregnancy</TableCell></TableRow>
-            <TableRow><TableCell>Triple-positive APS</TableCell><TableCell>Warfarin (avoid DOACs); long-term anticoagulation</TableCell></TableRow>
-          </TableBody>
-        </Table>
-      </SectionCard>
     </div>
   );
 }
 
-/* ------------------------------ Shared UI -------------------------------- */
+/* ============================== SHARED UI =============================== */
+
+function WizardHeader({ title, onBack, onReset }: { title: string; onBack: () => void; onReset: () => void }) {
+  return (
+    <div className="flex items-center justify-between gap-2">
+      <h2 className="font-display text-base font-bold text-foreground">{title}</h2>
+      <div className="flex gap-2">
+        <button
+          onClick={onReset}
+          className="flex items-center gap-1 px-3 py-1.5 rounded-md text-xs font-medium bg-secondary text-secondary-foreground hover:bg-secondary/80"
+        >
+          <RotateCcw className="h-3 w-3" /> Reset
+        </button>
+        <button
+          onClick={onBack}
+          className="flex items-center gap-1 px-3 py-1.5 rounded-md text-xs font-medium bg-secondary text-secondary-foreground hover:bg-secondary/80"
+        >
+          ← Change pathway
+        </button>
+      </div>
+    </div>
+  );
+}
+
+function Step({
+  n,
+  title,
+  complete,
+  icon,
+  children,
+}: {
+  n: number;
+  title: string;
+  complete: boolean;
+  icon: React.ReactNode;
+  children: React.ReactNode;
+}) {
+  return (
+    <SectionCard
+      title={`Step ${n} — ${title}`}
+      icon={complete ? <CheckCircle2 className="h-4 w-4" /> : icon}
+      tone={complete ? "emerald" : "primary"}
+      defaultOpen
+    >
+      {children}
+    </SectionCard>
+  );
+}
+
+function ChoiceGrid({
+  value,
+  onChange,
+  options,
+}: {
+  value: string;
+  onChange: (v: string) => void;
+  options: { value: string; label: string; hint?: string }[];
+}) {
+  return (
+    <div className="grid gap-2 sm:grid-cols-2">
+      {options.map((o) => {
+        const selected = value === o.value;
+        return (
+          <button
+            key={o.value}
+            onClick={() => onChange(o.value)}
+            className={`text-left rounded-md border px-3 py-2.5 transition-colors ${
+              selected
+                ? "border-primary bg-primary/10 text-foreground"
+                : "border-border bg-card hover:bg-muted/30 text-foreground"
+            }`}
+          >
+            <div className="text-sm font-semibold">{o.label}</div>
+            {o.hint && <div className="text-xs text-muted-foreground mt-0.5">{o.hint}</div>}
+          </button>
+        );
+      })}
+    </div>
+  );
+}
 
 function Field({ label, children }: { label: string; children: React.ReactNode }) {
   return (
@@ -307,7 +560,7 @@ function Select({
     <select
       value={value}
       onChange={(e) => onChange(e.target.value)}
-      className="w-full rounded-md border border-input bg-background px-3 py-2 text-sm"
+      className="w-full rounded-md border border-input bg-background px-3 py-2 text-sm text-foreground"
     >
       {options.map((o) => (
         <option key={o.value} value={o.value}>{o.label}</option>
@@ -325,7 +578,7 @@ function Check({ label, checked, onChange }: { label: string; checked: boolean; 
   );
 }
 
-function toneClass(tone: "danger" | "warning" | "primary" | "neutral") {
+function toneClass(tone: Recommendation["tone"]) {
   switch (tone) {
     case "danger": return "border-destructive/40 bg-destructive/5 text-destructive";
     case "warning": return "border-amber-500/40 bg-amber-500/5 text-amber-700 dark:text-amber-400";
@@ -334,39 +587,82 @@ function toneClass(tone: "danger" | "warning" | "primary" | "neutral") {
   }
 }
 
-/* -------------------------------- Root ----------------------------------- */
+function RecommendationCard({ rec }: { rec: Recommendation }) {
+  return (
+    <SectionCard
+      title="Recommended next tests"
+      icon={<ArrowRight className="h-4 w-4" />}
+      tone="warning"
+      defaultOpen
+    >
+      <div className={`rounded-md border px-3 py-2 mb-3 text-sm font-semibold ${toneClass(rec.tone)}`}>
+        {rec.diagnosis}
+      </div>
+      <div className="grid gap-4 md:grid-cols-2">
+        <div>
+          <h4 className="text-xs font-bold uppercase tracking-wide text-muted-foreground mb-2">Next tests</h4>
+          <ul className="space-y-1.5 text-sm">
+            {rec.nextTests.map((t, i) => (
+              <li key={i} className="flex gap-2"><ArrowRight className="h-3.5 w-3.5 mt-0.5 text-primary flex-shrink-0" /><span>{t}</span></li>
+            ))}
+          </ul>
+        </div>
+        <div>
+          <h4 className="text-xs font-bold uppercase tracking-wide text-muted-foreground mb-2">Confirmatory branch</h4>
+          <ul className="space-y-1.5 text-sm">
+            {rec.confirmatory.map((t, i) => (
+              <li key={i} className="flex gap-2"><CheckCircle2 className="h-3.5 w-3.5 mt-0.5 text-accent flex-shrink-0" /><span>{t}</span></li>
+            ))}
+          </ul>
+        </div>
+      </div>
+    </SectionCard>
+  );
+}
+
+/* ================================ ROOT ================================== */
 
 export default function BleedingClottingEvaluator() {
-  const [mode, setMode] = useState<Mode>("bleeding");
+  const [mode, setMode] = useState<Mode>("");
 
-  return (
-    <div className="space-y-4">
-      <div className="flex gap-2">
-        <button
-          onClick={() => setMode("bleeding")}
-          className={`flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
-            mode === "bleeding"
-              ? "bg-primary text-primary-foreground"
-              : "bg-secondary text-secondary-foreground hover:bg-secondary/80"
-          }`}
-        >
-          <Droplets className="h-4 w-4" />
-          Bleeding Algorithm
-        </button>
-        <button
-          onClick={() => setMode("clotting")}
-          className={`flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
-            mode === "clotting"
-              ? "bg-primary text-primary-foreground"
-              : "bg-secondary text-secondary-foreground hover:bg-secondary/80"
-          }`}
-        >
-          <Activity className="h-4 w-4" />
-          Clotting / Thrombophilia
-        </button>
+  if (mode === "") {
+    return (
+      <div className="space-y-4">
+        <div className="rounded-md border border-border bg-card p-4">
+          <h2 className="font-display text-base font-bold text-foreground mb-1">Bleeding & clotting evaluator</h2>
+          <p className="text-sm text-muted-foreground">Choose a pathway to start the step-by-step workup.</p>
+        </div>
+        <div className="grid gap-3 sm:grid-cols-2">
+          <button
+            onClick={() => setMode("bleeding")}
+            className="text-left rounded-lg border border-border bg-card hover:bg-muted/30 p-4 transition-colors"
+          >
+            <div className="flex items-center gap-2 mb-1">
+              <Droplets className="h-5 w-5 text-primary" />
+              <span className="font-semibold text-foreground">Bleeding phenotype</span>
+            </div>
+            <p className="text-xs text-muted-foreground">Patient is bleeding — work through phenotype → CBC/PT/aPTT → mixing study → confirmatory tests.</p>
+          </button>
+          <button
+            onClick={() => setMode("clotting")}
+            className="text-left rounded-lg border border-border bg-card hover:bg-muted/30 p-4 transition-colors"
+          >
+            <div className="flex items-center gap-2 mb-1">
+              <Activity className="h-5 w-5 text-accent" />
+              <span className="font-semibold text-foreground">Clotting / thrombophilia</span>
+            </div>
+            <p className="text-xs text-muted-foreground">Patient has thrombosis — work through provoked vs unprovoked → site → risk score → targeted panel.</p>
+          </button>
+        </div>
+        <div className="flex items-start gap-2 rounded-md border border-amber-500/30 bg-amber-500/5 px-3 py-2 text-xs text-amber-700 dark:text-amber-400">
+          <AlertTriangle className="h-3.5 w-3.5 mt-0.5 flex-shrink-0" />
+          <span>Decision-support only. Confirm all recommendations with current guidelines and clinical context.</span>
+        </div>
       </div>
+    );
+  }
 
-      {mode === "bleeding" ? <BleedingAlgorithm /> : <ClottingAlgorithm />}
-    </div>
-  );
+  return mode === "bleeding"
+    ? <BleedingWizard onBack={() => setMode("")} />
+    : <ClottingWizard onBack={() => setMode("")} />;
 }
