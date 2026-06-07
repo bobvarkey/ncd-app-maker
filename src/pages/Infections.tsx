@@ -1,7 +1,48 @@
 import { useMemo, useState } from "react";
-import { AlertTriangle, Pill, Printer, Copy, ShieldAlert, Baby, Activity, Hospital } from "lucide-react";
+import { AlertTriangle, Pill, Printer, Copy, ShieldAlert, Baby, Activity, Hospital, FlaskConical } from "lucide-react";
 import { toast } from "sonner";
 import SeriousInfections from "./infections/SeriousInfections";
+import { ANTIBIOTICS_DATA } from "@/calculators/diabetes/antibiotics-data";
+
+function egfrBand(egfr: number): "normal" | "eGFR60_89" | "eGFR45_59" | "eGFR30_44" | "eGFR15_29" | "eGFRBelow15" {
+  if (egfr >= 90) return "normal";
+  if (egfr >= 60) return "eGFR60_89";
+  if (egfr >= 45) return "eGFR45_59";
+  if (egfr >= 30) return "eGFR30_44";
+  if (egfr >= 15) return "eGFR15_29";
+  return "eGFRBelow15";
+}
+
+const BAND_LABEL: Record<string, string> = {
+  normal: "≥90",
+  eGFR60_89: "60–89",
+  eGFR45_59: "45–59",
+  eGFR30_44: "30–44",
+  eGFR15_29: "15–29",
+  eGFRBelow15: "<15",
+};
+
+type RenalAdj = { drug: string; adjustment: string; notes: string };
+
+function getRenalAdjustments(regimenDrug: string, egfr: number): RenalAdj[] {
+  const band = egfrBand(egfr);
+  const parts = regimenDrug.split(/[+/,]| or /i).map((s) => s.trim().toLowerCase());
+  const results: RenalAdj[] = [];
+  const seen = new Set<string>();
+  for (const part of parts) {
+    if (!part) continue;
+    const match = ANTIBIOTICS_DATA.find((d) => {
+      const base = d.drug.toLowerCase().split(/[\s(\-]/)[0];
+      return part.includes(base);
+    });
+    if (match && !seen.has(match.drug)) {
+      seen.add(match.drug);
+      const adj = band === "normal" ? "No adjustment (eGFR ≥90)" : (match as any)[band];
+      results.push({ drug: match.drug, adjustment: adj, notes: match.notes });
+    }
+  }
+  return results;
+}
 
 type Allergy = "none" | "penicillin-mild" | "penicillin-severe" | "macrolide" | "sulfa";
 type Severity = "mild" | "moderate" | "severe";
