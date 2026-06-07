@@ -639,6 +639,7 @@ export default function LipidMiniApp() {
   const showAcsBlock = i.scenario === "acs";
   const showDmBlock = i.scenario === "dm";
   const showTgBlock = i.scenario === "htg";
+  const showSecondaryBlock = i.scenario === "secondary";
 
   // ----- Export helpers -----
   const buildSummaryText = (): string => {
@@ -739,7 +740,7 @@ export default function LipidMiniApp() {
         </p>
 
         {/* Scenario picker */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-2 mb-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2 mb-4">
           <ScenarioCard
             active={i.scenario === "acs"}
             onClick={() => set("scenario", "acs")}
@@ -767,6 +768,13 @@ export default function LipidMiniApp() {
             icon={<Stethoscope className="h-3.5 w-3.5" />}
             title="Primary prevention"
             subtitle="LAI risk stratification"
+          />
+          <ScenarioCard
+            active={i.scenario === "secondary"}
+            onClick={() => set("scenario", "secondary")}
+            icon={<Heart className="h-3.5 w-3.5" />}
+            title="Secondary prevention"
+            subtitle="Stroke, PAD, or established ASCVD"
           />
           <ScenarioCard
             active={i.scenario === "recurrent"}
