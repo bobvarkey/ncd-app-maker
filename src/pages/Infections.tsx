@@ -483,7 +483,7 @@ export default function Infections() {
 
         {/* Output */}
         <section className="rounded-lg border border-border bg-card p-4 space-y-4 print:border-none print:p-0">
-          <div className="flex items-start justify-between gap-2">
+          <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-2">
             <div>
               <h2 className="text-lg font-heading font-semibold">{condition.label}</h2>
               <p className="text-xs text-muted-foreground">{condition.category}</p>
