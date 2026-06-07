@@ -622,8 +622,8 @@ export default function SeriousInfections() {
         {/* Empiric */}
         <div className="space-y-2">
           <h3 className="text-sm font-semibold">Most common empiric regimens to start</h3>
-          <div className="overflow-hidden rounded-md border border-border">
-            <table className="w-full text-sm">
+          <div className="overflow-x-auto rounded-md border border-border">
+            <table className="w-full text-sm min-w-[480px]">
               <thead className="bg-muted text-xs uppercase text-muted-foreground">
                 <tr>
                   <th className="px-3 py-2 text-left">Drug</th>
