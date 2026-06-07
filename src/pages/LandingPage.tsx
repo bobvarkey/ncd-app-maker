@@ -31,10 +31,10 @@ export default function LandingPage() {
           </div>
 
           <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold text-center leading-tight mb-4">
-            Prevent and treat
+            Primary care
             <br />
             <span className="bg-gradient-to-r from-pink-400 via-purple-400 to-cyan-400 bg-clip-text text-transparent">
-              non-communicable diseases
+              problems
             </span>
           </h1>
           <p className="text-sm text-gray-500 text-center mb-3">
