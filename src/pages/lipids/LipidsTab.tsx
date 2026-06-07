@@ -29,7 +29,7 @@ export type LAIResult = {
 
 export default function LipidsTab() {
   const navigate = useNavigate();
-  const [activeTab, setActiveTab] = useState("miniapp");
+  const [activeTab, setActiveTab] = useState("assessment");
   const [laiResult, setLaiResult] = useState<LAIResult | null>(null);
   const [egfr, setEgfr] = useState<string>("");
 
