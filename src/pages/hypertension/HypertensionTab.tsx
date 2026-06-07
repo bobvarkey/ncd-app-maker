@@ -85,10 +85,6 @@ export default function HypertensionTab() {
       <section className="max-w-6xl mx-auto px-6 pb-16">
         <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6">
           <TabsList className="grid w-full grid-cols-4 gap-1">
-            <TabsTrigger value="overview" className="flex items-center gap-2">
-              <BookOpen className="h-4 w-4" />
-              <span>Overview</span>
-            </TabsTrigger>
             <TabsTrigger value="assessment" className="flex items-center gap-2">
               <Stethoscope className="h-4 w-4" />
               <span>Assess</span>
@@ -100,6 +96,10 @@ export default function HypertensionTab() {
             <TabsTrigger value="workup" className="flex items-center gap-2">
               <Search className="h-4 w-4" />
               <span>Workup</span>
+            </TabsTrigger>
+            <TabsTrigger value="overview" className="flex items-center gap-2">
+              <BookOpen className="h-4 w-4" />
+              <span>Overview</span>
             </TabsTrigger>
           </TabsList>
 
