@@ -613,6 +613,60 @@ export default function Infections() {
             </div>
           )}
 
+          {ctx.egfr !== null && chosenRegimen.length > 0 && (
+            <div className="space-y-2">
+              <h3 className="text-sm font-semibold flex items-center gap-1.5">
+                <FlaskConical className="h-4 w-4 text-primary" />
+                Renal dose adjustment
+                <span className="text-xs font-normal text-muted-foreground">
+                  (eGFR {ctx.egfr} → band {BAND_LABEL[egfrBand(ctx.egfr)]} mL/min)
+                </span>
+              </h3>
+              {renalAdjustments.length === 0 ? (
+                <div className="rounded-md border border-border bg-muted/40 px-3 py-2 text-xs text-muted-foreground">
+                  No renal-adjustable antibiotic matched in the database for this regimen. Verify dose locally.
+                </div>
+              ) : (
+                <div className="overflow-x-auto rounded-md border border-border">
+                  <table className="w-full text-sm min-w-[480px]">
+                    <thead className="bg-muted text-xs uppercase text-muted-foreground">
+                      <tr>
+                        <th className="px-3 py-2 text-left">Drug</th>
+                        <th className="px-3 py-2 text-left">Adjusted dose</th>
+                        <th className="px-3 py-2 text-left">Notes</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {renalAdjustments.map((a, i) => {
+                        const danger = /contraindicated|avoid/i.test(a.adjustment);
+                        const warn = /reduce|caution|max|q\d{2,}|post-dialysis|tdm/i.test(a.adjustment);
+                        return (
+                          <tr key={i} className="border-t border-border">
+                            <td className="px-3 py-2 font-medium">{a.drug}</td>
+                            <td
+                              className={`px-3 py-2 ${
+                                danger
+                                  ? "bg-destructive/10 text-destructive font-medium"
+                                  : warn
+                                  ? "bg-warning/10 text-warning font-medium"
+                                  : ""
+                              }`}
+                            >
+                              {a.adjustment}
+                            </td>
+                            <td className="px-3 py-2 text-xs text-muted-foreground">{a.notes}</td>
+                          </tr>
+                        );
+                      })}
+                    </tbody>
+                  </table>
+                </div>
+              )}
+            </div>
+          )}
+
+
+
           <div className="grid gap-3 md:grid-cols-2">
             <div className="rounded-md border border-pink-200 bg-pink-50 p-3 text-xs">
               <div className="font-semibold text-pink-900 flex items-center gap-1">
