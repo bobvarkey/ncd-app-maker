@@ -71,6 +71,8 @@ export function TabNavigation() {
             const isActive =
               currentPath === item.path ||
               (item.path !== "/home" && currentPath.startsWith(item.path + "/"));
+            const isBlood = item.path === "/anemia";
+            const showBloodSubs = isBlood && currentPath.startsWith("/anemia") && !collapsed;
             return (
               <li key={item.path}>
                 <Link
@@ -88,11 +90,13 @@ export function TabNavigation() {
                   <span className="text-base leading-none">{item.icon}</span>
                   {!collapsed && <span className="truncate">{item.label}</span>}
                 </Link>
+                {showBloodSubs && <BloodSubNav />}
               </li>
             );
           })}
         </ul>
       </nav>
+
     </aside>
   );
 }
