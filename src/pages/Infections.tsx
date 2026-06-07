@@ -525,8 +525,8 @@ export default function Infections() {
                   <span className="ml-2 text-xs text-amber-700">(adjusted for {allergy.replace("-", " ")})</span>
                 )}
               </h3>
-              <div className="overflow-hidden rounded-md border border-border">
-                <table className="w-full text-sm">
+              <div className="overflow-x-auto rounded-md border border-border">
+                <table className="w-full text-sm min-w-[480px]">
                   <thead className="bg-muted text-xs uppercase text-muted-foreground">
                     <tr>
                       <th className="px-3 py-2 text-left">Drug</th>
