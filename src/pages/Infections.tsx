@@ -346,7 +346,7 @@ export default function Infections() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-background text-foreground pl-14 md:pl-[var(--tab-nav-width,14rem)] transition-[padding] duration-200">
+    <div className="min-h-screen bg-background text-foreground">
       <div className="max-w-5xl mx-auto p-3 sm:p-4 md:p-6 space-y-4">
         <header className="space-y-1">
           <h1 className="text-2xl font-heading font-semibold flex items-center gap-2">
