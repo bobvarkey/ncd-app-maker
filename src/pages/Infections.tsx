@@ -262,6 +262,7 @@ const PILL_INPUT =
   "w-full rounded-md border border-border bg-background px-3 py-2 text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-primary/30";
 
 export default function Infections() {
+  const [tab, setTab] = useState<"primary" | "serious">("primary");
   const [conditionId, setConditionId] = useState<string>("strep");
   const [severity, setSeverity] = useState<Severity>("mild");
   const [pregnant, setPregnant] = useState(false);
