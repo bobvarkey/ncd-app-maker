@@ -380,9 +380,11 @@ export default function LipidsAssessment({ onClassificationChange, onNavigateToT
           <div>
             <p className="text-xs text-slate-600 uppercase tracking-wide font-semibold mb-0.5">LAI 2023 Classification</p>
             <div className="flex items-center gap-2 flex-wrap">
-              <span className={`text-2xl font-bold px-3 py-1 rounded-lg ${bucketBadgeColor}`}>
-                {classification.cat}{classification.sub && `-${classification.sub}`}
-              </span>
+              <AbbreviationHover term={`${classification.cat}${classification.sub ? "-" + classification.sub : ""}`}>
+                <span className={`text-2xl font-bold px-3 py-1 rounded-lg ${bucketBadgeColor}`}>
+                  {classification.cat}{classification.sub && `-${classification.sub}`}
+                </span>
+              </AbbreviationHover>
               <span className="text-lg font-semibold text-slate-900">{classification.label}</span>
             </div>
           </div>
