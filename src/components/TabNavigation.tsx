@@ -1,7 +1,43 @@
 import { useEffect, useState } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useSearchParams } from "react-router-dom";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { cn } from "@/lib/utils";
+
+const bloodSubItems = [
+  { tab: "anemia", label: "Anemia Evaluator", icon: "🔬" },
+  { tab: "thrombocytopenia", label: "Thrombocytopenia", icon: "💧" },
+  { tab: "bleeding-clotting", label: "Bleeding / Clotting", icon: "🩹" },
+  { tab: "iron", label: "Iron Parameters", icon: "💉" },
+];
+
+function BloodSubNav() {
+  const [searchParams] = useSearchParams();
+  const current = searchParams.get("tab") ?? "anemia";
+  return (
+    <ul className="mt-1 ml-4 flex flex-col gap-0.5 border-l border-border pl-2">
+      {bloodSubItems.map((s) => {
+        const isActive = current === s.tab;
+        return (
+          <li key={s.tab}>
+            <Link
+              to={`/anemia?tab=${s.tab}`}
+              className={cn(
+                "flex items-center gap-2 px-2 py-1.5 rounded-md text-xs font-medium transition-colors",
+                isActive
+                  ? "bg-sky-500/10 text-sky-400"
+                  : "text-muted-foreground hover:bg-muted hover:text-foreground"
+              )}
+              aria-current={isActive ? "page" : undefined}
+            >
+              <span className="text-sm leading-none">{s.icon}</span>
+              <span className="truncate">{s.label}</span>
+            </Link>
+          </li>
+        );
+      })}
+    </ul>
+  );
+}
 
 type NavItem = {
   path: string;
