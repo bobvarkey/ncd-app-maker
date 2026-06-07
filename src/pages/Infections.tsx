@@ -1,6 +1,7 @@
 import { useMemo, useState } from "react";
-import { AlertTriangle, Pill, Printer, Copy, ShieldAlert, Baby, Activity } from "lucide-react";
+import { AlertTriangle, Pill, Printer, Copy, ShieldAlert, Baby, Activity, Hospital } from "lucide-react";
 import { toast } from "sonner";
+import SeriousInfections from "./infections/SeriousInfections";
 
 type Allergy = "none" | "penicillin-mild" | "penicillin-severe" | "macrolide" | "sulfa";
 type Severity = "mild" | "moderate" | "severe";
