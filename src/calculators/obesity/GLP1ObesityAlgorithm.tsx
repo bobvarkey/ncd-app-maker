@@ -210,7 +210,7 @@ export default function GLP1ObesityAlgorithm() {
         <div className="mx-auto max-w-4xl px-4">
           <div className="flex items-center gap-3 py-3">
             <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-gradient-to-br from-pink-500 to-rose-600 shadow-md">
-              <Syringe className="h-5 w-5 text-white" />
+              <Syringe className="h-5 w-5 text-foreground" />
             </div>
             <div className="min-w-0 flex-1">
               <h1 className="font-display text-xl font-extrabold tracking-tight bg-gradient-to-r from-pink-500 via-rose-500 to-orange-500 bg-clip-text text-transparent truncate">
@@ -269,7 +269,7 @@ export default function GLP1ObesityAlgorithm() {
                   type="number"
                   value={patient.bmi}
                   onChange={(e) => setPatient({ ...patient, bmi: parseFloat(e.target.value) || 0 })}
-                  className="bg-slate-900 border-slate-700"
+                  className="bg-white border-border"
                 />
               </div>
               <div className="space-y-2">
@@ -280,7 +280,7 @@ export default function GLP1ObesityAlgorithm() {
                   step="0.1"
                   value={patient.hba1c}
                   onChange={(e) => setPatient({ ...patient, hba1c: parseFloat(e.target.value) || 0 })}
-                  className="bg-slate-900 border-slate-700"
+                  className="bg-white border-border"
                 />
               </div>
             </div>

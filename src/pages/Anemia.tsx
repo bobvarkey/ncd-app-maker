@@ -63,17 +63,17 @@ export default function Anemia() {
   const mcvNum = parseFloat(cbc.mcv);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-black to-gray-900 text-white">
+    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-black to-gray-900 text-foreground">
       {/* Header */}
-      <header className="bg-gray-900 border-b border-gray-800 shadow-sm sticky top-0 z-10">
+      <header className="bg-white border-b border-border shadow-sm sticky top-0 z-10">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 py-4">
           <div className="flex items-center gap-3 mb-4">
             <div className="w-9 h-9 rounded-xl bg-sky-600 flex items-center justify-center shadow-sm">
-              <Microscope className="w-5 h-5 text-white" />
+              <Microscope className="w-5 h-5 text-foreground" />
             </div>
             <div>
-              <h1 className="text-lg font-bold text-white leading-tight">Hematology Evaluators</h1>
-              <p className="text-xs text-gray-400 leading-tight">CBC-based diagnostic decision-support tools</p>
+              <h1 className="text-lg font-bold text-foreground leading-tight">Hematology Evaluators</h1>
+              <p className="text-xs text-muted-foreground leading-tight">CBC-based diagnostic decision-support tools</p>
             </div>
           </div>
 

@@ -135,7 +135,7 @@ export default function BmiCalculator() {
         <div className="mx-auto max-w-2xl px-4">
           <div className="flex items-center gap-3 py-3">
             <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-gradient-to-br from-pink-500 to-rose-600 shadow-md">
-              <Scale className="h-5 w-5 text-white" />
+              <Scale className="h-5 w-5 text-foreground" />
             </div>
             <div className="min-w-0 flex-1">
               <h1 className="font-display text-xl font-extrabold tracking-tight bg-gradient-to-r from-pink-500 via-rose-500 to-orange-600 bg-clip-text text-transparent truncate">
@@ -201,15 +201,15 @@ export default function BmiCalculator() {
                         }
                       }}
                     >
-                      <SelectTrigger id="ethnicity" className="bg-slate-900 border-slate-700">
+                      <SelectTrigger id="ethnicity" className="bg-white border-border">
                         <SelectValue />
                       </SelectTrigger>
-                      <SelectContent className="bg-slate-900 border-slate-700">
+                      <SelectContent className="bg-white border-border">
                         {ETHNICITY_GUIDELINES.map((guideline) => (
                           <SelectItem
                             key={guideline.id}
                             value={guideline.id}
-                            className="text-slate-100 focus:bg-slate-800 focus:text-slate-100"
+                            className="text-slate-100 focus:bg-gray-100 focus:text-slate-100"
                           >
                             {guideline.name}
                           </SelectItem>
@@ -228,7 +228,7 @@ export default function BmiCalculator() {
                       id="height"
                       type="number"
                       placeholder="e.g., 170"
-                      className="bg-slate-900 border-slate-700"
+                      className="bg-white border-border"
                       {...register("height", { valueAsNumber: true })}
                     />
                     {errors.height && (
@@ -243,7 +243,7 @@ export default function BmiCalculator() {
                       id="weight"
                       type="number"
                       placeholder="e.g., 70"
-                      className="bg-slate-900 border-slate-700"
+                      className="bg-white border-border"
                       {...register("weight", { valueAsNumber: true })}
                     />
                     {errors.weight && (

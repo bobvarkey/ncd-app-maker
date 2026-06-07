@@ -30,7 +30,7 @@ export function NextBestMed({ nextBest, patient }: Props) {
       "glucose-monitoring": "bg-red-950/40 border-red-700/40",
       "stress-sleep": "bg-indigo-950/40 border-indigo-700/40",
     };
-    return colors[category] || "bg-gray-900/40 border-gray-700/40";
+    return colors[category] || "bg-white/40 border-border/40";
   };
 
   const getGoalCategoryIcon = (category: string) => {
@@ -278,8 +278,8 @@ export function NextBestMed({ nextBest, patient }: Props) {
                       <p className="text-[10px] font-semibold text-green-100">{goal.title}</p>
                       <p className="text-[9px] text-green-50/80 mt-1">{goal.goal}</p>
                       <div className="flex flex-wrap gap-2 mt-1.5 text-[8px]">
-                        <span className="bg-black/30 px-2 py-0.5 rounded">📍 {goal.specific}</span>
-                        <span className="bg-black/30 px-2 py-0.5 rounded">📈 {goal.measurable}</span>
+                        <span className="bg-black/10 px-2 py-0.5 rounded">📍 {goal.specific}</span>
+                        <span className="bg-black/10 px-2 py-0.5 rounded">📈 {goal.measurable}</span>
                       </div>
                       <p className="text-[9px] text-green-100/70 mt-1">⏰ {goal.timeframe}</p>
                     </div>

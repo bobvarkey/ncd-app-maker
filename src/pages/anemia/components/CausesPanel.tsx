@@ -75,10 +75,10 @@ export default function CausesPanel({ morphology, severity }: Props) {
   if (!data) return null;
 
   return (
-    <div className="bg-gray-900 rounded-2xl shadow-sm border border-gray-800 p-6">
+    <div className="bg-white rounded-2xl shadow-sm border border-border p-6">
       <div className="flex items-center gap-2 mb-4">
         <Lightbulb className="w-5 h-5 text-amber-400" />
-        <h2 className="text-lg font-semibold text-white">Differential Diagnosis</h2>
+        <h2 className="text-lg font-semibold text-foreground">Differential Diagnosis</h2>
         <span className="text-xs bg-amber-900/30 text-amber-400 border border-amber-800 px-2 py-0.5 rounded-full font-medium">
           {morphology} Anemia
         </span>
@@ -86,10 +86,10 @@ export default function CausesPanel({ morphology, severity }: Props) {
 
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
         <div>
-          <h3 className="text-xs font-semibold uppercase tracking-wide text-gray-400 mb-3">Common Causes</h3>
+          <h3 className="text-xs font-semibold uppercase tracking-wide text-muted-foreground mb-3">Common Causes</h3>
           <ul className="space-y-2">
             {data.causes.map(c => (
-              <li key={c} className="flex items-start gap-2 text-sm text-gray-300">
+              <li key={c} className="flex items-start gap-2 text-sm text-muted-foreground">
                 <span className="w-1.5 h-1.5 rounded-full bg-amber-400 mt-1.5 flex-shrink-0" />
                 {c}
               </li>
@@ -97,10 +97,10 @@ export default function CausesPanel({ morphology, severity }: Props) {
           </ul>
         </div>
         <div>
-          <h3 className="text-xs font-semibold uppercase tracking-wide text-gray-400 mb-3">Recommended Workup</h3>
+          <h3 className="text-xs font-semibold uppercase tracking-wide text-muted-foreground mb-3">Recommended Workup</h3>
           <ul className="space-y-2">
             {data.workup.map(w => (
-              <li key={w} className="flex items-start gap-2 text-sm text-gray-300">
+              <li key={w} className="flex items-start gap-2 text-sm text-muted-foreground">
                 <span className="w-1.5 h-1.5 rounded-full bg-sky-400 mt-1.5 flex-shrink-0" />
                 {w}
               </li>

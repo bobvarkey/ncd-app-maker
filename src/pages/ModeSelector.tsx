@@ -73,18 +73,18 @@ function Navbar() {
   const navigate = useNavigate();
   
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 bg-black/50 backdrop-blur-md border-b border-white/10">
+    <header className="fixed top-0 left-0 right-0 z-50 bg-black/10 backdrop-blur-md border-b border-border/40">
       <nav className="flex justify-between items-center w-full px-6 h-14 max-w-6xl mx-auto">
         <div className="flex items-center gap-2 cursor-pointer" onClick={() => navigate("/")}>
           <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-pink-500 to-cyan-500 flex items-center justify-center">
             <HeartBeat />
           </div>
-          <span className="text-lg font-bold text-white">NCD Rx</span>
+          <span className="text-lg font-bold text-foreground">NCD Rx</span>
         </div>
         
         <button 
           onClick={() => navigate("/home")}
-          className="px-4 py-1.5 rounded-full bg-white/10 hover:bg-white/20 text-white text-sm font-medium transition-colors"
+          className="px-4 py-1.5 rounded-full bg-white/10 hover:bg-white/20 text-foreground text-sm font-medium transition-colors"
         >
           Launch App
         </button>
@@ -98,7 +98,7 @@ function Hero() {
   const navigate = useNavigate();
 
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-black">
+    <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-white">
       {/* Background elements */}
       <div className="absolute inset-0">
         <div className="absolute top-0 left-0 w-1/2 h-full bg-gradient-to-r from-pink-600/20 to-transparent" />
@@ -116,13 +116,13 @@ function Hero() {
           <ECGWave />
         </div>
         
-        <h1 className="text-5xl md:text-7xl font-bold text-white mb-4" style={{ fontFamily: 'Space Grotesk, sans-serif' }}>
+        <h1 className="text-5xl md:text-7xl font-bold text-foreground mb-4" style={{ fontFamily: 'Space Grotesk, sans-serif' }}>
           <span className="bg-gradient-to-r from-pink-400 via-rose-400 to-cyan-400 bg-clip-text text-transparent">
             NCD Rx
           </span>
         </h1>
         
-        <p className="text-xl text-white/70 mb-8 max-w-xl mx-auto">
+        <p className="text-xl text-foreground/70 mb-8 max-w-xl mx-auto">
           Comprehensive non-communicable disease management.
           <br />
           Powered by latest clinical guidelines.
@@ -140,7 +140,7 @@ function Hero() {
           ].map((c, i) => (
             <span 
               key={i}
-              className={`px-4 py-1.5 rounded-full text-sm border ${c.color} bg-black/30`}
+              className={`px-4 py-1.5 rounded-full text-sm border ${c.color} bg-black/10`}
             >
               {c.name}
             </span>
@@ -149,7 +149,7 @@ function Hero() {
 
         <button 
           onClick={() => navigate("/home")}
-          className="px-8 py-3 rounded-full bg-gradient-to-r from-pink-500 to-cyan-500 hover:opacity-90 text-white font-semibold transition-all hover:scale-105"
+          className="px-8 py-3 rounded-full bg-gradient-to-r from-pink-500 to-cyan-500 hover:opacity-90 text-foreground font-semibold transition-all hover:scale-105"
         >
           Get Started →
         </button>
@@ -157,16 +157,16 @@ function Hero() {
         {/* Stats */}
         <div className="grid grid-cols-3 gap-6 mt-16 max-w-lg mx-auto">
           <div className="text-center">
-            <div className="text-2xl font-bold text-white">6</div>
-            <div className="text-xs text-white/50">Conditions</div>
+            <div className="text-2xl font-bold text-foreground">6</div>
+            <div className="text-xs text-foreground/50">Conditions</div>
           </div>
           <div className="text-center">
-            <div className="text-2xl font-bold text-white">50+</div>
-            <div className="text-xs text-white/50">Calculators</div>
+            <div className="text-2xl font-bold text-foreground">50+</div>
+            <div className="text-xs text-foreground/50">Calculators</div>
           </div>
           <div className="text-center">
-            <div className="text-2xl font-bold text-white">2026</div>
-            <div className="text-xs text-white/50">Guidelines</div>
+            <div className="text-2xl font-bold text-foreground">2026</div>
+            <div className="text-xs text-foreground/50">Guidelines</div>
           </div>
         </div>
       </div>
@@ -177,13 +177,13 @@ function Hero() {
 // Simple footer
 function Footer() {
   return (
-    <footer className="py-8 px-6 bg-black border-t border-white/10">
+    <footer className="py-8 px-6 bg-white border-t border-border/40">
       <div className="max-w-4xl mx-auto text-center">
         <div className="flex items-center justify-center gap-2 mb-2">
           <HeartBeat />
-          <span className="text-white font-medium">NCD Rx</span>
+          <span className="text-foreground font-medium">NCD Rx</span>
         </div>
-        <p className="text-xs text-white/30">© 2026 Clinician-designed for precision</p>
+        <p className="text-xs text-foreground/30">© 2026 Clinician-designed for precision</p>
       </div>
     </footer>
   );
@@ -192,7 +192,7 @@ function Footer() {
 // Main 
 export default function ModeSelector() {
   return (
-    <div className="min-h-screen bg-black text-white">
+    <div className="min-h-screen bg-white text-foreground">
       <Navbar />
       <main className="pt-14">
         <Hero />
