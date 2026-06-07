@@ -224,6 +224,119 @@ export default function ESRInterpretation() {
               </div>
             </div>
           )}
+
+          {/* Red Flags — Urgent Evaluation */}
+          {interpretation && interpretation !== 'normal' && (
+            <div className="bg-red-50 border border-red-200 rounded-xl p-4">
+              <div className="flex items-start gap-3">
+                <AlertTriangle className="w-5 h-5 text-red-600 mt-0.5 flex-shrink-0" />
+                <div className="flex-1">
+                  <p className="text-sm font-semibold text-foreground mb-2">When to Consider Urgent Evaluation</p>
+                  <ul className="space-y-1">
+                    {RED_FLAGS.map((flag) => (
+                      <li key={flag} className="flex items-start gap-2 text-sm text-foreground">
+                        <ArrowRight className="w-3.5 h-3.5 text-red-500 mt-0.5 flex-shrink-0" />
+                        {flag}
+                      </li>
+                    ))}
+                  </ul>
+                  <p className="text-xs text-muted-foreground mt-2">
+                    Any red flag in the setting of an abnormal ESR warrants prompt clinician review and targeted workup.
+                  </p>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* Next Steps */}
+          {interpretation && interpretation !== 'normal' && (
+            <div className="bg-white border border-border rounded-xl overflow-hidden">
+              <div className="p-4 border-b border-border flex items-center gap-2">
+                <ClipboardList className="w-5 h-5 text-primary" />
+                <p className="text-sm font-semibold text-foreground">Recommended Next Steps</p>
+              </div>
+              <div className="p-4 space-y-4">
+                {interpretation === 'high' && (
+                  <>
+                    {(() => {
+                      const severity = esrNum > 100 ? 'Marked elevation (>100 mm/hr)' : esrNum > (normalMax || 0) * 2 ? 'Moderate elevation (>2× upper limit)' : 'Mild elevation (≤2× upper limit)';
+                      const steps = ELEVATED_NEXT_STEPS[severity] || [];
+                      return (
+                        <div>
+                          <p className="text-xs font-medium text-muted-foreground uppercase tracking-wider mb-2">{severity}</p>
+                          <div className="space-y-2">
+                            {steps.map((step, i) => (
+                              <div key={i} className={`rounded-lg border p-3 ${step.urgency === 'urgent' ? 'bg-red-50 border-red-200' : 'bg-gray-50 border-border'}`}>
+                                <div className="flex items-center gap-2">
+                                  <span className={`text-[10px] font-bold uppercase tracking-wider px-1.5 py-0.5 rounded ${step.urgency === 'urgent' ? 'bg-red-200 text-red-800' : 'bg-gray-200 text-gray-700'}`}>
+                                    {step.urgency}
+                                  </span>
+                                  <p className="text-sm font-medium text-foreground">{step.label}</p>
+                                </div>
+                                {step.details && (
+                                  <p className="text-xs text-muted-foreground mt-1 ml-[calc(10px+0.5rem+2px)]">{step.details}</p>
+                                )}
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+                      );
+                    })()}
+                  </>
+                )}
+                {interpretation === 'low' && (
+                  <div className="space-y-2">
+                    {LOW_NEXT_STEPS.map((step, i) => (
+                      <div key={i} className="rounded-lg border border-border bg-gray-50 p-3">
+                        <div className="flex items-center gap-2">
+                          <span className="text-[10px] font-bold uppercase tracking-wider px-1.5 py-0.5 rounded bg-gray-200 text-gray-700">
+                            {step.urgency}
+                          </span>
+                          <p className="text-sm font-medium text-foreground">{step.label}</p>
+                        </div>
+                        {step.details && (
+                          <p className="text-xs text-muted-foreground mt-1 ml-[calc(10px+0.5rem+2px)]">{step.details}</p>
+                        )}
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </div>
+            </div>
+          )}
+
+          {/* Follow-up Labs for Elevated ESR */}
+          {interpretation === 'high' && (
+            <div className="bg-white border border-border rounded-xl overflow-hidden">
+              <div className="p-4 border-b border-border flex items-center gap-2">
+                <FlaskConical className="w-5 h-5 text-primary" />
+                <p className="text-sm font-semibold text-foreground">Suggested Follow-up Labs</p>
+              </div>
+              <div className="p-4">
+                <div className="overflow-x-auto">
+                  <table className="w-full text-sm">
+                    <thead>
+                      <tr className="border-b border-border">
+                        <th className="text-left py-2 px-3 font-semibold text-foreground">Test</th>
+                        <th className="text-left py-2 px-3 font-semibold text-foreground">Rationale</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {ELEVATED_FOLLOW_UP_LABS.map((lab, i) => (
+                        <tr key={i} className="border-b border-border last:border-0">
+                          <td className="py-2 px-3 font-medium text-foreground whitespace-nowrap">{lab.name}</td>
+                          <td className="py-2 px-3 text-muted-foreground">{lab.indication}</td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+                <p className="text-xs text-muted-foreground mt-3">
+                  Order selectively based on clinical context. Not all tests are indicated in every patient.
+                </p>
+              </div>
+            </div>
+          )}
         </div>
       </div>
 
