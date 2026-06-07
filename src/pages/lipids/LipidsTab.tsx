@@ -1,6 +1,6 @@
 import { useState, useMemo } from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { BookOpen, Calculator, Pill, Wind, ArrowLeft, ArrowRight, Home, AlertTriangle } from "lucide-react";
+import { BookOpen, Calculator, Pill, Wind, ArrowLeft, ArrowRight, Home, AlertTriangle, Sparkles } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { useNavigate, Link } from "react-router-dom";
@@ -8,6 +8,7 @@ import { AbbreviationHover, AbbrText } from "@/components/AbbreviationHover";
 import LipidsOverview from "./LipidsOverview";
 import LipidsAssessment from "./LipidsAssessment";
 import LipidsTreatment from "./LipidsTreatment";
+import LipidMiniApp from "./LipidMiniApp";
 import { SmartLabelUpload, LIPID_FIELDS } from "@/components/SmartLabelUpload";
 import RenalDoseAdjustment from "../RenalDoseAdjustment";
 // import Respiratory from "../Respiratory";
