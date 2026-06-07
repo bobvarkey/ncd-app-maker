@@ -1409,7 +1409,10 @@ export default function Home() {
       </header>
 
       <main className="max-w-6xl mx-auto px-6 pb-16 space-y-8">
-        {/* Prescription Engine - TOP */}
+        {/* Unified Mini-App — TOP */}
+        <UnifiedPrescriptionMiniApp />
+
+        {/* Prescription Engine */}
         <PrescriptionEngine />
 
         {/* OCR Upload */}
