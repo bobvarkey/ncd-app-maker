@@ -1,6 +1,6 @@
 import { useState, useMemo } from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { BookOpen, Calculator, Pill, Wind, ArrowLeft, ArrowRight, Home, AlertTriangle, Sparkles } from "lucide-react";
+import { BookOpen, Calculator, Pill, Shield, ArrowLeft, ArrowRight, Home, Sparkles } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { useNavigate, Link } from "react-router-dom";
@@ -10,8 +10,6 @@ import LipidsAssessment from "./LipidsAssessment";
 import LipidsTreatment from "./LipidsTreatment";
 import LipidMiniApp from "./LipidMiniApp";
 import { SmartLabelUpload, LIPID_FIELDS } from "@/components/SmartLabelUpload";
-import RenalDoseAdjustment from "../RenalDoseAdjustment";
-// import Respiratory from "../Respiratory";
 
 export type LAIResult = {
   cat: "EHR" | "VHR" | "HR" | "MOD" | "LOW";
@@ -83,26 +81,20 @@ export default function LipidsTab() {
         </div>
 
         <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6">
-          <TabsList className="grid w-full grid-cols-5 h-auto p-1 bg-muted/50">
+          <TabsList className="grid w-full grid-cols-4 h-auto p-1 bg-muted/50">
             <TabsTrigger value="assessment" className="flex items-center gap-1.5 py-2 text-xs data-[state=active]:bg-blue-500/10 data-[state=active]:text-blue-600">
               <Calculator className="h-4 w-4" /><span>Risk Calc</span>
             </TabsTrigger>
             <TabsTrigger value="treatment" disabled={!laiResult} className="flex items-center gap-1.5 py-2 text-xs data-[state=active]:bg-blue-500/10 data-[state=active]:text-blue-600">
               <Pill className="h-4 w-4" /><span>Rx</span>
             </TabsTrigger>
-            <TabsTrigger value="copd" className="flex items-center gap-1.5 py-2 text-xs data-[state=active]:bg-cyan-500/10 data-[state=active]:text-cyan-600">
-              <Wind className="h-4 w-4" /><span>COPD/Asthma</span>
-            </TabsTrigger>
-            <TabsTrigger value="renal" className="flex items-center gap-1.5 py-2 text-xs data-[state=active]:bg-amber-500/10 data-[state=active]:text-amber-600">
-              <AlertTriangle className="h-4 w-4" /><span>Renal</span>
+            <TabsTrigger value="secondary" className="flex items-center gap-1.5 py-2 text-xs data-[state=active]:bg-red-500/10 data-[state=active]:text-red-600">
+              <Shield className="h-4 w-4" /><span>Secondary Prevention</span>
             </TabsTrigger>
             <TabsTrigger value="overview" className="flex items-center gap-1.5 py-2 text-xs data-[state=active]:bg-blue-500/10 data-[state=active]:text-blue-600">
               <BookOpen className="h-4 w-4" /><span>Overview</span>
             </TabsTrigger>
           </TabsList>
-
-
-
 
           {/* Tab 1: Overview */}
           <TabsContent value="overview" className="mt-0">
@@ -129,14 +121,13 @@ export default function LipidsTab() {
             )}
           </TabsContent>
 
-          {/* Tab 4: COPD/Asthma */}
-          <TabsContent value="copd" className="mt-0">
-            <div className='p-8'>Coming soon: Respiratory</div>
-          </TabsContent>
-
-          {/* Tab 5: Renal Dose Adjustment */}
-          <TabsContent value="renal" className="mt-0">
-            <RenalDoseAdjustment />
+          {/* Tab 4: Secondary Prevention */}
+          <TabsContent value="secondary" className="mt-0">
+            <div className="p-8 text-center border rounded-xl border-dashed border-muted-foreground/30">
+              <Shield className="h-8 w-8 mx-auto text-muted-foreground/50 mb-3" />
+              <p className="text-muted-foreground font-medium">Secondary Prevention</p>
+              <p className="text-sm text-muted-foreground/70 mt-1">Use the Lipid Management Mini-App above and select <strong>Secondary Prevention</strong> scenario for stroke, PAD, or established ASCVD recommendations.</p>
+            </div>
           </TabsContent>
         </Tabs>
 

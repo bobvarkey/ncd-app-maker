@@ -26,6 +26,7 @@ import {
   Printer,
   Copy,
   FileText,
+  Heart,
 } from "lucide-react";
 
 /* ============================================================
@@ -33,11 +34,12 @@ import {
    Based on LAI 2023 lipid algorithm
    ============================================================ */
 
-type Scenario = "acs" | "dm" | "htg" | "general" | "recurrent";
+type Scenario = "acs" | "dm" | "htg" | "general" | "recurrent" | "secondary";
 type StatinGroup = "naive" | "low_mod" | "high" | "intolerant";
 type DmAscvd = "no" | "yes";
 type DmModifiers = "none" | "tod_or_2rf";
 type CacRange = "" | "0" | "1-99_lt75" | "1-99_ge75" | "100-299" | ">=300";
+type SecondaryType = "stroke" | "pad" | "ascvd";
 
 type Inputs = {
   scenario: Scenario | "";
@@ -70,6 +72,10 @@ type Inputs = {
   cac: CacRange;
   // recurrent
   recurrentEvent: boolean;
+  // secondary prevention
+  secondaryType: SecondaryType | "";
+  secondaryPolyvascular: boolean;
+  secondaryRecurrent: boolean;
 };
 
 const EMPTY: Inputs = {
@@ -96,6 +102,9 @@ const EMPTY: Inputs = {
   dmMods: "",
   cac: "",
   recurrentEvent: false,
+  secondaryType: "",
+  secondaryPolyvascular: false,
+  secondaryRecurrent: false,
 };
 
 type RiskGroup =
@@ -235,6 +244,69 @@ function buildResult(i: Inputs): Result | null {
         { week: "12 wk", action: "Reassess; target LDL ~10–15 mg/dL if events persist" },
       ],
       notes: ["Recurrent CV event despite LDL ~30 mg/dL → Extreme-Risk Category C."],
+    };
+  }
+
+  // Secondary prevention (stroke, PAD, established ASCVD)
+  if (i.scenario === "secondary") {
+    const st = i.secondaryType;
+    const poly = i.secondaryPolyvascular;
+    const rec = i.secondaryRecurrent;
+
+    let g: RiskGroup = "EHR-A";
+    if (rec) g = "EHR-C";
+    else if (poly) g = "EHR-B";
+
+    const conditionLabel =
+      st === "stroke" ? "Ischemic stroke / TIA" :
+      st === "pad" ? "Peripheral arterial disease" :
+      "Established ASCVD (CAD/MI/PCI/CABG)";
+
+    const groupLabel = `Secondary prevention — ${conditionLabel} — ${GROUP_LABEL[g]}`;
+
+    return {
+      group: g,
+      groupLabel,
+      ldlTarget: TARGETS[g].ldl,
+      nonHdlTarget: TARGETS[g].nonHdl,
+      apoBTarget: TARGETS[g].apoB,
+      intensity:
+        g === "EHR-C"
+          ? "Maximal therapy (statin + ezetimibe + PCSK9i ± bempedoic acid)"
+          : g === "EHR-B"
+            ? "High-intensity statin + ezetimibe + PCSK9i"
+            : "High-intensity statin + ezetimibe",
+      initialRx: [
+        "Send extended lipid panel incl. Apo-B and Lp(a) if not done",
+        g === "EHR-A"
+          ? "High-intensity statin (atorvastatin 40–80 mg or rosuvastatin 20–40 mg)"
+          : "Continue maximally tolerated high-intensity statin",
+        "Add ezetimibe 10 mg from start",
+        g === "EHR-B" || g === "EHR-C"
+          ? "Add PCSK9 inhibitor (evolocumab or alirocumab)"
+          : "Consider PCSK9i if LDL not <50 mg/dL by 4–6 weeks",
+        parseFloat(i.lpa) > 50 ? "Lp(a) > 50 mg/dL → prioritize PCSK9i early" : "Check Lp(a); if ≥50 mg/dL → prioritize PCSK9i",
+        st === "stroke" ? "Ensure BP <130/80; antiplatelet per stroke protocol" : undefined,
+        st === "pad" ? "Add low-dose rivaroxaban 2.5 mg BID + aspirin if PAD + CAD (COMPASS-eligible)" : undefined,
+      ].filter(Boolean) as string[],
+      escalation: [
+        "If LDL not at goal: add bempedoic acid 180 mg OD",
+        "Refractory after triple therapy: consider lipoprotein apheresis",
+        "Persistent TG >150 mg/dL on statin → add icosapent ethyl 2 g BID",
+        "Colchicine 0.5 mg/day if hsCRP > 2 mg/L (residual inflammatory risk)",
+        "SGLT2i / GLP-1 RA for metabolic residual risk if diabetic or obese",
+      ],
+      followUp: [
+        { week: "4 wk", action: "Extended lipid profile incl. Apo-B; intensify if not at goal" },
+        { week: "8 wk", action: "Repeat lipid profile; escalate if not at goal" },
+        { week: "12 wk", action: "Reassess all targets (LDL, non-HDL, Apo-B)" },
+      ],
+      notes: [
+        `Condition: ${conditionLabel}.`,
+        poly ? "Polyvascular disease → Extreme-Risk Category B." : undefined,
+        rec ? "Recurrent event despite therapy → Extreme-Risk Category C." : undefined,
+        "All secondary prevention patients are at least EHR-A per LAI 2023.",
+      ].filter(Boolean) as string[],
     };
   }
 
@@ -568,6 +640,7 @@ export default function LipidMiniApp() {
   const showAcsBlock = i.scenario === "acs";
   const showDmBlock = i.scenario === "dm";
   const showTgBlock = i.scenario === "htg";
+  const showSecondaryBlock = i.scenario === "secondary";
 
   // ----- Export helpers -----
   const buildSummaryText = (): string => {
@@ -668,7 +741,7 @@ export default function LipidMiniApp() {
         </p>
 
         {/* Scenario picker */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-2 mb-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2 mb-4">
           <ScenarioCard
             active={i.scenario === "acs"}
             onClick={() => set("scenario", "acs")}
@@ -696,6 +769,13 @@ export default function LipidMiniApp() {
             icon={<Stethoscope className="h-3.5 w-3.5" />}
             title="Primary prevention"
             subtitle="LAI risk stratification"
+          />
+          <ScenarioCard
+            active={i.scenario === "secondary"}
+            onClick={() => set("scenario", "secondary")}
+            icon={<Heart className="h-3.5 w-3.5" />}
+            title="Secondary prevention"
+            subtitle="Stroke, PAD, or established ASCVD"
           />
           <ScenarioCard
             active={i.scenario === "recurrent"}
@@ -762,6 +842,36 @@ export default function LipidMiniApp() {
                 <Chip active={i.dmMods === "none"} onClick={() => set("dmMods", "none")}>None / 0–1 RF</Chip>
                 <Chip active={i.dmMods === "tod_or_2rf"} onClick={() => set("dmMods", "tod_or_2rf")}>TOD or ≥2 RF</Chip>
               </div>
+            </div>
+          </div>
+        )}
+
+        {/* Secondary prevention context-aware block */}
+        {showSecondaryBlock && (
+          <div className="mb-4 space-y-3">
+            <div>
+              <Label className="text-xs text-muted-foreground mb-1.5 block">
+                Established atherosclerotic condition
+              </Label>
+              <div className="flex flex-wrap gap-2">
+                <Chip active={i.secondaryType === "stroke"} onClick={() => set("secondaryType", "stroke")}>
+                  Ischemic stroke / TIA
+                </Chip>
+                <Chip active={i.secondaryType === "pad"} onClick={() => set("secondaryType", "pad")}>
+                  PAD (ABI &lt;0.9, claudication, revascularization)
+                </Chip>
+                <Chip active={i.secondaryType === "ascvd"} onClick={() => set("secondaryType", "ascvd")}>
+                  CAD / prior MI / PCI / CABG
+                </Chip>
+              </div>
+            </div>
+            <div className="flex flex-wrap gap-2">
+              <Chip active={i.secondaryPolyvascular} onClick={() => set("secondaryPolyvascular", !i.secondaryPolyvascular)}>
+                Polyvascular disease (≥2 vascular beds)
+              </Chip>
+              <Chip active={i.secondaryRecurrent} onClick={() => set("secondaryRecurrent", !i.secondaryRecurrent)}>
+                Recurrent event despite therapy
+              </Chip>
             </div>
           </div>
         )}
