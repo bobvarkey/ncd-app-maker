@@ -185,6 +185,8 @@ export default function Anemia() {
           <IronReplacementCalculator />
         ) : activeTab === 'bleeding-clotting' ? (
           <BleedingClottingEvaluator />
+        ) : activeTab === 'esr' ? (
+          <ESRInterpretation />
         ) : (
           <ThrombocytopeniaEvaluator />
         )}
