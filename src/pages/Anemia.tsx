@@ -12,12 +12,13 @@ import ThrombocytopeniaEvaluator from './anemia/components/ThrombocytopeniaEvalu
 import BleedingClottingEvaluator from './anemia/components/BleedingClottingEvaluator';
 import IronReplacementCalculator from '@/calculators/iron/IronReplacementCalculator';
 import TestSuggestionAlgorithm from './anemia/components/TestSuggestionAlgorithm';
-import { Microscope, AlertTriangle, Droplet, Syringe, Activity } from 'lucide-react';
+import ESRInterpretation from './anemia/components/ESRInterpretation';
+import { Microscope, AlertTriangle, Droplet, Syringe, Activity, Timer } from 'lucide-react';
 import { SmartLabelUpload, CBC_FIELDS } from "@/components/SmartLabelUpload";
 
 const EMPTY_CBC: CBCValues = { hgb: '', rbc: '', mcv: '', mch: '', mchc: '', rdw: '', hct: '' };
 
-type Tab = 'anemia' | 'thrombocytopenia' | 'bleeding-clotting' | 'iron';
+type Tab = 'anemia' | 'thrombocytopenia' | 'bleeding-clotting' | 'iron' | 'esr';
 
 export default function Anemia() {
   const [searchParams] = useSearchParams();
