@@ -1,6 +1,6 @@
 import { useState, useMemo } from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { BookOpen, Calculator, Pill, Wind, ArrowLeft, ArrowRight, Home, AlertTriangle } from "lucide-react";
+import { BookOpen, Calculator, Pill, Wind, ArrowLeft, ArrowRight, Home, AlertTriangle, Sparkles } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { useNavigate, Link } from "react-router-dom";
@@ -8,6 +8,7 @@ import { AbbreviationHover, AbbrText } from "@/components/AbbreviationHover";
 import LipidsOverview from "./LipidsOverview";
 import LipidsAssessment from "./LipidsAssessment";
 import LipidsTreatment from "./LipidsTreatment";
+import LipidMiniApp from "./LipidMiniApp";
 import { SmartLabelUpload, LIPID_FIELDS } from "@/components/SmartLabelUpload";
 import RenalDoseAdjustment from "../RenalDoseAdjustment";
 // import Respiratory from "../Respiratory";
@@ -28,7 +29,7 @@ export type LAIResult = {
 
 export default function LipidsTab() {
   const navigate = useNavigate();
-  const [activeTab, setActiveTab] = useState("overview");
+  const [activeTab, setActiveTab] = useState("miniapp");
   const [laiResult, setLaiResult] = useState<LAIResult | null>(null);
   const [egfr, setEgfr] = useState<string>("");
 
@@ -77,7 +78,10 @@ export default function LipidsTab() {
         </div>
 
         <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6">
-          <TabsList className="grid w-full grid-cols-5 h-auto p-1 bg-muted/50">
+          <TabsList className="grid w-full grid-cols-6 h-auto p-1 bg-muted/50">
+            <TabsTrigger value="miniapp" className="flex items-center gap-1.5 py-2 text-xs data-[state=active]:bg-primary/10 data-[state=active]:text-primary">
+              <Sparkles className="h-4 w-4" /><span>Mini-App</span>
+            </TabsTrigger>
             <TabsTrigger value="assessment" className="flex items-center gap-1.5 py-2 text-xs data-[state=active]:bg-blue-500/10 data-[state=active]:text-blue-600">
               <Calculator className="h-4 w-4" /><span>Risk Calc</span>
             </TabsTrigger>
@@ -94,6 +98,11 @@ export default function LipidsTab() {
               <BookOpen className="h-4 w-4" /><span>Overview</span>
             </TabsTrigger>
           </TabsList>
+
+          <TabsContent value="miniapp" className="mt-0">
+            <LipidMiniApp />
+          </TabsContent>
+
 
           {/* Tab 1: Overview */}
           <TabsContent value="overview" className="mt-0">
