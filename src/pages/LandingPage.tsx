@@ -41,7 +41,7 @@ export default function LandingPage() {
             Global health · WHO data
           </p>
           <p className="text-lg md:text-xl text-gray-400 text-center max-w-2xl mx-auto mb-10 leading-relaxed">
-            Evidence-based prescription engine for major non-communicable diseases
+            Evidence-based prescription engine for major primary care problems
           </p>
 
           <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
