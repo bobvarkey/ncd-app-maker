@@ -33,11 +33,12 @@ import {
    Based on LAI 2023 lipid algorithm
    ============================================================ */
 
-type Scenario = "acs" | "dm" | "htg" | "general" | "recurrent";
+type Scenario = "acs" | "dm" | "htg" | "general" | "recurrent" | "secondary";
 type StatinGroup = "naive" | "low_mod" | "high" | "intolerant";
 type DmAscvd = "no" | "yes";
 type DmModifiers = "none" | "tod_or_2rf";
 type CacRange = "" | "0" | "1-99_lt75" | "1-99_ge75" | "100-299" | ">=300";
+type SecondaryType = "stroke" | "pad" | "ascvd";
 
 type Inputs = {
   scenario: Scenario | "";
@@ -70,6 +71,10 @@ type Inputs = {
   cac: CacRange;
   // recurrent
   recurrentEvent: boolean;
+  // secondary prevention
+  secondaryType: SecondaryType | "";
+  secondaryPolyvascular: boolean;
+  secondaryRecurrent: boolean;
 };
 
 const EMPTY: Inputs = {
@@ -96,6 +101,9 @@ const EMPTY: Inputs = {
   dmMods: "",
   cac: "",
   recurrentEvent: false,
+  secondaryType: "",
+  secondaryPolyvascular: false,
+  secondaryRecurrent: false,
 };
 
 type RiskGroup =
