@@ -338,6 +338,21 @@ export default function Infections() {
     return null;
   }, [ctx.egfr, condition]);
 
+  const renalAdjustments = useMemo(() => {
+    if (!ctx.egfr || !chosenRegimen.length) return [];
+    const all: RenalAdj[] = [];
+    const seen = new Set<string>();
+    for (const r of chosenRegimen) {
+      for (const a of getRenalAdjustments(r.drug + " " + r.dose, ctx.egfr)) {
+        if (!seen.has(a.drug)) {
+          seen.add(a.drug);
+          all.push(a);
+        }
+      }
+    }
+    return all;
+  }, [chosenRegimen, ctx.egfr]);
+
   const summary = useMemo(() => {
     const lines: string[] = [];
     lines.push(`Primary Care Infection Plan — ${condition.label}`);
@@ -374,22 +389,8 @@ export default function Infections() {
     lines.push("");
     lines.push("Disclaimer: Decision-support only. Does not replace local antimicrobial policy or clinical judgement.");
     return lines.join("\n");
-  }, [condition, ctx, severity, pregnant, allergy, duration, abx, chosenRegimen, renalWarn]);
+  }, [condition, ctx, severity, pregnant, allergy, duration, abx, chosenRegimen, renalWarn, renalAdjustments]);
 
-  const renalAdjustments = useMemo(() => {
-    if (!ctx.egfr || !chosenRegimen.length) return [];
-    const all: RenalAdj[] = [];
-    const seen = new Set<string>();
-    for (const r of chosenRegimen) {
-      for (const a of getRenalAdjustments(r.drug + " " + r.dose, ctx.egfr)) {
-        if (!seen.has(a.drug)) {
-          seen.add(a.drug);
-          all.push(a);
-        }
-      }
-    }
-    return all;
-  }, [chosenRegimen, ctx.egfr]);
 
   const handleCopy = async () => {
     await navigator.clipboard.writeText(summary);
