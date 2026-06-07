@@ -54,6 +54,7 @@ const navItems: NavItem[] = [
   { path: "/diabetes",                label: "Diabetes",  icon: "💉", active: "bg-red-500/10 text-red-400 border-red-500/30" },
   { path: "/hypertension",            label: "Hypertension", icon: "❤️", active: "bg-orange-500/10 text-orange-400 border-orange-500/30" },
   { path: "/lipids",                  label: "Lipids",    icon: "💧", active: "bg-blue-500/10 text-blue-400 border-blue-500/30" },
+  { path: "/liver",                   label: "Liver",     icon: "🧬", active: "bg-lime-500/10 text-lime-400 border-lime-500/30" },
   { path: "/thyroid",                 label: "Thyroid",   icon: "🔬", active: "bg-emerald-500/10 text-emerald-400 border-emerald-500/30" },
   { path: "/obesity/bmi-calculator",  label: "Obesity",   icon: "⚖️", active: "bg-violet-500/10 text-violet-400 border-violet-500/30" },
   { path: "/respiratory",             label: "COPD",      icon: "🫁", active: "bg-cyan-500/10 text-cyan-400 border-cyan-500/30" },

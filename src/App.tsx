@@ -21,6 +21,7 @@ import Home from "@/pages/Home";
 import Diabetes from "@/pages/Diabetes";
 import Hypertension from "@/pages/Hypertension";
 import Lipids from "@/pages/Lipids";
+import Liver from "@/pages/Liver";
 
 // Anemia Page
 import Anemia from "@/pages/Anemia";
@@ -172,6 +173,7 @@ const App = () => (
           <Route path="/diabetes" element={<><TabNavigation /><Diabetes /></>} />
           <Route path="/hypertension" element={<><TabNavigation /><Hypertension /></>} />
           <Route path="/lipids" element={<><TabNavigation /><Lipids /></>} />
+          <Route path="/liver" element={<><TabNavigation /><Liver /></>} />
           <Route path="/anemia" element={<><TabNavigation /><Anemia /></>} />
           <Route path="/diabetes/assessment" element={<><TabNavigation /><DiabetesAssessment /></>} />
           <Route path="/diabetes/overview" element={<><TabNavigation /><DiabetesOverview /></>} />
