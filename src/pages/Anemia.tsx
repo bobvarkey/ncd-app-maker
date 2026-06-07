@@ -8,14 +8,15 @@ import CausesPanel from './anemia/components/CausesPanel';
 import ReferenceRanges from './anemia/components/ReferenceRanges';
 import IronTherapy from './anemia/components/IronTherapy';
 import ThrombocytopeniaEvaluator from './anemia/components/ThrombocytopeniaEvaluator';
+import BleedingClottingEvaluator from './anemia/components/BleedingClottingEvaluator';
 import IronReplacementCalculator from '@/calculators/iron/IronReplacementCalculator';
 import TestSuggestionAlgorithm from './anemia/components/TestSuggestionAlgorithm';
-import { Microscope, AlertTriangle, Droplet, Syringe } from 'lucide-react';
+import { Microscope, AlertTriangle, Droplet, Syringe, Activity } from 'lucide-react';
 import { SmartLabelUpload, CBC_FIELDS } from "@/components/SmartLabelUpload";
 
 const EMPTY_CBC: CBCValues = { hgb: '', rbc: '', mcv: '', mch: '', mchc: '', rdw: '', hct: '' };
 
-type Tab = 'anemia' | 'thrombocytopenia' | 'iron';
+type Tab = 'anemia' | 'thrombocytopenia' | 'bleeding-clotting' | 'iron';
 
 export default function Anemia() {
   const [activeTab, setActiveTab] = useState<Tab>('anemia');
@@ -95,6 +96,17 @@ export default function Anemia() {
             >
               <Droplet className="w-4 h-4" />
               Thrombocytopenia
+            </button>
+            <button
+              onClick={() => setActiveTab('bleeding-clotting')}
+              className={`flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
+                activeTab === 'bleeding-clotting'
+                  ? 'bg-purple-600 text-white'
+                  : 'bg-gray-800 text-gray-300 hover:bg-gray-700 border border-gray-700'
+              }`}
+            >
+              <Activity className="w-4 h-4" />
+              Bleeding / Clotting
             </button>
             <button
               onClick={() => setActiveTab('iron')}
@@ -181,6 +193,8 @@ export default function Anemia() {
           </>
         ) : activeTab === 'iron' ? (
           <IronReplacementCalculator />
+        ) : activeTab === 'bleeding-clotting' ? (
+          <BleedingClottingEvaluator />
         ) : (
           <ThrombocytopeniaEvaluator />
         )}
