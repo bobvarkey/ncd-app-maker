@@ -246,6 +246,69 @@ function buildResult(i: Inputs): Result | null {
     };
   }
 
+  // Secondary prevention (stroke, PAD, established ASCVD)
+  if (i.scenario === "secondary") {
+    const st = i.secondaryType;
+    const poly = i.secondaryPolyvascular;
+    const rec = i.secondaryRecurrent;
+
+    let g: RiskGroup = "EHR-A";
+    if (rec) g = "EHR-C";
+    else if (poly) g = "EHR-B";
+
+    const conditionLabel =
+      st === "stroke" ? "Ischemic stroke / TIA" :
+      st === "pad" ? "Peripheral arterial disease" :
+      "Established ASCVD (CAD/MI/PCI/CABG)";
+
+    const groupLabel = `Secondary prevention — ${conditionLabel} — ${GROUP_LABEL[g]}`;
+
+    return {
+      group: g,
+      groupLabel,
+      ldlTarget: TARGETS[g].ldl,
+      nonHdlTarget: TARGETS[g].nonHdl,
+      apoBTarget: TARGETS[g].apoB,
+      intensity:
+        g === "EHR-C"
+          ? "Maximal therapy (statin + ezetimibe + PCSK9i ± bempedoic acid)"
+          : g === "EHR-B"
+            ? "High-intensity statin + ezetimibe + PCSK9i"
+            : "High-intensity statin + ezetimibe",
+      initialRx: [
+        "Send extended lipid panel incl. Apo-B and Lp(a) if not done",
+        g === "EHR-A"
+          ? "High-intensity statin (atorvastatin 40–80 mg or rosuvastatin 20–40 mg)"
+          : "Continue maximally tolerated high-intensity statin",
+        "Add ezetimibe 10 mg from start",
+        g === "EHR-B" || g === "EHR-C"
+          ? "Add PCSK9 inhibitor (evolocumab or alirocumab)"
+          : "Consider PCSK9i if LDL not <50 mg/dL by 4–6 weeks",
+        parseFloat(i.lpa) > 50 ? "Lp(a) > 50 mg/dL → prioritize PCSK9i early" : "Check Lp(a); if ≥50 mg/dL → prioritize PCSK9i",
+        st === "stroke" ? "Ensure BP <130/80; antiplatelet per stroke protocol" : undefined,
+        st === "pad" ? "Add low-dose rivaroxaban 2.5 mg BID + aspirin if PAD + CAD (COMPASS-eligible)" : undefined,
+      ].filter(Boolean) as string[],
+      escalation: [
+        "If LDL not at goal: add bempedoic acid 180 mg OD",
+        "Refractory after triple therapy: consider lipoprotein apheresis",
+        "Persistent TG >150 mg/dL on statin → add icosapent ethyl 2 g BID",
+        "Colchicine 0.5 mg/day if hsCRP > 2 mg/L (residual inflammatory risk)",
+        "SGLT2i / GLP-1 RA for metabolic residual risk if diabetic or obese",
+      ],
+      followUp: [
+        { week: "4 wk", action: "Extended lipid profile incl. Apo-B; intensify if not at goal" },
+        { week: "8 wk", action: "Repeat lipid profile; escalate if not at goal" },
+        { week: "12 wk", action: "Reassess all targets (LDL, non-HDL, Apo-B)" },
+      ],
+      notes: [
+        `Condition: ${conditionLabel}.`,
+        poly ? "Polyvascular disease → Extreme-Risk Category B." : undefined,
+        rec ? "Recurrent event despite therapy → Extreme-Risk Category C." : undefined,
+        "All secondary prevention patients are at least EHR-A per LAI 2023.",
+      ].filter(Boolean) as string[],
+    };
+  }
+
   if (i.scenario === "acs") {
     const g: RiskGroup = "EHR-A";
     const base =
