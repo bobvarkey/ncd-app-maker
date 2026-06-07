@@ -193,6 +193,8 @@ export default function Anemia() {
           </>
         ) : activeTab === 'iron' ? (
           <IronReplacementCalculator />
+        ) : activeTab === 'bleeding-clotting' ? (
+          <BleedingClottingEvaluator />
         ) : (
           <ThrombocytopeniaEvaluator />
         )}
