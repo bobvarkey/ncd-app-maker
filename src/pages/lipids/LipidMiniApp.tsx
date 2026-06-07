@@ -26,6 +26,7 @@ import {
   Printer,
   Copy,
   FileText,
+  Heart,
 } from "lucide-react";
 
 /* ============================================================
