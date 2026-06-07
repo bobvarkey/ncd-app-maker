@@ -1,7 +1,48 @@
 import { useMemo, useState } from "react";
-import { AlertTriangle, Pill, Printer, Copy, ShieldAlert, Baby, Activity, Hospital } from "lucide-react";
+import { AlertTriangle, Pill, Printer, Copy, ShieldAlert, Baby, Activity, Hospital, FlaskConical } from "lucide-react";
 import { toast } from "sonner";
 import SeriousInfections from "./infections/SeriousInfections";
+import { ANTIBIOTICS_DATA } from "@/calculators/diabetes/antibiotics-data";
+
+function egfrBand(egfr: number): "normal" | "eGFR60_89" | "eGFR45_59" | "eGFR30_44" | "eGFR15_29" | "eGFRBelow15" {
+  if (egfr >= 90) return "normal";
+  if (egfr >= 60) return "eGFR60_89";
+  if (egfr >= 45) return "eGFR45_59";
+  if (egfr >= 30) return "eGFR30_44";
+  if (egfr >= 15) return "eGFR15_29";
+  return "eGFRBelow15";
+}
+
+const BAND_LABEL: Record<string, string> = {
+  normal: "≥90",
+  eGFR60_89: "60–89",
+  eGFR45_59: "45–59",
+  eGFR30_44: "30–44",
+  eGFR15_29: "15–29",
+  eGFRBelow15: "<15",
+};
+
+type RenalAdj = { drug: string; adjustment: string; notes: string };
+
+function getRenalAdjustments(regimenDrug: string, egfr: number): RenalAdj[] {
+  const band = egfrBand(egfr);
+  const parts = regimenDrug.split(/[+/,]| or /i).map((s) => s.trim().toLowerCase());
+  const results: RenalAdj[] = [];
+  const seen = new Set<string>();
+  for (const part of parts) {
+    if (!part) continue;
+    const match = ANTIBIOTICS_DATA.find((d) => {
+      const base = d.drug.toLowerCase().split(/[\s(\-]/)[0];
+      return part.includes(base);
+    });
+    if (match && !seen.has(match.drug)) {
+      seen.add(match.drug);
+      const adj = band === "normal" ? "No adjustment (eGFR ≥90)" : (match as any)[band];
+      results.push({ drug: match.drug, adjustment: adj, notes: match.notes });
+    }
+  }
+  return results;
+}
 
 type Allergy = "none" | "penicillin-mild" | "penicillin-severe" | "macrolide" | "sulfa";
 type Severity = "mild" | "moderate" | "severe";
@@ -297,6 +338,21 @@ export default function Infections() {
     return null;
   }, [ctx.egfr, condition]);
 
+  const renalAdjustments = useMemo(() => {
+    if (!ctx.egfr || !chosenRegimen.length) return [];
+    const all: RenalAdj[] = [];
+    const seen = new Set<string>();
+    for (const r of chosenRegimen) {
+      for (const a of getRenalAdjustments(r.drug + " " + r.dose, ctx.egfr)) {
+        if (!seen.has(a.drug)) {
+          seen.add(a.drug);
+          all.push(a);
+        }
+      }
+    }
+    return all;
+  }, [chosenRegimen, ctx.egfr]);
+
   const summary = useMemo(() => {
     const lines: string[] = [];
     lines.push(`Primary Care Infection Plan — ${condition.label}`);
@@ -322,13 +378,19 @@ export default function Infections() {
       if (condition.pregnancy.note) lines.push(`Note: ${condition.pregnancy.note}`);
     }
     if (renalWarn) lines.push(`Renal: ${renalWarn}`);
+    if (renalAdjustments.length) {
+      lines.push("");
+      lines.push(`Renal dose adjustment (eGFR ${ctx.egfr}, band ${BAND_LABEL[egfrBand(ctx.egfr!)]})`);
+      renalAdjustments.forEach((a) => lines.push(`  • ${a.drug}: ${a.adjustment}`));
+    }
     lines.push("");
     lines.push(`Escalation: ${condition.severityEscalation}`);
     lines.push(`Red flags: ${condition.redFlags.join("; ")}`);
     lines.push("");
     lines.push("Disclaimer: Decision-support only. Does not replace local antimicrobial policy or clinical judgement.");
     return lines.join("\n");
-  }, [condition, ctx, severity, pregnant, allergy, duration, abx, chosenRegimen, renalWarn]);
+  }, [condition, ctx, severity, pregnant, allergy, duration, abx, chosenRegimen, renalWarn, renalAdjustments]);
+
 
   const handleCopy = async () => {
     await navigator.clipboard.writeText(summary);
@@ -550,6 +612,60 @@ export default function Infections() {
               </div>
             </div>
           )}
+
+          {ctx.egfr !== null && chosenRegimen.length > 0 && (
+            <div className="space-y-2">
+              <h3 className="text-sm font-semibold flex items-center gap-1.5">
+                <FlaskConical className="h-4 w-4 text-primary" />
+                Renal dose adjustment
+                <span className="text-xs font-normal text-muted-foreground">
+                  (eGFR {ctx.egfr} → band {BAND_LABEL[egfrBand(ctx.egfr)]} mL/min)
+                </span>
+              </h3>
+              {renalAdjustments.length === 0 ? (
+                <div className="rounded-md border border-border bg-muted/40 px-3 py-2 text-xs text-muted-foreground">
+                  No renal-adjustable antibiotic matched in the database for this regimen. Verify dose locally.
+                </div>
+              ) : (
+                <div className="overflow-x-auto rounded-md border border-border">
+                  <table className="w-full text-sm min-w-[480px]">
+                    <thead className="bg-muted text-xs uppercase text-muted-foreground">
+                      <tr>
+                        <th className="px-3 py-2 text-left">Drug</th>
+                        <th className="px-3 py-2 text-left">Adjusted dose</th>
+                        <th className="px-3 py-2 text-left">Notes</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {renalAdjustments.map((a, i) => {
+                        const danger = /contraindicated|avoid/i.test(a.adjustment);
+                        const warn = /reduce|caution|max|q\d{2,}|post-dialysis|tdm/i.test(a.adjustment);
+                        return (
+                          <tr key={i} className="border-t border-border">
+                            <td className="px-3 py-2 font-medium">{a.drug}</td>
+                            <td
+                              className={`px-3 py-2 ${
+                                danger
+                                  ? "bg-destructive/10 text-destructive font-medium"
+                                  : warn
+                                  ? "bg-warning/10 text-warning font-medium"
+                                  : ""
+                              }`}
+                            >
+                              {a.adjustment}
+                            </td>
+                            <td className="px-3 py-2 text-xs text-muted-foreground">{a.notes}</td>
+                          </tr>
+                        );
+                      })}
+                    </tbody>
+                  </table>
+                </div>
+              )}
+            </div>
+          )}
+
+
 
           <div className="grid gap-3 md:grid-cols-2">
             <div className="rounded-md border border-pink-200 bg-pink-50 p-3 text-xs">
