@@ -78,7 +78,10 @@ export default function LipidsTab() {
         </div>
 
         <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6">
-          <TabsList className="grid w-full grid-cols-5 h-auto p-1 bg-muted/50">
+          <TabsList className="grid w-full grid-cols-6 h-auto p-1 bg-muted/50">
+            <TabsTrigger value="miniapp" className="flex items-center gap-1.5 py-2 text-xs data-[state=active]:bg-primary/10 data-[state=active]:text-primary">
+              <Sparkles className="h-4 w-4" /><span>Mini-App</span>
+            </TabsTrigger>
             <TabsTrigger value="assessment" className="flex items-center gap-1.5 py-2 text-xs data-[state=active]:bg-blue-500/10 data-[state=active]:text-blue-600">
               <Calculator className="h-4 w-4" /><span>Risk Calc</span>
             </TabsTrigger>
@@ -95,6 +98,11 @@ export default function LipidsTab() {
               <BookOpen className="h-4 w-4" /><span>Overview</span>
             </TabsTrigger>
           </TabsList>
+
+          <TabsContent value="miniapp" className="mt-0">
+            <LipidMiniApp />
+          </TabsContent>
+
 
           {/* Tab 1: Overview */}
           <TabsContent value="overview" className="mt-0">
