@@ -465,37 +465,41 @@ export default function IronReplacementCalculator() {
                   </div>
                 </div>
 
-                {/* Row 2: TSAT or Serum Iron + TIBC */}
-                <div>
-                  <Label className="mb-2 block text-sm font-medium">Transferrin Saturation (TSAT)</Label>
-                  <div className="flex items-center gap-3 flex-wrap">
-                    <div className="flex-1 min-w-[120px]">
-                      <Input
-                        type="number" step="0.1" min="0" max="100"
-                        placeholder="Enter TSAT %"
-                        value={inputs.tsat}
-                        onChange={(e) => setInput("tsat", e.target.value)}
-                        className={inputs.tsat ? "border-primary/40" : ""}
-                      />
-                    </div>
-                    <span className="text-xs text-muted-foreground">OR</span>
-                    <div className="flex-1 min-w-[120px]">
-                      <Input
-                        type="number" step="0.1" min="0"
-                        placeholder="Serum Iron (µg/dL)"
-                        value={inputs.serumIron}
-                        onChange={(e) => setInput("serumIron", e.target.value)}
-                      />
-                    </div>
-                    <div className="flex-1 min-w-[120px]">
-                      <Input
-                        type="number" step="0.1" min="0"
-                        placeholder="TIBC (µg/dL)"
-                        value={inputs.tibc}
-                        onChange={(e) => setInput("tibc", e.target.value)}
-                      />
-                    </div>
+                {/* Row 2: Serum Iron + TIBC (above TSAT, matching its labeled placement) */}
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div className="space-y-2">
+                    <Label htmlFor="serumIron">Serum Iron</Label>
+                    <Input
+                      id="serumIron" type="number" step="0.1" min="0"
+                      placeholder="e.g. 45"
+                      value={inputs.serumIron}
+                      onChange={(e) => setInput("serumIron", e.target.value)}
+                    />
+                    <span className="text-[11px] text-muted-foreground">µg/dL</span>
                   </div>
+                  <div className="space-y-2">
+                    <Label htmlFor="tibc">TIBC</Label>
+                    <Input
+                      id="tibc" type="number" step="0.1" min="0"
+                      placeholder="e.g. 380"
+                      value={inputs.tibc}
+                      onChange={(e) => setInput("tibc", e.target.value)}
+                    />
+                    <span className="text-[11px] text-muted-foreground">µg/dL</span>
+                  </div>
+                </div>
+
+                {/* Row 3: TSAT (auto-calculated from Serum Iron/TIBC if not entered directly) */}
+                <div>
+                  <Label htmlFor="tsat" className="mb-2 block text-sm font-medium">Transferrin Saturation (TSAT)</Label>
+                  <Input
+                    id="tsat"
+                    type="number" step="0.1" min="0" max="100"
+                    placeholder="Enter TSAT % (or leave blank to auto-calculate)"
+                    value={inputs.tsat}
+                    onChange={(e) => setInput("tsat", e.target.value)}
+                    className={inputs.tsat ? "border-primary/40" : ""}
+                  />
                   <div className="flex items-center gap-1 mt-2">
                     <Calculator className="h-3 w-3 text-muted-foreground" />
                     <span className="text-[11px] text-muted-foreground">
