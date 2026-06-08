@@ -75,7 +75,7 @@ function AbbreviationLabel({ abbr, fullForm }: { abbr: string; fullForm?: string
         <span className="opacity-0 group-hover:opacity-100 transition-opacity"><Info className="h-3 w-3 text-muted-foreground/50" /></span>
       </button>
       <div className="absolute left-0 bottom-full mb-1 hidden group-hover:block z-10">
-        <div className="bg-popover text-popover-foreground text-[10px] px-2 py-1 rounded shadow-lg border border-border whitespace-nowrap">
+        <div className="bg-popover text-popover-foreground text-xs px-2 py-1 rounded shadow-lg border border-border whitespace-nowrap">
           {displayFullForm}
         </div>
       </div>
@@ -181,7 +181,7 @@ function OCRUpload({ onValuesExtracted }: OCRUploadProps) {
             <div className="flex items-center gap-2">
               <Sparkles className="h-4 w-4 text-blue-400" />
               <span className="text-sm font-medium text-foreground">Smart Lab Upload (OCR)</span>
-              <Badge variant="outline" className="text-[10px] border-blue-500/30 text-blue-400">Beta</Badge>
+              <Badge variant="outline" className="text-xs border-blue-500/30 text-blue-400">Beta</Badge>
             </div>
             <ChevronDown className={`h-4 w-4 text-muted-foreground transition-transform duration-200 ${isOpen ? "rotate-180" : ""}`} />
           </button>
@@ -207,7 +207,7 @@ function OCRUpload({ onValuesExtracted }: OCRUploadProps) {
                   </div>
                   <p className="text-sm font-medium text-foreground mb-1">Upload lab report image</p>
                   <p className="text-xs text-muted-foreground">Supports JPG, PNG, PDF</p>
-                  <p className="text-[10px] text-muted-foreground/60 mt-2">Auto-extracts: Glucose, HbA1c, Lipids, Creatinine, eGFR</p>
+                  <p className="text-xs text-muted-foreground mt-2">Auto-extracts: Glucose, HbA1c, Lipids, Creatinine, eGFR</p>
                 </div>
               ) : (
                 <div className="space-y-3">
@@ -227,7 +227,7 @@ function OCRUpload({ onValuesExtracted }: OCRUploadProps) {
                     <div className="bg-green-500/10 border border-green-500/20 rounded-lg p-3">
                       <div className="flex items-center justify-between mb-2">
                         <span className="text-xs font-medium text-green-400">Extracted Values</span>
-                        <button onClick={clearImage} className="text-[10px] text-muted-foreground hover:text-foreground">Clear</button>
+                        <button onClick={clearImage} className="text-xs text-muted-foreground hover:text-foreground">Clear</button>
                       </div>
                       <div className="grid grid-cols-3 gap-2 text-xs">
                         {extractedValues.fg && (
@@ -1091,7 +1091,7 @@ function PrescriptionEngine() {
           <div className="space-y-2">
             <Label className="text-xs flex items-center gap-1">
               eGFR
-              <span className="text-[10px] text-muted-foreground">(auto-calculated)</span>
+              <span className="text-xs text-muted-foreground">(auto-calculated)</span>
             </Label>
             <Input
               type="number"
@@ -1101,12 +1101,12 @@ function PrescriptionEngine() {
               className="h-9 bg-muted"
               readOnly
             />
-            <p className="text-[10px] text-muted-foreground">CKD-EPI 2021 equation</p>
+            <p className="text-xs text-muted-foreground">CKD-EPI 2021 equation</p>
           </div>
           <div className="space-y-2">
             <Label className="text-xs flex items-center gap-1">
               Height
-              <span className="text-[10px] text-muted-foreground">(cm)</span>
+              <span className="text-xs text-muted-foreground">(cm)</span>
             </Label>
             <Input
               type="number"
@@ -1119,7 +1119,7 @@ function PrescriptionEngine() {
           <div className="space-y-2">
             <Label className="text-xs flex items-center gap-1">
               BMI
-              <span className="text-[10px] text-muted-foreground">(kg/m²)</span>
+              <span className="text-xs text-muted-foreground">(kg/m²)</span>
             </Label>
             <Input
               type="number"
@@ -1129,7 +1129,7 @@ function PrescriptionEngine() {
               placeholder="auto-calc"
               className="h-9 bg-muted"
             />
-            <p className="text-[10px] text-muted-foreground">auto-calculated from weight & height</p>
+            <p className="text-xs text-muted-foreground">auto-calculated from weight & height</p>
           </div>
         </div>
 
@@ -1140,40 +1140,40 @@ function PrescriptionEngine() {
               <span className="w-2 h-2 rounded-full bg-emerald-400 shrink-0" />
               <span className="w-2 h-2 rounded-full bg-sky-400 shrink-0" />
               <span className="font-medium">Thyroid & Iron Studies</span>
-              <span className="text-[10px] text-muted-foreground">(optional)</span>
+              <span className="text-xs text-muted-foreground">(optional)</span>
               <ChevronDown className="h-3.5 w-3.5 ml-auto transition-transform" />
             </button>
           </CollapsibleTrigger>
           <CollapsibleContent className="pt-4">
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-4">
               <div className="space-y-2">
-                <Label className="text-xs flex items-center gap-1">TSH <span className="text-[10px] text-muted-foreground">(mIU/L)</span></Label>
+                <Label className="text-xs flex items-center gap-1">TSH <span className="text-xs text-muted-foreground">(mIU/L)</span></Label>
                 <Input type="number" step="0.01" value={tsh} onChange={(e) => setTsh(e.target.value)} placeholder="2.5" className="h-10 px-3 rounded-lg border-emerald-500/30 focus:ring-2 focus:ring-emerald-500/50 focus:border-emerald-500 transition-all" />
               </div>
               <div className="space-y-2">
-                <Label className="text-xs flex items-center gap-1">Free T4 <span className="text-[10px] text-muted-foreground">(ng/dL)</span></Label>
+                <Label className="text-xs flex items-center gap-1">Free T4 <span className="text-xs text-muted-foreground">(ng/dL)</span></Label>
                 <Input type="number" step="0.01" value={ft4} onChange={(e) => setFt4(e.target.value)} placeholder="1.1" className="h-10 px-3 rounded-lg border-emerald-500/30 focus:ring-2 focus:ring-emerald-500/50 focus:border-emerald-500 transition-all" />
               </div>
               <div className="space-y-2">
-                <Label className="text-xs flex items-center gap-1">Free T3 <span className="text-[10px] text-muted-foreground">(ng/dL)</span></Label>
+                <Label className="text-xs flex items-center gap-1">Free T3 <span className="text-xs text-muted-foreground">(ng/dL)</span></Label>
                 <Input type="number" step="0.01" value={ft3} onChange={(e) => setFt3(e.target.value)} placeholder="3.5" className="h-10 px-3 rounded-lg border-emerald-500/30 focus:ring-2 focus:ring-emerald-500/50 focus:border-emerald-500 transition-all" />
               </div>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
               <div className="space-y-2">
-                <Label className="text-xs flex items-center gap-1">Ferritin <span className="text-[10px] text-muted-foreground">(ng/mL)</span></Label>
+                <Label className="text-xs flex items-center gap-1">Ferritin <span className="text-xs text-muted-foreground">(ng/mL)</span></Label>
                 <Input type="number" value={ferritin} onChange={(e) => setFerritin(e.target.value)} placeholder="100" className="h-10 px-3 rounded-lg border-sky-500/30 focus:ring-2 focus:ring-sky-500/50 focus:border-sky-500 transition-all" />
               </div>
               <div className="space-y-2">
-                <Label className="text-xs flex items-center gap-1">Serum Iron <span className="text-[10px] text-muted-foreground">(µg/dL)</span></Label>
+                <Label className="text-xs flex items-center gap-1">Serum Iron <span className="text-xs text-muted-foreground">(µg/dL)</span></Label>
                 <Input type="number" value={serumIron} onChange={(e) => setSerumIron(e.target.value)} placeholder="80" className="h-10 px-3 rounded-lg border-sky-500/30 focus:ring-2 focus:ring-sky-500/50 focus:border-sky-500 transition-all" />
               </div>
               <div className="space-y-2">
-                <Label className="text-xs flex items-center gap-1">TIBC <span className="text-[10px] text-muted-foreground">(µg/dL)</span></Label>
+                <Label className="text-xs flex items-center gap-1">TIBC <span className="text-xs text-muted-foreground">(µg/dL)</span></Label>
                 <Input type="number" value={tibc} onChange={(e) => setTibc(e.target.value)} placeholder="300" className="h-10 px-3 rounded-lg border-sky-500/30 focus:ring-2 focus:ring-sky-500/50 focus:border-sky-500 transition-all" />
               </div>
               <div className="space-y-2">
-                <Label className="text-xs flex items-center gap-1">TSAT <span className="text-[10px] text-muted-foreground">(%)</span></Label>
+                <Label className="text-xs flex items-center gap-1">TSAT <span className="text-xs text-muted-foreground">(%)</span></Label>
                 <Input type="number" step="0.1" value={tsat} onChange={(e) => setTsat(e.target.value)} placeholder="20" className="h-10 px-3 rounded-lg border-sky-500/30 focus:ring-2 focus:ring-sky-500/50 focus:border-sky-500 transition-all" />
               </div>
             </div>

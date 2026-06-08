@@ -50,7 +50,7 @@ function SubChecklist({
             <div className="flex-1 min-w-0">
               <span className="text-sm leading-snug text-foreground">{item.label}</span>
               {item.qualifier && (
-                <p className="text-[11px] text-muted-foreground leading-snug mt-0.5">{item.qualifier}</p>
+                <p className="text-xs text-muted-foreground leading-snug mt-0.5">{item.qualifier}</p>
               )}
             </div>
           </label>
@@ -85,7 +85,7 @@ function TodSubChecklist({
           { title: "Macrovascular / Cardiac", items: TOD_MACROVASCULAR },
         ] as const).map(({ title, items }) => (
           <div key={title}>
-            <p className={`text-[11px] font-bold text-${colorClass}/80 uppercase tracking-wide mb-1.5`}>{title}</p>
+            <p className={`text-xs font-bold text-${colorClass}/80 uppercase tracking-wide mb-1.5`}>{title}</p>
             <div className="space-y-1.5">
               {items.map((tod) => (
                 <label
@@ -97,7 +97,7 @@ function TodSubChecklist({
                   <Checkbox checked={!!checked[tod.id]} onCheckedChange={() => toggle(tod.id)} className="mt-0.5" />
                   <div className="flex-1 min-w-0">
                     <span className="text-sm leading-snug text-foreground">{tod.label}</span>
-                    <p className="text-[11px] text-muted-foreground leading-snug mt-0.5">{tod.qualifier}</p>
+                    <p className="text-xs text-muted-foreground leading-snug mt-0.5">{tod.qualifier}</p>
                   </div>
                 </label>
               ))}
@@ -219,7 +219,7 @@ export default function AscvdEmr() {
     const count = countCheckedItems(sub, qChecked);
     const met = autoQual[item.id];
     return (
-      <span className={`ml-2 inline-block rounded px-1.5 py-0.5 text-[10px] font-bold ${
+      <span className={`ml-2 inline-block rounded px-1.5 py-0.5 text-xs font-bold ${
         met ? "bg-warning/15 text-warning" : "bg-muted text-muted-foreground"
       }`}>
         {count}/{sub.length} — {met ? "Qualified ✓" : "≥1 required"}
@@ -410,12 +410,12 @@ export default function AscvdEmr() {
           icon={<ShieldQuestion className="h-4 w-4" />}
           collapsible={false}
           badge={
-            <span className="rounded-full bg-[hsl(245_70%_55%)]/15 px-2 py-0.5 text-[10px] font-bold text-[hsl(245_70%_55%)]">
+            <span className="rounded-full bg-[hsl(245_70%_55%)]/15 px-2 py-0.5 text-xs font-bold text-[hsl(245_70%_55%)]">
               {enhCount}/{RISK_ENHANCERS_2019.length}
             </span>
           }
         >
-          <p className="mb-3 text-[11px] text-muted-foreground leading-snug">
+          <p className="mb-3 text-xs text-muted-foreground leading-snug">
             Use these factors to refine therapy decisions when 10-yr ASCVD risk is{" "}
             <strong className="text-foreground">borderline (5–&lt;7.5%)</strong> or{" "}
             <strong className="text-foreground">intermediate (7.5–&lt;20%)</strong>.
@@ -425,7 +425,7 @@ export default function AscvdEmr() {
 
           {Array.from(new Set(RISK_ENHANCERS_2019.map(e => e.category))).map((cat) => (
             <div key={cat} className="mb-3">
-              <p className="mb-1.5 text-[10px] font-bold uppercase tracking-wider text-muted-foreground">{cat}</p>
+              <p className="mb-1.5 text-xs font-bold uppercase tracking-wider text-muted-foreground">{cat}</p>
               <div className="space-y-1.5">
                 {RISK_ENHANCERS_2019.filter(e => e.category === cat).map((item) => {
                   const isSuggested = !!enhSuggested[item.id] && !enhChecked[item.id];
@@ -461,7 +461,7 @@ export default function AscvdEmr() {
           icon={<AlertTriangle className="h-4 w-4" />}
           collapsible={false}
           badge={qualifiedCount > 0 ? (
-            <span className="rounded-full bg-warning/15 px-2 py-0.5 text-[10px] font-bold text-warning">
+            <span className="rounded-full bg-warning/15 px-2 py-0.5 text-xs font-bold text-warning">
               {qualifiedCount}/{ASCVD_HISTORY_ITEMS.length}
             </span>
           ) : undefined}
@@ -518,7 +518,7 @@ export default function AscvdEmr() {
                         </button>
                       </CollapsibleTrigger>
                       <CollapsibleContent className="space-y-1.5 rounded-b-lg border-x border-b border-border bg-muted/30 p-3 pt-0">
-                        <p className="text-[11px] text-muted-foreground leading-snug">
+                        <p className="text-xs text-muted-foreground leading-snug">
                           "Premature" = CHD or atherosclerotic CVD event in a <strong className="text-foreground">male &lt;55 y</strong> or <strong className="text-foreground">female &lt;65 y</strong>.
                         </p>
                         {FHX_ITEMS.map((f) => (
@@ -531,7 +531,7 @@ export default function AscvdEmr() {
                             <Checkbox checked={!!qChecked[f.id]} onCheckedChange={() => toggleQ(f.id)} className="mt-0.5" />
                             <div className="flex-1 min-w-0">
                               <span className="text-sm leading-snug text-foreground">{f.label}</span>
-                              <p className="text-[11px] text-muted-foreground leading-snug mt-0.5">{f.qualifier}</p>
+                              <p className="text-xs text-muted-foreground leading-snug mt-0.5">{f.qualifier}</p>
                             </div>
                           </label>
                         ))}

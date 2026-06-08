@@ -209,7 +209,7 @@ export function NextBestMed({ nextBest, patient }: Props) {
         <div className="border border-green-700/40 bg-green-950/30 rounded-lg p-3 mb-3">
           <h4 className="text-xs font-medium text-green-200 mb-2">Pair With Lifestyle:</h4>
           <div className="space-y-2">
-            <div className="text-[10px]">
+            <div className="text-xs">
               <div className="flex items-start gap-2">
                 <Apple className="w-3 h-3 text-green-300 mt-0.5 shrink-0" />
                 <div className="text-green-100/90">
@@ -217,7 +217,7 @@ export function NextBestMed({ nextBest, patient }: Props) {
                 </div>
               </div>
             </div>
-            <div className="text-[10px]">
+            <div className="text-xs">
               <div className="flex items-start gap-2">
                 <Zap className="w-3 h-3 text-green-300 mt-0.5 shrink-0" />
                 <div className="text-green-100/90">
@@ -226,7 +226,7 @@ export function NextBestMed({ nextBest, patient }: Props) {
               </div>
             </div>
             {nextBest.recommendation.lifestyleComplement.weight && (
-              <div className="text-[10px]">
+              <div className="text-xs">
                 <div className="flex items-start gap-2">
                   <Weight className="w-3 h-3 text-green-300 mt-0.5 shrink-0" />
                   <div className="text-green-100/90">
@@ -236,7 +236,7 @@ export function NextBestMed({ nextBest, patient }: Props) {
               </div>
             )}
             {nextBest.recommendation.lifestyleComplement.other.length > 0 && (
-              <div className="text-[10px]">
+              <div className="text-xs">
                 <div className="flex items-start gap-2">
                   <Heart className="w-3 h-3 text-green-300 mt-0.5 shrink-0" />
                   <div className="text-green-100/90">
@@ -275,9 +275,9 @@ export function NextBestMed({ nextBest, patient }: Props) {
                   <div className="flex items-start gap-2">
                     <span className="text-lg shrink-0">{getGoalCategoryIcon(goal.category)}</span>
                     <div className="flex-1 min-w-0">
-                      <p className="text-[10px] font-semibold text-green-100">{goal.title}</p>
+                      <p className="text-xs font-semibold text-green-100">{goal.title}</p>
                       <p className="text-[9px] text-green-50/80 mt-1">{goal.goal}</p>
-                      <div className="flex flex-wrap gap-2 mt-1.5 text-[8px]">
+                      <div className="flex flex-wrap gap-2 mt-1.5 text-xs">
                         <span className="bg-black/10 px-2 py-0.5 rounded">📍 {goal.specific}</span>
                         <span className="bg-black/10 px-2 py-0.5 rounded">📈 {goal.measurable}</span>
                       </div>
@@ -297,10 +297,10 @@ export function NextBestMed({ nextBest, patient }: Props) {
       {/* Ranked alternatives */}
       {alternatives.length > 0 && (
         <div>
-          <h4 className="text-[11px] font-medium text-muted-foreground mb-1.5">Ranked Alternatives:</h4>
+          <h4 className="text-xs font-medium text-muted-foreground mb-1.5">Ranked Alternatives:</h4>
           <div className="space-y-1">
             {alternatives.map((alt, i) => (
-              <div key={i} className="flex items-center gap-2 text-[10px] bg-muted/50 rounded-md px-2 py-1.5">
+              <div key={i} className="flex items-center gap-2 text-xs bg-muted/50 rounded-md px-2 py-1.5">
                 <span className="w-5 h-5 rounded-full bg-muted flex items-center justify-center font-medium text-muted-foreground shrink-0">
                   {i + 2}
                 </span>
@@ -317,7 +317,7 @@ export function NextBestMed({ nextBest, patient }: Props) {
 
       {/* Citations */}
       <div className="border-t border-muted-foreground/20 pt-2 mt-3">
-        <p className="text-[8px] text-muted-foreground/70 leading-tight">
+        <p className="text-xs text-muted-foreground leading-tight">
           <span className="font-semibold">Evidence Base:</span> ADA Standards of Care 2026 · EASD Guidelines 2023-2026 ·
           {rec.drugClass === "sglt2i" && "DAPA-HF, EMPEROR-Reduced/Preserved, CREDENCE, DECLARE-TIMI "}
           {rec.drugClass === "glp1ra" && "SUSTAIN-6, LEADER, REWIND, SELECT "}

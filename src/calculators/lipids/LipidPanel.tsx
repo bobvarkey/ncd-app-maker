@@ -702,13 +702,13 @@ export default function LipidCalculator() {
                   : preventResult.category === "Borderline" ? "border-primary/30 bg-primary/5"
                   : "border-accent/30 bg-accent/5"
                 }`}>
-                  <span className="text-[8px] font-bold uppercase tracking-wider text-muted-foreground">Risk Index</span>
+                  <span className="text-xs font-bold uppercase tracking-wider text-muted-foreground">Risk Index</span>
                   <span className={`font-display text-sm font-bold ${
                     preventResult.category === "High" ? "text-danger"
                     : preventResult.category === "Intermediate" ? "text-warning"
                     : preventResult.category === "Borderline" ? "text-primary"
                     : "text-accent"
-                  }`}>{preventResult.riskPct}<span className="text-[10px]">%</span></span>
+                  }`}>{preventResult.riskPct}<span className="text-xs">%</span></span>
                 </div>
               )}
               {/* Metric / Imperial toggle */}
@@ -716,14 +716,14 @@ export default function LipidCalculator() {
                 <button
                   type="button"
                   onClick={() => setUnitSystem(0)}
-                  className={`px-2 py-1 text-[10px] font-bold rounded transition-colors ${unitSystem === 0 ? "bg-primary text-white" : "text-muted-foreground hover:text-foreground"}`}
+                  className={`px-2 py-1 text-xs font-bold rounded transition-colors ${unitSystem === 0 ? "bg-primary text-white" : "text-muted-foreground hover:text-foreground"}`}
                 >
                   Metric
                 </button>
                 <button
                   type="button"
                   onClick={() => setUnitSystem(1)}
-                  className={`px-2 py-1 text-[10px] font-bold rounded transition-colors ${unitSystem === 1 ? "bg-primary text-white" : "text-muted-foreground hover:text-foreground"}`}
+                  className={`px-2 py-1 text-xs font-bold rounded transition-colors ${unitSystem === 1 ? "bg-primary text-white" : "text-muted-foreground hover:text-foreground"}`}
                 >
                   Imperial
                 </button>
@@ -828,7 +828,7 @@ export default function LipidCalculator() {
               <div className="flex items-center justify-between">
                 <div>
                   <h3 className="font-display text-xs font-bold text-foreground">ASCVD Risk Assessment & EMR</h3>
-                  <p className="text-[10px] text-muted-foreground">ACC/AHA Primary Prevention</p>
+                  <p className="text-xs text-muted-foreground">ACC/AHA Primary Prevention</p>
                 </div>
                 <div className="flex gap-1">
                   <Button variant="outline" size="sm" onClick={() => { 
@@ -908,10 +908,10 @@ export default function LipidCalculator() {
                     const threshold = getObesityThreshold(ethnicity);
                     return (
                       <div className="mt-1.5 space-y-1">
-                        <p className={`text-[10px] font-medium ${bmiClass.color}`}>
+                        <p className={`text-xs font-medium ${bmiClass.color}`}>
                           {ethnicity === "caucasian" ? "WHO" : ethnicity.charAt(0).toUpperCase() + ethnicity.slice(1)}: {bmiClass.label} (BMI {bmiVal.toFixed(1)})
                         </p>
-                        <p className="text-[10px] text-muted-foreground">
+                        <p className="text-xs text-muted-foreground">
                           Obesity threshold: ≥{threshold} kg/m²
                         </p>
                       </div>
@@ -922,7 +922,7 @@ export default function LipidCalculator() {
               {/* BMI Classification Reference — Collapsible */}
               {!isNaN(parseFloat(bmi)) && (
                 <Collapsible>
-                  <CollapsibleTrigger className="w-full mt-3 flex items-center gap-1.5 text-[11px] font-semibold text-muted-foreground hover:text-foreground/70 transition-colors cursor-pointer">
+                  <CollapsibleTrigger className="w-full mt-3 flex items-center gap-1.5 text-xs font-semibold text-muted-foreground hover:text-foreground/70 transition-colors cursor-pointer">
                     <ChevronDown className="h-3.5 w-3.5 transition-transform duration-200 [&[data-state=open]]:rotate-0 -rotate-90 shrink-0" />
                     BMI Classification Criteria (WHO &amp; Asian Guidelines)
                   </CollapsibleTrigger>
@@ -930,8 +930,8 @@ export default function LipidCalculator() {
                     <div className="mt-2 rounded-lg border border-border bg-muted/30 p-3 space-y-3">
                       {/* WHO Standard */}
                       <div>
-                        <p className="text-[10px] font-bold text-muted-foreground uppercase tracking-wide mb-1">WHO Standard Criteria</p>
-                        <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 text-[10px]">
+                        <p className="text-xs font-bold text-muted-foreground uppercase tracking-wide mb-1">WHO Standard Criteria</p>
+                        <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 text-xs">
                           {[
                             { range: "<18.5", label: "Underweight", color: "text-primary" },
                             { range: "18.5–24.9", label: "Normal", color: "text-success" },
@@ -947,8 +947,8 @@ export default function LipidCalculator() {
                       </div>
                       {/* Asian Criteria */}
                       <div>
-                        <p className="text-[10px] font-bold text-muted-foreground uppercase tracking-wide mb-1">Asian-Specific Cut-offs (WHO Asia-Pacific)</p>
-                        <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 text-[10px]">
+                        <p className="text-xs font-bold text-muted-foreground uppercase tracking-wide mb-1">Asian-Specific Cut-offs (WHO Asia-Pacific)</p>
+                        <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 text-xs">
                           {[
                             { range: "18.5–22.9", label: "Normal", color: "text-success" },
                             { range: "23–24.9", label: "Overweight", color: "text-warning" },
@@ -961,14 +961,14 @@ export default function LipidCalculator() {
                             </div>
                           ))}
                         </div>
-                        <p className="text-[10px] text-muted-foreground mt-1.5 leading-snug">
+                        <p className="text-xs text-muted-foreground mt-1.5 leading-snug">
                           Asian populations face higher metabolic risks at lower BMI. WHO action points: ≥23 (public health), ≥27.5 (high risk).
                         </p>
                       </div>
                       {/* Country Examples */}
                       <div>
-                        <p className="text-[10px] font-bold text-muted-foreground uppercase tracking-wide mb-1">Country-Specific Variations</p>
-                        <div className="space-y-1 text-[10px] text-muted-foreground leading-snug">
+                        <p className="text-xs font-bold text-muted-foreground uppercase tracking-wide mb-1">Country-Specific Variations</p>
+                        <div className="space-y-1 text-xs text-muted-foreground leading-snug">
                           <p>🇮🇳 <strong className="text-foreground">India</strong>: Overweight 23–24.9, Obesity ≥25 kg/m²</p>
                           <p>🇯🇵 <strong className="text-foreground">Japan</strong>: Obesity ≥25 kg/m²</p>
                           <p>🇰🇷 <strong className="text-foreground">Korea</strong>: Overweight/Pre-obese ≥23, Obesity ≥25 kg/m²</p>
@@ -998,7 +998,7 @@ export default function LipidCalculator() {
                     const isHigh = sex === "male" ? maleHigh : femaleHigh;
                     const threshold = sex === "male" ? "≥90 cm" : "≥80 cm";
                     return (
-                      <p className={`mt-1 text-[10px] font-medium ${isHigh ? "text-danger" : "text-success"}`}>
+                      <p className={`mt-1 text-xs font-medium ${isHigh ? "text-danger" : "text-success"}`}>
                         {isHigh ? `⚠ Above Asian cutoff (${threshold})` : `Below Asian cutoff (${threshold})`}
                       </p>
                     );
@@ -1008,12 +1008,12 @@ export default function LipidCalculator() {
 
               {/* Waist Circumference Reference — Collapsible */}
               <Collapsible>
-                <CollapsibleTrigger className="w-full mt-3 flex items-center gap-1.5 text-[11px] font-semibold text-muted-foreground hover:text-foreground/70 transition-colors cursor-pointer">
+                <CollapsibleTrigger className="w-full mt-3 flex items-center gap-1.5 text-xs font-semibold text-muted-foreground hover:text-foreground/70 transition-colors cursor-pointer">
                   <ChevronDown className="h-3.5 w-3.5 transition-transform duration-200 [&[data-state=open]]:rotate-0 -rotate-90 shrink-0" />
                   Waist Circumference — Asian Cutoffs &amp; Clinical Role
                 </CollapsibleTrigger>
                 <CollapsibleContent>
-                  <div className="mt-2 rounded-lg border border-border bg-muted/30 p-3 space-y-2.5 text-[10px] text-muted-foreground leading-snug">
+                  <div className="mt-2 rounded-lg border border-border bg-muted/30 p-3 space-y-2.5 text-xs text-muted-foreground leading-snug">
                     <p>WC assesses central/abdominal obesity, complementing BMI due to higher visceral fat and metabolic risks at lower BMIs in Asians. Predicts CV and diabetes risks better than BMI alone.</p>
                     <div>
                       <p className="font-bold text-foreground uppercase tracking-wide mb-1">Measurement</p>
@@ -1022,7 +1022,7 @@ export default function LipidCalculator() {
                     <div>
                       <p className="font-bold text-foreground uppercase tracking-wide mb-1">Asian Cutoffs</p>
                       <div className="overflow-x-auto">
-                        <table className="w-full text-[10px] border-collapse">
+                        <table className="w-full text-xs border-collapse">
                           <thead>
                             <tr className="border-b border-border">
                               <th className="text-left py-1 pr-2 font-bold text-foreground">Population</th>
@@ -1088,7 +1088,7 @@ export default function LipidCalculator() {
                   units={UNITS_LPA}
                   belowInput={
                     !isNaN(lpaNum) && lpaNum >= 50 ? (
-                      <div className="mt-1 flex items-center gap-1 text-[11px] font-medium text-danger">
+                      <div className="mt-1 flex items-center gap-1 text-xs font-medium text-danger">
                         <AlertTriangle className="h-3 w-3" /> ≥50 → Extreme Risk A
                       </div>
                     ) : null
@@ -1141,7 +1141,7 @@ export default function LipidCalculator() {
                   auto={egfrAuto}
                   belowInput={
                     ckdStage ? (
-                      <p className={`mt-0.5 text-[10px] font-medium ${egfrVal < 60 ? "text-danger" : "text-muted-foreground"}`}>
+                      <p className={`mt-0.5 text-xs font-medium ${egfrVal < 60 ? "text-danger" : "text-muted-foreground"}`}>
                         CKD {ckdStage}
                       </p>
                     ) : null
@@ -1150,7 +1150,7 @@ export default function LipidCalculator() {
               </div>
               {/* PREVENT-specific */}
               <div className="border-t border-border pt-3 mt-1">
-                <p className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground mb-2">PREVENT Calculator Inputs</p>
+                <p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-2">PREVENT Calculator Inputs</p>
                 <div className="grid grid-cols-2 gap-3 mb-2">
                   <LabInput
                     label="Systolic BP"
@@ -1234,12 +1234,12 @@ export default function LipidCalculator() {
                   <ul className="space-y-2">
                     {preventResult.nextSteps.map((step, i) => (
                       <li key={i} className="flex items-start gap-2 text-sm text-foreground leading-relaxed">
-                        <span className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-primary text-[10px] font-bold text-primary-foreground">{i + 1}</span>
+                        <span className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-primary text-xs font-bold text-primary-foreground">{i + 1}</span>
                         {step}
                       </li>
                     ))}
                   </ul>
-                  <p className="text-[10px] text-muted-foreground italic">
+                  <p className="text-xs text-muted-foreground italic">
                     Ref: Khan SS et al. Circulation 2024;149(6):430-449.
                   </p>
                 </div>
@@ -1279,7 +1279,7 @@ export default function LipidCalculator() {
                 {enhCount}/{RISK_ENHANCERS_2019.length}
               </span>}
             >
-              <p className="mb-3 text-[11px] text-muted-foreground leading-snug">
+              <p className="mb-3 text-xs text-muted-foreground leading-snug">
                 Use these factors to refine therapy decisions when 10-yr ASCVD risk is{" "}
                 <strong className="text-foreground">borderline (5–&lt;7.5%)</strong> or{" "}
                 <strong className="text-foreground">intermediate (7.5–&lt;20%)</strong>.
@@ -1289,7 +1289,7 @@ export default function LipidCalculator() {
 
               {Array.from(new Set(RISK_ENHANCERS_2019.map(e => e.category))).map((cat) => (
                 <div key={cat} className="mb-3">
-                  <p className="mb-1.5 text-[10px] font-bold uppercase tracking-wider text-muted-foreground">{cat}</p>
+                  <p className="mb-1.5 text-xs font-bold uppercase tracking-wider text-muted-foreground">{cat}</p>
                   <div className="space-y-1.5">
                     {RISK_ENHANCERS_2019.filter(e => e.category === cat).map((item) => {
                       const isSuggested = !!enhSuggested[item.id] && !enhChecked[item.id];
@@ -1324,10 +1324,10 @@ export default function LipidCalculator() {
                   <p className="text-xs font-bold text-[hsl(245_70%_55%)] mb-1">
                     Coronary Artery Calcium (CAC) — Tie-Breaker
                   </p>
-                  <p className="text-[11px] text-foreground leading-relaxed">
+                  <p className="text-xs text-foreground leading-relaxed">
                     If risk-enhancers do not clarify the decision, obtain a CAC score:
                   </p>
-                  <ul className="mt-1.5 space-y-0.5 text-[11px] text-foreground">
+                  <ul className="mt-1.5 space-y-0.5 text-xs text-foreground">
                     <li>• <strong>CAC = 0</strong> → reasonable to defer/avoid statin (reassess in 5–10 y)</li>
                     <li>• <strong>CAC 1–99</strong> → favor statin, especially if age ≥55 y</li>
                     <li>• <strong>CAC ≥100 AU or ≥75th percentile</strong> → initiate statin therapy</li>
@@ -1349,7 +1349,7 @@ export default function LipidCalculator() {
               icon={<Heart className="h-4 w-4" />}
               badge={<span className="ml-2 rounded-full bg-warning/15 px-2 py-0.5 text-xs font-bold text-warning">{rfCount}/4</span>}
             >
-              <p className="mb-3 text-[10px] text-muted-foreground">Age and Low HDL-C are auto-derived from your inputs.</p>
+              <p className="mb-3 text-xs text-muted-foreground">Age and Low HDL-C are auto-derived from your inputs.</p>
               <div className="space-y-2">
                 {MAJOR_RF_KEYS.map((key) => {
                   const v = RF_VISUALS[key];
@@ -1386,7 +1386,7 @@ export default function LipidCalculator() {
                 {Object.values(laiFeatChecked).filter(Boolean).length}/{HIGH_RISK_FEATURES_LAI.length}
               </span>}
             >
-              <p className="mb-3 text-[10px] text-muted-foreground">Indicates a higher categorical risk even at lower RF counts.</p>
+              <p className="mb-3 text-xs text-muted-foreground">Indicates a higher categorical risk even at lower RF counts.</p>
               <div className="space-y-2">
                 {HIGH_RISK_FEATURES_LAI.map((item) => {
                   const v = FEATURE_VISUALS[item.id] ?? { tone: "rose" as LabTone, icon: <AlertTriangle className="h-4 w-4" /> };
@@ -1402,7 +1402,7 @@ export default function LipidCalculator() {
                         onToggle={() => toggleLaiFeat(item.id)}
                         disabled={isMets}
                         rightSlot={isMets ? (
-                          <span className={`rounded px-1.5 py-0.5 text-[10px] font-bold ${
+                          <span className={`rounded px-1.5 py-0.5 text-xs font-bold ${
                             metsynQualified ? "bg-warning/15 text-warning" : "bg-muted text-muted-foreground"
                           }`}>
                             {metsynCount}/5 — {metsynQualified ? "Qualified ✓" : "≥3 required"}
@@ -1424,7 +1424,7 @@ export default function LipidCalculator() {
                             </button>
                           </CollapsibleTrigger>
                           <CollapsibleContent className="space-y-1.5 rounded-b-lg border-x border-b border-border bg-muted/30 p-3 pt-0">
-                            <p className="text-[11px] text-muted-foreground leading-snug">
+                            <p className="text-xs text-muted-foreground leading-snug">
                               ≥3 of 5 criteria qualifies as <strong className="text-foreground">Metabolic Syndrome</strong> (NCEP ATP III / IDF).
                             </p>
                             {METSYN_CRITERIA.map((crit) => (
@@ -1460,7 +1460,7 @@ export default function LipidCalculator() {
                 {Object.values(laiModChecked).filter(Boolean).length}/{RISK_MODIFIERS_LAI.length}
               </span>}
             >
-              <p className="mb-3 text-[10px] text-muted-foreground">Modifiers that can upgrade Low to Moderate or Moderate to High Risk.</p>
+              <p className="mb-3 text-xs text-muted-foreground">Modifiers that can upgrade Low to Moderate or Moderate to High Risk.</p>
               <div className="space-y-2">
                 {RISK_MODIFIERS_LAI.map((item) => {
                   const v = MODIFIER_VISUALS_LAI[item.id] ?? { tone: "sky" as LabTone, icon: <ShieldCheck className="h-4 w-4" /> };
@@ -1486,17 +1486,17 @@ export default function LipidCalculator() {
                             </button>
                           </CollapsibleTrigger>
                           <CollapsibleContent className="space-y-3 rounded-b-lg border-x border-b border-border bg-muted/30 p-3 pt-2">
-                            <p className="text-[11px] text-muted-foreground leading-snug">
+                            <p className="text-xs text-muted-foreground leading-snug">
                               The PMOS (Polyendocrine Metabolic Ovarian Syndrome) diagnostic framework maintains the core "two-out-of-three" Rotterdam structure with updated biochemical thresholds and follicle counting. At least two of three criteria must be met <strong className="text-foreground">after excluding other mimics</strong> (thyroid disease, hyperprolactinemia, non-classic CAH).
                             </p>
                             {PMOS_DIAGNOSTIC_CRITERIA.map((criterion) => (
                               <div key={criterion.id}>
-                                <p className="text-[11px] font-bold text-rose-700 dark:text-rose-400 uppercase tracking-wide mb-1.5">
+                                <p className="text-xs font-bold text-rose-700 dark:text-rose-400 uppercase tracking-wide mb-1.5">
                                   {criterion.title}
                                 </p>
                                 <ul className="space-y-1">
                                   {criterion.subCriteria.map((sub, i) => (
-                                    <li key={i} className="flex items-start gap-2 text-[11px] text-foreground leading-snug">
+                                    <li key={i} className="flex items-start gap-2 text-xs text-foreground leading-snug">
                                       <span className="mt-0.5 h-1.5 w-1.5 shrink-0 rounded-full bg-rose-400 mt-[5px]" />
                                       {sub.label}
                                     </li>
@@ -1507,11 +1507,11 @@ export default function LipidCalculator() {
 
                             {/* Adult vs Adolescent Comparison */}
                             <div>
-                              <p className="text-[11px] font-bold text-rose-700 dark:text-rose-400 uppercase tracking-wide mb-1.5">
+                              <p className="text-xs font-bold text-rose-700 dark:text-rose-400 uppercase tracking-wide mb-1.5">
                                 Adult vs. Adolescent Criteria
                               </p>
                               <div className="overflow-x-auto">
-                                <table className="w-full text-[10px] border-collapse">
+                                <table className="w-full text-xs border-collapse">
                                   <thead>
                                     <tr className="border-b border-border">
                                       <th className="text-left py-1 pr-2 font-bold text-foreground">Feature</th>
@@ -1534,15 +1534,15 @@ export default function LipidCalculator() {
 
                             {/* Metabolic Screening */}
                             <div>
-                              <p className="text-[11px] font-bold text-rose-700 dark:text-rose-400 uppercase tracking-wide mb-1.5">
+                              <p className="text-xs font-bold text-rose-700 dark:text-rose-400 uppercase tracking-wide mb-1.5">
                                 Metabolic Screening (M Severity)
                               </p>
-                              <p className="text-[10px] text-muted-foreground mb-1.5">
+                              <p className="text-xs text-muted-foreground mb-1.5">
                                 Required to categorize Metabolic severity, though not strictly diagnostic.
                               </p>
                               <ul className="space-y-1">
                                 {PMOS_METABOLIC_SCREENING.map((item, i) => (
-                                  <li key={i} className="flex items-start gap-2 text-[11px] text-foreground leading-snug">
+                                  <li key={i} className="flex items-start gap-2 text-xs text-foreground leading-snug">
                                     <span className="mt-0.5 h-1.5 w-1.5 shrink-0 rounded-full bg-amber-400 mt-[5px]" />
                                     {item}
                                   </li>
@@ -1550,7 +1550,7 @@ export default function LipidCalculator() {
                               </ul>
                             </div>
 
-                            <p className="text-[10px] text-muted-foreground italic border-t border-border pt-2">
+                            <p className="text-xs text-muted-foreground italic border-t border-border pt-2">
                               Ref: 2026 Lancet Consensus on PMOS Diagnostic Framework
                             </p>
                           </CollapsibleContent>
@@ -1576,7 +1576,7 @@ export default function LipidCalculator() {
               tone="danger"
               icon={<Stethoscope className="h-4 w-4" />}
             >
-              <p className="mb-3 text-[10px] text-muted-foreground">
+              <p className="mb-3 text-xs text-muted-foreground">
                 Tick all that apply. Auto-classifies C → B → A → VHR.
               </p>
               <div className="space-y-2.5">
@@ -1592,7 +1592,7 @@ export default function LipidCalculator() {
                     const count = countCheckedItems(items, subChecked);
                     const qualified = isAutoQualified;
                     return (
-                      <span className={`rounded px-1.5 py-0.5 text-[10px] font-bold ${
+                      <span className={`rounded px-1.5 py-0.5 text-xs font-bold ${
                         qualified ? "bg-warning/15 text-warning" : "bg-muted text-muted-foreground"
                       }`}>
                         {count}/{items.length} — {qualified ? "Qualified ✓" : "≥1 required"}
@@ -1625,7 +1625,7 @@ export default function LipidCalculator() {
                           </CollapsibleTrigger>
                           <CollapsibleContent className="space-y-1.5 rounded-b-lg border-x border-b border-border bg-muted/30 p-3 pt-0">
                             {key === "familyHistory" && (
-                              <p className="text-[11px] text-muted-foreground leading-snug">
+                              <p className="text-xs text-muted-foreground leading-snug">
                                 "Premature" = CHD or atherosclerotic CVD event in a <strong className="text-foreground">male &lt;55 y</strong> or <strong className="text-foreground">female &lt;65 y</strong>. Includes MI, coronary revascularization, angina, ischemic stroke, or PAD.
                               </p>
                             )}
@@ -1661,7 +1661,7 @@ export default function LipidCalculator() {
                               { title: "Macrovascular / Cardiac", items: TOD_MACROVASCULAR },
                             ] as const).map(({ title, items }) => (
                               <div key={title}>
-                                <p className="text-[11px] font-bold text-warning/80 uppercase tracking-wide mb-1.5">{title}</p>
+                                <p className="text-xs font-bold text-warning/80 uppercase tracking-wide mb-1.5">{title}</p>
                                 <div className="space-y-1.5">
                                    {items.map((tod) => (
                                      <RiskFactorChip
@@ -1739,7 +1739,7 @@ export default function LipidCalculator() {
                       <ul className="space-y-2">
                         {result.treatment.map((step, i) => (
                           <li key={i} className="flex items-start gap-2 text-sm text-foreground">
-                            <span className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-primary text-[10px] font-bold text-primary-foreground">{i + 1}</span>
+                            <span className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-primary text-xs font-bold text-primary-foreground">{i + 1}</span>
                             {step}
                           </li>
                         ))}

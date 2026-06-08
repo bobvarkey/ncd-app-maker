@@ -168,8 +168,8 @@ const PlateMethod = () => {
           <circle cx="100" cy="200" r="14" fill="rgba(255,255,255,0.15)" />
 
           <text x="75" y="125" textAnchor="middle" className="text-[40px] font-bold" fill={plate[0].foods.length > 0 ? "white" : "#15803d"}>🥬</text>
-          <text x="75" y="165" textAnchor="middle" className="text-[10px] font-bold" fill={plate[0].foods.length > 0 ? "white" : "#166534"}>VEGGIES</text>
-          <text x="75" y="170" textAnchor="middle" className="text-[8px]" fill={plate[0].foods.length > 0 ? "rgba(255,255,255,0.8)" : "#4b5563"}>½ plate • 200g+</text>
+          <text x="75" y="165" textAnchor="middle" className="text-xs font-bold" fill={plate[0].foods.length > 0 ? "white" : "#166534"}>VEGGIES</text>
+          <text x="75" y="170" textAnchor="middle" className="text-xs" fill={plate[0].foods.length > 0 ? "rgba(255,255,255,0.8)" : "#4b5563"}>½ plate • 200g+</text>
           {plate[0].foods.length > 0 && (
             <text x="75" y="185" textAnchor="middle" className="text-[7px]" fill="white" fontWeight="bold">{plate[0].foods.length} items</text>
           )}
@@ -188,7 +188,7 @@ const PlateMethod = () => {
 
           <text x="215" y="95" textAnchor="middle" className="text-[36px] font-bold" fill={plate[1].foods.length > 0 ? "white" : "#7f1d1d"}>🐟</text>
           <text x="215" y="125" textAnchor="middle" className="text-[9px] font-bold" fill={plate[1].foods.length > 0 ? "white" : "#991b1b"}>PROTEIN</text>
-          <text x="215" y="118" textAnchor="middle" className="text-[8px]" fill={plate[1].foods.length > 0 ? "rgba(255,255,255,0.8)" : "#5f0f0f"}>¼ plate</text>
+          <text x="215" y="118" textAnchor="middle" className="text-xs" fill={plate[1].foods.length > 0 ? "rgba(255,255,255,0.8)" : "#5f0f0f"}>¼ plate</text>
           {plate[1].foods.length > 0 && (
             <text x="215" y="130" textAnchor="middle" className="text-[7px]" fill="white" fontWeight="bold">{plate[1].foods.length} items</text>
           )}
@@ -207,7 +207,7 @@ const PlateMethod = () => {
 
           <text x="215" y="215" textAnchor="middle" className="text-[36px] font-bold" fill={plate[2].foods.length > 0 ? "#78350f" : "#92400e"}>🍚</text>
           <text x="215" y="250" textAnchor="middle" className="text-[9px] font-bold" fill={plate[2].foods.length > 0 ? "#78350f" : "#b45309"}>GRAINS</text>
-          <text x="215" y="233" textAnchor="middle" className="text-[8px]" fill={plate[2].foods.length > 0 ? "#78350f" : "#7c2d12"}>¼ plate</text>
+          <text x="215" y="233" textAnchor="middle" className="text-xs" fill={plate[2].foods.length > 0 ? "#78350f" : "#7c2d12"}>¼ plate</text>
           {plate[2].foods.length > 0 && (
             <text x="215" y="245" textAnchor="middle" className="text-[7px]" fill="#78350f" fontWeight="bold">{plate[2].foods.length} items</text>
           )}
@@ -220,10 +220,10 @@ const PlateMethod = () => {
           <text x="150" y="144" textAnchor="middle" className="text-[24px] font-black" fill={score === 3 ? "#22c55e" : score === 2 ? "#f59e0b" : "#ef4444"}>
             {score}
           </text>
-          <text x="150" y="160" textAnchor="middle" className="text-[11px] font-bold" fill="#4b5563">/3 SCORE</text>
+          <text x="150" y="160" textAnchor="middle" className="text-xs font-bold" fill="#4b5563">/3 SCORE</text>
 
           {/* Score indicator emoji */}
-          <text x="150" y="175" textAnchor="middle" className="text-[14px]">
+          <text x="150" y="175" textAnchor="middle" className="text-sm">
             {score === 3 ? "✓" : score === 2 ? "◐" : "○"}
           </text>
         </svg>

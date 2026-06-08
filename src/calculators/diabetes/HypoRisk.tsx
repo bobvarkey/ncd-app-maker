@@ -287,7 +287,7 @@ const HypoRiskCalculator = () => {
           </label>
         </div>
 
-        <p className="text-[10px] text-muted-foreground mt-2">
+        <p className="text-xs text-muted-foreground mt-2">
           These entries auto-update matching risk factors; remaining factors can be toggled manually.
         </p>
       </div>
@@ -316,7 +316,7 @@ const HypoRiskCalculator = () => {
         </div>
 
         {riskMeter()}
-        <div className="flex justify-between text-[10px] text-muted-foreground mt-1">
+        <div className="flex justify-between text-xs text-muted-foreground mt-1">
           <span>Low (0–3)</span>
           <span>Moderate (4–8)</span>
           <span>High (9–15)</span>
@@ -325,11 +325,11 @@ const HypoRiskCalculator = () => {
 
         <div className="mt-4 grid grid-cols-2 gap-3">
           <div className="p-2.5 rounded-lg bg-muted/50 text-center">
-            <span className="text-[10px] text-muted-foreground block">Recommended HbA1c</span>
+            <span className="text-xs text-muted-foreground block">Recommended HbA1c</span>
             <span className={`text-lg font-heading font-bold ${result.color}`}>{result.targetHba1c}</span>
           </div>
           <div className="p-2.5 rounded-lg bg-muted/50 text-center">
-            <span className="text-[10px] text-muted-foreground block">Category Scores</span>
+            <span className="text-xs text-muted-foreground block">Category Scores</span>
             <div className="flex justify-center gap-2 mt-1">
               {grouped.map(g => (
                 <span key={g.key} className={`text-xs ${g.points > 0 ? "text-foreground font-medium" : "text-muted-foreground"}`}>
@@ -356,7 +356,7 @@ const HypoRiskCalculator = () => {
               <group.icon className={`w-4 h-4 ${group.points > 0 ? "text-warning" : "text-muted-foreground"}`} />
               <h3 className="section-title">{group.label}</h3>
               {group.activeCount > 0 && (
-                <span className="text-[10px] bg-warning/10 text-warning px-2 py-0.5 rounded-full">
+                <span className="text-xs bg-warning/10 text-warning px-2 py-0.5 rounded-full">
                   {group.activeCount} active · {group.points} pts
                 </span>
               )}
@@ -382,7 +382,7 @@ const HypoRiskCalculator = () => {
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center gap-2">
                       <span className="text-sm font-medium">{factor.label}</span>
-                      <span className={`text-[10px] px-1.5 py-0.5 rounded-full ${
+                      <span className={`text-xs px-1.5 py-0.5 rounded-full ${
                         factor.points >= 4 ? "bg-destructive/10 text-destructive" :
                         factor.points >= 2 ? "bg-warning/10 text-warning" :
                         "bg-muted text-muted-foreground"
@@ -390,7 +390,7 @@ const HypoRiskCalculator = () => {
                         +{factor.points}
                       </span>
                       {isInputDriven && (
-                        <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-muted text-muted-foreground">
+                        <span className="text-xs px-1.5 py-0.5 rounded-full bg-muted text-muted-foreground">
                           from input
                         </span>
                       )}
@@ -422,7 +422,7 @@ const HypoRiskCalculator = () => {
             </div>
           ))}
         </div>
-        <p className="text-[10px] text-muted-foreground mt-3 italic">
+        <p className="text-xs text-muted-foreground mt-3 italic">
           Based on ADA Standards of Care 2026 §6.6 · Seaquist ER et al. Diabetes Care · NICE NG17 Hypo Guidelines
         </p>
       </div>

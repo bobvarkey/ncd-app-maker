@@ -62,7 +62,7 @@ const Dashboard = () => {
             const isHigh = bg > 180;
             return (
               <div key={i} className="flex-1 flex flex-col items-center gap-1">
-                <span className="text-[10px] text-muted-foreground">{bg}</span>
+                <span className="text-xs text-muted-foreground">{bg}</span>
                 <div
                   className={`w-full rounded-t-sm transition-all ${isHigh ? "bg-destructive/80" : "bg-primary/70"}`}
                   style={{ height: `${height}%` }}
@@ -93,7 +93,7 @@ const Dashboard = () => {
               <div className="flex-1 min-w-0">
                 <div className="flex items-center gap-2">
                   <span className="text-sm font-medium">{m.drug}</span>
-                  <span className={`stat-badge text-[10px] py-0.5 px-2 ${
+                  <span className={`stat-badge text-xs py-0.5 px-2 ${
                     m.priority === "first-line" ? "bg-primary/10 text-primary" :
                     m.priority === "adjustment" ? "bg-warning/10 text-warning" :
                     "bg-muted text-muted-foreground"
@@ -118,7 +118,7 @@ const Dashboard = () => {
             <span className="text-2xl">{link.icon}</span>
             <div>
               <span className="text-sm font-medium">{link.label}</span>
-              <p className="text-[11px] text-muted-foreground">{link.desc}</p>
+              <p className="text-xs text-muted-foreground">{link.desc}</p>
             </div>
           </Link>
         ))}

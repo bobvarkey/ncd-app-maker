@@ -459,7 +459,7 @@ export default function Infections() {
           <div className="grid gap-2 sm:grid-cols-2 md:grid-cols-3">
             {Object.entries(grouped).map(([cat, items]) => (
               <div key={cat} className="space-y-1">
-                <div className="text-[10px] uppercase tracking-wide text-muted-foreground">{cat}</div>
+                <div className="text-xs uppercase tracking-wide text-muted-foreground">{cat}</div>
                 <div className="flex flex-col gap-1">
                   {items.map((c) => (
                     <button
@@ -712,7 +712,7 @@ export default function Infections() {
 
           <details className="text-xs">
             <summary className="cursor-pointer text-muted-foreground">Plain-text summary</summary>
-            <pre className="mt-2 whitespace-pre-wrap rounded-md border border-border bg-muted/50 p-3 font-mono text-[11px]">
+            <pre className="mt-2 whitespace-pre-wrap rounded-md border border-border bg-muted/50 p-3 font-mono text-xs">
 {summary}
             </pre>
           </details>

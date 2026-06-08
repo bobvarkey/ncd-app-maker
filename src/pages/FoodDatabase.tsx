@@ -60,7 +60,7 @@ const FoodDatabase = () => {
                 <h4 className="text-sm font-medium">{food.name}</h4>
                 {food.nameLocal && <p className="text-xs text-muted-foreground italic">{food.nameLocal}</p>}
               </div>
-              <span className={`stat-badge text-[10px] py-0.5 ${giColor(food.glycemicIndex)}`}>
+              <span className={`stat-badge text-xs py-0.5 ${giColor(food.glycemicIndex)}`}>
                 GI: {food.glycemicIndex}
               </span>
             </div>
@@ -84,8 +84,8 @@ const FoodDatabase = () => {
               </div>
             </div>
             <div className="flex gap-1.5 mt-2">
-              {food.texture === "soft" && <span className="text-[10px] bg-accent text-accent-foreground px-2 py-0.5 rounded-full">Soft texture</span>}
-              {food.isLowSodium && <span className="text-[10px] bg-success/10 text-success px-2 py-0.5 rounded-full">Low sodium</span>}
+              {food.texture === "soft" && <span className="text-xs bg-accent text-accent-foreground px-2 py-0.5 rounded-full">Soft texture</span>}
+              {food.isLowSodium && <span className="text-xs bg-success/10 text-success px-2 py-0.5 rounded-full">Low sodium</span>}
             </div>
           </div>
         ))}

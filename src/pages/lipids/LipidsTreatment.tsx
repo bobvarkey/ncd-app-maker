@@ -183,7 +183,7 @@ export default function LipidsTreatment({ laiResult, onBackToAssessment }: Props
             <div className="flex items-center gap-3 mt-2 text-sm">
               <span className="text-muted-foreground">Current LDL: <strong className={atTarget ? "text-green-800" : "text-red-800"}>{ldlCurrent || "—"} mg/dL</strong></span>
               <span className="text-muted-foreground">Target: <strong>&lt; {ldlTarget} mg/dL</strong></span>
-              <Badge variant={atTarget ? "default" : "destructive"} className="text-[10px]">{atTarget ? "At target ✅" : "Above target ⚠"}</Badge>
+              <Badge variant={atTarget ? "default" : "destructive"} className="text-xs">{atTarget ? "At target ✅" : "Above target ⚠"}</Badge>
             </div>
           </div>
           <Pill className="h-6 w-6 text-primary" />
@@ -206,7 +206,7 @@ export default function LipidsTreatment({ laiResult, onBackToAssessment }: Props
             <p className="text-xs font-semibold text-muted-foreground mb-1">Rationale</p>
             <p className="text-sm text-foreground"><AbbrText text={rec.rationale} /></p>
           </div>
-          <p className="text-xs text-muted-foreground/80 leading-relaxed"><AbbrText text={rec.mechanism} /></p>
+          <p className="text-xs text-foreground/80 leading-relaxed"><AbbrText text={rec.mechanism} /></p>
         </div>
       </SectionCard>
 

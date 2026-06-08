@@ -178,7 +178,7 @@ export default function GfrCalculator({ onResultChange }: GfrCalculatorProps) {
               <button
                 type="button"
                 onClick={toggleUnit}
-                className="flex items-center gap-1 text-[11px] text-primary hover:underline font-medium"
+                className="flex items-center gap-1 text-xs text-primary hover:underline font-medium"
               >
                 <ArrowLeftRight className="h-3 w-3" />
                 {unit === "mgdl" ? "µmol/L" : "mg/dL"}

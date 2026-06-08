@@ -391,13 +391,13 @@ const PatientInput = () => {
                     />
                     <button
                       onClick={() => update("serialBG", patient.serialBG.filter((_, idx) => idx !== i))}
-                      className="absolute -top-1 -right-0.5 w-3.5 h-3.5 rounded-full bg-destructive/80 text-destructive-foreground text-[8px] hidden group-hover:flex items-center justify-center"
+                      className="absolute -top-1 -right-0.5 w-3.5 h-3.5 rounded-full bg-destructive/80 text-destructive-foreground text-xs hidden group-hover:flex items-center justify-center"
                     >×</button>
                   </div>
                 );
               })}
             </div>
-            <div className="flex items-center gap-3 text-[10px] text-muted-foreground">
+            <div className="flex items-center gap-3 text-xs text-muted-foreground">
               <span className="flex items-center gap-1"><span className="w-2 h-2 rounded-full bg-destructive/70" /> &gt;180</span>
               <span className="flex items-center gap-1"><span className="w-2 h-2 rounded-full bg-primary/70" /> 70-180</span>
               <span className="flex items-center gap-1"><span className="w-2 h-2 rounded-full bg-warning/70" /> &lt;70</span>

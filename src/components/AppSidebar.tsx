@@ -47,7 +47,7 @@ export function AppSidebar() {
           <SidebarGroupLabel className="text-xs">
             {!collapsed && (
               <span className="flex items-center gap-2">
-                <span className="w-6 h-6 rounded-lg bg-sidebar-primary flex items-center justify-center text-[10px] text-sidebar-primary-foreground font-bold">DM</span>
+                <span className="w-6 h-6 rounded-lg bg-sidebar-primary flex items-center justify-center text-xs text-sidebar-primary-foreground font-bold">DM</span>
                 Diabetes Med Optimizer
               </span>
             )}

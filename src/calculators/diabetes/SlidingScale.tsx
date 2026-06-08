@@ -249,7 +249,7 @@ export default function SlidingScaleInsulin() {
                 <div className="flex items-center gap-2 text-sm font-semibold">
                   <AlertTriangle className="h-4 w-4" />
                   <span>{a.code}</span>
-                  <Badge variant="outline" className="ml-auto text-[10px]">{a.severity}</Badge>
+                  <Badge variant="outline" className="ml-auto text-xs">{a.severity}</Badge>
                 </div>
                 <div className="text-sm mt-1">{a.message}</div>
                 <div className="text-xs mt-1 opacity-80"><strong>Action:</strong> {a.recommended_action}</div>
@@ -396,7 +396,7 @@ function SSIDoseCalculator(props: CalcProps) {
       </div>
 
       <div className="rounded-md border bg-background p-3 text-xs space-y-1">
-        <div className="font-semibold text-sm">{meta.label} <Badge variant="outline" className="ml-1 text-[10px]">{meta.kind}</Badge></div>
+        <div className="font-semibold text-sm">{meta.label} <Badge variant="outline" className="ml-1 text-xs">{meta.kind}</Badge></div>
         <div>Onset {meta.onset_min} · Peak {meta.peak_hr} h · Duration {meta.duration_hr} h</div>
         <div className="text-muted-foreground">{meta.notes}</div>
       </div>
@@ -461,7 +461,7 @@ function SSIDoseCalculator(props: CalcProps) {
         </div>
       )}
 
-      <p className="text-[11px] text-muted-foreground">
+      <p className="text-xs text-muted-foreground">
         Pre-meal column = scheduled bolus + correction. Bedtime column = correction reduced ~50% (no scheduled prandial). 
         Correction-only column = stand-alone correction for NPO patients (q4–6h with regular insulin).
         For premix 30/70 and NPH, ad-hoc correction must use Insugen-R, Actrapid, or generic regular insulin.

@@ -92,7 +92,7 @@ export function RiskFactorChip({
             <span
               className={cn(
                 "flex-1 leading-snug font-medium",
-                isSm ? "text-[13px]" : "text-sm",
+                isSm ? "text-sm" : "text-sm",
                 checked ? t.labelOn : "text-foreground",
               )}
             >
@@ -101,7 +101,7 @@ export function RiskFactorChip({
             {rightSlot}
           </div>
           {qualifier && (
-            <p className={cn("mt-0.5 leading-snug text-muted-foreground", isSm ? "text-[10px]" : "text-[11px]")}>
+            <p className={cn("mt-0.5 leading-snug text-muted-foreground", isSm ? "text-xs" : "text-xs")}>
               {qualifier}
             </p>
           )}

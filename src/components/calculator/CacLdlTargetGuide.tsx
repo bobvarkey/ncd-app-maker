@@ -89,7 +89,7 @@ export function CacLdlTargetGuide() {
           LDL-C Target Guide — by CAC Range
         </p>
       </div>
-      <p className="text-[11px] text-muted-foreground mb-2">
+      <p className="text-xs text-muted-foreground mb-2">
         Select the patient's CAC range to view the suggested LDL-C target and statin intensity.
       </p>
 
@@ -102,7 +102,7 @@ export function CacLdlTargetGuide() {
               key={opt.id}
               type="button"
               onClick={() => setSelected(isActive ? null : opt.id)}
-              className={`rounded-md border px-2 py-1.5 text-[11px] font-semibold transition-all ${
+              className={`rounded-md border px-2 py-1.5 text-xs font-semibold transition-all ${
                 isActive
                   ? `${t.border} ${t.bg} ${t.text} shadow-sm`
                   : "border-border bg-card text-foreground hover:bg-muted/40"
@@ -119,16 +119,16 @@ export function CacLdlTargetGuide() {
           <div className="flex items-start gap-2">
             <Target className={`h-3.5 w-3.5 mt-0.5 ${tone.text}`} />
             <div className="flex-1">
-              <p className={`text-[11px] font-bold uppercase tracking-wider ${tone.text}`}>
+              <p className={`text-xs font-bold uppercase tracking-wider ${tone.text}`}>
                 Suggested LDL-C target
               </p>
               <p className="text-sm font-bold text-foreground mt-0.5">{active.ldlTarget}</p>
               <span
-                className={`inline-block mt-1 rounded-full px-2 py-0.5 text-[10px] font-bold ${tone.pill}`}
+                className={`inline-block mt-1 rounded-full px-2 py-0.5 text-xs font-bold ${tone.pill}`}
               >
                 {active.intensity}
               </span>
-              <p className="mt-1.5 text-[11px] leading-relaxed text-foreground">
+              <p className="mt-1.5 text-xs leading-relaxed text-foreground">
                 {active.rationale}
               </p>
             </div>

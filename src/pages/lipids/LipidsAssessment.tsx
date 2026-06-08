@@ -325,7 +325,7 @@ export default function LipidsAssessment({ onClassificationChange, onNavigateToT
                   <button className="flex w-full items-center justify-between rounded-lg border border-border bg-muted/30 px-4 py-2.5 hover:bg-muted/50 transition-colors">
                     <div className="flex items-center gap-2">
                       <span className="text-sm font-semibold text-foreground">{group.title}</span>
-                      {count > 0 && <Badge variant="secondary" className="text-[10px]">{count}/{group.items.length}</Badge>}
+                      {count > 0 && <Badge variant="secondary" className="text-xs">{count}/{group.items.length}</Badge>}
                     </div>
                     <ChevronDown className="h-4 w-4 text-muted-foreground" />
                   </button>
@@ -336,7 +336,7 @@ export default function LipidsAssessment({ onClassificationChange, onNavigateToT
                       <Checkbox checked={!!checked[item.id]} onCheckedChange={() => toggle(item.id)} className="mt-0.5" />
                       <div>
                         <span className="text-sm text-foreground font-medium">{item.label}</span>
-                        <p className="text-[11px] text-muted-foreground">{item.qualifier}</p>
+                        <p className="text-xs text-muted-foreground">{item.qualifier}</p>
                       </div>
                     </label>
                   ))}
@@ -393,17 +393,17 @@ export default function LipidsAssessment({ onClassificationChange, onNavigateToT
 
         <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 mb-4">
           <div className="p-3 rounded-lg bg-white/80 border border-slate-200">
-            <p className="text-[10px] text-slate-600 uppercase font-semibold tracking-wide">LDL Target</p>
+            <p className="text-xs text-foreground/70 uppercase font-semibold tracking-wide">LDL Target</p>
             <p className="text-lg font-bold text-slate-900">{details.ldl} mg/dL</p>
             <p className="text-xs text-slate-600">Current: {ldl || "—"}</p>
             {ldl && <p className={`text-xs font-semibold ${atTarget ? "text-green-700" : "text-red-700"}`}>{atTarget ? "✅ At target" : "⚠ Above target"}</p>}
           </div>
           <div className="p-3 rounded-lg bg-white/80 border border-slate-200">
-            <p className="text-[10px] text-slate-600 uppercase font-semibold tracking-wide">Non-HDL Target</p>
+            <p className="text-xs text-foreground/70 uppercase font-semibold tracking-wide">Non-HDL Target</p>
             <p className="text-lg font-bold text-slate-900">{details.nonHdl} mg/dL</p>
           </div>
           <div className="p-3 rounded-lg bg-white/80 border border-slate-200">
-            <p className="text-[10px] text-slate-600 uppercase font-semibold tracking-wide">ApoB Target</p>
+            <p className="text-xs text-foreground/70 uppercase font-semibold tracking-wide">ApoB Target</p>
             <p className="text-lg font-bold text-slate-900">{details.apoB} mg/dL</p>
           </div>
         </div>

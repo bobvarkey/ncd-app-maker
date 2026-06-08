@@ -95,7 +95,7 @@ export function GlobalMedSearch() {
             <X className="h-3.5 w-3.5" />
           </button>
         )}
-        <kbd className="mr-3 hidden md:inline-flex items-center gap-0.5 rounded border border-border bg-muted px-1.5 py-0.5 text-[10px] font-medium text-muted-foreground">
+        <kbd className="mr-3 hidden md:inline-flex items-center gap-0.5 rounded border border-border bg-muted px-1.5 py-0.5 text-xs font-medium text-muted-foreground">
           ⌘K
         </kbd>
       </div>
@@ -121,7 +121,7 @@ export function GlobalMedSearch() {
                         <span className="font-semibold text-sm text-foreground truncate">
                           {m.drug}
                         </span>
-                        <span className="text-[10px] uppercase tracking-wide text-muted-foreground shrink-0">
+                        <span className="text-xs uppercase tracking-wide text-muted-foreground shrink-0">
                           {m.drugClass}
                         </span>
                       </div>
@@ -129,7 +129,7 @@ export function GlobalMedSearch() {
                         Normal: {m.normalDose}
                       </div>
                       {m.hepatic && (
-                        <div className="text-[11px] text-accent mt-0.5 line-clamp-1">
+                        <div className="text-xs text-accent mt-0.5 line-clamp-1">
                           Hepatic: {m.hepatic}
                         </div>
                       )}
@@ -139,7 +139,7 @@ export function GlobalMedSearch() {
               ))}
             </ul>
           )}
-          <div className="border-t border-border px-3 py-2 text-[11px] text-muted-foreground">
+          <div className="border-t border-border px-3 py-2 text-xs text-muted-foreground">
             Press <kbd className="rounded bg-muted px-1">↵</kbd> or click a drug to open full renal &amp; hepatic adjustments.
           </div>
         </div>

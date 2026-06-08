@@ -808,7 +808,7 @@ export default function HypertensionTreatment() {
             >
               <div className="flex items-start justify-between gap-2 mb-3">
                 <h3 className="text-sm font-semibold">{em.scenario}</h3>
-                <span className="text-[10px] px-2 py-0.5 rounded bg-muted text-muted-foreground whitespace-nowrap">
+                <span className="text-xs px-2 py-0.5 rounded bg-muted text-muted-foreground whitespace-nowrap">
                   {em.timeline}
                 </span>
               </div>

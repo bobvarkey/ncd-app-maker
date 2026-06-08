@@ -621,7 +621,7 @@ export default function HyperglycemicEmergency() {
                   <button
                     key={p}
                     onClick={() => setFluidPhase(p)}
-                    className={`text-[11px] px-2 py-1 rounded border transition ${
+                    className={`text-xs px-2 py-1 rounded border transition ${
                       fluidPhase === p
                         ? "border-primary bg-primary/10 text-primary"
                         : "border-border hover:bg-muted text-muted-foreground"
@@ -724,10 +724,10 @@ export default function HyperglycemicEmergency() {
             }).map(t => (
               <div key={t.id} className="rounded-md border border-border p-3 space-y-1">
                 <div className="text-xs font-semibold">{t.label}</div>
-                <div className="text-[11px] text-muted-foreground">
+                <div className="text-xs text-muted-foreground">
                   <span className="text-foreground">Investigations:</span> {t.investigations.join("; ")}
                 </div>
-                <div className="text-[11px] text-muted-foreground">
+                <div className="text-xs text-muted-foreground">
                   <span className="text-foreground">Management:</span> {t.management}
                 </div>
               </div>

@@ -123,7 +123,7 @@ function AlgorithmStep({
                           <p className="text-xs text-primary mt-0.5"><AbbrText text={med.notes} /></p>
                         )}
                         {med.ebm && (
-                          <p className="text-xs text-muted-foreground/70 mt-0.5 italic">{med.ebm}</p>
+                          <p className="text-xs text-muted-foreground mt-0.5 italic">{med.ebm}</p>
                         )}
                       </div>
                     </div>
@@ -246,15 +246,15 @@ const InsulinReferenceSection = () => (
                 <div key={ii} className="p-2.5 rounded-lg bg-muted/30 border border-border/40">
                   <div className="grid grid-cols-1 md:grid-cols-3 gap-2 text-sm">
                     <div>
-                      <p className="text-[10px] text-muted-foreground uppercase font-semibold mb-0.5">Generic</p>
+                      <p className="text-xs text-muted-foreground uppercase font-semibold mb-0.5">Generic</p>
                       <p className="text-foreground">{item.generic.split(" (")[0]}</p>
                     </div>
                     <div>
-                      <p className="text-[10px] text-muted-foreground uppercase font-semibold mb-0.5">US Brand</p>
+                      <p className="text-xs text-muted-foreground uppercase font-semibold mb-0.5">US Brand</p>
                       <p className="text-foreground"><AbbrText text={item.usBrand} /></p>
                     </div>
                     <div>
-                      <p className="text-[10px] text-muted-foreground uppercase font-semibold mb-0.5">🇮🇳 India</p>
+                      <p className="text-xs text-muted-foreground uppercase font-semibold mb-0.5">🇮🇳 India</p>
                       <p className="text-foreground"><AbbrText text={item.indianBrands.join(", ")} /></p>
                     </div>
                   </div>

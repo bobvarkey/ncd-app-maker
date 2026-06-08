@@ -161,8 +161,8 @@ export default function CommandPalette() {
 
         {/* Footer hint */}
         <div className="px-4 py-2 border-t border-border flex items-center justify-between text-xs text-muted-foreground">
-          <span><kbd className="px-1.5 py-0.5 bg-muted rounded text-[10px]">↑↓</kbd> navigate</span>
-          <span><kbd className="px-1.5 py-0.5 bg-muted rounded text-[10px]">↵</kbd> select</span>
+          <span><kbd className="px-1.5 py-0.5 bg-muted rounded text-xs">↑↓</kbd> navigate</span>
+          <span><kbd className="px-1.5 py-0.5 bg-muted rounded text-xs">↵</kbd> select</span>
         </div>
       </div>
     </div>

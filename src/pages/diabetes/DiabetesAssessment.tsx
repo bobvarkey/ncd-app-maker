@@ -96,7 +96,7 @@ const BMICalculator = () => {
                 }}
               />
             </div>
-            <div className="flex justify-between text-[10px] text-muted-foreground mt-1">
+            <div className="flex justify-between text-xs text-muted-foreground mt-1">
               <span>10</span>
               <span>18.5</span>
               <span>23</span>
@@ -204,7 +204,7 @@ const HbA1cInterpretation = () => {
                 }}
               />
             </div>
-            <div className="flex justify-between text-[10px] text-muted-foreground mt-1">
+            <div className="flex justify-between text-xs text-muted-foreground mt-1">
               <span>4%</span>
               <span>Normal</span>
               <span>Prediabetes</span>

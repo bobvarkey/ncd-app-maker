@@ -115,7 +115,7 @@ const PrediabetesAlgorithm = () => {
           {/* Prediabetes entry */}
           <div className="w-full max-w-md border-2 border-primary rounded-full p-3 bg-primary/10 text-center">
             <p className="text-sm font-medium text-primary">Prediabetes Identified</p>
-            <p className="text-[10px] text-muted-foreground">IFG | IGT | A1C 5.7-6.4% | Metabolic Syndrome</p>
+            <p className="text-xs text-muted-foreground">IFG | IGT | A1C 5.7-6.4% | Metabolic Syndrome</p>
           </div>
           <ArrowDown className="w-4 h-4 text-muted-foreground" />
 
@@ -124,7 +124,7 @@ const PrediabetesAlgorithm = () => {
             <p className="text-xs font-medium text-center mb-1">Goals</p>
             <div className="flex flex-wrap gap-1 justify-center">
               {result.goals.map((g, i) => (
-                <span key={i} className="text-[10px] bg-background px-2 py-0.5 rounded-full">{g}</span>
+                <span key={i} className="text-xs bg-background px-2 py-0.5 rounded-full">{g}</span>
               ))}
             </div>
           </div>
@@ -133,14 +133,14 @@ const PrediabetesAlgorithm = () => {
           {/* Lifestyle */}
           <div className="w-full max-w-md border-2 border-success rounded-lg p-3 bg-success/10">
             <p className="text-sm font-medium text-center">Lifestyle Intervention</p>
-            <p className="text-[10px] text-muted-foreground text-center">Nutrition | Physical Activity | Sleep Hygiene | Healthy Habits</p>
+            <p className="text-xs text-muted-foreground text-center">Nutrition | Physical Activity | Sleep Hygiene | Healthy Habits</p>
           </div>
           <ArrowDown className="w-4 h-4 text-muted-foreground" />
 
           {/* CV Risk */}
           <div className="w-full max-w-md border-2 border-destructive/50 rounded-lg p-3 bg-destructive/5">
             <p className="text-sm font-medium text-center">Cardiovascular Risk Reduction</p>
-            <p className="text-[10px] text-muted-foreground text-center">Weight Reduction | Blood Pressure Control | Lipid Management</p>
+            <p className="text-xs text-muted-foreground text-center">Weight Reduction | Blood Pressure Control | Lipid Management</p>
           </div>
           <ArrowDown className="w-4 h-4 text-muted-foreground" />
 
@@ -161,13 +161,13 @@ const PrediabetesAlgorithm = () => {
               </div>
               <ArrowDown className="w-3 h-3 text-muted-foreground" />
               <div className="w-full border rounded-lg p-2 bg-background text-center">
-                <p className="text-[11px] font-medium">GLP-1 RA</p>
-                <p className="text-[10px] text-muted-foreground">Phentermine / Topiramate ER</p>
+                <p className="text-xs font-medium">GLP-1 RA</p>
+                <p className="text-xs text-muted-foreground">Phentermine / Topiramate ER</p>
               </div>
               <ArrowDown className="w-3 h-3 text-muted-foreground" />
               <div className="w-full border border-dashed rounded-lg p-2 bg-muted/20 text-center">
-                <p className="text-[11px] font-medium">Consider Bariatric Surgery</p>
-                <p className="text-[10px] text-muted-foreground">BMI ≥35 (≥32.5 Asian)</p>
+                <p className="text-xs font-medium">Consider Bariatric Surgery</p>
+                <p className="text-xs text-muted-foreground">BMI ≥35 (≥32.5 Asian)</p>
               </div>
             </div>
 
@@ -181,13 +181,13 @@ const PrediabetesAlgorithm = () => {
               </div>
               <ArrowDown className="w-3 h-3 text-muted-foreground" />
               <div className="w-full border rounded-lg p-2 bg-background text-center">
-                <p className="text-[11px] font-medium">Metformin</p>
-                <p className="text-[10px] text-muted-foreground">Pioglitazone / Acarbose</p>
+                <p className="text-xs font-medium">Metformin</p>
+                <p className="text-xs text-muted-foreground">Pioglitazone / Acarbose</p>
               </div>
               <ArrowDown className="w-3 h-3 text-muted-foreground" />
               <div className="w-full border border-dashed rounded-lg p-2 bg-muted/20 text-center">
-                <p className="text-[11px] font-medium">→ Glycemic Control Algorithms</p>
-                <p className="text-[10px] text-muted-foreground">If progresses to overt diabetes</p>
+                <p className="text-xs font-medium">→ Glycemic Control Algorithms</p>
+                <p className="text-xs text-muted-foreground">If progresses to overt diabetes</p>
               </div>
             </div>
           </div>
@@ -200,14 +200,14 @@ const PrediabetesAlgorithm = () => {
               <AlertTriangle className="w-4 h-4 text-destructive" />
               <span className="text-xs font-medium text-destructive">Persistent Hyperglycemia Detected</span>
             </div>
-            <p className="text-[11px] text-muted-foreground">
+            <p className="text-xs text-muted-foreground">
               FPG {patient.fbs} mg/dL — If weight-loss medications insufficient, transition to dysglycemia-specific agents
               (Metformin, Pioglitazone, Acarbose) or proceed to overt diabetes management algorithms.
             </p>
           </div>
         )}
 
-        <p className="text-[10px] text-muted-foreground text-center mt-4 italic">
+        <p className="text-xs text-muted-foreground text-center mt-4 italic">
           Based on AACE 2023 Prediabetes Algorithm. Active pathway highlighted for this patient.
         </p>
       </div>
@@ -229,7 +229,7 @@ const PrediabetesAlgorithm = () => {
                   <p className="text-xs text-muted-foreground mt-1">{rec.detail}</p>
                   {rec.medications && rec.medications.length > 0 && (
                     <div className="mt-2 space-y-1">
-                      <span className="text-[10px] font-medium text-foreground">Medications:</span>
+                      <span className="text-xs font-medium text-foreground">Medications:</span>
                       {rec.medications.map((med, j) => (
                         <div key={j} className="flex items-center gap-1.5 text-xs">
                           <span className="w-1.5 h-1.5 rounded-full bg-primary shrink-0" />
@@ -239,7 +239,7 @@ const PrediabetesAlgorithm = () => {
                     </div>
                   )}
                   {rec.footnote && (
-                    <p className="text-[10px] text-muted-foreground italic mt-2">{rec.footnote}</p>
+                    <p className="text-xs text-muted-foreground italic mt-2">{rec.footnote}</p>
                   )}
                 </div>
               </div>
@@ -251,7 +251,7 @@ const PrediabetesAlgorithm = () => {
       {/* Footnotes */}
       <div className="clinical-card bg-muted/30">
         <h3 className="text-xs font-medium mb-2">References & Notes</h3>
-        <div className="space-y-1 text-[10px] text-muted-foreground">
+        <div className="space-y-1 text-xs text-muted-foreground">
           <p>¹ NCEP ATP III Criteria for Metabolic Syndrome</p>
           <p>² See Complications-Centric Model for the Care of Persons with Overweight/Obesity</p>
           <p>³ If no overweight or obesity, consider T1D antibody testing for LADA</p>

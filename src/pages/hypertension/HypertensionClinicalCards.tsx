@@ -620,7 +620,7 @@ export default function HypertensionClinicalCards() {
                   <CardTitle className="text-sm flex items-center gap-2">
                     <Activity className="h-4 w-4 shrink-0" />
                     {em.scenario}
-                    <Badge className="ml-auto shrink-0 text-[10px]" variant="outline">
+                    <Badge className="ml-auto shrink-0 text-xs" variant="outline">
                       {em.timeline}
                     </Badge>
                   </CardTitle>

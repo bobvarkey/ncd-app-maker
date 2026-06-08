@@ -34,7 +34,7 @@ function TooltipGLP({ text }: { text: string }) {
               </li>
             ))}
           </ul>
-          <p className="text-[10px] text-muted-foreground mt-2 italic">Semaglutide 0.25 mg → 1.0 mg weekly / Tirzepatide 2.5 mg → 15 mg weekly</p>
+          <p className="text-xs text-muted-foreground mt-2 italic">Semaglutide 0.25 mg → 1.0 mg weekly / Tirzepatide 2.5 mg → 15 mg weekly</p>
         </div>
       </div>
     </span>
@@ -312,7 +312,7 @@ function LipidsCalc() {
         <div className={`p-3 rounded-lg border text-xs ${riskInfo.color} ${riskInfo.risk.includes("Very High") ? "bg-red-50 border-red-200" : riskInfo.risk.includes("High") ? "bg-orange-50 border-orange-200" : riskInfo.risk.includes("Moderate") ? "bg-amber-50 border-amber-200" : "bg-green-50 border-green-200"}`}>
           <span className="font-semibold">{riskInfo.risk}</span>
           <span className="ml-2">→ LDL Target: <strong>{riskInfo.target}</strong></span>
-          <span className="ml-2 text-[10px]">({riskInfo.intensity})</span>
+          <span className="ml-2 text-xs">({riskInfo.intensity})</span>
         </div>
 
         <Button size="sm" onClick={calculate} className="w-full"><Calculator className="h-3.5 w-3.5 mr-1.5" /> Calculate &amp; Recommend</Button>
@@ -341,7 +341,7 @@ function ObesityCalc() {
               <li key={i} className="flex items-start gap-1.5"><span className="text-green-500 mt-0.5">•</span><span>{c}</span></li>
             ))}
           </ul>
-          <p className="text-[10px] text-muted-foreground mt-2 italic">Semaglutide 0.25→1.0 mg/wk or Tirzepatide 2.5→15 mg/wk</p>
+          <p className="text-xs text-muted-foreground mt-2 italic">Semaglutide 0.25→1.0 mg/wk or Tirzepatide 2.5→15 mg/wk</p>
         </div>
       </div>
     </span>
@@ -399,13 +399,13 @@ export default function SimpleMode() {
           <LipidsCalc />
           <ObesityCalc />
         </div>
-        <p className="text-center text-xs text-muted-foreground/60 mt-6">v1.0 · ADA 2026 · ESC/ESH 2024 · LAI 2023</p>
+        <p className="text-center text-xs text-muted-foreground mt-6">v1.0 · ADA 2026 · ESC/ESH 2024 · LAI 2023</p>
       </div>
 
       {/* Bottom nav */}
       <div className="fixed bottom-0 left-0 right-0 border-t border-border/60 bg-card/95 backdrop-blur supports-[backdrop-filter]:bg-background/95 py-2.5 px-4 flex items-center justify-center gap-2 z-50">
         <button onClick={() => window.location.href = "/"} className="px-3 py-1.5 text-xs font-semibold rounded-lg bg-primary/10 text-primary hover:bg-primary/20 transition-colors">🏠 Homepage</button>
-        <span className="text-[10px] text-muted-foreground/40">|</span>
+        <span className="text-xs text-muted-foreground/40">|</span>
         <button onClick={() => window.location.href = "/simple"} className="px-3 py-1.5 text-xs font-semibold rounded-lg bg-green-500/15 text-green-600 border border-green-500/30 hover:bg-green-500/25 transition-colors">🟢 Simple</button>
         <button onClick={() => window.location.href = "/moderate"} className="px-3 py-1.5 text-xs font-semibold rounded-lg text-muted-foreground hover:bg-muted transition-colors">🟠 Moderate</button>
         <button onClick={() => window.location.href = "/home"} className="px-3 py-1.5 text-xs font-semibold rounded-lg text-muted-foreground hover:bg-muted transition-colors">🔴 Complex</button>

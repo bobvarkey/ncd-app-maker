@@ -310,7 +310,7 @@ function LipidsModerate() {
         <div className={`p-3 rounded-lg border text-xs ${riskPreview.color}`}>
           <span className="font-semibold">{riskPreview.cat}</span>
           <span className="ml-2">→ LDL Target: <strong>{riskPreview.target}</strong></span>
-          <span className="ml-2 text-[10px]">({riskPreview.intensity} · {score} factor{score !== 1 ? "s" : ""})</span>
+          <span className="ml-2 text-xs">({riskPreview.intensity} · {score} factor{score !== 1 ? "s" : ""})</span>
         </div>
 
         <Button size="sm" onClick={calculate} className="w-full"><Calculator className="h-3.5 w-3.5 mr-1.5" /> Calculate Risk & Treatment</Button>
@@ -414,13 +414,13 @@ export default function ModerateMode() {
           <LipidsModerate />
           <ObesityModerate />
         </div>
-        <p className="text-center text-xs text-muted-foreground/60 mt-6">Guidelines: ADA 2026 · ESC/ESH 2024 · LAI 2023 · ACC/AHA</p>
+        <p className="text-center text-xs text-muted-foreground mt-6">Guidelines: ADA 2026 · ESC/ESH 2024 · LAI 2023 · ACC/AHA</p>
       </div>
 
       {/* Bottom nav */}
       <div className="fixed bottom-0 left-0 right-0 border-t border-border/60 bg-card/95 backdrop-blur supports-[backdrop-filter]:bg-background/95 py-2.5 px-4 flex items-center justify-center gap-2 z-50">
         <button onClick={() => window.location.href = "/"} className="px-3 py-1.5 text-xs font-semibold rounded-lg bg-primary/10 text-primary hover:bg-primary/20 transition-colors">🏠 Homepage</button>
-        <span className="text-[10px] text-muted-foreground/40">|</span>
+        <span className="text-xs text-muted-foreground/40">|</span>
         <button onClick={() => window.location.href = "/simple"} className="px-3 py-1.5 text-xs font-semibold rounded-lg text-muted-foreground hover:bg-muted transition-colors">🟢 Simple</button>
         <button onClick={() => window.location.href = "/moderate"} className="px-3 py-1.5 text-xs font-semibold rounded-lg bg-orange-500/15 text-orange-600 border border-orange-500/30 hover:bg-orange-500/25 transition-colors">🟠 Moderate</button>
         <button onClick={() => window.location.href = "/home"} className="px-3 py-1.5 text-xs font-semibold rounded-lg text-muted-foreground hover:bg-muted transition-colors">🔴 Complex</button>

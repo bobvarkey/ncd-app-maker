@@ -37,10 +37,10 @@ export default function LandingPage() {
               problems
             </span>
           </h1>
-          <p className="text-sm text-gray-500 text-center mb-3">
+          <p className="text-sm text-gray-700 text-center mb-3">
             Global health · WHO data
           </p>
-          <p className="text-lg md:text-xl text-gray-400 text-center max-w-2xl mx-auto mb-10 leading-relaxed">
+          <p className="text-lg md:text-xl text-gray-600 text-center max-w-2xl mx-auto mb-10 leading-relaxed">
             Evidence-based prescription engine for major primary care problems
           </p>
 
@@ -65,7 +65,7 @@ export default function LandingPage() {
             </div>
             <span className="text-sm font-serif font-semibold">NCD Rx</span>
           </div>
-          <p className="text-xs text-gray-600 mb-3">
+          <p className="text-xs text-gray-700 mb-3">
             Based on ADA 2026 · ESC/ESH 2024 · LAI 2023 · ACC/AHA · KDIGO · GINA/GOLD guidelines
           </p>
           <p className="text-xs text-gray-600">

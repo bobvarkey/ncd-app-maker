@@ -36,7 +36,7 @@ export default function LipidsTab() {
       <Button variant="ghost" size="sm" onClick={() => navigate("/home")}>
         <ArrowLeft className="h-4 w-4 mr-1" /> Back to Home
       </Button>
-      <Link to="/" className="text-[10px] text-muted-foreground/60 hover:text-foreground border border-border/40 rounded px-2 py-1 transition-colors">
+      <Link to="/" className="text-xs text-muted-foreground hover:text-foreground border border-border/40 rounded px-2 py-1 transition-colors">
         ← Mode Selector
       </Link>
     </div>
@@ -126,7 +126,7 @@ export default function LipidsTab() {
             <div className="p-8 text-center border rounded-xl border-dashed border-muted-foreground/30">
               <Shield className="h-8 w-8 mx-auto text-muted-foreground/50 mb-3" />
               <p className="text-muted-foreground font-medium">Secondary Prevention</p>
-              <p className="text-sm text-muted-foreground/70 mt-1">Use the Lipid Management Mini-App above and select <strong>Secondary Prevention</strong> scenario for stroke, PAD, or established ASCVD recommendations.</p>
+              <p className="text-sm text-muted-foreground mt-1">Use the Lipid Management Mini-App above and select <strong>Secondary Prevention</strong> scenario for stroke, PAD, or established ASCVD recommendations.</p>
             </div>
           </TabsContent>
         </Tabs>
@@ -136,7 +136,7 @@ export default function LipidsTab() {
           <Button variant="ghost" size="sm" onClick={() => navigate("/home")}>
             <ArrowLeft className="h-4 w-4 mr-1" /> Back to Home
           </Button>
-          <Link to="/" className="text-[10px] text-muted-foreground/60 hover:text-foreground border border-border/40 rounded px-2 py-1 transition-colors">
+          <Link to="/" className="text-xs text-muted-foreground hover:text-foreground border border-border/40 rounded px-2 py-1 transition-colors">
             ← Mode Selector
           </Link>
         </div>

@@ -36,7 +36,7 @@ function RangeOrExact({
       <div className="flex items-center justify-between">
         <Label htmlFor={id} className="text-xs">{label} {unit && <span className="text-muted-foreground">({unit})</span>}</Label>
         <button type="button" onClick={() => setMode(m => m === "range" ? "exact" : "range")}
-          className="text-[10px] text-primary hover:underline">{mode === "range" ? "exact" : "range"}</button>
+          className="text-xs text-primary hover:underline">{mode === "range" ? "exact" : "range"}</button>
       </div>
       {mode === "range" ? (
         <Select value={value} onValueChange={onChange}>
@@ -322,7 +322,7 @@ export default function LiverMiniApp() {
               <div className="flex items-center gap-2">
                 <Settings2 className="h-4 w-4 text-primary" />
                 <CardTitle className="text-sm">Cut-off thresholds</CardTitle>
-                <Badge variant="outline" className="ml-2 text-[10px]">
+                <Badge variant="outline" className="ml-2 text-xs">
                   {preset === "custom" ? "Custom" : PRESETS[preset].label}
                 </Badge>
               </div>
@@ -356,7 +356,7 @@ export default function LiverMiniApp() {
                   ["NFS high", "nfsHigh"],
                 ] as const).map(([label, key]) => (
                   <div key={key} className="space-y-1">
-                    <Label className="text-[10px] text-muted-foreground">{label}</Label>
+                    <Label className="text-xs text-muted-foreground">{label}</Label>
                     <Input type="number" step="0.01" className="h-8 text-xs" value={cutoffs[key]} onChange={e => setCutoff(key, e.target.value)} />
                   </div>
                 ))}
@@ -430,7 +430,7 @@ export default function LiverMiniApp() {
                 </label>
               </div>
               {alcohol.tier !== "none" && (
-                <div className="text-[11px]">
+                <div className="text-xs">
                   Tier: <span className={
                     alcohol.tier === "heavy" ? "text-red-400" :
                     alcohol.tier === "atrisk" ? "text-amber-400" : "text-emerald-400"
@@ -498,21 +498,21 @@ export default function LiverMiniApp() {
         <CardContent className="space-y-4">
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-3">
             <div className="p-3 rounded-lg border bg-card/60">
-              <div className="text-[10px] uppercase text-muted-foreground">LFT pattern</div>
+              <div className="text-xs uppercase text-muted-foreground">LFT pattern</div>
               <div className="text-sm font-semibold mt-1 capitalize">{pattern}</div>
             </div>
             <div className="p-3 rounded-lg border bg-card/60">
-              <div className="text-[10px] uppercase text-muted-foreground">FIB-4 (primary)</div>
+              <div className="text-xs uppercase text-muted-foreground">FIB-4 (primary)</div>
               <div className="text-sm font-semibold mt-1">{isNaN(fib4.score) ? "—" : fib4.score.toFixed(2)}</div>
               <div className="mt-1">{riskBadge(fib4.risk)}</div>
             </div>
             <div className="p-3 rounded-lg border bg-card/60">
-              <div className="text-[10px] uppercase text-muted-foreground">APRI</div>
+              <div className="text-xs uppercase text-muted-foreground">APRI</div>
               <div className="text-sm font-semibold mt-1">{isNaN(apri.score) ? "—" : apri.score.toFixed(2)}</div>
               <div className="mt-1">{riskBadge(apri.risk)}</div>
             </div>
             <div className="p-3 rounded-lg border bg-card/60">
-              <div className="text-[10px] uppercase text-muted-foreground">NAFLD FS</div>
+              <div className="text-xs uppercase text-muted-foreground">NAFLD FS</div>
               <div className="text-sm font-semibold mt-1">{isNaN(nfs.score) ? "—" : nfs.score.toFixed(2)}</div>
               <div className="mt-1">{riskBadge(nfs.risk)}</div>
             </div>
@@ -534,7 +534,7 @@ export default function LiverMiniApp() {
             </ol>
           </div>
 
-          <div className="text-[10px] text-muted-foreground">
+          <div className="text-xs text-muted-foreground">
             Active cut-offs — FIB-4: &lt;{cutoffs.fib4Low} low / up to {cutoffs.fib4High} indeterminate / &gt;{cutoffs.fib4High} high (≥65 y low ={cutoffs.fib4LowElderly}).
             APRI: &lt;{cutoffs.apriLow} / {cutoffs.apriLow}–{cutoffs.apriHigh} / &gt;{cutoffs.apriHigh}. NFS: &lt;{cutoffs.nfsLow} / up to {cutoffs.nfsHigh} / &gt;{cutoffs.nfsHigh}.
           </div>

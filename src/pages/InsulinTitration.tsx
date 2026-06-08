@@ -288,23 +288,23 @@ const InsulinTitration = () => {
           {/* Stats */}
           <div className="grid grid-cols-3 gap-3 mb-4">
             <div className="text-center p-2.5 rounded-lg bg-muted/50">
-              <span className="text-[10px] text-muted-foreground block">3-Day Avg FBG</span>
+              <span className="text-xs text-muted-foreground block">3-Day Avg FBG</span>
               <span className={`text-lg font-heading font-bold ${result.avg < 70 ? "text-warning" : result.atTarget ? "text-success" : "text-destructive"}`}>
                 {result.avg}
               </span>
-              <span className="text-[10px] text-muted-foreground block">mg/dL</span>
+              <span className="text-xs text-muted-foreground block">mg/dL</span>
             </div>
             <div className="text-center p-2.5 rounded-lg bg-muted/50">
-              <span className="text-[10px] text-muted-foreground block">Current Dose</span>
+              <span className="text-xs text-muted-foreground block">Current Dose</span>
               <span className="text-lg font-heading font-bold">{currentDose}</span>
-              <span className="text-[10px] text-muted-foreground block">units</span>
+              <span className="text-xs text-muted-foreground block">units</span>
             </div>
             <div className="text-center p-2.5 rounded-lg bg-muted/50">
-              <span className="text-[10px] text-muted-foreground block">New Dose</span>
+              <span className="text-xs text-muted-foreground block">New Dose</span>
               <span className={`text-lg font-heading font-bold ${result.adjustment > 0 ? "text-primary" : result.adjustment < 0 ? "text-warning" : "text-success"}`}>
                 {result.newDose}
               </span>
-              <span className="text-[10px] text-muted-foreground block">units</span>
+              <span className="text-xs text-muted-foreground block">units</span>
             </div>
           </div>
 
@@ -377,7 +377,7 @@ const InsulinTitration = () => {
             {/* Basal Insulins */}
             <div className="grid grid-cols-2 gap-2">
               <div className="p-2 rounded bg-muted/30">
-                <p className="font-semibold text-[10px] uppercase text-muted-foreground mb-1">Long-Acting (Basal)</p>
+                <p className="font-semibold text-xs uppercase text-muted-foreground mb-1">Long-Acting (Basal)</p>
                 <table className="w-full">
                   <tbody>
                     <tr className="border-b border-border/30"><td className="py-1">Glargine</td><td className="text-right">Lantus®, Abasaglar®, Semglee®</td></tr>
@@ -388,7 +388,7 @@ const InsulinTitration = () => {
                 </table>
               </div>
               <div className="p-2 rounded bg-muted/30">
-                <p className="font-semibold text-[10px] uppercase text-muted-foreground mb-1">Rapid-Acting (Bolus)</p>
+                <p className="font-semibold text-xs uppercase text-muted-foreground mb-1">Rapid-Acting (Bolus)</p>
                 <table className="w-full">
                   <tbody>
                     <tr className="border-b border-border/30"><td className="py-1">Aspart</td><td className="text-right">NovoRapid®, Fiasp®, Trurapi®</td></tr>
@@ -402,7 +402,7 @@ const InsulinTitration = () => {
 
             {/* Onset/Duration */}
             <div className="p-2 rounded bg-muted/30">
-              <p className="font-semibold text-[10px] uppercase text-muted-foreground mb-1">Onset & Duration</p>
+              <p className="font-semibold text-xs uppercase text-muted-foreground mb-1">Onset & Duration</p>
               <table className="w-full">
                 <tbody>
                   <tr className="border-b border-border/30"><td className="py-1">Ultra-Rapid (Bolus)</td><td className="text-right">Onset 4 min · 3-5h</td></tr>
@@ -417,8 +417,8 @@ const InsulinTitration = () => {
 
             {/* Prescribing Safety */}
             <div className="p-2 rounded bg-amber-500/10 border border-amber-500/30">
-              <p className="font-semibold text-[10px] uppercase text-amber-600 mb-1">Prescribing Safety</p>
-              <ul className="space-y-0.5 text-[10px]">
+              <p className="font-semibold text-xs uppercase text-amber-600 mb-1">Prescribing Safety</p>
+              <ul className="space-y-0.5 text-xs">
                 <li>• Always prescribe by <strong>brand name</strong> (not generic)</li>
                 <li>• Write <strong>"units"</strong> in full — never abbreviate</li>
                 <li>• NPH: Resuspend before use (cloudy)</li>
@@ -450,7 +450,7 @@ const InsulinTitration = () => {
             </div>
           ))}
         </div>
-        <p className="text-[10px] text-muted-foreground mt-3 italic">
+        <p className="text-xs text-muted-foreground mt-3 italic">
           ADA Standards of Care 2026 §9.5 · Riddle MC et al. Treat-to-Target · INSIGHT/AT.LANTUS protocols
         </p>
       </div>

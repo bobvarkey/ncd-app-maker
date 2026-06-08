@@ -153,7 +153,7 @@ const CKDGuideline = () => {
               {i > 0 && <ArrowDown className="w-4 h-4 text-muted-foreground my-1" />}
               <div className={`w-full border-2 p-3 transition-all ${nodeShape[node.type]} ${nodeColor[node.type]}`}>
                 <p className="text-sm font-medium">{node.label}</p>
-                <p className="text-[11px] text-muted-foreground mt-0.5">{node.detail}</p>
+                <p className="text-xs text-muted-foreground mt-0.5">{node.detail}</p>
               </div>
             </div>
           ))}
@@ -253,7 +253,7 @@ const CKDGuideline = () => {
               className="w-full rounded-lg border border-border"
               loading="lazy"
             />
-            <p className="text-[10px] text-muted-foreground mt-2 italic">
+            <p className="text-xs text-muted-foreground mt-2 italic">
               Source: NICE NG28 Type 2 diabetes in adults — management. © NICE 2026.
             </p>
           </div>

@@ -186,7 +186,7 @@ export function AlgorithmFlowchart({ patient, pathway }: { patient: PatientData;
                 <div className="min-w-0">
                   <p className="text-sm font-medium">{node.label}</p>
                   {node.detail && (
-                    <p className="text-[11px] text-muted-foreground mt-0.5">{node.detail}</p>
+                    <p className="text-xs text-muted-foreground mt-0.5">{node.detail}</p>
                   )}
                 </div>
               </div>
@@ -194,7 +194,7 @@ export function AlgorithmFlowchart({ patient, pathway }: { patient: PatientData;
           </div>
         ))}
       </div>
-      <p className="text-[10px] text-muted-foreground text-center mt-4 italic">
+      <p className="text-xs text-muted-foreground text-center mt-4 italic">
         Green nodes = active for this patient's profile. Dashed = intensification steps.
       </p>
     </div>

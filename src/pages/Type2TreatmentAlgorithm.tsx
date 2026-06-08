@@ -108,7 +108,7 @@ function AlgorithmStep({
                           <p className="text-xs text-primary mt-0.5"><AbbrText text={med.notes} /></p>
                         )}
                         {med.ebm && (
-                          <p className="text-xs text-muted-foreground/70 mt-0.5 italic">{med.ebm}</p>
+                          <p className="text-xs text-muted-foreground mt-0.5 italic">{med.ebm}</p>
                         )}
                       </div>
                     </div>
@@ -361,15 +361,15 @@ const TherapySelectionGuide = () => {
             <div key={i} className="p-3 rounded-lg bg-muted/30 border border-border/50">
               <div className="grid grid-cols-1 md:grid-cols-3 gap-2 text-sm">
                 <div>
-                  <p className="text-[10px] text-muted-foreground uppercase font-semibold">Scenario</p>
+                  <p className="text-xs text-muted-foreground uppercase font-semibold">Scenario</p>
                   <p className="text-xs font-medium">{entry.scenario}</p>
                 </div>
                 <div>
-                  <p className="text-[10px] text-muted-foreground uppercase font-semibold">Therapy</p>
+                  <p className="text-xs text-muted-foreground uppercase font-semibold">Therapy</p>
                   <p className="text-xs">{entry.therapy}</p>
                 </div>
                 <div className="text-right md:text-left">
-                  <p className="text-[10px] text-muted-foreground uppercase font-semibold">Recheck</p>
+                  <p className="text-xs text-muted-foreground uppercase font-semibold">Recheck</p>
                   <Badge variant="outline" className="text-xs">{entry.recheck}</Badge>
                 </div>
               </div>

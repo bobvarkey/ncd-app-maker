@@ -339,7 +339,7 @@ export default function LipidsOverview() {
           </div>
         </div>
 
-        <p className="mt-4 text-[11px] text-muted-foreground italic">
+        <p className="mt-4 text-xs text-muted-foreground italic">
           Source: 2026 AHA/ACC Dyslipidemia Guidelines At-a-Glance
         </p>
       </Card>
@@ -384,7 +384,7 @@ export default function LipidsOverview() {
                 <span className="text-orange-600 mt-0.5">•</span>
                 <div>
                   <p className="text-sm text-foreground">{mod.label}</p>
-                  <p className="text-[10px] text-muted-foreground uppercase">
+                  <p className="text-xs text-muted-foreground uppercase">
                     {mod.category}
                   </p>
                 </div>

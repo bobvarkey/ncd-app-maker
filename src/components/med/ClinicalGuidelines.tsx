@@ -90,15 +90,15 @@ export function ClinicalGuidelines() {
                 <Icon className="w-4 h-4 text-primary mt-0.5 shrink-0" />
                 <div>
                   <p className="text-xs font-medium">{g.title}</p>
-                  <p className="text-[11px] text-muted-foreground mt-0.5 leading-relaxed">{g.text}</p>
+                  <p className="text-xs text-muted-foreground mt-0.5 leading-relaxed">{g.text}</p>
                 </div>
               </div>
             );
           })}
 
           <div className="mt-4 p-3 rounded-lg border border-dashed border-info/30 bg-info/5">
-            <p className="text-[10px] font-medium text-info mb-1">Research Considerations</p>
-            <p className="text-[11px] text-muted-foreground leading-relaxed">{researchNote}</p>
+            <p className="text-xs font-medium text-info mb-1">Research Considerations</p>
+            <p className="text-xs text-muted-foreground leading-relaxed">{researchNote}</p>
           </div>
         </div>
       )}

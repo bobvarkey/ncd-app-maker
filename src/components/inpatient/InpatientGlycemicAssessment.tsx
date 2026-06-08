@@ -230,7 +230,7 @@ export function InpatientGlycemicAssessment({ assessment, slidingScale }: Props)
       )}
 
       {/* Audit Trail */}
-      <div className="text-xs text-muted-foreground/80 border-t border-muted-foreground/20 pt-2">
+      <div className="text-xs text-muted-foreground border-t border-border pt-2">
         <p className="font-semibold mb-1">Audit Trail:</p>
         <p>Rules fired: {assessment.audit.rules_fired.join(", ") || "None"}</p>
         <p>Confidence: <span className={assessment.audit.confidence === "high" ? "text-success" : assessment.audit.confidence === "moderate" ? "text-warning" : "text-destructive"}>{assessment.audit.confidence}</span></p>

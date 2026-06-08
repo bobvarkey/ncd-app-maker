@@ -246,8 +246,8 @@ const dxColors: Record<string, { bg: string; border: string; text: string; accen
   borderline: { bg: "bg-yellow-500/10", border: "border-yellow-500/30", text: "text-yellow-400", accent: "bg-yellow-500" },
   functional: { bg: "bg-orange-500/10", border: "border-orange-500/30", text: "text-orange-400", accent: "bg-orange-500" },
   none: { bg: "bg-emerald-500/10", border: "border-emerald-500/30", text: "text-emerald-400", accent: "bg-emerald-500" },
-  other: { bg: "bg-slate-500/10", border: "border-slate-500/30", text: "text-slate-400", accent: "bg-slate-500" },
-  unknown: { bg: "bg-gray-500/10", border: "border-gray-500/30", text: "text-gray-400", accent: "bg-gray-500" },
+  other: { bg: "bg-slate-500/10", border: "border-slate-500/30", text: "text-muted-foreground", accent: "bg-slate-500" },
+  unknown: { bg: "bg-gray-500/10", border: "border-gray-500/30", text: "text-gray-600", accent: "bg-gray-500" },
 };
 
 // ── Component ──────────────────────────────────────────────────
@@ -441,7 +441,7 @@ export default function IronReplacementCalculator() {
                       value={inputs.ferritin}
                       onChange={(e) => setInput("ferritin", e.target.value)}
                     />
-                    <span className="text-[11px] text-muted-foreground">ng/mL</span>
+                    <span className="text-xs text-muted-foreground">ng/mL</span>
                   </div>
                   <div className="space-y-2">
                     <Label htmlFor="hemoglobin">Hemoglobin <span className="text-destructive">*</span></Label>
@@ -451,7 +451,7 @@ export default function IronReplacementCalculator() {
                       value={inputs.hemoglobin}
                       onChange={(e) => setInput("hemoglobin", e.target.value)}
                     />
-                    <span className="text-[11px] text-muted-foreground">g/dL</span>
+                    <span className="text-xs text-muted-foreground">g/dL</span>
                   </div>
                   <div className="space-y-2">
                     <Label htmlFor="weight">Weight <span className="text-destructive">*</span></Label>
@@ -461,7 +461,7 @@ export default function IronReplacementCalculator() {
                       value={inputs.weight}
                       onChange={(e) => setInput("weight", e.target.value)}
                     />
-                    <span className="text-[11px] text-muted-foreground">kg</span>
+                    <span className="text-xs text-muted-foreground">kg</span>
                   </div>
                 </div>
 
@@ -475,7 +475,7 @@ export default function IronReplacementCalculator() {
                       value={inputs.serumIron}
                       onChange={(e) => setInput("serumIron", e.target.value)}
                     />
-                    <span className="text-[11px] text-muted-foreground">µg/dL</span>
+                    <span className="text-xs text-muted-foreground">µg/dL</span>
                   </div>
                   <div className="space-y-2">
                     <Label htmlFor="tibc">TIBC</Label>
@@ -485,7 +485,7 @@ export default function IronReplacementCalculator() {
                       value={inputs.tibc}
                       onChange={(e) => setInput("tibc", e.target.value)}
                     />
-                    <span className="text-[11px] text-muted-foreground">µg/dL</span>
+                    <span className="text-xs text-muted-foreground">µg/dL</span>
                   </div>
                 </div>
 
@@ -502,7 +502,7 @@ export default function IronReplacementCalculator() {
                   />
                   <div className="flex items-center gap-1 mt-2">
                     <Calculator className="h-3 w-3 text-muted-foreground" />
-                    <span className="text-[11px] text-muted-foreground">
+                    <span className="text-xs text-muted-foreground">
                       {inputs.tsat
                         ? "✓ Using direct TSAT entry."
                         : inputs.serumIron && inputs.tibc && parseFloat(inputs.tibc) > 0
@@ -591,34 +591,34 @@ export default function IronReplacementCalculator() {
                   <CardContent>
                     <div className="grid grid-cols-2 md:grid-cols-4 gap-3 text-sm">
                       <div className="rounded-lg bg-muted/30 p-2">
-                        <p className="text-[11px] text-muted-foreground">Ferritin</p>
+                        <p className="text-xs text-muted-foreground">Ferritin</p>
                         <p className="font-semibold">{inputs.ferritin || "—"}{inputs.ferritin ? " ng/mL" : ""}</p>
                       </div>
                       <div className="rounded-lg bg-muted/30 p-2">
-                        <p className="text-[11px] text-muted-foreground">Hemoglobin</p>
+                        <p className="text-xs text-muted-foreground">Hemoglobin</p>
                         <p className="font-semibold">{inputs.hemoglobin || "—"}{inputs.hemoglobin ? " g/dL" : ""}</p>
                       </div>
                       <div className="rounded-lg bg-muted/30 p-2">
-                        <p className="text-[11px] text-muted-foreground">Weight</p>
+                        <p className="text-xs text-muted-foreground">Weight</p>
                         <p className="font-semibold">{inputs.weight || "—"}{inputs.weight ? " kg" : ""}</p>
                       </div>
                       <div className="rounded-lg bg-muted/30 p-2">
-                        <p className="text-[11px] text-muted-foreground">TSAT</p>
+                        <p className="text-xs text-muted-foreground">TSAT</p>
                         <p className="font-semibold">{calcResult.tsat ? calcResult.tsat.toFixed(1) + "%" : "—"}</p>
                       </div>
                       <div className="rounded-lg bg-muted/30 p-2">
-                        <p className="text-[11px] text-muted-foreground">Serum Iron</p>
+                        <p className="text-xs text-muted-foreground">Serum Iron</p>
                         <p className="font-semibold">{inputs.serumIron || "—"}{inputs.serumIron ? " µg/dL" : ""}</p>
                       </div>
                       <div className="rounded-lg bg-muted/30 p-2">
-                        <p className="text-[11px] text-muted-foreground">TIBC</p>
+                        <p className="text-xs text-muted-foreground">TIBC</p>
                         <p className="font-semibold">{inputs.tibc || "—"}{inputs.tibc ? " µg/dL" : ""}</p>
                       </div>
                     </div>
                     {Object.entries(flags).some(([, v]) => v) && (
                       <div className="mt-3 flex flex-wrap gap-1.5">
                         {Object.entries(flags).filter(([, v]) => v).map(([k]) => (
-                          <Badge key={k} variant="outline" className="text-[11px]">{k}</Badge>
+                          <Badge key={k} variant="outline" className="text-xs">{k}</Badge>
                         ))}
                       </div>
                     )}

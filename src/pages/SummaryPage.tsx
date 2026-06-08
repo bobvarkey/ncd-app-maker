@@ -95,35 +95,35 @@ const SummaryPage = () => {
         </div>
         <div className="grid grid-cols-2 md:grid-cols-4 gap-3 text-sm">
           <div className="bg-primary-foreground/10 rounded-lg p-2">
-            <span className="text-[10px] opacity-70 block">BMI</span>
+            <span className="text-xs opacity-70 block">BMI</span>
             <strong>{patient.bmi || "—"}</strong> <span className="text-xs opacity-80">{bmiCat.label}</span>
           </div>
           <div className="bg-primary-foreground/10 rounded-lg p-2">
-            <span className="text-[10px] opacity-70 block">eGFR</span>
+            <span className="text-xs opacity-70 block">eGFR</span>
             <strong>{patient.eGFR || "—"}</strong> <span className="text-xs opacity-80">mL/min</span>
           </div>
           <div className="bg-primary-foreground/10 rounded-lg p-2">
-            <span className="text-[10px] opacity-70 block">HbA1c</span>
+            <span className="text-xs opacity-70 block">HbA1c</span>
             <strong>{patient.hba1c || "—"}%</strong>
           </div>
           <div className="bg-primary-foreground/10 rounded-lg p-2">
-            <span className="text-[10px] opacity-70 block">RBS / FBS</span>
+            <span className="text-xs opacity-70 block">RBS / FBS</span>
             <strong>{patient.rbs || "—"}</strong> / <strong>{patient.fbs || "—"}</strong>
           </div>
         </div>
         {comorbidities.length > 0 && (
           <div className="flex flex-wrap gap-1.5 mt-3">
             {comorbidities.map((c, i) => (
-              <span key={i} className="text-[10px] bg-primary-foreground/20 rounded-full px-2 py-0.5">{c}</span>
+              <span key={i} className="text-xs bg-primary-foreground/20 rounded-full px-2 py-0.5">{c}</span>
             ))}
           </div>
         )}
         {patient.currentMeds.length > 0 && (
           <div className="mt-2">
-            <span className="text-[10px] opacity-70 block mb-1">Current Medications:</span>
+            <span className="text-xs opacity-70 block mb-1">Current Medications:</span>
             <div className="flex flex-wrap gap-1.5">
               {patient.currentMeds.map((m, i) => (
-                <span key={i} className="text-[10px] bg-primary-foreground/15 rounded-full px-2 py-0.5">{m}</span>
+                <span key={i} className="text-xs bg-primary-foreground/15 rounded-full px-2 py-0.5">{m}</span>
               ))}
             </div>
           </div>
@@ -152,7 +152,7 @@ const SummaryPage = () => {
                     <div className="min-w-0">
                       <div className="flex items-center gap-2">
                         <span className="text-sm font-medium">{med.drug}</span>
-                        <span className={`text-[10px] px-1.5 py-0.5 rounded-full ${priorityBadge(med.priority)}`}>{med.priority}</span>
+                        <span className={`text-xs px-1.5 py-0.5 rounded-full ${priorityBadge(med.priority)}`}>{med.priority}</span>
                       </div>
                       <p className="text-xs text-muted-foreground">{getDrugClassLabel(med.drugClass)} · <strong>{med.dose}</strong> {med.frequency}</p>
                     </div>
@@ -162,7 +162,7 @@ const SummaryPage = () => {
                 {isOpen && (
                   <div className="mt-2 pt-2 border-t space-y-2 animate-slide-in">
                     <p className="text-xs text-muted-foreground">{med.reason}</p>
-                    <div className="flex gap-3 text-[10px]">
+                    <div className="flex gap-3 text-xs">
                       <span>HbA1c ↓{med.hba1cReduction}</span>
                       <span className={med.weightEffect === "loss" ? "text-success" : med.weightEffect === "gain" ? "text-destructive" : ""}>
                         Wt: {med.weightEffect === "loss" ? "↓ Loss" : med.weightEffect === "gain" ? "↑ Gain" : "→ Neutral"}
@@ -170,7 +170,7 @@ const SummaryPage = () => {
                       <span className={med.cvBenefit ? "text-success" : ""}>CV: {med.cvBenefit ? "✓" : "—"}</span>
                     </div>
                     {med.warnings.length > 0 && med.warnings.map((w, wi) => (
-                      <div key={wi} className="flex items-start gap-1 text-[11px]">
+                      <div key={wi} className="flex items-start gap-1 text-xs">
                         <AlertTriangle className="w-3 h-3 text-warning mt-0.5 shrink-0" /><span>{w}</span>
                       </div>
                     ))}
@@ -196,7 +196,7 @@ const SummaryPage = () => {
           <div className="h-2 bg-muted rounded-full overflow-hidden">
             <div className="h-full bg-destructive rounded-full" style={{ width: `${Math.min((lipids.ldlCurrent / 200) * 100, 100)}%` }} />
           </div>
-          <p className="text-[10px] text-destructive mt-1">Gap: {lipids.ldlGap} mg/dL · Post-stroke very high-risk target</p>
+          <p className="text-xs text-destructive mt-1">Gap: {lipids.ldlGap} mg/dL · Post-stroke very high-risk target</p>
         </div>
       )}
 
@@ -229,10 +229,10 @@ const SummaryPage = () => {
           <div key={di} className="clinical-card p-3">
             <button onClick={() => setExpandedDay(expandedDay === di ? -1 : di)} className="w-full flex items-center justify-between">
               <div className="flex items-center gap-2">
-                <span className="w-7 h-7 rounded-full bg-primary/10 text-primary flex items-center justify-center text-[10px] font-bold">{day.day.slice(0, 2)}</span>
+                <span className="w-7 h-7 rounded-full bg-primary/10 text-primary flex items-center justify-center text-xs font-bold">{day.day.slice(0, 2)}</span>
                 <div className="text-left">
                   <span className="text-sm font-medium">{day.day}</span>
-                  <span className="text-[11px] text-muted-foreground block">{day.totalCalories} kcal · {day.totalCarbs}g carbs</span>
+                  <span className="text-xs text-muted-foreground block">{day.totalCalories} kcal · {day.totalCarbs}g carbs</span>
                 </div>
               </div>
               {expandedDay === di ? <ChevronUp className="w-3.5 h-3.5 text-muted-foreground" /> : <ChevronDown className="w-3.5 h-3.5 text-muted-foreground" />}
@@ -247,7 +247,7 @@ const SummaryPage = () => {
                     </div>
                     <div className="pl-3 border-l-2 border-primary/20 space-y-0.5">
                       {meal.foods.map((f, fi) => (
-                        <div key={fi} className="text-[11px] flex justify-between">
+                        <div key={fi} className="text-xs flex justify-between">
                           <span>{f.food.name}</span>
                           <span className="text-muted-foreground">{f.food.carbsG}g C · {f.food.proteinG}g P</span>
                         </div>
@@ -260,7 +260,7 @@ const SummaryPage = () => {
                     <span className="text-xs font-medium">Snacks</span>
                     <div className="pl-3 border-l-2 border-secondary/40 space-y-0.5 mt-1">
                       {day.snacks.map((s, si) => (
-                        <div key={si} className="text-[11px] flex justify-between">
+                        <div key={si} className="text-xs flex justify-between">
                           <span>{s.food.name}</span>
                           <span className="text-muted-foreground">{s.food.calories} cal</span>
                         </div>
@@ -276,7 +276,7 @@ const SummaryPage = () => {
 
       {/* Footer */}
       <div className="clinical-card p-4 bg-muted/30 text-center">
-        <p className="text-[10px] text-muted-foreground">
+        <p className="text-xs text-muted-foreground">
           Generated by Diabetes Med Optimizer · ADA Standards of Care 2026 · LAI Lipid Guidelines<br />
           For post-stroke neuro patients · Kochi, Kerala · This is a clinical decision support tool — physician review required
         </p>

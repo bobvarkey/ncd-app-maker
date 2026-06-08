@@ -84,10 +84,10 @@ const PathophysiologySection = () => (
           ].map((item, i) => (
             <div key={i} className="p-3 rounded-lg bg-muted/30 border border-border/50">
               <p className="text-xs font-semibold text-foreground">{item.organ}</p>
-              <p className="text-[10px] text-muted-foreground mt-1">{item.defect}</p>
+              <p className="text-xs text-muted-foreground mt-1">{item.defect}</p>
               <div className="mt-2 flex items-center gap-1">
                 <ArrowRight className="h-3 w-3 text-red-500" />
-                <span className="text-[10px] text-red-400">{item.effect}</span>
+                <span className="text-xs text-red-400">{item.effect}</span>
               </div>
             </div>
           ))}
@@ -276,7 +276,7 @@ const RiskStratificationSection = () => {
               <div key={i} className="p-3 rounded-lg bg-success/5 border border-success/20 text-center">
                 <p className="text-xs text-muted-foreground"><AbbrText text={t.metric} /></p>
                 <p className="text-lg font-bold text-success">{t.target}</p>
-                <p className="text-[10px] text-muted-foreground mt-1">{t.note}</p>
+                <p className="text-xs text-muted-foreground mt-1">{t.note}</p>
               </div>
             ))}
           </div>

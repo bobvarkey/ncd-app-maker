@@ -274,7 +274,7 @@ export function GitHubSyncPanel({ initialBranch }: GitHubSyncPanelProps) {
           {sync.localCommit ? (
             <div className="flex items-center justify-between">
               <span className="font-mono text-xs">{sync.localCommit.hash}</span>
-              <span className="text-[11px] text-muted-foreground truncate max-w-[180px] text-right">
+              <span className="text-xs text-muted-foreground truncate max-w-[180px] text-right">
                 {sync.localCommit.message}
               </span>
             </div>
@@ -299,7 +299,7 @@ export function GitHubSyncPanel({ initialBranch }: GitHubSyncPanelProps) {
               <TooltipProvider>
                 <Tooltip>
                   <TooltipTrigger asChild>
-                    <span className="text-[11px] text-muted-foreground truncate max-w-[180px] text-right cursor-default">
+                    <span className="text-xs text-muted-foreground truncate max-w-[180px] text-right cursor-default">
                       {sync.latestRemoteCommit.message}
                     </span>
                   </TooltipTrigger>
@@ -352,7 +352,7 @@ export function GitHubSyncPanel({ initialBranch }: GitHubSyncPanelProps) {
 
         {sync.behind && sync.status === "synced" && (
           <p className="text-xs text-muted-foreground leading-relaxed">
-            Run <code className="text-[11px] bg-muted px-1 rounded">git pull origin {branch}</code> and redeploy to sync.
+            Run <code className="text-xs bg-muted px-1 rounded">git pull origin {branch}</code> and redeploy to sync.
           </p>
         )}
       </CardContent>

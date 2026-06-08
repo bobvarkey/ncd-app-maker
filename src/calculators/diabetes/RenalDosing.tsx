@@ -512,7 +512,7 @@ const RenalDoseAdjustment = () => {
                 <TableHead className="min-w-[120px]">Normal Dose</TableHead>
                 {eGFRColumns.map(col => (
                   <TableHead key={col.key} className="min-w-[110px] text-center">
-                    <div className="text-[10px] text-muted-foreground">eGFR</div>
+                    <div className="text-xs text-muted-foreground">eGFR</div>
                     <div>{col.label}</div>
                   </TableHead>
                 ))}

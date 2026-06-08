@@ -323,7 +323,7 @@ export default function SmartLabelUpload({ fields, onParse, existingValues = {} 
                         )} />
                         <span className="font-medium">{ev.label}</span>
                         {ev.alreadyPresent && (
-                          <span className="text-[10px] text-muted-foreground bg-muted rounded px-1.5">already set</span>
+                          <span className="text-xs text-muted-foreground bg-muted rounded px-1.5">already set</span>
                         )}
                       </div>
                       <div className="flex items-center gap-2">

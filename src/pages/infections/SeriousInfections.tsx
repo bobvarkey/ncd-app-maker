@@ -502,7 +502,7 @@ export default function SeriousInfections() {
         <div className="grid gap-3 md:grid-cols-3">
           {(["Emergency", "Serious CA", "Nosocomial"] as const).map((cat) => (
             <div key={cat} className="space-y-1">
-              <div className={`text-[10px] uppercase tracking-wide font-semibold ${cat === "Emergency" ? "text-red-700" : "text-muted-foreground"}`}>
+              <div className={`text-xs uppercase tracking-wide font-semibold ${cat === "Emergency" ? "text-red-700" : "text-muted-foreground"}`}>
                 {cat === "Emergency" && <Siren className="inline h-3 w-3 mr-1" />}
                 {cat}
               </div>
@@ -651,7 +651,7 @@ export default function SeriousInfections() {
                 ))}
                 {showMrsa && condition.mrsaAdd && (
                   <tr className="border-t border-border bg-amber-50">
-                    <td className="px-3 py-2 font-medium text-amber-900">+ {condition.mrsaAdd.drug} <span className="text-[10px] uppercase">MRSA add-on</span></td>
+                    <td className="px-3 py-2 font-medium text-amber-900">+ {condition.mrsaAdd.drug} <span className="text-xs uppercase">MRSA add-on</span></td>
                     <td className="px-3 py-2 text-amber-900">{condition.mrsaAdd.dose}</td>
                     <td className="px-3 py-2 text-amber-900">
                       {condition.mrsaAdd.route}
@@ -723,7 +723,7 @@ export default function SeriousInfections() {
 
         <details className="text-xs">
           <summary className="cursor-pointer text-muted-foreground">Plain-text summary</summary>
-          <pre className="mt-2 whitespace-pre-wrap rounded-md border border-border bg-muted/50 p-3 font-mono text-[11px]">
+          <pre className="mt-2 whitespace-pre-wrap rounded-md border border-border bg-muted/50 p-3 font-mono text-xs">
 {summary}
           </pre>
         </details>

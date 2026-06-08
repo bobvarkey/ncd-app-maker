@@ -140,7 +140,7 @@ export function GLP1ObesityAlgorithm({ patient }: Props) {
           <Syringe className="w-4 h-4 text-primary" />
           <h3 className="section-title">GLP-1 / GIP Obesity Treatment Algorithm</h3>
           {eligible && (
-            <span className="text-[10px] bg-success/10 text-success px-2 py-0.5 rounded-full">
+            <span className="text-xs bg-success/10 text-success px-2 py-0.5 rounded-full">
               Patient Eligible
             </span>
           )}
@@ -168,7 +168,7 @@ export function GLP1ObesityAlgorithm({ patient }: Props) {
             {matchedComorbidities.length > 0 && (
               <div className="flex flex-wrap gap-1 mt-2">
                 {matchedComorbidities.map((c, i) => (
-                  <span key={i} className="text-[10px] bg-warning/10 text-warning px-2 py-0.5 rounded-full">{c}</span>
+                  <span key={i} className="text-xs bg-warning/10 text-warning px-2 py-0.5 rounded-full">{c}</span>
                 ))}
               </div>
             )}
@@ -189,7 +189,7 @@ export function GLP1ObesityAlgorithm({ patient }: Props) {
                       <Icon className="w-4 h-4 text-primary shrink-0" />
                       <div className="min-w-0">
                         <p className="text-sm font-medium">{step.label}</p>
-                        <p className="text-[11px] text-muted-foreground mt-0.5">{step.detail}</p>
+                        <p className="text-xs text-muted-foreground mt-0.5">{step.detail}</p>
                       </div>
                     </div>
                   </div>
@@ -213,16 +213,16 @@ export function GLP1ObesityAlgorithm({ patient }: Props) {
                     <div className="flex items-center gap-2">
                       <span className="text-sm font-medium">{drug.name}</span>
                       {drug.name === preferred && (
-                        <span className="text-[10px] bg-primary/10 text-primary px-2 py-0.5 rounded-full">Preferred</span>
+                        <span className="text-xs bg-primary/10 text-primary px-2 py-0.5 rounded-full">Preferred</span>
                       )}
                     </div>
-                    <span className="text-[10px] text-muted-foreground">{drug.route} · {drug.frequency}</span>
+                    <span className="text-xs text-muted-foreground">{drug.route} · {drug.frequency}</span>
                   </div>
                   <div className="flex items-center gap-1 flex-wrap">
                     {drug.titration.map((dose, di) => (
                       <div key={di} className="flex items-center gap-1">
-                        {di > 0 && <span className="text-muted-foreground text-[10px]">→</span>}
-                        <span className={`text-[11px] px-2 py-0.5 rounded-full ${
+                        {di > 0 && <span className="text-muted-foreground text-xs">→</span>}
+                        <span className={`text-xs px-2 py-0.5 rounded-full ${
                           di === drug.titration.length - 1
                             ? "bg-primary/10 text-primary font-medium"
                             : "bg-muted text-muted-foreground"
@@ -245,21 +245,21 @@ export function GLP1ObesityAlgorithm({ patient }: Props) {
                 <CheckCircle2 className="w-4 h-4 text-success shrink-0 mt-0.5" />
                 <div>
                   <p className="text-xs font-medium text-success">Adequate Response (≥5% weight loss)</p>
-                  <p className="text-[11px] text-muted-foreground">Continue current therapy + monitoring</p>
+                  <p className="text-xs text-muted-foreground">Continue current therapy + monitoring</p>
                 </div>
               </div>
               <div className="flex items-start gap-2 p-2.5 rounded-lg bg-warning/5 border border-warning/20">
                 <RefreshCw className="w-4 h-4 text-warning shrink-0 mt-0.5" />
                 <div>
                   <p className="text-xs font-medium text-warning">Partial Response (3–5% weight loss)</p>
-                  <p className="text-[11px] text-muted-foreground">Optimize dose / reinforce lifestyle interventions</p>
+                  <p className="text-xs text-muted-foreground">Optimize dose / reinforce lifestyle interventions</p>
                 </div>
               </div>
               <div className="flex items-start gap-2 p-2.5 rounded-lg bg-destructive/5 border border-destructive/20">
                 <XCircle className="w-4 h-4 text-destructive shrink-0 mt-0.5" />
                 <div>
                   <p className="text-xs font-medium text-destructive">Inadequate Response (&lt;3–5% weight loss)</p>
-                  <p className="text-[11px] text-muted-foreground">Switch: Liraglutide → Semaglutide → Tirzepatide</p>
+                  <p className="text-xs text-muted-foreground">Switch: Liraglutide → Semaglutide → Tirzepatide</p>
                 </div>
               </div>
             </div>
@@ -292,10 +292,10 @@ export function GLP1ObesityAlgorithm({ patient }: Props) {
 
           {/* Safety Alerts */}
           <div className="p-3 rounded-lg border border-dashed border-destructive/30 bg-destructive/5">
-            <h4 className="text-[11px] font-medium text-destructive mb-2 flex items-center gap-1">
+            <h4 className="text-xs font-medium text-destructive mb-2 flex items-center gap-1">
               <AlertTriangle className="w-3.5 h-3.5" /> Safety Surveillance & Contraindications
             </h4>
-            <div className="space-y-1 text-[11px] text-muted-foreground">
+            <div className="space-y-1 text-xs text-muted-foreground">
               <p>• <strong>Contraindicated:</strong> History of medullary thyroid carcinoma (MTC) or MEN2 syndrome</p>
               <p>• <strong>Monitor for pancreatitis:</strong> Severe abdominal pain → discontinue immediately</p>
               <p>• <strong>Gallstone risk:</strong> RUQ pain — assess with imaging</p>
@@ -307,25 +307,25 @@ export function GLP1ObesityAlgorithm({ patient }: Props) {
           {/* Duration & Escalation */}
           <div className="grid grid-cols-2 gap-3">
             <div className="p-3 rounded-lg bg-muted/30 border">
-              <h4 className="text-[11px] font-medium mb-1 flex items-center gap-1">
+              <h4 className="text-xs font-medium mb-1 flex items-center gap-1">
                 <Clock className="w-3 h-3 text-primary" /> Duration
               </h4>
-              <p className="text-[11px] text-muted-foreground">Minimum 6 months</p>
-              <p className="text-[11px] text-muted-foreground">Typically long-term / lifelong</p>
+              <p className="text-xs text-muted-foreground">Minimum 6 months</p>
+              <p className="text-xs text-muted-foreground">Typically long-term / lifelong</p>
             </div>
             <div className="p-3 rounded-lg bg-muted/30 border">
-              <h4 className="text-[11px] font-medium mb-1 flex items-center gap-1">
+              <h4 className="text-xs font-medium mb-1 flex items-center gap-1">
                 <TrendingUp className="w-3 h-3 text-primary" /> Escalation
               </h4>
-              <p className="text-[11px] text-muted-foreground">Combination pharmacotherapy</p>
-              <p className="text-[11px] text-muted-foreground">Bariatric surgery if refractory</p>
+              <p className="text-xs text-muted-foreground">Combination pharmacotherapy</p>
+              <p className="text-xs text-muted-foreground">Bariatric surgery if refractory</p>
             </div>
           </div>
 
           {/* Bottom Line */}
           <div className="p-3 rounded-lg bg-primary/5 border border-primary/20">
-            <h4 className="text-[11px] font-medium text-primary mb-1">✅ Clinical Bottom Line</h4>
-            <ul className="text-[11px] text-muted-foreground space-y-0.5">
+            <h4 className="text-xs font-medium text-primary mb-1">✅ Clinical Bottom Line</h4>
+            <ul className="text-xs text-muted-foreground space-y-0.5">
               <li>• Always evaluate before starting GLP-1 therapy</li>
               <li>• Assess response at 12–16 weeks on therapeutic dose</li>
               <li>• Continue only if clinically meaningful benefit</li>

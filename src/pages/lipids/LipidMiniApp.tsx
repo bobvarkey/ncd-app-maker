@@ -622,7 +622,7 @@ function ScenarioCard({
         </span>
         <span className="text-sm font-semibold text-foreground">{title}</span>
       </div>
-      <p className="text-[11px] text-muted-foreground leading-snug">{subtitle}</p>
+      <p className="text-xs text-muted-foreground leading-snug">{subtitle}</p>
     </button>
   );
 }
@@ -880,7 +880,7 @@ export default function LipidMiniApp() {
 
         {/* TG explainer */}
         {showTgBlock && (
-          <p className="mb-4 text-[11px] text-muted-foreground italic">
+          <p className="mb-4 text-xs text-muted-foreground italic">
             TG values automatically branch the algorithm: 150–199 / 200–499 / 500–999 / ≥1000.
           </p>
         )}
@@ -1003,15 +1003,15 @@ export default function LipidMiniApp() {
 
             <div className="grid sm:grid-cols-3 gap-3">
               <Card className="p-3 border-primary/30 bg-primary/[0.05]">
-                <p className="text-[10px] uppercase tracking-wider text-primary font-bold">LDL-C target</p>
+                <p className="text-xs uppercase tracking-wider text-primary font-bold">LDL-C target</p>
                 <p className="text-sm font-bold text-foreground mt-0.5">{result.ldlTarget}</p>
               </Card>
               <Card className="p-3 border-accent/30 bg-accent/[0.05]">
-                <p className="text-[10px] uppercase tracking-wider text-accent font-bold">Non-HDL-C target</p>
+                <p className="text-xs uppercase tracking-wider text-accent font-bold">Non-HDL-C target</p>
                 <p className="text-sm font-bold text-foreground mt-0.5">{result.nonHdlTarget}</p>
               </Card>
               <Card className="p-3 border-warning/30 bg-warning/[0.05]">
-                <p className="text-[10px] uppercase tracking-wider text-warning font-bold">Apo-B target</p>
+                <p className="text-xs uppercase tracking-wider text-warning font-bold">Apo-B target</p>
                 <p className="text-sm font-bold text-foreground mt-0.5">{result.apoBTarget}</p>
               </Card>
             </div>
@@ -1061,7 +1061,7 @@ export default function LipidMiniApp() {
               <div className="grid sm:grid-cols-3 gap-2">
                 {result.followUp.map((f, idx) => (
                   <Card key={idx} className="p-2.5 border-border bg-card">
-                    <p className="text-[10px] uppercase tracking-wider text-muted-foreground">{f.week}</p>
+                    <p className="text-xs uppercase tracking-wider text-muted-foreground">{f.week}</p>
                     <p className="text-xs text-foreground mt-0.5">{f.action}</p>
                   </Card>
                 ))}
@@ -1071,7 +1071,7 @@ export default function LipidMiniApp() {
             {result.notes.length > 0 && (
               <div className="rounded-md border border-border bg-muted/30 p-2.5">
                 {result.notes.map((n, idx) => (
-                  <p key={idx} className="text-[11px] text-muted-foreground">• {n}</p>
+                  <p key={idx} className="text-xs text-muted-foreground">• {n}</p>
                 ))}
               </div>
             )}

@@ -339,7 +339,7 @@ export default function GlobalLabUpload() {
                                 ev.confidence === "medium" ? "bg-amber-400" : "bg-muted-foreground"
                               )} />
                               <span className="font-medium">{ev.label}</span>
-                              <span className="text-[10px] text-muted-foreground bg-muted rounded px-1.5">
+                              <span className="text-xs text-muted-foreground bg-muted rounded px-1.5">
                                 → /{ev.category.split(" ")[0]?.toLowerCase() || "page"}
                               </span>
                             </div>

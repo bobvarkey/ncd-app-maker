@@ -232,12 +232,12 @@ function RangeOrExactField({
     <div className="space-y-1.5">
       <div className="flex items-center justify-between">
         <Label className="text-xs text-muted-foreground">
-          {label} {unit ? <span className="text-[10px]">({unit})</span> : null}
+          {label} {unit ? <span className="text-xs">({unit})</span> : null}
         </Label>
         <button
           type="button"
           onClick={() => setMode(mode === "range" ? "exact" : "range")}
-          className="text-[10px] text-primary hover:underline"
+          className="text-xs text-primary hover:underline"
         >
           {mode === "range" ? "exact" : "range"}
         </button>
@@ -294,7 +294,7 @@ function Chip({
     <button
       type="button"
       onClick={onClick}
-      className={`px-2.5 py-1 rounded-full text-[11px] border transition ${
+      className={`px-2.5 py-1 rounded-full text-xs border transition ${
         active
           ? "bg-primary text-primary-foreground border-primary"
           : "bg-card text-foreground/80 border-border hover:border-primary/50"
@@ -610,7 +610,7 @@ export default function UnifiedPrescriptionMiniApp() {
         <CardTitle className="text-base flex items-center gap-2">
           <Sparkles className="h-4 w-4 text-primary" />
           Unified Prescription Mini-App
-          <Badge variant="outline" className="text-[10px] border-primary/30 text-primary">
+          <Badge variant="outline" className="text-xs border-primary/30 text-primary">
             client-side
           </Badge>
         </CardTitle>
@@ -733,7 +733,7 @@ export default function UnifiedPrescriptionMiniApp() {
         <div className="rounded-xl border border-border bg-muted/20 p-4 space-y-3">
           <div className="flex items-start justify-between gap-3 flex-wrap">
             <div>
-              <div className="text-[11px] uppercase tracking-wider text-muted-foreground">
+              <div className="text-xs uppercase tracking-wider text-muted-foreground">
                 Computed plan — {result.domain}
               </div>
               <div className="text-sm font-semibold mt-0.5">{result.classification}</div>
@@ -756,7 +756,7 @@ export default function UnifiedPrescriptionMiniApp() {
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
-              <div className="flex items-center gap-1.5 text-[11px] uppercase tracking-wider text-muted-foreground mb-1.5">
+              <div className="flex items-center gap-1.5 text-xs uppercase tracking-wider text-muted-foreground mb-1.5">
                 <Target className="h-3 w-3" /> Targets
               </div>
               <ul className="text-xs space-y-1 list-disc pl-4">
@@ -766,7 +766,7 @@ export default function UnifiedPrescriptionMiniApp() {
               </ul>
             </div>
             <div>
-              <div className="flex items-center gap-1.5 text-[11px] uppercase tracking-wider text-muted-foreground mb-1.5">
+              <div className="flex items-center gap-1.5 text-xs uppercase tracking-wider text-muted-foreground mb-1.5">
                 <ListChecks className="h-3 w-3" /> Plan
               </div>
               <ul className="text-xs space-y-1 list-disc pl-4">
@@ -779,7 +779,7 @@ export default function UnifiedPrescriptionMiniApp() {
 
           {result.alerts.length > 0 && (
             <div className="rounded-lg border border-destructive/40 bg-destructive/10 p-2.5">
-              <div className="flex items-center gap-1.5 text-[11px] uppercase tracking-wider text-destructive mb-1">
+              <div className="flex items-center gap-1.5 text-xs uppercase tracking-wider text-destructive mb-1">
                 <AlertTriangle className="h-3 w-3" /> Alerts
               </div>
               <ul className="text-xs space-y-1 list-disc pl-4 text-destructive">
@@ -790,7 +790,7 @@ export default function UnifiedPrescriptionMiniApp() {
             </div>
           )}
 
-          <div className="text-[11px] text-muted-foreground italic">
+          <div className="text-xs text-muted-foreground italic">
             Follow-up: {result.followUp}
           </div>
         </div>
