@@ -6,9 +6,11 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Checkbox } from "@/components/ui/checkbox";
-import { AlertTriangle, Activity, Syringe, Droplets, FlaskConical, HeartPulse, Copy, Printer, Download, ChevronDown } from "lucide-react";
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
+import { AlertTriangle, Activity, Syringe, Droplets, FlaskConical, HeartPulse, Copy, Printer, Download, ChevronDown, Image } from "lucide-react";
 import { downloadTextFile } from "@/lib/clinical-utils";
 import { toast } from "sonner";
+import ZoomableImage from "@/components/ZoomableImage";
 
 // ─── DKA severity classification ───
 type DKASeverity = "mild" | "moderate" | "severe" | null;
@@ -698,6 +700,51 @@ export default function HyperglycemicEmergency() {
           </CardContent>
         </Card>
       )}
+
+      {/* ─── Algorithm Images ─── */}
+      <Collapsible defaultOpen={true} className="group/collapsible">
+        <Card>
+          <CollapsibleTrigger asChild>
+            <CardHeader className="pb-2 cursor-pointer hover:bg-muted/30 transition-colors">
+              <div className="flex items-center gap-2">
+                <Image className="h-4 w-4 text-primary" />
+                <CardTitle className="text-sm">Clinical Algorithm Flowcharts</CardTitle>
+                <ChevronDown className="h-4 w-4 ml-auto text-muted-foreground transition-transform group-data-[state=open]/collapsible:rotate-180" />
+              </div>
+            </CardHeader>
+          </CollapsibleTrigger>
+          <CollapsibleContent>
+            <CardContent className="pt-0">
+              <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+                <div className="space-y-1">
+                  <p className="text-xs font-semibold text-foreground">DKA Algorithm</p>
+                  <ZoomableImage
+                    src="/dka-algorithm.jpg"
+                    alt="DKA Algorithm"
+                    className="w-full"
+                  />
+                </div>
+                <div className="space-y-1">
+                  <p className="text-xs font-semibold text-foreground">HHS Algorithm</p>
+                  <ZoomableImage
+                    src="/hhs-algorithm.jpg"
+                    alt="HHS Algorithm"
+                    className="w-full"
+                  />
+                </div>
+                <div className="space-y-1 sm:col-span-2 lg:col-span-1">
+                  <p className="text-xs font-semibold text-foreground">Mixed DKA + HHS Algorithm</p>
+                  <ZoomableImage
+                    src="/mixed-dka-hhs-algorithm.jpg"
+                    alt="Mixed DKA + HHS Algorithm"
+                    className="w-full"
+                  />
+                </div>
+              </div>
+            </CardContent>
+          </CollapsibleContent>
+        </Card>
+      </Collapsible>
 
       {/* ─── Management pathway ─── */}
       <Card>
