@@ -25,9 +25,11 @@ import {
   Droplet,
   Printer,
   Copy,
+  Download,
   FileText,
   Heart,
 } from "lucide-react";
+import { downloadTextFile } from "@/lib/clinical-utils";
 
 /* ============================================================
    Lipid Management Mini-App (fully client-side)
