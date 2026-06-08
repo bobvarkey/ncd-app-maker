@@ -375,7 +375,7 @@ const MedOptimizer = () => {
 
                   {/* Always visible summary */}
                   <div className="bg-muted/50 rounded-lg p-3 mt-2">
-                    <div className="grid grid-cols-2 gap-3 text-sm">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm">
                       <div><span className="text-muted-foreground text-xs font-medium">Dose:</span> <strong className="text-base">{med.dose}</strong></div>
                       <div><span className="text-muted-foreground text-xs font-medium">Freq:</span> <strong className="text-base">{med.frequency}</strong></div>
                     </div>
@@ -388,7 +388,7 @@ const MedOptimizer = () => {
                     <p className="text-xs text-muted-foreground">{med.reason}</p>
 
                     {/* Quick stats */}
-                    <div className="grid grid-cols-3 gap-2 text-center">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 sm:grid-cols-3 gap-2 text-center">
                       <div className="p-2 rounded bg-muted/30">
                         <span className="text-xs text-muted-foreground block font-medium">HbA1c ↓</span>
                         <span className="text-sm font-semibold">{med.hba1cReduction}</span>

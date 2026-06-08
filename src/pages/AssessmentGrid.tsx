@@ -49,7 +49,7 @@ export default function AssessmentGrid() {
         </div>
 
         {/* Hero Content */}
-        <div className="relative z-10 max-w-[390px] mx-auto px-4">
+        <div className="relative z-10 max-w-lg mx-auto px-4">
           <div className="text-center mb-8">
             <h1 className="text-4xl font-bold font-heading mb-4 leading-tight">
               Get access to all our<br />
@@ -66,9 +66,9 @@ export default function AssessmentGrid() {
 
       {/* Main Content */}
       <div className="w-full flex justify-center">
-        <div className="w-full max-w-[390px] px-4 py-8">
+        <div className="w-full max-w-lg px-4 py-8">
           {/* Tools Grid - 2 columns */}
-          <div className="grid grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             {TOOLS.map((tool) => (
               <button
                 key={tool.id}

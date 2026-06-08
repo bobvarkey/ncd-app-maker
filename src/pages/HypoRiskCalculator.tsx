@@ -331,7 +331,7 @@ const HypoRiskCalculator = () => {
           <span>Very High (16+)</span>
         </div>
 
-        <div className="mt-4 grid grid-cols-2 gap-3">
+        <div className="mt-4 grid grid-cols-1 sm:grid-cols-2 gap-3">
           <div className="p-2.5 rounded-lg bg-muted/50 text-center">
             <span className="text-xs text-muted-foreground block">Recommended HbA1c</span>
             <span className={`text-lg font-heading font-bold ${result.color}`}>{result.targetHba1c}</span>

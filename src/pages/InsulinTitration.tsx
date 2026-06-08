@@ -286,7 +286,7 @@ const InsulinTitration = () => {
           </div>
 
           {/* Stats */}
-          <div className="grid grid-cols-3 gap-3 mb-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-4">
             <div className="text-center p-2.5 rounded-lg bg-muted/50">
               <span className="text-xs text-muted-foreground block">3-Day Avg FBG</span>
               <span className={`text-lg font-heading font-bold ${result.avg < 70 ? "text-warning" : result.atTarget ? "text-success" : "text-destructive"}`}>
@@ -375,7 +375,7 @@ const InsulinTitration = () => {
         {showInsulins && (
           <div className="mt-3 space-y-3 text-xs">
             {/* Basal Insulins */}
-            <div className="grid grid-cols-2 gap-2">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
               <div className="p-2 rounded bg-muted/30">
                 <p className="font-semibold text-xs uppercase text-muted-foreground mb-1">Long-Acting (Basal)</p>
                 <table className="w-full">

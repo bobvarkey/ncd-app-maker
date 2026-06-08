@@ -206,7 +206,7 @@ export default function RespiratoryTab() {
         </div>
 
         <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6">
-          <TabsList className="grid w-full grid-cols-2 h-auto p-1 bg-muted/50">
+          <TabsList className="grid w-full grid-cols-1 sm:grid-cols-2 h-auto p-1 bg-muted/50">
             <TabsTrigger value="copd" className="flex items-center gap-2 py-3 data-[state=active]:bg-cyan-500/10 data-[state=active]:text-cyan-600">
               <Wind className="h-4 w-4" /><span>COPD</span>
             </TabsTrigger>

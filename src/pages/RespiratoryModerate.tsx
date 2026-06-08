@@ -52,7 +52,7 @@ export default function RespiratoryModerate() {
 
       <Card className="p-4">
         <p className="text-sm font-medium flex items-center gap-2"><Pill className="h-4 w-4"/>Key Meds</p>
-        <div className="mt-2 grid grid-cols-2 gap-2 text-xs"><div className="p-2 bg-muted rounded">COPD: LAMA, LABA, ICS</div><div className="p-2 bg-muted rounded">Asthma: ICS, SABA, LTRA</div></div>
+        <div className="mt-2 grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs"><div className="p-2 bg-muted rounded">COPD: LAMA, LABA, ICS</div><div className="p-2 bg-muted rounded">Asthma: ICS, SABA, LTRA</div></div>
       </Card>
 
       <div className="flex items-center gap-2 text-xs text-muted-foreground">

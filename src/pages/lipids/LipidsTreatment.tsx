@@ -188,7 +188,7 @@ export default function LipidsTreatment({ laiResult, onBackToAssessment }: Props
           </div>
           <Pill className="h-6 w-6 text-primary" />
         </div>
-        <div className="grid grid-cols-3 gap-2 text-xs text-muted-foreground mt-3 pt-3 border-t">
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 text-xs text-muted-foreground mt-3 pt-3 border-t">
           <span><strong>Non-HDL:</strong> {nonHdlTarget}</span>
           <span><strong>ApoB:</strong> {apoBTarget}</span>
           <span><strong>Intensity:</strong> {intensity}</span>

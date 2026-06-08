@@ -105,7 +105,7 @@ const PlateMethod = () => {
       </div>
 
       {/* Selectors Row */}
-      <div className="grid grid-cols-2 gap-3">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
         {/* Cuisine Selector */}
         <div className="space-y-2">
           <label className="text-sm font-medium">Cuisine</label>
@@ -230,7 +230,7 @@ const PlateMethod = () => {
       </div>
 
       {/* Validation */}
-      <div className="grid grid-cols-3 gap-2">
+      <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
         <div className={`text-center p-2 rounded-lg ${veggieOk ? "bg-success/10 text-success" : "bg-muted text-muted-foreground"}`}>
           <span className="text-xs">{veggieOk ? "✓" : "○"} Veggies</span>
         </div>

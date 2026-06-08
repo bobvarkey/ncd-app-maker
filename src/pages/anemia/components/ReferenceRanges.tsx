@@ -101,7 +101,7 @@ export default function ReferenceRanges() {
           {/* MCV morphology */}
           <div>
             <h3 className="text-sm font-semibold text-muted-foreground mb-3">Morphological Classification by MCV</h3>
-            <div className="grid grid-cols-3 gap-3">
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
               {[
                 { label: 'Microcytic', range: '< 80 fL', color: 'bg-sky-900/30 border-sky-800 text-sky-400' },
                 { label: 'Normocytic', range: '80–100 fL', color: 'bg-blue-900/30 border-blue-800 text-blue-400' },
@@ -175,7 +175,7 @@ export default function ReferenceRanges() {
                   <span className="bg-sky-600 text-foreground text-xs font-bold rounded-full w-6 h-6 flex items-center justify-center flex-shrink-0">3</span>
                   <div>
                     <p className="font-medium text-foreground">MCV-Based Classification</p>
-                    <div className="grid grid-cols-3 gap-2 mt-2">
+                    <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 mt-2">
                       <div className="bg-gray-100 rounded-lg p-2 border border-border">
                         <p className="text-xs font-semibold text-sky-400">Microcytic (&lt;80 fL)</p>
                         <p className="text-xs text-muted-foreground">Iron deficiency, thalassemia, ACD, sideroblastic</p>

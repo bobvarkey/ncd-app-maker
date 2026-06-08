@@ -371,7 +371,7 @@ export default function LiverMiniApp() {
         <Card>
           <CardHeader><CardTitle className="text-base">Patient & Context</CardTitle></CardHeader>
           <CardContent className="space-y-3">
-            <div className="grid grid-cols-2 gap-3">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
               <RangeOrExact id="age" label="Age" unit="years" value={age} onChange={setAge} ranges={RANGES.age} />
               <div className="space-y-1.5">
                 <Label className="text-xs">Sex</Label>
@@ -389,7 +389,7 @@ export default function LiverMiniApp() {
             {/* Viral hepatitis */}
             <div className="pt-2 border-t space-y-2">
               <div className="text-xs font-semibold text-muted-foreground">Viral hepatitis</div>
-              <div className="grid grid-cols-2 gap-3">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 <div className="space-y-1">
                   <Label className="text-xs">Hepatitis B</Label>
                   <Select value={hbv} onValueChange={setHbv}>
@@ -422,7 +422,7 @@ export default function LiverMiniApp() {
             {/* Alcohol */}
             <div className="pt-2 border-t space-y-2">
               <div className="text-xs font-semibold text-muted-foreground">Alcohol</div>
-              <div className="grid grid-cols-2 gap-3">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 <RangeOrExact id="drinks" label="Drinks per week" value={drinksWk} onChange={setDrinksWk} ranges={RANGES.drinks} />
                 <label className="flex items-end gap-2 text-xs cursor-pointer pb-2">
                   <Checkbox checked={alcoholDependence} onCheckedChange={(v) => setAlcoholDependence(!!v)} />
@@ -441,7 +441,7 @@ export default function LiverMiniApp() {
             </div>
 
             {/* Other context */}
-            <div className="grid grid-cols-2 gap-x-3 gap-y-2 pt-2 border-t">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-3 gap-y-2 pt-2 border-t">
               {[
                 ["diabetes","T2DM / pre-diabetes", diabetes, setDiabetes],
                 ["glucoseHigh","Fasting glucose ≥110", glucoseHigh, setGlucoseHigh],
@@ -463,7 +463,7 @@ export default function LiverMiniApp() {
         {/* Labs */}
         <Card>
           <CardHeader><CardTitle className="text-base">Liver Labs</CardTitle></CardHeader>
-          <CardContent className="grid grid-cols-2 gap-3">
+          <CardContent className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             <RangeOrExact id="ast" label="AST" unit="U/L" value={ast} onChange={setAst} ranges={RANGES.ast} />
             <RangeOrExact id="alt" label="ALT" unit="U/L" value={alt} onChange={setAlt} ranges={RANGES.alt} />
             <RangeOrExact id="alp" label="ALP" unit="U/L" value={alp} onChange={setAlp} ranges={RANGES.alp} />

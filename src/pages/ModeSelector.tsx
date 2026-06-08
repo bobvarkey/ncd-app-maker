@@ -155,7 +155,7 @@ function Hero() {
         </button>
 
         {/* Stats */}
-        <div className="grid grid-cols-3 gap-6 mt-16 max-w-lg mx-auto">
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 mt-16 max-w-lg mx-auto">
           <div className="text-center">
             <div className="text-2xl font-bold text-foreground">6</div>
             <div className="text-xs text-foreground/50">Conditions</div>

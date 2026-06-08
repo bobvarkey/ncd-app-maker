@@ -229,7 +229,7 @@ function OCRUpload({ onValuesExtracted }: OCRUploadProps) {
                         <span className="text-xs font-medium text-green-400">Extracted Values</span>
                         <button onClick={clearImage} className="text-xs text-muted-foreground hover:text-foreground">Clear</button>
                       </div>
-                      <div className="grid grid-cols-3 gap-2 text-xs">
+                      <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 text-xs">
                         {extractedValues.fg && (
                           <div className="flex items-center gap-1">
                             <span className="text-muted-foreground">FG:</span>

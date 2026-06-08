@@ -41,7 +41,7 @@ const InsulinTherapy = () => {
       color: "text-secondary",
       content: (
         <div className="space-y-3 text-sm">
-          <div className="grid grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div className="p-3 rounded-lg bg-muted/30">
               <p className="text-xs text-muted-foreground mb-1">Fasting</p>
               <p className="font-medium">{therapy.bg_goals.fasting}</p>
@@ -84,7 +84,7 @@ const InsulinTherapy = () => {
       color: "text-primary",
       content: (
         <div className="space-y-3 text-sm">
-          <div className="grid grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div className="p-3 rounded-lg bg-muted/30">
               <p className="text-xs text-muted-foreground mb-1">Basal</p>
               <p className="font-medium">{therapy.distribution.basal_pct}</p>

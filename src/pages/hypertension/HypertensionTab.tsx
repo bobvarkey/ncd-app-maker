@@ -84,7 +84,7 @@ export default function HypertensionTab() {
       {/* Main Content Tabs */}
       <section className="max-w-6xl mx-auto px-6 pb-16">
         <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6">
-          <TabsList className="grid w-full grid-cols-4 gap-1">
+          <TabsList className="grid w-full grid-cols-2 sm:grid-cols-4 gap-1">
             <TabsTrigger value="assessment" className="flex items-center gap-2">
               <Stethoscope className="h-4 w-4" />
               <span>Assess</span>

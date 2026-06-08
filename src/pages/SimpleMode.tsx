@@ -101,7 +101,7 @@ function DiabetesCalc() {
   return (
     <SectionCard title="Diabetes" icon={<Syringe className="h-4 w-4" />} tone="danger" defaultOpen={false}>
       <div className="max-w-md space-y-3">
-        <div className="grid grid-cols-2 gap-3">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
           <div><Label className="text-xs mb-1.5 block">HbA1c (%)</Label><Input type="number" step="0.1" value={hba1c} onChange={e => setHba1c(e.target.value)} placeholder="7.2" className="h-10 px-3 rounded-lg border-border/60 focus:ring-2 focus:ring-primary/50 focus:border-primary transition-all" /></div>
           <div><Label className="text-xs mb-1.5 block">FBG (mg/dL)</Label><Input type="number" value={fbg} onChange={e => setFbg(e.target.value)} placeholder="140" className="h-10 px-3 rounded-lg border-border/60 focus:ring-2 focus:ring-primary/50 focus:border-primary transition-all" /></div>
           <div><Label className="text-xs mb-1.5 block">Age</Label><Input type="number" value={age} onChange={e => setAge(e.target.value)} placeholder="55" className="h-10 px-3 rounded-lg border-border/60 focus:ring-2 focus:ring-primary/50 focus:border-primary transition-all" /></div>
@@ -163,7 +163,7 @@ function HypertensionCalc() {
   return (
     <SectionCard title="Hypertension" icon={<Heart className="h-4 w-4" />} tone="warning" defaultOpen={false}>
       <div className="max-w-md space-y-3">
-        <div className="grid grid-cols-2 gap-3">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
           <div><Label className="text-xs mb-1.5 block">SBP (mmHg)</Label><Input type="number" value={sbp} onChange={e => setSbp(e.target.value)} placeholder="e.g. 145" className="h-10 px-3 rounded-lg border-border/60 focus:ring-2 focus:ring-primary/50 focus:border-primary transition-all" /></div>
           <div><Label className="text-xs mb-1.5 block">DBP (mmHg)</Label><Input type="number" value={dbp} onChange={e => setDbp(e.target.value)} placeholder="e.g. 92" className="h-10 px-3 rounded-lg border-border/60 focus:ring-2 focus:ring-primary/50 focus:border-primary transition-all" /></div>
           <div><Label className="text-xs mb-1.5 block">Age</Label><Input type="number" value={age} onChange={e => setAge(e.target.value)} placeholder="55" className="h-10 px-3 rounded-lg border-border/60 focus:ring-2 focus:ring-primary/50 focus:border-primary transition-all" /></div>
@@ -277,7 +277,7 @@ function LipidsCalc() {
   return (
     <SectionCard title="Lipids" icon={<Dna className="h-4 w-4" />} tone="primary" defaultOpen={false}>
       <div className="max-w-md space-y-3">
-        <div className="grid grid-cols-2 gap-3">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
           <div><Label className="text-xs mb-1.5 block">LDL (mg/dL)</Label><Input type="number" value={ldl} onChange={e => setLdl(e.target.value)} placeholder="e.g. 130" className="h-10 px-3 rounded-lg border-border/60 focus:ring-2 focus:ring-primary/50 focus:border-primary transition-all" /></div>
           <div><Label className="text-xs mb-1.5 block">HDL (mg/dL)</Label><Input type="number" value={hdl} onChange={e => setHdl(e.target.value)} placeholder="e.g. 42" className="h-10 px-3 rounded-lg border-border/60 focus:ring-2 focus:ring-primary/50 focus:border-primary transition-all" /></div>
           <div><Label className="text-xs mb-1.5 block">TG (mg/dL)</Label><Input type="number" value={tg} onChange={e => setTg(e.target.value)} placeholder="e.g. 150" className="h-10 px-3 rounded-lg border-border/60 focus:ring-2 focus:ring-primary/50 focus:border-primary transition-all" /></div>
@@ -297,7 +297,7 @@ function LipidsCalc() {
         {/* Risk Modifiers */}
         <div>
           <p className="text-xs font-semibold text-muted-foreground mb-1.5">Risk Modifiers — toggle to set LDL target</p>
-          <div className="grid grid-cols-2 gap-x-4 gap-y-1.5">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-4 gap-y-1.5">
             <label className="flex items-center gap-2 cursor-pointer"><input type="checkbox" checked={hasASCVD} onChange={e => setHasASCVD(e.target.checked)} className="rounded" /><span className="text-xs">ASCVD History</span></label>
             <label className="flex items-center gap-2 cursor-pointer"><input type="checkbox" checked={hasDM} onChange={e => setHasDM(e.target.checked)} className="rounded" /><span className="text-xs">Diabetes</span></label>
             <label className="flex items-center gap-2 cursor-pointer"><input type="checkbox" checked={hasCKD} onChange={e => setHasCKD(e.target.checked)} className="rounded" /><span className="text-xs">CKD (eGFR &lt; 60)</span></label>
@@ -373,7 +373,7 @@ function ObesityCalc() {
   return (
     <SectionCard title="Obesity & Weight" icon={<Scale className="h-4 w-4" />} tone="purple" defaultOpen={false}>
       <div className="max-w-md space-y-3">
-        <div className="grid grid-cols-2 gap-3">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
           <div><Label className="text-xs mb-1.5 block">Weight (kg)</Label><Input type="number" step="0.1" value={weight} onChange={e => setWeight(e.target.value)} placeholder="e.g. 75" className="h-10 px-3 rounded-lg border-border/60 focus:ring-2 focus:ring-primary/50 focus:border-primary transition-all" /></div>
           <div><Label className="text-xs mb-1.5 block">Height (cm)</Label><Input type="number" value={height} onChange={e => setHeight(e.target.value)} placeholder="e.g. 170" className="h-10 px-3 rounded-lg border-border/60 focus:ring-2 focus:ring-primary/50 focus:border-primary transition-all" /></div>
         </div>

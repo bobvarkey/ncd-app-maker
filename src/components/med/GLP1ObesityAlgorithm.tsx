@@ -153,7 +153,7 @@ export function GLP1ObesityAlgorithm({ patient }: Props) {
           {/* Eligibility */}
           <div className={`p-3 rounded-lg border-2 ${eligible ? "border-success/30 bg-success/5" : "border-muted bg-muted/30"}`}>
             <h4 className="text-xs font-medium mb-2">Eligibility Assessment</h4>
-            <div className="grid grid-cols-2 gap-2 text-xs">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
               <div>
                 <span className="text-muted-foreground">BMI:</span>{" "}
                 <strong className={patient.bmi >= 30 ? "text-destructive" : patient.bmi >= 27 ? "text-warning" : "text-foreground"}>
@@ -305,7 +305,7 @@ export function GLP1ObesityAlgorithm({ patient }: Props) {
           </div>
 
           {/* Duration & Escalation */}
-          <div className="grid grid-cols-2 gap-3">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             <div className="p-3 rounded-lg bg-muted/30 border">
               <h4 className="text-xs font-medium mb-1 flex items-center gap-1">
                 <Clock className="w-3 h-3 text-primary" /> Duration

@@ -107,7 +107,7 @@ const Dashboard = () => {
       </div>
 
       {/* Quick Links */}
-      <div className="grid grid-cols-2 gap-3">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
         {[
           { to: "/plate", label: "Plate Method", icon: "🍽️", desc: "Build balanced meals" },
           { to: "/diet-plan", label: "7-Day Plan", icon: "📋", desc: "Kerala diet generator" },

@@ -334,7 +334,7 @@ const PatientInput = () => {
           <Brain className="w-4 h-4 text-primary" />
           <h3 className="section-title">Post-Stroke Assessment</h3>
         </div>
-        <div className="grid grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div className="flex items-center gap-2">
             <Switch checked={patient.postStrokeDysphagia} onCheckedChange={(v) => update("postStrokeDysphagia", v)} />
             <Label className="text-sm">Post-stroke dysphagia</Label>

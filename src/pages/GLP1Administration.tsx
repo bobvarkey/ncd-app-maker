@@ -319,7 +319,7 @@ const GLP1Administration = () => {
         <h2 className="text-3xl font-heading font-bold mb-4 text-foreground">💉 Injection Technique & Sites</h2>
 
         <Tabs defaultValue="technique" className="w-full">
-          <TabsList className="grid w-full grid-cols-2 bg-gray-200">
+          <TabsList className="grid w-full grid-cols-1 sm:grid-cols-2 bg-muted/50">
             <TabsTrigger value="technique" className="text-base font-semibold text-foreground">Step-by-Step</TabsTrigger>
             <TabsTrigger value="sites" className="text-base font-semibold text-foreground">Injection Sites</TabsTrigger>
           </TabsList>
@@ -418,7 +418,7 @@ const GLP1Administration = () => {
               <p className="text-base text-gray-800 mb-3">
                 To prevent lipohypertrophy (fat lumps):
               </p>
-              <div className="grid grid-cols-4 gap-2 text-sm font-mono text-center">
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 text-sm font-mono text-center">
                 <div className="p-2 bg-blue-200 text-foreground rounded font-semibold">Week 1<br/>Abd L</div>
                 <div className="p-2 bg-blue-300 text-foreground rounded font-semibold">Week 2<br/>Abd R</div>
                 <div className="p-2 bg-green-200 text-foreground rounded font-semibold">Week 3<br/>Thigh L</div>

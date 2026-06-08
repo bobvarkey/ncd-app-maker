@@ -627,7 +627,7 @@ const DrugClassesComparison = () => {
                   </Badge>
                 </div>
               </div>              <p className="text-xs text-muted-foreground mb-2"><AbbrText text={drug.mechanism} /></p>
-              <div className="grid grid-cols-2 gap-2 text-xs">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
                 <div>
                   <span className="text-muted-foreground">Weight: </span>
                   <span className={cn(
@@ -639,7 +639,7 @@ const DrugClassesComparison = () => {
                   <span><AbbrText text={drug.weight} /></span>
                 </div>
               </div>
-              <div className="mt-2 grid grid-cols-2 gap-2">
+              <div className="mt-2 grid grid-cols-1 sm:grid-cols-2 gap-2">
                 <div className="text-xs">
                   <p className="text-success font-medium mb-0.5">Pros</p>
                   <ul className="text-muted-foreground space-y-0.5">
@@ -722,10 +722,11 @@ const ManagementChecklist = () => {
 };
 
 import InsulinGuide from "./InsulinGuide";
+import HyperglycemicEmergencySection from "./HyperglycemicEmergencySection";
 
 // Main Component
 export default function DiabetesTreatment() {
-  const [activeTab, setActiveTab] = useState<"algorithm" | "glp1" | "drugs" | "insulin" | "checklist">("algorithm");
+  const [activeTab, setActiveTab] = useState<"algorithm" | "glp1" | "drugs" | "insulin" | "checklist" | "emergency">("algorithm");
 
   return (
     <div className="space-y-4">
@@ -737,6 +738,7 @@ export default function DiabetesTreatment() {
           { id: "insulin", label: "Insulin Guide", icon: Activity },
           { id: "drugs", label: "Drug Classes", icon: Pill },
           { id: "checklist", label: "Care Checklist", icon: FileText },
+          { id: "emergency", label: "DKA/HHS Guide", icon: AlertTriangle },
         ].map((tab) => (
           <button
             key={tab.id}
@@ -758,6 +760,7 @@ export default function DiabetesTreatment() {
       {activeTab === "insulin" && <InsulinGuide />}
       {activeTab === "drugs" && <DrugClassesComparison />}
       {activeTab === "checklist" && <ManagementChecklist />}
+      {activeTab === "emergency" && <HyperglycemicEmergencySection />}
     </div>
   );
 }

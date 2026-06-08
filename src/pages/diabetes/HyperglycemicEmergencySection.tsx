@@ -263,8 +263,8 @@ function assessEuglycemicDKA(glucose: number, ketones: string | null, sglt2i: bo
   };
 }
 
-// ─── Main component ───
-export default function HyperglycemicEmergency() {
+// ─── Main component (embedded version — no standalone page header) ───
+export default function HyperglycemicEmergencySection() {
   // Labs
   const [glucose, setGlucose] = useState("");
   const [bicarb, setBicarb] = useState("");
@@ -435,20 +435,7 @@ export default function HyperglycemicEmergency() {
   const PILL = "w-full rounded-md border border-border bg-background px-3 py-2 text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-primary/30";
 
   return (
-    <div className="space-y-4 max-w-6xl mx-auto p-4">
-      {/* Header */}
-      <Card className="border-red-500/30 bg-gradient-to-br from-red-500/5 to-amber-500/5">
-        <CardHeader>
-          <div className="flex items-center gap-2">
-            <AlertTriangle className="h-5 w-5 text-red-500" />
-            <CardTitle className="text-xl">Hyperglycemic Emergency — DKA / HHS Algorithm</CardTitle>
-          </div>
-          <CardDescription>
-            Diagnostic classification, fluid & insulin dosing, trigger workup for DKA, HKS, and mixed hyperglycemic emergencies.
-          </CardDescription>
-        </CardHeader>
-      </Card>
-
+    <div className="space-y-4 max-w-6xl">
       <div className="grid gap-4 md:grid-cols-2">
         {/* ─── Labs column ─── */}
         <div className="space-y-4">

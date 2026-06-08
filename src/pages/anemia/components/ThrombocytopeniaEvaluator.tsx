@@ -404,7 +404,7 @@ export default function ThrombocytopeniaEvaluator() {
                 <span className="bg-rose-600 text-foreground text-xs font-bold rounded-full w-6 h-6 flex items-center justify-center flex-shrink-0">4</span>
                 <div>
                   <p className="font-medium text-foreground">Mechanism-Based Classification</p>
-                  <div className="grid grid-cols-2 gap-2 mt-2">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 mt-2">
                     <div className="bg-gray-100 rounded-lg p-2 border border-border">
                       <p className="text-xs font-semibold text-rose-400">↓ Production</p>
                       <p className="text-xs text-muted-foreground">MDS, malignancy, B12/folate deficiency</p>

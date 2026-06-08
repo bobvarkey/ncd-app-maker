@@ -52,7 +52,7 @@ const BMICalculator = () => {
         </div>
       </CardHeader>
       <CardContent className="space-y-4">
-        <div className="grid grid-cols-2 gap-3">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
           <div>
             <Label htmlFor="bmi-weight" className="text-xs text-muted-foreground mb-1.5 block">
               Weight (kg)
@@ -294,9 +294,9 @@ const InsulinDosingCalculator = () => {
         </div>
       </CardHeader>
       <CardContent className="space-y-4">
-        <div className="grid grid-cols-2 gap-3">
-          <div>
-            <Label className="text-xs text-muted-foreground mb-1.5 block">Weight (kg)</Label>
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-3">
+                        <div className="space-y-1">
+                          <Label className="text-xs text-muted-foreground">Weight (kg)</Label>
             <Input
               type="number"
               value={weight}
@@ -333,7 +333,7 @@ const InsulinDosingCalculator = () => {
 
         {calculations && (
           <div className="p-4 rounded-lg bg-red-500/5 border border-red-500/20">
-            <div className="grid grid-cols-3 gap-3 mb-3">
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-3">
               <div className="text-center">
                 <p className="text-xs text-muted-foreground">Total Daily Dose</p>
                 <p className="text-xl font-bold">{calculations.tdd} U</p>
@@ -484,12 +484,12 @@ const GlucoseMonitoringGuide = () => {
 export default function DiabetesAssessment() {
   return (
     <div className="space-y-4">
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+      <div className="grid grid-cols-1 lg:grid-cols-1 sm:grid-cols-2 gap-4">
         <HbA1cInterpretation />
         <InsulinDosingCalculator />
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+      <div className="grid grid-cols-1 lg:grid-cols-1 sm:grid-cols-2 gap-4">
         <BMICalculator />
         <QuickCalculatorLinks />
         <GlucoseMonitoringGuide />

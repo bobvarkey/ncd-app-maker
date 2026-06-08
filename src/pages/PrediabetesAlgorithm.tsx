@@ -150,7 +150,7 @@ const PrediabetesAlgorithm = () => {
           </div>
 
           {/* Branches */}
-          <div className="w-full max-w-lg grid grid-cols-2 gap-3 mt-2">
+          <div className="w-full max-w-lg grid grid-cols-1 sm:grid-cols-2 gap-3 mt-2">
             {/* YES branch */}
             <div className={`flex flex-col items-center gap-1 ${result.isOverweight ? "" : "opacity-40"}`}>
               <span className={`text-xs font-bold ${result.isOverweight ? "text-primary" : "text-muted-foreground"}`}>

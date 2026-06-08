@@ -104,7 +104,7 @@ function DiabetesModerate() {
   return (
     <SectionCard title="Diabetes — Guideline-Integrated" icon={<Syringe className="h-4 w-4" />} tone="danger">
       <div className="max-w-xl space-y-3">
-        <div className="grid grid-cols-3 gap-3">
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
           <div><Label className="text-xs mb-1.5 block">HbA1c (%)</Label><Input type="number" step="0.1" value={hba1c} onChange={e => setHba1c(e.target.value)} placeholder="7.2" className="h-10 px-3 rounded-lg border-border/60 focus:ring-2 focus:ring-primary/50 focus:border-primary transition-all" /></div>
           <div><Label className="text-xs mb-1.5 block">FBG (mg/dL)</Label><Input type="number" value={fbg} onChange={e => setFbg(e.target.value)} placeholder="140" className="h-10 px-3 rounded-lg border-border/60 focus:ring-2 focus:ring-primary/50 focus:border-primary transition-all" /></div>
           <div><Label className="text-xs mb-1.5 block">Age</Label><Input type="number" value={age} onChange={e => setAge(e.target.value)} placeholder="55" className="h-10 px-3 rounded-lg border-border/60 focus:ring-2 focus:ring-primary/50 focus:border-primary transition-all" /></div>
@@ -180,7 +180,7 @@ function HypertensionModerate() {
   return (
     <SectionCard title="Hypertension — ESC Algorithm + Drug Check" icon={<Heart className="h-4 w-4" />} tone="warning">
       <div className="max-w-xl space-y-3">
-        <div className="grid grid-cols-3 gap-3">
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
           <div><Label className="text-xs mb-1.5 block">SBP</Label><Input type="number" value={sbp} onChange={e => setSbp(e.target.value)} placeholder="145" className="h-10 px-3 rounded-lg border-border/60 focus:ring-2 focus:ring-primary/50 focus:border-primary transition-all" /></div>
           <div><Label className="text-xs mb-1.5 block">DBP</Label><Input type="number" value={dbp} onChange={e => setDbp(e.target.value)} placeholder="92" className="h-10 px-3 rounded-lg border-border/60 focus:ring-2 focus:ring-primary/50 focus:border-primary transition-all" /></div>
           <div><Label className="text-xs mb-1.5 block">Age</Label><Input type="number" value={age} onChange={e => setAge(e.target.value)} placeholder="55" className="h-10 px-3 rounded-lg border-border/60 focus:ring-2 focus:ring-primary/50 focus:border-primary transition-all" /></div>
@@ -282,7 +282,7 @@ function LipidsModerate() {
   return (
     <SectionCard title="Lipids — ASCVD Risk Score" icon={<Dna className="h-4 w-4" />} tone="primary">
       <div className="max-w-xl space-y-3">
-        <div className="grid grid-cols-3 gap-3">
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
           <div><Label className="text-xs mb-1.5 block">LDL</Label><Input type="number" value={ldl} onChange={e => setLdl(e.target.value)} placeholder="130" className="h-10 px-3 rounded-lg border-border/60 focus:ring-2 focus:ring-primary/50 focus:border-primary transition-all" /></div>
           <div><Label className="text-xs mb-1.5 block">HDL</Label><Input type="number" value={hdl} onChange={e => setHdl(e.target.value)} placeholder="42" className="h-10 px-3 rounded-lg border-border/60 focus:ring-2 focus:ring-primary/50 focus:border-primary transition-all" /></div>
           <div><Label className="text-xs mb-1.5 block">TG</Label><Input type="number" value={tg} onChange={e => setTg(e.target.value)} placeholder="150" className="h-10 px-3 rounded-lg border-border/60 focus:ring-2 focus:ring-primary/50 focus:border-primary transition-all" /></div>
@@ -382,7 +382,7 @@ function ObesityModerate() {
   return (
     <SectionCard title="Obesity — GLP-1 Algorithm" icon={<Scale className="h-4 w-4" />} tone="purple">
       <div className="max-w-xl space-y-3">
-        <div className="grid grid-cols-3 gap-3">
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
           <div><Label className="text-xs mb-1.5 block">Weight (kg)</Label><Input type="number" step="0.1" value={weight} onChange={e => setWeight(e.target.value)} placeholder="75" className="h-10 px-3 rounded-lg border-border/60 focus:ring-2 focus:ring-primary/50 focus:border-primary transition-all" /></div>
           <div><Label className="text-xs mb-1.5 block">Height (cm)</Label><Input type="number" value={height} onChange={e => setHeight(e.target.value)} placeholder="170" className="h-10 px-3 rounded-lg border-border/60 focus:ring-2 focus:ring-primary/50 focus:border-primary transition-all" /></div>
           <div><Label className="text-xs mb-1.5 block">Waist (cm)</Label><Input type="number" value={waist} onChange={e => setWaist(e.target.value)} placeholder="95" className="h-10 px-3 rounded-lg border-border/60 focus:ring-2 focus:ring-primary/50 focus:border-primary transition-all" /></div>

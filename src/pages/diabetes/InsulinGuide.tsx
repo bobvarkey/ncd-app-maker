@@ -179,7 +179,7 @@ export default function InsulinGuide() {
                     )}
                   </div>
 
-                  <div className="grid grid-cols-3 gap-2 text-sm">
+                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 text-sm">
                     <div className="text-center p-2 bg-white/50 rounded">
                       <Clock className="h-4 w-4 mx-auto mb-1 text-muted-foreground" />
                       <span className="text-xs text-muted-foreground block">ONSET</span>

@@ -177,7 +177,7 @@ export default function TestSuggestionAlgorithm() {
           <label className="block text-sm font-medium text-muted-foreground mb-3">
             Select Morphology / MCV Category
           </label>
-          <div className="grid grid-cols-3 gap-3">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
             {(['microcytic', 'normocytic', 'macrocytic'] as const).map((type) => (
               <button
                 key={type}
