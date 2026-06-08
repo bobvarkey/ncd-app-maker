@@ -572,9 +572,58 @@ export default function IronReplacementCalculator() {
 
             {/* Results */}
             {calcResult && (
-              <div id="results" className="space-y-5">
-                {/* Copy/Print toolbar */}
-                <div className="flex items-center justify-end gap-2">
+              <div id="results" className="space-y-5 scroll-mt-24">
+                {/* Parameters Entered (echoed at top of results) */}
+                <Card className="clinical-card border-primary/20">
+                  <CardHeader className="pb-3">
+                    <CardTitle className="text-sm flex items-center gap-2">
+                      <FlaskConical className="h-4 w-4 text-primary" />
+                      Parameters Entered
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="grid grid-cols-2 md:grid-cols-4 gap-3 text-sm">
+                      <div className="rounded-lg bg-muted/30 p-2">
+                        <p className="text-[11px] text-muted-foreground">Ferritin</p>
+                        <p className="font-semibold">{inputs.ferritin || "—"}{inputs.ferritin ? " ng/mL" : ""}</p>
+                      </div>
+                      <div className="rounded-lg bg-muted/30 p-2">
+                        <p className="text-[11px] text-muted-foreground">Hemoglobin</p>
+                        <p className="font-semibold">{inputs.hemoglobin || "—"}{inputs.hemoglobin ? " g/dL" : ""}</p>
+                      </div>
+                      <div className="rounded-lg bg-muted/30 p-2">
+                        <p className="text-[11px] text-muted-foreground">Weight</p>
+                        <p className="font-semibold">{inputs.weight || "—"}{inputs.weight ? " kg" : ""}</p>
+                      </div>
+                      <div className="rounded-lg bg-muted/30 p-2">
+                        <p className="text-[11px] text-muted-foreground">TSAT</p>
+                        <p className="font-semibold">{calcResult.tsat ? calcResult.tsat.toFixed(1) + "%" : "—"}</p>
+                      </div>
+                      {(inputs.serumIron || inputs.tibc) && (
+                        <>
+                          <div className="rounded-lg bg-muted/30 p-2">
+                            <p className="text-[11px] text-muted-foreground">Serum Iron</p>
+                            <p className="font-semibold">{inputs.serumIron || "—"}{inputs.serumIron ? " µg/dL" : ""}</p>
+                          </div>
+                          <div className="rounded-lg bg-muted/30 p-2">
+                            <p className="text-[11px] text-muted-foreground">TIBC</p>
+                            <p className="font-semibold">{inputs.tibc || "—"}{inputs.tibc ? " µg/dL" : ""}</p>
+                          </div>
+                        </>
+                      )}
+                    </div>
+                    {Object.entries(flags).some(([, v]) => v) && (
+                      <div className="mt-3 flex flex-wrap gap-1.5">
+                        {Object.entries(flags).filter(([, v]) => v).map(([k]) => (
+                          <Badge key={k} variant="outline" className="text-[11px]">{k}</Badge>
+                        ))}
+                      </div>
+                    )}
+                  </CardContent>
+                </Card>
+
+                {/* Copy/Print/Download toolbar */}
+                <div className="flex items-center justify-end gap-2 flex-wrap no-print">
                   <Button
                     variant="outline"
                     size="sm"
@@ -598,11 +647,35 @@ export default function IronReplacementCalculator() {
                     <Copy className="h-4 w-4 mr-2" />
                     Copy
                   </Button>
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={() => {
+                      const note = formatClinicalNote({
+                        title: "Iron Replacement Calculator",
+                        inputs: { ferritin: inputs.ferritin, hemoglobin: inputs.hemoglobin, weight: inputs.weight, tsat: inputs.tsat || inputs.serumIron + " / " + inputs.tibc },
+                        results: {
+                          TSAT: calcResult.tsat.toFixed(1) + "%",
+                          Diagnosis: calcResult.dx.diagnosis,
+                          "Route": calcResult.rec.route,
+                          "Deficit (mg)": Math.round(calcResult.rec.deficit).toString(),
+                          "Target Hb": calcResult.rec.targetHb + " g/dL",
+                        },
+                        recommendations: calcResult.notes,
+                        citation: "ACG Clinical Guideline 2023; Ferritin/TSAT Thresholds per KDIGO",
+                      });
+                      downloadTextFile(`iron-replacement-${new Date().toISOString().slice(0,10)}`, note);
+                    }}
+                  >
+                    <Download className="h-4 w-4 mr-2" />
+                    Download .txt
+                  </Button>
                   <Button variant="outline" size="sm" onClick={() => window.print()}>
                     <Printer className="h-4 w-4 mr-2" />
                     Print
                   </Button>
                 </div>
+
 
                 {/* Diagnosis Card */}
                 <div className={cn("rounded-xl border-2 p-5", colors.bg, colors.border)}>
