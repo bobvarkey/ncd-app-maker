@@ -61,7 +61,7 @@ export function GlobalMedSearch() {
   return (
     <div
       ref={wrapRef}
-      className="fixed top-3 left-1/2 -translate-x-1/2 z-[60] w-[min(92vw,560px)]"
+      className="fixed top-3 right-4 z-[60] w-[min(92vw,400px)] md:w-80"
     >
       <div
         className={cn(
