@@ -198,7 +198,7 @@ export function AbbreviationHover({ term, children, definition: override }: { te
       <span className="text-foreground font-medium underline decoration-dotted decoration-primary/40 cursor-help">
         {children || term}
       </span>
-      <div className="absolute left-1/2 -translate-x-1/2 bottom-full mb-2 w-64 hidden group-hover:block z-50">
+      <div className="absolute left-0 top-full mt-1 w-72 hidden group-hover:block z-50">
         <div className="bg-popover text-popover-foreground text-xs p-3 rounded-lg shadow-xl border border-border">
           <p className="font-semibold text-primary mb-1">{term}</p>
           <p className="text-muted-foreground leading-relaxed">{fullForm}</p>
@@ -214,7 +214,7 @@ export function AbbreviationHoverInline({ children, definition }: { children: Re
       <span className="text-foreground underline decoration-dotted decoration-primary/40 cursor-help">
         {children}
       </span>
-      <div className="absolute left-1/2 -translate-x-1/2 bottom-full mb-2 w-64 hidden group-hover:block z-50">
+      <div className="absolute left-1/2 -translate-x-1/2 top-full mt-1 w-72 hidden group-hover:block z-50">
         <div className="bg-popover text-popover-foreground text-xs p-3 rounded-lg shadow-xl border border-border">
           <p className="text-muted-foreground leading-relaxed">{definition}</p>
         </div>

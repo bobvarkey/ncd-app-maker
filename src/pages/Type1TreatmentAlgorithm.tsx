@@ -211,7 +211,7 @@ function InsulinTooltip({ brand }: { brand: string }) {
   return (
     <div className="group relative inline-block">
       <span className="text-foreground font-medium underline decoration-dotted decoration-muted-foreground/40 cursor-help">{brand}</span>
-      <div className="absolute left-0 bottom-full mb-2 w-64 hidden group-hover:block z-50">
+      <div className="absolute left-0 top-full mt-1 w-72 hidden group-hover:block z-50">
         <div className="bg-popover text-popover-foreground text-xs p-3 rounded-lg shadow-xl border border-border">
           <p className="font-semibold mb-1">{found.generic}</p>
           <p className="text-muted-foreground mb-1.5">
