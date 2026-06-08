@@ -7,7 +7,8 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
-import { Copy, Printer, Activity, Settings2, ChevronDown } from "lucide-react";
+import { Copy, Printer, Activity, Settings2, ChevronDown, Download } from "lucide-react";
+import { downloadTextFile } from "@/lib/clinical-utils";
 import { toast } from "@/hooks/use-toast";
 
 // --- Range dropdown helper ---
