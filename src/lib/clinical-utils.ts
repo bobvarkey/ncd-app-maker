@@ -11,7 +11,28 @@ export async function copyToClipboard(text: string, label = "Copied!") {
   } catch {
     toast.error("Failed to copy");
     return false;
+}
+
+/** Download text content as a .txt file */
+export function downloadTextFile(filename: string, content: string) {
+  try {
+    const blob = new Blob([content], { type: "text/plain;charset=utf-8" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    const safeName = filename.replace(/[^a-z0-9-_\. ]/gi, "_");
+    a.href = url;
+    a.download = safeName.endsWith(".txt") ? safeName : `${safeName}.txt`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    setTimeout(() => URL.revokeObjectURL(url), 1000);
+    toast.success("Downloaded");
+    return true;
+  } catch {
+    toast.error("Download failed");
+    return false;
   }
+}
 }
 
 /** Format calculator result as a clinical note for printing/copying */
