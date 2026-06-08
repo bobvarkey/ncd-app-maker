@@ -21,11 +21,13 @@ import {
   Sparkles,
   Copy,
   Printer,
+  Download,
   RotateCcw,
   Target,
   ListChecks,
   AlertTriangle,
 } from "lucide-react";
+import { downloadTextFile } from "@/lib/clinical-utils";
 
 /* =====================================================================
  * Unified Prescription Mini App
