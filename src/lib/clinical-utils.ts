@@ -11,7 +11,10 @@ export async function copyToClipboard(text: string, label = "Copied!") {
   } catch {
     toast.error("Failed to copy");
     return false;
+  }
 }
+
+
 
 /** Download text content as a .txt file */
 export function downloadTextFile(filename: string, content: string) {
