@@ -21,11 +21,13 @@ import {
   Sparkles,
   Copy,
   Printer,
+  Download,
   RotateCcw,
   Target,
   ListChecks,
   AlertTriangle,
 } from "lucide-react";
+import { downloadTextFile } from "@/lib/clinical-utils";
 
 /* =====================================================================
  * Unified Prescription Mini App
@@ -739,6 +741,9 @@ export default function UnifiedPrescriptionMiniApp() {
             <div className="flex gap-2">
               <Button size="sm" variant="outline" onClick={handleCopy} className="h-8 text-xs">
                 <Copy className="h-3.5 w-3.5 mr-1" /> Copy summary
+              </Button>
+              <Button size="sm" variant="outline" onClick={() => downloadTextFile(`prescription-${new Date().toISOString().slice(0,10)}`, summaryText)} className="h-8 text-xs">
+                <Download className="h-3.5 w-3.5 mr-1" /> Download .txt
               </Button>
               <Button size="sm" variant="outline" onClick={handlePrint} className="h-8 text-xs">
                 <Printer className="h-3.5 w-3.5 mr-1" /> Print / PDF

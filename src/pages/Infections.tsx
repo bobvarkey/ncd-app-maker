@@ -1,5 +1,6 @@
 import { useMemo, useState } from "react";
-import { AlertTriangle, Pill, Printer, Copy, ShieldAlert, Baby, Activity, Hospital, FlaskConical } from "lucide-react";
+import { AlertTriangle, Pill, Printer, Copy, Download, ShieldAlert, Baby, Activity, Hospital, FlaskConical } from "lucide-react";
+import { downloadTextFile } from "@/lib/clinical-utils";
 import { toast } from "sonner";
 import SeriousInfections from "./infections/SeriousInfections";
 import { ANTIBIOTICS_DATA } from "@/calculators/diabetes/antibiotics-data";
@@ -556,6 +557,12 @@ export default function Infections() {
                 className="inline-flex items-center gap-1 rounded-md border border-border px-3 py-1.5 text-xs hover:bg-muted"
               >
                 <Copy className="h-3.5 w-3.5" /> Copy
+              </button>
+              <button
+                onClick={() => downloadTextFile(`infections-${condition.id || condition.label}-${new Date().toISOString().slice(0,10)}`, summary)}
+                className="inline-flex items-center gap-1 rounded-md border border-border px-3 py-1.5 text-xs hover:bg-muted"
+              >
+                <Download className="h-3.5 w-3.5" /> Download .txt
               </button>
               <button
                 onClick={handlePrint}

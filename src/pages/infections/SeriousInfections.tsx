@@ -1,5 +1,6 @@
 import { useMemo, useState } from "react";
-import { AlertTriangle, ShieldAlert, Activity, Scissors, Copy, Printer, Siren } from "lucide-react";
+import { AlertTriangle, ShieldAlert, Activity, Scissors, Copy, Printer, Siren, Download } from "lucide-react";
+import { downloadTextFile } from "@/lib/clinical-utils";
 import { toast } from "sonner";
 
 type Regimen = { drug: string; dose: string; route: string; notes?: string };
@@ -599,6 +600,12 @@ export default function SeriousInfections() {
               className="inline-flex items-center gap-1 rounded-md border border-border px-3 py-1.5 text-xs hover:bg-muted"
             >
               <Copy className="h-3.5 w-3.5" /> Copy
+            </button>
+            <button
+              onClick={() => downloadTextFile(`serious-infections-${condition.label}-${new Date().toISOString().slice(0,10)}`, summary)}
+              className="inline-flex items-center gap-1 rounded-md border border-border px-3 py-1.5 text-xs hover:bg-muted"
+            >
+              <Download className="h-3.5 w-3.5" /> Download .txt
             </button>
             <button
               onClick={() => window.print()}

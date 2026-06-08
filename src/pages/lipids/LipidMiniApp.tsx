@@ -25,9 +25,11 @@ import {
   Droplet,
   Printer,
   Copy,
+  Download,
   FileText,
   Heart,
 } from "lucide-react";
+import { downloadTextFile } from "@/lib/clinical-utils";
 
 /* ============================================================
    Lipid Management Mini-App (fully client-side)
@@ -981,6 +983,9 @@ export default function LipidMiniApp() {
             <div className="flex flex-wrap items-center gap-2 justify-end -mt-1">
               <Button variant="outline" size="sm" onClick={handleCopy}>
                 <Copy className="h-3.5 w-3.5 mr-1.5" /> Copy summary
+              </Button>
+              <Button variant="outline" size="sm" onClick={() => downloadTextFile(`lipids-${new Date().toISOString().slice(0,10)}`, buildSummaryText())}>
+                <Download className="h-3.5 w-3.5 mr-1.5" /> Download .txt
               </Button>
               <Button variant="outline" size="sm" onClick={handlePrint}>
                 <Printer className="h-3.5 w-3.5 mr-1.5" /> Print / PDF

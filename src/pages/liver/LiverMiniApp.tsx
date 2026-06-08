@@ -7,7 +7,8 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
-import { Copy, Printer, Activity, Settings2, ChevronDown } from "lucide-react";
+import { Copy, Printer, Activity, Settings2, ChevronDown, Download } from "lucide-react";
+import { downloadTextFile } from "@/lib/clinical-utils";
 import { toast } from "@/hooks/use-toast";
 
 // --- Range dropdown helper ---
@@ -490,6 +491,7 @@ export default function LiverMiniApp() {
           </div>
           <div className="flex gap-2">
             <Button size="sm" variant="outline" onClick={handleCopy}><Copy className="h-4 w-4 mr-1" />Copy</Button>
+            <Button size="sm" variant="outline" onClick={() => downloadTextFile(`liver-${new Date().toISOString().slice(0,10)}`, buildSummary())}><Download className="h-4 w-4 mr-1" />Download .txt</Button>
             <Button size="sm" onClick={handlePrint}><Printer className="h-4 w-4 mr-1" />Print / PDF</Button>
           </div>
         </CardHeader>
