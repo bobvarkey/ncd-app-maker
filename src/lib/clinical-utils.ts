@@ -34,7 +34,6 @@ export function downloadTextFile(filename: string, content: string) {
   } catch {
     toast.error("Download failed");
     return false;
-  }
 }
 }
 
