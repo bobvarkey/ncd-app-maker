@@ -1,5 +1,6 @@
 import { useMemo, useState } from "react";
-import { AlertTriangle, ShieldAlert, Activity, Scissors, Copy, Printer, Siren } from "lucide-react";
+import { AlertTriangle, ShieldAlert, Activity, Scissors, Copy, Printer, Siren, Download } from "lucide-react";
+import { downloadTextFile } from "@/lib/clinical-utils";
 import { toast } from "sonner";
 
 type Regimen = { drug: string; dose: string; route: string; notes?: string };
