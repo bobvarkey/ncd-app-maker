@@ -348,6 +348,9 @@ export default function IronReplacementCalculator() {
       notes.unshift('Partial entry: Hemoglobin and/or Weight missing. Dose estimate requires both values.');
       setCalcResult({ tsat: tsat || 0, dx, rec, notes });
     }
+    setTimeout(() => {
+      document.getElementById("results")?.scrollIntoView({ behavior: "smooth", block: "start" });
+    }, 50);
   }
 
   function handleReset() {
