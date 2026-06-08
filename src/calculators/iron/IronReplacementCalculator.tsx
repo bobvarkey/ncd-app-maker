@@ -602,18 +602,14 @@ export default function IronReplacementCalculator() {
                         <p className="text-[11px] text-muted-foreground">TSAT</p>
                         <p className="font-semibold">{calcResult.tsat ? calcResult.tsat.toFixed(1) + "%" : "—"}</p>
                       </div>
-                      {(inputs.serumIron || inputs.tibc) && (
-                        <>
-                          <div className="rounded-lg bg-muted/30 p-2">
-                            <p className="text-[11px] text-muted-foreground">Serum Iron</p>
-                            <p className="font-semibold">{inputs.serumIron || "—"}{inputs.serumIron ? " µg/dL" : ""}</p>
-                          </div>
-                          <div className="rounded-lg bg-muted/30 p-2">
-                            <p className="text-[11px] text-muted-foreground">TIBC</p>
-                            <p className="font-semibold">{inputs.tibc || "—"}{inputs.tibc ? " µg/dL" : ""}</p>
-                          </div>
-                        </>
-                      )}
+                      <div className="rounded-lg bg-muted/30 p-2">
+                        <p className="text-[11px] text-muted-foreground">Serum Iron</p>
+                        <p className="font-semibold">{inputs.serumIron || "—"}{inputs.serumIron ? " µg/dL" : ""}</p>
+                      </div>
+                      <div className="rounded-lg bg-muted/30 p-2">
+                        <p className="text-[11px] text-muted-foreground">TIBC</p>
+                        <p className="font-semibold">{inputs.tibc || "—"}{inputs.tibc ? " µg/dL" : ""}</p>
+                      </div>
                     </div>
                     {Object.entries(flags).some(([, v]) => v) && (
                       <div className="mt-3 flex flex-wrap gap-1.5">
