@@ -105,6 +105,13 @@ import Fatigue from "@/pages/Fatigue";
 // Infections
 import Infections from "@/pages/Infections";
 
+// Hyperglycemic Emergency
+import HyperglycemicEmergency from "@/pages/HyperglycemicEmergency";
+
+// Treatment Algorithm Pages
+import Type1TreatmentAlgorithm from "@/pages/Type1TreatmentAlgorithm";
+import Type2TreatmentAlgorithm from "@/pages/Type2TreatmentAlgorithm";
+
 const queryClient = new QueryClient();
 
 const DiabetesBuddyLayout = () => (
@@ -215,6 +222,9 @@ const App = () => (
           <Route path="/thyroid" element={<><TabNavigation /><ThyroidCalculator /></>} />
           <Route path="/fatigue" element={<><TabNavigation /><Fatigue /></>} />
           <Route path="/infections" element={<><TabNavigation /><Infections /></>} />
+          <Route path="/hyperglycemic-emergency" element={<><TabNavigation /><HyperglycemicEmergency /></>} />
+          <Route path="/type1-treatment-algorithm" element={<><TabNavigation /><Type1TreatmentAlgorithm /></>} />
+          <Route path="/type2-treatment-algorithm" element={<><TabNavigation /><Type2TreatmentAlgorithm /></>} />
 
           {/* 404 */}
           <Route path="*" element={<NotFound />} />
