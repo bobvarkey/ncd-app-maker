@@ -1,5 +1,6 @@
 import { useMemo, useState } from "react";
-import { AlertTriangle, Pill, Printer, Copy, ShieldAlert, Baby, Activity, Hospital, FlaskConical } from "lucide-react";
+import { AlertTriangle, Pill, Printer, Copy, Download, ShieldAlert, Baby, Activity, Hospital, FlaskConical } from "lucide-react";
+import { downloadTextFile } from "@/lib/clinical-utils";
 import { toast } from "sonner";
 import SeriousInfections from "./infections/SeriousInfections";
 import { ANTIBIOTICS_DATA } from "@/calculators/diabetes/antibiotics-data";
