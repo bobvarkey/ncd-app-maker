@@ -24,8 +24,9 @@ import {
   Info,
   Copy,
   Printer,
+  Download,
 } from "lucide-react";
-import { copyToClipboard, formatClinicalNote } from "@/lib/clinical-utils";
+import { copyToClipboard, formatClinicalNote, downloadTextFile } from "@/lib/clinical-utils";
 import { SmartLabelUpload, IRON_FIELDS } from "@/components/SmartLabelUpload";
 import { cn } from "@/lib/utils";
 
