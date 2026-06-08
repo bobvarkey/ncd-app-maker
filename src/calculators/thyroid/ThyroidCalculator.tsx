@@ -506,6 +506,27 @@ export default function ThyroidCalculator() {
                     <Copy className="h-4 w-4 mr-2" />
                     Copy
                   </Button>
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={() => {
+                      const note = formatClinicalNote({
+                        title: "Thyroid Calculator",
+                        inputs: { TSH: inputs.tsh, FT4: inputs.ft4, FT3: inputs.ft3, "TPO Ab": inputs.tpo, "TRAb": inputs.trab, Age: inputs.age, Weight: inputs.weight },
+                        results: {
+                          Diagnosis: result.dx.diagnosis,
+                          "Levothyroxine Dose": result.meds.levoText,
+                          "Methimazole Dose": result.meds.methimazoleText,
+                        },
+                        recommendations: result.nextSteps,
+                        citation: "ATA Guidelines 2023",
+                      });
+                      downloadTextFile(`thyroid-${new Date().toISOString().slice(0,10)}`, note);
+                    }}
+                  >
+                    <Download className="h-4 w-4 mr-2" />
+                    Download .txt
+                  </Button>
                   <Button variant="outline" size="sm" onClick={() => window.print()}>
                     <Printer className="h-4 w-4 mr-2" />
                     Print
