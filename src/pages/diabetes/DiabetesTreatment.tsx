@@ -1,3 +1,4 @@
+import { FrequencyBadge } from "@/components/FrequencyBadge";
 import React, { useState } from "react";
 import { AbbreviationHover, AbbrText } from "@/components/AbbreviationHover";
 import { Link } from "react-router-dom";

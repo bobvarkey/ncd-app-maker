@@ -1,3 +1,4 @@
+import { FrequencyBadge } from "@/components/FrequencyBadge";
 import { useState, useEffect, useMemo } from "react";
 import { PatientData, EXAMPLE_PATIENT, loadPatient, getBMICategory, getCKDStage } from "@/lib/patient-data";
 import { generateMedRecommendations, getHypoProtocol, getLipidTargets, getCategoryLabel, getDrugClassLabel, AlgorithmPriority } from "@/lib/med-logic";

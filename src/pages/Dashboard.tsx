@@ -1,3 +1,4 @@
+import { FrequencyBadge } from "@/components/FrequencyBadge";
 import { useState, useEffect, useMemo } from "react";
 import { Activity, Heart, Brain, TrendingDown, AlertTriangle, Pill, ChevronRight } from "lucide-react";
 import { Link } from "react-router-dom";

@@ -1,3 +1,4 @@
+import { FrequencyBadge } from "@/components/FrequencyBadge";
 import { useState, useEffect, useMemo, useRef, useCallback } from "react";
 import { PatientData, EXAMPLE_PATIENT, loadPatient } from "@/lib/patient-data";
 import {

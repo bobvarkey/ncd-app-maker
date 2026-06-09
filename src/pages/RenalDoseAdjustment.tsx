@@ -1,3 +1,4 @@
+import { FrequencyBadge } from "@/components/FrequencyBadge";
 import { useState } from "react";
 import { Pill, FlaskConical, Search, AlertTriangle, ChevronDown } from "lucide-react";
 import { Input } from "@/components/ui/input";
