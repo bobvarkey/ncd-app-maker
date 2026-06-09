@@ -470,7 +470,7 @@ const GLP1AdministrationGuide = () => {
           <div className="flex items-center justify-between mb-3">
             <div>
               <p className="font-semibold">{selected.name}</p>
-              <p className="text-xs text-muted-foreground">{selected.class} · {selected.frequency}</p>
+              <p className="text-xs text-muted-foreground flex items-center gap-1.5 flex-wrap">{selected.class} · {selected.frequency} <FrequencyBadge frequency={selected.frequency} /></p>
             </div>
             <div className="flex gap-2">
               <Badge variant="outline" className="text-xs">A1c ↓ {selected.a1cReduction}</Badge>

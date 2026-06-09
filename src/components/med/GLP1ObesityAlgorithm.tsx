@@ -216,7 +216,7 @@ export function GLP1ObesityAlgorithm({ patient }: Props) {
                         <span className="text-xs bg-primary/10 text-primary px-2 py-0.5 rounded-full">Preferred</span>
                       )}
                     </div>
-                    <span className="text-xs text-muted-foreground">{drug.route} · {drug.frequency}</span>
+                    <span className="text-xs text-muted-foreground flex items-center gap-1.5">{drug.route} · {drug.frequency} <FrequencyBadge frequency={drug.frequency} /></span>
                   </div>
                   <div className="flex items-center gap-1 flex-wrap">
                     {drug.titration.map((dose, di) => (

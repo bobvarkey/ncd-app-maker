@@ -830,7 +830,7 @@ const RenalDoseAdjustment = () => {
                         {d.drug}
                       </div>
                     </TableCell>
-                    <TableCell className="text-xs font-mono text-muted-foreground">{d.frequency}</TableCell>
+                    <TableCell className="text-xs"><FrequencyBadge frequency={d.frequency} /></TableCell>
                     <TableCell className="text-xs">{d.normalDose}</TableCell>
                     {eGFRColumns.map(col => (
                       <TableCell key={col.key} className={`text-xs text-center ${cellStyle(d[col.key])}`}>

@@ -257,9 +257,12 @@ const GLP1Administration = () => {
                 </div>
                 <span className="text-3xl text-foreground">{expandedMed === med.id ? "▼" : "▶"}</span>
               </div>
-              <p className="text-base bg-info/10 text-info p-3 rounded inline-block font-semibold">
-                {med.frequency}
-              </p>
+              <div className="flex items-center gap-2 flex-wrap">
+                <p className="text-base bg-info/10 text-info p-3 rounded inline-block font-semibold">
+                  {med.frequency}
+                </p>
+                <FrequencyBadge frequency={med.frequency} />
+              </div>
 
               {expandedMed === med.id && (
                 <div className="mt-4 space-y-4 border-t pt-4">

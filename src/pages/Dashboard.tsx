@@ -99,7 +99,7 @@ const Dashboard = () => {
                     "bg-muted text-muted-foreground"
                   }`}>{m.priority}</span>
                 </div>
-                <p className="text-xs text-muted-foreground mt-0.5">{m.dose} {m.frequency}</p>
+                <p className="text-xs text-muted-foreground mt-0.5 flex items-center gap-1.5 flex-wrap">{m.dose} {m.frequency} <FrequencyBadge frequency={m.frequency} /></p>
               </div>
             </div>
           ))}

@@ -2,6 +2,7 @@ import { NextBestMed as NextBestMedType, getAllContraindicationChecks } from "@/
 import { Sparkles, ArrowRight, AlertTriangle, AlertCircle, CheckCircle2, Lightbulb, BarChart3, Trophy, Apple, Zap, Weight, Heart, Target, Calendar } from "lucide-react";
 import { useState } from "react";
 import { PatientData } from "@/lib/patient-data";
+import { FrequencyBadge } from "@/components/FrequencyBadge";
 
 interface Props {
   nextBest: NextBestMedType;

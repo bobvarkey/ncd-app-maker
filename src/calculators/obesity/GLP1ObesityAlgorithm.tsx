@@ -396,7 +396,7 @@ export default function GLP1ObesityAlgorithm() {
                       <Badge variant="default" className="text-xs">Preferred</Badge>
                     )}
                   </div>
-                  <span className="text-xs text-muted-foreground">{drug.route} · {drug.frequency}</span>
+                  <span className="text-xs text-muted-foreground flex items-center gap-1.5">{drug.route} · {drug.frequency} <FrequencyBadge frequency={drug.frequency} /></span>
                 </div>
 
                 <div className="grid grid-cols-2 gap-4 mb-3">
@@ -577,7 +577,7 @@ export default function GLP1ObesityAlgorithm() {
                           <Badge variant="default" className="text-xs">Preferred</Badge>
                         )}
                       </div>
-                      <span className="text-xs text-muted-foreground">{drug.route} · {drug.frequency}</span>
+                      <span className="text-xs text-muted-foreground flex items-center gap-1.5">{drug.route} · {drug.frequency} <FrequencyBadge frequency={drug.frequency} /></span>
                     </div>
 
                     <div className="grid grid-cols-2 gap-4 mb-3">
