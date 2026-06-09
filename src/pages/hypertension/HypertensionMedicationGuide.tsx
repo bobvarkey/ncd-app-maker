@@ -33,7 +33,7 @@ const medicationClasses = [
   {
     class: "Calcium Channel Blockers (CCBs)",
     suffix: "-pine",
-    examples: ["Amlodipine", "Nifedipine", "Diltiazem", "Verapamil"],
+    examples: ["Amlodipine", "Azelnidipine", "Nifedipine", "Diltiazem", "Verapamil"],
     mechanism: "Block L-type calcium channels → arterial vasodilation, ↓ peripheral resistance",
     indications: ["Isolated systolic HTN (elderly)", "Angina", "Black patients", "Metabolic syndrome"],
     contraindications: ["Cardiogenic shock", "Severe aortic stenosis", "Verapamil/Diltiazem: avoid with HFrEF"],
@@ -106,6 +106,7 @@ const drugDoseDetails: DrugDoseDetail[] = [
   { name: "Olmesartan", brand: "Benicar", drugClass: "ARB", doseRange: "20–40 mg OD", pearls: "Potent ARB. Rare sprue-like enteropathy reported.", caution: "Monitor for GI symptoms" },
 
   // ─── CCBs ───
+  { name: "Azelnidipine", brand: "Calblock", drugClass: "DHP-CCB", doseRange: "8–16 mg OD", pearls: "Long t½ (~19h) — true OD. Less pedal oedema vs amlodipine. Also blocks T-type Ca channels — may have less reflex tachycardia. Popular in Japanese/Asian markets.", caution: "Headache, dizziness. Avoid with strong CYP3A4 inhibitors." },
   { name: "Amlodipine", brand: "Norvasc", drugClass: "DHP-CCB", doseRange: "2.5–10 mg OD", pearls: "Long T½ (30-50h) — true OD dosing. Vasoselective. Peripheral edema common.", caution: "Lower extremity edema" },
   { name: "Nifedipine ER", brand: "Procardia XL, Adalat CC", drugClass: "DHP-CCB", doseRange: "30–90 mg OD", pearls: "ER/XL only — short-acting IR NEVER use (reflex tachycardia, ↑ CV events).", caution: "Short-acting form contraindicated" },
   { name: "Verapamil", brand: "Calan, Isoptin", drugClass: "Non-DHP CCB", doseRange: "120–480 mg/day", pearls: "Rate + BP control — use in AF + HTN. Causes constipation.", caution: "Avoid with BB (bradycardia). Negative inotrope." },

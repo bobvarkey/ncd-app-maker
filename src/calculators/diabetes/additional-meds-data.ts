@@ -121,6 +121,18 @@ export const ADDITIONAL_MEDS_DATA: DoseEntry[] = [
 
   // ═══════ CCBs ═══════
   {
+    drug: "Azelnidipine",
+    drugClass: "Calcium Channel Blocker (DHP)",
+    normalDose: "8–16 mg/day",
+    eGFR60_89: "No adjustment",
+    eGFR45_59: "No adjustment",
+    eGFR30_44: "No adjustment",
+    eGFR15_29: "No adjustment",
+    eGFRBelow15: "No adjustment — hepatic clearance",
+    notes: "Used in Asia (Japan, India). Long t½ (~19 h) — true OD dosing. Less peripheral oedema vs amlodipine. Also has some T-type calcium channel blocking effect.",
+    hepatic: "Avoid in severe hepatic impairment — extensively hepatically metabolised via CYP3A4.",
+  },
+  {
     drug: "Amlodipine",
     drugClass: "Calcium Channel Blocker (DHP)",
     normalDose: "2.5–10 mg/day",

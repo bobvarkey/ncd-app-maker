@@ -9,6 +9,7 @@ import GfrCalculator from "@/calculators/htn/GfrCalculator";
 type DoseEntry = {
   drug: string;
   drugClass: string;
+  frequency: string;
   normalDose: string;
   eGFR60_89: string;
   eGFR45_59: string;
@@ -22,6 +23,7 @@ const RENAL_DATA: DoseEntry[] = [
   {
     drug: "Metformin",
     drugClass: "Biguanide",
+    frequency: "OD–BD",
     normalDose: "500–2000 mg/day",
     eGFR60_89: "No adjustment",
     eGFR45_59: "No adjustment",
@@ -33,6 +35,7 @@ const RENAL_DATA: DoseEntry[] = [
   {
     drug: "Empagliflozin",
     drugClass: "SGLT2 Inhibitor",
+    frequency: "OD",
     normalDose: "10–25 mg/day",
     eGFR60_89: "No adjustment",
     eGFR45_59: "No adjustment",
@@ -44,6 +47,7 @@ const RENAL_DATA: DoseEntry[] = [
   {
     drug: "Dapagliflozin",
     drugClass: "SGLT2 Inhibitor",
+    frequency: "OD",
     normalDose: "5–10 mg/day",
     eGFR60_89: "No adjustment",
     eGFR45_59: "No adjustment",
@@ -55,6 +59,7 @@ const RENAL_DATA: DoseEntry[] = [
   {
     drug: "Canagliflozin",
     drugClass: "SGLT2 Inhibitor",
+    frequency: "OD",
     normalDose: "100–300 mg/day",
     eGFR60_89: "No adjustment",
     eGFR45_59: "Max 100 mg/day",
@@ -66,6 +71,7 @@ const RENAL_DATA: DoseEntry[] = [
   {
     drug: "Semaglutide (oral)",
     drugClass: "GLP-1 RA",
+    frequency: "OD",
     normalDose: "3–14 mg/day",
     eGFR60_89: "No adjustment",
     eGFR45_59: "No adjustment",
@@ -77,6 +83,7 @@ const RENAL_DATA: DoseEntry[] = [
   {
     drug: "Semaglutide (SC)",
     drugClass: "GLP-1 RA",
+    frequency: "Weekly",
     normalDose: "0.25–2 mg/week",
     eGFR60_89: "No adjustment",
     eGFR45_59: "No adjustment",
@@ -88,6 +95,7 @@ const RENAL_DATA: DoseEntry[] = [
   {
     drug: "Liraglutide",
     drugClass: "GLP-1 RA",
+    frequency: "OD",
     normalDose: "0.6–1.8 mg/day",
     eGFR60_89: "No adjustment",
     eGFR45_59: "No adjustment",
@@ -99,6 +107,7 @@ const RENAL_DATA: DoseEntry[] = [
   {
     drug: "Dulaglutide",
     drugClass: "GLP-1 RA",
+    frequency: "Weekly",
     normalDose: "0.75–4.5 mg/week",
     eGFR60_89: "No adjustment",
     eGFR45_59: "No adjustment",
@@ -110,6 +119,7 @@ const RENAL_DATA: DoseEntry[] = [
   {
     drug: "Tirzepatide",
     drugClass: "GIP/GLP-1 RA",
+    frequency: "Weekly",
     normalDose: "2.5–15 mg/week",
     eGFR60_89: "No adjustment",
     eGFR45_59: "No adjustment",
@@ -121,6 +131,7 @@ const RENAL_DATA: DoseEntry[] = [
   {
     drug: "Sitagliptin",
     drugClass: "DPP-4 Inhibitor",
+    frequency: "OD",
     normalDose: "100 mg/day",
     eGFR60_89: "No adjustment",
     eGFR45_59: "50 mg/day",
@@ -132,6 +143,7 @@ const RENAL_DATA: DoseEntry[] = [
   {
     drug: "Saxagliptin",
     drugClass: "DPP-4 Inhibitor",
+    frequency: "OD",
     normalDose: "5 mg/day",
     eGFR60_89: "No adjustment",
     eGFR45_59: "2.5 mg/day",
@@ -143,6 +155,7 @@ const RENAL_DATA: DoseEntry[] = [
   {
     drug: "Linagliptin",
     drugClass: "DPP-4 Inhibitor",
+    frequency: "OD",
     normalDose: "5 mg/day",
     eGFR60_89: "No adjustment",
     eGFR45_59: "No adjustment",
@@ -154,6 +167,7 @@ const RENAL_DATA: DoseEntry[] = [
   {
     drug: "Vildagliptin",
     drugClass: "DPP-4 Inhibitor",
+    frequency: "OD–BID",
     normalDose: "50 mg BID",
     eGFR60_89: "No adjustment",
     eGFR45_59: "50 mg OD",
@@ -165,6 +179,7 @@ const RENAL_DATA: DoseEntry[] = [
   {
     drug: "Pioglitazone",
     drugClass: "Thiazolidinedione",
+    frequency: "OD",
     normalDose: "15–45 mg/day",
     eGFR60_89: "No adjustment",
     eGFR45_59: "No adjustment",
@@ -176,6 +191,7 @@ const RENAL_DATA: DoseEntry[] = [
   {
     drug: "Glimepiride",
     drugClass: "Sulfonylurea",
+    frequency: "OD",
     normalDose: "1–4 mg/day",
     eGFR60_89: "No adjustment",
     eGFR45_59: "Start at 1 mg",
@@ -187,6 +203,7 @@ const RENAL_DATA: DoseEntry[] = [
   {
     drug: "Gliclazide",
     drugClass: "Sulfonylurea",
+    frequency: "OD–BD",
     normalDose: "40–320 mg/day",
     eGFR60_89: "No adjustment",
     eGFR45_59: "No adjustment",
@@ -198,6 +215,7 @@ const RENAL_DATA: DoseEntry[] = [
   {
     drug: "Glipizide",
     drugClass: "Sulfonylurea",
+    frequency: "OD",
     normalDose: "2.5–20 mg/day",
     eGFR60_89: "No adjustment",
     eGFR45_59: "No adjustment",
@@ -209,6 +227,7 @@ const RENAL_DATA: DoseEntry[] = [
   {
     drug: "Insulin Glargine",
     drugClass: "Basal Insulin",
+    frequency: "OD (bedtime)",
     normalDose: "Individualized",
     eGFR60_89: "No adjustment",
     eGFR45_59: "No adjustment",
@@ -220,6 +239,7 @@ const RENAL_DATA: DoseEntry[] = [
   {
     drug: "Insulin Degludec",
     drugClass: "Basal Insulin",
+    frequency: "OD",
     normalDose: "Individualized",
     eGFR60_89: "No adjustment",
     eGFR45_59: "No adjustment",
@@ -231,6 +251,7 @@ const RENAL_DATA: DoseEntry[] = [
   {
     drug: "Finerenone",
     drugClass: "MRA (non-steroidal)",
+    frequency: "OD",
     normalDose: "10–20 mg/day",
     eGFR60_89: "20 mg/day",
     eGFR45_59: "20 mg/day",
@@ -244,6 +265,7 @@ const RENAL_DATA: DoseEntry[] = [
   {
     drug: "Cephalexin",
     drugClass: "Cephalosporin (1st gen)",
+    frequency: "Q6h",
     normalDose: "250–500 mg Q6h",
     eGFR60_89: "No adjustment",
     eGFR45_59: "No adjustment",
@@ -255,6 +277,7 @@ const RENAL_DATA: DoseEntry[] = [
   {
     drug: "Cefuroxime",
     drugClass: "Cephalosporin (2nd gen)",
+    frequency: "BID",
     normalDose: "250–500 mg BID",
     eGFR60_89: "No adjustment",
     eGFR45_59: "No adjustment",
@@ -266,6 +289,7 @@ const RENAL_DATA: DoseEntry[] = [
   {
     drug: "Cefixime",
     drugClass: "Cephalosporin (3rd gen)",
+    frequency: "OD/BID",
     normalDose: "200–400 mg OD/BID",
     eGFR60_89: "No adjustment",
     eGFR45_59: "No adjustment",
@@ -277,6 +301,7 @@ const RENAL_DATA: DoseEntry[] = [
   {
     drug: "Ceftriaxone",
     drugClass: "Cephalosporin (3rd gen)",
+    frequency: "OD/BID",
     normalDose: "1–2 g OD/BID",
     eGFR60_89: "No adjustment",
     eGFR45_59: "No adjustment",
@@ -288,6 +313,7 @@ const RENAL_DATA: DoseEntry[] = [
   {
     drug: "Cefotaxime",
     drugClass: "Cephalosporin (3rd gen)",
+    frequency: "Q8h",
     normalDose: "1–2 g Q8h",
     eGFR60_89: "No adjustment",
     eGFR45_59: "No adjustment",
@@ -299,6 +325,7 @@ const RENAL_DATA: DoseEntry[] = [
   {
     drug: "Ceftazidime",
     drugClass: "Cephalosporin (3rd gen)",
+    frequency: "Q8h",
     normalDose: "1–2 g Q8h",
     eGFR60_89: "No adjustment",
     eGFR45_59: "No adjustment",
@@ -310,6 +337,7 @@ const RENAL_DATA: DoseEntry[] = [
   {
     drug: "Cefepime",
     drugClass: "Cephalosporin (4th gen)",
+    frequency: "Q8–12h",
     normalDose: "1–2 g Q8–12h",
     eGFR60_89: "No adjustment",
     eGFR45_59: "No adjustment",
@@ -322,6 +350,7 @@ const RENAL_DATA: DoseEntry[] = [
   {
     drug: "Amoxicillin",
     drugClass: "Penicillin",
+    frequency: "Q8h",
     normalDose: "250–500 mg Q8h",
     eGFR60_89: "No adjustment",
     eGFR45_59: "No adjustment",
@@ -333,6 +362,7 @@ const RENAL_DATA: DoseEntry[] = [
   {
     drug: "Amoxicillin-Clavulanate",
     drugClass: "Penicillin + β-lactamase inh.",
+    frequency: "BID–TID",
     normalDose: "625 mg TID / 1 g BID",
     eGFR60_89: "No adjustment",
     eGFR45_59: "No adjustment",
@@ -344,6 +374,7 @@ const RENAL_DATA: DoseEntry[] = [
   {
     drug: "Piperacillin-Tazobactam",
     drugClass: "Penicillin + β-lactamase inh.",
+    frequency: "Q6h",
     normalDose: "4.5 g Q6h",
     eGFR60_89: "4.5 g Q6h",
     eGFR45_59: "4.5 g Q6h",
@@ -355,6 +386,7 @@ const RENAL_DATA: DoseEntry[] = [
   {
     drug: "Ciprofloxacin",
     drugClass: "Fluoroquinolone",
+    frequency: "BID",
     normalDose: "250–750 mg BID",
     eGFR60_89: "No adjustment",
     eGFR45_59: "No adjustment",
@@ -366,6 +398,7 @@ const RENAL_DATA: DoseEntry[] = [
   {
     drug: "Levofloxacin",
     drugClass: "Fluoroquinolone",
+    frequency: "OD",
     normalDose: "250–750 mg OD",
     eGFR60_89: "No adjustment",
     eGFR45_59: "No adjustment",
@@ -377,6 +410,7 @@ const RENAL_DATA: DoseEntry[] = [
   {
     drug: "Azithromycin",
     drugClass: "Macrolide",
+    frequency: "OD",
     normalDose: "250–500 mg OD",
     eGFR60_89: "No adjustment",
     eGFR45_59: "No adjustment",
@@ -388,6 +422,7 @@ const RENAL_DATA: DoseEntry[] = [
   {
     drug: "Vancomycin",
     drugClass: "Glycopeptide",
+    frequency: "Q8–12h",
     normalDose: "15–20 mg/kg Q8–12h",
     eGFR60_89: "15–20 mg/kg Q12h",
     eGFR45_59: "15–20 mg/kg Q12–24h",
@@ -399,6 +434,7 @@ const RENAL_DATA: DoseEntry[] = [
   {
     drug: "Gentamicin",
     drugClass: "Aminoglycoside",
+    frequency: "Q24h (extended interval)",
     normalDose: "5–7 mg/kg Q24h",
     eGFR60_89: "No adjustment",
     eGFR45_59: "5–7 mg/kg Q24h",
@@ -410,6 +446,7 @@ const RENAL_DATA: DoseEntry[] = [
   {
     drug: "Metronidazole",
     drugClass: "Nitroimidazole",
+    frequency: "Q8h",
     normalDose: "400–500 mg Q8h",
     eGFR60_89: "No adjustment",
     eGFR45_59: "No adjustment",
@@ -421,6 +458,7 @@ const RENAL_DATA: DoseEntry[] = [
   {
     drug: "Clindamycin",
     drugClass: "Lincosamide",
+    frequency: "Q6–8h",
     normalDose: "300–600 mg Q6–8h",
     eGFR60_89: "No adjustment",
     eGFR45_59: "No adjustment",
@@ -432,6 +470,7 @@ const RENAL_DATA: DoseEntry[] = [
   {
     drug: "Doxycycline",
     drugClass: "Tetracycline",
+    frequency: "BID",
     normalDose: "100 mg BID",
     eGFR60_89: "No adjustment",
     eGFR45_59: "No adjustment",
@@ -443,6 +482,7 @@ const RENAL_DATA: DoseEntry[] = [
   {
     drug: "Linezolid",
     drugClass: "Oxazolidinone",
+    frequency: "BID",
     normalDose: "600 mg BID",
     eGFR60_89: "No adjustment",
     eGFR45_59: "No adjustment",
@@ -454,6 +494,7 @@ const RENAL_DATA: DoseEntry[] = [
   {
     drug: "Nitrofurantoin",
     drugClass: "Nitrofuran",
+    frequency: "Q6h",
     normalDose: "100 mg Q6h (UTI)",
     eGFR60_89: "No adjustment",
     eGFR45_59: "No adjustment",
@@ -465,6 +506,7 @@ const RENAL_DATA: DoseEntry[] = [
   {
     drug: "Trimethoprim-Sulfamethoxazole",
     drugClass: "Sulfonamide combo",
+    frequency: "BID (DS tabs)",
     normalDose: "800/160 mg BID (DS)",
     eGFR60_89: "No adjustment",
     eGFR45_59: "No adjustment",
@@ -478,6 +520,7 @@ const RENAL_DATA: DoseEntry[] = [
   {
     drug: "Apixaban",
     drugClass: "NOAC (Factor Xa inhibitor)",
+    frequency: "BID",
     normalDose: "5 mg BID (AF); 10 mg BID ×7d then 5 mg BID (VTE)",
     eGFR60_89: "No adjustment",
     eGFR45_59: "No adjustment",
@@ -489,6 +532,7 @@ const RENAL_DATA: DoseEntry[] = [
   {
     drug: "Rivaroxaban",
     drugClass: "NOAC (Factor Xa inhibitor)",
+    frequency: "OD",
     normalDose: "20 mg OD (AF, with food); 15 mg BID ×21d then 20 mg OD (VTE)",
     eGFR60_89: "No adjustment",
     eGFR45_59: "15 mg OD (AF)",
@@ -500,6 +544,7 @@ const RENAL_DATA: DoseEntry[] = [
   {
     drug: "Edoxaban",
     drugClass: "NOAC (Factor Xa inhibitor)",
+    frequency: "OD",
     normalDose: "60 mg OD",
     eGFR60_89: "60 mg OD",
     eGFR45_59: "30 mg OD",
@@ -511,6 +556,7 @@ const RENAL_DATA: DoseEntry[] = [
   {
     drug: "Dabigatran",
     drugClass: "NOAC (Direct thrombin inhibitor)",
+    frequency: "BID",
     normalDose: "150 mg BID (AF)",
     eGFR60_89: "150 mg BID",
     eGFR45_59: "150 mg BID",
@@ -524,6 +570,7 @@ const RENAL_DATA: DoseEntry[] = [
   {
     drug: "Warfarin",
     drugClass: "Vitamin K antagonist",
+    frequency: "OD (INR-guided)",
     normalDose: "2–10 mg/day, INR-guided (target 2–3)",
     eGFR60_89: "No adjustment",
     eGFR45_59: "No adjustment",
@@ -535,6 +582,7 @@ const RENAL_DATA: DoseEntry[] = [
   {
     drug: "Acenocoumarol",
     drugClass: "Vitamin K antagonist",
+    frequency: "OD (INR-guided)",
     normalDose: "1–8 mg/day, INR-guided",
     eGFR60_89: "No adjustment",
     eGFR45_59: "No adjustment",
@@ -548,6 +596,7 @@ const RENAL_DATA: DoseEntry[] = [
   {
     drug: "Unfractionated Heparin (UFH)",
     drugClass: "Heparin (parenteral)",
+    frequency: "IV infusion (aPTT-guided)",
     normalDose: "80 U/kg bolus then 18 U/kg/h IV (VTE/ACS), aPTT-guided",
     eGFR60_89: "No adjustment",
     eGFR45_59: "No adjustment",
@@ -559,6 +608,7 @@ const RENAL_DATA: DoseEntry[] = [
   {
     drug: "Enoxaparin",
     drugClass: "LMWH",
+    frequency: "BID/OD",
     normalDose: "1 mg/kg SC Q12h (treatment) or 40 mg SC OD (prophylaxis)",
     eGFR60_89: "No adjustment",
     eGFR45_59: "No adjustment",
@@ -570,6 +620,7 @@ const RENAL_DATA: DoseEntry[] = [
   {
     drug: "Dalteparin",
     drugClass: "LMWH",
+    frequency: "OD",
     normalDose: "200 IU/kg SC OD (VTE) or 100 IU/kg BID; 5000 IU OD (prophylaxis)",
     eGFR60_89: "No adjustment",
     eGFR45_59: "No adjustment",
@@ -581,6 +632,7 @@ const RENAL_DATA: DoseEntry[] = [
   {
     drug: "Tinzaparin",
     drugClass: "LMWH",
+    frequency: "OD",
     normalDose: "175 IU/kg SC OD",
     eGFR60_89: "No adjustment",
     eGFR45_59: "No adjustment",
@@ -592,6 +644,7 @@ const RENAL_DATA: DoseEntry[] = [
   {
     drug: "Fondaparinux",
     drugClass: "Synthetic pentasaccharide (anti-Xa)",
+    frequency: "OD",
     normalDose: "2.5 mg SC OD (prophylaxis); 5–10 mg SC OD (treatment, by weight)",
     eGFR60_89: "No adjustment",
     eGFR45_59: "No adjustment",
@@ -730,6 +783,7 @@ const RenalDoseAdjustment = () => {
               <TableHeader>
                 <TableRow className="bg-muted/30">
                   <TableHead className="min-w-[140px]">Drug</TableHead>
+                  <TableHead className="min-w-[90px]">Frequency</TableHead>
                   <TableHead className="min-w-[120px]">Normal Dose</TableHead>
                   {eGFRColumns.map(col => (
                     <TableHead key={col.key} className="min-w-[100px] text-center">
@@ -748,6 +802,7 @@ const RenalDoseAdjustment = () => {
                         {d.drug}
                       </div>
                     </TableCell>
+                    <TableCell className="text-xs font-mono text-muted-foreground">{d.frequency}</TableCell>
                     <TableCell className="text-xs">{d.normalDose}</TableCell>
                     {eGFRColumns.map(col => (
                       <TableCell key={col.key} className={`text-xs text-center ${cellStyle(d[col.key])}`}>
