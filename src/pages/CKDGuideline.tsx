@@ -247,11 +247,10 @@ const CKDGuideline = () => {
         </button>
         {showImage && (
           <div className="mt-3 animate-slide-in">
-            <img
+            <ZoomableImage
               src={niceAlgorithmImg}
               alt="NICE NG28 Type 2 Diabetes glucose-lowering algorithm flowchart showing pathways for no comorbidities, obesity, CKD, early-onset, heart failure, ASCVD, and frailty"
               className="w-full rounded-lg border border-border"
-              loading="lazy"
             />
             <p className="text-xs text-muted-foreground mt-2 italic">
               Source: NICE NG28 Type 2 diabetes in adults — management. © NICE 2026.
