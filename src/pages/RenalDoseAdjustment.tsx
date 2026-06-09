@@ -275,6 +275,20 @@ const RENAL_DATA: DoseEntry[] = [
     notes: "Dual L/N-type CCB — reduces sympathetic overactivity. Hepatic metabolism (CYP3A4). Minimal renal excretion. Preferred CCB in CKD with proteinuria due to N-type blockade. Monitor edema.",
   },
 
+  // ═══════ Beta Blockers ═══════
+  {
+    drug: "Nebivolol",
+    drugClass: "Beta Blocker (vasodilating)",
+    frequency: "OD",
+    normalDose: "2.5–10 mg/day",
+    eGFR60_89: "No adjustment",
+    eGFR45_59: "No adjustment",
+    eGFR30_44: "Start at 2.5 mg",
+    eGFR15_29: "Start at 2.5 mg",
+    eGFRBelow15: "Limited data",
+    notes: "3rd-gen β₁-selective blocker with NO-mediated vasodilation. Hepatic metabolism (CYP2D6). Active metabolites accumulate in CKD — start low. Reduces oxidative stress and improves endothelial function. Preferred β-blocker in CKD with metabolic syndrome.",
+  },
+
   // ═══════ Antibiotics — Cephalosporins ═══════
   {
     drug: "Cephalexin",
