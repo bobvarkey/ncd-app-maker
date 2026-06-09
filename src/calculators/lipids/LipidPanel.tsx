@@ -758,7 +758,7 @@ export default function LipidCalculator() {
       {/* ─── Hero Image ─── */}
       {activeTab === "calculator" && (
         <div className="w-full overflow-hidden" style={{ maxHeight: "220px" }}>
-          <img src={heroDoctorImg} alt="Cardiovascular care" className="w-full object-cover object-top" style={{ maxHeight: "220px" }} />
+          <ZoomableImage src={heroDoctorImg} alt="Cardiovascular care" className="w-full object-cover object-top" style={{ maxHeight: "220px" }} />
         </div>
       )}
 
@@ -1047,7 +1047,7 @@ export default function LipidCalculator() {
 
             {/* ── Divider image ── */}
             <div className="rounded-xl overflow-hidden opacity-80 my-1" style={{ maxHeight: "110px" }}>
-              <img src={lipidsImg} alt="Lipid particles" className="w-full object-cover object-center" style={{ maxHeight: "110px" }} />
+              <ZoomableImage src={lipidsImg} alt="Lipid particles" className="w-full object-cover object-center" style={{ maxHeight: "110px" }} />
             </div>
 
             {/* ── Section 2: Lab Values ── */}
@@ -1184,7 +1184,7 @@ export default function LipidCalculator() {
 
             {/* ── Divider image ── */}
             <div className="rounded-xl overflow-hidden opacity-80 my-1" style={{ maxHeight: "110px" }}>
-              <img src={cvRiskImg} alt="CV risk measures" className="w-full object-cover object-top" style={{ maxHeight: "110px" }} />
+              <ZoomableImage src={cvRiskImg} alt="CV risk measures" className="w-full object-cover object-top" style={{ maxHeight: "110px" }} />
             </div>
 
             {/* ── Section 3: PREVENT Risk Score (Primary only) ── */}
@@ -1260,7 +1260,7 @@ export default function LipidCalculator() {
 
             {/* ── Divider ── */}
             <div className="rounded-xl overflow-hidden opacity-75 my-1">
-              <img src={lipoproteinImg} alt="Lipoprotein particles" className="w-full object-cover object-center" style={{ maxHeight: "100px" }} />
+              <ZoomableImage src={lipoproteinImg} alt="Lipoprotein particles" className="w-full object-cover object-center" style={{ maxHeight: "100px" }} />
             </div>
 
             {/* ── Major RFs + Risk Modifiers (Primary only) ── */}
@@ -1338,7 +1338,7 @@ export default function LipidCalculator() {
 
             {/* ── Divider ── */}
             <div className="rounded-xl overflow-hidden opacity-60 my-1">
-              <img src={cprFrameworkImg} alt="CPR framework" className="w-full object-cover object-top" style={{ maxHeight: "80px" }} />
+              <ZoomableImage src={cprFrameworkImg} alt="CPR framework" className="w-full object-cover object-top" style={{ maxHeight: "80px" }} />
             </div>
 
 
@@ -1374,7 +1374,7 @@ export default function LipidCalculator() {
 
             {/* ── Divider ── */}
             <div className="rounded-xl overflow-hidden opacity-75 my-1">
-              <img src={cprFrameworkImg} alt="CPR framework" className="w-full object-cover object-top" style={{ maxHeight: "100px" }} />
+              <ZoomableImage src={cprFrameworkImg} alt="CPR framework" className="w-full object-cover object-top" style={{ maxHeight: "100px" }} />
             </div>
 
             {/* ── Section: High-Risk Features ── */}
@@ -1448,7 +1448,7 @@ export default function LipidCalculator() {
 
             {/* ── Divider ── */}
             <div className="rounded-xl overflow-hidden opacity-75 my-1">
-              <img src={cvRiskImg} alt="CV risk measures" className="w-full object-cover object-top" style={{ maxHeight: "100px" }} />
+              <ZoomableImage src={cvRiskImg} alt="CV risk measures" className="w-full object-cover object-top" style={{ maxHeight: "100px" }} />
             </div>
 
             {/* ── Section: Risk Modifiers ── */}
@@ -1567,7 +1567,7 @@ export default function LipidCalculator() {
             {prevType === "secondary" && (<>
             {/* ── Divider ── */}
             <div className="rounded-xl overflow-hidden opacity-75 my-1">
-              <img src={lipidsImg} alt="Lipid particles" className="w-full object-cover object-center" style={{ maxHeight: "100px" }} />
+              <ZoomableImage src={lipidsImg} alt="Lipid particles" className="w-full object-cover object-center" style={{ maxHeight: "100px" }} />
             </div>
 
             {/* ── Section 5: ASCVD History & Modifiers ── */}
@@ -1757,7 +1757,7 @@ export default function LipidCalculator() {
 
             {/* ── Divider ── */}
             <div className="rounded-xl overflow-hidden opacity-75 my-1">
-              <img src={cprFrameworkImg} alt="CPR framework" className="w-full object-cover object-top" style={{ maxHeight: "100px" }} />
+              <ZoomableImage src={cprFrameworkImg} alt="CPR framework" className="w-full object-cover object-top" style={{ maxHeight: "100px" }} />
             </div>
 
             {/* ── Section 7: Decision Logic ── */}
@@ -1792,7 +1792,7 @@ export default function LipidCalculator() {
 
             {/* ── Divider ── */}
             <div className="rounded-xl overflow-hidden opacity-75 my-1">
-              <img src={cvRiskImg} alt="CV risk measures" className="w-full object-cover object-top" style={{ maxHeight: "100px" }} />
+              <ZoomableImage src={cvRiskImg} alt="CV risk measures" className="w-full object-cover object-top" style={{ maxHeight: "100px" }} />
             </div>
 
             {/* ── Section 8: EMR Note ── */}
