@@ -261,6 +261,20 @@ const RENAL_DATA: DoseEntry[] = [
     notes: "Indicated for CKD + T2DM. Monitor K+ closely. Do not start if K >5.0.",
   },
 
+  // ═══════ Calcium Channel Blockers ═══════
+  {
+    drug: "Cilnidipine",
+    drugClass: "Calcium Channel Blocker (N/L-type)",
+    frequency: "OD",
+    normalDose: "5–20 mg/day",
+    eGFR60_89: "No adjustment",
+    eGFR45_59: "No adjustment",
+    eGFR30_44: "No adjustment",
+    eGFR15_29: "Use with caution",
+    eGFRBelow15: "Limited data",
+    notes: "Dual L/N-type CCB — reduces sympathetic overactivity. Hepatic metabolism (CYP3A4). Minimal renal excretion. Preferred CCB in CKD with proteinuria due to N-type blockade. Monitor edema.",
+  },
+
   // ═══════ Antibiotics — Cephalosporins ═══════
   {
     drug: "Cephalexin",
