@@ -1,3 +1,4 @@
+import { FrequencyBadge } from "@/components/FrequencyBadge";
 import { useMemo, useState } from "react";
 import { AlertTriangle, Pill, Printer, Copy, Download, ShieldAlert, Baby, Activity, Hospital, FlaskConical } from "lucide-react";
 import { downloadTextFile } from "@/lib/clinical-utils";
