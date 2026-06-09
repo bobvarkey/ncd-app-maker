@@ -4,6 +4,7 @@ import { Input } from "@/components/ui/input";
 import {
   Table, TableHeader, TableBody, TableHead, TableRow, TableCell,
 } from "@/components/ui/table";
+import GfrCalculator from "@/calculators/htn/GfrCalculator";
 
 type DoseEntry = {
   drug: string;
@@ -641,6 +642,49 @@ const RenalDoseAdjustment = () => {
         </h1>
         <p className="text-sm text-muted-foreground">eGFR-based dose modifications for diabetes medications (ADA 2026 + KDIGO)</p>
       </div>
+
+      {/* eGFR Calculator */}
+      <GfrCalculator />
+
+      {/* Formula Reference */}
+      <details className="clinical-card p-3 group">
+        <summary className="text-sm font-medium text-primary cursor-pointer select-none list-none flex items-center gap-2">
+          <span className="text-xs">📐</span>
+          CKD-EPI 2021 eGFR Formula
+          <span className="text-xs text-muted-foreground ml-auto group-open:rotate-180 transition-transform">▼</span>
+        </summary>
+        <div className="mt-3 space-y-2 text-xs text-muted-foreground border-t border-border pt-3">
+          <p><strong className="text-foreground">Equation:</strong></p>
+          <div className="bg-muted/40 p-3 rounded-md font-mono text-[11px] leading-relaxed">
+            eGFR = 142 × min(Cr/κ, 1)<sup>α</sup> × max(Cr/κ, 1)<sup>−1.200</sup> × 0.9938<sup>Age</sup> × SF
+          </div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 mt-2">
+            <div>
+              <p><strong className="text-foreground">Sex</strong></p>
+              <table className="w-full text-[11px] mt-1">
+                <thead><tr className="border-b border-border"><th className="text-left pr-4">Parameter</th><th className="text-left">Male</th><th className="text-left pl-4">Female</th></tr></thead>
+                <tbody>
+                  <tr><td className="pr-4">κ</td><td>0.9</td><td className="pl-4">0.7</td></tr>
+                  <tr><td className="pr-4">α</td><td>−0.302</td><td className="pl-4">−0.241</td></tr>
+                  <tr><td className="pr-4">SF</td><td>1.000</td><td className="pl-4">1.012</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <div>
+              <p><strong className="text-foreground">Variables</strong></p>
+              <ul className="list-disc list-inside space-y-0.5 mt-1">
+                <li>Cr = Serum creatinine (mg/dL)</li>
+                <li>κ = 0.7 (F) / 0.9 (M)</li>
+                <li>SF = Sex factor</li>
+              </ul>
+            </div>
+          </div>
+          <p className="text-[11px] italic mt-2">
+            Race-free equation. Valid for adults ≥18 years. Results in mL/min/1.73m².
+            Inokuchi et al. 2021 (Ann Clin Biochem).
+          </p>
+        </div>
+      </details>
 
       {/* Legend */}
       <div className="clinical-card p-3 flex flex-wrap gap-4 text-xs">
