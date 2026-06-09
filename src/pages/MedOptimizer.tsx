@@ -1,3 +1,4 @@
+import { FrequencyBadge } from "@/components/FrequencyBadge";
 import { useState, useEffect, useMemo, useRef, useCallback } from "react";
 import { PatientData, EXAMPLE_PATIENT, loadPatient } from "@/lib/patient-data";
 import {
@@ -377,7 +378,7 @@ const MedOptimizer = () => {
                   <div className="bg-muted/50 rounded-lg p-3 mt-2">
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm">
                       <div><span className="text-muted-foreground text-xs font-medium">Dose:</span> <strong className="text-base">{med.dose}</strong></div>
-                      <div><span className="text-muted-foreground text-xs font-medium">Freq:</span> <strong className="text-base">{med.frequency}</strong></div>
+                      <div className="flex items-center gap-2"><span className="text-muted-foreground text-xs font-medium">Freq:</span> <strong className="text-base">{med.frequency}</strong> <FrequencyBadge frequency={med.frequency} /></div>
                     </div>
                   </div>
                 </button>

@@ -2,6 +2,7 @@ import { NextBestMed as NextBestMedType, getAllContraindicationChecks } from "@/
 import { Sparkles, ArrowRight, AlertTriangle, AlertCircle, CheckCircle2, Lightbulb, BarChart3, Trophy, Apple, Zap, Weight, Heart, Target, Calendar } from "lucide-react";
 import { useState } from "react";
 import { PatientData } from "@/lib/patient-data";
+import { FrequencyBadge } from "@/components/FrequencyBadge";
 
 interface Props {
   nextBest: NextBestMedType;
@@ -71,7 +72,7 @@ export function NextBestMed({ nextBest, patient }: Props) {
             <h4 className="font-bold text-base">{rec.drug}</h4>
             <p className="text-xs text-muted-foreground mt-1">{rec.reason}</p>
             <div className="flex flex-wrap gap-2 mt-3">
-              <span className="bg-blue-500/20 text-blue-300 px-2.5 py-1.5 rounded-full text-xs font-semibold border border-blue-500/40">📅 {rec.frequency || "OD"}</span>
+              <FrequencyBadge frequency={rec.frequency || "OD"} withIcon className="text-xs py-1" />
               <span className="bg-primary/10 text-primary px-2.5 py-1 rounded-full text-xs">{rec.dose} {rec.frequency}</span>
               <span className="bg-muted px-2.5 py-1 rounded-full text-xs">HbA1c ↓ {rec.hba1cReduction}</span>
               {rec.cvBenefit && <span className="bg-success/10 text-success px-2.5 py-1 rounded-full text-xs">✓ CV Benefit</span>}

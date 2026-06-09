@@ -1,3 +1,4 @@
+import { FrequencyBadge } from "@/components/FrequencyBadge";
 import { useState, useEffect, useMemo } from "react";
 import { PatientData, EXAMPLE_PATIENT, loadPatient, getBMICategory, getCKDStage } from "@/lib/patient-data";
 import { generateMedRecommendations, getHypoProtocol, getLipidTargets, getCategoryLabel, getDrugClassLabel, AlgorithmPriority } from "@/lib/med-logic";
@@ -154,7 +155,7 @@ const SummaryPage = () => {
                         <span className="text-sm font-medium">{med.drug}</span>
                         <span className={`text-xs px-1.5 py-0.5 rounded-full ${priorityBadge(med.priority)}`}>{med.priority}</span>
                       </div>
-                      <p className="text-xs text-muted-foreground">{getDrugClassLabel(med.drugClass)} · <strong>{med.dose}</strong> {med.frequency}</p>
+                      <p className="text-xs text-muted-foreground flex items-center gap-1.5 flex-wrap">{getDrugClassLabel(med.drugClass)} · <strong>{med.dose}</strong> {med.frequency} <FrequencyBadge frequency={med.frequency} /></p>
                     </div>
                     {isOpen ? <ChevronUp className="w-3.5 h-3.5 text-muted-foreground shrink-0" /> : <ChevronDown className="w-3.5 h-3.5 text-muted-foreground shrink-0" />}
                   </div>
