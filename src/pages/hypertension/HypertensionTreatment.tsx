@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { AbbreviationHover, AbbrText } from "@/components/AbbreviationHover";
+import ZoomableImage from "@/components/ZoomableImage";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -396,14 +397,11 @@ export default function HypertensionTreatment() {
           <p className="text-xs text-muted-foreground">Mnemonic-based escalation guide (tap to open full size)</p>
         </CardHeader>
         <CardContent>
-          <a href={tampDcmiImg.url} target="_blank" rel="noopener noreferrer" className="block">
-            <img
-              src={tampDcmiImg.url}
-              alt="Stepwise therapy for resistant hypertension: TAMP-DCMI mnemonic"
-              className="w-full h-auto rounded-md border border-border"
-              loading="lazy"
-            />
-          </a>
+          <ZoomableImage
+            src={tampDcmiImg.url}
+            alt="Stepwise therapy for resistant hypertension: TAMP-DCMI mnemonic"
+            className="w-full h-auto rounded-md border border-border"
+          />
         </CardContent>
       </Card>
 

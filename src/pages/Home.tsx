@@ -1,6 +1,7 @@
 import React, { useState, useRef } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Activity, Droplets, Heart, Scale, Syringe, Activity as PulseIcon, Dna, FileText, ChevronRight, Info, ChevronDown, Upload, Sparkles, Calculator, Stethoscope, FileSearch, UtensilsCrossed, Scan, CheckCircle2, X, AlertTriangle } from "lucide-react";
+import ZoomableImage from "@/components/ZoomableImage";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -212,7 +213,7 @@ function OCRUpload({ onValuesExtracted }: OCRUploadProps) {
               ) : (
                 <div className="space-y-3">
                   <div className="relative">
-                    <img src={previewUrl} alt="Lab report preview" className="rounded-lg max-h-48 mx-auto" />
+                    <ZoomableImage src={previewUrl} alt="Lab report preview" className="rounded-lg max-h-48 mx-auto" />
                     {isProcessing && (
                       <div className="absolute inset-0 bg-background/80 rounded-lg flex items-center justify-center">
                         <div className="text-center">

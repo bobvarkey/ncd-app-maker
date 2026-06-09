@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, CSSProperties } from "react";
 import {
   Dialog,
   DialogContent,
@@ -10,9 +10,19 @@ interface ZoomableImageProps {
   src: string;
   alt: string;
   className?: string;
+  style?: CSSProperties;
+  wrapperClassName?: string;
+  loading?: "lazy" | "eager";
 }
 
-export default function ZoomableImage({ src, alt, className = "" }: ZoomableImageProps) {
+export default function ZoomableImage({
+  src,
+  alt,
+  className = "",
+  style,
+  wrapperClassName = "",
+  loading = "lazy",
+}: ZoomableImageProps) {
   const [open, setOpen] = useState(false);
 
   return (
@@ -20,19 +30,21 @@ export default function ZoomableImage({ src, alt, className = "" }: ZoomableImag
       <DialogTrigger asChild>
         <button
           type="button"
-          className={`group relative cursor-pointer overflow-hidden rounded-lg border border-border ${className}`}
+          aria-label={`Zoom: ${alt}`}
+          className={`group relative cursor-zoom-in block w-full overflow-hidden ${wrapperClassName}`}
           onClick={() => setOpen(true)}
         >
           <img
             src={src}
             alt={alt}
-            className="w-full h-auto object-contain"
+            loading={loading}
+            className={className}
+            style={style}
             draggable={false}
           />
-          {/* Hover overlay — subtle zoom hint */}
-          <div className="absolute inset-0 flex items-center justify-center bg-black/0 transition-colors group-hover:bg-black/10">
-            <ZoomIn className="h-6 w-6 text-white opacity-0 transition-opacity group-hover:opacity-80 drop-shadow-lg" />
-          </div>
+          <span className="pointer-events-none absolute top-2 right-2 rounded-full bg-black/50 p-1 opacity-0 transition-opacity group-hover:opacity-100">
+            <ZoomIn className="h-4 w-4 text-white" />
+          </span>
         </button>
       </DialogTrigger>
       <DialogContent className="max-w-[95vw] max-h-[95vh] p-2 sm:p-4 bg-background border-border">

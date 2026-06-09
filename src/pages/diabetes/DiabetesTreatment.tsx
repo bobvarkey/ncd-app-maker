@@ -9,6 +9,7 @@ import { Separator } from "@/components/ui/separator";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 import { cn } from "@/lib/utils";
 import treatmentAlgorithmImage from "@/assets/diabetes-treatment-algorithm.png.asset.json";
+import ZoomableImage from "@/components/ZoomableImage";
 
 // Algorithm Step Component
 interface AlgorithmStepProps {
@@ -342,11 +343,10 @@ const TreatmentAlgorithm = () => {
       <CardContent>
         <figure className="mb-4 rounded-lg border border-border bg-white overflow-hidden">
           <div className="w-full overflow-x-auto">
-            <img
+            <ZoomableImage
               src={treatmentAlgorithmImage.url}
               alt="Diabetes treatment algorithm: HbA1c-based stepped approach from monotherapy to dual, triple therapy and insulin"
               className="w-full h-auto min-w-[320px] object-contain rounded-t"
-              loading="lazy"
             />
           </div>
           <figcaption className="px-3 py-2 text-xs text-muted-foreground text-center bg-white">
