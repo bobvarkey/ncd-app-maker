@@ -1,5 +1,5 @@
 import {
-  LayoutDashboard, User, UtensilsCrossed, Pizza, Pill, CalendarDays, TrendingDown, FileText, Syringe, ShieldAlert, FlaskConical, HeartPulse, Bean, Droplet, BookOpen, TableProperties, Activity, BookMarked, TriangleAlert, ArrowLeftRight, MessageSquare, AlertTriangle, Brain,
+  LayoutDashboard, User, UtensilsCrossed, Pizza, Pill, CalendarDays, TrendingDown, FileText, Syringe, ShieldAlert, FlaskConical, HeartPulse, Bean, Droplet, BookOpen, TableProperties, Activity, BookMarked, TriangleAlert, ArrowLeftRight, MessageSquare, AlertTriangle, Brain, Scale, Shield as ShieldIcon, AlertTriangle as WarningTriangle,
 } from "lucide-react";
 import { NavLink } from "@/components/NavLink";
 import { useLocation } from "react-router-dom";
@@ -33,6 +33,10 @@ const items = [
   { title: "Hyperglycemic Emergency", url: "/hyperglycemic-emergency", icon: AlertTriangle },
   { title: "T1D Treatment Algorithm", url: "/type1-treatment-algorithm", icon: Brain },
   { title: "T2D Treatment Algorithm", url: "/type2-treatment-algorithm", icon: Brain },
+  // Legal / Compliance
+  { title: "Disclaimer", url: "/disclaimer", icon: WarningTriangle },
+  { title: "Privacy Policy", url: "/privacy", icon: ShieldIcon },
+  { title: "Terms of Service", url: "/terms", icon: Scale },
 ];
 
 export function AppSidebar() {

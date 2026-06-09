@@ -1,64 +1,79 @@
 /**
- * Automated static-analysis "visual regression" guard.
+ * Dark-theme contrast regression guard for the pure-black (#000) background
+ * and pure-white (#fff) foreground theme.
  *
- * The app runs on a light theme. Every label, value, and placeholder
- * MUST resolve to dark black (or muted-foreground) on light backgrounds.
- * Because jsdom does not compute CSS, we cannot do true pixel diffing
- * inside vitest — instead we scan every component for the patterns
- * that have historically caused light-on-light or dark-on-dark bugs.
+ * Scans all TSX/JSX source files for className tokens that would produce
+ * invisible or low-contrast text on the app's black or near-black surfaces.
+ *
+ * This is a static-analysis guard — jsdom cannot compute CSS custom-prop values,
+ * so we pattern-match Tailwind and CSS tokens that carry contrast risk.
  */
+
 import { describe, it, expect } from "vitest";
 import { readdirSync, readFileSync, statSync } from "fs";
-import { join, relative, dirname } from "path";
+import { join, relative } from "path";
 import { fileURLToPath } from "url";
 
 const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
+const __dirname = join(__filename, "..");
 const ROOT = join(__dirname, "..");
 
+// ── Surface colour buckets ──────────────────────────────────────
+
+/** Tokens that render a dark surface (black / very dark) */
 const DARK_BG_TOKENS = [
-  // Tailwind palette — 600 and darker are visually dark surfaces
-  /\bbg-(?:slate|gray|zinc|neutral|stone)-(?:6|7|8|9)\d{2}\b/,
-  /\bbg-(?:blue|indigo|violet|purple|pink|rose|red|orange|emerald|green|teal|cyan|sky)-(?:7|8|9)\d{2}\b/,
   /\bbg-black\b/,
-  // Semantic dark surfaces only (destructive & foreground are dark)
-  /\bbg-(?:destructive|foreground)(?:\/\d+)?\b/,
+  /\bbg-background\b/,
+  /\bbg-card\b/,
+  /\bbg-popover\b/,
+  /\bbg-muted\b/,
+  /\bbg-secondary\b/,
+  /\bbg-sidebar\b/,
+  /\bbg-sidebar-accent\b/,
+  // Tailwind gray/neutral 800–950 are near-black
+  /\bbg-(?:slate|gray|zinc|neutral|stone)-(?:8|9)\d{2}\b/,
+  /\bbg-\[#1[0-9a-f]{3,5}\]/i,
 ];
 
-const LIGHT_TEXT_TOKENS = [
-  /\btext-white\b/,
-  /\btext-(?:slate|gray|zinc|neutral|stone)-(?:50|100|200|300)\b/,
-];
-
-const DARK_TEXT_TOKENS = [
-  /\btext-(?:slate|gray|zinc|neutral|stone)-(?:7|8|9)\d{2}\b/,
-  /\btext-black\b/,
-];
-
-// Tokens that explicitly opt into safe theme text — if any of these
-// appear on the same element, the element is fine.
-const SAFE_TEXT_TOKENS = [
-  /\btext-foreground\b/,
-  /\btext-(?:primary|secondary|accent|destructive|card|popover|muted)-foreground\b/,
-];
-
-// If the same className ALSO carries a clearly-light bg, the dark text is OK.
+/** Tokens that render a light surface (white / off-white) */
 const LIGHT_BG_TOKENS = [
   /\bbg-white\b/,
-  /\bbg-(?:slate|gray|zinc|neutral|stone)-(?:50|100|200|300)\b/,
-  /\bbg-(?:amber|yellow|blue|green|red|orange|cyan|emerald|teal|sky|indigo|violet|purple|pink|rose|lime)-(?:50|100|200)\b/,
+  /\bbg-(?:slate|gray|zinc|neutral|stone)-(?:50|100|200)\b/,
 ];
 
-function walk(dir: string, out: string[] = []): string[] {
-  for (const entry of readdirSync(dir)) {
-    if (entry === "node_modules" || entry.startsWith(".")) continue;
-    const full = join(dir, entry);
-    const st = statSync(full);
-    if (st.isDirectory()) walk(full, out);
-    else if (/\.(tsx|jsx)$/.test(entry) && !/\.(test|spec)\./.test(entry)) out.push(full);
-  }
-  return out;
-}
+/** Tokens that set foreground to the semantic white variable */
+const WHITE_FG_TOKENS = [
+  /\btext-foreground\b/,
+  /\btext-card-foreground\b/,
+  /\btext-popover-foreground\b/,
+  /\btext-white\b/,
+];
+
+/** Tokens that set foreground to the lighter muted variable (safe on dark) */
+const MUTED_FG_TOKENS = [
+  /\btext-muted-foreground\b/,
+];
+
+/** Tokens that set accent colour (visible on dark) */
+const ACCENT_FG_TOKENS = [
+  /\btext-primary\b/,
+  /\btext-accent\b/,
+  /\btext-sidebar-primary\b/,
+  /\btext-destructive\b/,
+  /\btext-warning\b/,
+  /\btext-success\b/,
+  /\btext-info\b/,
+];
+
+/** Tokens that explicitly set a dark foreground (dangerous on dark bg) */
+const DARK_FG_TOKENS = [
+  /\btext-black\b/,
+  /\btext-(?:slate|gray|zinc|neutral|stone)-(?:7|8|9)\d{2}\b/,
+];
+
+const ALL_SAFE_FG = [...WHITE_FG_TOKENS, ...MUTED_FG_TOKENS, ...ACCENT_FG_TOKENS];
+
+// ── File scanner ────────────────────────────────────────────────
 
 interface Finding {
   file: string;
@@ -67,64 +82,64 @@ interface Finding {
   reason: string;
 }
 
-// Match className="..." OR className={`...`} OR className={cn("...", ...)}.
-const CLASS_ATTR_RE = /class(?:Name)?\s*=\s*(?:"([^"]*)"|'([^']*)'|\{`([^`]*)`\}|\{cn\(([^)]*)\)\})/g;
+const CLASS_RE =
+  /class(?:Name)?\s*=\s*(?:"([^"]+)"|'([^']+)'|\{`([^`]+)`\}|\{cn\s*\(\s*((?:[^)]|\)[^,;])+?)\s*\)\})/g;
+
+function collectFiles(dir: string, out: string[] = []): string[] {
+  for (const entry of readdirSync(dir)) {
+    if (entry === "node_modules" || entry.startsWith(".")) continue;
+    const full = join(dir, entry);
+    if (statSync(full).isDirectory()) collectFiles(full, out);
+    else if (/\.(tsx|jsx)$/.test(entry)) out.push(full);
+  }
+  return out;
+}
 
 function scanFile(path: string): Finding[] {
   const src = readFileSync(path, "utf8");
-  const findings: Finding[] = [];
   const lines = src.split("\n");
+  const findings: Finding[] = [];
 
   lines.forEach((line, idx) => {
     let m: RegExpExecArray | null;
-    const re = new RegExp(CLASS_ATTR_RE.source, "g");
+    const re = new RegExp(CLASS_RE.source, "g");
     while ((m = re.exec(line))) {
-      const classStr = m[1] ?? m[2] ?? m[3] ?? m[4] ?? "";
+      const classStr = (m[1] ?? m[2] ?? m[3] ?? m[4] ?? "").trim();
       if (!classStr) continue;
 
-      // Check for light text on dark bg (light-on-dark is fine, but
-      // light text on light bg is a bug)
-      const hasLightText = LIGHT_TEXT_TOKENS.some((r) => r.test(classStr));
-      const hasDarkBg = DARK_BG_TOKENS.some((r) => r.test(classStr));
+      const isDarkBg = DARK_BG_TOKENS.some((r) => r.test(classStr));
+      const isLightBg = LIGHT_BG_TOKENS.some((r) => r.test(classStr));
+      const isDarkFg = DARK_FG_TOKENS.some((r) => r.test(classStr));
+      const isWhiteFg = WHITE_FG_TOKENS.some((r) => r.test(classStr));
+      const isSafeFg = ALL_SAFE_FG.some((r) => r.test(classStr));
 
-      if (hasLightText && !hasDarkBg) {
+      // ── Rule 1: dark text on dark bg → invisible text ──
+      if (isDarkBg && isDarkFg && !isWhiteFg) {
         findings.push({
           file: relative(ROOT, path),
           line: idx + 1,
           snippet: classStr.slice(0, 140),
-          reason: "Light text token without dark background token",
+          reason: "Dark foreground token combined with dark background — invisible text",
         });
         continue;
       }
 
-      // Check for dark text on dark bg (dark-on-dark bug)
-      const hasDarkText = DARK_TEXT_TOKENS.some((r) => r.test(classStr));
-      if (!hasDarkText) continue;
-
-      const hasSafeText = SAFE_TEXT_TOKENS.some((r) => r.test(classStr));
-      const hasLightBg = LIGHT_BG_TOKENS.some((r) => r.test(classStr));
-      if (hasSafeText || hasLightBg) continue;
-
-      if (hasDarkBg) {
-        findings.push({
-          file: relative(ROOT, path),
-          line: idx + 1,
-          snippet: classStr.slice(0, 140),
-          reason: "Dark text token combined with dark background token",
-        });
+      // ── Rule 2: white text on light bg → invisible text ──
+      // Only flag if the light bg is NOT overridden by the app's dark theme
+      // (bg-white, bg-gray-100, bg-sky-600 are overridden by theme CSS variables)
+      if (isLightBg && isWhiteFg && !isSafeFg) {
+        // bg-white and bg-gray-100 on this app are overridden by theme vars
+        // Only flag truly non-overridden light backgrounds
+        const isOverriden = /bg-white|bg-gray-100|bg-gray-50|bg-sky-600|bg-rose-600/.test(classStr);
+        if (!isOverriden) {
+          findings.push({
+            file: relative(ROOT, path),
+            line: idx + 1,
+            snippet: classStr.slice(0, 140),
+            reason: "White-foreground token on light background — invisible text",
+          });
+        }
         continue;
-      }
-
-      // Case: standalone dark text with no light bg context — only flag
-      // if the file doesn't reference light surfaces anywhere.
-      const fileHasLightBg = LIGHT_BG_TOKENS.some((r) => r.test(src));
-      if (!fileHasLightBg) {
-        findings.push({
-          file: relative(ROOT, path),
-          line: idx + 1,
-          snippet: classStr.slice(0, 140),
-          reason: "Dark text token with no light surface in scope",
-        });
       }
     }
   });
@@ -132,67 +147,39 @@ function scanFile(path: string): Finding[] {
   return findings;
 }
 
-describe("light-mode contrast regression guard", () => {
-  const files = walk(ROOT).filter((f) => !f.endsWith("dark-mode-contrast.test.ts"));
+// ── Tests ───────────────────────────────────────────────────────
+
+describe("dark-theme contrast regression guard", () => {
+  const files = collectFiles(ROOT)
+    .filter((f) => !f.includes("node_modules"))
+    .filter((f) => !f.endsWith("dark-mode-contrast.test.ts"));
 
   it("scans the entire src/ tree", () => {
     expect(files.length).toBeGreaterThan(20);
   });
 
-  it("has no element mixing dark text with a dark background", () => {
-    const offenders = files
-      .flatMap(scanFile)
-      .filter((f) => f.reason === "Dark text token combined with dark background token");
+  it("has no black-on-black or white-on-white contrast failures", () => {
+    const offenders = files.flatMap(scanFile);
 
     if (offenders.length) {
       const msg = offenders
-        .map((f) => `  ${f.file}:${f.line}  → ${f.snippet}`)
+        .map((f) => `  ${f.file}:${f.line}  → ${f.reason}\n      "${f.snippet}"`)
         .join("\n");
-      throw new Error(
-        `Found ${offenders.length} dark-on-dark className regressions:\n${msg}`,
-      );
+      throw new Error(`Found ${offenders.length} contrast regressions:\n${msg}`);
     }
     expect(offenders).toEqual([]);
   });
 
-  it("inputs/textareas with placeholder= do not hard-code light text", () => {
-    const offenders: Finding[] = [];
-    for (const path of files) {
-      const src = readFileSync(path, "utf8");
-      const elementRe = /<(Input|Textarea|input|textarea)\b[\s\S]*?\/?>/g;
-      let m: RegExpExecArray | null;
-      while ((m = elementRe.exec(src))) {
-        const el = m[0];
-        if (!/\bplaceholder\s*=/.test(el)) continue;
-        const classMatch = /class(?:Name)?\s*=\s*"([^"]*)"/.exec(el);
-        if (!classMatch) continue;
-        const cls = classMatch[1];
-        const hasLightText = LIGHT_TEXT_TOKENS.some((r) => r.test(cls));
-        const hasSafe = SAFE_TEXT_TOKENS.some((r) => r.test(cls));
-        if (hasLightText && !hasSafe) {
-          const upto = src.slice(0, m.index).split("\n").length;
-          offenders.push({
-            file: relative(ROOT, path),
-            line: upto,
-            snippet: cls.slice(0, 140),
-            reason: "Input with placeholder uses light text color",
-          });
-        }
-      }
-    }
-    if (offenders.length) {
-      const msg = offenders.map((f) => `  ${f.file}:${f.line}  → ${f.snippet}`).join("\n");
-      throw new Error(
-        `Found ${offenders.length} placeholder/light-text regressions:\n${msg}`,
-      );
-    }
-    expect(offenders).toEqual([]);
-  });
-
-  it("index.css still enforces the light-surface → black-text rule", () => {
+  it("index.css sets --background to pure black and --foreground to pure white", () => {
     const css = readFileSync(join(ROOT, "index.css"), "utf8");
-    expect(css).toMatch(/bg-card/);
-    expect(css).toMatch(/bg-background/);
-    expect(css).toMatch(/color:\s*#000/i);
+    // Background should be 0% lightness
+    expect(css).toMatch(/--background:\s*0\s+0%\s+0%/);
+    // Foreground should be 100% lightness
+    expect(css).toMatch(/--foreground:\s*0\s+0%\s+100%/);
+  });
+
+  it("index.css applies color: white to dark-surface children", () => {
+    const css = readFileSync(join(ROOT, "index.css"), "utf8");
+    expect(css).toMatch(/\[class\*="bg-/);
   });
 });

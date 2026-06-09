@@ -88,6 +88,9 @@ import RespiratorySimple from "@/pages/RespiratorySimple";
 import RespiratoryModerate from "@/pages/RespiratoryModerate";
 import PrediabetesAlgorithm from "@/pages/PrediabetesAlgorithm";
 import CKDGuideline from "@/pages/CKDGuideline";
+import PrivacyPolicy from "@/pages/PrivacyPolicy";
+import TermsOfService from "@/pages/TermsOfService";
+import DisclaimerPage from "@/pages/Disclaimer";
 import GLP1Administration from "@/pages/GLP1Administration";
 import DailyManagementGuide from "@/pages/DailyManagementGuide";
 import Type1DMManagement from "@/pages/Type1DMManagement";
@@ -225,6 +228,11 @@ const App = () => (
           <Route path="/hyperglycemic-emergency" element={<><TabNavigation /><HyperglycemicEmergency /></>} />
           <Route path="/type1-treatment-algorithm" element={<><TabNavigation /><Type1TreatmentAlgorithm /></>} />
           <Route path="/type2-treatment-algorithm" element={<><TabNavigation /><Type2TreatmentAlgorithm /></>} />
+
+          {/* Legal / Compliance */}
+          <Route path="/privacy" element={<><TabNavigation /><PrivacyPolicy /></>} />
+          <Route path="/terms" element={<><TabNavigation /><TermsOfService /></>} />
+          <Route path="/disclaimer" element={<><TabNavigation /><DisclaimerPage /></>} />
 
           {/* 404 */}
           <Route path="*" element={<NotFound />} />
