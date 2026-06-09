@@ -28,6 +28,7 @@ import {
   ShieldQuestion,
 } from "lucide-react";
 import { SmartLabelUpload, LIPID_FIELDS } from "@/components/SmartLabelUpload";
+import ZoomableImage from "@/components/ZoomableImage";
 import {
   LabInput,
   UNITS_CHOL, UNITS_APOB, UNITS_LPA, UNITS_HBA1C, UNITS_HSCRP,
