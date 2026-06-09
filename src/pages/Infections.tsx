@@ -600,6 +600,7 @@ export default function Infections() {
                     <tr>
                       <th className="px-3 py-2 text-left">Drug</th>
                       <th className="px-3 py-2 text-left">Adult dose</th>
+                      <th className="px-3 py-2 text-left">Freq</th>
                       <th className="px-3 py-2 text-left">Duration</th>
                     </tr>
                   </thead>
@@ -608,6 +609,7 @@ export default function Infections() {
                       <tr key={i} className="border-t border-border">
                         <td className="px-3 py-2 font-medium">{r.drug}</td>
                         <td className="px-3 py-2">{r.dose}</td>
+                        <td className="px-3 py-2"><FrequencyBadge frequency={r.dose} /></td>
                         <td className="px-3 py-2">
                           {r.duration}
                           {r.notes && <div className="text-xs text-muted-foreground mt-0.5">{r.notes}</div>}

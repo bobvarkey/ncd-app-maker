@@ -3,6 +3,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Gauge, AlertTriangle, Home } from "lucide-react";
+import { FrequencyBadge } from "@/components/FrequencyBadge";
 import {
   Table,
   TableBody,
@@ -187,7 +188,16 @@ export default function AntihypertensivePotencyTable() {
                       </TableCell>
                       <TableCell className="font-medium">{row.drugClass}</TableCell>
                       <TableCell className="text-sm text-muted-foreground">{row.examples}</TableCell>
-                      <TableCell className="text-sm">{row.startingDose}</TableCell>
+                      <TableCell className="text-sm">
+                        <div className="flex flex-col gap-1.5">
+                          <span>{row.startingDose}</span>
+                          <div className="flex flex-wrap gap-1">
+                            {Array.from(new Set(row.startingDose.split(/;|,/).map(s => s.trim()).filter(Boolean))).map((seg, si) => (
+                              <FrequencyBadge key={si} frequency={seg} />
+                            ))}
+                          </div>
+                        </div>
+                      </TableCell>
                       <TableCell className="text-sm text-muted-foreground">{row.bestUse}</TableCell>
                     </TableRow>
                   ))}
