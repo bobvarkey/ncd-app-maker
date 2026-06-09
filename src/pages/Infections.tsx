@@ -577,7 +577,7 @@ export default function Infections() {
             className={`rounded-md border px-3 py-2 text-sm ${
               abx.needed
                 ? "border-emerald-300 bg-emerald-50 text-emerald-900"
-                : "border-slate-300 bg-slate-50 text-slate-800"
+                : "border-slate-300 bg-card text-foreground"
             }`}
           >
             <div className="font-semibold">

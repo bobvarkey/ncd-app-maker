@@ -375,17 +375,17 @@ export default function LipidsAssessment({ onClassificationChange, onNavigateToT
       </SectionCard>
 
       {/* ─── Classification Result ─── */}
-      <Card className={`p-5 border-2 ${bucketColorBg} text-slate-900`}>
+      <Card className={`p-5 border-2 ${bucketColorBg} text-foreground`}>
         <div className="flex items-start justify-between mb-3">
           <div>
-            <p className="text-xs text-slate-600 uppercase tracking-wide font-semibold mb-0.5">LAI 2023 Classification</p>
+            <p className="text-xs text-muted-foreground uppercase tracking-wide font-semibold mb-0.5">LAI 2023 Classification</p>
             <div className="flex items-center gap-2 flex-wrap">
               <AbbreviationHover term={`${classification.cat}${classification.sub ? "-" + classification.sub : ""}`}>
                 <span className={`text-2xl font-bold px-3 py-1 rounded-lg ${bucketBadgeColor}`}>
                   {classification.cat}{classification.sub && `-${classification.sub}`}
                 </span>
               </AbbreviationHover>
-              <span className="text-lg font-semibold text-slate-900">{classification.label}</span>
+              <span className="text-lg font-semibold text-foreground">{classification.label}</span>
             </div>
           </div>
           <Target className="h-6 w-6 text-slate-500" />
@@ -394,27 +394,27 @@ export default function LipidsAssessment({ onClassificationChange, onNavigateToT
         <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 mb-4">
           <div className="p-3 rounded-lg bg-white/80 border border-slate-200">
             <p className="text-xs text-foreground/70 uppercase font-semibold tracking-wide">LDL Target</p>
-            <p className="text-lg font-bold text-slate-900">{details.ldl} mg/dL</p>
-            <p className="text-xs text-slate-600">Current: {ldl || "—"}</p>
+            <p className="text-lg font-bold text-foreground">{details.ldl} mg/dL</p>
+            <p className="text-xs text-muted-foreground">Current: {ldl || "—"}</p>
             {ldl && <p className={`text-xs font-semibold ${atTarget ? "text-green-700" : "text-red-700"}`}>{atTarget ? "✅ At target" : "⚠ Above target"}</p>}
           </div>
           <div className="p-3 rounded-lg bg-white/80 border border-slate-200">
             <p className="text-xs text-foreground/70 uppercase font-semibold tracking-wide">Non-HDL Target</p>
-            <p className="text-lg font-bold text-slate-900">{details.nonHdl} mg/dL</p>
+            <p className="text-lg font-bold text-foreground">{details.nonHdl} mg/dL</p>
           </div>
           <div className="p-3 rounded-lg bg-white/80 border border-slate-200">
             <p className="text-xs text-foreground/70 uppercase font-semibold tracking-wide">ApoB Target</p>
-            <p className="text-lg font-bold text-slate-900">{details.apoB} mg/dL</p>
+            <p className="text-lg font-bold text-foreground">{details.apoB} mg/dL</p>
           </div>
         </div>
 
         <div className="border-t border-slate-300 pt-3">
           <div className="flex items-center gap-2 mb-2">
-            <Target className="h-4 w-4 text-slate-700" />
-            <p className="text-sm font-semibold text-slate-900">{rec.title}</p>
+            <Target className="h-4 w-4 text-foreground" />
+            <p className="text-sm font-semibold text-foreground">{rec.title}</p>
           </div>
-          <p className="text-sm text-slate-700 mb-2">{rec.drug}</p>
-          <p className="text-xs text-slate-600">{rec.rationale}</p>
+          <p className="text-sm text-foreground mb-2">{rec.drug}</p>
+          <p className="text-xs text-muted-foreground">{rec.rationale}</p>
 
           <Button size="sm" onClick={onNavigateToTreatment} className="mt-3 gap-1.5" variant="default">
             View Full Treatment <ArrowRight className="h-3.5 w-3.5" />

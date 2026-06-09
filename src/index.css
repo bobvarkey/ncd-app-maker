@@ -21,63 +21,61 @@
   h4 { @apply text-base md:text-lg font-semibold; }
 
   :root {
-    /* Clean medical theme - light background with dark black text */
-    --background: 0 0% 100%;
-    --foreground: 0 0% 0%;
+    /* Dark teal-purple theme — inspired by clinical dashboard reference */
+    --background: 195 21% 7.5%;       /* ~#0f1517 */
+    --foreground: 300 71% 91%;         /* ~#f8d7f9 — light lavender */
 
-    --card: 0 0% 100%;
-    --card-foreground: 0 0% 0%;
+    --card: 195 18% 11%;               /* slightly lighter than bg */
+    --card-foreground: 300 71% 91%;
 
-    --popover: 0 0% 100%;
-    --popover-foreground: 0 0% 0%;
+    --popover: 195 18% 11%;
+    --popover-foreground: 300 71% 91%;
 
-    --primary: 185 60% 38%;
+    --primary: 185 60% 50%;            /* teal accent */
     --primary-foreground: 0 0% 100%;
 
-    --secondary: 220 15% 94%;
-    --secondary-foreground: 0 0% 0%;
+    --secondary: 280 12% 16%;
+    --secondary-foreground: 300 60% 90%;
 
-    --muted: 220 15% 94%;
-    --muted-foreground: 0 0% 0%;
+    --muted: 280 10% 14%;
+    --muted-foreground: 280 20% 65%;   /* readable gray on dark bg */
 
-    --accent: 175 55% 40%;
+    --accent: 185 45% 45%;
     --accent-foreground: 0 0% 100%;
 
-    --destructive: 0 75% 50%;
+    --destructive: 0 70% 50%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 220 15% 88%;
-    --input: 220 15% 90%;
-    --ring: 185 60% 38%;
+    --border: 280 10% 20%;
+    --input: 280 8% 22%;
+    --ring: 185 60% 50%;
 
     --radius: 0.625rem;
 
-    /* Clinical result tokens */
-    --success: 152 55% 40%;
+    /* Clinical result tokens — kept vivid for dark bg */
+    --success: 152 55% 42%;
     --success-foreground: 0 0% 100%;
-    --warning: 38 85% 45%;
+    --warning: 38 85% 50%;
     --warning-foreground: 0 0% 100%;
-    --info: 200 65% 45%;
+    --info: 200 65% 50%;
     --info-foreground: 0 0% 100%;
 
     /* Mode accent colors */
-    --mode-simple: 142 50% 40%;
-    --mode-moderate: 32 85% 45%;
-    --mode-complex: 265 60% 50%;
+    --mode-simple: 142 50% 45%;
+    --mode-moderate: 32 85% 50%;
+    --mode-complex: 265 60% 55%;
 
     /* Sidebar tokens */
-    --sidebar-background: 220 20% 98%;
-    --sidebar-foreground: 0 0% 0%;
-    --sidebar-primary: 185 60% 38%;
+    --sidebar-background: 195 18% 9%;
+    --sidebar-foreground: 300 50% 88%;
+    --sidebar-primary: 185 60% 50%;
     --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 220 15% 94%;
-    --sidebar-accent-foreground: 0 0% 0%;
-    --sidebar-border: 220 15% 88%;
-    --sidebar-ring: 185 60% 38%;
+    --sidebar-accent: 280 12% 16%;
+    --sidebar-accent-foreground: 300 50% 88%;
+    --sidebar-border: 280 10% 18%;
+    --sidebar-ring: 185 60% 50%;
   }
-}
 
-@layer base {
   * {
     @apply border-border;
   }
@@ -88,6 +86,8 @@
     @apply bg-background text-foreground font-sans antialiased;
     font-family: 'DM Sans', system-ui, sans-serif;
   }
+
+  /* Sidebar layout adjustments */
   body.has-tab-navigation #root > div:not([role="region"]),
   body.has-tab-navigation #root > main,
   body.has-tab-navigation #root > section {
@@ -106,128 +106,21 @@
   }
 
   /* ============================================================
-     Uniform contrast: black on light bg, white on dark bg.
-     Dark rules come AFTER light rules and use a doubled
-     attribute selector to win specificity ties when an element
-     with its own dark bg sits inside a light-bg ancestor.
+     Dark Theme — uniform light-on-dark contrast.
+     Default text is var(--foreground) ~ light lavender.
+     Semantic surfaces inherit that by default.
+     Only override when a surface's own colour would lose contrast.
      ============================================================ */
 
-  /* LIGHT BACKGROUNDS → black text (element + descendants) */
-  [class*="bg-white"],
-  [class*="bg-slate-50"], [class*="bg-slate-100"], [class*="bg-slate-200"], [class*="bg-slate-300"],
-  [class*="bg-gray-50"], [class*="bg-gray-100"], [class*="bg-gray-200"], [class*="bg-gray-300"],
-  [class*="bg-neutral-50"], [class*="bg-neutral-100"], [class*="bg-neutral-200"], [class*="bg-neutral-300"],
-  [class*="bg-zinc-50"], [class*="bg-zinc-100"], [class*="bg-zinc-200"], [class*="bg-zinc-300"],
-  [class*="bg-stone-50"], [class*="bg-stone-100"], [class*="bg-stone-200"], [class*="bg-stone-300"],
-  [class*="bg-amber-50"], [class*="bg-amber-100"], [class*="bg-amber-200"],
-  [class*="bg-yellow-50"], [class*="bg-yellow-100"], [class*="bg-yellow-200"],
-  [class*="bg-blue-50"], [class*="bg-blue-100"], [class*="bg-blue-200"],
-  [class*="bg-green-50"], [class*="bg-green-100"], [class*="bg-green-200"],
-  [class*="bg-red-50"], [class*="bg-red-100"], [class*="bg-red-200"],
-  [class*="bg-orange-50"], [class*="bg-orange-100"], [class*="bg-orange-200"],
-  [class*="bg-cyan-50"], [class*="bg-cyan-100"], [class*="bg-cyan-200"],
-  [class*="bg-emerald-50"], [class*="bg-emerald-100"], [class*="bg-emerald-200"],
-  [class*="bg-teal-50"], [class*="bg-teal-100"], [class*="bg-teal-200"],
-  [class*="bg-sky-50"], [class*="bg-sky-100"], [class*="bg-sky-200"],
-  [class*="bg-indigo-50"], [class*="bg-indigo-100"], [class*="bg-indigo-200"],
-  [class*="bg-violet-50"], [class*="bg-violet-100"], [class*="bg-violet-200"],
-  [class*="bg-purple-50"], [class*="bg-purple-100"], [class*="bg-purple-200"],
-  [class*="bg-pink-50"], [class*="bg-pink-100"], [class*="bg-pink-200"],
-  [class*="bg-rose-50"], [class*="bg-rose-100"], [class*="bg-rose-200"],
-  [class*="bg-lime-50"], [class*="bg-lime-100"], [class*="bg-lime-200"],
-  [class*="bg-white"] *,
-  [class*="bg-slate-50"] *, [class*="bg-slate-100"] *, [class*="bg-slate-200"] *, [class*="bg-slate-300"] *,
-  [class*="bg-gray-50"] *, [class*="bg-gray-100"] *, [class*="bg-gray-200"] *, [class*="bg-gray-300"] *,
-  [class*="bg-neutral-50"] *, [class*="bg-neutral-100"] *, [class*="bg-neutral-200"] *, [class*="bg-neutral-300"] *,
-  [class*="bg-zinc-50"] *, [class*="bg-zinc-100"] *, [class*="bg-zinc-200"] *, [class*="bg-zinc-300"] *,
-  [class*="bg-stone-50"] *, [class*="bg-stone-100"] *, [class*="bg-stone-200"] *, [class*="bg-stone-300"] *,
-  [class*="bg-amber-50"] *, [class*="bg-amber-100"] *, [class*="bg-amber-200"] *,
-  [class*="bg-yellow-50"] *, [class*="bg-yellow-100"] *, [class*="bg-yellow-200"] *,
-  [class*="bg-blue-50"] *, [class*="bg-blue-100"] *, [class*="bg-blue-200"] *,
-  [class*="bg-green-50"] *, [class*="bg-green-100"] *, [class*="bg-green-200"] *,
-  [class*="bg-red-50"] *, [class*="bg-red-100"] *, [class*="bg-red-200"] *,
-  [class*="bg-orange-50"] *, [class*="bg-orange-100"] *, [class*="bg-orange-200"] *,
-  [class*="bg-cyan-50"] *, [class*="bg-cyan-100"] *, [class*="bg-cyan-200"] *,
-  [class*="bg-emerald-50"] *, [class*="bg-emerald-100"] *, [class*="bg-emerald-200"] *,
-  [class*="bg-teal-50"] *, [class*="bg-teal-100"] *, [class*="bg-teal-200"] *,
-  [class*="bg-sky-50"] *, [class*="bg-sky-100"] *, [class*="bg-sky-200"] *,
-  [class*="bg-indigo-50"] *, [class*="bg-indigo-100"] *, [class*="bg-indigo-200"] *,
-  [class*="bg-violet-50"] *, [class*="bg-violet-100"] *, [class*="bg-violet-200"] *,
-  [class*="bg-purple-50"] *, [class*="bg-purple-100"] *, [class*="bg-purple-200"] *,
-  [class*="bg-pink-50"] *, [class*="bg-pink-100"] *, [class*="bg-pink-200"] *,
-  [class*="bg-rose-50"] *, [class*="bg-rose-100"] *, [class*="bg-rose-200"] *,
-  [class*="bg-lime-50"] *, [class*="bg-lime-100"] *, [class*="bg-lime-200"] * {
-    color: #000 !important;
-  }
-
-  /* Preserve gradient/clip-text utilities */
-  [class*="bg-clip-text"],
-  [class*="bg-clip-text"] * {
-    color: transparent !important;
-  }
-
-  /* DARK BACKGROUNDS → white text. Doubled [class] selector wins specificity. */
-  [class*="bg-black"][class], [class*="bg-foreground"][class],
-  [class*="bg-slate-600"][class], [class*="bg-slate-700"][class], [class*="bg-slate-800"][class], [class*="bg-slate-900"][class], [class*="bg-slate-950"][class],
-  [class*="bg-gray-600"][class], [class*="bg-gray-700"][class], [class*="bg-gray-800"][class], [class*="bg-gray-900"][class], [class*="bg-gray-950"][class],
-  [class*="bg-neutral-600"][class], [class*="bg-zinc-600"][class], [class*="bg-stone-600"][class],
-  [class*="bg-green-600"][class], [class*="bg-emerald-600"][class], [class*="bg-teal-600"][class], [class*="bg-cyan-600"][class], [class*="bg-sky-600"][class],
-  [class*="bg-amber-600"][class], [class*="bg-yellow-600"][class], [class*="bg-lime-600"][class],
-  [class*="bg-neutral-700"][class], [class*="bg-neutral-800"][class], [class*="bg-neutral-900"][class], [class*="bg-neutral-950"][class],
-  [class*="bg-zinc-700"][class], [class*="bg-zinc-800"][class], [class*="bg-zinc-900"][class], [class*="bg-zinc-950"][class],
-  [class*="bg-stone-700"][class], [class*="bg-stone-800"][class], [class*="bg-stone-900"][class], [class*="bg-stone-950"][class],
-  [class*="bg-blue-600"][class], [class*="bg-blue-700"][class], [class*="bg-blue-800"][class], [class*="bg-blue-900"][class], [class*="bg-blue-950"][class],
-  [class*="bg-indigo-600"][class], [class*="bg-indigo-700"][class], [class*="bg-indigo-800"][class], [class*="bg-indigo-900"][class], [class*="bg-indigo-950"][class],
-  [class*="bg-violet-600"][class], [class*="bg-violet-700"][class], [class*="bg-violet-800"][class], [class*="bg-violet-900"][class], [class*="bg-violet-950"][class],
-  [class*="bg-purple-600"][class], [class*="bg-purple-700"][class], [class*="bg-purple-800"][class], [class*="bg-purple-900"][class], [class*="bg-purple-950"][class],
-  [class*="bg-pink-600"][class], [class*="bg-pink-700"][class], [class*="bg-pink-800"][class], [class*="bg-pink-900"][class], [class*="bg-pink-950"][class],
-  [class*="bg-rose-600"][class], [class*="bg-rose-700"][class], [class*="bg-rose-800"][class], [class*="bg-rose-900"][class], [class*="bg-rose-950"][class],
-  [class*="bg-red-600"][class], [class*="bg-red-700"][class], [class*="bg-red-800"][class], [class*="bg-red-900"][class], [class*="bg-red-950"][class],
-  [class*="bg-orange-600"][class], [class*="bg-orange-700"][class], [class*="bg-orange-800"][class], [class*="bg-orange-900"][class], [class*="bg-orange-950"][class],
-  [class*="bg-amber-700"][class], [class*="bg-amber-800"][class], [class*="bg-amber-900"][class], [class*="bg-amber-950"][class],
-  [class*="bg-yellow-700"][class], [class*="bg-yellow-800"][class], [class*="bg-yellow-900"][class], [class*="bg-yellow-950"][class],
-  [class*="bg-lime-700"][class], [class*="bg-lime-800"][class], [class*="bg-lime-900"][class], [class*="bg-lime-950"][class],
-  [class*="bg-green-700"][class], [class*="bg-green-800"][class], [class*="bg-green-900"][class], [class*="bg-green-950"][class],
-  [class*="bg-emerald-700"][class], [class*="bg-emerald-800"][class], [class*="bg-emerald-900"][class], [class*="bg-emerald-950"][class],
-  [class*="bg-teal-700"][class], [class*="bg-teal-800"][class], [class*="bg-teal-900"][class], [class*="bg-teal-950"][class],
-  [class*="bg-cyan-700"][class], [class*="bg-cyan-800"][class], [class*="bg-cyan-900"][class], [class*="bg-cyan-950"][class],
-  [class*="bg-sky-700"][class], [class*="bg-sky-800"][class], [class*="bg-sky-900"][class], [class*="bg-sky-950"][class],
-  [class*="bg-black"][class] *,
-  [class*="bg-slate-700"][class] *, [class*="bg-slate-800"][class] *, [class*="bg-slate-900"][class] *, [class*="bg-slate-950"][class] *,
-  [class*="bg-gray-700"][class] *, [class*="bg-gray-800"][class] *, [class*="bg-gray-900"][class] *, [class*="bg-gray-950"][class] *,
-  [class*="bg-neutral-700"][class] *, [class*="bg-neutral-800"][class] *, [class*="bg-neutral-900"][class] *, [class*="bg-neutral-950"][class] *,
-  [class*="bg-zinc-700"][class] *, [class*="bg-zinc-800"][class] *, [class*="bg-zinc-900"][class] *, [class*="bg-zinc-950"][class] *,
-  [class*="bg-stone-700"][class] *, [class*="bg-stone-800"][class] *, [class*="bg-stone-900"][class] *, [class*="bg-stone-950"][class] *,
-  [class*="bg-blue-700"][class] *, [class*="bg-blue-800"][class] *, [class*="bg-blue-900"][class] *, [class*="bg-blue-950"][class] *,
-  [class*="bg-indigo-700"][class] *, [class*="bg-indigo-800"][class] *, [class*="bg-indigo-900"][class] *, [class*="bg-indigo-950"][class] *,
-  [class*="bg-violet-700"][class] *, [class*="bg-violet-800"][class] *, [class*="bg-violet-900"][class] *, [class*="bg-violet-950"][class] *,
-  [class*="bg-purple-700"][class] *, [class*="bg-purple-800"][class] *, [class*="bg-purple-900"][class] *, [class*="bg-purple-950"][class] *,
-  [class*="bg-pink-700"][class] *, [class*="bg-pink-800"][class] *, [class*="bg-pink-900"][class] *, [class*="bg-pink-950"][class] *,
-  [class*="bg-rose-700"][class] *, [class*="bg-rose-800"][class] *, [class*="bg-rose-900"][class] *, [class*="bg-rose-950"][class] *,
-  [class*="bg-red-700"][class] *, [class*="bg-red-800"][class] *, [class*="bg-red-900"][class] *, [class*="bg-red-950"][class] *,
-  [class*="bg-orange-700"][class] *, [class*="bg-orange-800"][class] *, [class*="bg-orange-900"][class] *, [class*="bg-orange-950"][class] *,
-  [class*="bg-amber-800"][class] *, [class*="bg-amber-900"][class] *, [class*="bg-amber-950"][class] *,
-  [class*="bg-yellow-800"][class] *, [class*="bg-yellow-900"][class] *, [class*="bg-yellow-950"][class] *,
-  [class*="bg-lime-800"][class] *, [class*="bg-lime-900"][class] *, [class*="bg-lime-950"][class] *,
-  [class*="bg-green-700"][class] *, [class*="bg-green-800"][class] *, [class*="bg-green-900"][class] *, [class*="bg-green-950"][class] *,
-  [class*="bg-emerald-700"][class] *, [class*="bg-emerald-800"][class] *, [class*="bg-emerald-900"][class] *, [class*="bg-emerald-950"][class] *,
-  [class*="bg-teal-700"][class] *, [class*="bg-teal-800"][class] *, [class*="bg-teal-900"][class] *, [class*="bg-teal-950"][class] *,
-  [class*="bg-cyan-700"][class] *, [class*="bg-cyan-800"][class] *, [class*="bg-cyan-900"][class] *, [class*="bg-cyan-950"][class] *,
-  [class*="bg-sky-700"][class] *, [class*="bg-sky-800"][class] *, [class*="bg-sky-900"][class] *, [class*="bg-sky-950"][class] *,
-  [class*="bg-black"][class] *, [class*="bg-foreground"][class] *,
-  [class*="bg-slate-600"][class] *, [class*="bg-gray-600"][class] *, [class*="bg-neutral-600"][class] *, [class*="bg-zinc-600"][class] *, [class*="bg-stone-600"][class] *,
-  [class*="bg-green-600"][class] *, [class*="bg-emerald-600"][class] *, [class*="bg-teal-600"][class] *, [class*="bg-cyan-600"][class] *, [class*="bg-sky-600"][class] *,
-  [class*="bg-amber-600"][class] *, [class*="bg-yellow-600"][class] *, [class*="bg-lime-600"][class] * {
+  /* Dark surfaces → light text */
+  [class*="bg-primary"], [class*="bg-accent"],
+  [class*="bg-destructive"], [class*="bg-foreground"],
+  [class*="bg-primary"] *, [class*="bg-accent"] *,
+  [class*="bg-destructive"] *, [class*="bg-foreground"] * {
     color: #fff !important;
   }
 
-  /* ----------------------------------------------------------
-     Semantic-token surfaces (shadcn) — these are LIGHT in this
-     theme, so all descendants must read as dark. Substring
-     match so opacity variants (bg-card/50, bg-foreground/5...)
-     are also covered. (bg-foreground is dark — handled by
-     dark-bg block above.)
-     ---------------------------------------------------------- */
+  /* Semantic-token surfaces — inherit foreground (light lavender) */
   [class*="bg-background"], [class*="bg-card"], [class*="bg-popover"],
   [class*="bg-muted"], [class*="bg-secondary"], [class*="bg-sidebar"],
   [class*="bg-sidebar-accent"],
@@ -237,80 +130,12 @@
     color: hsl(var(--foreground)) !important;
   }
 
-  /* Destructive / foreground surfaces are dark — keep text white */
-  [class*="bg-destructive"], [class*="bg-foreground"],
-  [class*="bg-destructive"] *, [class*="bg-foreground"] * {
-    color: #fff !important;
+  /* Always keep muted-foreground visible */
+  .text-muted-foreground, [class*="text-muted-foreground"] {
+    color: hsl(var(--muted-foreground)) !important;
   }
 
-  /* Primary / accent surfaces are teal — keep text white for contrast */
-  [class~="bg-primary"], [class~="bg-accent"],
-  [class~="bg-primary"] *, [class~="bg-accent"] * {
-    color: #fff !important;
-  }
-
-
-  /* ----------------------------------------------------------
-     Higher-specificity LIGHT-BG override.
-     When an element carries BOTH a dark semantic token
-     (e.g. shadcn `bg-card`) AND an explicit light Tailwind bg
-     (e.g. `bg-amber-50`), the visual background is light, so
-     text must be black. The [class][class] selector wins on
-     specificity over the semantic-token rules above.
-     ---------------------------------------------------------- */
-  [class*="bg-white"][class],
-  [class*="bg-slate-50"][class],  [class*="bg-slate-100"][class],  [class*="bg-slate-200"][class],  [class*="bg-slate-300"][class],
-  [class*="bg-gray-50"][class],   [class*="bg-gray-100"][class],   [class*="bg-gray-200"][class],   [class*="bg-gray-300"][class],
-  [class*="bg-neutral-50"][class],[class*="bg-neutral-100"][class],[class*="bg-neutral-200"][class],[class*="bg-neutral-300"][class],
-  [class*="bg-zinc-50"][class],   [class*="bg-zinc-100"][class],   [class*="bg-zinc-200"][class],   [class*="bg-zinc-300"][class],
-  [class*="bg-stone-50"][class],  [class*="bg-stone-100"][class],  [class*="bg-stone-200"][class],  [class*="bg-stone-300"][class],
-  [class*="bg-amber-50"][class],  [class*="bg-amber-100"][class],  [class*="bg-amber-200"][class],
-  [class*="bg-yellow-50"][class], [class*="bg-yellow-100"][class], [class*="bg-yellow-200"][class],
-  [class*="bg-blue-50"][class],   [class*="bg-blue-100"][class],   [class*="bg-blue-200"][class],
-  [class*="bg-green-50"][class],  [class*="bg-green-100"][class],  [class*="bg-green-200"][class],
-  [class*="bg-red-50"][class],    [class*="bg-red-100"][class],    [class*="bg-red-200"][class],
-  [class*="bg-orange-50"][class], [class*="bg-orange-100"][class], [class*="bg-orange-200"][class],
-  [class*="bg-cyan-50"][class],   [class*="bg-cyan-100"][class],   [class*="bg-cyan-200"][class],
-  [class*="bg-emerald-50"][class],[class*="bg-emerald-100"][class],[class*="bg-emerald-200"][class],
-  [class*="bg-teal-50"][class],   [class*="bg-teal-100"][class],   [class*="bg-teal-200"][class],
-  [class*="bg-sky-50"][class],    [class*="bg-sky-100"][class],    [class*="bg-sky-200"][class],
-  [class*="bg-indigo-50"][class], [class*="bg-indigo-100"][class], [class*="bg-indigo-200"][class],
-  [class*="bg-violet-50"][class], [class*="bg-violet-100"][class], [class*="bg-violet-200"][class],
-  [class*="bg-purple-50"][class], [class*="bg-purple-100"][class], [class*="bg-purple-200"][class],
-  [class*="bg-pink-50"][class],   [class*="bg-pink-100"][class],   [class*="bg-pink-200"][class],
-  [class*="bg-rose-50"][class],   [class*="bg-rose-100"][class],   [class*="bg-rose-200"][class],
-  [class*="bg-lime-50"][class],   [class*="bg-lime-100"][class],   [class*="bg-lime-200"][class],
-  [class*="bg-white"][class] *,
-  [class*="bg-slate-50"][class] *,  [class*="bg-slate-100"][class] *,  [class*="bg-slate-200"][class] *,  [class*="bg-slate-300"][class] *,
-  [class*="bg-gray-50"][class] *,   [class*="bg-gray-100"][class] *,   [class*="bg-gray-200"][class] *,   [class*="bg-gray-300"][class] *,
-  [class*="bg-neutral-50"][class] *,[class*="bg-neutral-100"][class] *,[class*="bg-neutral-200"][class] *,[class*="bg-neutral-300"][class] *,
-  [class*="bg-zinc-50"][class] *,   [class*="bg-zinc-100"][class] *,   [class*="bg-zinc-200"][class] *,   [class*="bg-zinc-300"][class] *,
-  [class*="bg-stone-50"][class] *,  [class*="bg-stone-100"][class] *,  [class*="bg-stone-200"][class] *,  [class*="bg-stone-300"][class] *,
-  [class*="bg-amber-50"][class] *,  [class*="bg-amber-100"][class] *,  [class*="bg-amber-200"][class] *,
-  [class*="bg-yellow-50"][class] *, [class*="bg-yellow-100"][class] *, [class*="bg-yellow-200"][class] *,
-  [class*="bg-blue-50"][class] *,   [class*="bg-blue-100"][class] *,   [class*="bg-blue-200"][class] *,
-  [class*="bg-green-50"][class] *,  [class*="bg-green-100"][class] *,  [class*="bg-green-200"][class] *,
-  [class*="bg-red-50"][class] *,    [class*="bg-red-100"][class] *,    [class*="bg-red-200"][class] *,
-  [class*="bg-orange-50"][class] *, [class*="bg-orange-100"][class] *, [class*="bg-orange-200"][class] *,
-  [class*="bg-cyan-50"][class] *,   [class*="bg-cyan-100"][class] *,   [class*="bg-cyan-200"][class] *,
-  [class*="bg-emerald-50"][class] *,[class*="bg-emerald-100"][class] *,[class*="bg-emerald-200"][class] *,
-  [class*="bg-teal-50"][class] *,   [class*="bg-teal-100"][class] *,   [class*="bg-teal-200"][class] *,
-  [class*="bg-sky-50"][class] *,    [class*="bg-sky-100"][class] *,    [class*="bg-sky-200"][class] *,
-  [class*="bg-indigo-50"][class] *, [class*="bg-indigo-100"][class] *, [class*="bg-indigo-200"][class] *,
-  [class*="bg-violet-50"][class] *, [class*="bg-violet-100"][class] *, [class*="bg-violet-200"][class] *,
-  [class*="bg-purple-50"][class] *, [class*="bg-purple-100"][class] *, [class*="bg-purple-200"][class] *,
-  [class*="bg-pink-50"][class] *,   [class*="bg-pink-100"][class] *,   [class*="bg-pink-200"][class] *,
-  [class*="bg-rose-50"][class] *,   [class*="bg-rose-100"][class] *,   [class*="bg-rose-200"][class] *,
-  [class*="bg-lime-50"][class] *,   [class*="bg-lime-100"][class] *,   [class*="bg-lime-200"][class] * {
-    color: #000 !important;
-  }
-
-  /* But preserve white text on dark badges/buttons that sit inside light-bg cards */
-  [class*="text-white"][class][class] { color: #fff !important; }
-
-  /* Portal surfaces rendered outside #root (dialogs, dropdowns,
-     popovers, tooltips, sonner toasts) — default to readable
-     foreground using the theme tokens. */
+  /* Portal surfaces (dialogs, dropdowns, popovers, tooltips, toasts) */
   [role="dialog"], [role="menu"], [role="listbox"], [role="tooltip"],
   [data-radix-popper-content-wrapper], [data-sonner-toaster], [data-sonner-toast],
   [role="dialog"] *, [role="menu"] *, [role="listbox"] *, [role="tooltip"] *,
@@ -318,17 +143,12 @@
     color: hsl(var(--popover-foreground)) !important;
   }
 
-  /* Always keep muted-foreground (gray helper text) visible */
-  .text-muted-foreground, [class*="text-muted-foreground"] {
-    color: hsl(var(--muted-foreground)) !important;
-  }
-
-  /* Tabs: keep label as foreground regardless of active/inactive state */
+  /* Tabs: keep foreground regardless of state */
   [role="tab"], [role="tab"] * {
     color: hsl(var(--foreground)) !important;
   }
 
-  /* Clinical context chips sit on dark surfaces in both selected and unselected states. */
+  /* Clinical context chips */
   .iron-context-toggle,
   .iron-context-toggle * {
     color: hsl(var(--foreground)) !important;
@@ -341,9 +161,9 @@
   [class*="text-destructive-foreground"]{ color: hsl(var(--destructive-foreground)) !important; }
   [class*="text-card-foreground"]       { color: hsl(var(--card-foreground)) !important; }
   [class*="text-popover-foreground"]    { color: hsl(var(--popover-foreground)) !important; }
+  [class*="text-white"][class][class]   { color: #fff !important; }
 
-  /* Form inputs sit on dark bg-background — keep their text white
-     and placeholder readable. */
+  /* Form inputs — light text on darker bg-background-ish fields */
   input, textarea, select {
     color: hsl(var(--foreground));
   }
@@ -351,11 +171,9 @@
     color: hsl(var(--muted-foreground)) !important;
     opacity: 1;
   }
-  /* Form labels default to white on this dark theme */
   label {
     color: hsl(var(--foreground));
   }
-  /* Radix Select trigger value + placeholder */
   [data-radix-select-trigger], [data-radix-select-value] {
     color: hsl(var(--foreground)) !important;
   }
@@ -363,9 +181,7 @@
     color: hsl(var(--muted-foreground)) !important;
   }
 
-  /* (light theme: mid-gray text on semantic surfaces is already readable) */
-
-  /* Tables inherit; ensure header cells on dark surfaces stay white */
+  /* Tables inherit */
   thead, tbody, tfoot, tr, th, td { color: inherit; }
 }
 

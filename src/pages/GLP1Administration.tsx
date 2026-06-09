@@ -300,9 +300,9 @@ const GLP1Administration = () => {
                     <h4 className="font-semibold mb-2 text-lg text-foreground">Administration Tips</h4>
                     <ul className="text-base space-y-2">
                       {med.administrationTips.map((tip, idx) => (
-                        <li key={idx} className="flex gap-2 text-gray-800">
+                        <li key={idx} className="flex gap-2 text-foreground">
                           <span className="text-green-600 font-bold">✓</span>
-                          <span className="text-gray-800">{tip}</span>
+                          <span className="text-foreground">{tip}</span>
                         </li>
                       ))}
                     </ul>
@@ -380,7 +380,7 @@ const GLP1Administration = () => {
                   <h4 className="font-bold text-xl mb-3 text-foreground">{section.step}</h4>
                   <ul className="space-y-2">
                     {section.details.map((detail, didx) => (
-                      <li key={didx} className="flex gap-2 text-base text-gray-800">
+                      <li key={didx} className="flex gap-2 text-base text-foreground">
                         <span className="text-blue-600 font-bold">→</span>
                         <span>{detail}</span>
                       </li>
@@ -402,11 +402,11 @@ const GLP1Administration = () => {
                   <div className="space-y-3 text-base">
                     <div>
                       <span className="font-semibold text-green-700">✓ Pros:</span>
-                      <p className="text-gray-800">{site.pros}</p>
+                      <p className="text-foreground">{site.pros}</p>
                     </div>
                     <div>
                       <span className="font-semibold text-amber-700">⚠ Cons:</span>
-                      <p className="text-gray-800">{site.cons}</p>
+                      <p className="text-foreground">{site.cons}</p>
                     </div>
                   </div>
                 </div>
@@ -415,7 +415,7 @@ const GLP1Administration = () => {
 
             <div className="mt-4 p-4 bg-purple-100 rounded-lg border-2 border-purple-300">
               <h4 className="font-bold mb-2 text-lg text-foreground">Rotation Pattern Example</h4>
-              <p className="text-base text-gray-800 mb-3">
+              <p className="text-base text-foreground mb-3">
                 To prevent lipohypertrophy (fat lumps):
               </p>
               <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 text-sm font-mono text-center">
@@ -424,7 +424,7 @@ const GLP1Administration = () => {
                 <div className="p-2 bg-green-200 text-foreground rounded font-semibold">Week 3<br/>Thigh L</div>
                 <div className="p-2 bg-green-300 text-foreground rounded font-semibold">Week 4<br/>Thigh R</div>
               </div>
-              <p className="text-sm text-gray-800 mt-2 font-semibold">
+              <p className="text-sm text-foreground mt-2 font-semibold">
                 Then repeat with upper arms, thighs, and abdomen in different spots
               </p>
             </div>
@@ -460,11 +460,11 @@ const GLP1Administration = () => {
               <div className="space-y-2 text-base">
                 <div>
                   <span className="font-semibold text-foreground">Management:</span>
-                  <p className="text-gray-800">{se.management}</p>
+                  <p className="text-foreground">{se.management}</p>
                 </div>
                 <div>
                   <span className="font-semibold text-foreground">Resolution:</span>
-                  <p className="text-gray-800">{se.resolve}</p>
+                  <p className="text-foreground">{se.resolve}</p>
                 </div>
               </div>
             </div>
@@ -548,7 +548,7 @@ const GLP1Administration = () => {
             <div key={idx} className="p-3 border-2 border-green-300 rounded-lg bg-card">
               <h4 className="font-bold text-lg text-foreground">{monitor.param}</h4>
               <p className="text-base text-muted-foreground font-semibold">Frequency: {monitor.frequency}</p>
-              <p className="text-base mt-1 text-gray-800">
+              <p className="text-base mt-1 text-foreground">
                 <span className="font-bold">Target:</span> {monitor.target}
               </p>
             </div>

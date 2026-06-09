@@ -686,10 +686,10 @@ export default function SeriousInfections() {
             <div className="mt-1 text-blue-900">{condition.sourceControl}</div>
           </div>
           <div className="rounded-md border border-slate-200 bg-slate-50 p-3 text-xs">
-            <div className="font-semibold text-slate-900 flex items-center gap-1">
+            <div className="font-semibold text-foreground flex items-center gap-1">
               <Activity className="h-3.5 w-3.5" /> Monitoring
             </div>
-            <ul className="mt-1 list-disc pl-5 text-slate-900 space-y-0.5">
+            <ul className="mt-1 list-disc pl-5 text-foreground space-y-0.5">
               {condition.monitoring.map((m, i) => <li key={i}>{m}</li>)}
             </ul>
           </div>

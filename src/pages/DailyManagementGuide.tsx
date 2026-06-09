@@ -217,7 +217,7 @@ const DailyManagementGuide = () => {
                 <div className="border-t px-4 py-4 space-y-4">
                   {section.content.map((content, cidx) => (
                     <div key={cidx}>
-                      <h3 className="font-semibold text-sm mb-3 text-gray-900">{content.heading}</h3>
+                      <h3 className="font-semibold text-sm mb-3 text-foreground">{content.heading}</h3>
 
                       {/* Tips List */}
                       <ul className="space-y-2 mb-4">

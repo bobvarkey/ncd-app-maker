@@ -54,7 +54,7 @@ export default function Type1DMManagement() {
       content: (
         <div className="space-y-3">
           <div className="bg-destructive/5 p-4 rounded-lg">
-            <p className="text-sm font-semibold text-gray-800 mb-2">Recommended Daily Basal Dose:</p>
+            <p className="text-sm font-semibold text-foreground mb-2">Recommended Daily Basal Dose:</p>
             <p className="text-base font-bold text-red-700">{management.basal_insulin.recommended_daily_dose}</p>
             <p className="text-xs text-muted-foreground mt-3">{management.basal_insulin.percentage_of_tdd}</p>
           </div>
@@ -159,16 +159,16 @@ export default function Type1DMManagement() {
       content: (
         <div className="space-y-3">
           <div className="bg-destructive/5 p-3 rounded-lg border-l-4 border-red-400">
-            <p className="text-sm font-semibold text-gray-800 mb-2">Level 1 (70-54 mg/dL):</p>
+            <p className="text-sm font-semibold text-foreground mb-2">Level 1 (70-54 mg/dL):</p>
             <p className="text-xs text-muted-foreground"><strong>Treatment:</strong> {management.hypoglycemia_protocol.level_1_70_54.treatment}</p>
             <p className="text-xs text-muted-foreground"><strong>Recheck:</strong> {management.hypoglycemia_protocol.level_1_70_54.recheck}</p>
           </div>
           <div className="bg-orange-50 p-3 rounded-lg border-l-4 border-orange-400">
-            <p className="text-sm font-semibold text-gray-800 mb-2">Level 2 (Below 54 mg/dL):</p>
+            <p className="text-sm font-semibold text-foreground mb-2">Level 2 (Below 54 mg/dL):</p>
             <p className="text-xs text-muted-foreground">{management.hypoglycemia_protocol.level_2_below_54.treatment}</p>
           </div>
           <div className="bg-red-100 p-3 rounded-lg border-l-4 border-red-600">
-            <p className="text-sm font-semibold text-gray-800 mb-2">Level 3 (Severe):</p>
+            <p className="text-sm font-semibold text-foreground mb-2">Level 3 (Severe):</p>
             <p className="text-xs text-muted-foreground"><strong>Definition:</strong> {management.hypoglycemia_protocol.level_3_severe.definition}</p>
             <p className="text-xs text-muted-foreground mt-1"><strong>Treatment:</strong> {management.hypoglycemia_protocol.level_3_severe.treatment}</p>
           </div>

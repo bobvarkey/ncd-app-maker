@@ -49,7 +49,7 @@ export default function Tooltip({ content }: Props) {
         onFocus={() => setVisible(true)}
         onBlur={() => setVisible(false)}
         onClick={() => setVisible(v => !v)}
-        className="text-gray-700 hover:text-sky-400 transition-colors focus:outline-none"
+        className="text-foreground hover:text-sky-400 transition-colors focus:outline-none"
         aria-label="Parameter info"
       >
         <Info className="w-3.5 h-3.5" />
@@ -70,15 +70,15 @@ export default function Tooltip({ content }: Props) {
           <div className="divide-y divide-gray-800">
             <div className="px-3 py-2">
               <span className="text-emerald-400 font-semibold block mb-0.5">Normal</span>
-              <span className="text-gray-600 leading-relaxed">{content.normal}</span>
+              <span className="text-muted-foreground leading-relaxed">{content.normal}</span>
             </div>
             <div className="px-3 py-2">
               <span className="text-sky-400 font-semibold block mb-0.5">Low</span>
-              <span className="text-gray-600 leading-relaxed">{content.low}</span>
+              <span className="text-muted-foreground leading-relaxed">{content.low}</span>
             </div>
             <div className="px-3 py-2">
               <span className="text-rose-400 font-semibold block mb-0.5">High</span>
-              <span className="text-gray-600 leading-relaxed">{content.high}</span>
+              <span className="text-muted-foreground leading-relaxed">{content.high}</span>
             </div>
           </div>
         </div>

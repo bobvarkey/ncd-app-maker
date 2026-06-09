@@ -268,7 +268,7 @@ export default function ESRInterpretation() {
                             {steps.map((step, i) => (
                               <div key={i} className={`rounded-lg border p-3 ${step.urgency === 'urgent' ? 'bg-red-50 border-red-200' : 'bg-gray-50 border-border'}`}>
                                 <div className="flex items-center gap-2">
-                                  <span className={`text-xs font-bold uppercase tracking-wider px-1.5 py-0.5 rounded ${step.urgency === 'urgent' ? 'bg-red-200 text-red-800' : 'bg-gray-200 text-gray-700'}`}>
+                                  <span className={`text-xs font-bold uppercase tracking-wider px-1.5 py-0.5 rounded ${step.urgency === 'urgent' ? 'bg-red-900/40 text-red-300' : 'bg-muted text-muted-foreground'}`}>
                                     {step.urgency}
                                   </span>
                                   <p className="text-sm font-medium text-foreground">{step.label}</p>
@@ -289,7 +289,7 @@ export default function ESRInterpretation() {
                     {LOW_NEXT_STEPS.map((step, i) => (
                       <div key={i} className="rounded-lg border border-border bg-gray-50 p-3">
                         <div className="flex items-center gap-2">
-                          <span className="text-xs font-bold uppercase tracking-wider px-1.5 py-0.5 rounded bg-gray-200 text-gray-700">
+                          <span className="text-xs font-bold uppercase tracking-wider px-1.5 py-0.5 rounded bg-muted text-muted-foreground">
                             {step.urgency}
                           </span>
                           <p className="text-sm font-medium text-foreground">{step.label}</p>
