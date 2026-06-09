@@ -511,6 +511,56 @@ export default function IronReplacementCalculator() {
                     </span>
                   </div>
                 </div>
+
+                {/* Live Iron Parameters Summary — independent of clinical context */}
+                {(previewTSAT !== null || (hasHb && hasWeight)) && (() => {
+                  const w = parseFloat(inputs.weight);
+                  const hb = parseFloat(inputs.hemoglobin);
+                  const ferritinNum = parseFloat(inputs.ferritin);
+                  const liveTargetHb = hasWeight && w >= 35 ? 14 : 13;
+                  const liveStores = hasWeight ? (w >= 35 ? 500 : 15 * w) : null;
+                  const liveDeficit = hasHb && hasWeight
+                    ? Math.max(0, w * (liveTargetHb - hb) * 2.4 + (liveStores ?? 0))
+                    : null;
+                  return (
+                    <div className="rounded-xl border-2 border-primary/30 bg-primary/5 p-4">
+                      <div className="flex items-center gap-2 mb-3">
+                        <Calculator className="h-4 w-4 text-primary" />
+                        <h4 className="text-sm font-bold text-foreground">Live Iron Parameters</h4>
+                        <Badge variant="outline" className="text-[10px]">auto</Badge>
+                      </div>
+                      <div className="grid grid-cols-2 md:grid-cols-4 gap-3 text-sm">
+                        <div className="rounded-lg bg-background/60 p-2">
+                          <p className="text-xs text-muted-foreground">TSAT</p>
+                          <p className="font-bold text-base">{previewTSAT !== null ? previewTSAT.toFixed(1) + "%" : "—"}</p>
+                        </div>
+                        <div className="rounded-lg bg-background/60 p-2">
+                          <p className="text-xs text-muted-foreground">Ferritin</p>
+                          <p className="font-bold text-base">{!isNaN(ferritinNum) ? ferritinNum + " ng/mL" : "—"}</p>
+                        </div>
+                        <div className="rounded-lg bg-background/60 p-2">
+                          <p className="text-xs text-muted-foreground">Target Hb</p>
+                          <p className="font-bold text-base">{hasWeight ? liveTargetHb + " g/dL" : "—"}</p>
+                        </div>
+                        <div className="rounded-lg bg-background/60 p-2">
+                          <p className="text-xs text-muted-foreground">Ganzoni Deficit</p>
+                          <p className="font-bold text-base text-primary">
+                            {liveDeficit !== null ? Math.round(liveDeficit) + " mg" : "—"}
+                          </p>
+                        </div>
+                      </div>
+                      {liveDeficit === null ? (
+                        <p className="text-xs text-muted-foreground mt-2">
+                          Enter Hemoglobin + Weight to see the iron deficit (Ganzoni formula).
+                        </p>
+                      ) : (
+                        <p className="text-xs text-muted-foreground mt-2">
+                          Deficit = weight × (target Hb − Hb) × 2.4 + iron stores ({liveStores} mg). Shown before clinical context — flags below refine route &amp; targets.
+                        </p>
+                      )}
+                    </div>
+                  );
+                })()}
               </CardContent>
             </Card>
 
