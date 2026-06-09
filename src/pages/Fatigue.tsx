@@ -2,6 +2,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 import { ArrowRight, AlertCircle, Stethoscope, FileSearch } from "lucide-react";
+import ZoomableImage from "@/components/ZoomableImage";
 
 const flowchartPath = "/fatigue-flowchart.jpg";
 
@@ -29,11 +30,10 @@ export default function Fatigue() {
           </CardTitle>
         </CardHeader>
         <CardContent>
-          <img
+          <ZoomableImage
             src={flowchartPath}
             alt="Fatigue Differential Diagnosis Flowchart"
             className="w-full h-auto rounded-lg border border-border/40"
-            style={{ maxHeight: "none" }}
           />
         </CardContent>
       </Card>

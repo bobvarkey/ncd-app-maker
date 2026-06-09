@@ -212,7 +212,7 @@ function OCRUpload({ onValuesExtracted }: OCRUploadProps) {
               ) : (
                 <div className="space-y-3">
                   <div className="relative">
-                    <img src={previewUrl} alt="Lab report preview" className="rounded-lg max-h-48 mx-auto" />
+                    <ZoomableImage src={previewUrl} alt="Lab report preview" className="rounded-lg max-h-48 mx-auto" />
                     {isProcessing && (
                       <div className="absolute inset-0 bg-background/80 rounded-lg flex items-center justify-center">
                         <div className="text-center">

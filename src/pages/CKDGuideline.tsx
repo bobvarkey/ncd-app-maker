@@ -2,6 +2,7 @@ import { useState, useMemo } from "react";
 import { loadPatient, PatientData } from "@/lib/patient-data";
 import { ChevronDown, ChevronUp, AlertTriangle, Check, ArrowDown, Heart, Shield, Pill, Activity } from "lucide-react";
 import niceAlgorithmImg from "@/assets/nice-ckd-algorithm.png";
+import ZoomableImage from "@/components/ZoomableImage";
 
 type CKDStage = "none" | "micro" | "macro" | "t2d-ckd" | "cvd" | "advanced";
 

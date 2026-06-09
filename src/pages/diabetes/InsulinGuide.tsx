@@ -3,6 +3,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 import { Clock, Activity, AlertCircle, CheckCircle2, Syringe } from "lucide-react";
+import ZoomableImage from "@/components/ZoomableImage";
 
 // Insulin Types Data
 const insulinTypes = [
@@ -224,7 +225,7 @@ export default function InsulinGuide() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="space-y-2">
               <p className="text-sm font-medium">Types of Insulin - Quick Reference</p>
-              <img
+              <ZoomableImage
                 src="/images/Insulins.jpg"
                 alt="Insulin Types Pharmacology Reference"
                 className="w-full rounded-lg border"
@@ -235,7 +236,7 @@ export default function InsulinGuide() {
             </div>
             <div className="space-y-2">
               <p className="text-sm font-medium">Insulin Activity Profile</p>
-              <img
+              <ZoomableImage
                 src="/images/insulin-types-graph.png"
                 alt="Insulin Activity Graph"
                 className="w-full rounded-lg border bg-white"
