@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Pill, FlaskConical, Search, AlertTriangle } from "lucide-react";
+import { Pill, FlaskConical, Search, AlertTriangle, ChevronDown } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import {
   Table, TableHeader, TableBody, TableHead, TableRow, TableCell,
@@ -623,15 +623,26 @@ const cellStyle = (val: string) => {
 
 const RenalDoseAdjustment = () => {
   const [search, setSearch] = useState("");
-  const [classFilter, setClassFilter] = useState<string>("all");
 
-  const classes = [...new Set(RENAL_DATA.map(d => d.drugClass))];
+  // Group drugs by class
+  const groupedByClass = RENAL_DATA.reduce((acc, drug) => {
+    if (!acc[drug.drugClass]) acc[drug.drugClass] = [];
+    acc[drug.drugClass].push(drug);
+    return acc;
+  }, {} as Record<string, DoseEntry[]>);
 
-  const filtered = RENAL_DATA.filter(d => {
-    const matchSearch = !search || d.drug.toLowerCase().includes(search.toLowerCase()) || d.drugClass.toLowerCase().includes(search.toLowerCase());
-    const matchClass = classFilter === "all" || d.drugClass === classFilter;
-    return matchSearch && matchClass;
-  });
+  // Filter groups and drugs based on search
+  const filteredGroups = Object.entries(groupedByClass)
+    .map(([drugClass, drugs]) => {
+      const filtered = drugs.filter(d =>
+        !search ||
+        d.drug.toLowerCase().includes(search.toLowerCase()) ||
+        d.drugClass.toLowerCase().includes(search.toLowerCase()) ||
+        d.notes.toLowerCase().includes(search.toLowerCase())
+      );
+      return [drugClass, filtered] as const;
+    })
+    .filter(([_, drugs]) => drugs.length > 0);
 
   return (
     <div className="space-y-5 animate-slide-in">
@@ -651,7 +662,7 @@ const RenalDoseAdjustment = () => {
         <summary className="text-sm font-medium text-primary cursor-pointer select-none list-none flex items-center gap-2">
           <span className="text-xs">📐</span>
           CKD-EPI 2021 eGFR Formula
-          <span className="text-xs text-muted-foreground ml-auto group-open:rotate-180 transition-transform">▼</span>
+          <ChevronDown className="w-4 h-4 ml-auto text-muted-foreground group-open:rotate-180 transition-transform" />
         </summary>
         <div className="mt-3 space-y-2 text-xs text-muted-foreground border-t border-border pt-3">
           <p><strong className="text-foreground">Equation:</strong></p>
@@ -694,89 +705,92 @@ const RenalDoseAdjustment = () => {
         <span className="flex items-center gap-1.5"><span className="w-3 h-3 rounded bg-background border border-border" /> No adjustment</span>
       </div>
 
-      {/* Filters */}
-      <div className="flex flex-col sm:flex-row gap-3">
-        <div className="relative flex-1">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
-          <Input
-            placeholder="Search drug or class..."
-            value={search}
-            onChange={e => setSearch(e.target.value)}
-            className="pl-9"
-          />
-        </div>
-        <select
-          value={classFilter}
-          onChange={e => setClassFilter(e.target.value)}
-          className="h-10 rounded-md border border-input bg-background px-3 text-sm"
-        >
-          <option value="all">All Classes</option>
-          {classes.map(c => <option key={c} value={c}>{c}</option>)}
-        </select>
+      {/* Search */}
+      <div className="relative">
+        <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+        <Input
+          placeholder="Search drug or class..."
+          value={search}
+          onChange={e => setSearch(e.target.value)}
+          className="pl-9"
+        />
       </div>
 
-      {/* Table */}
-      <div className="clinical-card p-0 overflow-hidden">
-        <div className="overflow-x-auto">
-          <Table>
-            <TableHeader>
-              <TableRow className="bg-muted/50">
-                <TableHead className="min-w-[140px] sticky left-0 bg-muted/50 z-10">Drug</TableHead>
-                <TableHead className="min-w-[100px]">Class</TableHead>
-                <TableHead className="min-w-[120px]">Normal Dose</TableHead>
-                {eGFRColumns.map(col => (
-                  <TableHead key={col.key} className="min-w-[110px] text-center">
-                    <div className="text-xs text-muted-foreground">eGFR</div>
-                    <div>{col.label}</div>
-                  </TableHead>
-                ))}
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {filtered.map((d, i) => (
-                <TableRow key={i}>
-                  <TableCell className="font-medium sticky left-0 bg-card z-10">
-                    <div className="flex items-center gap-1.5">
-                      <Pill className="w-3.5 h-3.5 text-primary shrink-0" />
-                      {d.drug}
-                    </div>
-                  </TableCell>
-                  <TableCell className="text-xs text-muted-foreground">{d.drugClass}</TableCell>
-                  <TableCell className="text-xs">{d.normalDose}</TableCell>
+      {/* Drug groups */}
+      {filteredGroups.map(([drugClass, drugs]) => (
+        <details key={drugClass} className="clinical-card p-0 overflow-hidden group" defaultChecked>
+          <summary className="flex items-center gap-2 px-4 py-3 cursor-pointer select-none list-none hover:bg-muted/30 transition-colors sticky top-0 bg-card z-10">
+            <ChevronDown className="w-4 h-4 text-muted-foreground shrink-0 group-open:rotate-0 -rotate-90 transition-transform" />
+            <Pill className="w-4 h-4 text-primary shrink-0" />
+            <span className="text-sm font-medium">{drugClass}</span>
+            <span className="text-[11px] text-muted-foreground ml-auto">{drugs.length} drug{drugs.length !== 1 ? "s" : ""}</span>
+          </summary>
+          <div className="overflow-x-auto border-t border-border">
+            <Table>
+              <TableHeader>
+                <TableRow className="bg-muted/30">
+                  <TableHead className="min-w-[140px]">Drug</TableHead>
+                  <TableHead className="min-w-[120px]">Normal Dose</TableHead>
                   {eGFRColumns.map(col => (
-                    <TableCell key={col.key} className={`text-xs text-center ${cellStyle(d[col.key])}`}>
-                      {d[col.key]}
-                    </TableCell>
+                    <TableHead key={col.key} className="min-w-[100px] text-center">
+                      <div className="text-xs text-muted-foreground">eGFR</div>
+                      <div>{col.label}</div>
+                    </TableHead>
                   ))}
+                  <TableHead className="min-w-[180px] hidden md:table-cell">Notes</TableHead>
                 </TableRow>
-              ))}
-              {filtered.length === 0 && (
-                <TableRow>
-                  <TableCell colSpan={8} className="text-center text-muted-foreground py-8">
-                    No medications found
-                  </TableCell>
-                </TableRow>
-              )}
-            </TableBody>
-          </Table>
+              </TableHeader>
+              <TableBody>
+                {drugs.map((d, i) => (
+                  <TableRow key={i}>
+                    <TableCell className="font-medium">
+                      <div className="flex items-center gap-1.5">
+                        {d.drug}
+                      </div>
+                    </TableCell>
+                    <TableCell className="text-xs">{d.normalDose}</TableCell>
+                    {eGFRColumns.map(col => (
+                      <TableCell key={col.key} className={`text-xs text-center ${cellStyle(d[col.key])}`}>
+                        {d[col.key]}
+                      </TableCell>
+                    ))}
+                    <TableCell className="text-xs text-muted-foreground hidden md:table-cell max-w-[200px]">
+                      <span className="line-clamp-2">{d.notes}</span>
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </div>
+        </details>
+      ))}
+
+      {filteredGroups.length === 0 && (
+        <div className="text-center text-muted-foreground py-12 text-sm">
+          No medications found matching "<span className="text-foreground font-medium">{search}</span>"
         </div>
-      </div>
+      )}
 
       {/* Clinical Notes */}
-      <div className="clinical-card">
-        <div className="flex items-center gap-2 mb-3">
-          <AlertTriangle className="w-4 h-4 text-warning" />
-          <h3 className="section-title">Clinical Notes</h3>
-        </div>
-        <div className="space-y-2">
-          {filtered.filter(d => d.notes).map((d, i) => (
-            <div key={i} className="flex items-start gap-2 text-xs">
-              <span className="font-medium text-primary min-w-[100px]">{d.drug}:</span>
-              <span className="text-muted-foreground">{d.notes}</span>
+      {(() => {
+        const allFiltered = filteredGroups.flatMap(([_, drugs]) => drugs);
+        return allFiltered.filter(d => d.notes).length > 0 ? (
+          <div className="clinical-card">
+            <div className="flex items-center gap-2 mb-3">
+              <AlertTriangle className="w-4 h-4 text-warning" />
+              <h3 className="section-title">Clinical Notes</h3>
             </div>
-          ))}
-        </div>
-      </div>
+            <div className="space-y-2">
+              {allFiltered.filter(d => d.notes).map((d, i) => (
+                <div key={i} className="flex items-start gap-2 text-xs">
+                  <span className="font-medium text-primary min-w-[100px]">{d.drug}:</span>
+                  <span className="text-muted-foreground">{d.notes}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        ) : null;
+      })()}
     </div>
   );
 };
