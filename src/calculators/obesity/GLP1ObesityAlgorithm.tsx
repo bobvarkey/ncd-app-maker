@@ -217,7 +217,7 @@ export default function GLP1ObesityAlgorithm() {
               <h1 className="font-display text-xl font-extrabold tracking-tight bg-gradient-to-r from-pink-500 via-rose-500 to-orange-500 bg-clip-text text-transparent truncate">
                 GLP-1 / GIP Obesity Algorithm
               </h1>
-              <p className="text-xs font-medium text-rose-500 dark:text-rose-400 truncate">
+              <p className="text-xs font-medium text-destructive dark:text-destructive truncate">
                 Evidence-Based Obesity Pharmacotherapy
               </p>
             </div>
@@ -270,7 +270,7 @@ export default function GLP1ObesityAlgorithm() {
                   type="number"
                   value={patient.bmi}
                   onChange={(e) => setPatient({ ...patient, bmi: parseFloat(e.target.value) || 0 })}
-                  className="bg-white border-border"
+                  className="bg-card border-border"
                 />
               </div>
               <div className="space-y-2">
@@ -281,7 +281,7 @@ export default function GLP1ObesityAlgorithm() {
                   step="0.1"
                   value={patient.hba1c}
                   onChange={(e) => setPatient({ ...patient, hba1c: parseFloat(e.target.value) || 0 })}
-                  className="bg-white border-border"
+                  className="bg-card border-border"
                 />
               </div>
             </div>

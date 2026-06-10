@@ -27,7 +27,7 @@ export default function RespiratoryModerate() {
     <div className="space-y-4">
       <div className="flex gap-2">
         <button onClick={() => {setMode("copd"); setResult(""); setRecs([]);}} className={`px-4 py-2 rounded-lg text-sm ${mode === "copd" ? "bg-cyan-500/20 text-cyan-400" : "bg-muted"}`}>COPD</button>
-        <button onClick={() => {setMode("asthma"); setResult(""); setRecs([]);}} className={`px-4 py-2 rounded-lg text-sm ${mode === "asthma" ? "bg-amber-500/20 text-amber-400" : "bg-muted"}`}>Asthma</button>
+        <button onClick={() => {setMode("asthma"); setResult(""); setRecs([]);}} className={`px-4 py-2 rounded-lg text-sm ${mode === "asthma" ? "bg-warning/100/20 text-warning" : "bg-muted"}`}>Asthma</button>
         <button onClick={() => navigate("/respiratory")} className="ml-auto px-4 py-2 rounded-lg text-sm bg-muted">Full</button>
       </div>
 

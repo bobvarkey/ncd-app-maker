@@ -13,24 +13,24 @@ export function InpatientGlycemicAssessment({ assessment, slidingScale }: Props)
   const getSeverityColor = (severity: string) => {
     switch (severity) {
       case "critical":
-        return "bg-red-100 border-2 border-red-500";
+        return "bg-destructive/10 border-2 border-red-500";
       case "high":
-        return "bg-orange-100 border-2 border-orange-500";
+        return "bg-warning/10 border-2 border-warning";
       case "warning":
-        return "bg-yellow-100 border-2 border-yellow-500";
+        return "bg-warning/10 border-2 border-yellow-500";
       default:
-        return "bg-blue-100 border-2 border-blue-500";
+        return "bg-primary/10 border-2 border-blue-500";
     }
   };
 
   const getSeverityBadgeColor = (severity: string) => {
     switch (severity) {
       case "critical":
-        return "bg-red-500 text-white";
+        return "bg-destructive/100 text-white";
       case "high":
-        return "bg-orange-500 text-white";
+        return "bg-warning/100 text-white";
       case "warning":
-        return "bg-yellow-600 text-white";
+        return "bg-warning text-white";
       default:
         return "bg-blue-500 text-white";
     }
@@ -39,28 +39,28 @@ export function InpatientGlycemicAssessment({ assessment, slidingScale }: Props)
   const getSeverityTextColor = (severity: string) => {
     switch (severity) {
       case "critical":
-        return "text-red-800";
+        return "text-destructive";
       case "high":
         return "text-orange-800";
       case "warning":
         return "text-yellow-800";
       default:
-        return "text-blue-800";
+        return "text-primary";
     }
   };
 
   const getRegimensColor = (regimen: string) => {
     switch (regimen) {
       case "iv_insulin_protocol":
-        return "text-red-700 bg-red-100 border border-red-300";
+        return "text-destructive bg-destructive/10 border border-destructive/30";
       case "basal_bolus_correction":
-        return "text-green-700 bg-green-100 border border-green-300";
+        return "text-success bg-success/10 border border-success/30";
       case "basal_plus_correction":
-        return "text-blue-700 bg-blue-100 border border-blue-300";
+        return "text-primary bg-primary/10 border border-primary/30";
       case "correction_only_exception":
-        return "text-yellow-700 bg-yellow-100 border border-yellow-300";
+        return "text-warning bg-warning/10 border border-warning/30";
       default:
-        return "text-gray-700 bg-gray-100 border border-gray-300";
+        return "text-muted-foreground bg-muted border border-border";
     }
   };
 
@@ -74,7 +74,7 @@ export function InpatientGlycemicAssessment({ assessment, slidingScale }: Props)
           </div>
           <h3 className="text-lg font-heading font-bold text-primary">Inpatient Glycemic Management</h3>
           <div className="ml-auto">
-            <span className={`text-sm font-bold px-3 py-1.5 rounded-full ${assessment.status === "ok" ? "bg-green-500 text-white" : "bg-yellow-500 text-gray-900"}`}>
+            <span className={`text-sm font-bold px-3 py-1.5 rounded-full ${assessment.status === "ok" ? "bg-success/100 text-white" : "bg-warning text-foreground"}`}>
               {assessment.status === "ok" ? "✓ Complete" : "⚠️ Incomplete"}
             </span>
           </div>
@@ -82,27 +82,27 @@ export function InpatientGlycemicAssessment({ assessment, slidingScale }: Props)
 
         {/* Derived Features Summary */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-3">
-          <div className={`p-3 rounded-lg border ${assessment.derived_features.persistent_hyperglycemia ? "bg-orange-100 border-orange-400" : "bg-gray-100 border-gray-300"}`}>
-            <span className={`font-bold text-sm block ${assessment.derived_features.persistent_hyperglycemia ? "text-orange-900" : "text-gray-700"}`}>Persistent Hyperglycemia</span>
-            <p className={`text-sm font-semibold ${assessment.derived_features.persistent_hyperglycemia ? "text-orange-700" : "text-gray-600"}`}>{assessment.derived_features.persistent_hyperglycemia ? "✓ Yes" : "✗ No"}</p>
+          <div className={`p-3 rounded-lg border ${assessment.derived_features.persistent_hyperglycemia ? "bg-warning/10 border-warning/50" : "bg-muted border-border"}`}>
+            <span className={`font-bold text-sm block ${assessment.derived_features.persistent_hyperglycemia ? "text-warning" : "text-muted-foreground"}`}>Persistent Hyperglycemia</span>
+            <p className={`text-sm font-semibold ${assessment.derived_features.persistent_hyperglycemia ? "text-warning" : "text-muted-foreground"}`}>{assessment.derived_features.persistent_hyperglycemia ? "✓ Yes" : "✗ No"}</p>
           </div>
-          <div className={`p-3 rounded-lg border ${assessment.derived_features.severe_hyperglycemia ? "bg-red-100 border-red-400" : "bg-gray-100 border-gray-300"}`}>
-            <span className={`font-bold text-sm block ${assessment.derived_features.severe_hyperglycemia ? "text-red-900" : "text-gray-700"}`}>Severe Hyperglycemia</span>
-            <p className={`text-sm font-semibold ${assessment.derived_features.severe_hyperglycemia ? "text-red-700" : "text-gray-600"}`}>{assessment.derived_features.severe_hyperglycemia ? "✓ Yes" : "✗ No"}</p>
+          <div className={`p-3 rounded-lg border ${assessment.derived_features.severe_hyperglycemia ? "bg-destructive/10 border-destructive/50" : "bg-muted border-border"}`}>
+            <span className={`font-bold text-sm block ${assessment.derived_features.severe_hyperglycemia ? "text-destructive" : "text-muted-foreground"}`}>Severe Hyperglycemia</span>
+            <p className={`text-sm font-semibold ${assessment.derived_features.severe_hyperglycemia ? "text-destructive" : "text-muted-foreground"}`}>{assessment.derived_features.severe_hyperglycemia ? "✓ Yes" : "✗ No"}</p>
           </div>
-          <div className={`p-3 rounded-lg border ${assessment.derived_features.hypoglycemia ? "bg-red-100 border-red-400" : "bg-gray-100 border-gray-300"}`}>
-            <span className={`font-bold text-sm block ${assessment.derived_features.hypoglycemia ? "text-red-900" : "text-gray-700"}`}>Hypoglycemia</span>
-            <p className={`text-sm font-semibold ${assessment.derived_features.hypoglycemia ? "text-red-700" : "text-gray-600"}`}>{assessment.derived_features.hypoglycemia ? "✓ Yes" : "✗ No"}</p>
+          <div className={`p-3 rounded-lg border ${assessment.derived_features.hypoglycemia ? "bg-destructive/10 border-destructive/50" : "bg-muted border-border"}`}>
+            <span className={`font-bold text-sm block ${assessment.derived_features.hypoglycemia ? "text-destructive" : "text-muted-foreground"}`}>Hypoglycemia</span>
+            <p className={`text-sm font-semibold ${assessment.derived_features.hypoglycemia ? "text-destructive" : "text-muted-foreground"}`}>{assessment.derived_features.hypoglycemia ? "✓ Yes" : "✗ No"}</p>
           </div>
-          <div className={`p-3 rounded-lg border ${assessment.derived_features.type1_without_basal ? "bg-red-100 border-red-400" : "bg-gray-100 border-gray-300"}`}>
-            <span className={`font-bold text-sm block ${assessment.derived_features.type1_without_basal ? "text-red-900" : "text-gray-700"}`}>Type 1 No Basal</span>
-            <p className={`text-sm font-semibold ${assessment.derived_features.type1_without_basal ? "text-red-700" : "text-gray-600"}`}>{assessment.derived_features.type1_without_basal ? "⚠️ CRITICAL" : "✓ Safe"}</p>
+          <div className={`p-3 rounded-lg border ${assessment.derived_features.type1_without_basal ? "bg-destructive/10 border-destructive/50" : "bg-muted border-border"}`}>
+            <span className={`font-bold text-sm block ${assessment.derived_features.type1_without_basal ? "text-destructive" : "text-muted-foreground"}`}>Type 1 No Basal</span>
+            <p className={`text-sm font-semibold ${assessment.derived_features.type1_without_basal ? "text-destructive" : "text-muted-foreground"}`}>{assessment.derived_features.type1_without_basal ? "⚠️ CRITICAL" : "✓ Safe"}</p>
           </div>
         </div>
 
         {/* Recommended Regimen */}
         <div className="border-t border-muted-foreground/20 pt-4">
-          <h4 className="text-sm font-bold text-gray-900 mb-3">💊 Recommended Regimen</h4>
+          <h4 className="text-sm font-bold text-foreground mb-3">💊 Recommended Regimen</h4>
           <div className={`p-4 rounded-lg text-base font-bold ${getRegimensColor(assessment.recommended_regimen)}`}>
             {assessment.recommended_regimen === "iv_insulin_protocol" && "🏥 IV Insulin Protocol (ICU/Hemodynamically Unstable)"}
             {assessment.recommended_regimen === "basal_bolus_correction" && "💉 Basal-Bolus-Correction (Eating Regular)"}
@@ -117,7 +117,7 @@ export function InpatientGlycemicAssessment({ assessment, slidingScale }: Props)
       {/* Critical Alerts */}
       {assessment.alerts.length > 0 && (
         <div className="space-y-3">
-          <h3 className="text-sm font-bold text-gray-900">🔔 Clinical Alerts ({assessment.alerts.length})</h3>
+          <h3 className="text-sm font-bold text-foreground">🔔 Clinical Alerts ({assessment.alerts.length})</h3>
           {assessment.alerts.map((alert, i) => (
             <div key={i} className={`rounded-lg p-4 mb-3 ${getSeverityColor(alert.severity)}`}>
               <button
@@ -125,10 +125,10 @@ export function InpatientGlycemicAssessment({ assessment, slidingScale }: Props)
                 className="w-full text-left hover:opacity-80 transition-opacity"
               >
                 <div className="flex items-start gap-3">
-                  {alert.severity === "critical" && <AlertTriangle className="w-5 h-5 text-red-700 shrink-0 mt-0.5 font-bold" />}
-                  {alert.severity === "high" && <AlertCircle className="w-5 h-5 text-orange-700 shrink-0 mt-0.5 font-bold" />}
-                  {alert.severity === "warning" && <TrendingUp className="w-5 h-5 text-yellow-700 shrink-0 mt-0.5 font-bold" />}
-                  {alert.severity === "info" && <CheckCircle2 className="w-5 h-5 text-blue-700 shrink-0 mt-0.5 font-bold" />}
+                  {alert.severity === "critical" && <AlertTriangle className="w-5 h-5 text-destructive shrink-0 mt-0.5 font-bold" />}
+                  {alert.severity === "high" && <AlertCircle className="w-5 h-5 text-warning shrink-0 mt-0.5 font-bold" />}
+                  {alert.severity === "warning" && <TrendingUp className="w-5 h-5 text-warning shrink-0 mt-0.5 font-bold" />}
+                  {alert.severity === "info" && <CheckCircle2 className="w-5 h-5 text-primary shrink-0 mt-0.5 font-bold" />}
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center gap-2 mb-2 flex-wrap">
                       <span className={`font-bold text-sm ${getSeverityTextColor(alert.severity)}`}>{alert.code}</span>
@@ -159,7 +159,7 @@ export function InpatientGlycemicAssessment({ assessment, slidingScale }: Props)
             {assessment.recommended_actions.map((action, i) => (
               <li key={i} className="flex items-start gap-3 text-sm">
                 <span className="bg-primary text-white rounded-full w-6 h-6 flex items-center justify-center text-xs font-bold shrink-0 mt-0.5">{i + 1}</span>
-                <span className="leading-relaxed pt-1 font-semibold text-gray-700">{action}</span>
+                <span className="leading-relaxed pt-1 font-semibold text-muted-foreground">{action}</span>
               </li>
             ))}
           </ul>

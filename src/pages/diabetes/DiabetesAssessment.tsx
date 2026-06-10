@@ -26,10 +26,10 @@ const BMICalculator = () => {
 
   const category = useMemo(() => {
     if (bmi === null) return null;
-    if (bmi < 18.5) return { label: "Underweight", color: "text-yellow-500", bgColor: "bg-yellow-500/10", borderColor: "border-yellow-500/30" };
+    if (bmi < 18.5) return { label: "Underweight", color: "text-yellow-500", bgColor: "bg-warning/10", borderColor: "border-yellow-500/30" };
     if (bmi < 23) return { label: "Normal", color: "text-success", bgColor: "bg-success/10", borderColor: "border-success/30" };
     if (bmi < 25) return { label: "Overweight (At Risk)", color: "text-warning", bgColor: "bg-warning/10", borderColor: "border-warning/30" };
-    if (bmi < 30) return { label: "Obese Class I", color: "text-orange-400", bgColor: "bg-orange-400/10", borderColor: "border-orange-400/30" };
+    if (bmi < 30) return { label: "Obese Class I", color: "text-warning", bgColor: "bg-orange-400/10", borderColor: "border-warning/50/30" };
     return { label: "Obese Class II", color: "text-destructive", bgColor: "bg-destructive/10", borderColor: "border-destructive/30" };
   }, [bmi]);
 
@@ -37,7 +37,7 @@ const BMICalculator = () => {
     { range: "< 18.5", category: "Underweight", class: "text-yellow-500" },
     { range: "18.5 — 23", category: "Normal", class: "text-success" },
     { range: "23 — 25", category: "Overweight (At Risk)", class: "text-warning" },
-    { range: "25 — 30", category: "Obese Class I", class: "text-orange-400" },
+    { range: "25 — 30", category: "Obese Class I", class: "text-warning" },
     { range: "> 30", category: "Obese Class II", class: "text-destructive" },
   ];
 
@@ -133,7 +133,7 @@ const HbA1cInterpretation = () => {
 
     if (val < 5.7) return { category: "Normal", color: "text-success", bgColor: "bg-success/10", borderColor: "border-success/30" };
     if (val < 6.5) return { category: "Prediabetes", color: "text-warning", bgColor: "bg-warning/10", borderColor: "border-warning/30" };
-    if (val < 7.0) return { category: "Diabetes (Near Target)", color: "text-orange-400", bgColor: "bg-orange-400/10", borderColor: "border-orange-400/30" };
+    if (val < 7.0) return { category: "Diabetes (Near Target)", color: "text-warning", bgColor: "bg-orange-400/10", borderColor: "border-warning/50/30" };
     if (val < 8.0) return { category: "Diabetes (Above Target)", color: "text-destructive", bgColor: "bg-destructive/10", borderColor: "border-destructive/30" };
     if (val < 9.0) return { category: "Diabetes (Poor Control)", color: "text-destructive", bgColor: "bg-destructive/10", borderColor: "border-destructive/30" };
     return { category: "Diabetes (Very Poor Control)", color: "text-destructive", bgColor: "bg-destructive/20", borderColor: "border-destructive/50" };
@@ -287,7 +287,7 @@ const InsulinDosingCalculator = () => {
     <Card className="clinical-card">
       <CardHeader className="pb-3">
         <div className="flex items-center gap-2">
-          <div className="w-8 h-8 rounded-lg bg-red-500/10 flex items-center justify-center">
+          <div className="w-8 h-8 rounded-lg bg-destructive/100/10 flex items-center justify-center">
             <Syringe className="h-4 w-4 text-red-500" />
           </div>
           <CardTitle className="text-base">Insulin Dosing Calculator</CardTitle>
@@ -332,7 +332,7 @@ const InsulinDosingCalculator = () => {
         </div>
 
         {calculations && (
-          <div className="p-4 rounded-lg bg-red-500/5 border border-red-500/20">
+          <div className="p-4 rounded-lg bg-destructive/100/5 border border-red-500/20">
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-3">
               <div className="text-center">
                 <p className="text-xs text-muted-foreground">Total Daily Dose</p>
@@ -415,7 +415,7 @@ const QuickCalculatorLinks = () => {
           {calculators.map((calc) => (
             <Link key={calc.path} to={calc.path}>
               <div className="flex items-center gap-3 p-3 rounded-lg border border-border/60 hover:border-red-500/30 hover:bg-muted/30 transition-all group">
-                <div className="w-8 h-8 rounded-lg bg-red-500/10 flex items-center justify-center shrink-0">
+                <div className="w-8 h-8 rounded-lg bg-destructive/100/10 flex items-center justify-center shrink-0">
                   <calc.icon className="h-4 w-4 text-red-500" />
                 </div>
                 <div className="flex-1 min-w-0">

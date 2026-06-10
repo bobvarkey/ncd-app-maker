@@ -137,11 +137,11 @@ export default function LipidsTreatment({ laiResult, onBackToAssessment }: Props
   const key = cat + (sub ? "-" : "") + sub;
   const rec = TREATMENT_RECS[key] || TREATMENT_RECS["LOW"];
 
-  const catColor = cat === "EHR" ? "bg-red-500 text-white" :
-    cat === "VHR" ? "bg-orange-500 text-white" :
-    cat === "HR" ? "bg-amber-500 text-white" :
-    cat === "MOD" ? "bg-yellow-500 text-white" :
-    "bg-green-500 text-white";
+  const catColor = cat === "EHR" ? "bg-destructive/100 text-white" :
+    cat === "VHR" ? "bg-warning/100 text-white" :
+    cat === "HR" ? "bg-warning/100 text-white" :
+    cat === "MOD" ? "bg-warning text-white" :
+    "bg-success/100 text-white";
 
   const generateSummary = () => {
     return [
@@ -169,7 +169,7 @@ export default function LipidsTreatment({ laiResult, onBackToAssessment }: Props
     <div className="space-y-6">
 
       {/* ─── Header Card ─── */}
-      <Card className={`p-5 border-2 ${cat === "EHR" ? "border-red-300 bg-red-50" : cat === "VHR" ? "border-orange-300 bg-orange-50" : cat === "HR" ? "border-amber-300 bg-amber-50" : cat === "MOD" ? "border-yellow-300 bg-yellow-50" : "border-green-300 bg-green-50"}`}>
+      <Card className={`p-5 border-2 ${cat === "EHR" ? "border-destructive/30 bg-destructive/10" : cat === "VHR" ? "border-orange-300 bg-warning/10" : cat === "HR" ? "border-warning/30 bg-warning/10" : cat === "MOD" ? "border-warning/30 bg-warning/10" : "border-success/30 bg-success/10"}`}>
         <div className="flex items-start justify-between mb-3">
           <div>
             <div className="flex items-center gap-2">
@@ -181,7 +181,7 @@ export default function LipidsTreatment({ laiResult, onBackToAssessment }: Props
               <span className="text-lg font-semibold text-foreground">{laiResult.label}</span>
             </div>
             <div className="flex items-center gap-3 mt-2 text-sm">
-              <span className="text-muted-foreground">Current LDL: <strong className={atTarget ? "text-green-800" : "text-red-800"}>{ldlCurrent || "—"} mg/dL</strong></span>
+              <span className="text-muted-foreground">Current LDL: <strong className={atTarget ? "text-success" : "text-destructive"}>{ldlCurrent || "—"} mg/dL</strong></span>
               <span className="text-muted-foreground">Target: <strong>&lt; {ldlTarget} mg/dL</strong></span>
               <Badge variant={atTarget ? "default" : "destructive"} className="text-xs">{atTarget ? "At target ✅" : "Above target ⚠"}</Badge>
             </div>
@@ -215,7 +215,7 @@ export default function LipidsTreatment({ laiResult, onBackToAssessment }: Props
         <ul className="space-y-2">
           {(TREATMENT_RECS[key]?.targets || []).map((t, i) => (
             <li key={i} className="flex items-start gap-2 p-2 rounded-lg bg-muted/30">
-              <span className={`w-1.5 h-1.5 rounded-full mt-2 ${cat === "EHR" ? "bg-red-500" : cat === "VHR" ? "bg-orange-500" : "bg-primary"}`} />
+              <span className={`w-1.5 h-1.5 rounded-full mt-2 ${cat === "EHR" ? "bg-destructive/100" : cat === "VHR" ? "bg-warning/100" : "bg-primary"}`} />
               <span className="text-sm text-foreground"><AbbrText text={t} /></span>
             </li>
           ))}

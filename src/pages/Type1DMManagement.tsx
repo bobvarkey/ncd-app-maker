@@ -55,7 +55,7 @@ export default function Type1DMManagement() {
         <div className="space-y-3">
           <div className="bg-destructive/5 p-4 rounded-lg">
             <p className="text-sm font-semibold text-foreground mb-2">Recommended Daily Basal Dose:</p>
-            <p className="text-base font-bold text-red-700">{management.basal_insulin.recommended_daily_dose}</p>
+            <p className="text-base font-bold text-destructive">{management.basal_insulin.recommended_daily_dose}</p>
             <p className="text-xs text-muted-foreground mt-3">{management.basal_insulin.percentage_of_tdd}</p>
           </div>
           <div>
@@ -69,7 +69,7 @@ export default function Type1DMManagement() {
               ))}
             </ul>
           </div>
-          <div className="bg-yellow-50 border-l-4 border-yellow-400 p-3 mt-3">
+          <div className="bg-warning/10 border-l-4 border-warning/50 p-3 mt-3">
             <p className="text-xs text-muted-foreground"><strong>Target Fasting Glucose:</strong> {management.basal_insulin.fasting_glucose_target}</p>
             <p className="text-xs text-muted-foreground mt-2">{management.basal_insulin.notes}</p>
           </div>
@@ -80,7 +80,7 @@ export default function Type1DMManagement() {
       id: "bolus",
       title: "Bolus Insulin (Mealtime Coverage)",
       icon: <Activity className="w-5 h-5" />,
-      color: "text-green-600",
+      color: "text-success",
       content: (
         <div className="space-y-3">
           <div className="bg-success/5 p-4 rounded-lg">
@@ -108,7 +108,7 @@ export default function Type1DMManagement() {
       icon: <Droplet className="w-5 h-5" />,
       color: "text-cyan-600",
       content: (
-        <div className="bg-cyan-50 p-4 rounded-lg space-y-2">
+        <div className="bg-primary/10 p-4 rounded-lg space-y-2">
           <div className="text-sm">
             <p><strong>Premeal:</strong> <span className="text-cyan-700">{management.glucose_targets.premeal}</span></p>
             <p><strong>Postmeal (1-2h):</strong> <span className="text-cyan-700">{management.glucose_targets.postmeal_1_2h}</span></p>
@@ -129,7 +129,7 @@ export default function Type1DMManagement() {
       color: "text-purple-600",
       content: (
         <div className="space-y-3">
-          <div className="bg-purple-50 p-4 rounded-lg">
+          <div className="bg-accent/10 p-4 rounded-lg">
             <p className="text-sm font-semibold mb-2">🎯 CGM (Preferred):</p>
             <ul className="space-y-1">
               {management.monitoring_protocol.cgm_recommended.metrics.map((metric, idx) => (
@@ -147,7 +147,7 @@ export default function Type1DMManagement() {
               ))}
             </ul>
           </div>
-          <p className="text-sm text-muted-foreground bg-yellow-50 p-2 rounded"><strong>Ketone Testing:</strong> {management.monitoring_protocol.ketone_testing}</p>
+          <p className="text-sm text-muted-foreground bg-warning/10 p-2 rounded"><strong>Ketone Testing:</strong> {management.monitoring_protocol.ketone_testing}</p>
         </div>
       ),
     },
@@ -158,16 +158,16 @@ export default function Type1DMManagement() {
       color: "text-red-600",
       content: (
         <div className="space-y-3">
-          <div className="bg-destructive/5 p-3 rounded-lg border-l-4 border-red-400">
+          <div className="bg-destructive/5 p-3 rounded-lg border-l-4 border-destructive/50">
             <p className="text-sm font-semibold text-foreground mb-2">Level 1 (70-54 mg/dL):</p>
             <p className="text-xs text-muted-foreground"><strong>Treatment:</strong> {management.hypoglycemia_protocol.level_1_70_54.treatment}</p>
             <p className="text-xs text-muted-foreground"><strong>Recheck:</strong> {management.hypoglycemia_protocol.level_1_70_54.recheck}</p>
           </div>
-          <div className="bg-orange-50 p-3 rounded-lg border-l-4 border-orange-400">
+          <div className="bg-warning/10 p-3 rounded-lg border-l-4 border-warning/50">
             <p className="text-sm font-semibold text-foreground mb-2">Level 2 (Below 54 mg/dL):</p>
             <p className="text-xs text-muted-foreground">{management.hypoglycemia_protocol.level_2_below_54.treatment}</p>
           </div>
-          <div className="bg-red-100 p-3 rounded-lg border-l-4 border-red-600">
+          <div className="bg-destructive/10 p-3 rounded-lg border-l-4 border-red-600">
             <p className="text-sm font-semibold text-foreground mb-2">Level 3 (Severe):</p>
             <p className="text-xs text-muted-foreground"><strong>Definition:</strong> {management.hypoglycemia_protocol.level_3_severe.definition}</p>
             <p className="text-xs text-muted-foreground mt-1"><strong>Treatment:</strong> {management.hypoglycemia_protocol.level_3_severe.treatment}</p>
@@ -187,7 +187,7 @@ export default function Type1DMManagement() {
       id: "exercise",
       title: "Exercise Adjustments",
       icon: <Activity className="w-5 h-5" />,
-      color: "text-green-600",
+      color: "text-success",
       content: (
         <div className="space-y-3">
           <div className="bg-success/5 p-3 rounded-lg">
@@ -260,7 +260,7 @@ export default function Type1DMManagement() {
             <div key={section.id} className="clinical-card border border-gray-200">
               <button
                 onClick={() => toggleSection(section.id)}
-                className="w-full flex items-center justify-between p-4 hover:bg-gray-50 transition-colors"
+                className="w-full flex items-center justify-between p-4 hover:bg-muted/80 transition-colors"
               >
                 <div className="flex items-center gap-3">
                   <div className={section.color}>{section.icon}</div>
@@ -280,12 +280,12 @@ export default function Type1DMManagement() {
       </div>
 
       {/* Sick Day Rules Alert */}
-      <div className="clinical-card bg-gradient-to-r from-red-50 to-orange-50 border-red-200">
-        <h3 className="section-title mb-3 text-red-700">⚠️ Sick Day Rules</h3>
+      <div className="clinical-card bg-gradient-to-r from-red-50 to-orange-50 border-destructive/30">
+        <h3 className="section-title mb-3 text-destructive">⚠️ Sick Day Rules</h3>
         <p className="text-sm text-muted-foreground mb-3">{management.sick_day_rules.insulin_adjustment}</p>
         <p className="text-sm text-muted-foreground mb-3"><strong>Hydration:</strong> {management.sick_day_rules.hydration_goal}</p>
         <p className="text-sm text-muted-foreground mb-3"><strong>Monitoring:</strong> {management.sick_day_rules.monitoring}</p>
-        <p className="text-sm font-semibold text-red-700 bg-red-100 p-2 rounded"><strong>🚨 Escalation:</strong> {management.sick_day_rules.escalation_criteria}</p>
+        <p className="text-sm font-semibold text-destructive bg-destructive/10 p-2 rounded"><strong>🚨 Escalation:</strong> {management.sick_day_rules.escalation_criteria}</p>
       </div>
 
       {/* Complication Screening */}

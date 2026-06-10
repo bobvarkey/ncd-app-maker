@@ -327,7 +327,7 @@ export function GitHubSyncPanel({ initialBranch }: GitHubSyncPanelProps) {
             </Badge>
           ) : sync.status === "synced" ? (
             sync.behind ? (
-              <Badge variant="secondary" className="text-xs gap-1.5 bg-amber-500/10 text-amber-400 border-amber-500/30">
+              <Badge variant="secondary" className="text-xs gap-1.5 bg-warning/100/10 text-warning border-amber-500/30">
                 <AlertCircle className="h-3 w-3" />
                 Behind — sync recommended
               </Badge>

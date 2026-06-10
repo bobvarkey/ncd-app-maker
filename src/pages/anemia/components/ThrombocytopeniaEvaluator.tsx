@@ -64,9 +64,9 @@ export default function ThrombocytopeniaEvaluator() {
 
   function getSeverity(count: number): { level: string; color: string; risk: string } {
     if (count >= 150) return { level: 'Normal', color: 'text-emerald-400', risk: 'No bleeding risk' };
-    if (count >= 100) return { level: 'Mild', color: 'text-amber-400', risk: 'Minimal bleeding risk' };
-    if (count >= 50) return { level: 'Moderate', color: 'text-orange-400', risk: 'Increased bleeding with trauma/surgery' };
-    if (count >= 20) return { level: 'Severe', color: 'text-red-400', risk: 'Spontaneous bleeding risk' };
+    if (count >= 100) return { level: 'Mild', color: 'text-warning', risk: 'Minimal bleeding risk' };
+    if (count >= 50) return { level: 'Moderate', color: 'text-warning', risk: 'Increased bleeding with trauma/surgery' };
+    if (count >= 20) return { level: 'Severe', color: 'text-destructive', risk: 'Spontaneous bleeding risk' };
     return { level: 'Life-threatening', color: 'text-red-500', risk: 'High risk of spontaneous hemorrhage' };
   }
 
@@ -145,11 +145,11 @@ export default function ThrombocytopeniaEvaluator() {
   }
 
   return (
-    <div className="bg-white rounded-2xl shadow-sm border border-border overflow-hidden">
+    <div className="bg-card rounded-2xl shadow-sm border border-border overflow-hidden">
       <div className="p-6 border-b border-border">
         <div className="flex items-center gap-3">
           <div className="w-10 h-10 rounded-xl bg-rose-900/30 flex items-center justify-center border border-rose-800">
-            <Droplet className="w-5 h-5 text-rose-400" />
+            <Droplet className="w-5 h-5 text-destructive" />
           </div>
           <div>
             <h2 className="text-lg font-bold text-foreground">Thrombocytopenia Evaluator</h2>
@@ -177,7 +177,7 @@ export default function ThrombocytopeniaEvaluator() {
               value={values.plateletCount}
               onChange={(e) => setValues({ ...values, plateletCount: e.target.value })}
               placeholder="e.g., 45"
-              className="w-full px-4 py-2 bg-gray-100 border border-border text-foreground rounded-xl focus:ring-2 focus:ring-rose-500 focus:border-transparent outline-none transition-all placeholder-gray-500"
+              className="w-full px-4 py-2 bg-muted border border-border text-foreground rounded-xl focus:ring-2 focus:ring-destructive focus:border-transparent outline-none transition-all placeholder-muted-foreground"
             />
           </div>
           <div>
@@ -189,7 +189,7 @@ export default function ThrombocytopeniaEvaluator() {
               value={values.mpv}
               onChange={(e) => setValues({ ...values, mpv: e.target.value })}
               placeholder="7-11"
-              className="w-full px-4 py-2 bg-gray-100 border border-border text-foreground rounded-xl focus:ring-2 focus:ring-rose-500 focus:border-transparent outline-none transition-all placeholder-gray-500"
+              className="w-full px-4 py-2 bg-muted border border-border text-foreground rounded-xl focus:ring-2 focus:ring-destructive focus:border-transparent outline-none transition-all placeholder-muted-foreground"
             />
           </div>
           <div>
@@ -201,13 +201,13 @@ export default function ThrombocytopeniaEvaluator() {
               value={factors.age}
               onChange={(e) => setFactors({ ...factors, age: e.target.value })}
               placeholder="years"
-              className="w-full px-4 py-2 bg-gray-100 border border-border text-foreground rounded-xl focus:ring-2 focus:ring-rose-500 focus:border-transparent outline-none transition-all placeholder-gray-500"
+              className="w-full px-4 py-2 bg-muted border border-border text-foreground rounded-xl focus:ring-2 focus:ring-destructive focus:border-transparent outline-none transition-all placeholder-muted-foreground"
             />
           </div>
         </div>
 
         {/* Clinical Factors */}
-        <div className="bg-gray-100/50 rounded-xl p-4 border border-border">
+        <div className="bg-muted/50 rounded-xl p-4 border border-border">
           <h3 className="text-sm font-semibold text-foreground mb-4 flex items-center gap-2">
             <Stethoscope className="w-4 h-4 text-muted-foreground" />
             Clinical Factors (Check all that apply)
@@ -221,12 +221,12 @@ export default function ThrombocytopeniaEvaluator() {
               { key: 'fever', label: 'Fever' },
               { key: 'newMedications', label: 'New medications in last 2 weeks' },
             ].map((item) => (
-              <label key={item.key} className="flex items-center gap-3 cursor-pointer hover:bg-gray-100 p-2 rounded-lg transition-colors">
+              <label key={item.key} className="flex items-center gap-3 cursor-pointer hover:bg-muted/80 p-2 rounded-lg transition-colors">
                 <input
                   type="checkbox"
                   checked={factors[item.key as keyof PatientFactors] as boolean}
                   onChange={(e) => setFactors({ ...factors, [item.key]: e.target.checked })}
-                  className="w-4 h-4 text-rose-500 rounded border-gray-600 bg-gray-700 focus:ring-rose-500"
+                  className="w-4 h-4 text-destructive rounded border-border bg-muted focus:ring-destructive"
                 />
                 <span className="text-sm text-muted-foreground">{item.label}</span>
               </label>
@@ -237,7 +237,7 @@ export default function ThrombocytopeniaEvaluator() {
           <div className="mt-4 border-t border-border pt-4">
             <button
               onClick={() => setShowDrugList(!showDrugList)}
-              className="flex items-center gap-2 text-sm text-amber-400 hover:text-amber-300 transition-colors"
+              className="flex items-center gap-2 text-sm text-warning hover:text-amber-300 transition-colors"
             >
               <Pill className="w-4 h-4" />
               <span>Common drugs causing thrombocytopenia (DITP)</span>
@@ -245,7 +245,7 @@ export default function ThrombocytopeniaEvaluator() {
             </button>
 
             {showDrugList && (
-              <div className="mt-3 bg-white/50 rounded-lg p-4 border border-border animate-in fade-in slide-in-from-top-2 duration-200">
+              <div className="mt-3 bg-card/50 rounded-lg p-4 border border-border animate-in fade-in slide-in-from-top-2 duration-200">
                 <div className="flex items-start gap-2 mb-3">
                   <Info className="w-4 h-4 text-amber-500 mt-0.5 flex-shrink-0" />
                   <p className="text-xs text-muted-foreground">
@@ -255,7 +255,7 @@ export default function ThrombocytopeniaEvaluator() {
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
                   <div>
-                    <h4 className="text-xs font-semibold text-rose-400 mb-2">Antibiotics</h4>
+                    <h4 className="text-xs font-semibold text-destructive mb-2">Antibiotics</h4>
                     <ul className="space-y-1">
                       {commonDITPDrugs.antibiotics.map(drug => (
                         <li key={drug} className="text-xs text-muted-foreground">{drug}</li>
@@ -263,7 +263,7 @@ export default function ThrombocytopeniaEvaluator() {
                     </ul>
                   </div>
                   <div>
-                    <h4 className="text-xs font-semibold text-rose-400 mb-2">Cardiovascular</h4>
+                    <h4 className="text-xs font-semibold text-destructive mb-2">Cardiovascular</h4>
                     <ul className="space-y-1">
                       {commonDITPDrugs.cardiovascular.map(drug => (
                         <li key={drug} className="text-xs text-muted-foreground">{drug}</li>
@@ -271,7 +271,7 @@ export default function ThrombocytopeniaEvaluator() {
                     </ul>
                   </div>
                   <div>
-                    <h4 className="text-xs font-semibold text-rose-400 mb-2">Anticonvulsants</h4>
+                    <h4 className="text-xs font-semibold text-destructive mb-2">Anticonvulsants</h4>
                     <ul className="space-y-1">
                       {commonDITPDrugs.anticonvulsants.map(drug => (
                         <li key={drug} className="text-xs text-muted-foreground">{drug}</li>
@@ -279,7 +279,7 @@ export default function ThrombocytopeniaEvaluator() {
                     </ul>
                   </div>
                   <div>
-                    <h4 className="text-xs font-semibold text-rose-400 mb-2">NSAIDs/Analgesics</h4>
+                    <h4 className="text-xs font-semibold text-destructive mb-2">NSAIDs/Analgesics</h4>
                     <ul className="space-y-1">
                       {commonDITPDrugs.analgesics.map(drug => (
                         <li key={drug} className="text-xs text-muted-foreground">{drug}</li>
@@ -287,7 +287,7 @@ export default function ThrombocytopeniaEvaluator() {
                     </ul>
                   </div>
                   <div>
-                    <h4 className="text-xs font-semibold text-rose-400 mb-2">Psychotropic</h4>
+                    <h4 className="text-xs font-semibold text-destructive mb-2">Psychotropic</h4>
                     <ul className="space-y-1">
                       {commonDITPDrugs.psychotropic.map(drug => (
                         <li key={drug} className="text-xs text-muted-foreground">{drug}</li>
@@ -295,7 +295,7 @@ export default function ThrombocytopeniaEvaluator() {
                     </ul>
                   </div>
                   <div>
-                    <h4 className="text-xs font-semibold text-rose-400 mb-2">Other</h4>
+                    <h4 className="text-xs font-semibold text-destructive mb-2">Other</h4>
                     <ul className="space-y-1">
                       {commonDITPDrugs.other.map(drug => (
                         <li key={drug} className="text-xs text-muted-foreground">{drug}</li>
@@ -318,7 +318,7 @@ export default function ThrombocytopeniaEvaluator() {
             value={factors.priorPlateletCount}
             onChange={(e) => setFactors({ ...factors, priorPlateletCount: e.target.value })}
             placeholder="e.g., 250"
-            className="w-full px-4 py-2 bg-gray-100 border border-border text-foreground rounded-xl focus:ring-2 focus:ring-rose-500 focus:border-transparent outline-none transition-all placeholder-gray-500"
+            className="w-full px-4 py-2 bg-muted border border-border text-foreground rounded-xl focus:ring-2 focus:ring-destructive focus:border-transparent outline-none transition-all placeholder-muted-foreground"
           />
         </div>
 
@@ -327,13 +327,13 @@ export default function ThrombocytopeniaEvaluator() {
           <button
             onClick={generateAssessment}
             disabled={!values.plateletCount}
-            className="flex-1 bg-rose-600 text-foreground py-3 rounded-xl font-semibold hover:bg-rose-700 disabled:bg-gray-100 disabled:text-muted-foreground transition-colors"
+            className="flex-1 bg-destructive text-foreground py-3 rounded-xl font-semibold hover:bg-destructive/80 disabled:bg-muted disabled:text-muted-foreground transition-colors"
           >
             Evaluate Thrombocytopenia
           </button>
           <button
             onClick={handleReset}
-            className="px-6 py-3 border border-border text-muted-foreground rounded-xl font-medium hover:bg-gray-100 transition-colors"
+            className="px-6 py-3 border border-border text-muted-foreground rounded-xl font-medium hover:bg-muted/80 transition-colors"
           >
             Reset
           </button>
@@ -359,7 +359,7 @@ export default function ThrombocytopeniaEvaluator() {
         {/* Algorithm Section */}
         <button
           onClick={() => setShowAlgorithm(!showAlgorithm)}
-          className="w-full flex items-center justify-between p-4 bg-gray-100/50 hover:bg-gray-100 border border-border rounded-xl transition-colors"
+          className="w-full flex items-center justify-between p-4 bg-muted/50 hover:bg-muted/80 border border-border rounded-xl transition-colors"
         >
           <div className="flex items-center gap-2">
             <TestTube className="w-5 h-5 text-muted-foreground" />
@@ -369,7 +369,7 @@ export default function ThrombocytopeniaEvaluator() {
         </button>
 
         {showAlgorithm && (
-          <div className="bg-white rounded-xl p-5 space-y-4 text-sm border border-border">
+          <div className="bg-card rounded-xl p-5 space-y-4 text-sm border border-border">
             <p className="text-muted-foreground">
               Based on Al-Samkari H, Kuter DJ. <em>How I diagnose and treat thrombocytopenia in geriatric patients.</em> Blood 2024.
             </p>
@@ -377,7 +377,7 @@ export default function ThrombocytopeniaEvaluator() {
             {/* Algorithm Steps */}
             <div className="space-y-4">
               <div className="flex items-start gap-3">
-                <span className="bg-rose-600 text-foreground text-xs font-bold rounded-full w-6 h-6 flex items-center justify-center flex-shrink-0">1</span>
+                <span className="bg-destructive text-foreground text-xs font-bold rounded-full w-6 h-6 flex items-center justify-center flex-shrink-0">1</span>
                 <div>
                   <p className="font-medium text-foreground">Confirm True Thrombocytopenia</p>
                   <p className="text-xs text-muted-foreground mt-1">Review peripheral smear to exclude pseudothrombocytopenia (platelet clumping). If suspected, repeat using heparin or citrate tube.</p>
@@ -385,7 +385,7 @@ export default function ThrombocytopeniaEvaluator() {
               </div>
 
               <div className="flex items-start gap-3">
-                <span className="bg-rose-600 text-foreground text-xs font-bold rounded-full w-6 h-6 flex items-center justify-center flex-shrink-0">2</span>
+                <span className="bg-destructive text-foreground text-xs font-bold rounded-full w-6 h-6 flex items-center justify-center flex-shrink-0">2</span>
                 <div>
                   <p className="font-medium text-foreground">Assess Other Cell Lines</p>
                   <p className="text-xs text-muted-foreground mt-1">Look for leukocyte abnormalities (blasts, dysplasia) or anemia suggesting underlying malignancy or bone marrow disorder.</p>
@@ -393,7 +393,7 @@ export default function ThrombocytopeniaEvaluator() {
               </div>
 
               <div className="flex items-start gap-3">
-                <span className="bg-rose-600 text-foreground text-xs font-bold rounded-full w-6 h-6 flex items-center justify-center flex-shrink-0">3</span>
+                <span className="bg-destructive text-foreground text-xs font-bold rounded-full w-6 h-6 flex items-center justify-center flex-shrink-0">3</span>
                 <div>
                   <p className="font-medium text-foreground">Evaluate for Hemolysis</p>
                   <p className="text-xs text-muted-foreground mt-1">LDH, haptoglobin, reticulocyte count, direct antiglobulin test (DAT). Schistocytes on smear suggest TTP/HUS/DIC.</p>
@@ -401,24 +401,24 @@ export default function ThrombocytopeniaEvaluator() {
               </div>
 
               <div className="flex items-start gap-3">
-                <span className="bg-rose-600 text-foreground text-xs font-bold rounded-full w-6 h-6 flex items-center justify-center flex-shrink-0">4</span>
+                <span className="bg-destructive text-foreground text-xs font-bold rounded-full w-6 h-6 flex items-center justify-center flex-shrink-0">4</span>
                 <div>
                   <p className="font-medium text-foreground">Mechanism-Based Classification</p>
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 mt-2">
-                    <div className="bg-gray-100 rounded-lg p-2 border border-border">
-                      <p className="text-xs font-semibold text-rose-400">↓ Production</p>
+                    <div className="bg-muted rounded-lg p-2 border border-border">
+                      <p className="text-xs font-semibold text-destructive">↓ Production</p>
                       <p className="text-xs text-muted-foreground">MDS, malignancy, B12/folate deficiency</p>
                     </div>
-                    <div className="bg-gray-100 rounded-lg p-2 border border-border">
-                      <p className="text-xs font-semibold text-rose-400">↑ Destruction</p>
+                    <div className="bg-muted rounded-lg p-2 border border-border">
+                      <p className="text-xs font-semibold text-destructive">↑ Destruction</p>
                       <p className="text-xs text-muted-foreground">ITP, drug-induced, autoimmune</p>
                     </div>
-                    <div className="bg-gray-100 rounded-lg p-2 border border-border">
-                      <p className="text-xs font-semibold text-rose-400">Consumption</p>
+                    <div className="bg-muted rounded-lg p-2 border border-border">
+                      <p className="text-xs font-semibold text-destructive">Consumption</p>
                       <p className="text-xs text-muted-foreground">DIC, TTP, HUS, TMA</p>
                     </div>
-                    <div className="bg-gray-100 rounded-lg p-2 border border-border">
-                      <p className="text-xs font-semibold text-rose-400">Sequestration</p>
+                    <div className="bg-muted rounded-lg p-2 border border-border">
+                      <p className="text-xs font-semibold text-destructive">Sequestration</p>
                       <p className="text-xs text-muted-foreground">Hypersplenism/portal hypertension</p>
                     </div>
                   </div>
@@ -426,7 +426,7 @@ export default function ThrombocytopeniaEvaluator() {
               </div>
 
               <div className="flex items-start gap-3">
-                <span className="bg-rose-600 text-foreground text-xs font-bold rounded-full w-6 h-6 flex items-center justify-center flex-shrink-0">5</span>
+                <span className="bg-destructive text-foreground text-xs font-bold rounded-full w-6 h-6 flex items-center justify-center flex-shrink-0">5</span>
                 <div>
                   <p className="font-medium text-foreground">Red Flags Requiring Urgent Action</p>
                   <ul className="text-xs text-muted-foreground mt-1 space-y-1 list-disc list-inside">
@@ -443,7 +443,7 @@ export default function ThrombocytopeniaEvaluator() {
             {/* HIT 4Ts Score Reference */}
             <div className="bg-amber-900/20 rounded-lg p-3 border border-amber-800/50 mt-4">
               <p className="font-semibold text-amber-300 text-xs">HIT 4Ts Score (Pretest Probability)</p>
-              <p className="text-xs text-amber-400 mt-1">
+              <p className="text-xs text-warning mt-1">
                 <strong>Thrombocytopenia:</strong> &gt;50% fall = 2 pts, 10-50% = 1 pt, &lt;10% = 0 pts<br/>
                 <strong>Timing:</strong> 5-10 days = 2 pts, &gt;10 days or &lt;4 days = 1 pt<br/>
                 <strong>Thrombosis:</strong> Confirmed thrombosis = 2 pts, progressive/recurrent = 1 pt<br/>

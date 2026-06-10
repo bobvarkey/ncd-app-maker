@@ -141,7 +141,7 @@ export default function BmiCalculator() {
               <h1 className="font-display text-xl font-extrabold tracking-tight bg-gradient-to-r from-pink-500 via-rose-500 to-orange-600 bg-clip-text text-transparent truncate">
                 BMI Calculator
               </h1>
-              <p className="text-xs font-medium text-rose-500 dark:text-rose-400 truncate">
+              <p className="text-xs font-medium text-destructive dark:text-destructive truncate">
                 Body Mass Index with Ethnicity-Specific Thresholds
               </p>
             </div>
@@ -201,15 +201,15 @@ export default function BmiCalculator() {
                         }
                       }}
                     >
-                      <SelectTrigger id="ethnicity" className="bg-white border-border">
+                      <SelectTrigger id="ethnicity" className="bg-card border-border">
                         <SelectValue />
                       </SelectTrigger>
-                      <SelectContent className="bg-white border-border">
+                      <SelectContent className="bg-card border-border">
                         {ETHNICITY_GUIDELINES.map((guideline) => (
                           <SelectItem
                             key={guideline.id}
                             value={guideline.id}
-                            className="text-slate-100 focus:bg-gray-100 focus:text-slate-100"
+                            className="text-foreground focus:bg-muted focus:text-foreground"
                           >
                             {guideline.name}
                           </SelectItem>
@@ -228,7 +228,7 @@ export default function BmiCalculator() {
                       id="height"
                       type="number"
                       placeholder="e.g., 170"
-                      className="bg-white border-border"
+                      className="bg-card border-border"
                       {...register("height", { valueAsNumber: true })}
                     />
                     {errors.height && (
@@ -243,7 +243,7 @@ export default function BmiCalculator() {
                       id="weight"
                       type="number"
                       placeholder="e.g., 70"
-                      className="bg-white border-border"
+                      className="bg-card border-border"
                       {...register("weight", { valueAsNumber: true })}
                     />
                     {errors.weight && (
@@ -430,14 +430,14 @@ export default function BmiCalculator() {
                               <div className="text-sm space-y-1">
                                 <p><strong>Early Response ({TREATMENT_MONITORING.earlyResponse.timeframe}):</strong> Target {TREATMENT_MONITORING.earlyResponse.target} weight loss</p>
                                 <p className="text-muted-foreground">{TREATMENT_MONITORING.earlyResponse.interpretation}</p>
-                                <p className="mt-2 text-amber-400"><strong>Important:</strong> {TREATMENT_MONITORING.longTermTherapy.discontinuationWarning}</p>
+                                <p className="mt-2 text-warning"><strong>Important:</strong> {TREATMENT_MONITORING.longTermTherapy.discontinuationWarning}</p>
                               </div>
                             </AlertDescription>
                           </Alert>
 
                           {/* Treatment Recommendations based on BMI */}
                           {treatmentData && (
-                            <Alert className="border-amber-500/50 bg-amber-500/10">
+                            <Alert className="border-amber-500/50 bg-warning/100/10">
                               <AlertCircle className="h-4 w-4" />
                               <AlertDescription className="space-y-3">
                                 <p className="font-medium">Personalized Recommendations for Current BMI:</p>
@@ -531,9 +531,9 @@ export default function BmiCalculator() {
 
                           {/* Metabolic Surgery */}
                           {(result.bmi >= 30 || (selectedEthnicity !== "standard" && result.bmi >= 27.5)) && (
-                            <Card className="border-red-500/30 bg-red-500/5">
+                            <Card className="border-red-500/30 bg-destructive/100/5">
                               <CardHeader className="pb-3">
-                                <CardTitle className="flex items-center gap-2 text-base text-red-400">
+                                <CardTitle className="flex items-center gap-2 text-base text-destructive">
                                   <Activity className="h-4 w-4" />
                                   Metabolic Surgery Consideration
                                 </CardTitle>
@@ -564,7 +564,7 @@ export default function BmiCalculator() {
                                       <ul className="mt-2 space-y-1">
                                         {surgery.notes.map((note, j) => (
                                           <li key={j} className="text-xs text-muted-foreground flex items-start gap-1">
-                                            <span className="text-red-400">•</span> {note}
+                                            <span className="text-destructive">•</span> {note}
                                           </li>
                                         ))}
                                       </ul>

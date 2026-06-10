@@ -39,8 +39,8 @@ function calculateCkdEpi(creatinine: number, age: number, sex: "male" | "female"
 export function getGfrStage(gfr: number): { stage: string; label: string; color: string } {
   if (gfr >= 90) return { stage: "G1", label: "Normal or High", color: "bg-success/20 text-success border-success/30" };
   if (gfr >= 60) return { stage: "G2", label: "Mildly Decreased", color: "bg-success/20 text-success border-success/30" };
-  if (gfr >= 45) return { stage: "G3a", label: "Mild-Moderate Decrease", color: "bg-yellow-500/20 text-yellow-700 border-yellow-500/30" };
-  if (gfr >= 30) return { stage: "G3b", label: "Moderate-Severe Decrease", color: "bg-orange-500/20 text-orange-700 border-orange-500/30" };
+  if (gfr >= 45) return { stage: "G3a", label: "Mild-Moderate Decrease", color: "bg-warning/20 text-warning border-yellow-500/30" };
+  if (gfr >= 30) return { stage: "G3b", label: "Moderate-Severe Decrease", color: "bg-warning/100/20 text-warning border-warning/30" };
   if (gfr >= 15) return { stage: "G4", label: "Severely Decreased", color: "bg-destructive/20 text-destructive border-destructive/30" };
   return { stage: "G5", label: "Kidney Failure", color: "bg-destructive/30 text-destructive border-destructive/40" };
 }

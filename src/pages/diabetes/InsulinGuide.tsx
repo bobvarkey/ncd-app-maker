@@ -11,7 +11,7 @@ const insulinTypes = [
     category: "Rapid Acting",
     color: "bg-rose-500",
     borderColor: "border-rose-500",
-    bgColor: "bg-rose-50",
+    bgColor: "bg-destructive/10",
     generic: ["Glulisine", "Lispro", "Aspart"],
     trade: ["Apidra", "Humalog", "NovoLOG"],
     onset: "15 mins",
@@ -25,9 +25,9 @@ const insulinTypes = [
   },
   {
     category: "Short Acting",
-    color: "bg-orange-500",
-    borderColor: "border-orange-500",
-    bgColor: "bg-orange-50",
+    color: "bg-warning/100",
+    borderColor: "border-warning",
+    bgColor: "bg-warning/10",
     generic: ["Regular"],
     trade: ["Humalin R", "Novolin R"],
     onset: "30-60 mins",
@@ -42,9 +42,9 @@ const insulinTypes = [
   },
   {
     category: "Intermediate Acting",
-    color: "bg-amber-500",
+    color: "bg-warning/100",
     borderColor: "border-amber-500",
-    bgColor: "bg-amber-50",
+    bgColor: "bg-warning/10",
     generic: ["NPH"],
     trade: ["Humalin N", "Novolin N"],
     onset: "60-120 mins",
@@ -60,7 +60,7 @@ const insulinTypes = [
     category: "Long Acting",
     color: "bg-blue-500",
     borderColor: "border-blue-500",
-    bgColor: "bg-blue-50",
+    bgColor: "bg-primary/10",
     generic: ["Glargine", "Detemir"],
     trade: ["Lantus", "Levemir"],
     onset: "60-120 mins",
@@ -181,17 +181,17 @@ export default function InsulinGuide() {
                   </div>
 
                   <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 text-sm">
-                    <div className="text-center p-2 bg-white/50 rounded">
+                    <div className="text-center p-2 bg-muted rounded">
                       <Clock className="h-4 w-4 mx-auto mb-1 text-muted-foreground" />
                       <span className="text-xs text-muted-foreground block">ONSET</span>
                       <span className="font-semibold">{insulin.onset}</span>
                     </div>
-                    <div className="text-center p-2 bg-white/50 rounded">
+                    <div className="text-center p-2 bg-muted rounded">
                       <Activity className="h-4 w-4 mx-auto mb-1 text-muted-foreground" />
                       <span className="text-xs text-muted-foreground block">PEAK</span>
                       <span className="font-semibold">{insulin.peak}</span>
                     </div>
-                    <div className="text-center p-2 bg-white/50 rounded">
+                    <div className="text-center p-2 bg-muted rounded">
                       <Clock className="h-4 w-4 mx-auto mb-1 text-muted-foreground" />
                       <span className="text-xs text-muted-foreground block">DURATION</span>
                       <span className="font-semibold">{insulin.duration}</span>
@@ -201,7 +201,7 @@ export default function InsulinGuide() {
 
                 <div className="flex flex-wrap gap-2">
                   {insulin.keyInfo.map((info, i) => (
-                    <Badge key={i} variant="outline" className="text-xs bg-white/50">
+                    <Badge key={i} variant="outline" className="text-xs bg-muted">
                       {info.includes("HYPOGLYCEMIA") ? (
                         <span className="text-rose-600">⚠️ {info}</span>
                       ) : (
@@ -239,7 +239,7 @@ export default function InsulinGuide() {
               <ZoomableImage
                 src="/images/insulin-types-graph.png"
                 alt="Insulin Activity Graph"
-                className="w-full rounded-lg border bg-white"
+                className="w-full rounded-lg border bg-card"
                 style={{ filter: "invert(1) hue-rotate(180deg) brightness(1.1) contrast(1.05)" }}
               />
               <p className="text-xs text-muted-foreground">
@@ -321,7 +321,7 @@ export default function InsulinGuide() {
             ))}
           </div>
           <Separator className="my-4" />
-          <div className="p-3 bg-rose-50 border border-rose-200 rounded-lg">
+          <div className="p-3 bg-destructive/10 border border-destructive/30 rounded-lg">
             <p className="text-sm font-semibold text-rose-700 flex items-center gap-2">
               <AlertCircle className="h-4 w-4" />
               Important Reminder

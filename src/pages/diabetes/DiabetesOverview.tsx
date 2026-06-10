@@ -13,7 +13,7 @@ const PathophysiologySection = () => (
       <Card className="clinical-card border-red-500/20">
         <CardHeader className="pb-3">
           <div className="flex items-center gap-2">
-            <div className="w-8 h-8 rounded-lg bg-red-500/10 flex items-center justify-center">
+            <div className="w-8 h-8 rounded-lg bg-destructive/100/10 flex items-center justify-center">
               <Flame className="h-4 w-4 text-red-500" />
             </div>
             <CardTitle className="text-base">Type 1 Diabetes</CardTitle>
@@ -36,10 +36,10 @@ const PathophysiologySection = () => (
         </CardContent>
       </Card>
 
-      <Card className="clinical-card border-orange-500/20">
+      <Card className="clinical-card border-warning/20">
         <CardHeader className="pb-3">
           <div className="flex items-center gap-2">
-            <div className="w-8 h-8 rounded-lg bg-orange-500/10 flex items-center justify-center">
+            <div className="w-8 h-8 rounded-lg bg-warning/100/10 flex items-center justify-center">
               <Activity className="h-4 w-4 text-orange-500" />
             </div>
             <CardTitle className="text-base">Type 2 Diabetes</CardTitle>
@@ -87,7 +87,7 @@ const PathophysiologySection = () => (
               <p className="text-xs text-muted-foreground mt-1">{item.defect}</p>
               <div className="mt-2 flex items-center gap-1">
                 <ArrowRight className="h-3 w-3 text-red-500" />
-                <span className="text-xs text-red-400">{item.effect}</span>
+                <span className="text-xs text-destructive">{item.effect}</span>
               </div>
             </div>
           ))}

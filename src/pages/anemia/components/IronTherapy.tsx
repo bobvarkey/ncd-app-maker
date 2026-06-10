@@ -54,24 +54,24 @@ const ironCutoffs = [
 ];
 
 const severityColor = {
-  low:    'bg-sky-900/20 border-sky-800/50 text-sky-400',
-  medium: 'bg-amber-900/20 border-amber-800/50 text-amber-400',
-  high:   'bg-rose-900/20 border-rose-800/50 text-rose-400',
+  low:    'bg-sky-900/20 border-sky-800/50 text-primary',
+  medium: 'bg-amber-900/20 border-amber-800/50 text-warning',
+  high:   'bg-rose-900/20 border-rose-800/50 text-destructive',
 };
 
 export default function IronTherapy() {
   const [open, setOpen] = useState(false);
 
   return (
-    <div className="bg-white rounded-2xl shadow-sm border border-border overflow-hidden">
+    <div className="bg-card rounded-2xl shadow-sm border border-border overflow-hidden">
       <button
         onClick={() => setOpen(v => !v)}
-        className="w-full flex items-center justify-between p-6 hover:bg-gray-100 transition-colors"
+        className="w-full flex items-center justify-between p-6 hover:bg-muted/80 transition-colors"
       >
         <div className="flex items-center gap-2">
-          <Syringe className="w-5 h-5 text-sky-400" />
+          <Syringe className="w-5 h-5 text-primary" />
           <h2 className="text-lg font-semibold text-foreground">IV Iron Replacement Therapy</h2>
-          <span className="text-xs bg-rose-900/30 text-rose-400 border border-rose-800 px-2 py-0.5 rounded-full font-medium">
+          <span className="text-xs bg-rose-900/30 text-destructive border border-rose-800 px-2 py-0.5 rounded-full font-medium">
             IS vs FCM
           </span>
         </div>
@@ -82,8 +82,8 @@ export default function IronTherapy() {
         <div className="px-6 pb-6 space-y-7">
           {/* Intro */}
           <p className="text-sm text-muted-foreground leading-relaxed">
-            Both <strong className="text-gray-200">Iron Sucrose (IS)</strong> and{' '}
-            <strong className="text-gray-200">Ferric Carboxymaltose (FCM)</strong> are IV iron therapies used when oral iron
+            Both <strong className="text-foreground">Iron Sucrose (IS)</strong> and{' '}
+            <strong className="text-foreground">Ferric Carboxymaltose (FCM)</strong> are IV iron therapies used when oral iron
             is poorly tolerated or ineffective. FCM is generally preferred — it allows high-dose administration in a single
             sitting, reducing hospital visits and accelerating recovery.
           </p>
@@ -97,15 +97,15 @@ export default function IronTherapy() {
             <div className="overflow-x-auto rounded-xl border border-border">
               <table className="w-full text-sm">
                 <thead>
-                  <tr className="bg-gray-100 border-b border-border">
+                  <tr className="bg-muted border-b border-border">
                     <th className="text-left py-3 px-4 text-xs font-semibold text-muted-foreground uppercase tracking-wide">Feature</th>
-                    <th className="text-left py-3 px-4 text-xs font-semibold text-amber-400 uppercase tracking-wide">Iron Sucrose (IS)</th>
-                    <th className="text-left py-3 px-4 text-xs font-semibold text-sky-400 uppercase tracking-wide">Ferric Carboxymaltose (FCM)</th>
+                    <th className="text-left py-3 px-4 text-xs font-semibold text-warning uppercase tracking-wide">Iron Sucrose (IS)</th>
+                    <th className="text-left py-3 px-4 text-xs font-semibold text-primary uppercase tracking-wide">Ferric Carboxymaltose (FCM)</th>
                   </tr>
                 </thead>
                 <tbody>
                   {ivComparison.map((row, i) => (
-                    <tr key={row.feature} className={`border-b border-border ${i % 2 === 0 ? '' : 'bg-gray-100/30'}`}>
+                    <tr key={row.feature} className={`border-b border-border ${i % 2 === 0 ? '' : 'bg-muted/30'}`}>
                       <td className="py-3 px-4 text-xs font-medium text-muted-foreground">{row.feature}</td>
                       <td className="py-3 px-4 text-xs text-amber-300/80">{row.is}</td>
                       <td className="py-3 px-4 text-xs text-sky-300/80">{row.fcm}</td>
@@ -121,7 +121,7 @@ export default function IronTherapy() {
             <div className="rounded-xl border border-amber-800/40 bg-amber-900/10 p-4">
               <div className="flex items-center gap-2 mb-2">
                 <span className="w-2 h-2 rounded-full bg-amber-400 flex-shrink-0" />
-                <span className="text-sm font-semibold text-amber-400">Iron Sucrose</span>
+                <span className="text-sm font-semibold text-warning">Iron Sucrose</span>
               </div>
               <p className="text-xs text-muted-foreground leading-relaxed">
                 Long-standing standard of care. Excellent safety profile with highly controlled, incremental iron
@@ -131,7 +131,7 @@ export default function IronTherapy() {
             <div className="rounded-xl border border-sky-800/40 bg-sky-900/10 p-4">
               <div className="flex items-center gap-2 mb-2">
                 <span className="w-2 h-2 rounded-full bg-sky-400 flex-shrink-0" />
-                <span className="text-sm font-semibold text-sky-400">Ferric Carboxymaltose</span>
+                <span className="text-sm font-semibold text-primary">Ferric Carboxymaltose</span>
               </div>
               <p className="text-xs text-muted-foreground leading-relaxed">
                 Preferred for severe anemia, pregnancy (2nd/3rd trimester), IBD, and heart failure. The carbohydrate
@@ -143,8 +143,8 @@ export default function IronTherapy() {
           {/* Iron markers section */}
           <div>
             <div className="flex items-center gap-2 mb-1">
-              <FlaskConical className="w-4 h-4 text-sky-400" />
-              <h3 className="text-sm font-semibold text-gray-200">Iron Status Markers & Cutoffs by Condition</h3>
+              <FlaskConical className="w-4 h-4 text-primary" />
+              <h3 className="text-sm font-semibold text-foreground">Iron Status Markers & Cutoffs by Condition</h3>
             </div>
             <p className="text-xs text-muted-foreground mb-4">
               Clinicians rely on two primary markers: <strong className="text-muted-foreground">Serum Ferritin</strong> (total stored
@@ -156,7 +156,7 @@ export default function IronTherapy() {
               {ironCutoffs.map(row => (
                 <div
                   key={row.condition}
-                  className="rounded-xl border border-border bg-gray-100/40 overflow-hidden"
+                  className="rounded-xl border border-border bg-muted/40 overflow-hidden"
                 >
                   <div className="flex flex-col sm:flex-row sm:items-center gap-3 p-4">
                     <div className="flex-1 min-w-0">
@@ -191,7 +191,7 @@ export default function IronTherapy() {
           <div className="rounded-xl border border-amber-800/40 bg-amber-900/10 p-4">
             <div className="flex items-center gap-2 mb-2">
               <span className="w-2 h-2 rounded-full bg-amber-400 flex-shrink-0" />
-              <span className="text-sm font-semibold text-amber-400">Investigating Cause of Iron Deficiency</span>
+              <span className="text-sm font-semibold text-warning">Investigating Cause of Iron Deficiency</span>
             </div>
             <p className="text-xs text-muted-foreground leading-relaxed">
               For unexplained iron deficiency anemia, investigate the underlying cause:

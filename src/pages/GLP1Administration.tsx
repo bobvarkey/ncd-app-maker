@@ -202,7 +202,7 @@ const GLP1Administration = () => {
       </div>
 
       {/* Quick Overview */}
-      <Card className="p-6 bg-card border-2 border-blue-200">
+      <Card className="p-6 bg-card border-2 border-primary/30">
         <h2 className="font-bold mb-3 text-xl text-foreground">Quick Reference</h2>
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-base">
           <div>
@@ -305,7 +305,7 @@ const GLP1Administration = () => {
                     <ul className="text-base space-y-2">
                       {med.administrationTips.map((tip, idx) => (
                         <li key={idx} className="flex gap-2 text-foreground">
-                          <span className="text-green-600 font-bold">✓</span>
+                          <span className="text-success font-bold">✓</span>
                           <span className="text-foreground">{tip}</span>
                         </li>
                       ))}
@@ -379,7 +379,7 @@ const GLP1Administration = () => {
               ].map((section, idx) => (
                 <div
                   key={idx}
-                  className="p-4 border-2 border-green-200 rounded-lg bg-green-50"
+                  className="p-4 border-2 border-success/30 rounded-lg bg-success/10"
                 >
                   <h4 className="font-bold text-xl mb-3 text-foreground">{section.step}</h4>
                   <ul className="space-y-2">
@@ -405,7 +405,7 @@ const GLP1Administration = () => {
 
                   <div className="space-y-3 text-base">
                     <div>
-                      <span className="font-semibold text-green-700">✓ Pros:</span>
+                      <span className="font-semibold text-success">✓ Pros:</span>
                       <p className="text-foreground">{site.pros}</p>
                     </div>
                     <div>
@@ -417,16 +417,16 @@ const GLP1Administration = () => {
               ))}
             </div>
 
-            <div className="mt-4 p-4 bg-purple-100 rounded-lg border-2 border-purple-300">
+            <div className="mt-4 p-4 bg-accent/10 rounded-lg border-2 border-accent/30">
               <h4 className="font-bold mb-2 text-lg text-foreground">Rotation Pattern Example</h4>
               <p className="text-base text-foreground mb-3">
                 To prevent lipohypertrophy (fat lumps):
               </p>
               <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 text-sm font-mono text-center">
-                <div className="p-2 bg-blue-200 text-foreground rounded font-semibold">Week 1<br/>Abd L</div>
-                <div className="p-2 bg-blue-300 text-foreground rounded font-semibold">Week 2<br/>Abd R</div>
-                <div className="p-2 bg-green-200 text-foreground rounded font-semibold">Week 3<br/>Thigh L</div>
-                <div className="p-2 bg-green-300 text-foreground rounded font-semibold">Week 4<br/>Thigh R</div>
+                <div className="p-2 bg-primary/20 text-foreground rounded font-semibold">Week 1<br/>Abd L</div>
+                <div className="p-2 bg-primary/30 text-foreground rounded font-semibold">Week 2<br/>Abd R</div>
+                <div className="p-2 bg-success/20 text-foreground rounded font-semibold">Week 3<br/>Thigh L</div>
+                <div className="p-2 bg-success/30 text-foreground rounded font-semibold">Week 4<br/>Thigh R</div>
               </div>
               <p className="text-sm text-foreground mt-2 font-semibold">
                 Then repeat with upper arms, thighs, and abdomen in different spots
@@ -477,12 +477,12 @@ const GLP1Administration = () => {
       </Card>
 
       {/* Safety Considerations */}
-      <Card className="p-6 border-2 border-red-300 bg-red-100">
-        <h2 className="text-3xl font-heading font-bold mb-4 text-red-900">⚠️ Safety Considerations</h2>
+      <Card className="p-6 border-2 border-destructive/30 bg-destructive/10">
+        <h2 className="text-3xl font-heading font-bold mb-4 text-destructive">⚠️ Safety Considerations</h2>
         <ul className="space-y-2">
           {safetyConsiderations.map((safety, idx) => (
-            <li key={idx} className="flex gap-3 text-base text-red-900 font-semibold">
-              <span className="text-red-700 font-bold">✗</span>
+            <li key={idx} className="flex gap-3 text-base text-destructive font-semibold">
+              <span className="text-destructive font-bold">✗</span>
               <span>{safety}</span>
             </li>
           ))}
@@ -520,7 +520,7 @@ const GLP1Administration = () => {
               action: "Use alternative analgesics when possible",
             },
           ].map((interaction, idx) => (
-            <div key={idx} className="p-3 border-2 border-amber-300 rounded-lg bg-amber-100">
+            <div key={idx} className="p-3 border-2 border-warning/30 rounded-lg bg-warning/10">
               <h4 className="font-bold text-amber-900 mb-1 text-lg">
                 {interaction.drug}
               </h4>
@@ -536,8 +536,8 @@ const GLP1Administration = () => {
       </Card>
 
       {/* Monitoring Parameters */}
-      <Card className="p-6 bg-green-100 border-2 border-green-300">
-        <h2 className="text-3xl font-heading font-bold mb-4 text-green-900">✓ Monitoring Parameters</h2>
+      <Card className="p-6 bg-success/10 border-2 border-success/30">
+        <h2 className="text-3xl font-heading font-bold mb-4 text-success">✓ Monitoring Parameters</h2>
         <div className="grid md:grid-cols-2 gap-4">
           {[
             { param: "HbA1c", frequency: "Every 3 months", target: "<7% or individualized" },
@@ -549,7 +549,7 @@ const GLP1Administration = () => {
             { param: "Thyroid (TSH if hx of thyroid)", frequency: "Annually", target: "Normal" },
             { param: "Lipid Panel", frequency: "6-12 months", target: "Individual goals" },
           ].map((monitor, idx) => (
-            <div key={idx} className="p-3 border-2 border-green-300 rounded-lg bg-card">
+            <div key={idx} className="p-3 border-2 border-success/30 rounded-lg bg-card">
               <h4 className="font-bold text-lg text-foreground">{monitor.param}</h4>
               <p className="text-base text-muted-foreground font-semibold">Frequency: {monitor.frequency}</p>
               <p className="text-base mt-1 text-foreground">

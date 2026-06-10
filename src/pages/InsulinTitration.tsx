@@ -416,8 +416,8 @@ const InsulinTitration = () => {
             </div>
 
             {/* Prescribing Safety */}
-            <div className="p-2 rounded bg-amber-500/10 border border-amber-500/30">
-              <p className="font-semibold text-xs uppercase text-amber-600 mb-1">Prescribing Safety</p>
+            <div className="p-2 rounded bg-warning/100/10 border border-amber-500/30">
+              <p className="font-semibold text-xs uppercase text-warning mb-1">Prescribing Safety</p>
               <ul className="space-y-0.5 text-xs">
                 <li>• Always prescribe by <strong>brand name</strong> (not generic)</li>
                 <li>• Write <strong>"units"</strong> in full — never abbreviate</li>

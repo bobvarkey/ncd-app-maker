@@ -225,9 +225,9 @@ function OCRUpload({ onValuesExtracted }: OCRUploadProps) {
                   </div>
 
                   {extractedValues && !isProcessing && (
-                    <div className="bg-green-500/10 border border-green-500/20 rounded-lg p-3">
+                    <div className="bg-success/100/10 border border-green-500/20 rounded-lg p-3">
                       <div className="flex items-center justify-between mb-2">
-                        <span className="text-xs font-medium text-green-400">Extracted Values</span>
+                        <span className="text-xs font-medium text-success">Extracted Values</span>
                         <button onClick={clearImage} className="text-xs text-muted-foreground hover:text-foreground">Clear</button>
                       </div>
                       <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 text-xs">
@@ -528,7 +528,7 @@ Also works for: TSH, Free T4, Ferritin, TSAT, Hemoglobin, MCV, eGFR, Potassium, 
                 </div>
                 <div className="p-2 space-y-1">
                   {parsedValues.__none ? (
-                    <div className="px-3 py-2 text-sm text-amber-400">
+                    <div className="px-3 py-2 text-sm text-warning">
                       {parsedValues.__none}
                     </div>
                   ) : (
@@ -1163,19 +1163,19 @@ function PrescriptionEngine() {
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
               <div className="space-y-2">
                 <Label className="text-xs flex items-center gap-1">Ferritin <span className="text-xs text-muted-foreground">(ng/mL)</span></Label>
-                <Input type="number" value={ferritin} onChange={(e) => setFerritin(e.target.value)} placeholder="100" className="h-10 px-3 rounded-lg border-sky-500/30 focus:ring-2 focus:ring-sky-500/50 focus:border-sky-500 transition-all" />
+                <Input type="number" value={ferritin} onChange={(e) => setFerritin(e.target.value)} placeholder="100" className="h-10 px-3 rounded-lg border-sky-500/30 focus:ring-2 focus:ring-primary/50 focus:border-sky-500 transition-all" />
               </div>
               <div className="space-y-2">
                 <Label className="text-xs flex items-center gap-1">Serum Iron <span className="text-xs text-muted-foreground">(µg/dL)</span></Label>
-                <Input type="number" value={serumIron} onChange={(e) => setSerumIron(e.target.value)} placeholder="80" className="h-10 px-3 rounded-lg border-sky-500/30 focus:ring-2 focus:ring-sky-500/50 focus:border-sky-500 transition-all" />
+                <Input type="number" value={serumIron} onChange={(e) => setSerumIron(e.target.value)} placeholder="80" className="h-10 px-3 rounded-lg border-sky-500/30 focus:ring-2 focus:ring-primary/50 focus:border-sky-500 transition-all" />
               </div>
               <div className="space-y-2">
                 <Label className="text-xs flex items-center gap-1">TIBC <span className="text-xs text-muted-foreground">(µg/dL)</span></Label>
-                <Input type="number" value={tibc} onChange={(e) => setTibc(e.target.value)} placeholder="300" className="h-10 px-3 rounded-lg border-sky-500/30 focus:ring-2 focus:ring-sky-500/50 focus:border-sky-500 transition-all" />
+                <Input type="number" value={tibc} onChange={(e) => setTibc(e.target.value)} placeholder="300" className="h-10 px-3 rounded-lg border-sky-500/30 focus:ring-2 focus:ring-primary/50 focus:border-sky-500 transition-all" />
               </div>
               <div className="space-y-2">
                 <Label className="text-xs flex items-center gap-1">TSAT <span className="text-xs text-muted-foreground">(%)</span></Label>
-                <Input type="number" step="0.1" value={tsat} onChange={(e) => setTsat(e.target.value)} placeholder="20" className="h-10 px-3 rounded-lg border-sky-500/30 focus:ring-2 focus:ring-sky-500/50 focus:border-sky-500 transition-all" />
+                <Input type="number" step="0.1" value={tsat} onChange={(e) => setTsat(e.target.value)} placeholder="20" className="h-10 px-3 rounded-lg border-sky-500/30 focus:ring-2 focus:ring-primary/50 focus:border-sky-500 transition-all" />
               </div>
             </div>
           </CollapsibleContent>
@@ -1250,7 +1250,7 @@ function PrescriptionEngine() {
         </div>
 
         {/* Liver Disease Section */}
-        <div className="mb-6 p-4 bg-white border border-border/40 rounded-lg">
+        <div className="mb-6 p-4 bg-card border border-border/40 rounded-lg">
           <div className="flex items-center space-x-2 mb-3">
             <Checkbox
               id="liver"
@@ -1451,11 +1451,11 @@ export default function Home() {
           <div className="flex flex-wrap items-center justify-between gap-4">
             <div className="flex items-center gap-6 text-sm text-muted-foreground">
               <span className="flex items-center gap-2">
-                <span className="w-1.5 h-1.5 rounded-full bg-green-500" />
+                <span className="w-1.5 h-1.5 rounded-full bg-success/100" />
                 ADA Guidelines 2024
               </span>
               <span className="flex items-center gap-2">
-                <span className="w-1.5 h-1.5 rounded-full bg-orange-500" />
+                <span className="w-1.5 h-1.5 rounded-full bg-warning/100" />
                 ESC/ESH 2024
               </span>
               <span className="flex items-center gap-2">

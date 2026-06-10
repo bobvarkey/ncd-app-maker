@@ -126,11 +126,11 @@ function scanFile(path: string): Finding[] {
 
       // ── Rule 2: white text on light bg → invisible text ──
       // Only flag if the light bg is NOT overridden by the app's dark theme
-      // (bg-white, bg-gray-100, bg-sky-600 are overridden by theme CSS variables)
+      // (bg-card, bg-muted, bg-primary are overridden by theme CSS variables)
       if (isLightBg && isWhiteFg && !isSafeFg) {
-        // bg-white and bg-gray-100 on this app are overridden by theme vars
+        // bg-card and bg-muted on this app are overridden by theme vars
         // Only flag truly non-overridden light backgrounds
-        const isOverriden = /bg-white|bg-gray-100|bg-gray-50|bg-sky-600|bg-rose-600/.test(classStr);
+        const isOverriden = /bg-card|bg-muted|bg-muted|bg-primary|bg-destructive/.test(classStr);
         if (!isOverriden) {
           findings.push({
             file: relative(ROOT, path),

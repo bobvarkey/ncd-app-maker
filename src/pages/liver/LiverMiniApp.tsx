@@ -112,8 +112,8 @@ function patternFromLFTs(ast: number, alt: number, alp: number, alpULN = 120): "
 
 const riskBadge = (r: Risk) => {
   if (r === "low") return <Badge className="bg-emerald-500/15 text-emerald-400 border-emerald-500/30">Low risk</Badge>;
-  if (r === "indeterminate") return <Badge className="bg-amber-500/15 text-amber-400 border-amber-500/30">Indeterminate</Badge>;
-  if (r === "high") return <Badge className="bg-red-500/15 text-red-400 border-red-500/30">High risk</Badge>;
+  if (r === "indeterminate") return <Badge className="bg-warning/100/15 text-warning border-amber-500/30">Indeterminate</Badge>;
+  if (r === "high") return <Badge className="bg-destructive/100/15 text-destructive border-red-500/30">High risk</Badge>;
   return <Badge variant="outline">—</Badge>;
 };
 
@@ -432,8 +432,8 @@ export default function LiverMiniApp() {
               {alcohol.tier !== "none" && (
                 <div className="text-xs">
                   Tier: <span className={
-                    alcohol.tier === "heavy" ? "text-red-400" :
-                    alcohol.tier === "atrisk" ? "text-amber-400" : "text-emerald-400"
+                    alcohol.tier === "heavy" ? "text-destructive" :
+                    alcohol.tier === "atrisk" ? "text-warning" : "text-emerald-400"
                   }>{alcohol.label}</span>
                   {sex && <span className="text-muted-foreground"> (threshold {sex === "female" ? "≥8" : "≥15"}/wk heavy)</span>}
                 </div>
@@ -519,8 +519,8 @@ export default function LiverMiniApp() {
           </div>
 
           {redFlags.length > 0 && (
-            <div className="p-3 rounded-lg border border-red-500/40 bg-red-500/5">
-              <div className="text-xs font-semibold text-red-400 mb-1">Red flags — urgent referral</div>
+            <div className="p-3 rounded-lg border border-red-500/40 bg-destructive/100/5">
+              <div className="text-xs font-semibold text-destructive mb-1">Red flags — urgent referral</div>
               <ul className="text-xs space-y-0.5 list-disc list-inside">
                 {redFlags.map(f => <li key={f}>{f}</li>)}
               </ul>

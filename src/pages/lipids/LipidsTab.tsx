@@ -61,7 +61,7 @@ export default function LipidsTab() {
               Comprehensive lipid assessment and treatment with ACC/AHA and LAI 2023 guidelines
             </p>
             {laiResult && (
-              <Badge variant="outline" className={`mt-1 ${laiResult.cat === "EHR" ? "bg-red-500/10 text-red-800 border-red-500/30" : laiResult.cat === "VHR" ? "bg-orange-500/10 text-orange-600 border-orange-500/30" : laiResult.cat === "HR" ? "bg-amber-500/10 text-amber-600 border-amber-500/30" : "bg-green-500/10 text-green-800 border-green-500/30"}`}>
+              <Badge variant="outline" className={`mt-1 ${laiResult.cat === "EHR" ? "bg-destructive/100/10 text-destructive border-red-500/30" : laiResult.cat === "VHR" ? "bg-warning/100/10 text-orange-600 border-warning/30" : laiResult.cat === "HR" ? "bg-warning/100/10 text-warning border-amber-500/30" : "bg-success/100/10 text-success border-green-500/30"}`}>
                 {laiResult.cat}{laiResult.sub && `-${laiResult.sub}`} — Target LDL {laiResult.ldlTarget}
               </Badge>
             )}
@@ -88,7 +88,7 @@ export default function LipidsTab() {
             <TabsTrigger value="treatment" disabled={!laiResult} className="flex items-center gap-1.5 py-2 text-xs data-[state=active]:bg-blue-500/10 data-[state=active]:text-blue-600">
               <Pill className="h-4 w-4" /><span>Rx</span>
             </TabsTrigger>
-            <TabsTrigger value="secondary" className="flex items-center gap-1.5 py-2 text-xs data-[state=active]:bg-red-500/10 data-[state=active]:text-red-600">
+            <TabsTrigger value="secondary" className="flex items-center gap-1.5 py-2 text-xs data-[state=active]:bg-destructive/100/10 data-[state=active]:text-red-600">
               <Shield className="h-4 w-4" /><span>Secondary Prevention</span>
             </TabsTrigger>
             <TabsTrigger value="overview" className="flex items-center gap-1.5 py-2 text-xs data-[state=active]:bg-blue-500/10 data-[state=active]:text-blue-600">

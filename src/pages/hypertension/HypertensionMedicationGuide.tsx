@@ -16,7 +16,7 @@ const medicationClasses = [
     sideEffects: ["Dry cough (10-20%)", "Hyperkalemia", "Acute kidney injury", "Angioedema (rare)"],
     monitoring: ["Creatinine & K+ at baseline, 1-2 weeks, then annually", "Check BP response"],
     firstLine: true,
-    color: "bg-blue-50 border-blue-300",
+    color: "bg-primary/10 border-primary/30",
   },
   {
     class: "ARBs (Angiotensin Receptor Blockers)",
@@ -28,7 +28,7 @@ const medicationClasses = [
     sideEffects: ["Hyperkalemia", "Hypotension", "Acute kidney injury", "Less cough than ACEi"],
     monitoring: ["Creatinine & K+ at baseline, 1-2 weeks, then annually", "BP response"],
     firstLine: true,
-    color: "bg-blue-50 border-blue-300",
+    color: "bg-primary/10 border-primary/30",
   },
   {
     class: "Calcium Channel Blockers (CCBs)",
@@ -40,7 +40,7 @@ const medicationClasses = [
     sideEffects: ["Peripheral edema", "Flushing", "Dizziness", "Gingival hyperplasia", "Constipation (verapamil)"],
     monitoring: ["Peripheral edema", "BP response", "Heart rate (non-DHP CCBs)"],
     firstLine: true,
-    color: "bg-green-50 border-green-300",
+    color: "bg-success/10 border-success/30",
   },
   {
     class: "Thiazide Diuretics",
@@ -52,7 +52,7 @@ const medicationClasses = [
     sideEffects: ["Hypokalemia", "Hyponatremia", "Hyperglycemia", "Hyperuricemia", "Dehydration"],
     monitoring: ["Electrolytes (Na+, K+) at 1-2 weeks then 6-12 monthly", "Creatinine", "Glucose", "Uric acid"],
     firstLine: true,
-    color: "bg-yellow-50 border-yellow-300",
+    color: "bg-warning/10 border-warning/30",
   },
   {
     class: "Beta-Blockers",
@@ -64,7 +64,7 @@ const medicationClasses = [
     sideEffects: ["Fatigue", "Bradycardia", "Sexual dysfunction", "Mask hypoglycemia", "Depression"],
     monitoring: ["Heart rate", "BP", "Signs of heart failure", "Masked hypoglycemia in diabetics"],
     firstLine: false,
-    color: "bg-gray-50 border-gray-300",
+    color: "bg-muted border-border",
   },
   {
     class: "Mineralocorticoid Receptor Antagonists",
@@ -76,7 +76,7 @@ const medicationClasses = [
     sideEffects: ["Hyperkalemia", "Gynecomastia (spironolactone)", "Renal dysfunction"],
     monitoring: ["K+ and creatinine at 1 week, 1 month, then 3-6 monthly", "BP response"],
     firstLine: false,
-    color: "bg-purple-50 border-purple-300",
+    color: "bg-accent/10 border-accent/30",
   },
 ];
 
@@ -423,7 +423,7 @@ export default function HypertensionMedicationGuide() {
                   </div>
                   <p className="text-xs text-muted-foreground mt-1">{drug.pearls}</p>
                   {drug.caution && (
-                    <p className="text-xs text-amber-400 mt-1 flex items-start gap-1">
+                    <p className="text-xs text-warning mt-1 flex items-start gap-1">
                       <span>⚠</span> <span>{drug.caution}</span>
                     </p>
                   )}

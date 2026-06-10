@@ -271,18 +271,18 @@ export default function LipidsAssessment({ onClassificationChange, onNavigateToT
   };
 
   const bucketColorBg =
-    classification.cat === "EHR" ? "bg-red-50 border-red-300" :
-    classification.cat === "VHR" ? "bg-orange-50 border-orange-300" :
-    classification.cat === "HR" ? "bg-amber-50 border-amber-300" :
-    classification.cat === "MOD" ? "bg-yellow-50 border-yellow-300" :
-    "bg-green-50 border-green-300";
+    classification.cat === "EHR" ? "bg-destructive/10 border-destructive/30" :
+    classification.cat === "VHR" ? "bg-warning/10 border-orange-300" :
+    classification.cat === "HR" ? "bg-warning/10 border-warning/30" :
+    classification.cat === "MOD" ? "bg-warning/10 border-warning/30" :
+    "bg-success/10 border-success/30";
 
   const bucketBadgeColor =
-    classification.cat === "EHR" ? "bg-red-500 text-white" :
-    classification.cat === "VHR" ? "bg-orange-500 text-white" :
-    classification.cat === "HR" ? "bg-amber-500 text-white" :
-    classification.cat === "MOD" ? "bg-yellow-500 text-white" :
-    "bg-green-500 text-white";
+    classification.cat === "EHR" ? "bg-destructive/100 text-white" :
+    classification.cat === "VHR" ? "bg-warning/100 text-white" :
+    classification.cat === "HR" ? "bg-warning/100 text-white" :
+    classification.cat === "MOD" ? "bg-warning text-white" :
+    "bg-success/100 text-white";
 
   return (
     <div className="space-y-6">
@@ -363,9 +363,9 @@ export default function LipidsAssessment({ onClassificationChange, onNavigateToT
           <label className="flex items-center gap-2 cursor-pointer"><input type="checkbox" checked={smoking} onChange={e => setSmoking(e.target.checked)} className="rounded" /><span className="text-xs">Smoker</span></label>
         </div>
         {preventResult?.valid ? (
-          <div className={`mt-3 p-3 rounded-lg border ${preventResult.category === "High" ? "bg-red-50 border-red-200" : preventResult.category === "Intermediate" ? "bg-amber-50 border-amber-200" : "bg-green-50 border-green-200"}`}>
+          <div className={`mt-3 p-3 rounded-lg border ${preventResult.category === "High" ? "bg-destructive/10 border-destructive/30" : preventResult.category === "Intermediate" ? "bg-warning/10 border-warning/30" : "bg-success/10 border-success/30"}`}>
             <span className="font-semibold text-lg">{preventResult.riskPct}%</span>
-            <span className={`ml-2 text-xs font-semibold ${preventResult.category === "High" ? "text-red-800" : preventResult.category === "Intermediate" ? "text-amber-600" : "text-green-800"}`}>
+            <span className={`ml-2 text-xs font-semibold ${preventResult.category === "High" ? "text-destructive" : preventResult.category === "Intermediate" ? "text-warning" : "text-success"}`}>
               ({preventResult.category})
             </span>
           </div>
@@ -388,27 +388,27 @@ export default function LipidsAssessment({ onClassificationChange, onNavigateToT
               <span className="text-lg font-semibold text-foreground">{classification.label}</span>
             </div>
           </div>
-          <Target className="h-6 w-6 text-slate-500" />
+          <Target className="h-6 w-6 text-muted-foreground" />
         </div>
 
         <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 mb-4">
-          <div className="p-3 rounded-lg bg-white/80 border border-slate-200">
+          <div className="p-3 rounded-lg bg-muted/80 border border-border">
             <p className="text-xs text-foreground/70 uppercase font-semibold tracking-wide">LDL Target</p>
             <p className="text-lg font-bold text-foreground">{details.ldl} mg/dL</p>
             <p className="text-xs text-muted-foreground">Current: {ldl || "—"}</p>
-            {ldl && <p className={`text-xs font-semibold ${atTarget ? "text-green-700" : "text-red-700"}`}>{atTarget ? "✅ At target" : "⚠ Above target"}</p>}
+            {ldl && <p className={`text-xs font-semibold ${atTarget ? "text-success" : "text-destructive"}`}>{atTarget ? "✅ At target" : "⚠ Above target"}</p>}
           </div>
-          <div className="p-3 rounded-lg bg-white/80 border border-slate-200">
+          <div className="p-3 rounded-lg bg-muted/80 border border-border">
             <p className="text-xs text-foreground/70 uppercase font-semibold tracking-wide">Non-HDL Target</p>
             <p className="text-lg font-bold text-foreground">{details.nonHdl} mg/dL</p>
           </div>
-          <div className="p-3 rounded-lg bg-white/80 border border-slate-200">
+          <div className="p-3 rounded-lg bg-muted/80 border border-border">
             <p className="text-xs text-foreground/70 uppercase font-semibold tracking-wide">ApoB Target</p>
             <p className="text-lg font-bold text-foreground">{details.apoB} mg/dL</p>
           </div>
         </div>
 
-        <div className="border-t border-slate-300 pt-3">
+        <div className="border-t border-border pt-3">
           <div className="flex items-center gap-2 mb-2">
             <Target className="h-4 w-4 text-foreground" />
             <p className="text-sm font-semibold text-foreground">{rec.title}</p>
@@ -435,15 +435,15 @@ export default function LipidsAssessment({ onClassificationChange, onNavigateToT
               </tr>
             </thead>
             <tbody className="text-foreground">
-              <tr className="border-b border-border/50"><td className="py-2 pr-2 font-bold text-red-800"><AbbreviationHover term="EHR-A">EHR-A</AbbreviationHover></td><td className="py-2 pr-2"><AbbreviationHover term="ASCVD">ASCVD</AbbreviationHover> only</td><td className="py-2 pr-2 font-bold">&lt; 55</td><td className="py-2">High statin + Ezetimibe</td></tr>
-              <tr className="border-b border-border/50"><td className="py-2 pr-2 font-bold text-red-800"><AbbreviationHover term="EHR-B">EHR-B</AbbreviationHover></td><td className="py-2 pr-2"><AbbreviationHover term="ASCVD">ASCVD</AbbreviationHover> + 1 high-risk feature</td><td className="py-2 pr-2 font-bold">&lt; 55</td><td className="py-2">+ <AbbreviationHover term="PCSK9i">PCSK9i</AbbreviationHover></td></tr>
-              <tr className="border-b border-border/50"><td className="py-2 pr-2 font-bold text-red-800"><AbbreviationHover term="EHR-C">EHR-C</AbbreviationHover></td><td className="py-2 pr-2"><AbbreviationHover term="ASCVD">ASCVD</AbbreviationHover> + ≥2 high-risk features</td><td className="py-2 pr-2 font-bold">&lt; 55</td><td className="py-2">Max triple therapy</td></tr>
+              <tr className="border-b border-border/50"><td className="py-2 pr-2 font-bold text-destructive"><AbbreviationHover term="EHR-A">EHR-A</AbbreviationHover></td><td className="py-2 pr-2"><AbbreviationHover term="ASCVD">ASCVD</AbbreviationHover> only</td><td className="py-2 pr-2 font-bold">&lt; 55</td><td className="py-2">High statin + Ezetimibe</td></tr>
+              <tr className="border-b border-border/50"><td className="py-2 pr-2 font-bold text-destructive"><AbbreviationHover term="EHR-B">EHR-B</AbbreviationHover></td><td className="py-2 pr-2"><AbbreviationHover term="ASCVD">ASCVD</AbbreviationHover> + 1 high-risk feature</td><td className="py-2 pr-2 font-bold">&lt; 55</td><td className="py-2">+ <AbbreviationHover term="PCSK9i">PCSK9i</AbbreviationHover></td></tr>
+              <tr className="border-b border-border/50"><td className="py-2 pr-2 font-bold text-destructive"><AbbreviationHover term="EHR-C">EHR-C</AbbreviationHover></td><td className="py-2 pr-2"><AbbreviationHover term="ASCVD">ASCVD</AbbreviationHover> + ≥2 high-risk features</td><td className="py-2 pr-2 font-bold">&lt; 55</td><td className="py-2">Max triple therapy</td></tr>
               <tr className="border-b border-border/50"><td className="py-2 pr-2 font-bold text-orange-600">VHR-A</td><td className="py-2 pr-2"><AbbreviationHover term="ASCVD">ASCVD</AbbreviationHover> equivalent</td><td className="py-2 pr-2 font-bold">&lt; 55</td><td className="py-2">High statin</td></tr>
               <tr className="border-b border-border/50"><td className="py-2 pr-2 font-bold text-orange-600">VHR-B</td><td className="py-2 pr-2"><AbbreviationHover term="DM">DM</AbbreviationHover> + <AbbreviationHover term="TOD">TOD</AbbreviationHover></td><td className="py-2 pr-2 font-bold">&lt; 55</td><td className="py-2">Statin + Ezetimibe</td></tr>
               <tr className="border-b border-border/50"><td className="py-2 pr-2 font-bold text-orange-600">VHR-C</td><td className="py-2 pr-2"><AbbreviationHover term="CKD">CKD</AbbreviationHover>/<AbbreviationHover term="FH">FH</AbbreviationHover>/<AbbreviationHover term="LDL">LDL</AbbreviationHover> ≥190</td><td className="py-2 pr-2 font-bold">&lt; 55</td><td className="py-2">Triple ± <AbbreviationHover term="PCSK9i">PCSK9i</AbbreviationHover></td></tr>
-              <tr className="border-b border-border/50"><td className="py-2 pr-2 font-bold text-amber-600">HR</td><td className="py-2 pr-2">Multiple RF, <AbbreviationHover term="DM">DM</AbbreviationHover> alone, <AbbreviationHover term="LDL">LDL</AbbreviationHover> 160-189</td><td className="py-2 pr-2 font-bold">&lt; 70</td><td className="py-2">High statin</td></tr>
+              <tr className="border-b border-border/50"><td className="py-2 pr-2 font-bold text-warning">HR</td><td className="py-2 pr-2">Multiple RF, <AbbreviationHover term="DM">DM</AbbreviationHover> alone, <AbbreviationHover term="LDL">LDL</AbbreviationHover> 160-189</td><td className="py-2 pr-2 font-bold">&lt; 70</td><td className="py-2">High statin</td></tr>
               <tr className="border-b border-border/50"><td className="py-2 pr-2 font-bold text-yellow-600">MOD</td><td className="py-2 pr-2">Age ≥40 + enhancer, <AbbreviationHover term="LDL">LDL</AbbreviationHover> 130-159</td><td className="py-2 pr-2 font-bold">&lt; 100</td><td className="py-2">Moderate statin</td></tr>
-              <tr><td className="py-2 pr-2 font-bold text-green-800">LOW</td><td className="py-2 pr-2">No major risk factors</td><td className="py-2 pr-2 font-bold">&lt; 130</td><td className="py-2">Lifestyle</td></tr>
+              <tr><td className="py-2 pr-2 font-bold text-success">LOW</td><td className="py-2 pr-2">No major risk factors</td><td className="py-2 pr-2 font-bold">&lt; 130</td><td className="py-2">Lifestyle</td></tr>
             </tbody>
           </table>
         </div>

@@ -52,11 +52,11 @@ const CARD_TABS = [
 // ═══════════════════════════════════════════════════════════════════════════
 
 const BP_CLASSIFICATION = [
-  { label: "Normal", sbp: "<120", dbp: "<80", color: "text-emerald-400", action: "Reassess in 1 year", bg: "bg-green-500/10" },
-  { label: "Elevated", sbp: "120–129", dbp: "<80", color: "text-yellow-400", action: "Lifestyle modification, reassess 3-6 months", bg: "bg-yellow-500/10" },
-  { label: "Stage 1 HTN", sbp: "130–139", dbp: "80–89", color: "text-orange-400", action: "Lifestyle + 1 medication if high CV risk", bg: "bg-orange-500/10" },
-  { label: "Stage 2 HTN", sbp: "≥140", dbp: "≥90", color: "text-red-400", action: "Lifestyle + 2 antihypertensives", bg: "bg-red-500/10" },
-  { label: "Crisis", sbp: ">180", dbp: ">120", color: "text-rose-400", action: "Immediate evaluation + IV therapy", bg: "bg-rose-500/10" },
+  { label: "Normal", sbp: "<120", dbp: "<80", color: "text-emerald-400", action: "Reassess in 1 year", bg: "bg-success/100/10" },
+  { label: "Elevated", sbp: "120–129", dbp: "<80", color: "text-yellow-400", action: "Lifestyle modification, reassess 3-6 months", bg: "bg-warning/10" },
+  { label: "Stage 1 HTN", sbp: "130–139", dbp: "80–89", color: "text-warning", action: "Lifestyle + 1 medication if high CV risk", bg: "bg-warning/100/10" },
+  { label: "Stage 2 HTN", sbp: "≥140", dbp: "≥90", color: "text-destructive", action: "Lifestyle + 2 antihypertensives", bg: "bg-destructive/100/10" },
+  { label: "Crisis", sbp: ">180", dbp: ">120", color: "text-destructive", action: "Immediate evaluation + IV therapy", bg: "bg-rose-500/10" },
 ];
 
 const RED_FLAGS: { flag: string; icon: React.ReactNode; detail?: string }[] = [
@@ -73,10 +73,10 @@ const RED_FLAGS: { flag: string; icon: React.ReactNode; detail?: string }[] = [
 ];
 
 const CHARLES_MNEMONIC: { letter: string; stands: string; color: string }[] = [
-  { letter: "C", stands: "Conn's syndrome, Cushing's, Congenital adrenal hyperplasia", color: "text-rose-400" },
-  { letter: "H", stands: "Hyperparathyroidism, Hyperthyroidism", color: "text-orange-400" },
+  { letter: "C", stands: "Conn's syndrome, Cushing's, Congenital adrenal hyperplasia", color: "text-destructive" },
+  { letter: "H", stands: "Hyperparathyroidism, Hyperthyroidism", color: "text-warning" },
   { letter: "A", stands: "Aortic coarctation, Adrenal carcinoma", color: "text-yellow-400" },
-  { letter: "R", stands: "Renovascular hypertension, Reninoma, Renal parenchymal disease", color: "text-amber-400" },
+  { letter: "R", stands: "Renovascular hypertension, Reninoma, Renal parenchymal disease", color: "text-warning" },
   { letter: "L", stands: "Liddle's syndrome (ENaC gain-of-function), Licorice", color: "text-cyan-400" },
   { letter: "E", stands: "Estrogen pills (OCPs), End-stage renal disease", color: "text-blue-400" },
   { letter: "S", stands: "Sleep apnea, Stenosis (renal artery)", color: "text-teal-400" },
@@ -384,7 +384,7 @@ export default function HypertensionClinicalCards() {
           {/* Red Flags */}
           <Card className="border-rose-500/30 bg-rose-500/5">
             <CardHeader className="pb-1">
-              <CardTitle className="text-base flex items-center gap-2 text-rose-400">
+              <CardTitle className="text-base flex items-center gap-2 text-destructive">
                 <AlertTriangle className="h-4 w-4" />
                 When to Suspect Secondary HTN
               </CardTitle>
@@ -393,7 +393,7 @@ export default function HypertensionClinicalCards() {
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
                 {RED_FLAGS.map((rf) => (
                   <div key={rf.flag} className="flex items-start gap-2 text-sm p-1.5 rounded-md hover:bg-rose-500/5">
-                    <span className="text-rose-400 mt-0.5 shrink-0">{rf.icon}</span>
+                    <span className="text-destructive mt-0.5 shrink-0">{rf.icon}</span>
                     <div>
                       <span className="font-medium">{rf.flag}</span>
                       {rf.detail && <p className="text-xs text-muted-foreground mt-0.5">{rf.detail}</p>}
@@ -510,7 +510,7 @@ export default function HypertensionClinicalCards() {
                         {c.safe ? (
                           <CheckCircle2 className="h-4 w-4 text-emerald-400 inline" />
                         ) : (
-                          <XCircle className="h-4 w-4 text-rose-400 inline" />
+                          <XCircle className="h-4 w-4 text-destructive inline" />
                         )}
                       </TableCell>
                       <TableCell className="text-xs text-muted-foreground">{c.note}</TableCell>
@@ -556,7 +556,7 @@ export default function HypertensionClinicalCards() {
                 <CardContent className="text-xs space-y-2">
                   <p className="text-muted-foreground">{drug.pearls}</p>
                   {drug.caution && (
-                    <p className="flex items-start gap-1 text-amber-400">
+                    <p className="flex items-start gap-1 text-warning">
                       <AlertTriangle className="h-3 w-3 mt-0.5 shrink-0" />
                       <span>{drug.caution}</span>
                     </p>
@@ -646,7 +646,7 @@ export default function HypertensionClinicalCards() {
 
                   <div className="space-y-1">
                     <p className="text-xs font-medium flex items-center gap-1">
-                      <Ban className="h-3 w-3 text-rose-400" /> Avoid
+                      <Ban className="h-3 w-3 text-destructive" /> Avoid
                     </p>
                     <div className="flex flex-wrap gap-1.5">
                       {em.avoid.map((d) => (

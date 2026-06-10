@@ -330,12 +330,12 @@ const getPotencyColor = (potency: Potency): string => {
     case "Very high":
       return "bg-destructive/20 text-destructive border-destructive/30";
     case "High":
-      return "bg-orange-500/20 text-orange-700 border-orange-500/30";
+      return "bg-warning/100/20 text-warning border-warning/30";
     case "Moderate":
-      return "bg-amber-500/20 text-amber-700 border-amber-500/30";
+      return "bg-warning/100/20 text-amber-700 border-amber-500/30";
     case "Moderate to low":
     case "Low to moderate":
-      return "bg-yellow-500/20 text-yellow-700 border-yellow-500/30";
+      return "bg-warning/20 text-warning border-yellow-500/30";
     case "Low":
       return "bg-muted text-muted-foreground border-border";
     default:
@@ -388,7 +388,7 @@ export default function HypertensionTreatment() {
   return (
     <div className="space-y-6">
       {/* Resistant HTN Infographic: TAMP-DCMI */}
-      <Card className="border-2 border-orange-500/20 overflow-hidden">
+      <Card className="border-2 border-warning/20 overflow-hidden">
         <CardHeader className="pb-3">
           <div className="flex items-center gap-2">
             <Activity className="h-5 w-5" style={{ color: categoryColors.accent }} />
@@ -406,7 +406,7 @@ export default function HypertensionTreatment() {
       </Card>
 
       {/* Treatment Algorithm */}
-      <Card className="border-2 border-orange-500/20">
+      <Card className="border-2 border-warning/20">
         <CardHeader className="pb-3">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
@@ -454,10 +454,10 @@ export default function HypertensionTreatment() {
                   <button
                     key={opt.nextId}
                     onClick={() => selectAlgorithmOption(opt.nextId)}
-                    className="text-left p-3 rounded-lg border-2 border-border hover:border-orange-500/50 hover:bg-orange-500/5 transition-all group"
+                    className="text-left p-3 rounded-lg border-2 border-border hover:border-warning/50 hover:bg-warning/100/5 transition-all group"
                   >
                     <div className="flex items-center justify-between">
-                      <span className="text-sm font-medium group-hover:text-orange-700">{opt.label}</span>
+                      <span className="text-sm font-medium group-hover:text-warning">{opt.label}</span>
                       <ChevronRight className="h-4 w-4 text-muted-foreground group-hover:text-orange-500" />
                     </div>
                   </button>
@@ -560,9 +560,9 @@ export default function HypertensionTreatment() {
         <CollapsibleContent>
         <CardContent>
           {/* Key Considerations Alert */}
-          <Alert className="mb-4 border-amber-500/30 bg-amber-500/5">
+          <Alert className="mb-4 border-amber-500/30 bg-warning/100/5">
             <Info className="h-4 w-4 text-amber-500" />
-            <AlertDescription className="text-amber-600 text-sm">
+            <AlertDescription className="text-warning text-sm">
               Potency alone should not drive drug selection — consider comorbidities, side effects, and patient preferences.
               Thiazide-like diuretics (chlorthalidone, indapamide) preferred over HCTZ for cardiovascular outcomes.
             </AlertDescription>
@@ -683,9 +683,9 @@ export default function HypertensionTreatment() {
               </ul>
             </div>
 
-            <Alert className="border-red-500/30 bg-red-500/5">
+            <Alert className="border-red-500/30 bg-destructive/100/5">
               <AlertTriangle className="h-4 w-4 text-red-500" />
-              <AlertTitle className="text-red-700 text-sm">Cautions in Acute Stroke</AlertTitle>
+              <AlertTitle className="text-destructive text-sm">Cautions in Acute Stroke</AlertTitle>
               <AlertDescription className="text-red-600 text-sm">
                 <ul className="mt-2 space-y-1">
                   {strokeProtocol.cautions.map((caution, i) => (
@@ -709,7 +709,7 @@ export default function HypertensionTreatment() {
         <CardContent>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="p-3 rounded-lg border border-emerald-500/30 bg-emerald-500/5">
-              <p className="text-sm font-medium text-emerald-700 mb-2">✓ Safe Options</p>
+              <p className="text-sm font-medium text-success mb-2">✓ Safe Options</p>
               <ul className="text-xs text-muted-foreground space-y-1">
                 <li>• Methyldopa — gold standard, most studied</li>
                 <li>• Labetalol — preferred for acute severe HTN</li>
@@ -734,7 +734,7 @@ export default function HypertensionTreatment() {
       <Card className="border-2 border-rose-500/20">
         <CardHeader className="pb-3">
           <div className="flex items-center gap-2">
-            <AlertTriangle className="h-5 w-5 text-rose-500" />
+            <AlertTriangle className="h-5 w-5 text-destructive" />
             <CardTitle className="text-lg">Hypertensive Emergencies</CardTitle>
           </div>
           <p className="text-xs text-muted-foreground">

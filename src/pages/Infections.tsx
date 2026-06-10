@@ -446,7 +446,7 @@ export default function Infections() {
           <SeriousInfections />
         ) : (
         <>
-        <div className="rounded-md border border-amber-300 bg-amber-50 px-3 py-2 text-xs text-amber-900 flex gap-2">
+        <div className="rounded-md border border-warning/30 bg-warning/10 px-3 py-2 text-xs text-amber-900 flex gap-2">
           <ShieldAlert className="h-4 w-4 shrink-0 mt-0.5" />
           <div>
             Decision-support only. <strong>Does not replace local antimicrobial policy.</strong> Always verify pregnancy,
@@ -577,8 +577,8 @@ export default function Infections() {
           <div
             className={`rounded-md border px-3 py-2 text-sm ${
               abx.needed
-                ? "border-emerald-300 bg-emerald-50 text-emerald-900"
-                : "border-slate-300 bg-card text-foreground"
+                ? "border-success/30 bg-success/10 text-success"
+                : "border-border bg-card text-foreground"
             }`}
           >
             <div className="font-semibold">
@@ -678,7 +678,7 @@ export default function Infections() {
 
 
           <div className="grid gap-3 md:grid-cols-2">
-            <div className="rounded-md border border-pink-200 bg-pink-50 p-3 text-xs">
+            <div className="rounded-md border border-destructive/30 bg-destructive/10 p-3 text-xs">
               <div className="font-semibold text-pink-900 flex items-center gap-1">
                 <Baby className="h-3.5 w-3.5" /> Pregnancy
               </div>
@@ -690,7 +690,7 @@ export default function Infections() {
                 {condition.pregnancy.note && <div className="mt-1 italic">{condition.pregnancy.note}</div>}
               </div>
             </div>
-            <div className="rounded-md border border-blue-200 bg-blue-50 p-3 text-xs">
+            <div className="rounded-md border border-primary/30 bg-primary/10 p-3 text-xs">
               <div className="font-semibold text-blue-900 flex items-center gap-1">
                 <Activity className="h-3.5 w-3.5" /> Renal / Severity escalation
               </div>
@@ -702,11 +702,11 @@ export default function Infections() {
             </div>
           </div>
 
-          <div className="rounded-md border border-red-300 bg-red-50 p-3">
-            <div className="text-sm font-semibold text-red-900 flex items-center gap-1">
+          <div className="rounded-md border border-destructive/30 bg-destructive/10 p-3">
+            <div className="text-sm font-semibold text-destructive flex items-center gap-1">
               <AlertTriangle className="h-4 w-4" /> Red flags — escalate / refer
             </div>
-            <ul className="mt-1 list-disc pl-5 text-xs text-red-900 space-y-0.5">
+            <ul className="mt-1 list-disc pl-5 text-xs text-destructive space-y-0.5">
               {condition.redFlags.map((f, i) => (
                 <li key={i}>{f}</li>
               ))}

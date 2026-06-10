@@ -137,7 +137,7 @@ export default function HypertensionTab() {
             <Button
               key={item.label}
               variant="outline"
-              className="h-auto py-4 flex flex-col items-center gap-2 hover:border-orange-500/30"
+              className="h-auto py-4 flex flex-col items-center gap-2 hover:border-warning/30"
               onClick={() => setActiveTab(item.tab)}
             >
               <item.icon className="h-5 w-5" style={{ color: categoryColors.accent }} />
@@ -160,8 +160,8 @@ export default function HypertensionTab() {
             { step: 1, title: "Initial Assessment", desc: "History & Physical Examination, BP confirmation (×3 readings), Basic metabolic panel, Urinalysis", color: "border-l-blue-500", bg: "bg-blue-500/5" },
             { step: 2, title: "Baseline Investigations", desc: "Serum creatinine, BUN, eGFR, Serum electrolytes (Na+, K+), Fasting glucose, HbA1c, Lipid profile, ECG, Urinalysis with microalbuminuria", color: "border-l-emerald-500", bg: "bg-emerald-500/5" },
             { step: 3, title: "Screen for Secondary Causes", desc: "Aldosterone/Renin Ratio, TSH/fT4, Plasma/Urine Metanephrines, Overnight Dexamethasone Suppression, Sleep study (if symptomatic), Renal Doppler Ultrasound", color: "border-l-teal-500", bg: "bg-teal-500/5" },
-            { step: 4, title: "Confirmatory Testing", desc: "Saline Suppression Test (aldosteronism), CT/MRI Adrenals, CTA/MRA Renal Arteries, 24h Urine Cortisol, Adrenal Vein Sampling", color: "border-l-amber-500", bg: "bg-amber-500/5" },
-            { step: 5, title: "Targeted Treatment", desc: "Treat underlying cause, Optimize antihypertensive therapy, Monitor response, Follow-up investigations", color: "border-l-green-500", bg: "bg-green-500/5" },
+            { step: 4, title: "Confirmatory Testing", desc: "Saline Suppression Test (aldosteronism), CT/MRI Adrenals, CTA/MRA Renal Arteries, 24h Urine Cortisol, Adrenal Vein Sampling", color: "border-l-amber-500", bg: "bg-warning/100/5" },
+            { step: 5, title: "Targeted Treatment", desc: "Treat underlying cause, Optimize antihypertensive therapy, Monitor response, Follow-up investigations", color: "border-l-green-500", bg: "bg-success/100/5" },
           ].map((s) => (
             <div key={s.step} className={`flex items-start gap-3 p-3 rounded-lg border-l-4 ${s.color} ${s.bg} border border-border/30`}>
               <div className="w-7 h-7 rounded-full bg-primary/15 text-primary text-xs font-bold flex items-center justify-center shrink-0 mt-0.5">

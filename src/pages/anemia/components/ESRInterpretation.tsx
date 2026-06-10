@@ -115,10 +115,10 @@ export default function ESRInterpretation() {
   return (
     <div className="space-y-6">
       {/* Header / Definition */}
-      <div className="bg-white rounded-2xl shadow-sm border border-border overflow-hidden">
+      <div className="bg-card rounded-2xl shadow-sm border border-border overflow-hidden">
         <div className="p-6 border-b border-border">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-rose-100 flex items-center justify-center border border-rose-200">
+            <div className="w-10 h-10 rounded-xl bg-destructive/10 flex items-center justify-center border border-destructive/30">
               <Timer className="w-5 h-5 text-rose-600" />
             </div>
             <div>
@@ -129,7 +129,7 @@ export default function ESRInterpretation() {
         </div>
 
         <div className="p-6 space-y-4">
-          <div className="bg-blue-50 border border-blue-100 rounded-xl p-4">
+          <div className="bg-primary/10 border border-primary/20 rounded-xl p-4">
             <div className="flex items-start gap-3">
               <Info className="w-5 h-5 text-blue-600 mt-0.5 flex-shrink-0" />
               <div>
@@ -154,7 +154,7 @@ export default function ESRInterpretation() {
                   value={esrValue}
                   onChange={(e) => setEsrValue(e.target.value)}
                   placeholder="e.g. 25"
-                  className="w-full px-3 py-2 rounded-lg border border-border bg-white text-foreground text-sm focus:outline-none focus:ring-2 focus:ring-primary"
+                  className="w-full px-3 py-2 rounded-lg border border-border bg-card text-foreground text-sm focus:outline-none focus:ring-2 focus:ring-primary"
                 />
                 <span className="text-sm text-muted-foreground whitespace-nowrap">mm/hr</span>
               </div>
@@ -166,7 +166,7 @@ export default function ESRInterpretation() {
                 value={age}
                 onChange={(e) => setAge(e.target.value)}
                 placeholder="e.g. 45"
-                className="w-full px-3 py-2 rounded-lg border border-border bg-white text-foreground text-sm focus:outline-none focus:ring-2 focus:ring-primary"
+                className="w-full px-3 py-2 rounded-lg border border-border bg-card text-foreground text-sm focus:outline-none focus:ring-2 focus:ring-primary"
               />
             </div>
             <div>
@@ -177,7 +177,7 @@ export default function ESRInterpretation() {
                   className={`flex-1 px-3 py-2 rounded-lg text-sm font-medium border transition-all ${
                     sex === 'male'
                       ? 'bg-primary text-primary-foreground border-primary'
-                      : 'bg-white text-foreground border-border hover:border-gray-400'
+                      : 'bg-card text-foreground border-border hover:border-muted-foreground'
                   }`}
                 >
                   Male
@@ -187,7 +187,7 @@ export default function ESRInterpretation() {
                   className={`flex-1 px-3 py-2 rounded-lg text-sm font-medium border transition-all ${
                     sex === 'female'
                       ? 'bg-primary text-primary-foreground border-primary'
-                      : 'bg-white text-foreground border-border hover:border-gray-400'
+                      : 'bg-card text-foreground border-border hover:border-muted-foreground'
                   }`}
                 >
                   Female
@@ -201,15 +201,15 @@ export default function ESRInterpretation() {
             <div
               className={`rounded-xl border p-4 flex items-center gap-3 ${
                 interpretation === 'normal'
-                  ? 'bg-emerald-50 border-emerald-200'
+                  ? 'bg-success/10 border-success/30'
                   : interpretation === 'high'
-                  ? 'bg-rose-50 border-rose-200'
-                  : 'bg-amber-50 border-amber-200'
+                  ? 'bg-destructive/10 border-destructive/30'
+                  : 'bg-warning/10 border-warning/30'
               }`}
             >
               {interpretation === 'normal' && <Activity className="w-5 h-5 text-emerald-600" />}
               {interpretation === 'high' && <TrendingUp className="w-5 h-5 text-rose-600" />}
-              {interpretation === 'low' && <TrendingDown className="w-5 h-5 text-amber-600" />}
+              {interpretation === 'low' && <TrendingDown className="w-5 h-5 text-warning" />}
               <div>
                 <p className="text-sm font-semibold text-foreground">
                   {interpretation === 'normal' && 'ESR within normal range'}
@@ -227,7 +227,7 @@ export default function ESRInterpretation() {
 
           {/* Red Flags — Urgent Evaluation */}
           {interpretation && interpretation !== 'normal' && (
-            <div className="bg-red-50 border border-red-200 rounded-xl p-4">
+            <div className="bg-destructive/10 border border-destructive/30 rounded-xl p-4">
               <div className="flex items-start gap-3">
                 <AlertTriangle className="w-5 h-5 text-red-600 mt-0.5 flex-shrink-0" />
                 <div className="flex-1">
@@ -250,7 +250,7 @@ export default function ESRInterpretation() {
 
           {/* Next Steps */}
           {interpretation && interpretation !== 'normal' && (
-            <div className="bg-white border border-border rounded-xl overflow-hidden">
+            <div className="bg-card border border-border rounded-xl overflow-hidden">
               <div className="p-4 border-b border-border flex items-center gap-2">
                 <ClipboardList className="w-5 h-5 text-primary" />
                 <p className="text-sm font-semibold text-foreground">Recommended Next Steps</p>
@@ -266,7 +266,7 @@ export default function ESRInterpretation() {
                           <p className="text-xs font-medium text-muted-foreground uppercase tracking-wider mb-2">{severity}</p>
                           <div className="space-y-2">
                             {steps.map((step, i) => (
-                              <div key={i} className={`rounded-lg border p-3 ${step.urgency === 'urgent' ? 'bg-red-50 border-red-200' : 'bg-gray-50 border-border'}`}>
+                              <div key={i} className={`rounded-lg border p-3 ${step.urgency === 'urgent' ? 'bg-destructive/10 border-destructive/30' : 'bg-muted border-border'}`}>
                                 <div className="flex items-center gap-2">
                                   <span className={`text-xs font-bold uppercase tracking-wider px-1.5 py-0.5 rounded ${step.urgency === 'urgent' ? 'bg-red-900/40 text-red-300' : 'bg-muted text-muted-foreground'}`}>
                                     {step.urgency}
@@ -287,7 +287,7 @@ export default function ESRInterpretation() {
                 {interpretation === 'low' && (
                   <div className="space-y-2">
                     {LOW_NEXT_STEPS.map((step, i) => (
-                      <div key={i} className="rounded-lg border border-border bg-gray-50 p-3">
+                      <div key={i} className="rounded-lg border border-border bg-muted p-3">
                         <div className="flex items-center gap-2">
                           <span className="text-xs font-bold uppercase tracking-wider px-1.5 py-0.5 rounded bg-muted text-muted-foreground">
                             {step.urgency}
@@ -307,7 +307,7 @@ export default function ESRInterpretation() {
 
           {/* Follow-up Labs for Elevated ESR */}
           {interpretation === 'high' && (
-            <div className="bg-white border border-border rounded-xl overflow-hidden">
+            <div className="bg-card border border-border rounded-xl overflow-hidden">
               <div className="p-4 border-b border-border flex items-center gap-2">
                 <FlaskConical className="w-5 h-5 text-primary" />
                 <p className="text-sm font-semibold text-foreground">Suggested Follow-up Labs</p>
@@ -341,13 +341,13 @@ export default function ESRInterpretation() {
       </div>
 
       {/* Normal Ranges */}
-      <div className="bg-white rounded-2xl shadow-sm border border-border overflow-hidden">
+      <div className="bg-card rounded-2xl shadow-sm border border-border overflow-hidden">
         <button
           onClick={() => setShowRanges(!showRanges)}
           className="w-full p-6 flex items-center justify-between border-b border-border"
         >
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-sky-100 flex items-center justify-center border border-sky-200">
+            <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center border border-primary/30">
               <Activity className="w-5 h-5 text-sky-600" />
             </div>
             <div className="text-left">
@@ -388,10 +388,10 @@ export default function ESRInterpretation() {
       </div>
 
       {/* Elevated ESR Causes */}
-      <div className="bg-white rounded-2xl shadow-sm border border-border overflow-hidden">
+      <div className="bg-card rounded-2xl shadow-sm border border-border overflow-hidden">
         <div className="p-6 border-b border-border">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-rose-100 flex items-center justify-center border border-rose-200">
+            <div className="w-10 h-10 rounded-xl bg-destructive/10 flex items-center justify-center border border-destructive/30">
               <TrendingUp className="w-5 h-5 text-rose-600" />
             </div>
             <div>
@@ -409,7 +409,7 @@ export default function ESRInterpretation() {
                 {items.map((item) => (
                   <span
                     key={item}
-                    className="px-3 py-1 rounded-full text-xs font-medium bg-gray-100 text-foreground border border-border"
+                    className="px-3 py-1 rounded-full text-xs font-medium bg-muted text-foreground border border-border"
                   >
                     {item}
                   </span>
@@ -421,11 +421,11 @@ export default function ESRInterpretation() {
       </div>
 
       {/* Low ESR Causes */}
-      <div className="bg-white rounded-2xl shadow-sm border border-border overflow-hidden">
+      <div className="bg-card rounded-2xl shadow-sm border border-border overflow-hidden">
         <div className="p-6 border-b border-border">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-amber-100 flex items-center justify-center border border-amber-200">
-              <TrendingDown className="w-5 h-5 text-amber-600" />
+            <div className="w-10 h-10 rounded-xl bg-warning/10 flex items-center justify-center border border-warning/30">
+              <TrendingDown className="w-5 h-5 text-warning" />
             </div>
             <div>
               <h3 className="text-lg font-bold text-foreground">Causes of Low ESR</h3>
@@ -439,7 +439,7 @@ export default function ESRInterpretation() {
             {LOW_CAUSES.map((item) => (
               <span
                 key={item}
-                className="px-3 py-1 rounded-full text-xs font-medium bg-gray-100 text-foreground border border-border"
+                className="px-3 py-1 rounded-full text-xs font-medium bg-muted text-foreground border border-border"
               >
                 {item}
               </span>

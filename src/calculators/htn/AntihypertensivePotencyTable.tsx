@@ -99,14 +99,14 @@ const drugData: DrugRow[] = [
 const getPotencyColor = (potency: Potency): string => {
   switch (potency) {
     case "Very high":
-      return "bg-red-500/20 text-red-400 border-red-500/30";
+      return "bg-destructive/100/20 text-destructive border-red-500/30";
     case "High":
-      return "bg-orange-500/20 text-orange-400 border-orange-500/30";
+      return "bg-warning/100/20 text-warning border-warning/30";
     case "Moderate":
-      return "bg-amber-500/20 text-amber-400 border-amber-500/30";
+      return "bg-warning/100/20 text-warning border-amber-500/30";
     case "Moderate to low":
     case "Low to moderate":
-      return "bg-yellow-500/20 text-yellow-400 border-yellow-500/30";
+      return "bg-warning/20 text-yellow-400 border-yellow-500/30";
     case "Low":
       return "bg-muted text-muted-foreground border-border";
     default:
@@ -145,7 +145,7 @@ export default function AntihypertensivePotencyTable() {
 
       <main className="mx-auto max-w-5xl px-4 py-5 space-y-6">
         {/* Key Considerations Alert */}
-        <div className="rounded-lg border-2 border-amber-500/40 bg-amber-500/5 p-4">
+        <div className="rounded-lg border-2 border-amber-500/40 bg-warning/100/5 p-4">
           <div className="flex items-start gap-3">
             <AlertTriangle className="h-5 w-5 text-amber-500 mt-0.5" />
             <div className="space-y-2">

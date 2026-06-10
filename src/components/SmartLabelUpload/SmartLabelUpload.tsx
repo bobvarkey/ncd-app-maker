@@ -339,7 +339,7 @@ export default function SmartLabelUpload({ fields, onParse, existingValues = {} 
             {/* No results */}
             {showParser && extractedValues.length === 0 && (activeTab === "text" || ocrState === "done") && (
               <div className="flex items-center gap-3 p-4 rounded-xl bg-amber-900/10 border border-amber-800/30">
-                <AlertTriangle className="h-4 w-4 text-amber-400 shrink-0" />
+                <AlertTriangle className="h-4 w-4 text-warning shrink-0" />
                 <div className="text-sm text-amber-300/80">
                   <p className="font-medium">Could not identify lab values</p>
                   <p className="text-xs mt-0.5">

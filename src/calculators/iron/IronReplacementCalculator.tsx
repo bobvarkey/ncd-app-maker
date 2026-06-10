@@ -243,13 +243,13 @@ const DEFAULT_FLAGS: ClinicalFlags = {
 
 // ── Diagnosis severity colors ──────────────────────────────────
 const dxColors: Record<string, { bg: string; border: string; text: string; accent: string }> = {
-  absolute: { bg: "bg-red-500/10", border: "border-red-500/30", text: "text-red-400", accent: "bg-red-500" },
-  early: { bg: "bg-amber-500/10", border: "border-amber-500/30", text: "text-amber-400", accent: "bg-amber-500" },
-  borderline: { bg: "bg-yellow-500/10", border: "border-yellow-500/30", text: "text-yellow-400", accent: "bg-yellow-500" },
-  functional: { bg: "bg-orange-500/10", border: "border-orange-500/30", text: "text-orange-400", accent: "bg-orange-500" },
+  absolute: { bg: "bg-destructive/100/10", border: "border-red-500/30", text: "text-destructive", accent: "bg-destructive/100" },
+  early: { bg: "bg-warning/100/10", border: "border-amber-500/30", text: "text-warning", accent: "bg-warning/100" },
+  borderline: { bg: "bg-warning/10", border: "border-yellow-500/30", text: "text-yellow-400", accent: "bg-warning" },
+  functional: { bg: "bg-warning/100/10", border: "border-warning/30", text: "text-warning", accent: "bg-warning/100" },
   none: { bg: "bg-emerald-500/10", border: "border-emerald-500/30", text: "text-emerald-400", accent: "bg-emerald-500" },
-  other: { bg: "bg-slate-500/10", border: "border-slate-500/30", text: "text-muted-foreground", accent: "bg-slate-500" },
-  unknown: { bg: "bg-gray-500/10", border: "border-gray-500/30", text: "text-gray-600", accent: "bg-gray-500" },
+  other: { bg: "bg-muted0/10", border: "border-slate-500/30", text: "text-muted-foreground", accent: "bg-muted0" },
+  unknown: { bg: "bg-muted0/10", border: "border-border", text: "text-muted-foreground", accent: "bg-muted0" },
 };
 
 // ── Live Iron Parameters Card (auto-calc, no flags needed) ────
@@ -386,7 +386,7 @@ function IronParametersLive({
               </div>
             )}
             <p className="text-[10px] pt-1">
-              Reference: <a href="https://www.perinatology.com/calculators/IV-Iron-Dosing-Calculator.htm" target="_blank" rel="noopener noreferrer" className="text-sky-400 hover:underline">Perinatology.com IV Iron Dosing Calculator</a>
+              Reference: <a href="https://www.perinatology.com/calculators/IV-Iron-Dosing-Calculator.htm" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">Perinatology.com IV Iron Dosing Calculator</a>
             </p>
           </CollapsibleContent>
         </Collapsible>
@@ -724,19 +724,19 @@ export default function IronReplacementCalculator() {
                 <div className="flex flex-wrap gap-2">
                   {[
                     // Comorbidities
-                    { key: "inflammation" as keyof ClinicalFlags, label: "Inflammation / Chronic Disease", color: "bg-orange-500" },
+                    { key: "inflammation" as keyof ClinicalFlags, label: "Inflammation / Chronic Disease", color: "bg-warning/100" },
                     { key: "rls" as keyof ClinicalFlags, label: "Restless Legs Syndrome", color: "bg-purple-500" },
                     { key: "ibd" as keyof ClinicalFlags, label: "IBD / Chronic GI Inflammation", color: "bg-pink-500" },
-                    { key: "chf" as keyof ClinicalFlags, label: "Chronic Heart Failure (CHF)", color: "bg-red-500" },
+                    { key: "chf" as keyof ClinicalFlags, label: "Chronic Heart Failure (CHF)", color: "bg-destructive/100" },
                     { key: "bariatric" as keyof ClinicalFlags, label: "Post-Bariatric Surgery", color: "bg-indigo-500" },
                     // Pregnancy
                     { key: "pregnancy" as keyof ClinicalFlags, label: "Pregnancy", color: "bg-rose-500" },
                     // CKD/ESA
-                    { key: "ckd" as keyof ClinicalFlags, label: "CKD", color: "bg-amber-500" },
+                    { key: "ckd" as keyof ClinicalFlags, label: "CKD", color: "bg-warning/100" },
                     { key: "esa" as keyof ClinicalFlags, label: "On ESA Therapy", color: "bg-amber-600" },
                     // Scenarios
                     { key: "oralIntolerance" as keyof ClinicalFlags, label: "Oral Iron Intolerant", color: "bg-cyan-500" },
-                    { key: "rapidCorrection" as keyof ClinicalFlags, label: "Rapid Correction Needed", color: "bg-red-500" },
+                    { key: "rapidCorrection" as keyof ClinicalFlags, label: "Rapid Correction Needed", color: "bg-destructive/100" },
                     { key: "ongoingBloodLoss" as keyof ClinicalFlags, label: "Ongoing Blood Loss", color: "bg-red-600" },
                   ].map(({ key, label }) => (
                     <Button
@@ -769,7 +769,7 @@ export default function IronReplacementCalculator() {
                 </span>
               )}
               {canCalculate && (!hasHb || !hasWeight) && (
-                <span className="text-xs text-amber-400 self-center">
+                <span className="text-xs text-warning self-center">
                   ⚡ Diagnosis available now. Add Hemoglobin + Weight for full dose estimate.
                 </span>
               )}
@@ -898,7 +898,7 @@ export default function IronReplacementCalculator() {
                   <CardHeader className="pb-3">
                     <CardTitle className="text-base flex items-center gap-2">
                       {calcResult.rec.isIV
-                        ? <Syringe className="h-5 w-5 text-sky-400" />
+                        ? <Syringe className="h-5 w-5 text-primary" />
                         : <Pill className="h-5 w-5 text-emerald-400" />
                       }
                       {calcResult.rec.isIV ? "IV Iron Recommendation" : "Oral Iron Recommendation"}
@@ -928,7 +928,7 @@ export default function IronReplacementCalculator() {
                       <div className="flex items-start gap-3">
                         <div className={cn("w-8 h-8 rounded-lg flex items-center justify-center", calcResult.rec.isIV ? "bg-sky-500/20" : "bg-emerald-500/20")}>
                           {calcResult.rec.isIV
-                            ? <Syringe className="h-4 w-4 text-sky-400" />
+                            ? <Syringe className="h-4 w-4 text-primary" />
                             : <Pill className="h-4 w-4 text-emerald-400" />
                           }
                         </div>
@@ -945,13 +945,13 @@ export default function IronReplacementCalculator() {
                 {calcResult.notes.length > 0 && (
                   <div className="rounded-xl border border-amber-800/40 bg-amber-900/10 p-4">
                     <div className="flex items-center gap-2 mb-2">
-                      <AlertTriangle className="h-4 w-4 text-amber-400" />
-                      <span className="text-sm font-semibold text-amber-400">Clinical Notes</span>
+                      <AlertTriangle className="h-4 w-4 text-warning" />
+                      <span className="text-sm font-semibold text-warning">Clinical Notes</span>
                     </div>
                     <ul className="space-y-1.5">
                       {calcResult.notes.map((note, i) => (
                         <li key={i} className="flex items-start gap-2 text-sm text-amber-300/80">
-                          <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-amber-500/50 flex-shrink-0" />
+                          <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-warning/100/50 flex-shrink-0" />
                           {note}
                         </li>
                       ))}
@@ -1079,7 +1079,7 @@ export default function IronReplacementCalculator() {
                     "Ongoing heavy blood loss",
                   ].map((indication, i) => (
                     <div key={i} className="flex items-center gap-2 p-3 rounded-lg bg-muted/30 border border-border">
-                      <CheckCircle2 className="h-4 w-4 text-sky-400 shrink-0" />
+                      <CheckCircle2 className="h-4 w-4 text-primary shrink-0" />
                       <span className="text-muted-foreground">{indication}</span>
                     </div>
                   ))}
@@ -1097,7 +1097,7 @@ export default function IronReplacementCalculator() {
               <CardContent className="space-y-4">
                 <div className="rounded-lg bg-muted/30 border border-border p-4">
                   <p className="font-mono text-sm">
-                    <span className="text-sky-400 font-bold">Total iron deficit (mg)</span> = weight (kg) × [<span className="text-emerald-400">target Hb</span> − <span className="text-red-400">current Hb (g/dL)</span>] × 2.4 + <span className="text-amber-400">iron stores</span>
+                    <span className="text-primary font-bold">Total iron deficit (mg)</span> = weight (kg) × [<span className="text-emerald-400">target Hb</span> − <span className="text-destructive">current Hb (g/dL)</span>] × 2.4 + <span className="text-warning">iron stores</span>
                   </p>
                 </div>
 
@@ -1144,7 +1144,7 @@ export default function IronReplacementCalculator() {
                     ].map(([def, dose]) => (
                       <div key={def} className="flex justify-between py-1 border-b border-border/50 last:border-0">
                         <span>{def}</span>
-                        <span className="font-mono text-xs text-sky-400 text-right">{dose}</span>
+                        <span className="font-mono text-xs text-primary text-right">{dose}</span>
                       </div>
                     ))}
                   </div>
@@ -1217,12 +1217,12 @@ export default function IronReplacementCalculator() {
                 <div>
                   <h4 className="font-semibold text-foreground mb-1">Key References</h4>
                   <ul className="space-y-1">
-                    <li>• <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC9827648/" target="_blank" rel="noopener noreferrer" className="text-sky-400 hover:underline">How to diagnose iron deficiency in chronic disease - PMC</a></li>
-                    <li>• <a href="https://www.perinatology.com/calculators/IV-Iron-Dosing-Calculator.htm" target="_blank" rel="noopener noreferrer" className="text-sky-400 hover:underline">Iron Dosing Calculator (Iron Deficit) - Perinatology.com</a></li>
-                    <li>• <a href="https://www2.gov.bc.ca/gov/content/health/practitioner-professional-resources/bc-guidelines/iron-deficiency" target="_blank" rel="noopener noreferrer" className="text-sky-400 hover:underline">BC Guidelines: Iron Deficiency – Diagnosis and Management</a></li>
-                    <li>• <a href="https://emedicine.medscape.com/article/202333-treatment" target="_blank" rel="noopener noreferrer" className="text-sky-400 hover:underline">Medscape: Iron Deficiency Anemia Treatment & Management</a></li>
-                    <li>• <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC4518169/" target="_blank" rel="noopener noreferrer" className="text-sky-400 hover:underline">Intravenous Iron Therapy in Patients with Iron Deficiency Anemia</a></li>
-                    <li>• <a href="https://www.omnicalculator.com/health/transferrin" target="_blank" rel="noopener noreferrer" className="text-sky-400 hover:underline">Transferrin Saturation Calculator - Omni Calculator</a></li>
+                    <li>• <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC9827648/" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">How to diagnose iron deficiency in chronic disease - PMC</a></li>
+                    <li>• <a href="https://www.perinatology.com/calculators/IV-Iron-Dosing-Calculator.htm" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">Iron Dosing Calculator (Iron Deficit) - Perinatology.com</a></li>
+                    <li>• <a href="https://www2.gov.bc.ca/gov/content/health/practitioner-professional-resources/bc-guidelines/iron-deficiency" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">BC Guidelines: Iron Deficiency – Diagnosis and Management</a></li>
+                    <li>• <a href="https://emedicine.medscape.com/article/202333-treatment" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">Medscape: Iron Deficiency Anemia Treatment & Management</a></li>
+                    <li>• <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC4518169/" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">Intravenous Iron Therapy in Patients with Iron Deficiency Anemia</a></li>
+                    <li>• <a href="https://www.omnicalculator.com/health/transferrin" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">Transferrin Saturation Calculator - Omni Calculator</a></li>
                   </ul>
                 </div>
               </CardContent>

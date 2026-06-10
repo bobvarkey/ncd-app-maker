@@ -109,12 +109,12 @@ export default function EducationSection() {
           </p>
         </div>
 
-        <div className="rounded-lg border border-amber-500/30 bg-amber-500/5 p-4 space-y-2.5 text-sm text-foreground leading-relaxed mb-5">
-          <p className="text-xs font-semibold uppercase tracking-wider text-amber-600 dark:text-amber-400 mb-2">Biggest Changes</p>
-          <p>• <strong className="text-amber-600 dark:text-amber-400">Lp(a) testing</strong> is now recommended for all adults.</p>
-          <p>• Treatment is now recommended for <strong className="text-amber-600 dark:text-amber-400">younger adults</strong>, based on 30-year risk projections.</p>
-          <p>• <strong className="text-amber-600 dark:text-amber-400">ApoB testing, hsCRP, and CAC</strong> are recommended more frequently.</p>
-          <p>• <strong className="text-amber-600 dark:text-amber-400">Specific LDL targets are back</strong>, after being removed in the 2013 guidelines.</p>
+        <div className="rounded-lg border border-amber-500/30 bg-warning/100/5 p-4 space-y-2.5 text-sm text-foreground leading-relaxed mb-5">
+          <p className="text-xs font-semibold uppercase tracking-wider text-warning dark:text-warning mb-2">Biggest Changes</p>
+          <p>• <strong className="text-warning dark:text-warning">Lp(a) testing</strong> is now recommended for all adults.</p>
+          <p>• Treatment is now recommended for <strong className="text-warning dark:text-warning">younger adults</strong>, based on 30-year risk projections.</p>
+          <p>• <strong className="text-warning dark:text-warning">ApoB testing, hsCRP, and CAC</strong> are recommended more frequently.</p>
+          <p>• <strong className="text-warning dark:text-warning">Specific LDL targets are back</strong>, after being removed in the 2013 guidelines.</p>
         </div>
 
         {/* Risk Categories & LDL-C Targets */}
@@ -348,7 +348,7 @@ export default function EducationSection() {
         </div>
 
         {/* TG ≥500 */}
-        <div className="rounded-lg border border-amber-500/30 bg-amber-500/5 p-4 mb-5">
+        <div className="rounded-lg border border-amber-500/30 bg-warning/100/5 p-4 mb-5">
           <p className="text-xs font-semibold uppercase tracking-wider text-amber-500 mb-2">Adults with Triglycerides ≥500 mg/dL (≥5.6 mmol/L)</p>
           <ol className="space-y-1.5 text-sm text-foreground leading-relaxed list-decimal list-inside">
             <li>Identify/manage <strong>secondary causes</strong></li>
@@ -517,7 +517,7 @@ export default function EducationSection() {
       {/* Lp(a) Risk Table */}
       <Card className="border-border bg-card p-5">
         <div className="flex items-center gap-3 mb-4">
-          <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-gradient-to-br from-orange-500/20 to-red-500/20 backdrop-blur-md border border-orange-500/30">
+          <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-gradient-to-br from-orange-500/20 to-red-500/20 backdrop-blur-md border border-warning/30">
             <Activity className="h-5 w-5 text-orange-500" />
           </div>
           <h3 className="font-display text-lg font-bold text-foreground">Lp(a) & Relative ASCVD Risk</h3>
@@ -661,8 +661,8 @@ export default function EducationSection() {
             </p>
           </div>
           
-          <div className="flex items-start gap-3 p-3 rounded-lg bg-amber-500/5 border border-amber-500/20">
-            <div className="flex h-8 w-8 items-center justify-center rounded-md bg-amber-500/20 flex-shrink-0">
+          <div className="flex items-start gap-3 p-3 rounded-lg bg-warning/100/5 border border-amber-500/20">
+            <div className="flex h-8 w-8 items-center justify-center rounded-md bg-warning/100/20 flex-shrink-0">
               <AlertTriangle className="h-4 w-4 text-amber-500" />
             </div>
             <p className="text-sm text-foreground">
@@ -780,8 +780,8 @@ export default function EducationSection() {
           {[
             { range: "≥1.3",       interp: "Abnormal calcification (non-compressible vessels)", tone: "bg-warning/15 text-warning" },
             { range: "1.0–1.29",   interp: "Normal value",                                       tone: "bg-success/15 text-success" },
-            { range: "0.9–0.99",   interp: "Borderline PAD",                                     tone: "bg-amber-500/15 text-amber-600 dark:text-amber-400" },
-            { range: "0.7–0.89",   interp: "Mild PAD",                                           tone: "bg-orange-500/15 text-orange-600 dark:text-orange-400" },
+            { range: "0.9–0.99",   interp: "Borderline PAD",                                     tone: "bg-warning/100/15 text-warning dark:text-warning" },
+            { range: "0.7–0.89",   interp: "Mild PAD",                                           tone: "bg-warning/100/15 text-orange-600 dark:text-warning" },
             { range: "0.5–0.69",   interp: "Moderate PAD",                                       tone: "bg-danger/15 text-danger" },
             { range: "<0.5",       interp: "Severe PAD with impending gangrene",                 tone: "bg-danger/25 text-danger font-bold" },
           ].map((row) => (
@@ -809,8 +809,8 @@ export default function EducationSection() {
           A CAC score above 100 doesn't literally change the PREVENT equation, but it <strong>reclassifies risk upward</strong> when used as a decision aid alongside PREVENT.<Cite n={1} source="Grundy SM, et al. 2018 AHA/ACC/Multisociety Cholesterol Guideline. Circulation. 2019;139(25):e1082–e1143." /> CAC &gt;100 typically pushes an intermediate-risk patient toward more aggressive prevention — especially statin therapy — because event rates and expected treatment benefit are higher.<Cite n={2} source="Budoff MJ, et al. Ten-year association of CAC with all-cause and cause-specific mortality. JACC. 2018;72(4):434–447." />
         </p>
 
-        <div className="rounded-lg border border-amber-500/30 bg-amber-500/5 p-3 mb-4">
-          <p className="text-xs font-semibold uppercase tracking-wider text-amber-600 dark:text-amber-400 mb-1.5">How to Interpret</p>
+        <div className="rounded-lg border border-amber-500/30 bg-warning/100/5 p-3 mb-4">
+          <p className="text-xs font-semibold uppercase tracking-wider text-warning dark:text-warning mb-1.5">How to Interpret</p>
           <p className="text-sm text-foreground leading-relaxed">
             PREVENT is a clinical risk estimator based on traditional risk factors;<Cite n={3} source="Khan SS, et al. Development and validation of the PREVENT equations. Circulation. 2024;149:430–449." /> CAC is a <strong>direct measure of coronary atherosclerotic burden</strong>. The 2018 ACC/AHA cholesterol guidance encourages statin initiation when CAC ≥100 AU or ≥75th percentile for age/sex/ethnicity.<Cite n={1} source="Grundy SM, et al. 2018 AHA/ACC/Multisociety Cholesterol Guideline. Circulation. 2019;139(25):e1082–e1143." />
           </p>
@@ -835,9 +835,9 @@ export default function EducationSection() {
           </div>
 
           <div className="space-y-3">
-            <div className="rounded-md border border-orange-500/30 bg-orange-500/5 p-3">
+            <div className="rounded-md border border-warning/30 bg-warning/100/5 p-3">
               <div className="flex items-center gap-2 mb-1.5">
-                <span className="rounded bg-orange-500/20 px-2 py-0.5 text-xs font-bold text-orange-600 dark:text-orange-400">
+                <span className="rounded bg-warning/100/20 px-2 py-0.5 text-xs font-bold text-orange-600 dark:text-warning">
                   CAC ≥100 AU
                 </span>
                 <span className="text-xs font-semibold text-foreground">→ START or INTENSIFY statin</span>
@@ -876,8 +876,8 @@ export default function EducationSection() {
         <div className="space-y-2">
           {[
             { range: "0",        interp: "Risk often LOWER than PREVENT alone suggests — defer/avoid statin reasonable", tone: "bg-success/15 text-success" },
-            { range: "1–99",     interp: "Modest upward shift — moderate-intensity statin generally favored",            tone: "bg-amber-500/15 text-amber-600 dark:text-amber-400" },
-            { range: "≥100",     interp: "Meaningful upward shift — favors pharmacologic prevention (high-intensity statin)", tone: "bg-orange-500/15 text-orange-600 dark:text-orange-400" },
+            { range: "1–99",     interp: "Modest upward shift — moderate-intensity statin generally favored",            tone: "bg-warning/100/15 text-warning dark:text-warning" },
+            { range: "≥100",     interp: "Meaningful upward shift — favors pharmacologic prevention (high-intensity statin)", tone: "bg-warning/100/15 text-orange-600 dark:text-warning" },
             { range: "≥300",     interp: "Very high risk — treat aggressively; consider tighter LDL-C targets",          tone: "bg-danger/15 text-danger" },
             { range: "≥1000",    interp: "Risk approaching secondary prevention — maximal therapy warranted",            tone: "bg-danger/25 text-danger font-bold" },
           ].map((row) => (
@@ -922,7 +922,7 @@ export default function EducationSection() {
             {
               range: "1–99",
               label: "CAC 1–99 AU",
-              tone: "bg-amber-500/15 text-amber-600 dark:text-amber-400 border-amber-500/30",
+              tone: "bg-warning/100/15 text-warning dark:text-warning border-amber-500/30",
               summary: "Mild calcified plaque burden",
               risk: "Modest upward shift in risk vs. CAC 0",
               interp: "Confirms presence of subclinical atherosclerosis. Particularly meaningful in younger adults (<55 y) where any CAC is abnormal.",
@@ -931,7 +931,7 @@ export default function EducationSection() {
             {
               range: "≥100",
               label: "CAC ≥100 AU",
-              tone: "bg-orange-500/15 text-orange-600 dark:text-orange-400 border-orange-500/30",
+              tone: "bg-warning/100/15 text-orange-600 dark:text-warning border-warning/30",
               summary: "Significant plaque burden — 2018 ACC/AHA statin trigger",
               risk: "Meaningful upward shift; risk often >7.5%/10-yr regardless of PREVENT estimate",
               interp: "True risk is likely higher than PREVENT alone suggests. CAC ≥100 OR ≥75th percentile is the guideline-endorsed threshold favoring statin initiation when treatment decision is uncertain.",

@@ -246,15 +246,15 @@ function getNextSteps(dx: DiagnosisResult): string[] {
 
 const badgeVariants: Record<DiagnosisColor, string> = {
   success: "bg-emerald-500/20 text-emerald-400 border-emerald-500/30",
-  warning: "bg-amber-500/20 text-amber-400 border-amber-500/30",
-  error: "bg-red-500/20 text-red-400 border-red-500/30",
+  warning: "bg-warning/100/20 text-warning border-amber-500/30",
+  error: "bg-destructive/100/20 text-destructive border-red-500/30",
   primary: "bg-blue-500/20 text-blue-400 border-blue-500/30",
 };
 
 const colorClasses: Record<DiagnosisColor, { bg: string; border: string; accent: string }> = {
   success: { bg: "bg-emerald-500/10", border: "border-emerald-500/30", accent: "bg-emerald-500" },
-  warning: { bg: "bg-amber-500/10", border: "border-amber-500/30", accent: "bg-amber-500" },
-  error: { bg: "bg-red-500/10", border: "border-red-500/30", accent: "bg-red-500" },
+  warning: { bg: "bg-warning/100/10", border: "border-amber-500/30", accent: "bg-warning/100" },
+  error: { bg: "bg-destructive/100/10", border: "border-red-500/30", accent: "bg-destructive/100" },
   primary: { bg: "bg-blue-500/10", border: "border-blue-500/30", accent: "bg-blue-500" },
 };
 
@@ -585,10 +585,10 @@ export default function ThyroidCalculator() {
                       </div>
                     </div>
 
-                    <div className={cn("rounded-lg border p-4", result.meds.methimazoleDose > 0 ? "border-red-500/30 bg-red-500/5" : "border-muted bg-muted/20")}>
+                    <div className={cn("rounded-lg border p-4", result.meds.methimazoleDose > 0 ? "border-red-500/30 bg-destructive/100/5" : "border-muted bg-muted/20")}>
                       <div className="flex items-start gap-3">
-                        <div className={cn("w-8 h-8 rounded-lg flex items-center justify-center", result.meds.methimazoleDose > 0 ? "bg-red-500/20" : "bg-muted")}>
-                          <Shield className={cn("h-4 w-4", result.meds.methimazoleDose > 0 ? "text-red-400" : "text-muted-foreground")} />
+                        <div className={cn("w-8 h-8 rounded-lg flex items-center justify-center", result.meds.methimazoleDose > 0 ? "bg-destructive/100/20" : "bg-muted")}>
+                          <Shield className={cn("h-4 w-4", result.meds.methimazoleDose > 0 ? "text-destructive" : "text-muted-foreground")} />
                         </div>
                         <div>
                           <p className="text-sm font-semibold text-foreground">
@@ -607,7 +607,7 @@ export default function ThyroidCalculator() {
                 {/* Next Steps */}
                 <Card className="clinical-card border-amber-800/40 bg-amber-900/10">
                   <CardHeader className="pb-3">
-                    <CardTitle className="text-sm flex items-center gap-2 text-amber-400">
+                    <CardTitle className="text-sm flex items-center gap-2 text-warning">
                       <Activity className="h-4 w-4" />
                       Next Steps
                     </CardTitle>
@@ -616,7 +616,7 @@ export default function ThyroidCalculator() {
                     <ul className="space-y-1.5">
                       {result.nextSteps.map((step, i) => (
                         <li key={i} className="flex items-start gap-2 text-sm text-amber-300/80">
-                          <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-amber-500/50 flex-shrink-0" />
+                          <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-warning/100/50 flex-shrink-0" />
                           {step}
                         </li>
                       ))}

@@ -42,35 +42,35 @@ const bpClassification: BPStage[] = [
     category: "Optimal",
     sbp: "< 120",
     dbp: "< 80",
-    color: "bg-emerald-500/20 text-emerald-700 border-emerald-500/30",
+    color: "bg-emerald-500/20 text-success border-emerald-500/30",
     description: "Continue healthy lifestyle",
   },
   {
     category: "Normal",
     sbp: "120-129",
     dbp: "80-84",
-    color: "bg-green-500/20 text-green-700 border-green-500/30",
+    color: "bg-success/100/20 text-success border-green-500/30",
     description: "Lifestyle counseling",
   },
   {
     category: "High Normal",
     sbp: "130-139",
     dbp: "85-89",
-    color: "bg-yellow-500/20 text-yellow-700 border-yellow-500/30",
+    color: "bg-warning/20 text-warning border-yellow-500/30",
     description: "Lifestyle modification, monitor closely",
   },
   {
     category: "Grade 1 Hypertension",
     sbp: "140-159",
     dbp: "90-99",
-    color: "bg-orange-500/20 text-orange-700 border-orange-500/30",
+    color: "bg-warning/100/20 text-warning border-warning/30",
     description: "Confirm with repeated measurements; consider pharmacotherapy",
   },
   {
     category: "Grade 2 Hypertension",
     sbp: "160-179",
     dbp: "100-109",
-    color: "bg-red-500/20 text-red-700 border-red-500/30",
+    color: "bg-destructive/100/20 text-destructive border-red-500/30",
     description: "Initiate antihypertensive therapy",
   },
   {
@@ -93,7 +93,7 @@ const riskFactors: RiskFactor[] = [
   {
     category: "Low Risk",
     factors: ["No risk factors", "No target organ damage"],
-    color: "bg-emerald-500/20 text-emerald-700 border-emerald-500/30",
+    color: "bg-emerald-500/20 text-success border-emerald-500/30",
   },
   {
     category: "Moderate Risk",
@@ -102,7 +102,7 @@ const riskFactors: RiskFactor[] = [
       "No target organ damage",
       "No established CVD",
     ],
-    color: "bg-yellow-500/20 text-yellow-700 border-yellow-500/30",
+    color: "bg-warning/20 text-warning border-yellow-500/30",
   },
   {
     category: "High Risk",
@@ -112,7 +112,7 @@ const riskFactors: RiskFactor[] = [
       "Diabetes without organ damage",
       "CKD stage 3",
     ],
-    color: "bg-orange-500/20 text-orange-700 border-orange-500/30",
+    color: "bg-warning/100/20 text-warning border-warning/30",
   },
   {
     category: "Very High Risk",
@@ -226,10 +226,10 @@ export default function HypertensionOverview({ onNavigateToEmergencies, onNaviga
   return (
     <div className="space-y-6">
       {/* Alert for Emergency */}
-      <Alert className="border-amber-500/40 bg-amber-500/5">
+      <Alert className="border-amber-500/40 bg-warning/100/5">
         <AlertTriangle className="h-4 w-4 text-amber-500" />
         <AlertTitle className="text-amber-700">Hypertensive Crisis Threshold</AlertTitle>
-        <AlertDescription className="text-amber-600 text-sm">
+        <AlertDescription className="text-warning text-sm">
           BP ≥ 180/120 mmHg requires immediate evaluation. If accompanied by acute target organ damage
           (encephalopathy, pulmonary edema, AKI, aortic dissection), treat as hypertensive emergency.
         </AlertDescription>
@@ -237,7 +237,7 @@ export default function HypertensionOverview({ onNavigateToEmergencies, onNaviga
           <Button
             variant="outline"
             size="sm"
-            className="mt-3 border-amber-500/40 text-amber-600 hover:bg-amber-500/10"
+            className="mt-3 border-amber-500/40 text-warning hover:bg-warning/100/10"
             onClick={onNavigateToEmergencies}
           >
             View Emergencies Protocol
@@ -345,7 +345,7 @@ export default function HypertensionOverview({ onNavigateToEmergencies, onNaviga
             {riskFactors.map((risk, index) => (
               <div
                 key={index}
-                className="p-4 rounded-lg border border-border/60 hover:border-orange-500/30 transition-colors"
+                className="p-4 rounded-lg border border-border/60 hover:border-warning/30 transition-colors"
               >
                 <div className="flex items-center justify-between mb-2">
                   <Badge variant="outline" className={risk.color}>
@@ -472,7 +472,7 @@ export default function HypertensionOverview({ onNavigateToEmergencies, onNaviga
             ))}
           </div>
 
-<div className="p-3 rounded-lg bg-amber-500/5 border border-amber-500/20">
+<div className="p-3 rounded-lg bg-warning/100/5 border border-amber-500/20">
             <p className="text-xs font-medium text-amber-700 mb-2">Screening Recommendations</p>
             <ul className="text-xs text-muted-foreground space-y-1">
               <li>• Primary aldosteronism: Screen if hypokalemia, resistant HTN, or adrenal incidentaloma</li>

@@ -103,15 +103,15 @@ export default function AssessmentGrid() {
             <div className="space-y-3">
               <div className="flex gap-3 text-sm">
                 <span className="text-secondary font-bold flex-shrink-0">✓</span>
-                <span className="text-gray-200">Hospital-grade algorithms trusted by clinicians</span>
+                <span className="text-foreground">Hospital-grade algorithms trusted by clinicians</span>
               </div>
               <div className="flex gap-3 text-sm">
                 <span className="text-secondary font-bold flex-shrink-0">✓</span>
-                <span className="text-gray-200">Evidence-based with clinical trial citations</span>
+                <span className="text-foreground">Evidence-based with clinical trial citations</span>
               </div>
               <div className="flex gap-3 text-sm">
                 <span className="text-secondary font-bold flex-shrink-0">✓</span>
-                <span className="text-gray-200">All {TOOLS.length} tools accessible immediately</span>
+                <span className="text-foreground">All {TOOLS.length} tools accessible immediately</span>
               </div>
             </div>
           </div>

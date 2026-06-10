@@ -29,7 +29,7 @@ function TooltipGLP({ text }: { text: string }) {
           <ul className="space-y-0.5">
             {GLP_COMORBIDITIES.map((c, i) => (
               <li key={i} className="flex items-start gap-1.5">
-                <span className="text-green-500 mt-0.5">•</span>
+                <span className="text-success mt-0.5">•</span>
                 <span>{c}</span>
               </li>
             ))}
@@ -49,7 +49,7 @@ export function ModeNav() {
         <ArrowLeft className="h-4 w-4 mr-1" /> Home
       </Button>
       <div className="flex items-center gap-1.5 bg-muted/50 rounded-lg p-1">
-        <button onClick={() => navigate("/simple")} className="px-3 py-1.5 text-xs font-semibold rounded-lg bg-green-500/15 text-green-600 border border-green-500/30">Simple</button>
+        <button onClick={() => navigate("/simple")} className="px-3 py-1.5 text-xs font-semibold rounded-lg bg-success/100/15 text-success border border-green-500/30">Simple</button>
         <button onClick={() => navigate("/moderate")} className="px-3 py-1.5 text-xs font-semibold rounded-lg text-muted-foreground hover:bg-muted">Moderate</button>
         <button onClick={() => navigate("/home")} className="px-3 py-1.5 text-xs font-semibold rounded-lg text-muted-foreground hover:bg-muted">Complex</button>
       </div>
@@ -74,7 +74,7 @@ function DiabetesCalc() {
 
     const lines: React.ReactNode[] = [];
     if (a1c >= 6.5 || f >= 126) {
-      lines.push(<span><span className="text-green-600 font-medium">✅ Diabetes diagnosed</span></span>);
+      lines.push(<span><span className="text-success font-medium">✅ Diabetes diagnosed</span></span>);
       if (a1c >= 9) {
         lines.push(<span>➡️ <AbbreviationHover term="HbA1c">HbA1c</AbbreviationHover> ≥ 9%: Consider insulin therapy</span>);
         lines.push(<span>   Metformin + Basal insulin (Glargine 10U bedtime)</span>);
@@ -89,7 +89,7 @@ function DiabetesCalc() {
       }
       lines.push(<span className="pt-1">Target: <AbbreviationHover term="HbA1c">HbA1c</AbbreviationHover> &lt; 7.0%, <AbbreviationHover term="FBG">FBG</AbbreviationHover> &lt; 130 mg/dL</span>);
     } else if (a1c >= 5.7 || f >= 100) {
-      lines.push(<span><span className="text-amber-600 font-medium">⚠️ Prediabetes range</span></span>);
+      lines.push(<span><span className="text-warning font-medium">⚠️ Prediabetes range</span></span>);
       lines.push(<span>➡️ Lifestyle modification + Metformin if age &lt; 60 or <AbbreviationHover term="BMI">BMI</AbbreviationHover> ≥ 35</span>);
       lines.push(<span>➡️ Repeat <AbbreviationHover term="HbA1c">HbA1c</AbbreviationHover> in 3-6 months</span>);
     } else {
@@ -208,12 +208,12 @@ function LipidsCalc() {
       const h = parseFloat(hdl);
       if (!isNaN(h) && h < 40) modCount++;
       if (modCount >= 2) return { risk: "High Risk", target: "< 70 mg/dL", intensity: "High", color: "text-orange-600" };
-      if (modCount >= 1) return { risk: "Moderate Risk", target: "< 100 mg/dL", intensity: "Moderate", color: "text-amber-600" };
+      if (modCount >= 1) return { risk: "Moderate Risk", target: "< 100 mg/dL", intensity: "Moderate", color: "text-warning" };
     }
     const l = parseFloat(ldl);
-    if (!isNaN(l) && l >= 160) return { risk: "Moderate Risk", target: "< 100 mg/dL", intensity: "Moderate", color: "text-amber-600" };
-    if (!isNaN(a) && a > 40) return { risk: "Moderate Risk", target: "< 100 mg/dL", intensity: "Moderate", color: "text-amber-600" };
-    return { risk: "Low Risk", target: "< 130 mg/dL", intensity: "Lifestyle", color: "text-green-600" };
+    if (!isNaN(l) && l >= 160) return { risk: "Moderate Risk", target: "< 100 mg/dL", intensity: "Moderate", color: "text-warning" };
+    if (!isNaN(a) && a > 40) return { risk: "Moderate Risk", target: "< 100 mg/dL", intensity: "Moderate", color: "text-warning" };
+    return { risk: "Low Risk", target: "< 130 mg/dL", intensity: "Lifestyle", color: "text-success" };
   };
 
   const riskInfo = getRiskCategory();
@@ -251,7 +251,7 @@ function LipidsCalc() {
         lines.push(<span>✅ At target <AbbreviationHover term="LDL">LDL</AbbreviationHover>. Maintain current therapy.</span>);
       } else {
         const above = l - targetNum;
-        lines.push(<span><span className="text-amber-600">⚠ {above} mg/dL above target</span> (current <AbbreviationHover term="LDL">LDL</AbbreviationHover> {l}, target {riskInfo.target})</span>);
+        lines.push(<span><span className="text-warning">⚠ {above} mg/dL above target</span> (current <AbbreviationHover term="LDL">LDL</AbbreviationHover> {l}, target {riskInfo.target})</span>);
         lines.push(<span>➡️ Start {riskInfo.intensity} intensity statin</span>);
         if (riskInfo.intensity === "High") lines.push(<span>   Atorvastatin 40-80 mg OD or Rosuvastatin 20-40 mg OD</span>);
         else if (riskInfo.intensity === "Moderate") lines.push(<span>   Atorvastatin 10-20 mg OD or Rosuvastatin 5-10 mg OD</span>);
@@ -266,7 +266,7 @@ function LipidsCalc() {
     }
 
     if (!isNaN(t) && t >= 500) {
-      lines.push(<span><span className="text-amber-600 font-medium">⚠ <AbbreviationHover term="TG">TG</AbbreviationHover> ≥ 500 mg/dL:</span> Add Fenofibrate 145 mg OD for pancreatitis prevention</span>);
+      lines.push(<span><span className="text-warning font-medium">⚠ <AbbreviationHover term="TG">TG</AbbreviationHover> ≥ 500 mg/dL:</span> Add Fenofibrate 145 mg OD for pancreatitis prevention</span>);
     }
 
     lines.push(<span className="text-xs text-muted-foreground pt-1">Monitoring: Lipids at 6 weeks, then 6-12 monthly</span>);
@@ -309,7 +309,7 @@ function LipidsCalc() {
         </div>
 
         {/* Live Risk Target Preview */}
-        <div className={`p-3 rounded-lg border text-xs ${riskInfo.color} ${riskInfo.risk.includes("Very High") ? "bg-red-50 border-red-200" : riskInfo.risk.includes("High") ? "bg-orange-50 border-orange-200" : riskInfo.risk.includes("Moderate") ? "bg-amber-50 border-amber-200" : "bg-green-50 border-green-200"}`}>
+        <div className={`p-3 rounded-lg border text-xs ${riskInfo.color} ${riskInfo.risk.includes("Very High") ? "bg-destructive/10 border-destructive/30" : riskInfo.risk.includes("High") ? "bg-warning/10 border-warning/30" : riskInfo.risk.includes("Moderate") ? "bg-warning/10 border-warning/30" : "bg-success/10 border-success/30"}`}>
           <span className="font-semibold">{riskInfo.risk}</span>
           <span className="ml-2">→ LDL Target: <strong>{riskInfo.target}</strong></span>
           <span className="ml-2 text-xs">({riskInfo.intensity})</span>
@@ -338,7 +338,7 @@ function ObesityCalc() {
           <p className="font-semibold text-primary mb-1.5">GLP-1 RA indicated for:</p>
           <ul className="space-y-0.5">
             {GLP_COMORBS.map((c, i) => (
-              <li key={i} className="flex items-start gap-1.5"><span className="text-green-500 mt-0.5">•</span><span>{c}</span></li>
+              <li key={i} className="flex items-start gap-1.5"><span className="text-success mt-0.5">•</span><span>{c}</span></li>
             ))}
           </ul>
           <p className="text-xs text-muted-foreground mt-2 italic">Semaglutide 0.25→1.0 mg/wk or Tirzepatide 2.5→15 mg/wk</p>
@@ -406,7 +406,7 @@ export default function SimpleMode() {
       <div className="fixed bottom-0 left-0 right-0 border-t border-border/60 bg-card/95 backdrop-blur supports-[backdrop-filter]:bg-background/95 py-2.5 px-4 flex items-center justify-center gap-2 z-50">
         <button onClick={() => window.location.href = "/"} className="px-3 py-1.5 text-xs font-semibold rounded-lg bg-primary/10 text-primary hover:bg-primary/20 transition-colors">🏠 Homepage</button>
         <span className="text-xs text-muted-foreground/40">|</span>
-        <button onClick={() => window.location.href = "/simple"} className="px-3 py-1.5 text-xs font-semibold rounded-lg bg-green-500/15 text-green-600 border border-green-500/30 hover:bg-green-500/25 transition-colors">🟢 Simple</button>
+        <button onClick={() => window.location.href = "/simple"} className="px-3 py-1.5 text-xs font-semibold rounded-lg bg-success/100/15 text-success border border-green-500/30 hover:bg-success/100/25 transition-colors">🟢 Simple</button>
         <button onClick={() => window.location.href = "/moderate"} className="px-3 py-1.5 text-xs font-semibold rounded-lg text-muted-foreground hover:bg-muted transition-colors">🟠 Moderate</button>
         <button onClick={() => window.location.href = "/home"} className="px-3 py-1.5 text-xs font-semibold rounded-lg text-muted-foreground hover:bg-muted transition-colors">🔴 Complex</button>
       </div>

@@ -9,7 +9,7 @@ interface PaywallModalProps {
 export default function PaywallModal({ open, onOpenChange }: PaywallModalProps) {
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="bg-white border border-border max-w-sm">
+      <DialogContent className="bg-card border border-border max-w-sm">
         <DialogHeader>
           <DialogTitle className="text-foreground">
             <div className="text-center">
@@ -48,7 +48,7 @@ export default function PaywallModal({ open, onOpenChange }: PaywallModalProps) 
           </Button>
           <Button
             variant="outline"
-            className="w-full border-border text-muted-foreground hover:bg-white"
+            className="w-full border-border text-muted-foreground hover:bg-card"
             onClick={() => onOpenChange(false)}
           >
             Maybe Later

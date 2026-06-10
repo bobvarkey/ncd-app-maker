@@ -480,7 +480,7 @@ export default function SeriousInfections() {
   return (
     <div className="space-y-4">
       {/* Disclaimer */}
-      <div className="rounded-md border border-red-300 bg-red-50 px-3 py-2 text-xs text-red-900 flex gap-2">
+      <div className="rounded-md border border-destructive/30 bg-destructive/10 px-3 py-2 text-xs text-destructive flex gap-2">
         <ShieldAlert className="h-4 w-4 shrink-0 mt-0.5" />
         <div>
           Decision-support only. <strong>Does NOT replace local antibiograms, ID consultation, renal-dose adjustment,
@@ -502,7 +502,7 @@ export default function SeriousInfections() {
         <div className="grid gap-3 md:grid-cols-3">
           {(["Emergency", "Serious CA", "Nosocomial"] as const).map((cat) => (
             <div key={cat} className="space-y-1">
-              <div className={`text-xs uppercase tracking-wide font-semibold ${cat === "Emergency" ? "text-red-700" : "text-muted-foreground"}`}>
+              <div className={`text-xs uppercase tracking-wide font-semibold ${cat === "Emergency" ? "text-destructive" : "text-muted-foreground"}`}>
                 {cat === "Emergency" && <Siren className="inline h-3 w-3 mr-1" />}
                 {cat}
               </div>
@@ -515,7 +515,7 @@ export default function SeriousInfections() {
                       ctx.conditionId === c.id
                         ? "border-primary bg-primary/10 text-primary"
                         : c.emergency
-                        ? "border-red-200 hover:bg-red-50"
+                        ? "border-destructive/30 hover:bg-destructive/10"
                         : "border-border hover:bg-muted"
                     }`}
                   >
@@ -619,8 +619,8 @@ export default function SeriousInfections() {
         {/* Working dx */}
         <div className={`rounded-md border px-3 py-2 text-sm ${
           condition.emergency
-            ? "border-red-300 bg-red-50 text-red-900"
-            : "border-emerald-300 bg-emerald-50 text-emerald-900"
+            ? "border-destructive/30 bg-destructive/10 text-destructive"
+            : "border-success/30 bg-success/10 text-success"
         }`}>
           <div className="font-semibold">Working diagnosis</div>
           <div className="text-xs mt-0.5">{condition.workingDx}</div>
@@ -650,7 +650,7 @@ export default function SeriousInfections() {
                   </tr>
                 ))}
                 {showMrsa && condition.mrsaAdd && (
-                  <tr className="border-t border-border bg-amber-50">
+                  <tr className="border-t border-border bg-warning/10">
                     <td className="px-3 py-2 font-medium text-amber-900">+ {condition.mrsaAdd.drug} <span className="text-xs uppercase">MRSA add-on</span></td>
                     <td className="px-3 py-2 text-amber-900">{condition.mrsaAdd.dose}</td>
                     <td className="px-3 py-2 text-amber-900">
@@ -663,12 +663,12 @@ export default function SeriousInfections() {
             </table>
           </div>
           {showMdr && (
-            <div className="rounded-md border border-orange-200 bg-orange-50 p-2 text-xs text-orange-900">
+            <div className="rounded-md border border-warning/30 bg-warning/10 p-2 text-xs text-warning">
               <strong>MDR escalation:</strong> {condition.mdrEscalation}
             </div>
           )}
           {showPcnAlt && (
-            <div className="rounded-md border border-purple-200 bg-purple-50 p-2 text-xs text-purple-900">
+            <div className="rounded-md border border-purple-200 bg-accent/10 p-2 text-xs text-accent-foreground">
               <strong>Severe PCN allergy alternative:</strong> {condition.pcnSevereAlt}
             </div>
           )}
@@ -679,13 +679,13 @@ export default function SeriousInfections() {
 
         {/* Source control + monitoring */}
         <div className="grid gap-3 md:grid-cols-2">
-          <div className="rounded-md border border-blue-200 bg-blue-50 p-3 text-xs">
+          <div className="rounded-md border border-primary/30 bg-primary/10 p-3 text-xs">
             <div className="font-semibold text-blue-900 flex items-center gap-1">
               <Scissors className="h-3.5 w-3.5" /> Source control
             </div>
             <div className="mt-1 text-blue-900">{condition.sourceControl}</div>
           </div>
-          <div className="rounded-md border border-slate-200 bg-slate-50 p-3 text-xs">
+          <div className="rounded-md border border-border bg-muted p-3 text-xs">
             <div className="font-semibold text-foreground flex items-center gap-1">
               <Activity className="h-3.5 w-3.5" /> Monitoring
             </div>
@@ -697,26 +697,26 @@ export default function SeriousInfections() {
 
         {/* Escalation + red flags */}
         <div className="grid gap-3 md:grid-cols-2">
-          <div className="rounded-md border border-amber-300 bg-amber-50 p-3 text-xs">
+          <div className="rounded-md border border-warning/30 bg-warning/10 p-3 text-xs">
             <div className="font-semibold text-amber-900">Escalation flags</div>
             <ul className="mt-1 list-disc pl-5 text-amber-900 space-y-0.5">
               {condition.escalation.map((e, i) => <li key={i}>{e}</li>)}
             </ul>
           </div>
-          <div className="rounded-md border border-red-300 bg-red-50 p-3 text-xs">
-            <div className="font-semibold text-red-900 flex items-center gap-1">
+          <div className="rounded-md border border-destructive/30 bg-destructive/10 p-3 text-xs">
+            <div className="font-semibold text-destructive flex items-center gap-1">
               <AlertTriangle className="h-4 w-4" /> Red flags — escalate / refer urgently
             </div>
-            <ul className="mt-1 list-disc pl-5 text-red-900 space-y-0.5">
+            <ul className="mt-1 list-disc pl-5 text-destructive space-y-0.5">
               {condition.redFlags.map((f, i) => <li key={i}>{f}</li>)}
             </ul>
           </div>
         </div>
 
         {/* Stewardship */}
-        <div className="rounded-md border border-emerald-200 bg-emerald-50 p-3 text-xs">
-          <div className="font-semibold text-emerald-900">Stewardship reminders</div>
-          <ul className="mt-1 list-disc pl-5 text-emerald-900 space-y-0.5">
+        <div className="rounded-md border border-success/30 bg-success/10 p-3 text-xs">
+          <div className="font-semibold text-success">Stewardship reminders</div>
+          <ul className="mt-1 list-disc pl-5 text-success space-y-0.5">
             {condition.stewardship.map((s, i) => <li key={i}>{s}</li>)}
           </ul>
         </div>

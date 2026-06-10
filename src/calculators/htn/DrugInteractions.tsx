@@ -214,14 +214,14 @@ const severityConfig: Record<Severity, { label: string; icon: React.ReactNode; b
   major: {
     label: "MAJOR",
     icon: <AlertTriangle className="h-4 w-4" />,
-    badgeClass: "bg-orange-500/20 text-orange-700 border-orange-500/30",
-    borderClass: "border-orange-500/30 bg-orange-500/5",
+    badgeClass: "bg-warning/100/20 text-warning border-warning/30",
+    borderClass: "border-warning/30 bg-warning/100/5",
   },
   moderate: {
     label: "MODERATE",
     icon: <Info className="h-4 w-4" />,
-    badgeClass: "bg-yellow-500/20 text-yellow-700 border-yellow-500/30",
-    borderClass: "border-yellow-500/30 bg-yellow-500/5",
+    badgeClass: "bg-warning/20 text-warning border-yellow-500/30",
+    borderClass: "border-yellow-500/30 bg-warning/5",
   },
 };
 

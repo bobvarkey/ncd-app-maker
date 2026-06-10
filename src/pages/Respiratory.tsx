@@ -160,11 +160,11 @@ function ResucerProtocol() {
   return (
     <div className="space-y-3">
       {steps.map((s) => (
-        <div key={s.n} className={`flex gap-3 p-3 rounded-lg ${s.critical ? 'bg-red-50 border border-red-200' : 'bg-muted/30'}`}>
-          <div className={`shrink-0 w-7 h-7 rounded-full flex items-center justify-center text-sm font-bold ${s.critical ? 'bg-red-500 text-white' : 'bg-muted text-muted-foreground'}`}>
+        <div key={s.n} className={`flex gap-3 p-3 rounded-lg ${s.critical ? 'bg-destructive/10 border border-destructive/30' : 'bg-muted/30'}`}>
+          <div className={`shrink-0 w-7 h-7 rounded-full flex items-center justify-center text-sm font-bold ${s.critical ? 'bg-destructive/100 text-white' : 'bg-muted text-muted-foreground'}`}>
             {s.n}
           </div>
-          <span className={s.critical ? 'text-red-700 font-medium' : 'text-foreground'}>{s.text}</span>
+          <span className={s.critical ? 'text-destructive font-medium' : 'text-foreground'}>{s.text}</span>
         </div>
       ))}
     </div>
@@ -210,7 +210,7 @@ export default function RespiratoryTab() {
             <TabsTrigger value="copd" className="flex items-center gap-2 py-3 data-[state=active]:bg-cyan-500/10 data-[state=active]:text-cyan-600">
               <Wind className="h-4 w-4" /><span>COPD</span>
             </TabsTrigger>
-            <TabsTrigger value="asthma" className="flex items-center gap-2 py-3 data-[state=active]:bg-amber-500/10 data-[state=active]:text-amber-600">
+            <TabsTrigger value="asthma" className="flex items-center gap-2 py-3 data-[state=active]:bg-warning/100/10 data-[state=active]:text-warning">
               <Wind className="h-4 w-4" /><span>Asthma</span>
             </TabsTrigger>
           </TabsList>
@@ -258,7 +258,7 @@ export default function RespiratoryTab() {
             <SectionCard title="Exacerbation Warning Signs" icon={<AlertTriangle className="h-4 w-4" />} tone="danger" collapsible={false}>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                 {EXACERBATION_SIGNS.map((item) => (
-                  <div key={item.sign} className="flex items-start gap-3 p-3 rounded-lg bg-red-50/50 border border-red-200/30">
+                  <div key={item.sign} className="flex items-start gap-3 p-3 rounded-lg bg-destructive/10/50 border border-destructive/30/30">
                     <AlertTriangle className="h-4 w-4 text-red-500 shrink-0 mt-0.5" />
                     <div>
                       <span className="font-medium text-foreground text-sm">{item.sign}</span>
@@ -298,7 +298,7 @@ export default function RespiratoryTab() {
             </SectionCard>
 
             <SectionCard title="SABA Over-reliance Warning" icon={<AlertTriangle className="h-4 w-4" />} tone="danger" collapsible={false}>
-              <div className="p-4 bg-amber-50/50 rounded-lg border border-amber-200/30">
+              <div className="p-4 bg-warning/10/50 rounded-lg border border-warning/30/30">
                 <p className="text-sm text-amber-800">
                   <strong>Red flag:</strong> Using SABA &gt;2 times/week (excluding PRN for exercise) indicates uncontrolled asthma.
                 </p>
@@ -310,7 +310,7 @@ export default function RespiratoryTab() {
                     <XCircle className="h-4 w-4 text-red-500" /> Reliever alone reduces clinic visits but increases exacerbations
                   </li>
                   <li className="flex items-center gap-2">
-                    <CheckCircle className="h-4 w-4 text-green-500" /> Always pair SABA with ICS (formoterol doubles as controller)
+                    <CheckCircle className="h-4 w-4 text-success" /> Always pair SABA with ICS (formoterol doubles as controller)
                   </li>
                 </ul>
               </div>

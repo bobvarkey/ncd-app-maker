@@ -784,8 +784,8 @@ export default function LipidCalculator() {
             {/* ── Primary / Secondary Prevention switch ── */}
             <div className={`no-print rounded-xl border-2 p-1 shadow-sm transition-colors ${
               prevType === "primary"
-                ? "border-emerald-400 bg-emerald-50 dark:bg-emerald-950/30"
-                : "border-rose-400 bg-rose-50 dark:bg-rose-950/30"
+                ? "border-emerald-400 bg-success/10 dark:bg-emerald-950/30"
+                : "border-rose-400 bg-destructive/10 dark:bg-rose-950/30"
             }`}>
               <div className="grid grid-cols-2 gap-1">
                 <button
@@ -794,7 +794,7 @@ export default function LipidCalculator() {
                   className={`flex items-center justify-center gap-2 rounded-lg px-3 py-2.5 text-xs font-bold transition-all ${
                     prevType === "primary"
                       ? "bg-gradient-to-br from-emerald-500 to-green-600 text-white shadow-md"
-                      : "text-emerald-700 dark:text-emerald-400 hover:bg-emerald-100 dark:hover:bg-emerald-900/30"
+                      : "text-success dark:text-emerald-400 hover:bg-emerald-100 dark:hover:bg-emerald-900/30"
                   }`}
                 >
                   <ShieldCheck className="h-4 w-4" />
@@ -806,7 +806,7 @@ export default function LipidCalculator() {
                   className={`flex items-center justify-center gap-2 rounded-lg px-3 py-2.5 text-xs font-bold transition-all ${
                     prevType === "secondary"
                       ? "bg-gradient-to-br from-rose-500 to-red-600 text-white shadow-md"
-                      : "text-rose-700 dark:text-rose-400 hover:bg-rose-100 dark:hover:bg-rose-900/30"
+                      : "text-rose-700 dark:text-destructive hover:bg-destructive/10 dark:hover:bg-rose-900/30"
                   }`}
                 >
                   <HeartPulse className="h-4 w-4" />
@@ -1492,7 +1492,7 @@ export default function LipidCalculator() {
                             </p>
                             {PMOS_DIAGNOSTIC_CRITERIA.map((criterion) => (
                               <div key={criterion.id}>
-                                <p className="text-xs font-bold text-rose-700 dark:text-rose-400 uppercase tracking-wide mb-1.5">
+                                <p className="text-xs font-bold text-rose-700 dark:text-destructive uppercase tracking-wide mb-1.5">
                                   {criterion.title}
                                 </p>
                                 <ul className="space-y-1">
@@ -1508,7 +1508,7 @@ export default function LipidCalculator() {
 
                             {/* Adult vs Adolescent Comparison */}
                             <div>
-                              <p className="text-xs font-bold text-rose-700 dark:text-rose-400 uppercase tracking-wide mb-1.5">
+                              <p className="text-xs font-bold text-rose-700 dark:text-destructive uppercase tracking-wide mb-1.5">
                                 Adult vs. Adolescent Criteria
                               </p>
                               <div className="overflow-x-auto">
@@ -1535,7 +1535,7 @@ export default function LipidCalculator() {
 
                             {/* Metabolic Screening */}
                             <div>
-                              <p className="text-xs font-bold text-rose-700 dark:text-rose-400 uppercase tracking-wide mb-1.5">
+                              <p className="text-xs font-bold text-rose-700 dark:text-destructive uppercase tracking-wide mb-1.5">
                                 Metabolic Screening (M Severity)
                               </p>
                               <p className="text-xs text-muted-foreground mb-1.5">

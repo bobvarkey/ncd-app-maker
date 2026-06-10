@@ -31,7 +31,7 @@ const AlgorithmStep = ({ step, title, description, criteria, medications, icon, 
     switch (tone) {
       case "primary": return "border-primary/40 bg-primary/5";
       case "accent": return "border-accent/40 bg-accent/5";
-      case "warning": return "border-amber-500/40 bg-amber-500/5";
+      case "warning": return "border-amber-500/40 bg-warning/100/5";
       case "danger": return "border-destructive/40 bg-destructive/5";
       default: return "border-border bg-card";
     }
@@ -342,7 +342,7 @@ const TreatmentAlgorithm = () => {
         </div>
       </CardHeader>
       <CardContent>
-        <figure className="mb-4 rounded-lg border border-border bg-white overflow-hidden">
+        <figure className="mb-4 rounded-lg border border-border bg-card overflow-hidden">
           <div className="w-full overflow-x-auto">
             <ZoomableImage
               src={treatmentAlgorithmImage.url}
@@ -350,7 +350,7 @@ const TreatmentAlgorithm = () => {
               className="w-full h-auto min-w-[320px] object-contain rounded-t"
             />
           </div>
-          <figcaption className="px-3 py-2 text-xs text-muted-foreground text-center bg-white">
+          <figcaption className="px-3 py-2 text-xs text-muted-foreground text-center bg-card">
             Goal therapy: HbA1c &lt;7% (individualised) — stepped pharmacotherapy by entry HbA1c
           </figcaption>
         </figure>

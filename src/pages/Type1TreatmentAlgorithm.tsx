@@ -72,7 +72,7 @@ function AlgorithmStep({
       case "accent":
         return "border-accent/30 bg-accent/5";
       case "warning":
-        return "border-amber-300 bg-amber-50/50";
+        return "border-warning/30 bg-warning/10/50";
       case "danger":
         return "border-destructive/30 bg-destructive/5";
       default:
@@ -307,7 +307,7 @@ const TidalDosingPanel = () => (
           </ul>
         </div>
       </div>
-      <div className="p-3 rounded-lg bg-yellow-50 border-l-4 border-yellow-400">
+      <div className="p-3 rounded-lg bg-warning/10 border-l-4 border-warning/50">
         <p className="text-xs font-medium text-yellow-800">ICR & CF Adjustment Guidance</p>
         <p className="text-xs text-muted-foreground mt-1">
           If postprandial excursions persist despite correct bolus timing, decrease ICR by 5g (e.g., 1:12 → 1:10). If hypoglycemia occurs within 4h of meals, increase ICR by 5g. Correction factor adjustments: if correction fails to bring glucose to target, decrease CF by 5-10 mg/dL/U.
@@ -341,7 +341,7 @@ const PumpTherapyPanel = () => (
             <li className="text-xs text-muted-foreground">• Gastroparesis (micro-dosing ability)</li>
           </ul>
         </div>
-        <div className="p-3 rounded-lg bg-purple-50/50 border border-purple-200/50">
+        <div className="p-3 rounded-lg bg-accent/10/50 border border-purple-200/50">
           <p className="text-xs font-medium mb-2">Hybrid Closed-Loop (HCL) Systems</p>
           <ul className="space-y-1">
             <li className="text-xs text-muted-foreground">• MiniMed 780G (Medtronic) — SmartGuard auto-correction</li>
@@ -352,7 +352,7 @@ const PumpTherapyPanel = () => (
           </ul>
         </div>
       </div>
-      <div className="p-3 rounded-lg bg-amber-50 border-l-4 border-amber-400">
+      <div className="p-3 rounded-lg bg-warning/10 border-l-4 border-amber-400">
         <p className="text-xs font-medium text-amber-800">Safety Considerations</p>
         <p className="text-xs text-muted-foreground mt-1">
           Always maintain backup insulin pens/syringes. Rotate infusion set every 2-3 days. Monitor for lipodystrophy. Check for ketones if unexplained hyperglycemia occurs. Never disconnect pump for &gt;2h without basal coverage.

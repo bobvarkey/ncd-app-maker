@@ -245,7 +245,7 @@ const DailyManagementGuide = () => {
                               href={link.url}
                               target="_blank"
                               rel="noopener noreferrer"
-                              className="text-xs px-3 py-1.5 bg-blue-50 text-blue-700 rounded-full hover:bg-blue-100 transition-colors"
+                              className="text-xs px-3 py-1.5 bg-primary/10 text-primary rounded-full hover:bg-primary/10 transition-colors"
                             >
                               {link.text}
                             </a>

@@ -137,7 +137,7 @@ const morphologyInfo = {
   microcytic: {
     title: 'Microcytic Anemia (MCV < 80 fL)',
     description: 'Most commonly due to decreased heme synthesis. Key differentials: Iron deficiency, thalassemia, anemia of chronic disease.',
-    color: 'text-sky-400',
+    color: 'text-primary',
     bg: 'bg-sky-900/20 border-sky-800',
   },
   normocytic: {
@@ -158,7 +158,7 @@ export default function TestSuggestionAlgorithm() {
   const [selectedMorphology, setSelectedMorphology] = useState<MorphologyType>(null);
 
   return (
-    <div className="bg-white rounded-2xl shadow-sm border border-border overflow-hidden">
+    <div className="bg-card rounded-2xl shadow-sm border border-border overflow-hidden">
       <div className="p-6 border-b border-border">
         <div className="flex items-center gap-3">
           <div className="w-10 h-10 rounded-xl bg-emerald-900/30 flex items-center justify-center border border-emerald-800">
@@ -185,7 +185,7 @@ export default function TestSuggestionAlgorithm() {
                 className={`p-4 rounded-xl border transition-all text-left ${
                   selectedMorphology === type
                     ? morphologyInfo[type].bg
-                    : 'bg-gray-100 border-border hover:border-gray-600'
+                    : 'bg-muted border-border hover:border-muted-foreground'
                 }`}
               >
                 <div className={`font-semibold text-sm capitalize ${
@@ -221,7 +221,7 @@ export default function TestSuggestionAlgorithm() {
               {testRecommendations[selectedMorphology].map((category, idx) => (
                 <div
                   key={category.category}
-                  className="bg-gray-100/50 rounded-xl border border-border overflow-hidden"
+                  className="bg-muted/50 rounded-xl border border-border overflow-hidden"
                 >
                   <div className="p-4">
                     <div className="flex items-center justify-between mb-3">
@@ -234,10 +234,10 @@ export default function TestSuggestionAlgorithm() {
                       <span
                         className={`text-xs px-2 py-0.5 rounded-full border ${
                           category.urgency === 'immediate'
-                            ? 'bg-red-900/30 text-red-400 border-red-800'
+                            ? 'bg-red-900/30 text-destructive border-red-800'
                             : category.urgency === 'urgent'
-                            ? 'bg-amber-900/30 text-amber-400 border-amber-800'
-                            : 'bg-gray-700/50 text-muted-foreground border-border'
+                            ? 'bg-amber-900/30 text-warning border-amber-800'
+                            : 'bg-muted/50 text-muted-foreground border-border'
                         }`}
                       >
                         {category.urgency}

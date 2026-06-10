@@ -59,7 +59,7 @@ function AlgorithmStep({
     switch (tone) {
       case "primary": return "border-primary/30 bg-primary/5";
       case "accent": return "border-accent/30 bg-accent/5";
-      case "warning": return "border-amber-300 bg-amber-50/50";
+      case "warning": return "border-warning/30 bg-warning/10/50";
       case "danger": return "border-destructive/30 bg-destructive/5";
       default: return "border-border bg-card";
     }
@@ -393,7 +393,7 @@ const DeescalationGuide = () => (
       </div>
     </CardHeader>
     <CardContent className="space-y-3">
-      <div className="p-3 rounded-lg bg-amber-50 border-l-4 border-amber-400">
+      <div className="p-3 rounded-lg bg-warning/10 border-l-4 border-amber-400">
         <p className="text-xs font-medium text-amber-800 mb-1">When to De-escalate</p>
         <ul className="space-y-1">
           <li className="text-xs text-amber-700">• HbA1c consistently &lt;6.5% on ≥3 agents</li>
@@ -402,19 +402,19 @@ const DeescalationGuide = () => (
           <li className="text-xs text-amber-700">• After lifestyle improvement (new exercise regimen, dietary change)</li>
         </ul>
       </div>
-      <div className="p-3 rounded-lg bg-green-50 border-l-4 border-green-400">
-        <p className="text-xs font-medium text-green-800 mb-1">De-escalation Order</p>
+      <div className="p-3 rounded-lg bg-success/10 border-l-4 border-green-400">
+        <p className="text-xs font-medium text-success mb-1">De-escalation Order</p>
         <ol className="space-y-1 list-decimal ml-4">
-          <li className="text-xs text-green-700">Reduce/stop SU (highest hypo risk)</li>
-          <li className="text-xs text-green-700">Reduce insulin by 10-20% if on basal</li>
-          <li className="text-xs text-green-700">Consider stopping TZD if weight gain/edema</li>
-          <li className="text-xs text-green-700">Maintain metformin + SGLT2i/GLP-1 RA (CV/renal benefit)</li>
-          <li className="text-xs text-green-700">Recheck HbA1c at 3 months after each change</li>
+          <li className="text-xs text-success">Reduce/stop SU (highest hypo risk)</li>
+          <li className="text-xs text-success">Reduce insulin by 10-20% if on basal</li>
+          <li className="text-xs text-success">Consider stopping TZD if weight gain/edema</li>
+          <li className="text-xs text-success">Maintain metformin + SGLT2i/GLP-1 RA (CV/renal benefit)</li>
+          <li className="text-xs text-success">Recheck HbA1c at 3 months after each change</li>
         </ol>
       </div>
-      <div className="p-3 rounded-lg bg-red-50 border-l-4 border-red-400">
-        <p className="text-xs font-medium text-red-800 mb-1">Never De-escalate Without Reassessment</p>
-        <p className="text-xs text-red-700">
+      <div className="p-3 rounded-lg bg-destructive/10 border-l-4 border-destructive/50">
+        <p className="text-xs font-medium text-destructive mb-1">Never De-escalate Without Reassessment</p>
+        <p className="text-xs text-destructive">
           Re-check HbA1c and CGM data before each reduction. If HbA1c remains &lt;7% after de-escalation, consider further reduction. If HbA1c rises above target, restart the agent at previous dose and re-evaluate adherence/lifestyle changes.
         </p>
       </div>

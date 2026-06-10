@@ -10,10 +10,10 @@ interface Props {
 }
 
 const consensusConfig = {
-  IDA:          { bg: 'bg-rose-900/30',    border: 'border-rose-800',    text: 'text-rose-400',    label: 'Iron Deficiency Anemia (IDA) likely' },
-  Thalassemia:  { bg: 'bg-sky-900/30',     border: 'border-sky-800',     text: 'text-sky-400',     label: 'Thalassemia trait likely' },
-  Inconclusive: { bg: 'bg-amber-900/30',   border: 'border-amber-800',   text: 'text-amber-400',   label: 'Inconclusive — further workup needed' },
-  'N/A':        { bg: 'bg-white/30',    border: 'border-border',    text: 'text-muted-foreground',    label: 'Not applicable' },
+  IDA:          { bg: 'bg-rose-900/30',    border: 'border-rose-800',    text: 'text-destructive',    label: 'Iron Deficiency Anemia (IDA) likely' },
+  Thalassemia:  { bg: 'bg-sky-900/30',     border: 'border-sky-800',     text: 'text-primary',     label: 'Thalassemia trait likely' },
+  Inconclusive: { bg: 'bg-amber-900/30',   border: 'border-amber-800',   text: 'text-warning',   label: 'Inconclusive — further workup needed' },
+  'N/A':        { bg: 'bg-card/30',    border: 'border-border',    text: 'text-muted-foreground',    label: 'Not applicable' },
 };
 
 export default function DiscriminantTable({ results, idaCount, thalCount, consensus }: Props) {
@@ -22,15 +22,15 @@ export default function DiscriminantTable({ results, idaCount, thalCount, consen
   const cc = consensusConfig[consensus];
 
   return (
-    <div className="bg-white rounded-2xl shadow-sm border border-border overflow-hidden">
+    <div className="bg-card rounded-2xl shadow-sm border border-border overflow-hidden">
       <button
         onClick={() => setExpanded(v => !v)}
-        className="w-full flex items-center justify-between p-6 hover:bg-gray-100 transition-colors"
+        className="w-full flex items-center justify-between p-6 hover:bg-muted/80 transition-colors"
       >
         <div className="flex items-center gap-2">
-          <FlaskConical className="w-5 h-5 text-sky-400" />
+          <FlaskConical className="w-5 h-5 text-primary" />
           <h2 className="text-lg font-semibold text-foreground">Discriminant Indices</h2>
-          <span className="text-xs bg-sky-900/30 text-sky-400 px-2 py-0.5 rounded-full font-medium border border-sky-800">
+          <span className="text-xs bg-sky-900/30 text-primary px-2 py-0.5 rounded-full font-medium border border-sky-800">
             IDA vs Thalassemia
           </span>
         </div>
@@ -40,7 +40,7 @@ export default function DiscriminantTable({ results, idaCount, thalCount, consen
       {expanded && (
         <div className="px-6 pb-6">
           {results.length === 0 ? (
-            <div className="flex items-start gap-3 bg-gray-100/50 rounded-xl p-4 text-sm text-muted-foreground border border-border">
+            <div className="flex items-start gap-3 bg-muted/50 rounded-xl p-4 text-sm text-muted-foreground border border-border">
               <Info className="w-4 h-4 mt-0.5 flex-shrink-0 text-muted-foreground" />
               <div>
                 Discriminant indices apply to <strong className="text-muted-foreground">microcytic anemia (MCV &lt; 80 fL)</strong>.
@@ -58,11 +58,11 @@ export default function DiscriminantTable({ results, idaCount, thalCount, consen
                   </div>
                   <div className="flex gap-3">
                     <div className="text-center">
-                      <div className="text-xl font-bold text-rose-400">{idaCount}</div>
+                      <div className="text-xl font-bold text-destructive">{idaCount}</div>
                       <div className="text-xs text-muted-foreground">IDA</div>
                     </div>
                     <div className="text-center">
-                      <div className="text-xl font-bold text-sky-400">{thalCount}</div>
+                      <div className="text-xl font-bold text-primary">{thalCount}</div>
                       <div className="text-xs text-muted-foreground">Thal.</div>
                     </div>
                     <div className="text-center">
@@ -73,7 +73,7 @@ export default function DiscriminantTable({ results, idaCount, thalCount, consen
                 </div>
                 {total > 0 && (
                   <div className="mt-3">
-                    <div className="h-2 rounded-full bg-gray-700 overflow-hidden flex">
+                    <div className="h-2 rounded-full bg-muted overflow-hidden flex">
                       <div
                         className="h-full bg-rose-500 transition-all"
                         style={{ width: `${(idaCount / total) * 100}%` }}
@@ -95,7 +95,7 @@ export default function DiscriminantTable({ results, idaCount, thalCount, consen
               <div className="overflow-x-auto rounded-xl border border-border">
                 <table className="w-full text-sm">
                   <thead>
-                    <tr className="bg-gray-100 border-b border-border">
+                    <tr className="bg-muted border-b border-border">
                       <th className="text-left py-3 px-4 font-semibold text-muted-foreground text-xs uppercase tracking-wide">Index</th>
                       <th className="text-left py-3 px-4 font-semibold text-muted-foreground text-xs uppercase tracking-wide hidden md:table-cell">Formula</th>
                       <th className="text-right py-3 px-4 font-semibold text-muted-foreground text-xs uppercase tracking-wide">Value</th>
@@ -108,7 +108,7 @@ export default function DiscriminantTable({ results, idaCount, thalCount, consen
                     {results.map((r, i) => (
                       <tr
                         key={r.name}
-                        className={`border-b border-border hover:bg-gray-100/50 transition-colors ${i % 2 === 0 ? '' : 'bg-white'}`}
+                        className={`border-b border-border hover:bg-muted/80/50 transition-colors ${i % 2 === 0 ? '' : 'bg-card'}`}
                       >
                         <td className="py-3 px-4">
                           <div className="font-medium text-foreground text-xs leading-tight">{r.name}</div>
@@ -122,11 +122,11 @@ export default function DiscriminantTable({ results, idaCount, thalCount, consen
                         <td className="py-3 px-4 text-right font-mono text-muted-foreground">{r.cutoff}</td>
                         <td className="py-3 px-4 text-center">
                           {r.interpretation === 'N/A' ? (
-                            <span className="px-2.5 py-1 rounded-full text-xs font-medium bg-gray-100 text-muted-foreground border border-border">—</span>
+                            <span className="px-2.5 py-1 rounded-full text-xs font-medium bg-muted text-muted-foreground border border-border">—</span>
                           ) : r.interpretation === 'IDA' ? (
-                            <span className="px-2.5 py-1 rounded-full text-xs font-semibold bg-rose-900/30 text-rose-400 border border-rose-800">IDA</span>
+                            <span className="px-2.5 py-1 rounded-full text-xs font-semibold bg-rose-900/30 text-destructive border border-rose-800">IDA</span>
                           ) : (
-                            <span className="px-2.5 py-1 rounded-full text-xs font-semibold bg-sky-900/30 text-sky-400 border border-sky-800">Thalassemia</span>
+                            <span className="px-2.5 py-1 rounded-full text-xs font-semibold bg-sky-900/30 text-primary border border-sky-800">Thalassemia</span>
                           )}
                         </td>
                         <td className="py-3 px-4 text-xs text-muted-foreground hidden lg:table-cell">{r.reference}</td>
@@ -137,7 +137,7 @@ export default function DiscriminantTable({ results, idaCount, thalCount, consen
               </div>
 
               <div className="mt-4 text-xs text-muted-foreground bg-amber-900/20 border border-amber-800/50 rounded-lg px-3 py-2">
-                <strong className="text-amber-400">Clinical note:</strong> These indices differentiate iron deficiency anemia from thalassemia trait in microcytic anemia. Confirmatory testing (serum ferritin, hemoglobin electrophoresis, genetic testing) is required for definitive diagnosis.
+                <strong className="text-warning">Clinical note:</strong> These indices differentiate iron deficiency anemia from thalassemia trait in microcytic anemia. Confirmatory testing (serum ferritin, hemoglobin electrophoresis, genetic testing) is required for definitive diagnosis.
               </div>
             </>
           )}

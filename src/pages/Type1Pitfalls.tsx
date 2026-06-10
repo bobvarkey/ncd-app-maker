@@ -111,7 +111,7 @@ const Type1Pitfalls = () => {
       id: "exercise-illness",
       title: "Exercise & Illness Adjustments",
       icon: <Activity className="w-5 h-5" />,
-      color: "bg-orange-500/10 text-orange-600",
+      color: "bg-warning/100/10 text-orange-600",
       content: [{
         heading: "Metabolic Challenges",
         tips: [

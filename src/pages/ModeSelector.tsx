@@ -84,7 +84,7 @@ function Navbar() {
         
         <button 
           onClick={() => navigate("/home")}
-          className="px-4 py-1.5 rounded-full bg-white/10 hover:bg-white/20 text-foreground text-sm font-medium transition-colors"
+          className="px-4 py-1.5 rounded-full bg-card/10 hover:bg-card/20 text-foreground text-sm font-medium transition-colors"
         >
           Launch App
         </button>
@@ -98,7 +98,7 @@ function Hero() {
   const navigate = useNavigate();
 
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-white">
+    <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-background">
       {/* Background elements */}
       <div className="absolute inset-0">
         <div className="absolute top-0 left-0 w-1/2 h-full bg-gradient-to-r from-pink-600/20 to-transparent" />
@@ -131,9 +131,9 @@ function Hero() {
         {/* Condition badges */}
         <div className="flex flex-wrap justify-center gap-3 mb-10">
           {[
-            { name: 'Diabetes', color: 'border-red-500/50 text-red-400' },
-            { name: 'Hypertension', color: 'border-rose-500/50 text-rose-400' },
-            { name: 'Lipids', color: 'border-amber-500/50 text-amber-400' },
+            { name: 'Diabetes', color: 'border-red-500/50 text-destructive' },
+            { name: 'Hypertension', color: 'border-rose-500/50 text-destructive' },
+            { name: 'Lipids', color: 'border-amber-500/50 text-warning' },
             { name: 'Obesity', color: 'border-emerald-500/50 text-emerald-400' },
             { name: 'COPD', color: 'border-cyan-500/50 text-cyan-400' },
             { name: 'Kidney', color: 'border-violet-500/50 text-violet-400' }
@@ -177,7 +177,7 @@ function Hero() {
 // Simple footer
 function Footer() {
   return (
-    <footer className="py-8 px-6 bg-white border-t border-border/40">
+    <footer className="py-8 px-6 bg-card border-t border-border/40">
       <div className="max-w-4xl mx-auto text-center">
         <div className="flex items-center justify-center gap-2 mb-2">
           <HeartBeat />
@@ -192,7 +192,7 @@ function Footer() {
 // Main 
 export default function ModeSelector() {
   return (
-    <div className="min-h-screen bg-white text-foreground">
+    <div className="min-h-screen bg-card text-foreground">
       <Navbar />
       <main className="pt-14">
         <Hero />

@@ -49,7 +49,7 @@ export default function Tooltip({ content }: Props) {
         onFocus={() => setVisible(true)}
         onBlur={() => setVisible(false)}
         onClick={() => setVisible(v => !v)}
-        className="text-foreground hover:text-sky-400 transition-colors focus:outline-none"
+        className="text-foreground hover:text-primary transition-colors focus:outline-none"
         aria-label="Parameter info"
       >
         <Info className="w-3.5 h-3.5" />
@@ -58,13 +58,13 @@ export default function Tooltip({ content }: Props) {
       {visible && (
         <div
           ref={tooltipRef}
-          className={`absolute left-1/2 -translate-x-1/2 z-50 w-72 rounded-xl shadow-2xl border border-gray-700 bg-gray-950 text-xs text-gray-200 p-0 overflow-hidden pointer-events-none ${
+          className={`absolute left-1/2 -translate-x-1/2 z-50 w-72 rounded-xl shadow-2xl border border-border bg-card text-xs text-foreground p-0 overflow-hidden pointer-events-none ${
             above ? 'bottom-full mb-2' : 'top-full mt-2'
           }`}
           role="tooltip"
         >
           {/* Header */}
-          <div className="bg-gray-800 px-3 py-2 text-gray-200 font-medium border-b border-gray-700 text-xs leading-snug">
+          <div className="bg-card px-3 py-2 text-foreground font-medium border-b border-border text-xs leading-snug">
             {content.what}
           </div>
           <div className="divide-y divide-gray-800">
@@ -73,11 +73,11 @@ export default function Tooltip({ content }: Props) {
               <span className="text-muted-foreground leading-relaxed">{content.normal}</span>
             </div>
             <div className="px-3 py-2">
-              <span className="text-sky-400 font-semibold block mb-0.5">Low</span>
+              <span className="text-primary font-semibold block mb-0.5">Low</span>
               <span className="text-muted-foreground leading-relaxed">{content.low}</span>
             </div>
             <div className="px-3 py-2">
-              <span className="text-rose-400 font-semibold block mb-0.5">High</span>
+              <span className="text-destructive font-semibold block mb-0.5">High</span>
               <span className="text-muted-foreground leading-relaxed">{content.high}</span>
             </div>
           </div>

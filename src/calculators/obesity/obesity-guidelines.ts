@@ -33,7 +33,7 @@ export const ETHNICITY_GUIDELINES: EthnicityGuideline[] = [
       { max: 30, category: "overweight", label: "Overweight", color: "text-amber-500" },
       { max: 35, category: "obese", label: "Obese Class I", color: "text-orange-500" },
       { max: 40, category: "obese", label: "Obese Class II", color: "text-red-500" },
-      { max: Infinity, category: "obese", label: "Obese Class III", color: "text-red-700" },
+      { max: Infinity, category: "obese", label: "Obese Class III", color: "text-destructive" },
     ],
   },
   {

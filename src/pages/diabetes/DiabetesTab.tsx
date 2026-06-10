@@ -32,7 +32,7 @@ const Section = ({ id, title, icon, description, isOpen, onToggle, children }: S
             <div className="flex items-center gap-3">
               <div className={cn(
                 "w-10 h-10 rounded-lg flex items-center justify-center transition-colors",
-                isOpen ? "bg-red-500/20" : "bg-muted"
+                isOpen ? "bg-destructive/100/20" : "bg-muted"
               )}>
                 {React.cloneElement(icon as React.ReactElement, {
                   className: cn("h-5 w-5", isOpen ? "text-red-500" : "text-muted-foreground")
@@ -119,7 +119,7 @@ export default function DiabetesTab() {
       {/* Hero Section */}
       <section className="max-w-6xl mx-auto px-6 pt-10 pb-6">
         <div className="flex items-center gap-3 mb-4">
-          <div className="w-10 h-10 rounded-lg bg-red-500/10 flex items-center justify-center">
+          <div className="w-10 h-10 rounded-lg bg-destructive/100/10 flex items-center justify-center">
             <Syringe className="h-5 w-5 text-red-500" />
           </div>
           <div>
@@ -154,7 +154,7 @@ export default function DiabetesTab() {
             variant="outline"
             size="sm"
             onClick={() => navigate('/diet-plan')}
-            className="gap-1.5 border-red-500/30 text-red-500 hover:bg-red-500/10"
+            className="gap-1.5 border-red-500/30 text-red-500 hover:bg-destructive/100/10"
           >
             <UtensilsCrossed className="h-3.5 w-3.5" />
             Meal Planner

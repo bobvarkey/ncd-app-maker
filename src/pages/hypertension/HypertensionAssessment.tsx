@@ -61,11 +61,11 @@ function calculateCkdEpi(creatinine: number, age: number, sex: "male" | "female"
 }
 
 function getGfrStage(gfr: number): GfrResult {
-  if (gfr >= 90) return { gfr, stage: "G1", label: "Normal or High", color: "bg-emerald-500/20 text-emerald-700 border-emerald-500/30" };
-  if (gfr >= 60) return { gfr, stage: "G2", label: "Mildly Decreased", color: "bg-emerald-500/20 text-emerald-700 border-emerald-500/30" };
-  if (gfr >= 45) return { gfr, stage: "G3a", label: "Mild-Moderate Decrease", color: "bg-yellow-500/20 text-yellow-700 border-yellow-500/30" };
-  if (gfr >= 30) return { gfr, stage: "G3b", label: "Moderate-Severe Decrease", color: "bg-orange-500/20 text-orange-700 border-orange-500/30" };
-  if (gfr >= 15) return { gfr, stage: "G4", label: "Severely Decreased", color: "bg-red-500/20 text-red-700 border-red-500/30" };
+  if (gfr >= 90) return { gfr, stage: "G1", label: "Normal or High", color: "bg-emerald-500/20 text-success border-emerald-500/30" };
+  if (gfr >= 60) return { gfr, stage: "G2", label: "Mildly Decreased", color: "bg-emerald-500/20 text-success border-emerald-500/30" };
+  if (gfr >= 45) return { gfr, stage: "G3a", label: "Mild-Moderate Decrease", color: "bg-warning/20 text-warning border-yellow-500/30" };
+  if (gfr >= 30) return { gfr, stage: "G3b", label: "Moderate-Severe Decrease", color: "bg-warning/100/20 text-warning border-warning/30" };
+  if (gfr >= 15) return { gfr, stage: "G4", label: "Severely Decreased", color: "bg-destructive/100/20 text-destructive border-red-500/30" };
   return { gfr, stage: "G5", label: "Kidney Failure", color: "bg-destructive/20 text-destructive border-destructive/30" };
 }
 
@@ -199,13 +199,13 @@ const severityConfig: Record<Severity, { label: string; color: string; borderCla
   },
   major: {
     label: "MAJOR",
-    color: "bg-orange-500/20 text-orange-700 border-orange-500/30",
-    borderClass: "border-orange-500/30 bg-orange-500/5",
+    color: "bg-warning/100/20 text-warning border-warning/30",
+    borderClass: "border-warning/30 bg-warning/100/5",
   },
   moderate: {
     label: "MODERATE",
-    color: "bg-yellow-500/20 text-yellow-700 border-yellow-500/30",
-    borderClass: "border-yellow-500/30 bg-yellow-500/5",
+    color: "bg-warning/20 text-warning border-yellow-500/30",
+    borderClass: "border-yellow-500/30 bg-warning/5",
   },
 };
 
@@ -409,7 +409,7 @@ export default function HypertensionAssessment() {
   return (
     <div className="space-y-6">
       {/* GFR Calculator */}
-      <Card className="border-2 border-orange-500/20">
+      <Card className="border-2 border-warning/20">
         <CardHeader className="pb-3">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
@@ -527,9 +527,9 @@ export default function HypertensionAssessment() {
                 </div>
               </div>
               {gfrResult.gfr < 60 && (
-                <Alert className="mt-3 border-amber-500/30 bg-amber-500/5">
+                <Alert className="mt-3 border-amber-500/30 bg-warning/100/5">
                   <AlertTriangle className="h-4 w-4 text-amber-500" />
-                  <AlertDescription className="text-amber-600 text-sm">
+                  <AlertDescription className="text-warning text-sm">
                     GFR &lt; 60: Review renal dosing adjustments for all medications
                   </AlertDescription>
                 </Alert>
@@ -540,7 +540,7 @@ export default function HypertensionAssessment() {
       </Card>
 
       {/* Secondary Hypertension Checklist */}
-      <Card className="border-2 border-orange-500/20">
+      <Card className="border-2 border-warning/20">
         <CardHeader>
           <div className="flex items-center gap-2">
             <Stethoscope className="h-5 w-5" style={{ color: categoryColors.accent }} />
@@ -557,8 +557,8 @@ export default function HypertensionAssessment() {
                 key={item.id}
                 className={`p-3 rounded-lg border transition-colors cursor-pointer ${
                   checkedSecondary.has(item.id)
-                    ? "bg-orange-500/5 border-orange-500/30"
-                    : "border-border/50 hover:border-orange-500/20"
+                    ? "bg-warning/100/5 border-warning/30"
+                    : "border-border/50 hover:border-warning/20"
                 }`}
                 onClick={() => toggleSecondary(item.id)}
               >
@@ -615,7 +615,7 @@ export default function HypertensionAssessment() {
 
       {/* Drug Interaction Checker */}
 
-      <Card className="border-2 border-orange-500/20">
+      <Card className="border-2 border-warning/20">
         <CardHeader className="pb-3">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
@@ -640,7 +640,7 @@ export default function HypertensionAssessment() {
                   <label
                     key={drug.id}
                     className={`flex items-center space-x-2 p-1.5 rounded-md cursor-pointer transition-colors text-sm ${
-                      selectedDrugs.has(drug.id) ? "bg-orange-500/10 text-orange-700 font-medium" : "hover:bg-muted/50"
+                      selectedDrugs.has(drug.id) ? "bg-warning/100/10 text-warning font-medium" : "hover:bg-muted/50"
                     }`}
                   >
                     <Checkbox
@@ -662,7 +662,7 @@ export default function HypertensionAssessment() {
                   Interaction Results ({selectedDrugs.size} drugs selected)
                 </h3>
                 {interactionResults.length === 0 && (
-                  <Badge variant="outline" className="bg-emerald-500/20 text-emerald-700 border-emerald-500/30">
+                  <Badge variant="outline" className="bg-emerald-500/20 text-success border-emerald-500/30">
                     No interactions found
                   </Badge>
                 )}

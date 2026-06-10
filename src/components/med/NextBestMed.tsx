@@ -31,7 +31,7 @@ export function NextBestMed({ nextBest, patient }: Props) {
       "glucose-monitoring": "bg-red-950/40 border-red-700/40",
       "stress-sleep": "bg-indigo-950/40 border-indigo-700/40",
     };
-    return colors[category] || "bg-white/40 border-border/40";
+    return colors[category] || "bg-card/40 border-border/40";
   };
 
   const getGoalCategoryIcon = (category: string) => {
@@ -208,20 +208,20 @@ export function NextBestMed({ nextBest, patient }: Props) {
       {/* Lifestyle Complement */}
       {nextBest.recommendation.lifestyleComplement && (
         <div className="border border-green-700/40 bg-green-950/30 rounded-lg p-3 mb-3">
-          <h4 className="text-xs font-medium text-green-200 mb-2">Pair With Lifestyle:</h4>
+          <h4 className="text-xs font-medium text-success/70 mb-2">Pair With Lifestyle:</h4>
           <div className="space-y-2">
             <div className="text-xs">
               <div className="flex items-start gap-2">
-                <Apple className="w-3 h-3 text-green-300 mt-0.5 shrink-0" />
-                <div className="text-green-100/90">
+                <Apple className="w-3 h-3 text-success/80 mt-0.5 shrink-0" />
+                <div className="text-success/60/90">
                   <span className="font-medium">Nutrition: </span>{nextBest.recommendation.lifestyleComplement.nutrition}
                 </div>
               </div>
             </div>
             <div className="text-xs">
               <div className="flex items-start gap-2">
-                <Zap className="w-3 h-3 text-green-300 mt-0.5 shrink-0" />
-                <div className="text-green-100/90">
+                <Zap className="w-3 h-3 text-success/80 mt-0.5 shrink-0" />
+                <div className="text-success/60/90">
                   <span className="font-medium">Activity: </span>{nextBest.recommendation.lifestyleComplement.physicalActivity}
                 </div>
               </div>
@@ -229,8 +229,8 @@ export function NextBestMed({ nextBest, patient }: Props) {
             {nextBest.recommendation.lifestyleComplement.weight && (
               <div className="text-xs">
                 <div className="flex items-start gap-2">
-                  <Weight className="w-3 h-3 text-green-300 mt-0.5 shrink-0" />
-                  <div className="text-green-100/90">
+                  <Weight className="w-3 h-3 text-success/80 mt-0.5 shrink-0" />
+                  <div className="text-success/60/90">
                     <span className="font-medium">Weight: </span>{nextBest.recommendation.lifestyleComplement.weight}
                   </div>
                 </div>
@@ -239,8 +239,8 @@ export function NextBestMed({ nextBest, patient }: Props) {
             {nextBest.recommendation.lifestyleComplement.other.length > 0 && (
               <div className="text-xs">
                 <div className="flex items-start gap-2">
-                  <Heart className="w-3 h-3 text-green-300 mt-0.5 shrink-0" />
-                  <div className="text-green-100/90">
+                  <Heart className="w-3 h-3 text-success/80 mt-0.5 shrink-0" />
+                  <div className="text-success/60/90">
                     <span className="font-medium">Other: </span>
                     <ul className="list-disc list-inside ml-1 space-y-0.5 mt-0.5">
                       {nextBest.recommendation.lifestyleComplement.other.slice(0, 2).map((item, i) => (
@@ -260,7 +260,7 @@ export function NextBestMed({ nextBest, patient }: Props) {
         <div className="border border-green-700/40 bg-green-950/20 rounded-lg p-3 mb-3">
           <button
             onClick={() => setShowGoals(!showGoals)}
-            className="w-full flex items-center justify-between text-xs font-medium text-green-200 hover:text-green-100 transition-colors"
+            className="w-full flex items-center justify-between text-xs font-medium text-success/70 hover:text-success/60 transition-colors"
           >
             <div className="flex items-center gap-1">
               <Target className="w-3.5 h-3.5" />
@@ -276,19 +276,19 @@ export function NextBestMed({ nextBest, patient }: Props) {
                   <div className="flex items-start gap-2">
                     <span className="text-lg shrink-0">{getGoalCategoryIcon(goal.category)}</span>
                     <div className="flex-1 min-w-0">
-                      <p className="text-xs font-semibold text-green-100">{goal.title}</p>
+                      <p className="text-xs font-semibold text-success/60">{goal.title}</p>
                       <p className="text-[9px] text-green-50/80 mt-1">{goal.goal}</p>
                       <div className="flex flex-wrap gap-2 mt-1.5 text-xs">
                         <span className="bg-black/10 px-2 py-0.5 rounded">📍 {goal.specific}</span>
                         <span className="bg-black/10 px-2 py-0.5 rounded">📈 {goal.measurable}</span>
                       </div>
-                      <p className="text-[9px] text-green-100/70 mt-1">⏰ {goal.timeframe}</p>
+                      <p className="text-[9px] text-success/60/70 mt-1">⏰ {goal.timeframe}</p>
                     </div>
                   </div>
                 </div>
               ))}
               {smartGoals.filter(g => g.isActive).length > 5 && (
-                <p className="text-[9px] text-green-200/60 text-center">... and {smartGoals.filter(g => g.isActive).length - 5} more goals</p>
+                <p className="text-[9px] text-success/70/60 text-center">... and {smartGoals.filter(g => g.isActive).length - 5} more goals</p>
               )}
             </div>
           )}

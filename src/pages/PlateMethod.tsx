@@ -270,7 +270,7 @@ const PlateMethod = () => {
                       onClick={() => addFood(slotIdx, food)}
                       className={`w-full text-left p-4 rounded-lg transition-all border ${
                         slot.foods.some(f => f.id === food.id)
-                          ? "bg-green-50 dark:bg-green-950/30 border-green-500"
+                          ? "bg-success/10 dark:bg-green-950/30 border-green-500"
                           : "border-transparent hover:bg-muted/50 hover:border-primary/20"
                       }`}
                     >
@@ -294,7 +294,7 @@ const PlateMethod = () => {
                             <span className="text-blue-600 dark:text-blue-400 font-bold text-lg">{food.carbsG}g</span> carb
                           </p>
                           <p className="text-base font-mono text-muted-foreground font-semibold">
-                            <span className="text-red-600 dark:text-red-400 font-bold text-lg">{food.proteinG}g</span> prot
+                            <span className="text-red-600 dark:text-destructive font-bold text-lg">{food.proteinG}g</span> prot
                           </p>
                           <p className="text-base font-mono text-muted-foreground font-semibold">
                             {food.calories} kcal

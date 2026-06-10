@@ -581,7 +581,7 @@ function Check({ label, checked, onChange }: { label: string; checked: boolean; 
 function toneClass(tone: Recommendation["tone"]) {
   switch (tone) {
     case "danger": return "border-destructive/40 bg-destructive/5 text-destructive";
-    case "warning": return "border-amber-500/40 bg-amber-500/5 text-amber-700 dark:text-amber-400";
+    case "warning": return "border-amber-500/40 bg-warning/100/5 text-amber-700 dark:text-warning";
     case "primary": return "border-primary/40 bg-primary/5 text-primary";
     default: return "border-border bg-card text-foreground";
   }
@@ -654,7 +654,7 @@ export default function BleedingClottingEvaluator() {
             <p className="text-xs text-muted-foreground">Patient has thrombosis — work through provoked vs unprovoked → site → risk score → targeted panel.</p>
           </button>
         </div>
-        <div className="flex items-start gap-2 rounded-md border border-amber-500/30 bg-amber-500/5 px-3 py-2 text-xs text-amber-700 dark:text-amber-400">
+        <div className="flex items-start gap-2 rounded-md border border-amber-500/30 bg-warning/100/5 px-3 py-2 text-xs text-amber-700 dark:text-warning">
           <AlertTriangle className="h-3.5 w-3.5 mt-0.5 flex-shrink-0" />
           <span>Decision-support only. Confirm all recommendations with current guidelines and clinical context.</span>
         </div>

@@ -113,7 +113,7 @@ export default function WaistHeightRatio() {
               <h1 className="font-display text-xl font-extrabold tracking-tight bg-gradient-to-r from-pink-500 via-rose-500 to-orange-500 bg-clip-text text-transparent truncate">
                 Waist-to-Height Ratio
               </h1>
-              <p className="text-xs font-medium text-rose-500 dark:text-rose-400 truncate">
+              <p className="text-xs font-medium text-destructive dark:text-destructive truncate">
                 Central Obesity Assessment
               </p>
             </div>
@@ -186,19 +186,19 @@ export default function WaistHeightRatio() {
                   }}
                   {...register("ethnicity")}
                 >
-                  <SelectTrigger id="ethnicity" className="bg-white border-border">
+                  <SelectTrigger id="ethnicity" className="bg-card border-border">
                     <SelectValue />
                   </SelectTrigger>
-                  <SelectContent className="bg-white border-border">
+                  <SelectContent className="bg-card border-border">
                     <SelectItem
                       value="standard"
-                      className="text-slate-100 focus:bg-gray-100 focus:text-slate-100"
+                      className="text-foreground focus:bg-muted focus:text-foreground"
                     >
                       Europid/African/American
                     </SelectItem>
                     <SelectItem
                       value="asian"
-                      className="text-slate-100 focus:bg-gray-100 focus:text-slate-100"
+                      className="text-foreground focus:bg-muted focus:text-foreground"
                     >
                       South Asian/East Asian
                     </SelectItem>
@@ -216,7 +216,7 @@ export default function WaistHeightRatio() {
                   id="height"
                   type="number"
                   placeholder="e.g., 170"
-                  className="bg-white border-border"
+                  className="bg-card border-border"
                   {...register("height", { valueAsNumber: true })}
                 />
                 {errors.height && (
@@ -231,7 +231,7 @@ export default function WaistHeightRatio() {
                   id="waist"
                   type="number"
                   placeholder="e.g., 90"
-                  className="bg-white border-border"
+                  className="bg-card border-border"
                   {...register("waist", { valueAsNumber: true })}
                 />
                 {errors.waist && (
@@ -331,7 +331,7 @@ export default function WaistHeightRatio() {
                         </div>
 
                         {result.isCentralObese && (
-                          <div className="p-3 rounded bg-amber-500/10 border border-amber-500/30">
+                          <div className="p-3 rounded bg-warning/100/10 border border-amber-500/30">
                             <p className="text-sm">
                               <strong>Note:</strong> Central obesity is associated with increased
                               cardiovascular and metabolic risk, even with normal BMI. Consider
@@ -357,7 +357,7 @@ export default function WaistHeightRatio() {
               </CardHeader>
               <CardContent>
                 <div className="space-y-3">
-                  <div className="flex items-center justify-between p-3 rounded-lg bg-yellow-500/10 border border-yellow-500/20">
+                  <div className="flex items-center justify-between p-3 rounded-lg bg-warning/10 border border-yellow-500/20">
                     <span className="text-sm">&lt; 0.40</span>
                     <span className="text-sm font-medium text-yellow-500">Underweight</span>
                   </div>
@@ -365,11 +365,11 @@ export default function WaistHeightRatio() {
                     <span className="text-sm">0.40 - 0.49</span>
                     <span className="text-sm font-medium text-emerald-500">Healthy</span>
                   </div>
-                  <div className="flex items-center justify-between p-3 rounded-lg bg-amber-500/10 border border-amber-500/20">
+                  <div className="flex items-center justify-between p-3 rounded-lg bg-warning/100/10 border border-amber-500/20">
                     <span className="text-sm">0.50 - 0.59</span>
                     <span className="text-sm font-medium text-amber-500">Increased Risk</span>
                   </div>
-                  <div className="flex items-center justify-between p-3 rounded-lg bg-red-500/10 border border-red-500/20">
+                  <div className="flex items-center justify-between p-3 rounded-lg bg-destructive/100/10 border border-red-500/20">
                     <span className="text-sm">≥ 0.60</span>
                     <span className="text-sm font-medium text-red-500">High Risk</span>
                   </div>

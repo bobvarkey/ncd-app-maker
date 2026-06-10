@@ -429,8 +429,8 @@ export default function HyperglycemicEmergencySection() {
 
   const riskBadge = (severity: DKASeverity) => {
     if (severity === "mild") return <Badge className="bg-emerald-500/15 text-emerald-400 border-emerald-500/30">Mild DKA</Badge>;
-    if (severity === "moderate") return <Badge className="bg-amber-500/15 text-amber-400 border-amber-500/30">Moderate DKA</Badge>;
-    if (severity === "severe") return <Badge className="bg-red-500/15 text-red-400 border-red-500/30">Severe DKA</Badge>;
+    if (severity === "moderate") return <Badge className="bg-warning/100/15 text-warning border-amber-500/30">Moderate DKA</Badge>;
+    if (severity === "severe") return <Badge className="bg-destructive/100/15 text-destructive border-red-500/30">Severe DKA</Badge>;
     return <Badge variant="outline">—</Badge>;
   };
 
@@ -583,7 +583,7 @@ export default function HyperglycemicEmergencySection() {
               <div className="border-t border-border pt-3 space-y-1">
                 <div className="flex justify-between text-xs">
                   <span className="text-muted-foreground">HHS:</span>
-                  <span className={hhs.isHHS ? "text-red-400 font-medium" : "text-emerald-400"}>
+                  <span className={hhs.isHHS ? "text-destructive font-medium" : "text-emerald-400"}>
                     {hhs.isHHS ? `✅ ${hhs.confidence}` : "❌ Not HHS"}
                   </span>
                 </div>
@@ -655,7 +655,7 @@ export default function HyperglycemicEmergencySection() {
               <CardHeader className="pb-2">
                 <div className="flex items-center gap-2">
                   <AlertTriangle className="h-4 w-4 text-amber-500" />
-                  <CardTitle className="text-sm text-amber-400">Euglycemic DKA Suspected (SGLT2i)</CardTitle>
+                  <CardTitle className="text-sm text-warning">Euglycemic DKA Suspected (SGLT2i)</CardTitle>
                 </div>
               </CardHeader>
               <CardContent className="text-xs">
@@ -672,14 +672,14 @@ export default function HyperglycemicEmergencySection() {
           <CardHeader className="pb-2">
             <div className="flex items-center gap-2">
               <AlertTriangle className="h-4 w-4 text-red-500" />
-              <CardTitle className="text-sm text-red-400">Red Flags</CardTitle>
+              <CardTitle className="text-sm text-destructive">Red Flags</CardTitle>
             </div>
           </CardHeader>
           <CardContent>
             <ul className="space-y-1">
               {redFlags.map((f, i) => (
                 <li key={i} className="text-xs flex gap-2">
-                  <span className="text-red-400 shrink-0">•</span>
+                  <span className="text-destructive shrink-0">•</span>
                   <span>{f}</span>
                 </li>
               ))}

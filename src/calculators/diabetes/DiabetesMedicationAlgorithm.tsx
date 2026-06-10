@@ -225,7 +225,7 @@ export default function DiabetesMedicationAlgorithm() {
       case "accent":
         return "border-accent/40 bg-accent/5";
       case "warning":
-        return "border-amber-500/40 bg-amber-500/5";
+        return "border-amber-500/40 bg-warning/100/5";
       case "danger":
         return "border-destructive/40 bg-destructive/5";
       default:
@@ -468,7 +468,7 @@ export default function DiabetesMedicationAlgorithm() {
                     <li>BMI 35.0–39.9 kg/m² (32.5–37.4 for Asian) with inadequate glycemic control despite lifestyle & medical therapy</li>
                     <li>BMI 30–34.9 with difficult-to-control T2DM despite optimal medical therapy (may be considered)</li>
                   </ul>
-                  <div className="p-3 rounded-lg bg-amber-500/10 border border-amber-500/20 mt-3">
+                  <div className="p-3 rounded-lg bg-warning/100/10 border border-amber-500/20 mt-3">
                     <p className="text-xs text-amber-200">
                       <strong>Note:</strong> Surgery should be performed in high-volume centers with multidisciplinary teams.
                       Benefits include diabetes remission in 60-80% of patients at 1-5 years.

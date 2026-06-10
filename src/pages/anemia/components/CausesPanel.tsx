@@ -75,11 +75,11 @@ export default function CausesPanel({ morphology, severity }: Props) {
   if (!data) return null;
 
   return (
-    <div className="bg-white rounded-2xl shadow-sm border border-border p-6">
+    <div className="bg-card rounded-2xl shadow-sm border border-border p-6">
       <div className="flex items-center gap-2 mb-4">
-        <Lightbulb className="w-5 h-5 text-amber-400" />
+        <Lightbulb className="w-5 h-5 text-warning" />
         <h2 className="text-lg font-semibold text-foreground">Differential Diagnosis</h2>
-        <span className="text-xs bg-amber-900/30 text-amber-400 border border-amber-800 px-2 py-0.5 rounded-full font-medium">
+        <span className="text-xs bg-amber-900/30 text-warning border border-amber-800 px-2 py-0.5 rounded-full font-medium">
           {morphology} Anemia
         </span>
       </div>

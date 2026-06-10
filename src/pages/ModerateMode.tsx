@@ -22,7 +22,7 @@ export function ModeNav() {
       </Button>
       <div className="flex items-center gap-1.5 bg-muted/50 rounded-lg p-1">
         <button onClick={() => navigate("/simple")} className="px-3 py-1.5 text-xs font-semibold rounded-lg text-muted-foreground hover:bg-muted">Simple</button>
-        <button onClick={() => navigate("/moderate")} className="px-3 py-1.5 text-xs font-semibold rounded-lg bg-orange-500/15 text-orange-600 border border-orange-500/30">Moderate</button>
+        <button onClick={() => navigate("/moderate")} className="px-3 py-1.5 text-xs font-semibold rounded-lg bg-warning/100/15 text-orange-600 border border-warning/30">Moderate</button>
         <button onClick={() => navigate("/home")} className="px-3 py-1.5 text-xs font-semibold rounded-lg text-muted-foreground hover:bg-muted">Complex</button>
       </div>
     </div>
@@ -214,15 +214,15 @@ function LipidsModerate() {
 
   // Live risk computation
   const getRisk = () => {
-    if (hasASCVD) return { cat: "Very High Risk", target: "< 55 mg/dL", intensity: "High", color: "text-red-600 bg-red-50 border-red-200" };
-    if (hasDM && (smoker || htn || hasCKD)) return { cat: "Very High Risk", target: "< 55 mg/dL", intensity: "High", color: "text-red-600 bg-red-50 border-red-200" };
-    if (hasDM || hasCKD) return { cat: "High Risk", target: "< 70 mg/dL", intensity: "High", color: "text-orange-600 bg-orange-50 border-orange-200" };
+    if (hasASCVD) return { cat: "Very High Risk", target: "< 55 mg/dL", intensity: "High", color: "text-red-600 bg-destructive/10 border-destructive/30" };
+    if (hasDM && (smoker || htn || hasCKD)) return { cat: "Very High Risk", target: "< 55 mg/dL", intensity: "High", color: "text-red-600 bg-destructive/10 border-destructive/30" };
+    if (hasDM || hasCKD) return { cat: "High Risk", target: "< 70 mg/dL", intensity: "High", color: "text-orange-600 bg-warning/10 border-warning/30" };
     const s = getScore();
-    if (s >= 3) return { cat: "High Risk", target: "< 70 mg/dL", intensity: "High", color: "text-orange-600 bg-orange-50 border-orange-200" };
-    if (s >= 2) return { cat: "Moderate Risk", target: "< 100 mg/dL", intensity: "Moderate", color: "text-amber-600 bg-amber-50 border-amber-200" };
+    if (s >= 3) return { cat: "High Risk", target: "< 70 mg/dL", intensity: "High", color: "text-orange-600 bg-warning/10 border-warning/30" };
+    if (s >= 2) return { cat: "Moderate Risk", target: "< 100 mg/dL", intensity: "Moderate", color: "text-warning bg-warning/10 border-warning/30" };
     const l = parseFloat(ldl);
-    if (!isNaN(l) && l >= 160) return { cat: "Moderate Risk", target: "< 100 mg/dL", intensity: "Moderate", color: "text-amber-600 bg-amber-50 border-amber-200" };
-    return { cat: "Low Risk", target: "< 130 mg/dL", intensity: "Lifestyle", color: "text-green-600 bg-green-50 border-green-200" };
+    if (!isNaN(l) && l >= 160) return { cat: "Moderate Risk", target: "< 100 mg/dL", intensity: "Moderate", color: "text-warning bg-warning/10 border-warning/30" };
+    return { cat: "Low Risk", target: "< 130 mg/dL", intensity: "Lifestyle", color: "text-success bg-success/10 border-success/30" };
   };
 
   const getScore = () => {
@@ -257,7 +257,7 @@ function LipidsModerate() {
       if (l <= targetNum) {
         lines.push(<span>✅ <AbbreviationHover term="LDL">LDL</AbbreviationHover> at target. Continue current therapy.</span>);
       } else {
-        lines.push(<span><span className="text-amber-600">⚠ {l - targetNum} mg/dL above target</span> (<AbbreviationHover term="LDL">LDL</AbbreviationHover> {l}, target {riskPreview.target})</span>);
+        lines.push(<span><span className="text-warning">⚠ {l - targetNum} mg/dL above target</span> (<AbbreviationHover term="LDL">LDL</AbbreviationHover> {l}, target {riskPreview.target})</span>);
         lines.push(<span>➡️ Start: {riskPreview.intensity}</span>);
         if (riskPreview.intensity === "High") lines.push(<span>   Atorvastatin 40-80 mg OD or Rosuvastatin 20-40 mg OD</span>);
         else if (riskPreview.intensity === "Moderate") lines.push(<span>   Atorvastatin 10-20 mg OD or Rosuvastatin 5-10 mg OD</span>);
@@ -266,7 +266,7 @@ function LipidsModerate() {
     }
 
     if (t >= 500) {
-      lines.push(<span><span className="text-amber-600 font-medium">⚠ <AbbreviationHover term="TG">TG</AbbreviationHover> ≥ 500:</span> Fenofibrate 145 mg for pancreatitis prevention</span>);
+      lines.push(<span><span className="text-warning font-medium">⚠ <AbbreviationHover term="TG">TG</AbbreviationHover> ≥ 500:</span> Fenofibrate 145 mg for pancreatitis prevention</span>);
       lines.push(<span>   Avoid Gemfibrozil with statins (myopathy risk)</span>);
     }
     if (t >= 200 && t < 500 && hasDM && hasASCVD) {
@@ -340,7 +340,7 @@ function ObesityModerate() {
 
     const lines: React.ReactNode[] = [];
     if (whr) {
-      lines.push(<span>📊 <AbbreviationHover term="BMI">BMI</AbbreviationHover>: {bmi.toFixed(1)} kg/m² — Waist-Height Ratio: {whr.toFixed(2)} {whr >= 0.5 ? <span className="text-amber-600">⚠ Elevated</span> : <span className="text-green-600">✅ Normal</span>}</span>);
+      lines.push(<span>📊 <AbbreviationHover term="BMI">BMI</AbbreviationHover>: {bmi.toFixed(1)} kg/m² — Waist-Height Ratio: {whr.toFixed(2)} {whr >= 0.5 ? <span className="text-warning">⚠ Elevated</span> : <span className="text-success">✅ Normal</span>}</span>);
     } else {
       lines.push(<span>📊 <AbbreviationHover term="BMI">BMI</AbbreviationHover>: {bmi.toFixed(1)} kg/m²</span>);
     }
@@ -422,7 +422,7 @@ export default function ModerateMode() {
         <button onClick={() => window.location.href = "/"} className="px-3 py-1.5 text-xs font-semibold rounded-lg bg-primary/10 text-primary hover:bg-primary/20 transition-colors">🏠 Homepage</button>
         <span className="text-xs text-muted-foreground/40">|</span>
         <button onClick={() => window.location.href = "/simple"} className="px-3 py-1.5 text-xs font-semibold rounded-lg text-muted-foreground hover:bg-muted transition-colors">🟢 Simple</button>
-        <button onClick={() => window.location.href = "/moderate"} className="px-3 py-1.5 text-xs font-semibold rounded-lg bg-orange-500/15 text-orange-600 border border-orange-500/30 hover:bg-orange-500/25 transition-colors">🟠 Moderate</button>
+        <button onClick={() => window.location.href = "/moderate"} className="px-3 py-1.5 text-xs font-semibold rounded-lg bg-warning/100/15 text-orange-600 border border-warning/30 hover:bg-warning/100/25 transition-colors">🟠 Moderate</button>
         <button onClick={() => window.location.href = "/home"} className="px-3 py-1.5 text-xs font-semibold rounded-lg text-muted-foreground hover:bg-muted transition-colors">🔴 Complex</button>
       </div>
       <div className="h-14" />

@@ -66,10 +66,10 @@ export default function Anemia() {
   return (
     <div className="min-h-screen bg-background text-foreground">
       {/* Header */}
-      <header className="bg-white border-b border-border shadow-sm sticky top-0 z-10">
+      <header className="bg-card border-b border-border shadow-sm sticky top-0 z-10">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 py-4">
           <div className="flex items-center gap-3 mb-4">
-            <div className="w-9 h-9 rounded-xl bg-sky-600 flex items-center justify-center shadow-sm">
+            <div className="w-9 h-9 rounded-xl bg-primary flex items-center justify-center shadow-sm">
               <Microscope className="w-5 h-5 text-white" />
             </div>
             <div>
@@ -99,8 +99,8 @@ export default function Anemia() {
                   }}
                   className={`flex items-center gap-1.5 px-3 py-2 rounded-lg text-sm font-medium border whitespace-nowrap transition-all ${
                     isActive
-                      ? 'bg-sky-600 text-white border-sky-600'
-                      : 'bg-white text-foreground border-border hover:border-gray-400'
+                      ? 'bg-primary text-white border-sky-600'
+                      : 'bg-card text-foreground border-border hover:border-muted-foreground'
                   }`}
                 >
                   {tab.icon}
@@ -140,7 +140,7 @@ export default function Anemia() {
             {result && (
               <div id="results" className="space-y-5 pt-1">
                 {result.missingFields.length > 0 && result.missingFields.includes('Hemoglobin') && (
-                  <div className="flex items-center gap-2 text-sm text-amber-700 bg-amber-50 border border-amber-100 rounded-xl px-4 py-3">
+                  <div className="flex items-center gap-2 text-sm text-amber-700 bg-warning/10 border border-amber-100 rounded-xl px-4 py-3">
                     <AlertTriangle className="w-4 h-4 flex-shrink-0" />
                     Missing required fields: {result.missingFields.join(', ')}
                   </div>
