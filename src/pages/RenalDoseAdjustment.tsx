@@ -814,8 +814,7 @@ const RenalDoseAdjustment = () => {
                 <TableRow className="bg-muted/30">
                   <TableHead className="min-w-[140px]">Drug</TableHead>
                   <TableHead className="min-w-[90px]">Class</TableHead>
-                  <TableHead className="min-w-[90px]">Frequency</TableHead>
-                  <TableHead className="min-w-[120px]">Normal Dose</TableHead>
+                  <TableHead className="min-w-[180px]">Dosing (Frequency & Strength)</TableHead>
                   {eGFRColumns.map(col => (
                     <TableHead key={col.key} className="min-w-[100px] text-center">
                       <div className="text-xs text-muted-foreground">eGFR</div>
@@ -833,8 +832,11 @@ const RenalDoseAdjustment = () => {
                         <div className="flex items-center gap-1.5">{d.drug}</div>
                       </TableCell>
                       <TableCell className="text-xs text-muted-foreground">{d.drugClass}</TableCell>
-                      <TableCell className="text-xs font-mono text-muted-foreground">{d.frequency}</TableCell>
-                      <TableCell className="text-xs">{d.normalDose}</TableCell>
+                      <TableCell className="text-xs">
+                        <span className="font-mono text-muted-foreground">{d.frequency}</span>
+                        <span className="mx-1.5 text-muted-foreground/50">•</span>
+                        <span>{d.normalDose}</span>
+                      </TableCell>
                       {eGFRColumns.map(col => (
                         <TableCell key={col.key} className={`text-xs text-center ${cellStyle(d[col.key])}`}>
                           {d[col.key]}
