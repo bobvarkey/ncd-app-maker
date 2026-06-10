@@ -11,6 +11,14 @@ import {
   GitBranch, ChevronRight, ChevronDown, RotateCcw, Gauge, CheckCircle, Brain, Baby,
 } from "lucide-react";
 import HtnAlgorithmFlowchart from "@/components/hypertension/HtnAlgorithmFlowchart";
+import ZoomableImage from "@/components/ZoomableImage";
+import tampDcmiImg from "@/assets/tamp-dcmi-resistant-htn.png.asset.json";
+import { AbbreviationHover as AbbrText } from "@/components/AbbreviationHover";
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
+import { Separator } from "@/components/ui/separator";
 
 // Category colors for hypertension (orange theme)
 const categoryColors = {
