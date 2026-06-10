@@ -414,8 +414,18 @@ export const ADDITIONAL_MEDS_DATA: DoseEntry[] = [
     notes: "First-dose hypotension — start at bedtime.",
     hepatic: "Start low; titrate slowly.",
   },
-
-  // ═══════ STATINS ═══════
+  {
+    drug: "Doxazosin",
+    drugClass: "α1-Blocker",
+    normalDose: "1–8 mg OD",
+    eGFR60_89: "No adjustment",
+    eGFR45_59: "No adjustment",
+    eGFR30_44: "Start 1 mg",
+    eGFR15_29: "Use with caution",
+    eGFRBelow15: "Use with caution; limited data",
+    notes: "Longer T½ than prazosin — true OD dosing. ALLHAT trial: increased HF vs chlorthalidone — no longer 1st-line HTN monotherapy. Also used for BPH. First-dose syncope risk — start 1 mg at bedtime.",
+    hepatic: "Use with caution in severe impairment.",
+  },
   {
     drug: "Atorvastatin",
     drugClass: "Statin (HMG-CoA reductase inhibitor)",
