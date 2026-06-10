@@ -9,7 +9,6 @@ import LipidsOverview from "./LipidsOverview";
 import LipidsAssessment from "./LipidsAssessment";
 import LipidsTreatment from "./LipidsTreatment";
 import LipidMiniApp from "./LipidMiniApp";
-import { SmartLabelUpload, LIPID_FIELDS } from "@/components/SmartLabelUpload";
 
 export type LAIResult = {
   cat: "EHR" | "VHR" | "HR" | "MOD" | "LOW";
@@ -71,13 +70,6 @@ export default function LipidsTab() {
         {/* Mini-App pinned to top */}
         <div className="mb-6">
           <LipidMiniApp />
-        </div>
-
-        {/* Smart Lab Import */}
-        <div className="mb-6">
-          <SmartLabelUpload fields={LIPID_FIELDS.fields} onParse={(values) => {
-            Object.entries(values).forEach(([key, val]) => localStorage.setItem(`lipid_${key}`, val));
-          }} />
         </div>
 
         <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6">

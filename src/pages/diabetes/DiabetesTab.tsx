@@ -5,7 +5,6 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 import { cn } from "@/lib/utils";
-import { SmartLabelUpload, DIABETES_FIELDS } from "@/components/SmartLabelUpload";
 import DiabetesOverview from "./DiabetesOverview";
 import DiabetesAssessment from "./DiabetesAssessment";
 import DiabetesTreatment from "./DiabetesTreatment";
@@ -162,12 +161,6 @@ export default function DiabetesTab() {
         </div>
       </section>
 
-      {/* Smart Lab Import */}
-      <section className="max-w-6xl mx-auto px-6 pb-4">
-        <SmartLabelUpload fields={DIABETES_FIELDS.fields} onParse={(values) => {
-          Object.entries(values).forEach(([key, val]) => localStorage.setItem(`diabetes_${key}`, val));
-        }} />
-      </section>
 
       {/* Sections */}
       <section className="max-w-6xl mx-auto px-6 pb-16 space-y-4">
