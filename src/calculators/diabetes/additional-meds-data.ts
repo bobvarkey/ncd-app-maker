@@ -367,6 +367,18 @@ export const ADDITIONAL_MEDS_DATA: DoseEntry[] = [
     hepatic: "No specific adjustment.",
   },
   {
+    drug: "Moxonidine",
+    drugClass: "Central α2-agonist",
+    normalDose: "0.2–0.4 mg OD",
+    eGFR60_89: "No adjustment",
+    eGFR45_59: "No adjustment",
+    eGFR30_44: "Use with caution",
+    eGFR15_29: "Reduce dose 50%",
+    eGFRBelow15: "Limited data; use with caution",
+    notes: "Imidazoline receptor agonist. Less sedation than clonidine. Start 0.2 mg OD, max 0.6 mg/day. No rebound on withdrawal vs clonidine. Preferred central agent in CKD due to lower adverse effect profile.",
+    hepatic: "No specific adjustment.",
+  },
+  {
     drug: "Hydralazine",
     drugClass: "Direct Vasodilator",
     normalDose: "25–100 mg q6–8h",
