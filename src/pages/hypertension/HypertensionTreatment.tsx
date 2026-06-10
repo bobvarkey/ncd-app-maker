@@ -1274,6 +1274,108 @@ export default function HypertensionTreatment() {
           </Tabs>
         </CardContent>
       </Card>
+
+      {/* Moxonidine vs Clonidine Comparison */}
+      <Card className="border-2 border-primary/20 bg-gradient-to-br from-primary/5 to-accent/5">
+        <CardHeader>
+          <div className="flex items-center space-x-2">
+            <Info className="h-5 w-5 text-primary" />
+            <CardTitle className="text-lg">Moxonidine vs Clonidine: Clinical Comparison</CardTitle>
+          </div>
+          <p className="text-xs text-muted-foreground">Moxonidine is generally preferred over clonidine due to fewer CNS side effects</p>
+        </CardHeader>
+        <CardContent>
+          <div className="overflow-x-auto">
+            <table className="w-full border-collapse text-sm">
+              <thead>
+                <tr className="border-b-2 border-border">
+                  <th className="text-left p-3 font-semibold text-foreground bg-muted/50">Feature</th>
+                  <th className="text-left p-3 font-semibold text-primary bg-primary/10">Moxonidine (Preferred)</th>
+                  <th className="text-left p-3 font-semibold text-foreground bg-muted/30">Clonidine</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr className="border-b border-border">
+                  <td className="p-3 font-medium text-muted-foreground">Mechanism</td>
+                  <td className="p-3">Selective I1 imidazoline receptor agonist</td>
+                  <td className="p-3">Non-selective: I1 + α2-adrenergic agonist</td>
+                </tr>
+                <tr className="border-b border-border bg-muted/20">
+                  <td className="p-3 font-medium text-muted-foreground">Side Effects</td>
+                  <td className="p-3 text-success text-xs">Less sedation, less dry mouth, fewer CNS effects</td>
+                  <td className="p-3 text-destructive text-xs">More sedation, dry mouth, CNS effects; rebound HTN on abrupt withdrawal</td>
+                </tr>
+                <tr className="border-b border-border">
+                  <td className="p-3 font-medium text-muted-foreground">Additional Indications</td>
+                  <td className="p-3 text-xs">Primarily hypertension</td>
+                  <td className="p-3 text-xs">Hypertension, ADHD, opioid withdrawal, pain conditions</td>
+                </tr>
+                <tr className="bg-muted/20">
+                  <td className="p-3 font-medium text-muted-foreground">Clinical Preference</td>
+                  <td className="p-3"><Badge className="bg-success/20 text-success border-success">Preferred for HTN</Badge></td>
+                  <td className="p-3"><Badge variant="secondary">Use with caution</Badge></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </CardContent>
+      </Card>
+
+      {/* Diuretic Comparison Table */}
+      <Card className="border-2 border-accent/20 bg-gradient-to-br from-accent/5 to-muted/10">
+        <CardHeader>
+          <div className="flex items-center space-x-2">
+            <Droplets className="h-5 w-5 text-primary" />
+            <CardTitle className="text-lg">Diuretic Comparison: Loop vs Thiazide vs Potassium-Sparing</CardTitle>
+          </div>
+        </CardHeader>
+        <CardContent>
+          <div className="overflow-x-auto">
+            <table className="w-full border-collapse text-sm">
+              <thead>
+                <tr className="border-b-2 border-border">
+                  <th className="text-left p-3 font-semibold text-foreground bg-muted/50">Feature</th>
+                  <th className="text-left p-3 font-semibold text-primary bg-primary/10">Loop Diuretics</th>
+                  <th className="text-left p-3 font-semibold text-foreground bg-muted/30">Thiazide / Thiazide-like</th>
+                  <th className="text-left p-3 font-semibold text-accent-foreground bg-accent/10">Potassium-Sparing</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr className="border-b border-border">
+                  <td className="p-3 font-medium text-muted-foreground">Examples</td>
+                  <td className="p-3 text-xs">Furosemide, Torsemide, Bumetanide</td>
+                  <td className="p-3 text-xs">HCTZ, Chlorthalidone, Indapamide</td>
+                  <td className="p-3 text-xs">Spironolactone, Eplerenone, Amiloride</td>
+                </tr>
+                <tr className="border-b border-border bg-muted/20">
+                  <td className="p-3 font-medium text-muted-foreground">Site of Action</td>
+                  <td className="p-3 text-xs">Thick ascending limb (Na+/K+/2Cl- cotransporter)</td>
+                  <td className="p-3 text-xs">Distal convoluted tubule (Na+/Cl- cotransporter)</td>
+                  <td className="p-3 text-xs">Collecting duct (aldosterone receptor or ENaC)</td>
+                </tr>
+                <tr className="border-b border-border">
+                  <td className="p-3 font-medium text-muted-foreground">Potency</td>
+                  <td className="p-3"><Badge className="bg-destructive/20 text-destructive">High (15-25% Na+)</Badge></td>
+                  <td className="p-3"><Badge className="bg-primary/20 text-primary">Moderate (5-8%)</Badge></td>
+                  <td className="p-3"><Badge variant="secondary">Mild (1-3%)</Badge></td>
+                </tr>
+                <tr className="border-b border-border bg-muted/20">
+                  <td className="p-3 font-medium text-muted-foreground">Renal Function</td>
+                  <td className="p-3"><Badge className="bg-success/20 text-success">Effective even at GFR {'<'} 15</Badge></td>
+                  <td className="p-3"><Badge className="bg-destructive/20 text-destructive">Ineffective at GFR {'<'} 30</Badge></td>
+                  <td className="p-3"><Badge className="bg-destructive/20 text-destructive">Risk of hyperkalemia if GFR {'<'} 30</Badge></td>
+                </tr>
+                <tr className="border-b border-border">
+                  <td className="p-3 font-medium text-muted-foreground">Key Electrolyte Effects</td>
+                  <td className="p-3 text-xs">↓ K+, Na+, Mg2+, Ca2+</td>
+                  <td className="p-3 text-xs">↓ K+, Na+, Mg2+; ↑ Ca2+, uric acid, glucose</td>
+                  <td className="p-3 text-xs">↑ K+ (hyperkalemia risk); ↓ Na+ (mild)</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </CardContent>
+      </Card>
     </div>
   );
 }
