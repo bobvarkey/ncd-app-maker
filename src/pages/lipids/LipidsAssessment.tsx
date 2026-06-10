@@ -422,6 +422,68 @@ export default function LipidsAssessment({ onClassificationChange, onNavigateToT
         </div>
       </Card>
 
+      {/* ─── LAI 2023 ASCVD Risk Stratification Algorithm ─── */}
+      <SectionCard title="LAI 2023 ASCVD Risk Stratification Algorithm" icon={<BookOpen className="h-4 w-4" />} tone="indigo" defaultOpen={false}>
+        <figure className="space-y-2">
+          <a href="https://www.sciencedirect.com/science/article/pii/S1933287424000060#fig0004" target="_blank" rel="noopener noreferrer">
+            <img
+              src="/images/ascvd-risk-stratification-lai.jpg"
+              alt="ASCVD Risk Stratification Algorithm — Lipid Association of India 2023"
+              className="w-full rounded-lg border border-border"
+              loading="lazy"
+            />
+          </a>
+          <figcaption className="text-xs text-muted-foreground">
+            <strong>Figure 4.</strong> LAI 2023 Cardiovascular risk stratification algorithm for primary prevention. 
+            Source: Puri et al., <em>J Clin Lipidol</em> 2024. 
+            <a href="https://doi.org/10.1016/j.jacl.2024.01.006" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">
+              doi:10.1016/j.jacl.2024.01.006
+            </a>
+            &nbsp;—&nbsp;
+            <a href="https://www.sciencedirect.com/science/article/pii/S1933287424000060#fig0004" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">
+              View on ScienceDirect
+            </a>
+          </figcaption>
+        </figure>
+      </SectionCard>
+
+      {/* ─── Hypertriglyceridemia Algorithm ─── */}
+      <SectionCard title="Hypertriglyceridemia Management Algorithm (LAI 2023)" icon={<BookOpen className="h-4 w-4" />} tone="indigo" defaultOpen={false}>
+        <figure className="space-y-2">
+          <img
+            src="/images/hypertriglyceridemia-algorithm-lai.jpg"
+            alt="Hypertriglyceridemia Management Algorithm"
+            className="w-full rounded-lg border border-border"
+            loading="lazy"
+          />
+          <figcaption className="text-xs text-muted-foreground">
+            TG-based treatment algorithm. Source: Lipid Association of India 2023 Consensus Statement IV.
+            <a href="https://doi.org/10.1016/j.jacl.2024.01.006" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline ml-1">
+              doi:10.1016/j.jacl.2024.01.006
+            </a>
+          </figcaption>
+        </figure>
+      </SectionCard>
+
+      {/* ─── CACS Risk Stratification ─── */}
+      <SectionCard title="CACS-Based Risk Stratification (LAI 2023)" icon={<BookOpen className="h-4 w-4" />} tone="indigo" defaultOpen={false}>
+        <figure className="space-y-2">
+          <img
+            src="/images/cacs-risk-stratification-lai.jpg"
+            alt="CACS-Based Risk Stratification Algorithm"
+            className="w-full rounded-lg border border-border"
+            loading="lazy"
+          />
+          <figcaption className="text-xs text-muted-foreground">
+            Coronary Artery Calcium Score (CACS) risk classification for refining ASCVD risk. 
+            Source: Lipid Association of India 2023.
+            <a href="https://doi.org/10.1016/j.jacl.2024.01.006" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline ml-1">
+              doi:10.1016/j.jacl.2024.01.006
+            </a>
+          </figcaption>
+        </figure>
+      </SectionCard>
+
       {/* ─── Classification Guide Table ─── */}
       <SectionCard title="LAI 2023 Full Classification Guide" icon={<BookOpen className="h-4 w-4" />} tone="indigo" defaultOpen={false}>
         <div className="overflow-x-auto">
