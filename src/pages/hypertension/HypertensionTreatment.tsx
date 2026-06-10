@@ -1,43 +1,16 @@
 import { useState } from "react";
-import { AbbreviationHover, AbbrText } from "@/components/AbbreviationHover";
-import ZoomableImage from "@/components/ZoomableImage";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
-import { Separator } from "@/components/ui/separator";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Checkbox } from "@/components/ui/checkbox";
+import { Progress } from "@/components/ui/progress";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from "@/components/ui/accordion";
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
-import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
-import {
-  GitBranch,
-  ChevronRight, ChevronDown,
-  RotateCcw,
-  Activity,
-  Heart,
-  Brain,
-  Baby,
-  AlertTriangle,
-  Info,
-  Gauge,
-  CheckCircle,
-  Ban,
-  Clock,
-  Crosshair,
+  Heart, Wine, Pill, Activity, Zap, Moon, TestTube, Stethoscope, FlaskConical,
+  Droplets, Syringe, Tablets, Info, AlertTriangle, Ban, Clock, Crosshair,
+  GitBranch, ChevronRight, ChevronDown, RotateCcw, Gauge, CheckCircle, Brain, Baby,
 } from "lucide-react";
-import tampDcmiImg from "@/assets/tamp-dcmi-resistant-htn.png.asset.json";
+import HtnAlgorithmFlowchart from "@/components/hypertension/HtnAlgorithmFlowchart";
 
 // Category colors for hypertension (orange theme)
 const categoryColors = {
@@ -365,6 +338,363 @@ const strokeProtocol = {
     "Consider permissive hypertension in acute stroke if no thrombolysis",
   ],
 };
+
+// Secondary HTN Workup Checklist
+interface ChecklistItem {
+  id: string;
+  condition: string;
+  tests: string[];
+  icon: React.ReactNode;
+  category: 'endocrine' | 'renal' | 'lifestyle' | 'vascular' | 'other';
+}
+
+const checklistItems: ChecklistItem[] = [
+  {
+    id: 'primary-aldosteronism',
+    condition: 'Primary Aldosteronism',
+    tests: ['Aldosterone/renin ratio', 'Saline suppression test', 'Adrenal CT/MRI'],
+    icon: <Droplets className="h-5 w-5" />,
+    category: 'endocrine'
+  },
+  {
+    id: 'sleep-apnea',
+    condition: 'Obstructive Sleep Apnea',
+    tests: ['Sleep study (polysomnography)', 'Epworth sleepiness scale', 'Overnight oximetry'],
+    icon: <Moon className="h-5 w-5" />,
+    category: 'other'
+  },
+  {
+    id: 'alcohol-use',
+    condition: 'Alcohol Use',
+    tests: ['Detailed alcohol history', 'AUDIT questionnaire', 'GGT, AST, ALT levels'],
+    icon: <Wine className="h-5 w-5" />,
+    category: 'lifestyle'
+  },
+  {
+    id: 'nsaid-use',
+    condition: 'NSAID Use',
+    tests: ['Medication history review', 'OTC medication assessment', 'Drug interaction check'],
+    icon: <Pill className="h-5 w-5" />,
+    category: 'lifestyle'
+  },
+  {
+    id: 'renovascular-disease',
+    condition: 'Renovascular Disease',
+    tests: ['Renal ultrasound', 'Serum creatinine', 'BUN', 'Urinalysis'],
+    icon: <FlaskConical className="h-5 w-5" />,
+    category: 'renal'
+  },
+  {
+    id: 'renal-artery-stenosis',
+    condition: 'Renal Artery Stenosis',
+    tests: ['Renal artery Doppler', 'CT angiography', 'MR angiography', 'ACE inhibitor test'],
+    icon: <Activity className="h-5 w-5" />,
+    category: 'vascular'
+  },
+  {
+    id: 'thyroid-disorders',
+    condition: 'Thyroid Disorders',
+    tests: ['TSH', 'Free T3', 'Free T4', 'Thyroid antibodies'],
+    icon: <Zap className="h-5 w-5" />,
+    category: 'endocrine'
+  },
+  {
+    id: 'cushings',
+    condition: "Cushing's Syndrome",
+    tests: ['24-hour urine cortisol', 'Dexamethasone suppression test', 'Late-night salivary cortisol'],
+    icon: <TestTube className="h-5 w-5" />,
+    category: 'endocrine'
+  },
+  {
+    id: 'pheochromocytoma',
+    condition: 'Pheochromocytoma / Paraganglioma',
+    tests: ['Plasma free metanephrines', '24-hour urinary metanephrines', 'Adrenal CT/MRI', 'Genetic testing if indicated'],
+    icon: <Syringe className="h-5 w-5" />,
+    category: 'endocrine'
+  },
+  {
+    id: 'substance-abuse',
+    condition: 'Substance Abuse & Polycythemia',
+    tests: ['Urine toxicology screen', 'Complete blood count', 'Hematocrit', 'EPO levels'],
+    icon: <Stethoscope className="h-5 w-5" />,
+    category: 'other'
+  }
+];
+
+const checklistCategoryColors = {
+  endocrine: 'bg-primary/10 text-primary border-primary/20',
+  renal: 'bg-accent/10 text-accent border-accent/20',
+  lifestyle: 'bg-success/10 text-success border-success/20',
+  vascular: 'bg-destructive/10 text-destructive border-destructive/20',
+  other: 'bg-muted/50 text-muted-foreground border-border'
+};
+
+// Medication Dosing Reference
+interface RenalDosing {
+  gfrRange: string;
+  recommendation: string;
+}
+
+interface MedicationDose {
+  route: 'IV' | 'Oral';
+  dosing: string[];
+  notes?: string;
+}
+
+interface Medication {
+  name: string;
+  category: string;
+  doses: MedicationDose[];
+  renalDosing?: RenalDosing[];
+}
+
+const medications: Medication[] = [
+  // ACE Inhibitors
+  {
+    name: 'Enalapril',
+    category: 'ACE Inhibitor',
+    doses: [
+      { route: 'Oral', dosing: ['Initial: 2.5-5 mg daily', 'Maintenance: 10-40 mg/day in 1-2 divided doses'] },
+      { route: 'IV', dosing: ['1.25 mg over 5 minutes q6h', 'May increase to 5 mg/dose'] }
+    ],
+    renalDosing: [
+      { gfrRange: '> 30 mL/min', recommendation: 'No adjustment' },
+      { gfrRange: '10-30 mL/min', recommendation: 'Start 2.5 mg daily, titrate cautiously' },
+      { gfrRange: '< 10 mL/min', recommendation: 'Start 2.5 mg on dialysis days' }
+    ]
+  },
+  {
+    name: 'Lisinopril',
+    category: 'ACE Inhibitor',
+    doses: [
+      { route: 'Oral', dosing: ['Initial: 5-10 mg daily', 'Maintenance: 20-40 mg daily'] }
+    ],
+    renalDosing: [
+      { gfrRange: '> 30 mL/min', recommendation: 'No adjustment' },
+      { gfrRange: '10-30 mL/min', recommendation: 'Start 2.5-5 mg daily' },
+      { gfrRange: '< 10 mL/min', recommendation: 'Start 2.5 mg daily, monitor K+' }
+    ]
+  },
+  {
+    name: 'Ramipril',
+    category: 'ACE Inhibitor',
+    doses: [
+      { route: 'Oral', dosing: ['Initial: 1.25-2.5 mg daily', 'Maintenance: 5-10 mg daily', 'Max: 20 mg daily'] }
+    ],
+    renalDosing: [
+      { gfrRange: '> 30 mL/min', recommendation: 'No adjustment' },
+      { gfrRange: '< 30 mL/min', recommendation: 'Start 1.25 mg daily, titrate slowly' }
+    ]
+  },
+  {
+    name: 'Perindopril',
+    category: 'ACE Inhibitor',
+    doses: [
+      { route: 'Oral', dosing: ['Initial: 4 mg daily', 'Maintenance: 4-8 mg daily', 'Max: 8 mg daily'] }
+    ],
+    renalDosing: [
+      { gfrRange: '> 30 mL/min', recommendation: 'No adjustment' },
+      { gfrRange: '< 30 mL/min', recommendation: 'Start 2 mg daily' }
+    ]
+  },
+  // ARBs
+  {
+    name: 'Losartan',
+    category: 'ARB',
+    doses: [
+      { route: 'Oral', dosing: ['Initial: 50 mg daily', 'Maintenance: 50-100 mg daily', 'Max: 100 mg daily'] }
+    ],
+    renalDosing: [
+      { gfrRange: '> 30 mL/min', recommendation: 'No adjustment' },
+      { gfrRange: '< 30 mL/min', recommendation: 'Use with caution; monitor K+' }
+    ]
+  },
+  {
+    name: 'Valsartan',
+    category: 'ARB',
+    doses: [
+      { route: 'Oral', dosing: ['Initial: 80-160 mg daily', 'Maintenance: 160-320 mg daily', 'Max: 320 mg daily'] }
+    ],
+    renalDosing: [
+      { gfrRange: '> 30 mL/min', recommendation: 'No adjustment' },
+      { gfrRange: '< 30 mL/min', recommendation: 'Use with caution' }
+    ]
+  },
+  {
+    name: 'Telmisartan',
+    category: 'ARB',
+    doses: [
+      { route: 'Oral', dosing: ['Initial: 40 mg daily', 'Maintenance: 40-80 mg daily', 'Max: 80 mg daily'] }
+    ],
+    renalDosing: [
+      { gfrRange: 'All GFR', recommendation: 'No adjustment (hepatically metabolized)' }
+    ]
+  },
+  {
+    name: 'Olmesartan',
+    category: 'ARB',
+    doses: [
+      { route: 'Oral', dosing: ['Initial: 20 mg daily', 'Maintenance: 20-40 mg daily', 'Max: 40 mg daily'] }
+    ],
+    renalDosing: [
+      { gfrRange: '> 20 mL/min', recommendation: 'No adjustment' },
+      { gfrRange: '< 20 mL/min', recommendation: 'Use with caution' }
+    ]
+  },
+  // Beta Blockers
+  {
+    name: 'Metoprolol',
+    category: 'Beta-Blocker',
+    doses: [
+      { route: 'Oral', dosing: ['Initial: 25-50 mg BID', 'Maintenance: 100-200 mg/day', 'Max: 400 mg/day'] },
+      { route: 'IV', dosing: ['2.5-5 mg over 2 minutes', 'May repeat q5-10 min', 'Max: 15 mg'] }
+    ],
+    renalDosing: [
+      { gfrRange: 'All GFR', recommendation: 'No adjustment needed' }
+    ]
+  },
+  {
+    name: 'Atenolol',
+    category: 'Beta-Blocker',
+    doses: [
+      { route: 'Oral', dosing: ['Initial: 25-50 mg daily', 'Maintenance: 50-100 mg daily', 'Max: 100 mg daily'] }
+    ],
+    renalDosing: [
+      { gfrRange: '> 50 mL/min', recommendation: 'No adjustment' },
+      { gfrRange: '10-50 mL/min', recommendation: 'Reduce dose by 50%' },
+      { gfrRange: '< 10 mL/min', recommendation: 'Reduce dose by 75%' }
+    ]
+  },
+  {
+    name: 'Carvedilol',
+    category: 'Beta-Blocker',
+    doses: [
+      { route: 'Oral', dosing: ['Initial: 6.25 mg BID', 'Maintenance: 12.5-25 mg BID', 'Max: 50 mg/day'] }
+    ],
+    renalDosing: [
+      { gfrRange: 'All GFR', recommendation: 'Use with caution in severe CKD' }
+    ]
+  },
+  {
+    name: 'Labetalol',
+    category: 'Beta-Blocker',
+    doses: [
+      { route: 'Oral', dosing: ['Initial: 100 mg BID', 'Maintenance: 200-400 mg BID', 'Max: 1200 mg/day'] },
+      { route: 'IV', dosing: ['10-20 mg over 2 minutes', 'May double q10 min', 'Max: 300 mg total'] }
+    ],
+    renalDosing: [
+      { gfrRange: 'All GFR', recommendation: 'Use with caution' }
+    ]
+  },
+  {
+    name: 'Nebivolol',
+    category: 'Beta-Blocker',
+    doses: [
+      { route: 'Oral', dosing: ['Initial: 2.5 mg daily', 'Maintenance: 5-10 mg daily', 'Max: 10 mg daily'] }
+    ],
+    renalDosing: [
+      { gfrRange: '> 30 mL/min', recommendation: 'No adjustment' },
+      { gfrRange: '< 30 mL/min', recommendation: 'Use with caution' }
+    ]
+  },
+  // CCBs
+  {
+    name: 'Amlodipine',
+    category: 'CCB (DHP)',
+    doses: [
+      { route: 'Oral', dosing: ['Initial: 2.5-5 mg daily', 'Maintenance: 5-10 mg daily', 'Max: 10 mg daily'] }
+    ],
+    renalDosing: [
+      { gfrRange: 'All GFR', recommendation: 'No adjustment needed' }
+    ]
+  },
+  {
+    name: 'Nifedipine',
+    category: 'CCB (DHP)',
+    doses: [
+      { route: 'Oral', dosing: ['ER: 30-60 mg daily', 'Max: 90 mg/day'] }
+    ],
+    renalDosing: [
+      { gfrRange: 'All GFR', recommendation: 'No adjustment needed' }
+    ]
+  },
+  {
+    name: 'Diltiazem',
+    category: 'CCB (Non-DHP)',
+    doses: [
+      { route: 'Oral', dosing: ['ER: 120-240 mg daily', 'Max: 480 mg/day'] }
+    ],
+    renalDosing: [
+      { gfrRange: 'All GFR', recommendation: 'Use with caution in severe CKD' }
+    ]
+  },
+  {
+    name: 'Azelnidipine',
+    category: 'CCB (DHP)',
+    doses: [
+      { route: 'Oral', dosing: ['Initial: 8 mg daily', 'Maintenance: 8-16 mg daily', 'Max: 16 mg daily'] }
+    ],
+    renalDosing: [
+      { gfrRange: 'All GFR', recommendation: 'No adjustment needed' }
+    ]
+  },
+  // Diuretics
+  {
+    name: 'Hydrochlorothiazide',
+    category: 'Thiazide',
+    doses: [
+      { route: 'Oral', dosing: ['Initial: 12.5-25 mg daily', 'Maintenance: 25-50 mg daily', 'Max: 100 mg/day'] }
+    ],
+    renalDosing: [
+      { gfrRange: '> 30 mL/min', recommendation: 'Effective' },
+      { gfrRange: '< 30 mL/min', recommendation: 'Less effective; consider loop diuretic' }
+    ]
+  },
+  {
+    name: 'Indapamide',
+    category: 'Thiazide-like',
+    doses: [
+      { route: 'Oral', dosing: ['Initial: 1.25 mg daily', 'Maintenance: 1.25-2.5 mg daily', 'Max: 2.5 mg daily'] }
+    ],
+    renalDosing: [
+      { gfrRange: '> 30 mL/min', recommendation: 'No adjustment' },
+      { gfrRange: '< 30 mL/min', recommendation: 'Use with caution' }
+    ]
+  },
+  {
+    name: 'Furosemide',
+    category: 'Loop Diuretic',
+    doses: [
+      { route: 'Oral', dosing: ['Initial: 20-40 mg daily', 'Maintenance: 40-80 mg daily', 'Max: 160 mg/day'] },
+      { route: 'IV', dosing: ['20-40 mg IV', 'May double q2h', 'Max: 200 mg/day'] }
+    ],
+    renalDosing: [
+      { gfrRange: '> 30 mL/min', recommendation: 'No adjustment' },
+      { gfrRange: '< 30 mL/min', recommendation: 'May need higher doses' }
+    ]
+  },
+  {
+    name: 'Torsemide',
+    category: 'Loop Diuretic',
+    doses: [
+      { route: 'Oral', dosing: ['Initial: 5-10 mg daily', 'Maintenance: 10-20 mg daily', 'Max: 40 mg/day'] }
+    ],
+    renalDosing: [
+      { gfrRange: 'All GFR', recommendation: 'No adjustment needed' }
+    ]
+  },
+  {
+    name: 'Spironolactone',
+    category: 'MRA',
+    doses: [
+      { route: 'Oral', dosing: ['Initial: 12.5-25 mg daily', 'Maintenance: 25-50 mg daily', 'Max: 100 mg/day'] }
+    ],
+    renalDosing: [
+      { gfrRange: '> 30 mL/min', recommendation: 'No adjustment' },
+      { gfrRange: '< 30 mL/min', recommendation: 'Avoid; monitor K+' }
+    ]
+  }
+];
 
 export default function HypertensionTreatment() {
   const [algorithmHistory, setAlgorithmHistory] = useState<string[]>(["start"]);
@@ -844,6 +1174,95 @@ export default function HypertensionTreatment() {
               </div>
             </div>
           ))}
+        </CardContent>
+      </Card>
+
+      {/* Interactive Algorithm Flowchart */}
+      <HtnAlgorithmFlowchart />
+
+      {/* Secondary Hypertension Workup */}
+      <Card className="border-2 border-primary/20">
+        <CardHeader className="pb-3">
+          <div className="flex items-center gap-2">
+            <Activity className="h-5 w-5 text-primary" />
+            <CardTitle className="text-lg">Secondary Hypertension Workup</CardTitle>
+          </div>
+          <p className="text-xs text-muted-foreground">Investigations to consider based on clinical suspicion</p>
+        </CardHeader>
+        <CardContent>
+          <div className="grid gap-3 md:grid-cols-2 lg:grid-cols-3">
+            {checklistItems.map((item) => (
+              <div key={item.id} className={`p-3 rounded-lg border ${checklistCategoryColors[item.category]}`}>
+                <div className="flex items-center gap-2 mb-2">
+                  {item.icon}
+                  <span className="font-medium text-sm">{item.condition}</span>
+                </div>
+                <ul className="text-xs space-y-1">
+                  {item.tests.map((test, i) => (
+                    <li key={i} className="flex items-start gap-1">
+                      <span className="text-primary">•</span>
+                      {test}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
+          </div>
+        </CardContent>
+      </Card>
+
+      {/* Medication Dosing Tables */}
+      <Card className="border-2 border-primary/20">
+        <CardHeader className="pb-3">
+          <div className="flex items-center gap-2">
+            <Pill className="h-5 w-5 text-primary" />
+            <CardTitle className="text-lg">Medication Dosing Reference</CardTitle>
+          </div>
+          <p className="text-xs text-muted-foreground">Oral and IV dosing with renal adjustment guides</p>
+        </CardHeader>
+        <CardContent>
+          <Tabs defaultValue="ace" className="w-full">
+            <TabsList className="flex flex-wrap h-auto">
+              <TabsTrigger value="ace">ACE Inhibitors</TabsTrigger>
+              <TabsTrigger value="arb">ARBs</TabsTrigger>
+              <TabsTrigger value="bb">Beta-Blockers</TabsTrigger>
+              <TabsTrigger value="ccb">CCBs</TabsTrigger>
+              <TabsTrigger value="diuretic">Diuretics</TabsTrigger>
+            </TabsList>
+            {[
+              { key: "ace", drugs: medications.filter((m) => m.category.includes("ACE")) },
+              { key: "arb", drugs: medications.filter((m) => m.category.includes("ARB")) },
+              { key: "bb", drugs: medications.filter((m) => m.category.includes("Beta")) },
+              { key: "ccb", drugs: medications.filter((m) => m.category.includes("CCB")) },
+              { key: "diuretic", drugs: medications.filter((m) => m.category.includes("uretic")) },
+            ].map((tab) => (
+              <TabsContent key={tab.key} value={tab.key} className="space-y-3">
+                {tab.drugs.map((drug) => (
+                  <div key={drug.name} className="p-3 rounded-lg border bg-muted/20">
+                    <div className="flex items-center justify-between mb-2">
+                      <span className="font-medium">{drug.name}</span>
+                      <Badge variant="outline">{drug.category}</Badge>
+                    </div>
+                    {drug.doses.map((dose, i) => (
+                      <div key={i} className="text-xs mb-1">
+                        <span className="font-semibold">{dose.route}:</span> {dose.dosing.join(", ")}
+                      </div>
+                    ))}
+                    {drug.renalDosing && drug.renalDosing.length > 0 && (
+                      <div className="mt-2 pt-2 border-t text-xs">
+                        <span className="font-semibold">Renal dosing:</span>
+                        {drug.renalDosing.map((rd, i) => (
+                          <div key={i} className="text-muted-foreground">
+                            {rd.gfrRange}: {rd.recommendation}
+                          </div>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                ))}
+              </TabsContent>
+            ))}
+          </Tabs>
         </CardContent>
       </Card>
     </div>
