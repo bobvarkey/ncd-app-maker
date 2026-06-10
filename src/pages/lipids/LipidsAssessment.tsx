@@ -1,6 +1,5 @@
 import { useState, useMemo, useCallback, useEffect, type ReactNode } from "react";
 import { AbbreviationHover } from "@/components/AbbreviationHover";
-import ZoomableImage from "@/components/ZoomableImage";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
