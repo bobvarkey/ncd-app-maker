@@ -13,7 +13,8 @@ import {
 import HtnAlgorithmFlowchart from "@/components/hypertension/HtnAlgorithmFlowchart";
 import ZoomableImage from "@/components/ZoomableImage";
 import tampDcmiImg from "@/assets/tamp-dcmi-resistant-htn.png.asset.json";
-import { AbbreviationHover as AbbrText } from "@/components/AbbreviationHover";
+import { AbbreviationHover } from "@/components/AbbreviationHover";
+const AbbrText = ({ text }: { text: string }) => <AbbreviationHover term={text}>{text}</AbbreviationHover>;
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
