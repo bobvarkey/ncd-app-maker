@@ -55,6 +55,46 @@ export const ADDITIONAL_MEDS_DATA: DoseEntry[] = [
     hepatic: "Severe: use with caution.",
   },
 
+  // ═══════ DIRECT RENIN INHIBITOR ═══════
+  {
+    drug: "Aliskiren",
+    drugClass: "Direct Renin Inhibitor",
+    normalDose: "150–300 mg/day",
+    eGFR60_89: "No adjustment",
+    eGFR45_59: "No adjustment",
+    eGFR30_44: "Use with caution; monitor K⁺",
+    eGFR15_29: "Avoid",
+    eGFRBelow15: "Avoid",
+    notes: "CONTRAINDICATED with ACEi/ARB in diabetes (ALTITUDE trial). Avoid in pregnancy, bilateral RAS, eGFR <30.获批用于高血压单药或与ACEi/ARB联合用于非糖尿病CKD。",
+    hepatic: "No adjustment in mild–moderate. Severe: not recommended.",
+  },
+
+  // ═══════ NEWER / SPECIALTY AGENTS ═══════
+  {
+    drug: "Aprocitentan",
+    drugClass: "Dual Endothelin Receptor Antagonist",
+    normalDose: "12.5–25 mg/day",
+    eGFR60_89: "No adjustment",
+    eGFR45_59: "No adjustment",
+    eGFR30_44: "Use with caution; monitor for fluid retention",
+    eGFR15_29: "Limited data; use with caution",
+    eGFRBelow15: "Not recommended",
+    notes: "FDA-approved for resistant HTN (PRECISION trial). Dual ETA/ETB antagonist. Common AE: edema/fluid retention (manage with diuretics), headache, nasal congestion. Monitor LFTs. Contraindicated in pregnancy (can cause fetal harm). Requires REMS program. Avoid cyclosporine.",
+    hepatic: "Moderate impairment: max 12.5 mg/day. Severe: not recommended.",
+  },
+  {
+    drug: "Baxdrostat",
+    drugClass: "Aldosterone Synthase Inhibitor (Investigational)",
+    normalDose: "1–2 mg/day",
+    eGFR60_89: "No adjustment",
+    eGFR45_59: "No adjustment",
+    eGFR30_44: "Use with caution; monitor K⁺",
+    eGFR15_29: "Limited data",
+    eGFRBelow15: "Not studied",
+    notes: "Investigational (not yet FDA-approved). Highly selective aldosterone synthase (CYP11B2) inhibitor — suppresses aldosterone without affecting cortisol. Phase 2 BrigHTN trial: dose-dependent BP reduction in resistant HTN. AE: hyperkalemia (dose-dependent), hyponatremia. Monitor K⁺, Na⁺, cortisol.",
+    hepatic: "No data; use with caution.",
+  },
+
   // ═══════ ARBs ═══════
   {
     drug: "Losartan",
@@ -318,7 +358,7 @@ export const ADDITIONAL_MEDS_DATA: DoseEntry[] = [
   },
   {
     drug: "Carvedilol",
-    drugClass: "Beta-Blocker (α/β)",
+    drugClass: "Combined α/β-blocker",
     normalDose: "3.125–25 mg BID",
     eGFR60_89: "No adjustment",
     eGFR45_59: "No adjustment",

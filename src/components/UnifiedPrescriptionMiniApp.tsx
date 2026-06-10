@@ -12,6 +12,8 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { toast } from "@/hooks/use-toast";
+import SmartLabelUpload from "@/components/SmartLabelUpload/SmartLabelUpload";
+import { DIABETES_FIELDS, HTN_FIELDS, LIPID_FIELDS, OBESITY_FIELDS, THYROID_FIELDS, CBC_FIELDS, RENAL_FIELDS } from "@/components/SmartLabelUpload";
 import {
   Activity,
   Heart,
@@ -26,9 +28,10 @@ import {
   Target,
   ListChecks,
   AlertTriangle,
+  Upload,
+  ChevronDown,
 } from "lucide-react";
 import { downloadTextFile } from "@/lib/clinical-utils";
-import SmartLabelUpload, { DIABETES_FIELDS, HTN_FIELDS, LIPID_FIELDS, OBESITY_FIELDS, RENAL_FIELDS } from "@/components/SmartLabelUpload";
 
 /* =====================================================================
  * Unified Prescription Mini App
@@ -674,13 +677,20 @@ export default function UnifiedPrescriptionMiniApp() {
         {/* Context-aware domain fields */}
 
         {/* ── Smart Lab Import ── */}
-        <CollapsibleSection title="Smart Lab Import" icon={<Upload className="h-3.5 w-3.5" />} defaultOpen={false}>
-          {domain === "obesity" && <SmartLabelUpload fields={OBESITY_FIELDS.fields} onParse={parseFields} existingValues={{}} />}
-          {domain === "diabetes" && <SmartLabelUpload fields={DIABETES_FIELDS.fields} onParse={parseFields} existingValues={{}} />}
-          {domain === "hypertension" && <SmartLabelUpload fields={HTN_FIELDS.fields} onParse={parseFields} existingValues={{}} />}
-          {domain === "lipids" && <SmartLabelUpload fields={LIPID_FIELDS.fields} onParse={parseFields} existingValues={{}} />}
-          {domain === "ckd" && <SmartLabelUpload fields={RENAL_FIELDS.fields} onParse={parseFields} existingValues={{}} />}
-        </CollapsibleSection>
+        <details className="group rounded-lg border border-border/60 bg-muted/10">
+          <summary className="flex items-center gap-2 px-3 py-2 text-xs font-medium text-muted-foreground cursor-pointer hover:text-foreground transition select-none">
+            <Upload className="h-3.5 w-3.5" />
+            Smart Lab Import
+            <ChevronDown className="h-3 w-3 ml-auto transition-transform group-open:rotate-180" />
+          </summary>
+          <div className="px-3 pb-3 space-y-2">
+            {domain === "obesity" && <SmartLabelUpload fields={OBESITY_FIELDS.fields} onParse={parseFields} existingValues={{}} />}
+            {domain === "diabetes" && <SmartLabelUpload fields={DIABETES_FIELDS.fields} onParse={parseFields} existingValues={{}} />}
+            {domain === "hypertension" && <SmartLabelUpload fields={HTN_FIELDS.fields} onParse={parseFields} existingValues={{}} />}
+            {domain === "lipids" && <SmartLabelUpload fields={LIPID_FIELDS.fields} onParse={parseFields} existingValues={{}} />}
+            {domain === "ckd" && <SmartLabelUpload fields={RENAL_FIELDS.fields} onParse={parseFields} existingValues={{}} />}
+          </div>
+        </details>
 
                 {domain === "diabetes" && (
           <div className="space-y-3">
