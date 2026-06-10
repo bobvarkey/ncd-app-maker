@@ -8,7 +8,6 @@ import {
   CollapsibleTrigger,
 } from "@/components/ui/collapsible";
 import { ClipboardCopy, ArrowLeft, AlertTriangle, Heart, ChevronDown, User, TestTube, FileText, TrendingUp, ShieldQuestion } from "lucide-react";
-import { SmartLabelUpload, LIPID_FIELDS } from "@/components/SmartLabelUpload";
 import { SectionCard } from "@/components/ui/section-card";
 import { RiskFactorChip } from "@/components/ui/risk-factor-chip";
 import { useNavigate } from "react-router-dom";
@@ -297,11 +296,6 @@ export default function AscvdEmr() {
         </Button>
 
         <div className="mt-4">
-          <SmartLabelUpload fields={LIPID_FIELDS.fields} onParse={(values) => {
-            Object.entries(values).forEach(([key, value]) => {
-              setPatient(prev => ({ ...prev, [key]: isNaN(Number(value)) ? value : Number(value) }));
-            });
-          }} existingValues={Object.fromEntries(Object.entries(patient).map(([k,v]) => [k, String(v)]))} />
         </div>
 
         <div className="text-center mb-6">

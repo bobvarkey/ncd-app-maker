@@ -28,6 +28,7 @@ import {
   AlertTriangle,
 } from "lucide-react";
 import { downloadTextFile } from "@/lib/clinical-utils";
+import SmartLabelUpload, { DIABETES_FIELDS, HTN_FIELDS, LIPID_FIELDS, OBESITY_FIELDS, RENAL_FIELDS } from "@/components/SmartLabelUpload";
 
 /* =====================================================================
  * Unified Prescription Mini App
@@ -525,6 +526,19 @@ export default function UnifiedPrescriptionMiniApp() {
   const set = <K extends keyof Inputs>(k: K, v: Inputs[K]) =>
     setInputs((p) => ({ ...p, [k]: v }));
 
+  const parseFields = (values: Record<string, string>) => {
+    const numericKeys = ["age", "a1c", "fpg", "ppg", "sbp", "dbp", "ldl", "hdl", "tg", "hsCrp", "bmi", "waist", "egfr", "uacr"] as const;
+    const updates: Partial<Inputs> = {};
+    Object.entries(values).forEach(([key, val]) => {
+      if ((numericKeys as readonly string[]).includes(key)) {
+        (updates as any)[key] = val;
+      } else {
+        (updates as any)[key] = val;
+      }
+    });
+    setInputs((p) => ({ ...p, ...updates }));
+  };
+
   const result = useMemo(() => ENGINES[domain](inputs), [domain, inputs]);
 
   const reset = () => setInputs(DEFAULTS);
@@ -658,7 +672,17 @@ export default function UnifiedPrescriptionMiniApp() {
         </div>
 
         {/* Context-aware domain fields */}
-        {domain === "diabetes" && (
+
+        {/* ── Smart Lab Import ── */}
+        <CollapsibleSection title="Smart Lab Import" icon={<Upload className="h-3.5 w-3.5" />} defaultOpen={false}>
+          {domain === "obesity" && <SmartLabelUpload fields={OBESITY_FIELDS.fields} onParse={parseFields} existingValues={{}} />}
+          {domain === "diabetes" && <SmartLabelUpload fields={DIABETES_FIELDS.fields} onParse={parseFields} existingValues={{}} />}
+          {domain === "hypertension" && <SmartLabelUpload fields={HTN_FIELDS.fields} onParse={parseFields} existingValues={{}} />}
+          {domain === "lipids" && <SmartLabelUpload fields={LIPID_FIELDS.fields} onParse={parseFields} existingValues={{}} />}
+          {domain === "ckd" && <SmartLabelUpload fields={RENAL_FIELDS.fields} onParse={parseFields} existingValues={{}} />}
+        </CollapsibleSection>
+
+                {domain === "diabetes" && (
           <div className="space-y-3">
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
               <RangeOrExactField label="HbA1c" unit="%" fieldKey="a1c" value={inputs.a1c} onChange={(v) => set("a1c", v)} />

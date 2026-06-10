@@ -6,7 +6,6 @@ import { Input } from "@/components/ui/input";
 import { useNavigate } from "react-router-dom";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { SmartLabelUpload, DIABETES_FIELDS } from "@/components/SmartLabelUpload";
 
 interface BGReading {
   day: number;
@@ -139,11 +138,6 @@ const InsulinTitration = () => {
 
   return (
     <div className="space-y-5 animate-slide-in">
-      <SmartLabelUpload fields={DIABETES_FIELDS.fields} onParse={handleSmartParse} existingValues={{
-        age: patient?.age?.toString() || '',
-        weight: patient?.weightKg?.toString() || '',
-        egfr: patient?.eGFR?.toString() || '',
-      }} />
       <div>
         <h1 className="text-xl font-heading font-bold">Insulin Titration Calculator</h1>
         <p className="text-sm text-muted-foreground">ADA basal insulin dose adjustment based on fasting BG</p>

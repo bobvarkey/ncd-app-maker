@@ -4,7 +4,6 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { ShieldAlert, RotateCcw, AlertTriangle, XCircle, Info } from "lucide-react";
-import { SmartLabelUpload, HTN_FIELDS } from "@/components/SmartLabelUpload";
 
 export const drugList = [
   { id: "losartan", name: "Losartan", group: "ARB" },
@@ -265,7 +264,6 @@ export default function DrugInteractionChecker({ onSelectionChange }: DrugIntera
 
   return (
     <>
-      <SmartLabelUpload fields={HTN_FIELDS.fields} onParse={handleSmartParse} existingValues={{}} />
       <Card className="border-2 border-primary/20 bg-gradient-to-br from-muted/5 to-primary/5">
         <CardHeader className="pb-3">
         <div className="flex items-center justify-between">

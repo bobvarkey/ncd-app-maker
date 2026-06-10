@@ -29,7 +29,6 @@ import {
 import { copyToClipboard, formatClinicalNote, downloadTextFile } from "@/lib/clinical-utils";
 import { cn } from "@/lib/utils";
 import { AbbreviationHover, AbbrText } from "@/components/AbbreviationHover";
-import { SmartLabelUpload, THYROID_FIELDS } from "@/components/SmartLabelUpload";
 
 type TabKey = "calculator" | "reference" | "about";
 
@@ -392,7 +391,6 @@ export default function ThyroidCalculator() {
               </p>
             </div>
 
-            <SmartLabelUpload fields={THYROID_FIELDS.fields} onParse={handleSmartParse} existingValues={Object.fromEntries(Object.entries(inputs).map(([k,v]) => [k, String(v)]))} />
 
             {/* Inputs */}
             <Card className="clinical-card border-primary/20">

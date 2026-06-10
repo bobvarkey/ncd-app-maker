@@ -4,7 +4,6 @@ import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { GitBranch, ChevronRight, RotateCcw, Activity, Heart, Brain, Baby, AlertTriangle, Home } from "lucide-react";
-import { SmartLabelUpload, HTN_FIELDS } from "@/components/SmartLabelUpload";
 
 interface AlgorithmNode {
   id: string;
@@ -266,7 +265,6 @@ export default function AntihypertensiveTreatmentAlgorithm() {
 
       <main className="mx-auto max-w-3xl px-4 py-5">
         <div className="mb-4">
-          <SmartLabelUpload fields={HTN_FIELDS.fields} onParse={() => {}} existingValues={{}} />
         </div>
         <Card className="border-2 border-primary/20 bg-gradient-to-br from-primary/5 to-accent/5">
           <CardHeader className="pb-3">

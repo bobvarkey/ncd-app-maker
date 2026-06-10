@@ -5,7 +5,6 @@ import { Label } from "@/components/ui/label";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Calculator, RotateCcw, ArrowLeftRight } from "lucide-react";
-import { SmartLabelUpload, HTN_FIELDS } from "@/components/SmartLabelUpload";
 
 type CreatinineUnit = "mgdl" | "umol";
 type Sex = "male" | "female" | null;
@@ -151,7 +150,6 @@ export default function GfrCalculator({ onResultChange }: GfrCalculatorProps) {
 
   return (
     <>
-      <SmartLabelUpload fields={HTN_FIELDS.fields} onParse={handleSmartParse} existingValues={{ creatinine, age }} />
       <Card className="border-2 border-primary/20 bg-gradient-to-br from-primary/5 to-muted/5">
         <CardHeader className="pb-3">
           <div className="flex items-center justify-between">

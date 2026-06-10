@@ -29,7 +29,6 @@ import {
   Activity,
 } from "lucide-react";
 import { copyToClipboard, formatClinicalNote, downloadTextFile } from "@/lib/clinical-utils";
-import { SmartLabelUpload, IRON_FIELDS } from "@/components/SmartLabelUpload";
 import { cn } from "@/lib/utils";
 
 // ── Types ──────────────────────────────────────────────────────
@@ -565,7 +564,6 @@ export default function IronReplacementCalculator() {
               </p>
             </div>
 
-            <SmartLabelUpload fields={IRON_FIELDS.fields} onParse={handleSmartParse} existingValues={inputs as unknown as Record<string, string>} />
 
             {/* ── Live Iron Parameters (auto-calc, no flags needed) ── */}
             <IronParametersLive inputs={inputs} />

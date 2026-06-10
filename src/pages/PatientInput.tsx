@@ -7,7 +7,6 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
-import { SmartLabelUpload, DIABETES_FIELDS } from "@/components/SmartLabelUpload";
 import { Switch } from "@/components/ui/switch";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
@@ -190,10 +189,6 @@ const PatientInput = () => {
         </div>
       </div>
 
-      {/* Smart Lab Import */}
-      <SmartLabelUpload fields={DIABETES_FIELDS.fields} onParse={(values) => {
-        Object.entries(values).forEach(([key, val]) => localStorage.setItem(`patient_${key}`, val));
-      }} />
 
       {/* Demographics */}
       <div className="clinical-card">

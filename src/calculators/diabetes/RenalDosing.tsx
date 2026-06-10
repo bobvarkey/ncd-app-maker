@@ -9,7 +9,6 @@ import { ANTIBIOTICS_DATA } from "./antibiotics-data";
 import { ANTICOAGULANTS_DATA } from "./anticoagulants-data";
 import { ADDITIONAL_MEDS_DATA } from "./additional-meds-data";
 import { cn } from "@/lib/utils";
-import { SmartLabelUpload, RENAL_FIELDS } from "@/components/SmartLabelUpload";
 
 export type { DoseEntry };
 
@@ -494,9 +493,6 @@ const RenalDoseAdjustment = () => {
         <span className="flex items-center gap-1.5"><span className="w-3 h-3 rounded bg-background border border-border" /> No adjustment</span>
       </div>
 
-      <div className="mt-4">
-        <SmartLabelUpload fields={RENAL_FIELDS.fields} onParse={handleSmartParse} existingValues={{}} />
-      </div>
 
       {/* Filters (legacy slot removed — search is at top) */}
 

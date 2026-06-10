@@ -27,7 +27,6 @@ import {
   Donut, Soup, Eye, Repeat, AlertOctagon, Syringe,
   ShieldQuestion,
 } from "lucide-react";
-import { SmartLabelUpload, LIPID_FIELDS } from "@/components/SmartLabelUpload";
 import ZoomableImage from "@/components/ZoomableImage";
 import {
   LabInput,
@@ -763,19 +762,6 @@ export default function LipidCalculator() {
         </div>
       )}
 
-      {/* ── Smart Upload ── */}
-      <div className="mx-auto max-w-2xl px-4">
-        <SmartLabelUpload fields={LIPID_FIELDS.fields} onParse={(values) => {
-          Object.entries(values).forEach(([key, value]) => {
-            const setterMap: Record<string, (v: string) => void> = {
-              age: setAge, ldl: setLdl, hdl: setHdl,
-              nonHdl: setNonhdl, totalCholesterol: setTotalChol,
-            };
-            const setter = setterMap[key];
-            if (setter) setter(value);
-          });
-        }} existingValues={{ age, ldl, hdl } as Record<string, string>} />
-      </div>
 
       {/* ─── Content ─── */}
       <div className="mx-auto max-w-2xl px-4 py-5">

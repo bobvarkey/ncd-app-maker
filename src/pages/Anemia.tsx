@@ -14,7 +14,6 @@ import IronReplacementCalculator from '@/calculators/iron/IronReplacementCalcula
 import TestSuggestionAlgorithm from './anemia/components/TestSuggestionAlgorithm';
 import ESRInterpretation from './anemia/components/ESRInterpretation';
 import { Microscope, AlertTriangle, Droplet, Syringe, Activity, Timer } from 'lucide-react';
-import { SmartLabelUpload, CBC_FIELDS } from "@/components/SmartLabelUpload";
 
 const EMPTY_CBC: CBCValues = { hgb: '', rbc: '', mcv: '', mch: '', mchc: '', rdw: '', hct: '' };
 
@@ -122,7 +121,6 @@ export default function Anemia() {
           </p>
         </div>
 
-        <SmartLabelUpload fields={CBC_FIELDS.fields} onParse={handleSmartParse} existingValues={cbc as unknown as Record<string, string>} />
 
         {activeTab === 'anemia' ? (
           <>

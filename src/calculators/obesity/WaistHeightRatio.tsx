@@ -4,7 +4,6 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import { Ruler, Calculator, Info, ChevronDown, ChevronUp, Home, RotateCcw, Target, BookOpen } from "lucide-react";
-import { SmartLabelUpload, OBESITY_FIELDS } from "@/components/SmartLabelUpload";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -146,7 +145,6 @@ export default function WaistHeightRatio() {
       </div>
 
       <main className="mx-auto max-w-2xl px-4 py-5">
-        <SmartLabelUpload fields={OBESITY_FIELDS.fields} onParse={handleSmartParse} existingValues={{}} />
         {activeTab === "calculator" && (
         <Card className="clinical-card">
           <CardHeader>

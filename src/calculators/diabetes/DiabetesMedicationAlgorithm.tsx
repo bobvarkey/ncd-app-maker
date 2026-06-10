@@ -21,7 +21,6 @@ import {
   Home,
   RotateCcw,
 } from "lucide-react";
-import { SmartLabelUpload, DIABETES_FIELDS } from "@/components/SmartLabelUpload";
 
 interface AlgorithmStep {
   id: string;
@@ -280,7 +279,6 @@ export default function DiabetesMedicationAlgorithm() {
       </div>
 
       <main className="mx-auto max-w-5xl px-4 py-5">
-        <SmartLabelUpload fields={DIABETES_FIELDS.fields} onParse={handleSmartParse} existingValues={{}} />
         <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6">
           {/* Algorithm Tab */}
           <TabsContent value="algorithm" className="space-y-6">
