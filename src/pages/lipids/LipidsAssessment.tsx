@@ -484,6 +484,66 @@ export default function LipidsAssessment({ onClassificationChange, onNavigateToT
         </figure>
       </SectionCard>
 
+      {/* ─── Diabetes + Lipid Management Algorithm ─── */}
+      <SectionCard title="Diabetes + Lipid Management Algorithm (LAI 2023)" icon={<BookOpen className="h-4 w-4" />} tone="danger" defaultOpen={false}>
+        <figure className="space-y-2">
+          <img
+            src="/images/diabetes-lipid-algorithm-lai.jpg"
+            alt="Diabetes Lipid Management Algorithm — LAI 2023"
+            className="w-full rounded-lg border border-border"
+            loading="lazy"
+          />
+          <figcaption className="text-xs text-muted-foreground">
+            Risk-stratified lipid targets and treatment algorithm for patients with diabetes mellitus: 
+            High Risk (LDL &lt;70) → Very High Risk (&lt;50) → Extreme Cat A (&lt;50, opt ≤30) → Extreme Cat B (≤30). 
+            Stepwise therapy at Week 0 → 4 → 8. Source: LAI 2023.
+            <a href="https://doi.org/10.1016/j.jacl.2024.01.006" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline ml-1">
+              doi:10.1016/j.jacl.2024.01.006
+            </a>
+          </figcaption>
+        </figure>
+      </SectionCard>
+
+      {/* ─── ACS Lipid Management Algorithm ─── */}
+      <SectionCard title="ACS Lipid Management Algorithm (LAI 2023)" icon={<BookOpen className="h-4 w-4" />} tone="danger" defaultOpen={false}>
+        <figure className="space-y-2">
+          <img
+            src="/images/acs-lipid-algorithm-lai.jpg"
+            alt="ACS Lipid Management Algorithm — LAI 2023"
+            className="w-full rounded-lg border border-border"
+            loading="lazy"
+          />
+          <figcaption className="text-xs text-muted-foreground">
+            Post-ACS lipid management protocol: statin-naïve → on low/mod-intensity → on high-intensity → intolerant. 
+            Admission workup with Lp(a), initial high-intensity statin + ezetimibe, then Step 1 (2 wk) and Step 2 (4 wk) 
+            escalation with PCSK9i / bempedoic acid / LDL apheresis if not at target.
+            <a href="https://doi.org/10.1016/j.jacl.2024.01.006" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline ml-1">
+              doi:10.1016/j.jacl.2024.01.006
+            </a>
+          </figcaption>
+        </figure>
+      </SectionCard>
+
+      {/* ─── LAI Treatment Algorithm by Risk Group ─── */}
+      <SectionCard title="LAI 2023 Treatment Algorithm by Risk Group" icon={<BookOpen className="h-4 w-4" />} tone="indigo" defaultOpen={false}>
+        <figure className="space-y-2">
+          <img
+            src="/images/lai-treatment-algorithm.jpg"
+            alt="LAI 2023 Treatment Algorithm by Risk Group"
+            className="w-full rounded-lg border border-border"
+            loading="lazy"
+          />
+          <figcaption className="text-xs text-muted-foreground">
+            Full LAI risk-aligned treatment algorithm: Low risk (LDL &lt;100) → Moderate (optional &lt;70) → 
+            High (&lt;70) → Very High (&lt;50) → Extreme Cat A (&lt;50, opt ≤30) → Extreme Cat B (≤30). 
+            Week 0/4/8 stepped escalation with lipid profile + Apo-B monitoring.
+            <a href="https://doi.org/10.1016/j.jacl.2024.01.006" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline ml-1">
+              doi:10.1016/j.jacl.2024.01.006
+            </a>
+          </figcaption>
+        </figure>
+      </SectionCard>
+
       {/* ─── Classification Guide Table ─── */}
       <SectionCard title="LAI 2023 Full Classification Guide" icon={<BookOpen className="h-4 w-4" />} tone="indigo" defaultOpen={false}>
         <div className="overflow-x-auto">
