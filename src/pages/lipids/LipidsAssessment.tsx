@@ -1,4 +1,4 @@
-import { useState, useMemo, useCallback, useEffect } from "react";
+import { useState, useMemo, useCallback, useEffect, type ReactNode } from "react";
 import { AbbreviationHover } from "@/components/AbbreviationHover";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -6,6 +6,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Badge } from "@/components/ui/badge";
+import { Dialog, DialogContent, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import {
   Select, SelectContent, SelectItem, SelectTrigger, SelectValue,
 } from "@/components/ui/select";
@@ -15,13 +16,38 @@ import {
 import {
   ChevronDown, ClipboardCopy, TrendingUp, User, Heart, TestTube,
   AlertTriangle, Target, Dna, Scale, Stethoscope, ArrowRight, Info,
-  Pill, BookOpen,
+  Pill, BookOpen, ZoomIn,
 } from "lucide-react";
 import { SectionCard } from "@/components/ui/section-card";
 import { toast } from "sonner";
 import { cn } from "@/lib/utils";
 import { calculatePrevent, type PreventResult } from "@/lib/prevent";
 import type { LAIResult } from "./LipidsTab";
+
+/** Reusable click-to-zoom image wrapper */
+function ZoomableImage({ src, alt }: { src: string; alt: string }) {
+  const [open, setOpen] = useState(false);
+  return (
+    <>
+      <button type="button" onClick={() => setOpen(true)} className="w-full text-left cursor-zoom-in block">
+        <img
+          src={src}
+          alt={alt}
+          className="w-full rounded-lg border border-border transition-transform hover:opacity-90"
+          loading="lazy"
+        />
+      </button>
+      <Dialog open={open} onOpenChange={setOpen}>
+        <DialogContent className="max-w-[95vw] max-h-[95vh] w-auto h-auto bg-background border-border p-0 overflow-hidden">
+          <DialogTitle className="sr-only">{alt}</DialogTitle>
+          <div className="flex items-center justify-center w-full h-full p-2">
+            <img src={src} alt={alt} className="max-w-full max-h-[90vh] object-contain rounded" />
+          </div>
+        </DialogContent>
+      </Dialog>
+    </>
+  );
+}
 
 // ─── LAI 2023 Classification ───
 const MODIFIER_GROUPS = [
@@ -425,14 +451,10 @@ export default function LipidsAssessment({ onClassificationChange, onNavigateToT
       {/* ─── LAI 2023 ASCVD Risk Stratification Algorithm ─── */}
       <SectionCard title="LAI 2023 ASCVD Risk Stratification Algorithm" icon={<BookOpen className="h-4 w-4" />} tone="indigo" defaultOpen={false}>
         <figure className="space-y-2">
-          <a href="https://www.sciencedirect.com/science/article/pii/S1933287424000060#fig0004" target="_blank" rel="noopener noreferrer">
-            <img
+            <ZoomableImage
               src="/images/ascvd-risk-stratification-lai.jpg"
               alt="ASCVD Risk Stratification Algorithm — Lipid Association of India 2023"
-              className="w-full rounded-lg border border-border"
-              loading="lazy"
             />
-          </a>
           <figcaption className="text-xs text-muted-foreground">
             <strong>Figure 4.</strong> LAI 2023 Cardiovascular risk stratification algorithm for primary prevention. 
             Source: Puri et al., <em>J Clin Lipidol</em> 2024. 
@@ -450,11 +472,9 @@ export default function LipidsAssessment({ onClassificationChange, onNavigateToT
       {/* ─── Hypertriglyceridemia Algorithm ─── */}
       <SectionCard title="Hypertriglyceridemia Management Algorithm (LAI 2023)" icon={<BookOpen className="h-4 w-4" />} tone="indigo" defaultOpen={false}>
         <figure className="space-y-2">
-          <img
+          <ZoomableImage
             src="/images/hypertriglyceridemia-algorithm-lai.jpg"
             alt="Hypertriglyceridemia Management Algorithm"
-            className="w-full rounded-lg border border-border"
-            loading="lazy"
           />
           <figcaption className="text-xs text-muted-foreground">
             TG-based treatment algorithm. Source: Lipid Association of India 2023 Consensus Statement IV.
@@ -468,11 +488,9 @@ export default function LipidsAssessment({ onClassificationChange, onNavigateToT
       {/* ─── CACS Risk Stratification ─── */}
       <SectionCard title="CACS-Based Risk Stratification (LAI 2023)" icon={<BookOpen className="h-4 w-4" />} tone="indigo" defaultOpen={false}>
         <figure className="space-y-2">
-          <img
+          <ZoomableImage
             src="/images/cacs-risk-stratification-lai.jpg"
             alt="CACS-Based Risk Stratification Algorithm"
-            className="w-full rounded-lg border border-border"
-            loading="lazy"
           />
           <figcaption className="text-xs text-muted-foreground">
             Coronary Artery Calcium Score (CACS) risk classification for refining ASCVD risk. 
@@ -487,11 +505,9 @@ export default function LipidsAssessment({ onClassificationChange, onNavigateToT
       {/* ─── Diabetes + Lipid Management Algorithm ─── */}
       <SectionCard title="Diabetes + Lipid Management Algorithm (LAI 2023)" icon={<BookOpen className="h-4 w-4" />} tone="danger" defaultOpen={false}>
         <figure className="space-y-2">
-          <img
+          <ZoomableImage
             src="/images/diabetes-lipid-algorithm-lai.jpg"
             alt="Diabetes Lipid Management Algorithm — LAI 2023"
-            className="w-full rounded-lg border border-border"
-            loading="lazy"
           />
           <figcaption className="text-xs text-muted-foreground">
             Risk-stratified lipid targets and treatment algorithm for patients with diabetes mellitus: 
@@ -507,11 +523,9 @@ export default function LipidsAssessment({ onClassificationChange, onNavigateToT
       {/* ─── ACS Lipid Management Algorithm ─── */}
       <SectionCard title="ACS Lipid Management Algorithm (LAI 2023)" icon={<BookOpen className="h-4 w-4" />} tone="danger" defaultOpen={false}>
         <figure className="space-y-2">
-          <img
+          <ZoomableImage
             src="/images/acs-lipid-algorithm-lai.jpg"
             alt="ACS Lipid Management Algorithm — LAI 2023"
-            className="w-full rounded-lg border border-border"
-            loading="lazy"
           />
           <figcaption className="text-xs text-muted-foreground">
             Post-ACS lipid management protocol: statin-naïve → on low/mod-intensity → on high-intensity → intolerant. 
@@ -527,11 +541,9 @@ export default function LipidsAssessment({ onClassificationChange, onNavigateToT
       {/* ─── LAI Treatment Algorithm by Risk Group ─── */}
       <SectionCard title="LAI 2023 Treatment Algorithm by Risk Group" icon={<BookOpen className="h-4 w-4" />} tone="indigo" defaultOpen={false}>
         <figure className="space-y-2">
-          <img
+          <ZoomableImage
             src="/images/lai-treatment-algorithm.jpg"
             alt="LAI 2023 Treatment Algorithm by Risk Group"
-            className="w-full rounded-lg border border-border"
-            loading="lazy"
           />
           <figcaption className="text-xs text-muted-foreground">
             Full LAI risk-aligned treatment algorithm: Low risk (LDL &lt;100) → Moderate (optional &lt;70) → 
@@ -547,11 +559,9 @@ export default function LipidsAssessment({ onClassificationChange, onNavigateToT
       {/* ─── Lipid Management Goals by Risk Group ─── */}
       <SectionCard title="Lipid Management Goals by Risk Group" icon={<Target className="h-4 w-4" />} tone="indigo" defaultOpen={false}>
         <figure className="space-y-2">
-          <img
+          <ZoomableImage
             src="/images/lipid-goals-by-risk-lai.jpg"
             alt="Lipid Management Goals by Risk Group"
-            className="w-full rounded-lg border border-border"
-            loading="lazy"
           />
           <figcaption className="text-xs text-muted-foreground">
             Quick-reference target table: Low/Moderate (LDL &lt;100 / non-HDL &lt;130) → 
