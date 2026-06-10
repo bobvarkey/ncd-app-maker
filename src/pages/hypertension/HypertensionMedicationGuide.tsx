@@ -3,6 +3,19 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 import { AlertCircle, CheckCircle2, Heart, Activity, Droplet, AlertTriangle, ChevronDown, ChevronRight, Stethoscope } from "lucide-react";
+import { FrequencyBadge } from "@/components/FrequencyBadge";
+
+/** Extract frequency tag from a dose range string like "8–16 mg OD" -> "OD" */
+function extractCardFreq(dose: string): string {
+  const s = dose.toLowerCase();
+  if (/\b(weekly)\b/.test(s)) return "Weekly";
+  if (/\b(qid|qds|four\s*times)\b/.test(s)) return "QID";
+  if (/\b(tds|tid|three\s*times)\b/.test(s)) return "TDS";
+  if (/\b(bd|bid|twice)\b/.test(s)) return "BD";
+  if (/\b(od|daily|once|day|qd|o\.d)\b/.test(s)) return "OD";
+  if (/\b(prn)\b/.test(s)) return "PRN";
+  return "—";
+}
 
 // Antihypertensive Classes
 const medicationClasses = [
@@ -419,7 +432,10 @@ export default function HypertensionMedicationGuide() {
                       <span className="font-semibold text-sm">{drug.name}</span>
                       <span className="text-xs text-muted-foreground ml-2">({drug.brand})</span>
                     </div>
-                    <span className="text-xs font-mono bg-muted px-2 py-0.5 rounded">{drug.doseRange}</span>
+                    <div className="flex flex-wrap gap-1 items-center">
+                      <FrequencyBadge frequency={extractCardFreq(drug.doseRange)} className="text-[10px]" />
+                      <span className="text-xs font-mono bg-muted px-2 py-0.5 rounded">{drug.doseRange}</span>
+                    </div>
                   </div>
                   <p className="text-xs text-muted-foreground mt-1">{drug.pearls}</p>
                   {drug.caution && (

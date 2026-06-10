@@ -6,6 +6,9 @@ import {
   Table, TableHeader, TableBody, TableHead, TableRow, TableCell,
 } from "@/components/ui/table";
 import GfrCalculator from "@/calculators/htn/GfrCalculator";
+import { ADDITIONAL_MEDS_DATA } from "@/calculators/diabetes/additional-meds-data";
+import { ANTIBIOTICS_DATA } from "@/calculators/diabetes/antibiotics-data";
+import { ANTICOAGULANTS_DATA } from "@/calculators/diabetes/anticoagulants-data";
 
 type DoseEntry = {
   drug: string;
@@ -703,11 +706,53 @@ const cellStyle = (val: string) => {
   return "";
 };
 
+/** Extract a concise frequency tag from a normalDose string like "5 mg BID (AF)" → "BID" */
+function extractFreq(dose: string): string {
+  const s = dose.toLowerCase();
+  if (/\b(weekly|once\s*a?\s*week|every\s*week)\b/.test(s)) return "Weekly";
+  if (/\b(monthly)\b/.test(s)) return "Monthly";
+  if (/\b(qds|qid|four\s*times|q\s*6\s*h)\b/.test(s)) return "QID";
+  if (/\b(tds|tid|three\s*times|thrice|q\s*8\s*h)\b/.test(s)) return "TDS";
+  if (/\b(bd|bid|twice|two\s*times|q\s*12\s*h|b\.i\.d)\b/.test(s)) return "BD";
+  if (/\b(od|once\s*daily|daily|every\s*(morning|evening|night|day)|q\s*24\s*h|o\.d|qd|bedtime)\b/.test(s)) return "OD";
+  if (/\b(prn|as\s*needed)\b/.test(s)) return "PRN";
+  if (/\b(iv|infusion|drip)\b/.test(s)) return "IV";
+  // Some have inline like "q6h" inside dose
+  const qMatch = s.match(/q\s*(\d+)\s*h/);
+  if (qMatch) {
+    const n = parseInt(qMatch[1], 10);
+    if (n === 6) return "Q6H";
+    if (n === 8) return "Q8H";
+    if (n === 12) return "Q12H";
+    if (n === 24) return "OD";
+    return `Q${n}H`;
+  }
+  // Fallback: use the first short token if it looks like a freq
+  const tokens = s.split(/[\s,/(]/);
+  for (const t of tokens) {
+    if (/^(od|bd|tds|qid|prn)$/i.test(t)) return t.toUpperCase();
+  }
+  return "—"; // unknown
+}
+
+/** Convert external DoseEntry (no frequency field) into page-local DoseEntry */
+function wrapExternal(d: typeof ADDITIONAL_MEDS_DATA[number]): DoseEntry {
+  return { ...d, frequency: extractFreq(d.normalDose) };
+}
+
+// Merge all data sources
+const ALL_RENAL_DATA: DoseEntry[] = [
+  ...RENAL_DATA,
+  ...ADDITIONAL_MEDS_DATA.map(wrapExternal),
+  ...ANTIBIOTICS_DATA.map(wrapExternal),
+  ...ANTICOAGULANTS_DATA.map(wrapExternal),
+];
+
 const RenalDoseAdjustment = () => {
   const [search, setSearch] = useState("");
 
   // Group drugs by class
-  const groupedByClass = RENAL_DATA.reduce((acc, drug) => {
+  const groupedByClass = ALL_RENAL_DATA.reduce((acc, drug) => {
     if (!acc[drug.drugClass]) acc[drug.drugClass] = [];
     acc[drug.drugClass].push(drug);
     return acc;
