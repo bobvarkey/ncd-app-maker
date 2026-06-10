@@ -544,6 +544,27 @@ export default function LipidsAssessment({ onClassificationChange, onNavigateToT
         </figure>
       </SectionCard>
 
+      {/* ─── Lipid Management Goals by Risk Group ─── */}
+      <SectionCard title="Lipid Management Goals by Risk Group" icon={<Target className="h-4 w-4" />} tone="indigo" defaultOpen={false}>
+        <figure className="space-y-2">
+          <img
+            src="/images/lipid-goals-by-risk-lai.jpg"
+            alt="Lipid Management Goals by Risk Group"
+            className="w-full rounded-lg border border-border"
+            loading="lazy"
+          />
+          <figcaption className="text-xs text-muted-foreground">
+            Quick-reference target table: Low/Moderate (LDL &lt;100 / non-HDL &lt;130) → 
+            High (&lt;70 / &lt;100) → Very High (&lt;50 / &lt;80) → Extreme A (&lt;50 opt ≤30 / &lt;80 opt ≤60) → 
+            Extreme B (&lt;30 / &lt;60) → Extreme C (&lt;15 / &lt;60). 
+            Source: Simplified from Multiple Guidelines 2026 (LAI, ACC/AHA, ESC).
+            <a href="https://doi.org/10.1016/j.jacl.2024.01.006" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline ml-1">
+              doi:10.1016/j.jacl.2024.01.006
+            </a>
+          </figcaption>
+        </figure>
+      </SectionCard>
+
       {/* ─── Classification Guide Table ─── */}
       <SectionCard title="LAI 2023 Full Classification Guide" icon={<BookOpen className="h-4 w-4" />} tone="indigo" defaultOpen={false}>
         <div className="overflow-x-auto">
