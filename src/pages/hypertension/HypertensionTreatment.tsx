@@ -450,11 +450,29 @@ interface MedicationDose {
   notes?: string;
 }
 
+interface DrugInteraction {
+  drug: string;
+  severity: 'contraindicated' | 'major' | 'moderate';
+  effect: string;
+  management: string;
+}
+
+interface LactationGuidance {
+  status: 'avoid' | 'caution' | 'compatible';
+  summary: string;
+  details: string[];
+}
+
 interface Medication {
   name: string;
   category: string;
   doses: MedicationDose[];
   renalDosing?: RenalDosing[];
+  monitoring?: string[];
+  redFlags?: string[];
+  contraindications?: string[];
+  lactation?: LactationGuidance;
+  interactions?: DrugInteraction[];
 }
 
 const medications: Medication[] = [
@@ -708,6 +726,7 @@ const medications: Medication[] = [
 export default function HypertensionTreatment() {
   const [algorithmHistory, setAlgorithmHistory] = useState<string[]>(["start"]);
   const [potencyOpen, setPotencyOpen] = useState(false);
+  const [activeSection, setActiveSection] = useState("algorithm");
 
   const currentId = algorithmHistory[algorithmHistory.length - 1];
   const currentNode = algorithmNodes.find((n) => n.id === currentId);
@@ -724,10 +743,45 @@ export default function HypertensionTreatment() {
 
   const restartAlgorithm = () => setAlgorithmHistory(["start"]);
 
+  const sections = [
+    { id: "algorithm", label: "Algorithm", icon: "📋" },
+    { id: "tamp-dcmi", label: "TAMP-DCMI", icon: "🛡️" },
+    { id: "potency", label: "Potency", icon: "⚡" },
+    { id: "stroke", label: "Stroke", icon: "🧠" },
+    { id: "pregnancy", label: "Pregnancy", icon: "🤰" },
+    { id: "emergencies", label: "Emergencies", icon: "🚨" },
+    { id: "secondary", label: "Secondary HTN", icon: "🔬" },
+    { id: "medications", label: "Medications", icon: "💊" },
+  ];
+
+  const scrollToSection = (id: string) => {
+    setActiveSection(id);
+    const el = document.getElementById(`htn-section-${id}`);
+    if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
+  };
+
   return (
     <div className="space-y-6">
-      {/* Resistant HTN Infographic: TAMP-DCMI */}
-      <Card className="border-2 border-warning/20 overflow-hidden">
+      {/* Quick Navigation Tabs */}
+      <div className="sticky top-0 z-50 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 pb-2 pt-2 -mx-4 px-4">
+        <div className="flex flex-wrap gap-1.5">
+          {sections.map((s) => (
+            <button
+              key={s.id}
+              onClick={() => scrollToSection(s.id)}
+              className={`px-3 py-1.5 text-xs rounded-full border transition-all whitespace-nowrap ${
+                activeSection === s.id
+                  ? "bg-primary text-primary-foreground border-primary shadow-sm"
+                  : "bg-muted/50 text-muted-foreground border-border hover:border-primary/40 hover:text-foreground"
+              }`}
+            >
+              {s.icon} {s.label}
+            </button>
+          ))}
+        </div>
+      </div>
+      {/* TAMP-DCMI: Resistant HTN */}
+      <Card id="htn-section-tamp-dcmi" className="border-2 border-warning/20 overflow-hidden">
         <CardHeader className="pb-3">
           <div className="flex items-center gap-2">
             <Activity className="h-5 w-5" style={{ color: categoryColors.accent }} />
@@ -745,7 +799,7 @@ export default function HypertensionTreatment() {
       </Card>
 
       {/* Treatment Algorithm */}
-      <Card className="border-2 border-warning/20">
+      <Card id="htn-section-algorithm" className="border-2 border-warning/20">
         <CardHeader className="pb-3">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
@@ -875,8 +929,7 @@ export default function HypertensionTreatment() {
         </CardContent>
       </Card>
 
-      {/* Drug Potency Table */}
-      <Card>
+      <Card id="htn-section-potency">
         <Collapsible open={potencyOpen} onOpenChange={setPotencyOpen}>
         <CollapsibleTrigger asChild>
         <CardHeader className="cursor-pointer hover:bg-muted/30 transition-colors">
@@ -983,7 +1036,7 @@ export default function HypertensionTreatment() {
       </Card>
 
       {/* Recurrent Stroke Prevention Protocol */}
-      <Card>
+      <Card id="htn-section-stroke">
         <CardHeader>
           <div className="flex items-center gap-2">
             <Brain className="h-5 w-5" style={{ color: categoryColors.accent }} />
@@ -1038,7 +1091,7 @@ export default function HypertensionTreatment() {
       </Card>
 
       {/* Pregnancy Quick Reference */}
-      <Card>
+      <Card id="htn-section-pregnancy">
         <CardHeader>
           <div className="flex items-center gap-2">
             <Baby className="h-5 w-5" style={{ color: categoryColors.accent }} />
@@ -1070,7 +1123,7 @@ export default function HypertensionTreatment() {
       </Card>
 
       {/* Hypertensive Emergencies */}
-      <Card className="border-2 border-rose-500/20">
+      <Card id="htn-section-emergencies" className="border-2 border-rose-500/20">
         <CardHeader className="pb-3">
           <div className="flex items-center gap-2">
             <AlertTriangle className="h-5 w-5 text-destructive" />
@@ -1190,7 +1243,7 @@ export default function HypertensionTreatment() {
       <HtnAlgorithmFlowchart />
 
       {/* Secondary Hypertension Workup */}
-      <Card className="border-2 border-primary/20">
+      <Card id="htn-section-secondary" className="border-2 border-primary/20">
         <CardHeader className="pb-3">
           <div className="flex items-center gap-2">
             <Activity className="h-5 w-5 text-primary" />
@@ -1221,7 +1274,7 @@ export default function HypertensionTreatment() {
       </Card>
 
       {/* Medication Dosing Tables */}
-      <Card className="border-2 border-primary/20">
+      <Card id="htn-section-medications" className="border-2 border-primary/20">
         <CardHeader className="pb-3">
           <div className="flex items-center gap-2">
             <Pill className="h-5 w-5 text-primary" />
