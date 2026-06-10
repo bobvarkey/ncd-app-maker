@@ -19,7 +19,6 @@ import HypertensionOverview from "./HypertensionOverview";
 import HypertensionAssessment from "./HypertensionAssessment";
 import HypertensionTreatment from "./HypertensionTreatment";
 import HypertensionClinicalCards from "./HypertensionClinicalCards";
-import { SmartLabelUpload, HTN_FIELDS } from "@/components/SmartLabelUpload";
 
 // Category colors for hypertension (orange theme)
 const categoryColors = {
@@ -72,13 +71,6 @@ export default function HypertensionTab() {
           assessment calculators, and treatment algorithms. Integrates GFR calculation,
           drug interaction checking, and secondary hypertension screening.
         </p>
-      </section>
-
-      {/* Smart Lab Import */}
-      <section className="max-w-6xl mx-auto px-6 pb-4">
-        <SmartLabelUpload fields={HTN_FIELDS.fields} onParse={(values) => {
-          Object.entries(values).forEach(([key, val]) => localStorage.setItem(`htn_${key}`, val));
-        }} />
       </section>
 
       {/* Main Content Tabs */}
