@@ -341,6 +341,18 @@ export const ADDITIONAL_MEDS_DATA: DoseEntry[] = [
     hepatic: "No adjustment.",
   },
   {
+    drug: "Nebivolol",
+    drugClass: "Beta-Blocker (vasodilating)",
+    normalDose: "2.5–10 mg/day",
+    eGFR60_89: "No adjustment",
+    eGFR45_59: "No adjustment",
+    eGFR30_44: "Start at 2.5 mg",
+    eGFR15_29: "Start at 2.5 mg",
+    eGFRBelow15: "Limited data",
+    notes: "3rd-gen β₁-selective blocker with NO-mediated vasodilation. Hepatic metabolism (CYP2D6). Active metabolites accumulate in CKD — start low. Reduces oxidative stress and improves endothelial function. Preferred β-blocker in CKD with metabolic syndrome.",
+    hepatic: "Severe: use with caution — CYP2D6 dependent.",
+  },
+  {
     drug: "Labetalol",
     drugClass: "Beta-Blocker (α/β)",
     normalDose: "100–400 mg BID PO; 20 mg IV bolus",
