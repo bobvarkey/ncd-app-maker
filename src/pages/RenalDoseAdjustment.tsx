@@ -798,9 +798,68 @@ const RenalDoseAdjustment = () => {
         />
       </div>
 
-      {/* Drug groups */}
+      {/* Search Results Panel — appears below search bar when searching */}
+      {search && (
+        <div className="clinical-card overflow-hidden animate-in fade-in slide-in-from-top-2 duration-200">
+          <div className="px-4 py-2 bg-primary/10 border-b border-border flex items-center gap-2">
+            <Search className="w-3.5 h-3.5 text-primary" />
+            <span className="text-xs font-medium">Search Results: "{search}"</span>
+            <span className="text-[11px] text-muted-foreground ml-auto">
+              {filteredGroups.reduce((acc, [_, drugs]) => acc + drugs.length, 0)} match(es)
+            </span>
+          </div>
+          <div className="overflow-x-auto">
+            <Table>
+              <TableHeader>
+                <TableRow className="bg-muted/30">
+                  <TableHead className="min-w-[140px]">Drug</TableHead>
+                  <TableHead className="min-w-[90px]">Class</TableHead>
+                  <TableHead className="min-w-[90px]">Frequency</TableHead>
+                  <TableHead className="min-w-[120px]">Normal Dose</TableHead>
+                  {eGFRColumns.map(col => (
+                    <TableHead key={col.key} className="min-w-[100px] text-center">
+                      <div className="text-xs text-muted-foreground">eGFR</div>
+                      <div>{col.label}</div>
+                    </TableHead>
+                  ))}
+                  <TableHead className="min-w-[180px] hidden md:table-cell">Notes</TableHead>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
+                {filteredGroups.flatMap(([drugClass, drugs]) =>
+                  drugs.map((d, i) => (
+                    <TableRow key={`${drugClass}-${i}`}>
+                      <TableCell className="font-medium">
+                        <div className="flex items-center gap-1.5">{d.drug}</div>
+                      </TableCell>
+                      <TableCell className="text-xs text-muted-foreground">{d.drugClass}</TableCell>
+                      <TableCell className="text-xs font-mono text-muted-foreground">{d.frequency}</TableCell>
+                      <TableCell className="text-xs">{d.normalDose}</TableCell>
+                      {eGFRColumns.map(col => (
+                        <TableCell key={col.key} className={`text-xs text-center ${cellStyle(d[col.key])}`}>
+                          {d[col.key]}
+                        </TableCell>
+                      ))}
+                      <TableCell className="text-xs text-muted-foreground hidden md:table-cell max-w-[200px]">
+                        <span className="line-clamp-2">{d.notes}</span>
+                      </TableCell>
+                    </TableRow>
+                  ))
+                )}
+              </TableBody>
+            </Table>
+          </div>
+          {filteredGroups.length === 0 && (
+            <div className="text-center text-muted-foreground py-8 text-sm">
+              No medications found matching "<span className="text-foreground font-medium">{search}</span>"
+            </div>
+          )}
+        </div>
+      )}
+
+      {/* Drug groups — collapsed by default when search is active */}
       {filteredGroups.map(([drugClass, drugs]) => (
-        <details key={drugClass} className="clinical-card p-0 overflow-hidden group" defaultChecked>
+        <details key={drugClass} className="clinical-card p-0 overflow-hidden group" defaultChecked={!search}>
           <summary className="flex items-center gap-2 px-4 py-3 cursor-pointer select-none list-none hover:bg-muted/30 transition-colors sticky top-0 bg-card z-10">
             <ChevronDown className="w-4 h-4 text-muted-foreground shrink-0 group-open:rotate-0 -rotate-90 transition-transform" />
             <Pill className="w-4 h-4 text-primary shrink-0" />
@@ -849,7 +908,7 @@ const RenalDoseAdjustment = () => {
         </details>
       ))}
 
-      {filteredGroups.length === 0 && (
+      {!search && filteredGroups.length === 0 && (
         <div className="text-center text-muted-foreground py-12 text-sm">
           No medications found matching "<span className="text-foreground font-medium">{search}</span>"
         </div>
