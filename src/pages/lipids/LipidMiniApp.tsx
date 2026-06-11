@@ -540,26 +540,34 @@ function RangeField({
   value: string;
   onChange: (v: string) => void;
 }) {
+  const [mode, setMode] = useState<"range" | "exact">("range");
   const opts = RANGES[fieldKey];
-  // Map current numeric value back to a label for display
   const matched = opts.find((o) => o.value === value);
   return (
     <div className="space-y-1">
-      <Label className="text-xs text-muted-foreground">{label}</Label>
-      <Select value={value} onValueChange={onChange}>
-        <SelectTrigger className="h-9 text-xs">
-          <SelectValue placeholder="Select range">
-            {matched?.label ?? "Select range"}
-          </SelectValue>
-        </SelectTrigger>
-        <SelectContent>
-          {opts.map((o) => (
-            <SelectItem key={o.value} value={o.value} className="text-xs">
-              {o.label}
-            </SelectItem>
-          ))}
-        </SelectContent>
-      </Select>
+      <div className="flex items-center justify-between">
+        <Label className="text-xs text-muted-foreground">{label}</Label>
+        <button type="button" onClick={() => setMode(m => m === "range" ? "exact" : "range")}
+          className="text-[10px] text-primary hover:underline">{mode === "range" ? "exact" : "range"}</button>
+      </div>
+      {mode === "range" ? (
+        <Select value={value} onValueChange={onChange}>
+          <SelectTrigger className="h-9 text-xs">
+            <SelectValue placeholder="Select range">
+              {matched?.label ?? "Select range"}
+            </SelectValue>
+          </SelectTrigger>
+          <SelectContent>
+            {opts.map((o) => (
+              <SelectItem key={o.value} value={o.value} className="text-xs">
+                {o.label}
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
+      ) : (
+        <Input type="number" inputMode="decimal" step="0.1" className="h-9 text-xs" value={value} onChange={e => onChange(e.target.value)} placeholder="Enter exact value" />
+      )}
     </div>
   );
 }
