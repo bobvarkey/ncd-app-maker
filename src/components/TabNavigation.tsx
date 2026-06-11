@@ -1,7 +1,18 @@
-import { useEffect, useState } from "react";
-import { Link, useLocation, useSearchParams } from "react-router-dom";
-import { ChevronLeft, ChevronRight } from "lucide-react";
+import { useEffect, useMemo, useRef, useState } from "react";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import { ChevronLeft, ChevronRight, Search, X, Pill } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { RENAL_DATA } from "@/calculators/diabetes/RenalDosing";
+import { ANTIBIOTICS_DATA } from "@/calculators/diabetes/antibiotics-data";
+import { ANTICOAGULANTS_DATA } from "@/calculators/diabetes/anticoagulants-data";
+import { ADDITIONAL_MEDS_DATA } from "@/calculators/diabetes/additional-meds-data";
+
+const ALL_MEDS = [
+  ...RENAL_DATA,
+  ...ANTIBIOTICS_DATA,
+  ...ANTICOAGULANTS_DATA,
+  ...ADDITIONAL_MEDS_DATA,
+];
 
 const bloodSubItems = [
   { tab: "anemia", label: "Anemia Evaluator", icon: "🔬" },
@@ -99,9 +110,23 @@ const navItems: NavItem[] = [
 export function TabNavigation() {
   const location = useLocation();
   const currentPath = location.pathname;
+  const navigate = useNavigate();
   const [collapsed, setCollapsed] = useState(() =>
     typeof window !== "undefined" ? window.innerWidth < 768 : false
   );
+
+  // Search state
+  const [searchQ, setSearchQ] = useState("");
+  const [searchOpen, setSearchOpen] = useState(false);
+  const searchRef = useRef<HTMLDivElement>(null);
+
+  const searchResults = useMemo(() => {
+    const term = searchQ.trim().toLowerCase();
+    if (!term) return [];
+    return ALL_MEDS
+      .filter((m) => m.drug.toLowerCase().includes(term) || m.drugClass.toLowerCase().includes(term))
+      .slice(0, 6);
+  }, [searchQ]);
 
   useEffect(() => {
     document.body.classList.add("has-tab-navigation");
@@ -121,6 +146,23 @@ export function TabNavigation() {
     return () => document.body.classList.remove("tab-navigation-collapsed");
   }, [collapsed]);
 
+  // Close search on outside click
+  useEffect(() => {
+    function onClick(e: MouseEvent) {
+      if (searchRef.current && !searchRef.current.contains(e.target as Node)) {
+        setSearchOpen(false);
+      }
+    }
+    document.addEventListener("mousedown", onClick);
+    return () => document.removeEventListener("mousedown", onClick);
+  }, []);
+
+  function goToDrug(drug: string) {
+    setSearchOpen(false);
+    setSearchQ("");
+    navigate(`/renal-dosing?q=${encodeURIComponent(drug)}`);
+  }
+
   return (
     <aside
       className={cn(
@@ -129,21 +171,124 @@ export function TabNavigation() {
       )}
       aria-label="Primary"
     >
+      {/* Header */}
       <div className="flex items-center justify-between h-12 px-2 border-b border-border shrink-0">
         {!collapsed && (
-          <span className="text-xs font-semibold text-muted-foreground px-2 truncate">
-            NCD Rx
-          </span>
+          <button
+            type="button"
+            onClick={() => setSearchOpen(true)}
+            className="flex items-center gap-2 px-2 py-1 rounded-md hover:bg-muted transition-colors w-full"
+          >
+            <Search className="h-4 w-4 text-muted-foreground shrink-0" />
+            <span className="text-xs text-muted-foreground truncate">Search meds…</span>
+          </button>
+        )}
+        {collapsed && (
+          <button
+            type="button"
+            onClick={() => setSearchOpen(true)}
+            className="mx-auto inline-flex items-center justify-center h-8 w-8 rounded-md text-muted-foreground hover:bg-muted hover:text-foreground"
+            aria-label="Search"
+          >
+            <Search className="h-4 w-4" />
+          </button>
         )}
         <button
           type="button"
           onClick={() => setCollapsed((c) => !c)}
-          className="ml-auto inline-flex items-center justify-center h-8 w-8 rounded-md text-muted-foreground hover:bg-muted hover:text-foreground"
+          className="ml-auto inline-flex items-center justify-center h-8 w-8 rounded-md text-muted-foreground hover:bg-muted hover:text-foreground shrink-0"
           aria-label={collapsed ? "Expand sidebar" : "Collapse sidebar"}
         >
           {collapsed ? <ChevronRight className="h-4 w-4" /> : <ChevronLeft className="h-4 w-4" />}
         </button>
       </div>
+
+      {/* Search panel (inside sidebar when open) */}
+      {searchOpen && !collapsed && (
+        <div ref={searchRef} className="border-b border-border px-2 py-2">
+          <div className="flex items-center gap-1.5 rounded-md border border-primary/30 bg-primary/5 px-2">
+            <Search className="h-3.5 w-3.5 text-primary shrink-0" />
+            <input
+              type="text"
+              value={searchQ}
+              onChange={(e) => setSearchQ(e.target.value)}
+              placeholder="Medication name…"
+              className="flex-1 bg-transparent py-1.5 text-xs placeholder:text-muted-foreground focus:outline-none"
+              autoFocus
+            />
+            {searchQ && (
+              <button type="button" onClick={() => { setSearchQ(""); setSearchOpen(false); }} className="shrink-0">
+                <X className="h-3 w-3 text-muted-foreground" />
+              </button>
+            )}
+          </div>
+          {searchQ && (
+            <div className="mt-1 max-h-40 overflow-y-auto">
+              {searchResults.length === 0 ? (
+                <p className="px-2 py-1.5 text-xs text-muted-foreground">No medications found.</p>
+              ) : (
+                <ul>
+                  {searchResults.map((m) => (
+                    <li key={`${m.drug}-${m.drugClass}`}>
+                      <button
+                        type="button"
+                        onClick={() => goToDrug(m.drug)}
+                        className="w-full flex items-center gap-2 px-2 py-1.5 text-left text-xs rounded hover:bg-muted transition-colors"
+                      >
+                        <Pill className="h-3 w-3 text-primary shrink-0" />
+                        <span className="font-medium text-foreground truncate">{m.drug}</span>
+                        <span className="text-muted-foreground truncate">{m.drugClass}</span>
+                      </button>
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </div>
+          )}
+        </div>
+      )}
+
+      {/* Floating search modal when collapsed */}
+      {searchOpen && collapsed && (
+        <div className="absolute left-full top-0 ml-1 w-56 rounded-lg border border-border bg-card shadow-xl z-50 p-2" ref={searchRef}>
+          <div className="flex items-center gap-1.5 rounded-md border border-primary/30 bg-primary/5 px-2">
+            <Search className="h-3.5 w-3.5 text-primary shrink-0" />
+            <input
+              type="text"
+              value={searchQ}
+              onChange={(e) => setSearchQ(e.target.value)}
+              placeholder="Search medications…"
+              className="flex-1 bg-transparent py-1.5 text-xs placeholder:text-muted-foreground focus:outline-none"
+              autoFocus
+            />
+            <button type="button" onClick={() => { setSearchQ(""); setSearchOpen(false); }} className="shrink-0">
+              <X className="h-3 w-3 text-muted-foreground" />
+            </button>
+          </div>
+          {searchQ && (
+            <div className="mt-1 max-h-40 overflow-y-auto">
+              {searchResults.length === 0 ? (
+                <p className="px-2 py-1.5 text-xs text-muted-foreground">No medications found.</p>
+              ) : (
+                <ul>
+                  {searchResults.map((m) => (
+                    <li key={`${m.drug}-${m.drugClass}`}>
+                      <button
+                        type="button"
+                        onClick={() => goToDrug(m.drug)}
+                        className="w-full flex items-center gap-2 px-2 py-1.5 text-left text-xs rounded hover:bg-muted transition-colors"
+                      >
+                        <Pill className="h-3 w-3 text-primary shrink-0" />
+                        <span className="font-medium text-foreground truncate">{m.drug}</span>
+                      </button>
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </div>
+          )}
+        </div>
+      )}
 
       <nav className="flex-1 overflow-y-auto overflow-x-hidden py-2">
         <ul className="flex flex-col gap-1 px-2">
@@ -179,7 +324,6 @@ export function TabNavigation() {
           })}
         </ul>
       </nav>
-
     </aside>
   );
 }
