@@ -65,7 +65,7 @@ export const ADDITIONAL_MEDS_DATA: DoseEntry[] = [
     eGFR30_44: "Use with caution; monitor K⁺",
     eGFR15_29: "Avoid",
     eGFRBelow15: "Avoid",
-    notes: "CONTRAINDICATED with ACEi/ARB in diabetes (ALTITUDE trial). Avoid in pregnancy, bilateral RAS, eGFR <30.获批用于高血压单药或与ACEi/ARB联合用于非糖尿病CKD。",
+    notes: "CONTRAINDICATED with ACEi/ARB in diabetes (ALTITUDE trial). Avoid in pregnancy, bilateral RAS, eGFR <30. Approved for hypertension monotherapy or combination with ACEi/ARB in non-diabetic CKD.",
     hepatic: "No adjustment in mild–moderate. Severe: not recommended.",
   },
 
