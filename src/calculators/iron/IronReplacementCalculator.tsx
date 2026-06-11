@@ -5,6 +5,13 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import {
@@ -211,6 +218,111 @@ function buildNotes(
   if (esa)
     notes.push("ESA use: monitor iron status closely; IV iron often needed to support erythropoiesis.");
   return notes;
+}
+
+// ── Range / Exact toggle ───────────────────────────────────────
+type RangeOpt = { label: string; mid: number };
+const RANGES: Record<string, RangeOpt[]> = {
+  ferritin: [
+    { label: "< 10 (very low)", mid: 5 },
+    { label: "10 – 29", mid: 20 },
+    { label: "30 – 49", mid: 40 },
+    { label: "50 – 100", mid: 75 },
+    { label: "101 – 200", mid: 150 },
+    { label: "> 200", mid: 300 },
+  ],
+  hemoglobin: [
+    { label: "< 7 (severe anemia)", mid: 6 },
+    { label: "7 – 9.9", mid: 8.5 },
+    { label: "10 – 11.9", mid: 11 },
+    { label: "12 – 13.5", mid: 13 },
+    { label: "> 13.5", mid: 15 },
+  ],
+  weight: [
+    { label: "< 40 kg", mid: 35 },
+    { label: "40 – 59", mid: 50 },
+    { label: "60 – 79", mid: 70 },
+    { label: "80 – 99", mid: 90 },
+    { label: "100 – 120", mid: 110 },
+    { label: "> 120", mid: 140 },
+  ],
+  serumIron: [
+    { label: "< 30 (very low)", mid: 20 },
+    { label: "30 – 59", mid: 45 },
+    { label: "60 – 99", mid: 80 },
+    { label: "100 – 149", mid: 125 },
+    { label: "150 – 200", mid: 175 },
+    { label: "> 200", mid: 220 },
+  ],
+  tibc: [
+    { label: "< 200 (low)", mid: 180 },
+    { label: "200 – 299", mid: 250 },
+    { label: "300 – 399", mid: 350 },
+    { label: "400 – 499", mid: 450 },
+    { label: "> 500", mid: 550 },
+  ],
+  tsat: [
+    { label: "< 5% (very low)", mid: 3 },
+    { label: "5 – 10%", mid: 7.5 },
+    { label: "11 – 15%", mid: 13 },
+    { label: "16 – 20%", mid: 18 },
+    { label: "21 – 30%", mid: 25 },
+    { label: "> 30%", mid: 35 },
+  ],
+};
+
+function RangeOrExact({
+  id, label, unit, value, onChange, fieldKey, required,
+}: {
+  id: string;
+  label: string;
+  unit?: string;
+  value: string;
+  onChange: (v: string) => void;
+  fieldKey: keyof typeof RANGES;
+  required?: boolean;
+}) {
+  const [mode, setMode] = useState<"range" | "exact">("range");
+  const opts = RANGES[fieldKey] || [];
+  const matched = opts.find((o) => String(o.mid) === value);
+  return (
+    <div className="space-y-1.5">
+      <div className="flex items-center justify-between">
+        <Label htmlFor={id} className="text-sm font-medium">
+          {label} {required && <span className="text-destructive">*</span>}
+          {unit && <span className="text-xs text-muted-foreground ml-1">({unit})</span>}
+        </Label>
+        <button type="button" onClick={() => setMode(m => m === "range" ? "exact" : "range")}
+          className="text-xs text-primary hover:underline">{mode === "range" ? "exact" : "range"}</button>
+      </div>
+      {mode === "range" ? (
+        <Select value={value} onValueChange={(v) => {
+          const opt = opts.find((o) => o.label === v);
+          onChange(opt ? String(opt.mid) : v);
+        }}>
+          <SelectTrigger id={id} className="h-9">
+            <SelectValue placeholder="Select range">
+              {matched?.label ?? value ?? "Select range"}
+            </SelectValue>
+          </SelectTrigger>
+          <SelectContent>
+            {opts.map((o) => (
+              <SelectItem key={o.label} value={o.label} className="text-xs">
+                {o.label}
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
+      ) : (
+        <Input
+          id={id} type="number" inputMode="decimal" step="0.1" min="0"
+          placeholder={`e.g. ${opts.length ? opts[Math.floor(opts.length / 2)].mid : ""}`}
+          value={value} onChange={(e) => onChange(e.target.value)}
+          className="h-9"
+        />
+      )}
+    </div>
+  );
 }
 
 // ── Default State ──────────────────────────────────────────────
@@ -579,72 +691,43 @@ export default function IronReplacementCalculator() {
               <CardContent className="space-y-5">
                 {/* Row 1: Ferritin, Hb, Weight */}
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                  <div className="space-y-2">
-                    <Label htmlFor="ferritin">Ferritin <span className="text-destructive">*</span></Label>
-                    <Input
-                      id="ferritin" type="number" step="0.1" min="0"
-                      placeholder="e.g. 15"
-                      value={inputs.ferritin}
-                      onChange={(e) => setInput("ferritin", e.target.value)}
-                    />
-                    <span className="text-xs text-muted-foreground">ng/mL</span>
-                  </div>
-                  <div className="space-y-2">
-                    <Label htmlFor="hemoglobin">Hemoglobin <span className="text-destructive">*</span></Label>
-                    <Input
-                      id="hemoglobin" type="number" step="0.1" min="0"
-                      placeholder="e.g. 9.2"
-                      value={inputs.hemoglobin}
-                      onChange={(e) => setInput("hemoglobin", e.target.value)}
-                    />
-                    <span className="text-xs text-muted-foreground">g/dL</span>
-                  </div>
-                  <div className="space-y-2">
-                    <Label htmlFor="weight">Weight <span className="text-destructive">*</span></Label>
-                    <Input
-                      id="weight" type="number" step="0.1" min="1"
-                      placeholder="e.g. 70"
-                      value={inputs.weight}
-                      onChange={(e) => setInput("weight", e.target.value)}
-                    />
-                    <span className="text-xs text-muted-foreground">kg</span>
-                  </div>
+                  <RangeOrExact
+                    id="ferritin" label="Ferritin" unit="ng/mL"
+                    value={inputs.ferritin} onChange={(v) => setInput("ferritin", v)}
+                    fieldKey="ferritin" required
+                  />
+                  <RangeOrExact
+                    id="hemoglobin" label="Hemoglobin" unit="g/dL"
+                    value={inputs.hemoglobin} onChange={(v) => setInput("hemoglobin", v)}
+                    fieldKey="hemoglobin" required
+                  />
+                  <RangeOrExact
+                    id="weight" label="Weight" unit="kg"
+                    value={inputs.weight} onChange={(v) => setInput("weight", v)}
+                    fieldKey="weight" required
+                  />
                 </div>
 
                 {/* Row 2: Serum Iron + TIBC (above TSAT, matching its labeled placement) */}
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <div className="space-y-2">
-                    <Label htmlFor="serumIron">Serum Iron</Label>
-                    <Input
-                      id="serumIron" type="number" step="0.1" min="0"
-                      placeholder="e.g. 45"
-                      value={inputs.serumIron}
-                      onChange={(e) => setInput("serumIron", e.target.value)}
-                    />
-                    <span className="text-xs text-muted-foreground">µg/dL</span>
-                  </div>
-                  <div className="space-y-2">
-                    <Label htmlFor="tibc">TIBC</Label>
-                    <Input
-                      id="tibc" type="number" step="0.1" min="0"
-                      placeholder="e.g. 380"
-                      value={inputs.tibc}
-                      onChange={(e) => setInput("tibc", e.target.value)}
-                    />
-                    <span className="text-xs text-muted-foreground">µg/dL</span>
-                  </div>
+                  <RangeOrExact
+                    id="serumIron" label="Serum Iron" unit="µg/dL"
+                    value={inputs.serumIron} onChange={(v) => setInput("serumIron", v)}
+                    fieldKey="serumIron"
+                  />
+                  <RangeOrExact
+                    id="tibc" label="TIBC" unit="µg/dL"
+                    value={inputs.tibc} onChange={(v) => setInput("tibc", v)}
+                    fieldKey="tibc"
+                  />
                 </div>
 
                 {/* Row 3: TSAT (auto-calculated from Serum Iron/TIBC if not entered directly) */}
                 <div>
-                  <Label htmlFor="tsat" className="mb-2 block text-sm font-medium">Transferrin Saturation (TSAT)</Label>
-                  <Input
-                    id="tsat"
-                    type="number" step="0.1" min="0" max="100"
-                    placeholder="Enter TSAT % (or leave blank to auto-calculate)"
-                    value={inputs.tsat}
-                    onChange={(e) => setInput("tsat", e.target.value)}
-                    className={inputs.tsat ? "border-primary/40" : ""}
+                  <RangeOrExact
+                    id="tsat" label="Transferrin Saturation (TSAT)" unit="%"
+                    value={inputs.tsat} onChange={(v) => setInput("tsat", v)}
+                    fieldKey="tsat"
                   />
                   <div className="flex items-center gap-1 mt-2">
                     <Calculator className="h-3 w-3 text-muted-foreground" />
