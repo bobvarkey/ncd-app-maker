@@ -113,7 +113,7 @@ export default function Fatigue() {
                     <li className="flex items-start gap-2"><ArrowRight className="h-4 w-4 mt-0.5 text-destructive shrink-0" />Hypothyroidism</li>
                     <li className="flex items-start gap-2"><ArrowRight className="h-4 w-4 mt-0.5 text-destructive shrink-0" />Acromegaly</li>
                     <li className="flex items-start gap-2"><ArrowRight className="h-4 w-4 mt-0.5 text-destructive shrink-0" />OSA / Insulinoma</li>
-                    <li className="flex items-start gap-2"><ArrowRight className="h-4 w-4 mt-0.5 text-destructive shrink-0" />Organ failure (CCF, nephrotic syndrome, liver disease)</li>
+                    <li className="flex items-start gap-2"><ArrowRight className="h-4 w-4 mt-0.5 text-destructive shrink-0" />Organ failure (CCF/HFpEF/HFrEF, nephrotic syndrome, liver disease)</li>
                   </ul>
                 </div>
                 <div>
@@ -158,6 +158,8 @@ export default function Fatigue() {
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm text-muted-foreground">
                 <ul className="space-y-1">
                   <li className="flex items-start gap-2"><ArrowRight className="h-4 w-4 mt-0.5 text-success shrink-0" />Anemia</li>
+                  <li className="flex items-start gap-2"><ArrowRight className="h-4 w-4 mt-0.5 text-success shrink-0" />Iron deficiency (with or without anemia)</li>
+                  <li className="flex items-start gap-2"><ArrowRight className="h-4 w-4 mt-0.5 text-success shrink-0" />HFpEF / HFrEF (exertional fatigue, DOE)</li>
                   <li className="flex items-start gap-2"><ArrowRight className="h-4 w-4 mt-0.5 text-success shrink-0" />SLE</li>
                   <li className="flex items-start gap-2"><ArrowRight className="h-4 w-4 mt-0.5 text-success shrink-0" />Multiple sclerosis</li>
                   <li className="flex items-start gap-2"><ArrowRight className="h-4 w-4 mt-0.5 text-success shrink-0" />Chronic fatigue syndrome</li>
@@ -217,7 +219,8 @@ export default function Fatigue() {
             <div className="p-4 rounded-lg bg-muted/40 border border-border/50 space-y-2">
               <h3 className="text-sm font-semibold text-success">➡️ No Weight Change</h3>
               <ul className="space-y-1.5 text-sm text-muted-foreground">
-                <li className="flex items-start gap-2"><span className="text-warning mt-0.5 shrink-0">•</span>CBC, ferritin, iron studies (anemia)</li>
+                <li className="flex items-start gap-2"><span className="text-warning mt-0.5 shrink-0">•</span>CBC, ferritin, iron studies (anemia / iron deficiency)</li>
+                <li className="flex items-start gap-2"><span className="text-warning mt-0.5 shrink-0">•</span>BNP or NT-proBNP, echo (HFpEF / HFrEF)</li>
                 <li className="flex items-start gap-2"><span className="text-warning mt-0.5 shrink-0">•</span>ANA, anti-dsDNA, C3/C4, ESR (SLE)</li>
                 <li className="flex items-start gap-2"><span className="text-warning mt-0.5 shrink-0">•</span>MRI brain, CSF analysis (MS)</li>
                 <li className="flex items-start gap-2"><span className="text-warning mt-0.5 shrink-0">•</span>PHQ-9 / GAD-7 screening (depression)</li>
