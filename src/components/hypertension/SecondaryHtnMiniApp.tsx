@@ -29,12 +29,16 @@ const evaluationItems: EvaluationItem[] = [
     id: 'reninoma',
     condition: 'Reninoma (Juxtaglomerular Cell Tumor)',
     tests: [
+      'Stop ACEi, ARB, MRA meds (interfere with renin measurement)',
+      'CT abdomen with contrast — look for small cortical tumor / complex renal cyst',
+      'MRI kidney with delayed contrast',
+      'Admit 4–6 days prior to RVS for bed rest, final antihypertensive titration, and salt deprivation',
+      'Renal vein renin sampling (Wolley technique): samples before & 20 min after IV enalaprilat 2.5 mg',
+      'Lateralization ratio >1.5 consistent with reninoma',
       'Plasma renin activity & direct renin concentration (elevated)',
       'Aldosterone levels (elevated)',
-      'Renal CT / MRI with contrast — look for small cortical tumor',
-      'Selective renal vein renin sampling (lateralization)',
-      'Serum K+ (hypokalemia common, but can be normokalemic)',
-      'Age of onset <30 years (typical presentation: severe HTN + hypokalemia in young)'
+      'Serum K+ (hypokalemia common, can be normokalemic)',
+      'Age of onset <30 years (typical: severe HTN + hypokalemia in young)'
     ],
     icon: <Droplets className="h-5 w-5" />,
     category: 'endocrine'
@@ -176,6 +180,40 @@ export default function SecondaryHtnMiniApp() {
                 </div>
               );
             })}
+
+            {/* Reninoma — detailed protocol card */}
+            <div className="p-4 rounded-lg border-2 border-purple-500/30 bg-purple-500/5 mt-4">
+              <h4 className="text-sm font-semibold flex items-center gap-2 mb-3">
+                <Droplets className="h-4 w-4 text-purple-500" />
+                Reninoma Workup Protocol
+              </h4>
+              <div className="space-y-2 text-xs">
+                <div className="flex items-start gap-2">
+                  <span className="font-bold text-purple-500 shrink-0 w-5">a.</span>
+                  <span><strong>Stop ACEi, ARB, MRA meds</strong> — these interfere with renin measurement.</span>
+                </div>
+                <div className="flex items-start gap-2">
+                  <span className="font-bold text-purple-500 shrink-0 w-5">b.</span>
+                  <span><strong>CT abdomen with contrast</strong> — evaluate for renal artery stenosis and reninoma (look for small cortical tumor / complex renal cyst).</span>
+                </div>
+                <div className="flex items-start gap-2">
+                  <span className="font-bold text-purple-500 shrink-0 w-5">c.</span>
+                  <span><strong>MRI kidney with delayed contrast</strong> — further characterization if CT inconclusive.</span>
+                </div>
+                <div className="flex items-start gap-2">
+                  <span className="font-bold text-purple-500 shrink-0 w-5">d.</span>
+                  <span><strong>Admit 4–6 days prior to renal vein sampling (RVS)</strong> for bed rest, final antihypertensive titration, and salt deprivation.</span>
+                </div>
+                <div className="flex items-start gap-2">
+                  <span className="font-bold text-purple-500 shrink-0 w-5">e.</span>
+                  <span><strong>Renal vein renin sampling per Wolley et al:</strong> After 5 days of salt deprivation and overnight recumbency, simultaneous bilateral renal vein and infrarenal IVC samples are drawn <strong>before</strong> and <strong>20 min after</strong> IV enalaprilat 2.5 mg. A lateralization ratio &gt;1.5 before and after stimulation confirms a unilateral renin-secreting source — typical for reninoma.</span>
+                </div>
+                <div className="flex items-start gap-2">
+                  <span className="font-bold text-purple-500 shrink-0 w-5">f.</span>
+                  <span><strong>Interpretation:</strong> e.g., right-to-left ratio 1.9 pre-enalaprilat + 2.0 post-enalaprilat → consistent with right renal reninoma (presumed = the imaged complex right renal cyst).</span>
+                </div>
+              </div>
+            </div>
           </TabsContent>
 
           <TabsContent value="causes" className="space-y-3 pt-4">
@@ -231,7 +269,11 @@ export default function SecondaryHtnMiniApp() {
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-primary font-bold">•</span>
-                  <span><strong>Reninoma (juxtaglomerular cell tumor):</strong> Rare cause of severe HTN in young (&lt;30y), marked by high renin, high aldosterone, low K+. Small cortical tumor on CT/MRI. Treatment: surgical resection. Suspect when young patient presents with resistant HTN + hypokalemia + very high renin.</span>
+                  <span><strong>Reninoma (juxtaglomerular cell tumor):</strong> Rare cause of severe HTN in young (&lt;30y), marked by high renin, high aldosterone, low K⁺. Small cortical tumor on CT. <strong>Workup:</strong> Stop ACEi/ARB/MRA; CT abdomen with contrast; MRI kidney with delayed contrast; admit 4–6 days before renal vein sampling for bed rest, BP titration &amp; salt deprivation; renal vein renin sampling per <strong>Wolley et al</strong> — samples before &amp; 20 min after IV enalaprilat 2.5 mg; lateralization ratio &gt;1.5 confirms. Treatment: partial/complete nephrectomy.</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-primary font-bold">•</span>
+                  <span><strong>Renal vein renin sampling — Wolley technique:</strong> After 5 days of salt deprivation and overnight recumbency, simultaneous bilateral renal vein and infrarenal IVC samples are drawn before and 20 minutes after IV enalaprilat 2.5 mg. A right-to-left ratio &gt;1.5 (or left-to-right &gt;1.5) before and after enalaprilat indicates a unilateral renin-secreting source — typically a reninoma (JG cell tumor).</span>
                 </li>
               </ul>
             </div>
