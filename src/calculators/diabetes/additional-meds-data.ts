@@ -443,6 +443,13 @@ export const ADDITIONAL_MEDS_DATA: DoseEntry[] = [
     hepatic: "Reduce dose in severe impairment.",
   },
   {
+    drug: "Dihydralazine",
+    drugClass: "Direct Vasodilator",
+    normalDose: "12.5–25 mg TID/QID",
+    notes: "Hydralazine derivative. Used in pregnancy hypertension (pre-eclampsia). Lower lupus risk vs hydralazine. Similar renal dosing considerations.",
+    hepatic: "Use caution in severe impairment.",
+  },
+  {
     drug: "Prazosin",
     drugClass: "α1-Blocker",
     normalDose: "1–10 mg BID–TID",

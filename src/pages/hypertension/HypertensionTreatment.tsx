@@ -238,8 +238,8 @@ const drugData: DrugRow[] = [
   {
     potency: "Very high",
     drugClass: "Direct vasodilators",
-    examples: "Hydralazine, minoxidil",
-    startingDose: "Hydralazine 25 mg BID; minoxidil 2.5 mg daily",
+    examples: "Hydralazine, dihydralazine, minoxidil",
+    startingDose: "Hydralazine 25 mg BID; dihydralazine 12.5 mg TID; minoxidil 2.5 mg daily",
     bestUse: "Resistant hypertension or special situations, usually combined with other agents due to adverse-effect burden.",
   },
   {

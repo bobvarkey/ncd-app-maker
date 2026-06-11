@@ -157,6 +157,7 @@ const drugDoseDetails: DrugDoseDetail[] = [
 
   // ─── Vasodilators ───
   { name: "Hydralazine", brand: "Apresoline", drugClass: "Direct vasodilator", doseRange: "10–50 mg QID", pearls: "Use with BB + diuretic (pseudo-tolerance). A-HeFT: ↓ mortality in African-Americans with HF.", caution: "Reflex tachycardia, drug-induced lupus" },
+  { name: "Dihydralazine", brand: "Aprilife", drugClass: "Direct vasodilator", doseRange: "12.5–25 mg TID/QID", pearls: "Hydralazine derivative; used in pregnancy hypertension (esp. pre-eclampsia) where other agents have failed. Similar properties to hydralazine with possibly less reflex tachycardia.", caution: "Reflex tachycardia, drug-induced lupus (lower risk than hydralazine)" },
   { name: "Minoxidil", brand: "Loniten", drugClass: "Direct vasodilator", doseRange: "2.5–40 mg BID/TID", pearls: "Most potent oral agent. Requires loop diuretic + BB (reflex tachycardia + fluid retention).", caution: "Pericardial effusion, hirsutism" },
 
   // ─── IV Agents ───
