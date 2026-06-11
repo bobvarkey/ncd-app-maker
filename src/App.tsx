@@ -40,6 +40,7 @@ import HypertensionOverview from "@/pages/hypertension/HypertensionOverview";
 import HypertensionTab from "@/pages/hypertension/HypertensionTab";
 import HypertensionTreatment from "@/pages/hypertension/HypertensionTreatment";
 import HypertensionClinicalCards from "@/pages/hypertension/HypertensionClinicalCards";
+import SecondaryHtnPage from "@/pages/hypertension/SecondaryHtnPage";
 
 // Big Four — Lipids sub-pages
 import LipidsAssessment from "@/pages/lipids/LipidsAssessment";
@@ -199,6 +200,7 @@ const App = () => (
           <Route path="/hypertension/tab" element={<><TabNavigation /><HypertensionTab /></>} />
           <Route path="/hypertension/treatment" element={<><TabNavigation /><HypertensionTreatment /></>} />
           <Route path="/hypertension/clinical-cards" element={<><TabNavigation /><HypertensionClinicalCards /></>} />
+          <Route path="/hypertension/secondary-htn" element={<><TabNavigation /><SecondaryHtnPage /></>} />
           <Route path="/lipids/assessment" element={<><TabNavigation /><LipidsAssessment /></>} />
           <Route path="/lipids/overview" element={<><TabNavigation /><LipidsOverview /></>} />
           <Route path="/lipids/tab" element={<><TabNavigation /><LipidsTab /></>} />

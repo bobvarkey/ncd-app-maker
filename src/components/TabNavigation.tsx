@@ -39,6 +39,38 @@ function BloodSubNav() {
   );
 }
 
+const htnSubItems = [
+  { path: "/hypertension/secondary-htn", label: "Secondary HTN", icon: "🔍" },
+];
+
+function HtnSubNav() {
+  const location = useLocation();
+  return (
+    <ul className="mt-1 ml-4 flex flex-col gap-0.5 border-l border-border pl-2">
+      {htnSubItems.map((s) => {
+        const isActive = location.pathname === s.path;
+        return (
+          <li key={s.path}>
+            <Link
+              to={s.path}
+              className={cn(
+                "flex items-center gap-2 px-2 py-1.5 rounded-md text-xs font-medium transition-colors",
+                isActive
+                  ? "bg-warning/100/10 text-warning"
+                  : "text-muted-foreground hover:bg-muted hover:text-foreground"
+              )}
+              aria-current={isActive ? "page" : undefined}
+            >
+              <span className="text-sm leading-none">{s.icon}</span>
+              <span className="truncate">{s.label}</span>
+            </Link>
+          </li>
+        );
+      })}
+    </ul>
+  );
+}
+
 type NavItem = {
   path: string;
   label: string;
@@ -120,7 +152,9 @@ export function TabNavigation() {
               currentPath === item.path ||
               (item.path !== "/home" && currentPath.startsWith(item.path + "/"));
             const isBlood = item.path === "/anemia";
+            const isHtn = item.path === "/hypertension";
             const showBloodSubs = isBlood && currentPath.startsWith("/anemia") && !collapsed;
+            const showHtnSubs = isHtn && currentPath.startsWith("/hypertension") && !collapsed;
             return (
               <li key={item.path}>
                 <Link
@@ -139,6 +173,7 @@ export function TabNavigation() {
                   {!collapsed && <span className="truncate">{item.label}</span>}
                 </Link>
                 {showBloodSubs && <BloodSubNav />}
+                {showHtnSubs && <HtnSubNav />}
               </li>
             );
           })}

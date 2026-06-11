@@ -1,0 +1,308 @@
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { Checkbox } from "@/components/ui/checkbox";
+import { Progress } from "@/components/ui/progress";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { ArrowLeft } from "lucide-react";
+import {
+  Heart, Wine, Pill, Activity, Zap, Moon, TestTube, Stethoscope, FlaskConical,
+  Droplets, Syringe, Info, AlertTriangle,
+} from "lucide-react";
+
+interface EvaluationItem {
+  id: string;
+  condition: string;
+  tests: string[];
+  icon: React.ReactNode;
+  category: 'endocrine' | 'renal' | 'lifestyle' | 'vascular' | 'other';
+}
+
+const evaluationItems: EvaluationItem[] = [
+  {
+    id: 'primary-aldosteronism',
+    condition: 'Primary Aldosteronism',
+    tests: ['Aldosterone/renin ratio', 'Saline suppression test', 'Adrenal CT/MRI'],
+    icon: <Droplets className="h-5 w-5" />,
+    category: 'endocrine'
+  },
+  {
+    id: 'reninoma',
+    condition: 'Reninoma (Juxtaglomerular Cell Tumor)',
+    tests: [
+      'Stop ACEi, ARB, MRA meds (interfere with renin measurement)',
+      'CT abdomen with contrast — look for small cortical tumor / complex renal cyst',
+      'MRI kidney with delayed contrast',
+      'Admit 4–6 days prior to RVS for bed rest, final antihypertensive titration, and salt deprivation',
+      'Renal vein renin sampling (Wolley technique): samples before & 20 min after IV enalaprilat 2.5 mg',
+      'Lateralization ratio >1.5 consistent with reninoma',
+      'Plasma renin activity & direct renin concentration (elevated)',
+      'Aldosterone levels (elevated)',
+      'Serum K+ (hypokalemia common, can be normokalemic)',
+      'Age of onset <30 years (typical: severe HTN + hypokalemia in young)'
+    ],
+    icon: <Droplets className="h-5 w-5" />,
+    category: 'endocrine'
+  },
+  {
+    id: 'sleep-apnea',
+    condition: 'Obstructive Sleep Apnea',
+    tests: ['Polysomnography', 'Epworth sleepiness scale', 'Overnight oximetry'],
+    icon: <Moon className="h-5 w-5" />,
+    category: 'other'
+  },
+  {
+    id: 'alcohol-use',
+    condition: 'Alcohol Use',
+    tests: ['Detailed alcohol history', 'AUDIT questionnaire', 'GGT, AST, ALT'],
+    icon: <Wine className="h-5 w-5" />,
+    category: 'lifestyle'
+  },
+  {
+    id: 'nsaid-use',
+    condition: 'NSAID Use',
+    tests: ['Medication history review', 'OTC medication assessment'],
+    icon: <Pill className="h-5 w-5" />,
+    category: 'lifestyle'
+  },
+  {
+    id: 'renovascular',
+    condition: 'Renovascular Disease',
+    tests: ['Renal ultrasound', 'Serum creatinine/BUN', 'Urinalysis with microscopy for RBCs and casts'],
+    icon: <FlaskConical className="h-5 w-5" />,
+    category: 'renal'
+  },
+  {
+    id: 'renal-artery-stenosis',
+    condition: 'Renal Artery Stenosis',
+    tests: ['Renal artery Doppler', 'CT/MR angiography', 'ACE inhibitor test', 'Urine microscopic exam: look for RBCs, RBC casts, granular casts'],
+    icon: <Activity className="h-5 w-5" />,
+    category: 'vascular'
+  },
+  {
+    id: 'thyroid',
+    condition: 'Thyroid Disorders',
+    tests: ['TSH', 'Free T3/T4', 'Thyroid antibodies'],
+    icon: <Zap className="h-5 w-5" />,
+    category: 'endocrine'
+  },
+  {
+    id: 'cushings',
+    condition: "Cushing's Syndrome",
+    tests: ['24h urine cortisol', 'Dexamethasone suppression test', 'Late-night salivary cortisol'],
+    icon: <TestTube className="h-5 w-5" />,
+    category: 'endocrine'
+  },
+  {
+    id: 'pheochromocytoma',
+    condition: 'Pheochromocytoma',
+    tests: ['Plasma metanephrines', '24h urinary metanephrines', 'Adrenal CT/MRI', 'Genetic testing'],
+    icon: <Syringe className="h-5 w-5" />,
+    category: 'endocrine'
+  },
+  {
+    id: 'substance-abuse',
+    condition: 'Substance Abuse & Polycythemia',
+    tests: ['Urine toxicology', 'CBC/Hematocrit', 'EPO levels'],
+    icon: <Stethoscope className="h-5 w-5" />,
+    category: 'other'
+  }
+];
+
+const catColors: Record<string, string> = {
+  endocrine: 'bg-purple-500/10 text-purple-600 border-purple-500/20',
+  renal: 'bg-blue-500/10 text-blue-600 border-blue-500/20',
+  lifestyle: 'bg-emerald-500/10 text-emerald-600 border-emerald-500/20',
+  vascular: 'bg-rose-500/10 text-rose-600 border-rose-500/20',
+  other: 'bg-gray-500/10 text-gray-600 border-gray-500/20',
+};
+
+export default function SecondaryHtnPage() {
+  const navigate = useNavigate();
+  const [completed, setCompleted] = useState<Set<string>>(new Set());
+  const [activeTab, setActiveTab] = useState("evaluation");
+
+  const toggle = (id: string) => {
+    const next = new Set(completed);
+    if (next.has(id)) next.delete(id); else next.add(id);
+    setCompleted(next);
+  };
+
+  const progress = (completed.size / evaluationItems.length) * 100;
+
+  return (
+    <div className="min-h-screen bg-background">
+      <div className="max-w-6xl mx-auto px-4 py-6 md:py-8">
+        {/* Back to Home */}
+        <Button variant="ghost" size="sm" onClick={() => navigate("/home")} className="mb-6">
+          <ArrowLeft className="h-4 w-4 mr-1" /> Back to Home
+        </Button>
+
+        {/* Hero */}
+        <div className="mb-6">
+          <div className="flex items-center gap-3 mb-4">
+            <div className="w-12 h-12 rounded-xl bg-purple-500/10 flex items-center justify-center border border-purple-500/20">
+              <Heart className="h-6 w-6 text-purple-500" />
+            </div>
+            <div>
+              <h1 className="text-3xl font-serif font-semibold tracking-tight">
+                Secondary Hypertension
+              </h1>
+              <p className="text-muted-foreground">
+                Systematic evaluation for secondary causes of hypertension
+              </p>
+            </div>
+          </div>
+        </div>
+
+        {/* Progress */}
+        <div className="flex items-center gap-3 mb-6 p-4 rounded-lg border bg-card/60">
+          <Progress value={progress} className="h-3 flex-1" />
+          <span className="text-sm text-muted-foreground whitespace-nowrap font-medium">{completed.size}/{evaluationItems.length} evaluated</span>
+        </div>
+
+        {/* Main content */}
+        <Tabs value={activeTab} onValueChange={setActiveTab}>
+          <TabsList className="grid w-full grid-cols-3 h-auto">
+            <TabsTrigger value="evaluation">📋 Workup</TabsTrigger>
+            <TabsTrigger value="causes">🔍 Causes</TabsTrigger>
+            <TabsTrigger value="tips">💡 Tips</TabsTrigger>
+          </TabsList>
+
+          <TabsContent value="evaluation" className="space-y-2 pt-4">
+            {evaluationItems.map((item) => {
+              const done = completed.has(item.id);
+              return (
+                <div
+                  key={item.id}
+                  className={`p-3 rounded-lg border transition-all ${done ? 'border-emerald-500/30 bg-emerald-500/5' : 'border-border hover:border-primary/30'}`}
+                >
+                  <label className="flex items-start gap-3 cursor-pointer">
+                    <Checkbox checked={done} onCheckedChange={() => toggle(item.id)} className="mt-1" />
+                    <div className="flex-1 min-w-0">
+                      <div className="flex items-center gap-2 mb-1">
+                        <div className={`p-1 rounded ${catColors[item.category]}`}>{item.icon}</div>
+                        <span className={`text-sm font-medium ${done ? 'line-through text-muted-foreground' : ''}`}>
+                          {item.condition}
+                        </span>
+                        <Badge variant="outline" className={`ml-auto text-[10px] ${catColors[item.category]}`}>
+                          {item.category}
+                        </Badge>
+                      </div>
+                      {!done && (
+                        <div className="flex flex-wrap gap-1">
+                          {item.tests.map((t) => (
+                            <span key={t} className="text-[10px] px-1.5 py-0.5 rounded bg-muted text-muted-foreground">{t}</span>
+                          ))}
+                        </div>
+                      )}
+                    </div>
+                  </label>
+                </div>
+              );
+            })}
+
+            {/* Reninoma — detailed protocol card */}
+            <div className="p-4 rounded-lg border-2 border-purple-500/30 bg-purple-500/5 mt-4">
+              <h4 className="text-sm font-semibold flex items-center gap-2 mb-3">
+                <Droplets className="h-4 w-4 text-purple-500" />
+                Reninoma Workup Protocol
+              </h4>
+              <div className="space-y-2 text-xs">
+                <div className="flex items-start gap-2">
+                  <span className="font-bold text-purple-500 shrink-0 w-5">a.</span>
+                  <span><strong>Stop ACEi, ARB, MRA meds</strong> — these interfere with renin measurement.</span>
+                </div>
+                <div className="flex items-start gap-2">
+                  <span className="font-bold text-purple-500 shrink-0 w-5">b.</span>
+                  <span><strong>CT abdomen with contrast</strong> — evaluate for renal artery stenosis and reninoma (look for small cortical tumor / complex renal cyst).</span>
+                </div>
+                <div className="flex items-start gap-2">
+                  <span className="font-bold text-purple-500 shrink-0 w-5">c.</span>
+                  <span><strong>MRI kidney with delayed contrast</strong> — further characterization if CT inconclusive.</span>
+                </div>
+                <div className="flex items-start gap-2">
+                  <span className="font-bold text-purple-500 shrink-0 w-5">d.</span>
+                  <span><strong>Admit 4–6 days prior to renal vein sampling (RVS)</strong> for bed rest, final antihypertensive titration, and salt deprivation.</span>
+                </div>
+                <div className="flex items-start gap-2">
+                  <span className="font-bold text-purple-500 shrink-0 w-5">e.</span>
+                  <span><strong>Renal vein renin sampling per Wolley et al:</strong> After 5 days of salt deprivation and overnight recumbency, simultaneous bilateral renal vein and infrarenal IVC samples are drawn <strong>before</strong> and <strong>20 min after</strong> IV enalaprilat 2.5 mg. A lateralization ratio &gt;1.5 before and after stimulation confirms a unilateral renin-secreting source — typical for reninoma.</span>
+                </div>
+                <div className="flex items-start gap-2">
+                  <span className="font-bold text-purple-500 shrink-0 w-5">f.</span>
+                  <span><strong>Interpretation:</strong> e.g., right-to-left ratio 1.9 pre-enalaprilat + 2.0 post-enalaprilat → consistent with right renal reninoma (presumed = the imaged complex right renal cyst).</span>
+                </div>
+              </div>
+            </div>
+          </TabsContent>
+
+          <TabsContent value="causes" className="space-y-3 pt-4">
+            <div className="p-3 rounded-lg border bg-muted/20">
+              <h4 className="text-sm font-semibold mb-2">🔬 Common Secondary Causes</h4>
+              <div className="grid gap-2 text-xs">
+                <div className="p-2 rounded bg-purple-500/5 border border-purple-500/20">
+                  <strong>Endocrine:</strong> Primary aldosteronism, Cushing's, pheochromocytoma, thyroid disease, hyperparathyroidism, <strong>Reninoma</strong>
+                </div>
+                <div className="p-2 rounded bg-blue-500/5 border border-blue-500/20">
+                  <strong>Renal:</strong> Renovascular disease (RAS), renal artery stenosis, chronic kidney disease, polycystic kidney
+                </div>
+                <div className="p-2 rounded bg-emerald-500/5 border border-emerald-500/20">
+                  <strong>Lifestyle:</strong> Alcohol &gt;3 drinks/day, NSAIDs, cocaine/amphetamines, oral contraceptives, licorice
+                </div>
+                <div className="p-2 rounded bg-rose-500/5 border border-rose-500/20">
+                  <strong>Vascular:</strong> Coarctation of aorta, vasculitis
+                </div>
+                <div className="p-2 rounded bg-gray-500/5 border border-gray-500/20">
+                  <strong>Other:</strong> OSA, polycythemia, pregnancy (preeclampsia), hypercalcemia
+                </div>
+              </div>
+            </div>
+          </TabsContent>
+
+          <TabsContent value="tips" className="space-y-3 pt-4">
+            <div className="p-3 rounded-lg border bg-primary/5">
+              <h4 className="text-sm font-semibold mb-2">💡 Clinical Pearls</h4>
+              <ul className="space-y-2 text-xs">
+                <li className="flex items-start gap-2">
+                  <span className="text-primary font-bold">•</span>
+                  <span><strong>Screen for primary aldosteronism</strong> in resistant HTN + hypokalemia (even mild). Aldosterone/renin ratio is the screening test. Confirm with saline suppression or oral salt loading.</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-primary font-bold">•</span>
+                  <span><strong>Pheochromocytoma:</strong> Measure plasma metanephrines (supine ≥30 min, LC-MS/MS). Avoid TCAs, SNRIs, levodopa 2 weeks before. If positive, CT/MRI abdomen + 123I-MIBG or 68Ga-DOTATATE PET.</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-primary font-bold">•</span>
+                  <span><strong>OSA screening:</strong> Snoring, witnessed apneas, daytime sleepiness, BMI &gt;35. Polysomnography is gold standard. CPAP can lower BP 5–10 mmHg.</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-primary font-bold">•</span>
+                  <span><strong>Drug-induced HTN:</strong> NSAIDs (most common OTC cause), oral contraceptives, steroids, cyclosporine, tacrolimus, erythropoietin, decongestants, TCAs, MAOIs.</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-primary font-bold">•</span>
+                  <span><strong>Renovascular disease:</strong> Suspect in onset &lt;30y (fibromuscular dysplasia) or &gt;55y (atherosclerotic), worsening renal function with ACEi/ARB, flash pulmonary edema, asymmetric kidneys.</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-primary font-bold">•</span>
+                  <span><strong>Urine microscopy</strong> is an essential part of secondary HTN workup — check for microscopic hematuria (RBCs), RBC casts (glomerulonephritis), granular/waxy casts (parenchymal disease), and pyuria (infection/pyelonephritis).</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-primary font-bold">•</span>
+                  <span><strong>Reninoma (juxtaglomerular cell tumor):</strong> Rare cause of severe HTN in young (&lt;30y), marked by high renin, high aldosterone, low K⁺. Small cortical tumor on CT. <strong>Workup:</strong> Stop ACEi/ARB/MRA; CT abdomen with contrast; MRI kidney with delayed contrast; admit 4–6 days before renal vein sampling for bed rest, BP titration &amp; salt deprivation; renal vein renin sampling per <strong>Wolley et al</strong> — samples before &amp; 20 min after IV enalaprilat 2.5 mg; lateralization ratio &gt;1.5 confirms. Treatment: partial/complete nephrectomy.</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-primary font-bold">•</span>
+                  <span><strong>Renal vein renin sampling — Wolley technique:</strong> After 5 days of salt deprivation and overnight recumbency, simultaneous bilateral renal vein and infrarenal IVC samples are drawn before and 20 minutes after IV enalaprilat 2.5 mg. A right-to-left ratio &gt;1.5 (or left-to-right &gt;1.5) before and after enalaprilat indicates a unilateral renin-secreting source — typically a reninoma (JG cell tumor).</span>
+                </li>
+              </ul>
+            </div>
+          </TabsContent>
+        </Tabs>
+      </div>
+    </div>
+  );
+}
