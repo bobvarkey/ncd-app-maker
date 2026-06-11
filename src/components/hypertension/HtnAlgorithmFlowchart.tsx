@@ -343,9 +343,9 @@ export default function HtnAlgorithmFlowchart() {
                   >
                     <div className="flex items-center justify-between mb-1 gap-2 flex-wrap">
                       <Badge variant="outline" className={`${toneBadge[s.tone]} font-mono`}>{s.step}</Badge>
-                      <span className="text-xs font-semibold text-foreground">{s.label}</span>
+                      <span className="text-xs font-semibold text-white">{s.label}</span>
                     </div>
-                    <p className="text-xs text-foreground">{s.classes.join(" + ")}</p>
+                    <p className="text-xs text-white">{s.classes.join(" + ")}</p>
                   </button>
                   {i < coreSteps.length - 1 && (
                     <div className="flex justify-center py-0.5"><ArrowDown className="h-4 w-4 text-muted-foreground" /></div>
