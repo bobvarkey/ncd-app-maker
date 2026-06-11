@@ -105,6 +105,14 @@ export default function DiabetesTab() {
   // Order: Treatment first, then Assessment, then Overview at bottom
   const sectionOrder = ["assessment", "treatment", "overview"];
 
+  const scrollToSection = (id: string) => {
+    toggleSection(id);
+    setTimeout(() => {
+      const el = document.getElementById(`diabetes-section-${id}`);
+      if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
+    }, 100);
+  };
+
   return (
     <div className="min-h-screen bg-background">
       {/* Grain Overlay */}
@@ -131,6 +139,29 @@ export default function DiabetesTab() {
           </div>
         </div>
       </section>
+
+      {/* Quick Navigation Tabs — sticky at top */}
+      <div className="sticky top-0 z-50 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 pb-2 pt-2 -mx-4 px-4 max-w-6xl mx-auto">
+        <div className="flex flex-wrap gap-1.5">
+          {sectionOrder.map((id) => {
+            const section = sections.find(s => s.id === id)!;
+            return (
+              <button
+                key={id}
+                onClick={() => scrollToSection(id)}
+                className={`px-3 py-1.5 text-xs rounded-full border transition-all whitespace-nowrap ${
+                  openSections.has(id)
+                    ? "border-red-500/40 text-red-500 shadow-sm"
+                    : "bg-muted/50 text-muted-foreground border-border hover:border-red-500/40 hover:text-foreground"
+                }`}
+              >
+                {React.cloneElement(section.icon as React.ReactElement, { className: "h-3.5 w-3.5 inline mr-1" })}
+                {section.title.split(" ")[0]}
+              </button>
+            );
+          })}
+        </div>
+      </div>
 
       {/* Expand/Collapse All */}
       <section className="max-w-6xl mx-auto px-6 pb-4">
@@ -167,9 +198,10 @@ export default function DiabetesTab() {
         {sectionOrder.map((id) => {
           const section = sections.find(s => s.id === id)!;
           return (
-            <Section
-              key={section.id}
-              id={section.id}
+            <div key={section.id} id={`diabetes-section-${section.id}`}>
+              <Section
+                key={section.id}
+                id={section.id}
               title={section.title}
               icon={section.icon}
               description={section.description}

@@ -1,9 +1,9 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 import {
   Heart,
   Activity,
@@ -11,10 +11,13 @@ import {
   Pill,
   BookOpen,
   ChevronRight,
+  ChevronDown,
+  ChevronUp,
   Stethoscope,
   Search,
-  AlertTriangle
+  AlertTriangle,
 } from "lucide-react";
+import { cn } from "@/lib/utils";
 import HypertensionOverview from "./HypertensionOverview";
 import HypertensionAssessment from "./HypertensionAssessment";
 import HypertensionTreatment from "./HypertensionTreatment";
@@ -28,8 +31,114 @@ const categoryColors = {
   gradient: "from-orange-500 to-amber-600",
 };
 
+interface SectionProps {
+  id: string;
+  title: string;
+  icon: React.ReactNode;
+  description: string;
+  isOpen: boolean;
+  onToggle: () => void;
+  children: React.ReactNode;
+}
+
+const Section = ({ id, title, icon, description, isOpen, onToggle, children }: SectionProps) => (
+  <Card className={cn(
+    "border-border/60 transition-all duration-300",
+    isOpen && "border-warning/30 shadow-md"
+  )}>
+    <Collapsible open={isOpen} onOpenChange={onToggle}>
+      <CollapsibleTrigger asChild>
+        <CardHeader className="cursor-pointer hover:bg-muted/30 transition-colors">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-3">
+              <div className={cn(
+                "w-10 h-10 rounded-lg flex items-center justify-center transition-colors",
+                isOpen ? "bg-warning/100/15" : "bg-muted"
+              )}>
+                {React.cloneElement(icon as React.ReactElement, {
+                  className: cn("h-5 w-5", isOpen ? "text-orange-500" : "text-muted-foreground")
+                })}
+              </div>
+              <div>
+                <CardTitle className="text-lg">{title}</CardTitle>
+                <p className="text-sm text-muted-foreground">{description}</p>
+              </div>
+            </div>
+            <Button variant="ghost" size="sm" className="h-8 w-8 p-0">
+              {isOpen ? (
+                <ChevronUp className="h-4 w-4 text-muted-foreground" />
+              ) : (
+                <ChevronDown className="h-4 w-4 text-muted-foreground" />
+              )}
+            </Button>
+          </div>
+        </CardHeader>
+      </CollapsibleTrigger>
+      <CollapsibleContent>
+        <CardContent className="pt-0">
+          {children}
+        </CardContent>
+      </CollapsibleContent>
+    </Collapsible>
+  </Card>
+);
+
 export default function HypertensionTab() {
-  const [activeTab, setActiveTab] = useState("overview");
+  const [openSections, setOpenSections] = useState<Set<string>>(new Set(["overview", "assessment", "treatment", "workup"]));
+
+  const toggleSection = (id: string) => {
+    setOpenSections(prev => {
+      const next = new Set(prev);
+      if (next.has(id)) {
+        next.delete(id);
+      } else {
+        next.add(id);
+      }
+      return next;
+    });
+  };
+
+  const scrollToSection = (id: string) => {
+    toggleSection(id);
+    // Give the collapsible a moment to open before scrolling
+    setTimeout(() => {
+      const el = document.getElementById(`htn-section-${id}`);
+      if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
+    }, 100);
+  };
+
+  const sections = [
+    {
+      id: "overview",
+      title: "Overview & Guidelines",
+      icon: <BookOpen />,
+      description: "ESC 2024 classification, definitions, and diagnostic criteria",
+      component: <HypertensionOverview onNavigateToEmergencies={() => scrollToSection("treatment")} onNavigateToAssessment={() => scrollToSection("assessment")} />,
+    },
+    {
+      id: "assessment",
+      title: "Assessment Tools",
+      icon: <Stethoscope />,
+      description: "BP classification, GFR calculator, drug interactions, and risk stratification",
+      component: <HypertensionAssessment />,
+    },
+    {
+      id: "treatment",
+      title: "Treatment & Algorithms",
+      icon: <Pill />,
+      description: "Drug treatment algorithm, resistant HTN, hypertensive emergencies, potency tables",
+      component: <HypertensionTreatment />,
+    },
+    {
+      id: "workup",
+      title: "Workup & Clinical Cards",
+      icon: <Search />,
+      description: "Secondary hypertension workup, clinical vignettes, investigation flowchart",
+      component: <HypertensionClinicalCards />,
+    },
+  ];
+
+  const sectionOrder = ["overview", "assessment", "treatment", "workup"];
 
   return (
     <div className="min-h-screen bg-background">
@@ -68,104 +177,72 @@ export default function HypertensionTab() {
         </div>
         <p className="text-muted-foreground max-w-2xl leading-relaxed">
           Evidence-based hypertension management with classification tools, risk stratification,
-          assessment calculators, and treatment algorithms. Integrates GFR calculation,
-          drug interaction checking, and secondary hypertension screening.
+          assessment calculators, and treatment algorithms.
         </p>
       </section>
 
-      {/* Main Content Tabs */}
-      <section className="max-w-6xl mx-auto px-6 pb-16">
-        <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6">
-          <TabsList className="grid w-full grid-cols-2 sm:grid-cols-4 gap-1">
-            <TabsTrigger value="assessment" className="flex items-center gap-2">
-              <Stethoscope className="h-4 w-4" />
-              <span>Assess</span>
-            </TabsTrigger>
-            <TabsTrigger value="treatment" className="flex items-center gap-2">
-              <Pill className="h-4 w-4" />
-              <span>Treat</span>
-            </TabsTrigger>
-            <TabsTrigger value="workup" className="flex items-center gap-2">
-              <Search className="h-4 w-4" />
-              <span>Workup</span>
-            </TabsTrigger>
-            <TabsTrigger value="overview" className="flex items-center gap-2">
-              <BookOpen className="h-4 w-4" />
-              <span>Overview</span>
-            </TabsTrigger>
-          </TabsList>
-
-          <TabsContent value="overview" className="space-y-6">
-            <HypertensionOverview onNavigateToEmergencies={() => setActiveTab("treatment")} onNavigateToAssessment={() => setActiveTab("assessment")} />
-          </TabsContent>
-
-          <TabsContent value="assessment" className="space-y-6">
-            <HypertensionAssessment />
-          </TabsContent>
-
-          <TabsContent value="treatment" className="space-y-6">
-            <HypertensionTreatment />
-          </TabsContent>
-          <TabsContent value="workup" className="space-y-6">
-            <HypertensionClinicalCards />
-          </TabsContent>
-        </Tabs>
-      </section>
-
-      {/* Quick Navigation */}
-      <section className="max-w-6xl mx-auto px-6 pb-16">
-        <Separator className="mb-8" />
-        <h2 className="text-sm font-medium text-muted-foreground uppercase tracking-wider mb-4">
-          Quick Navigation
-        </h2>
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-          {[
-            { label: "GFR Calculator", icon: Activity, tab: "assessment" },
-            { label: "Drug Interactions", icon: Pill, tab: "assessment" },
-            { label: "Treatment Algorithm", icon: ClipboardList, tab: "treatment" },
-            { label: "Potency Table", icon: BookOpen, tab: "treatment" },
-            { label: "Hypertensive Emergencies", icon: AlertTriangle, tab: "treatment" },
-          ].map((item) => (
-            <Button
-              key={item.label}
-              variant="outline"
-              className="h-auto py-4 flex flex-col items-center gap-2 hover:border-warning/30"
-              onClick={() => setActiveTab(item.tab)}
-            >
-              <item.icon className="h-5 w-5" style={{ color: categoryColors.accent }} />
-              <span className="text-xs font-medium">{item.label}</span>
-              <ChevronRight className="h-3 w-3 text-muted-foreground" />
-            </Button>
-          ))}
+      {/* Quick Navigation Tabs — sticky at top */}
+      <div className="sticky top-0 z-50 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 pb-2 pt-2 -mx-4 px-4 max-w-6xl mx-auto">
+        <div className="flex flex-wrap gap-1.5">
+          {sectionOrder.map((id) => {
+            const section = sections.find(s => s.id === id)!;
+            return (
+              <button
+                key={id}
+                onClick={() => scrollToSection(id)}
+                className={`px-3 py-1.5 text-xs rounded-full border transition-all whitespace-nowrap ${
+                  openSections.has(id)
+                    ? "border-warning/40 text-warning shadow-sm"
+                    : "bg-muted/50 text-muted-foreground border-border hover:border-warning/40 hover:text-foreground"
+                }`}
+              >
+                {React.cloneElement(section.icon as React.ReactElement, { className: "h-3.5 w-3.5 inline mr-1" })}
+                {section.title.split(" ")[0]}
+              </button>
+            );
+          })}
         </div>
+      </div>
 
-        {/* Investigation Flowchart */}
-        <Separator className="my-8" />
-        <h2 className="text-sm font-medium text-muted-foreground uppercase tracking-wider mb-4">
-          Investigation Flowchart
-        </h2>
-        <p className="text-xs text-muted-foreground mb-4">
-          Systematic approach to secondary hypertension workup
-        </p>
-        <div className="space-y-2.5">
-          {[
-            { step: 1, title: "Initial Assessment", desc: "History & Physical Examination, BP confirmation (×3 readings), Basic metabolic panel, Urinalysis", color: "border-l-blue-500", bg: "bg-blue-500/5" },
-            { step: 2, title: "Baseline Investigations", desc: "Serum creatinine, BUN, eGFR, Serum electrolytes (Na+, K+), Fasting glucose, HbA1c, Lipid profile, ECG, Urinalysis with microalbuminuria", color: "border-l-emerald-500", bg: "bg-emerald-500/5" },
-            { step: 3, title: "Screen for Secondary Causes", desc: "Aldosterone/Renin Ratio, TSH/fT4, Plasma/Urine Metanephrines, Overnight Dexamethasone Suppression, Sleep study (if symptomatic), Renal Doppler Ultrasound", color: "border-l-teal-500", bg: "bg-teal-500/5" },
-            { step: 4, title: "Confirmatory Testing", desc: "Saline Suppression Test (aldosteronism), CT/MRI Adrenals, CTA/MRA Renal Arteries, 24h Urine Cortisol, Adrenal Vein Sampling", color: "border-l-amber-500", bg: "bg-warning/100/5" },
-            { step: 5, title: "Targeted Treatment", desc: "Treat underlying cause, Optimize antihypertensive therapy, Monitor response, Follow-up investigations", color: "border-l-green-500", bg: "bg-success/100/5" },
-          ].map((s) => (
-            <div key={s.step} className={`flex items-start gap-3 p-3 rounded-lg border-l-4 ${s.color} ${s.bg} border border-border/30`}>
-              <div className="w-7 h-7 rounded-full bg-primary/15 text-primary text-xs font-bold flex items-center justify-center shrink-0 mt-0.5">
-                {s.step}
-              </div>
-              <div className="min-w-0">
-                <p className="text-sm font-medium">{s.title}</p>
-                <p className="text-xs text-muted-foreground mt-1 leading-relaxed">{s.desc}</p>
-              </div>
+      {/* Expand/Collapse All */}
+      <section className="max-w-6xl mx-auto px-6 pb-4">
+        <div className="flex flex-wrap gap-2">
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={() => setOpenSections(new Set(sectionOrder))}
+          >
+            Expand All
+          </Button>
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={() => setOpenSections(new Set())}
+          >
+            Collapse All
+          </Button>
+        </div>
+      </section>
+
+      {/* Sections */}
+      <section className="max-w-6xl mx-auto px-6 pb-16 space-y-4">
+        {sectionOrder.map((id) => {
+          const section = sections.find(s => s.id === id)!;
+          return (
+            <div key={section.id} id={`htn-section-${section.id}`}>
+              <Section
+                id={section.id}
+                title={section.title}
+                icon={section.icon}
+                description={section.description}
+                isOpen={openSections.has(section.id)}
+                onToggle={() => toggleSection(section.id)}
+              >
+                {section.component}
+              </Section>
             </div>
-          ))}
-        </div>
+          );
+        })}
       </section>
     </div>
   );
