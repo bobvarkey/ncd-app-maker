@@ -227,7 +227,7 @@ export default function SecondaryHtnMiniApp() {
                   <strong>Renal:</strong> Renovascular disease (RAS), renal artery stenosis, chronic kidney disease, polycystic kidney
                 </div>
                 <div className="p-2 rounded bg-emerald-500/5 border border-emerald-500/20">
-                  <strong>Lifestyle:</strong> Alcohol >3 drinks/day, NSAIDs, cocaine/amphetamines, oral contraceptives, licorice
+                  <strong>Lifestyle:</strong> Alcohol &gt;3 drinks/day, NSAIDs, cocaine/amphetamines, oral contraceptives, licorice
                 </div>
                 <div className="p-2 rounded bg-rose-500/5 border border-rose-500/20">
                   <strong>Vascular:</strong> Coarctation of aorta, vasculitis

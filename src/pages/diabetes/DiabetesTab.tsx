@@ -200,16 +200,16 @@ export default function DiabetesTab() {
           return (
             <div key={section.id} id={`diabetes-section-${section.id}`}>
               <Section
-                key={section.id}
                 id={section.id}
-              title={section.title}
-              icon={section.icon}
-              description={section.description}
-              isOpen={openSections.has(section.id)}
-              onToggle={() => toggleSection(section.id)}
-            >
-              {section.component}
-            </Section>
+                title={section.title}
+                icon={section.icon}
+                description={section.description}
+                isOpen={openSections.has(section.id)}
+                onToggle={() => toggleSection(section.id)}
+              >
+                {section.component}
+              </Section>
+            </div>
           );
         })}
       </section>
