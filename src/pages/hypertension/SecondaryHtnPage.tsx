@@ -12,6 +12,97 @@ import {
   Droplets, Syringe, Info, AlertTriangle,
 } from "lucide-react";
 
+// ── Reninoma Clinical Probability Evaluator ──
+function ReninomaEvaluator() {
+  const [age, setAge] = useState<string>("");
+  const [htnSeverity, setHtnSeverity] = useState<string>("");
+  const [hypokalemia, setHypokalemia] = useState<boolean>(false);
+  const [refractory, setRefractory] = useState<boolean>(false);
+  const [youngOnset, setYoungOnset] = useState<boolean>(false);
+  const [highRenin, setHighRenin] = useState<boolean>(false);
+  const [renalMass, setRenalMass] = useState<boolean>(false);
+  const [familyHx, setFamilyHx] = useState<boolean>(false);
+
+  const score = [
+    age && parseInt(age) < 30,
+    htnSeverity === "severe" || htnSeverity === "resistant",
+    hypokalemia,
+    refractory,
+    youngOnset,
+    highRenin,
+    renalMass,
+    familyHx,
+  ].filter(Boolean).length;
+
+  const probability =
+    score >= 6 ? "High — strong likelihood of reninoma" :
+    score >= 4 ? "Moderate — consider dedicated workup" :
+    score >= 2 ? "Low — reninoma unlikely but not excluded" :
+    "Very low — alternative causes more likely";
+
+  const probColor =
+    score >= 6 ? "text-destructive border-red-500/30 bg-destructive/10" :
+    score >= 4 ? "text-warning border-amber-500/30 bg-warning/10" :
+    score >= 2 ? "text-blue-500 border-blue-500/30 bg-blue-500/10" :
+    "text-muted-foreground border-border bg-muted/20";
+
+  return (
+    <div className="p-4 rounded-lg border-2 border-purple-500/30 bg-purple-500/5 mt-4">
+      <h4 className="text-sm font-semibold flex items-center gap-2 mb-3">
+        <Droplets className="h-4 w-4 text-purple-500" />
+        Reninoma Clinical Probability Score
+      </h4>
+      <p className="text-xs text-muted-foreground mb-3">
+        Score clinical features to estimate pre-test probability of reninoma (JG cell tumor).
+      </p>
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-3">
+        <div className="space-y-1.5">
+          <label className="text-xs text-muted-foreground">Age</label>
+          <input type="number" className="w-full h-9 rounded-md border border-border bg-muted px-3 text-xs"
+            placeholder="Patient age" value={age} onChange={e => setAge(e.target.value)} />
+        </div>
+        <div className="space-y-1.5">
+          <label className="text-xs text-muted-foreground">HTN Severity</label>
+          <select className="w-full h-9 rounded-md border border-border bg-muted px-3 text-xs"
+            value={htnSeverity} onChange={e => setHtnSeverity(e.target.value)}>
+            <option value="">Select...</option>
+            <option value="mild">Mild (Stage 1)</option>
+            <option value="moderate">Moderate (Stage 2)</option>
+            <option value="severe">Severe (Stage 3)</option>
+            <option value="resistant">Resistant (≥3 meds)</option>
+          </select>
+        </div>
+      </div>
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 mb-3">
+        {[
+          [hypokalemia, setHypokalemia, "Hypokalemia (K⁺ < 3.5)"],
+          [refractory, setRefractory, "Refractory to ≥3 antihypertensives"],
+          [youngOnset, setYoungOnset, "Onset < 30 years"],
+          [highRenin, setHighRenin, "High plasma renin activity / direct renin"],
+          [renalMass, setRenalMass, "Renal mass / complex cyst on imaging"],
+          [familyHx, setFamilyHx, "Family history of HTN / reninoma"],
+        ].map(([val, setter, label]) => (
+          <label key={label as string} className="flex items-center gap-2 text-xs cursor-pointer">
+            <input type="checkbox" checked={val as boolean}
+              onChange={() => (setter as React.Dispatch<React.SetStateAction<boolean>>)(!(val as boolean))}
+              className="h-4 w-4 accent-purple-500" />
+            {label as string}
+          </label>
+        ))}
+      </div>
+      <div className={`p-3 rounded-lg border text-xs font-medium ${probColor}`}>
+        Score: <strong>{score}/8</strong> — {probability}
+      </div>
+      {score >= 4 && (
+        <div className="mt-2 text-xs text-muted-foreground">
+          <strong>Recommended next steps:</strong> Check plasma renin activity + aldosterone, renal imaging
+          (CT abdomen with contrast), and consider renal vein renin sampling per Wolley protocol (see above).
+        </div>
+      )}
+    </div>
+  );
+}
+
 interface EvaluationItem {
   id: string;
   condition: string;
@@ -237,6 +328,9 @@ export default function SecondaryHtnPage() {
                 </div>
               </div>
             </div>
+
+            {/* Reninoma — Clinical Probability Evaluator */}
+            <ReninomaEvaluator />
           </TabsContent>
 
           <TabsContent value="causes" className="space-y-3 pt-4">

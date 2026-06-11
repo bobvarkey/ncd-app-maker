@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -724,6 +725,7 @@ const medications: Medication[] = [
 ];
 
 export default function HypertensionTreatment() {
+  const navigate = useNavigate();
   const [algorithmHistory, setAlgorithmHistory] = useState<string[]>(["start"]);
   const [potencyOpen, setPotencyOpen] = useState(false);
   const [activeSection, setActiveSection] = useState("algorithm");
@@ -1243,13 +1245,17 @@ export default function HypertensionTreatment() {
       <HtnAlgorithmFlowchart />
 
       {/* Secondary Hypertension Workup */}
-      <Card id="htn-section-secondary" className="border-2 border-primary/20">
+      <Card id="htn-section-secondary" className="border-2 border-primary/20 cursor-pointer hover:border-purple-500/40 transition-colors group" onClick={() => navigate('/hypertension/secondary-htn')}>
         <CardHeader className="pb-3">
           <div className="flex items-center gap-2">
-            <Activity className="h-5 w-5 text-primary" />
-            <CardTitle className="text-lg">Secondary Hypertension Workup</CardTitle>
+            <Activity className="h-5 w-5 text-primary group-hover:text-purple-500 transition-colors" />
+            <CardTitle className="text-lg">Secondary Hypertension Workup
+              <span className="ml-2 inline-flex items-center gap-1 text-xs font-normal text-primary bg-primary/10 rounded-full px-2 py-0.5 group-hover:bg-purple-500/20 transition-colors">
+                Open full evaluator →
+              </span>
+            </CardTitle>
           </div>
-          <p className="text-xs text-muted-foreground">Investigations to consider based on clinical suspicion</p>
+          <p className="text-xs text-muted-foreground">Investigations to consider based on clinical suspicion. Click to open the dedicated Secondary Hypertension page with interactive checklists and detailed protocols.</p>
         </CardHeader>
         <CardContent>
           <div className="grid gap-3 md:grid-cols-2 lg:grid-cols-3">
