@@ -125,8 +125,21 @@ export function TabNavigation() {
     if (!term) return [];
     return ALL_MEDS
       .filter((m) => m.drug.toLowerCase().includes(term) || m.drugClass.toLowerCase().includes(term))
-      .slice(0, 6);
+      .slice(0, 8);
   }, [searchQ]);
+
+  useEffect(() => {
+    function onKey(e: KeyboardEvent) {
+      if ((e.metaKey || e.ctrlKey) && e.key === "k") {
+        e.preventDefault();
+        setSearchOpen(true);
+        setCollapsed(false);
+      }
+      if (e.key === "Escape") setSearchOpen(false);
+    }
+    document.addEventListener("keydown", onKey);
+    return () => document.removeEventListener("keydown", onKey);
+  }, []);
 
   useEffect(() => {
     document.body.classList.add("has-tab-navigation");
@@ -162,6 +175,34 @@ export function TabNavigation() {
     setSearchQ("");
     navigate(`/renal-dosing?q=${encodeURIComponent(drug)}`);
   }
+
+  const MedResultItem = ({ m }: { m: typeof ALL_MEDS[number] }) => (
+    <button
+      type="button"
+      onClick={() => goToDrug(m.drug)}
+      className="w-full flex items-start gap-3 px-3 py-2.5 text-left hover:bg-muted/60 transition-colors"
+    >
+      <Pill className="mt-0.5 h-4 w-4 text-primary shrink-0" />
+      <div className="min-w-0 flex-1">
+        <div className="flex items-baseline justify-between gap-2">
+          <span className="font-semibold text-sm text-foreground truncate">
+            {m.drug}
+          </span>
+          <span className="text-[10px] uppercase tracking-wide text-muted-foreground shrink-0">
+            {m.drugClass}
+          </span>
+        </div>
+        <div className="text-xs text-muted-foreground truncate">
+          Normal: {m.normalDose}
+        </div>
+        {m.hepatic && (
+          <div className="text-xs text-accent mt-0.5 line-clamp-1">
+            Hepatic: {m.hepatic}
+          </div>
+        )}
+      </div>
+    </button>
+  );
 
   return (
     <aside
@@ -227,21 +268,13 @@ export function TabNavigation() {
               {searchResults.length === 0 ? (
                 <p className="px-2 py-1.5 text-xs text-muted-foreground">No medications found.</p>
               ) : (
-                <ul>
-                  {searchResults.map((m) => (
-                    <li key={`${m.drug}-${m.drugClass}`}>
-                      <button
-                        type="button"
-                        onClick={() => goToDrug(m.drug)}
-                        className="w-full flex items-center gap-2 px-2 py-1.5 text-left text-xs rounded hover:bg-muted transition-colors"
-                      >
-                        <Pill className="h-3 w-3 text-primary shrink-0" />
-                        <span className="font-medium text-foreground truncate">{m.drug}</span>
-                        <span className="text-muted-foreground truncate">{m.drugClass}</span>
-                      </button>
-                    </li>
-                  ))}
-                </ul>
+              <ul className="py-1">
+                {searchResults.map((m) => (
+                  <li key={`${m.drug}-${m.drugClass}`}>
+                    <MedResultItem m={m} />
+                  </li>
+                ))}
+              </ul>
               )}
             </div>
           )}
@@ -270,20 +303,13 @@ export function TabNavigation() {
               {searchResults.length === 0 ? (
                 <p className="px-2 py-1.5 text-xs text-muted-foreground">No medications found.</p>
               ) : (
-                <ul>
-                  {searchResults.map((m) => (
-                    <li key={`${m.drug}-${m.drugClass}`}>
-                      <button
-                        type="button"
-                        onClick={() => goToDrug(m.drug)}
-                        className="w-full flex items-center gap-2 px-2 py-1.5 text-left text-xs rounded hover:bg-muted transition-colors"
-                      >
-                        <Pill className="h-3 w-3 text-primary shrink-0" />
-                        <span className="font-medium text-foreground truncate">{m.drug}</span>
-                      </button>
-                    </li>
-                  ))}
-                </ul>
+              <ul className="py-1">
+                {searchResults.map((m) => (
+                  <li key={`${m.drug}-${m.drugClass}`}>
+                    <MedResultItem m={m} />
+                  </li>
+                ))}
+              </ul>
               )}
             </div>
           )}

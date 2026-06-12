@@ -1,7 +1,6 @@
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { CommandPalette } from "@/components/CommandPalette";
-import { GlobalMedSearch } from "@/components/GlobalMedSearch";
 import { LabProvider } from "@/components/SmartLabelUpload/GlobalLabContext";
 
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -166,7 +165,6 @@ const App = () => (
       <Sonner />
       <BrowserRouter>
         <CommandPalette />
-        <GlobalMedSearch />
         <Routes>
           {/* Mode Selector — landing */}
           <Route path="/" element={<LandingPage />} />
