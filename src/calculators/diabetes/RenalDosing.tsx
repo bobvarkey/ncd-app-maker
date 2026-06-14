@@ -98,6 +98,7 @@ export const RENAL_DATA: DoseEntry[] = [
     normalDose: "5–15 mg/day",
     frequency: "OD",
     eGFR60_89: "5–15 mg/day",
+    eGFR45_59: "5–15 mg/day",
     eGFR30_44: "Not recommended (insufficient glycemic efficacy)",
     eGFR15_29: "Contraindicated",
     eGFRBelow15: "Contraindicated",
