@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState, useRef } from "react";
 import { AlertTriangle, ShieldAlert, Activity, Scissors, Copy, Printer, Siren, Download } from "lucide-react";
 import { downloadTextFile } from "@/lib/clinical-utils";
 import { toast } from "sonner";
@@ -818,6 +818,14 @@ export default function SeriousInfections() {
     [ctx.conditionId],
   );
 
+  // Scroll to treatment section when condition changes
+  useEffect(() => {
+    const el = document.getElementById("treatment-section");
+    if (el) {
+      setTimeout(() => el.scrollIntoView({ behavior: "smooth", block: "start" }), 100);
+    }
+  }, [ctx.conditionId]);
+
   const grouped = useMemo(() => {
     const m: Record<string, SeriousCondition[]> = {};
     CONDITIONS.forEach((c) => {
@@ -1041,8 +1049,8 @@ export default function SeriousInfections() {
           <div className="text-xs mt-0.5">{condition.workingDx}</div>
         </div>
 
-        {/* Empiric */}
-        <div className="space-y-2">
+        {/* Treatment - scroll target */}
+        <div id="treatment-section" className="space-y-2">
           <h3 className="text-sm font-semibold">Most common empiric regimens to start</h3>
           <div className="overflow-x-auto rounded-md border border-border">
             <table className="w-full text-sm min-w-[480px]">
