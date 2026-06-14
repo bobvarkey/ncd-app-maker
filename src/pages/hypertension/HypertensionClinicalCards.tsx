@@ -205,6 +205,20 @@ const SECONDARY_WORKUP: WorkupCategory[] = [
     ],
   },
   {
+    category: "Reninoma (JG Cell Tumor)",
+    group: "Endocrine",
+    tests: [
+      { name: "Stop ACEi/ARB/MRA", tag: "required", detail: "Hold interfering meds 2-4 weeks before renin measurement" },
+      { name: "Plasma renin activity", tag: "required", reference: "Elevated", detail: "High renin - key diagnostic finding" },
+      { name: "Direct renin concentration", tag: "required", reference: "Elevated", detail: "Confirms elevated renin" },
+      { name: "Serum aldosterone", tag: "required", reference: "Elevated", detail: "Secondary hyperaldosteronism" },
+      { name: "Serum potassium", tag: "required", reference: "↓ K+ common", detail: "Hypokalemia (can be normokalemic)" },
+      { name: "CT abdomen with contrast", tag: "required", detail: "Look for small cortical renal tumor/cyst" },
+      { name: "MRI kidney with contrast", tag: "recommended", detail: "Further characterize if CT inconclusive" },
+      { name: "Renal vein renin sampling", tag: "confirmatory", reference: "Lateralization ratio >1.5", detail: "Gold standard - Wolley technique with enalaprilat stimulation" },
+    ],
+  },
+  {
     category: "Liddle's Syndrome",
     group: "Endocrine",
     tests: [
