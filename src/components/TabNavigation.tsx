@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { ChevronLeft, ChevronRight, Search, X, Pill } from "lucide-react";
+import { ChevronLeft, ChevronRight, Search, X, Pill, FileText } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { RENAL_DATA } from "@/calculators/diabetes/RenalDosing";
 import { ANTIBIOTICS_DATA } from "@/calculators/diabetes/antibiotics-data";
@@ -12,6 +12,28 @@ const ALL_MEDS = [
   ...ANTIBIOTICS_DATA,
   ...ANTICOAGULANTS_DATA,
   ...ADDITIONAL_MEDS_DATA,
+];
+
+// Clinical topics for search
+const CLINICAL_TOPICS = [
+  { id: "reninoma", label: "Reninoma (JG Cell Tumor)", path: "/hypertension/secondary-htn", keywords: ["reninoma", "juxtaglomerular", "renal vein renin", "high renin hypertension"] },
+  { id: "primary-aldosteronism", label: "Primary Aldosteronism", path: "/hypertension/secondary-htn", keywords: ["aldosteronism", "conn", "arr", "aldosterone"] },
+  { id: "pheochromocytoma", label: "Pheochromocytoma", path: "/hypertension/secondary-htn", keywords: ["pheochromocytoma", "metanephrines", "catecholamine"] },
+  { id: "cushings", label: "Cushing's Syndrome", path: "/hypertension/secondary-htn", keywords: ["cushing", "cortisol", "dexamethasone"] },
+  { id: "sleep-apnea", label: "Sleep Apnea", path: "/hypertension/secondary-htn", keywords: ["sleep apnea", "osa", "polysomnography"] },
+  { id: "hypothyroidism", label: "Hypothyroidism", path: "/thyroid", keywords: ["hypothyroidism", "low t4", "high tsh"] },
+  { id: "hyperthyroidism", label: "Hyperthyroidism", path: "/thyroid", keywords: ["hyperthyroidism", "thyrotoxicosis", "graves"] },
+  { id: "thyroid-nodules", label: "Thyroid Nodules", path: "/thyroid", keywords: ["thyroid nodule", "fna"] },
+  { id: "type1-dm", label: "Type 1 Diabetes", path: "/diabetes/type1", keywords: ["type 1 diabetes", "t1dm"] },
+  { id: "type2-dm", label: "Type 2 Diabetes", path: "/diabetes", keywords: ["type 2 diabetes", "t2dm"] },
+  { id: "dk", label: "DKA", path: "/diabetes", keywords: [" dka", "diabetic ketoacidosis"] },
+  { id: "hhs", label: "HHS", path: "/diabetes", keywords: ["hhs", "hyperosmolar hyperglycemic"] },
+  { id: "iron-deficiency", label: "Iron Deficiency Anemia", path: "/anemia", keywords: ["iron deficiency", "microcytic"] },
+  { id: "b12-deficiency", label: "B12 Deficiency", path: "/anemia", keywords: ["b12 deficiency", "cobalamin", "megaloblastic"] },
+  { id: "statins", label: "Statins", path: "/lipids", keywords: ["statins", "atorvastatin", "cholesterol"] },
+  { id: "glp1", label: "GLP-1 Agonists", path: "/obesity/glp1-obesity", keywords: ["glp1", "semaglutide", "wegovy"] },
+  { id: "ckd", label: "CKD", path: "/hypertension/gfr", keywords: ["ckd", "chronic kidney disease"] },
+  { id: "copd", label: "COPD", path: "/respiratory/copd", keywords: ["copd", "gold", "emphysema"] },
 ];
 
 const bloodSubItems = [
@@ -123,9 +145,15 @@ export function TabNavigation() {
   const searchResults = useMemo(() => {
     const term = searchQ.trim().toLowerCase();
     if (!term) return [];
-    return ALL_MEDS
+    const meds = ALL_MEDS
       .filter((m) => m.drug.toLowerCase().includes(term) || m.drugClass.toLowerCase().includes(term))
-      .slice(0, 8);
+      .slice(0, 5)
+      .map(m => ({ type: 'med' as const, ...m }));
+    const topics = CLINICAL_TOPICS
+      .filter((t) => t.label.toLowerCase().includes(term) || t.keywords?.some(k => k.includes(term)))
+      .slice(0, 5)
+      .map(t => ({ type: 'topic' as const, ...t }));
+    return [...meds, ...topics].slice(0, 8);
   }, [searchQ]);
 
   useEffect(() => {
@@ -176,11 +204,12 @@ export function TabNavigation() {
     navigate(`/renal-dosing?q=${encodeURIComponent(drug)}`);
   }
 
+  // Medication result item
   const MedResultItem = ({ m }: { m: typeof ALL_MEDS[number] }) => (
     <button
       type="button"
       onClick={() => goToDrug(m.drug)}
-      className="w-full flex items-start gap-3 px-3 py-2.5 text-left hover:bg-muted/60 transition-colors"
+      className="w-full flex items-start gap-3 px-3 py-2 text-left hover:bg-muted/60 transition-colors"
     >
       <Pill className="mt-0.5 h-4 w-4 text-primary shrink-0" />
       <div className="min-w-0 flex-1">
@@ -195,14 +224,33 @@ export function TabNavigation() {
         <div className="text-xs text-muted-foreground truncate">
           Normal: {m.normalDose}
         </div>
-        {m.hepatic && (
-          <div className="text-xs text-accent mt-0.5 line-clamp-1">
-            Hepatic: {m.hepatic}
-          </div>
-        )}
       </div>
     </button>
   );
+
+  // Clinical topic result item
+  const TopicResultItem = ({ t }: { t: typeof CLINICAL_TOPICS[number] }) => {
+    const navigate = useNavigate();
+    return (
+      <button
+        type="button"
+        onClick={() => { setSearchOpen(false); navigate(t.path); }}
+        className="w-full flex items-start gap-3 px-3 py-2 text-left hover:bg-muted/60 transition-colors"
+      >
+        <FileText className="mt-0.5 h-4 w-4 text-blue-500 shrink-0" />
+        <div className="min-w-0 flex-1">
+          <div className="flex items-baseline justify-between gap-2">
+            <span className="font-semibold text-sm text-foreground truncate">
+              {t.label}
+            </span>
+            <span className="text-[10px] uppercase tracking-wide text-blue-500 shrink-0">
+              Topic
+            </span>
+          </div>
+        </div>
+      </button>
+    );
+  };
 
   return (
     <aside
@@ -253,7 +301,7 @@ export function TabNavigation() {
               type="text"
               value={searchQ}
               onChange={(e) => setSearchQ(e.target.value)}
-              placeholder="Medication name…"
+              placeholder="Medication or topic name…"
               className="flex-1 bg-transparent py-1.5 text-xs placeholder:text-muted-foreground focus:outline-none"
               autoFocus
             />
@@ -266,12 +314,12 @@ export function TabNavigation() {
           {searchQ && (
             <div className="mt-1 max-h-40 overflow-y-auto">
               {searchResults.length === 0 ? (
-                <p className="px-2 py-1.5 text-xs text-muted-foreground">No medications found.</p>
+                <p className="px-2 py-1.5 text-xs text-muted-foreground">No medications or topics found.</p>
               ) : (
               <ul className="py-1">
-                {searchResults.map((m) => (
-                  <li key={`${m.drug}-${m.drugClass}`}>
-                    <MedResultItem m={m} />
+                {searchResults.map((item) => (
+                  <li key={item.type === 'med' ? `${item.drug}-${item.drugClass}` : item.id}>
+                    {item.type === 'med' ? <MedResultItem m={item} /> : <TopicResultItem t={item} />}
                   </li>
                 ))}
               </ul>
@@ -290,7 +338,7 @@ export function TabNavigation() {
               type="text"
               value={searchQ}
               onChange={(e) => setSearchQ(e.target.value)}
-              placeholder="Search medications…"
+              placeholder="Search meds, topics…"
               className="flex-1 bg-transparent py-1.5 text-xs placeholder:text-muted-foreground focus:outline-none"
               autoFocus
             />
@@ -301,12 +349,12 @@ export function TabNavigation() {
           {searchQ && (
             <div className="mt-1 max-h-40 overflow-y-auto">
               {searchResults.length === 0 ? (
-                <p className="px-2 py-1.5 text-xs text-muted-foreground">No medications found.</p>
+                <p className="px-2 py-1.5 text-xs text-muted-foreground">No medications or topics found.</p>
               ) : (
               <ul className="py-1">
-                {searchResults.map((m) => (
-                  <li key={`${m.drug}-${m.drugClass}`}>
-                    <MedResultItem m={m} />
+                {searchResults.map((item) => (
+                  <li key={item.type === 'med' ? `${item.drug}-${item.drugClass}` : item.id}>
+                    {item.type === 'med' ? <MedResultItem m={item} /> : <TopicResultItem t={item} />}
                   </li>
                 ))}
               </ul>
