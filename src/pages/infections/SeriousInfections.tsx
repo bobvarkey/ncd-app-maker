@@ -5,6 +5,12 @@ import { toast } from "sonner";
 
 type Regimen = { drug: string; dose: string; route: string; notes?: string };
 
+type RenalLiverAdjustments = {
+  renal?: string;    // e.g., "Avoid if eGFR <30", "Dose reduce if eGFR <50"
+  liver?: string;    // e.g., "Avoid in severe hepatic impairment"
+  dialysis?: string; // e.g., "Dose after HD"
+};
+
 type SeriousCondition = {
   id: string;
   label: string;
@@ -22,6 +28,7 @@ type SeriousCondition = {
   stewardship: string[];
   redFlags: string[];
   presetScenario: string;
+  renalLiver?: RenalLiverAdjustments;
 };
 
 const CONDITIONS: SeriousCondition[] = [
@@ -370,6 +377,10 @@ const CONDITIONS: SeriousCondition[] = [
     stewardship: ["Start early - benefits up to 72h"],
     redFlags: ["Secondary bacterial PNA", "Respiratory failure"],
     presetScenario: "65y/o, fever 39°C, myalgia, cough × 2d → oseltamivir 75mg BD x5d",
+    renalLiver: {
+      renal: "No dose adjustment needed for oseltamivir",
+      liver: "Use with caution in severe hepatic impairment",
+    },
   },
   // ── Malaria ──
   {
@@ -390,6 +401,10 @@ const CONDITIONS: SeriousCondition[] = [
     stewardship: ["G6PD testing required"],
     redFlags: ["P. falciparum >5%", "Cerebral malaria", "ARDS"],
     presetScenario: "Returned from Nigeria, fever, P. falciparum 5% → artemether-lumefantrine",
+    renalLiver: {
+      renal: "Artesunate: no adjustment. Artemether-Lumefantrine: safe. Primaquine: avoid if G6PD deficient. Chloroquine: reduce dose if eGFR <10",
+      liver: "Artemether-Lumefantrine: avoid in severe hepatic impairment. Artesunate: use with caution",
+    },
   },
   // ── Mycoplasma pneumoniae ──
   {
@@ -409,6 +424,10 @@ const CONDITIONS: SeriousCondition[] = [
     stewardship: ["Azithro resistance ~10-20% in Asia"],
     redFlags: ["Respiratory failure", "Co-infection"],
     presetScenario: "25y/o, dry cough × 10d → azithro 500mg d1, 250mg d2-5",
+    renalLiver: {
+      renal: "Azithro: no dose adjustment. Doxy: safe in renal impairment",
+      liver: "Azithro: use caution in severe hepatic impairment. Doxy: avoid in severe hepatic impairment",
+    },
   },
   // ── Legionella ──
   {
@@ -428,6 +447,10 @@ const CONDITIONS: SeriousCondition[] = [
     stewardship: ["Report to public health"],
     redFlags: ["Severe hypoxemia", "Renal dysfunction"],
     presetScenario: "58y/o, hotel stay, fever 39.5°C, hyponatremia → levofloxacin 750mg IV",
+    renalLiver: {
+      renal: "Levofloxacin: reduce dose if eGFR <50 (CrCl 20-50: 750mg q48h; <20: 500mg q48h)",
+      liver: "Levofloxacin: avoid in severe hepatic impairment (Child-Pugh C)",
+    },
   },
   // ── Listeria ──
   {
@@ -466,6 +489,10 @@ const CONDITIONS: SeriousCondition[] = [
     stewardship: ["6-week minimum"],
     redFlags: ["Vertebral osteomyelitis", "Endocarditis", "Relapse"],
     presetScenario: "35y/o, farmer, fever × 3w → doxy + rif × 6 weeks",
+    renalLiver: {
+      renal: "Doxy: safe. Rifampin: no adjustment. Gentamicin: monitor levels (target <2mg/L trough)",
+      liver: "Doxy: avoid in severe hepatic impairment. Rifampin: monitor LFTs - hepatotoxicity",
+    },
   },
   // ── Tuberculosis - Pulmonary ──
   {
@@ -570,6 +597,10 @@ const CONDITIONS: SeriousCondition[] = [
     stewardship: ["Antimicrobial stewardship critical", "Don't use fluoroquinolones empirically unless confirmed susceptible"],
     redFlags: ["GI bleeding", "Intestinal perforation", "Relapse", "Chronic carrier state"],
     presetScenario: "Returned from India, fever 5d, relative bradycardia → azithro 1g d1, 500mg d2-7",
+    renalLiver: {
+      renal: "Azithro: no adjustment. Ciprofloxacin: reduce if eGFR <50. Ceftriaxone: safe",
+      liver: "Azithro: use caution in severe hepatic impairment. Ciprofloxacin: avoid in severe hepatic impairment",
+    },
   },
   // ── Leptospirosis ──
   {
@@ -1104,6 +1135,35 @@ export default function SeriousInfections() {
             {condition.stewardship.map((s, i) => <li key={i}>{s}</li>)}
           </ul>
         </div>
+
+        {/* Renal & Liver Adjustments */}
+        {condition.renalLiver && (
+          <div className="rounded-md border border-blue-500/30 bg-blue-500/10 p-3 text-xs">
+            <div className="font-semibold text-blue-700 flex items-center gap-1">
+              <Activity className="h-4 w-4" /> Dose Adjustments in Renal & Liver Dysfunction
+            </div>
+            <div className="mt-2 space-y-2">
+              {condition.renalLiver.renal && (
+                <div>
+                  <div className="font-medium text-blue-800">Renal (eGFR):</div>
+                  <div className="text-blue-700">{condition.renalLiver.renal}</div>
+                </div>
+              )}
+              {condition.renalLiver.liver && (
+                <div>
+                  <div className="font-medium text-blue-800">Hepatic:</div>
+                  <div className="text-blue-700">{condition.renalLiver.liver}</div>
+                </div>
+              )}
+              {condition.renalLiver.dialysis && (
+                <div>
+                  <div className="font-medium text-blue-800">Dialysis:</div>
+                  <div className="text-blue-700">{condition.renalLiver.dialysis}</div>
+                </div>
+              )}
+            </div>
+          </div>
+        )}
 
         <details className="text-xs">
           <summary className="cursor-pointer text-muted-foreground">Plain-text summary</summary>
