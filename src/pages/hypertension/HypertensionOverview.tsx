@@ -441,6 +441,63 @@ export default function HypertensionOverview({ onNavigateToEmergencies, onNaviga
         </CardContent>
       </Card>
 
+      {/* Hypertensive Urgency vs Emergency */}
+      <Card className="border-red-500/30">
+        <CardHeader>
+          <div className="flex items-center gap-2">
+            <AlertTriangle className="h-5 w-5 text-red-500" />
+            <CardTitle className="text-lg">Hypertensive Urgency vs Emergency</CardTitle>
+          </div>
+        </CardHeader>
+        <CardContent className="space-y-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {/* Urgency */}
+            <div className="p-4 rounded-lg border-2 border-amber-500/30 bg-amber-500/5">
+              <div className="flex items-center gap-2 mb-2">
+                <span className="text-lg">⚠️</span>
+                <span className="font-semibold text-amber-700">Hypertensive Urgency</span>
+              </div>
+              <p className="text-xs text-muted-foreground mb-2">BP ≥180/120 mmHg</p>
+              <ul className="text-xs space-y-1 mb-2">
+                <li>• No acute end-organ damage</li>
+                <li>• No symptoms or mild symptoms</li>
+              </ul>
+              <div className="p-2 rounded bg-muted text-xs">
+                <strong className="text-amber-600">Treatment:</strong> Oral meds over 24-48 hours
+              </div>
+            </div>
+
+            {/* Emergency */}
+            <div className="p-4 rounded-lg border-2 border-red-500/30 bg-red-500/5">
+              <div className="flex items-center gap-2 mb-2">
+                <span className="text-lg">🚨</span>
+                <span className="font-semibold text-red-600">Hypertensive Emergency</span>
+              </div>
+              <p className="text-xs text-muted-foreground mb-2">BP ≥180/120 mmHg</p>
+              <ul className="text-xs space-y-1 mb-2">
+                <li>• <strong>Acute end-organ damage</strong></li>
+                <li>• Encephalopathy, Stroke</li>
+                <li>• Papilledema, MI</li>
+                <li>• Aortic dissection</li>
+                <li>• Kidney injury</li>
+              </ul>
+              <div className="p-2 rounded bg-muted text-xs">
+                <strong className="text-red-600">Treatment:</strong> IV drugs (labetalol, nicardipine, nitroprusside)
+                <br /><span className="text-muted-foreground">Lower BP by ≤25% in first hour</span>
+              </div>
+            </div>
+          </div>
+
+          <Alert className="border-amber-500/30 bg-amber-500/10">
+            <AlertTriangle className="h-4 w-4 text-amber-500" />
+            <AlertDescription className="text-amber-700 text-sm">
+              <strong>Clinical Pearl:</strong> Do not lower BP too fast in an emergency — 
+              rapid reduction can cause organ hypoperfusion including stroke.
+            </AlertDescription>
+          </Alert>
+        </CardContent>
+      </Card>
+
       {/* Secondary Causes */}
       <Card>
         <CardHeader>
