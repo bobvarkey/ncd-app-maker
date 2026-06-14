@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
 import { useSearchParams } from "react-router-dom";
 import { Pill, FlaskConical, Search, AlertTriangle, Syringe, Droplet, Layers } from "lucide-react";
 import { Input } from "@/components/ui/input";
@@ -10,12 +10,26 @@ import { ANTICOAGULANTS_DATA } from "./anticoagulants-data";
 import { ADDITIONAL_MEDS_DATA } from "./additional-meds-data";
 import { cn } from "@/lib/utils";
 
+// Infer frequency from dose string
+function inferFrequency(dose: string): string {
+  const d = dose.toLowerCase();
+  if (d.includes("q24h") || d.includes("daily") || d.includes("/day") || d.includes("/24h") || d.includes("od")) return "OD";
+  if (d.includes("bid") || d.includes("q12h") || d.includes("twice") || d.includes("/bd")) return "BD";
+  if (d.includes("tid") || d.includes("q8h") || d.includes("tds") || d.includes("thrice") || d.includes("/tds")) return "TDS";
+  if (d.includes("qid") || d.includes("q6h") || d.includes("four") || d.includes("qid")) return "QID";
+  if (d.includes("prn") || d.includes("as needed")) return "PRN";
+  if (d.includes("weekly") || d.includes("/week") || d.includes("qw")) return "Weekly";
+  if (d.includes("once") || d.includes("single")) return "OD";
+  return "—";
+}
+
 export type { DoseEntry };
 
 type DoseEntry = {
   drug: string;
   drugClass: string;
   normalDose: string;
+  frequency?: string; // OD, BD, TDS, QID, PRN, etc.
   eGFR60_89: string;
   eGFR45_59: string;
   eGFR30_44: string;
@@ -30,6 +44,7 @@ export const RENAL_DATA: DoseEntry[] = [
     drug: "Metformin",
     drugClass: "Biguanide",
     normalDose: "500–2000 mg/day",
+    frequency: "BD",
     eGFR60_89: "No adjustment",
     eGFR45_59: "No adjustment",
     eGFR30_44: "Max 1000 mg/day",
@@ -42,6 +57,7 @@ export const RENAL_DATA: DoseEntry[] = [
     drug: "Empagliflozin",
     drugClass: "SGLT2 Inhibitor",
     normalDose: "10–25 mg/day",
+    frequency: "OD",
     eGFR60_89: "10–25 mg/day",
     eGFR45_59: "10–25 mg/day",
     eGFR30_44: "10 mg/day (T2DM); 10 mg for CKD/HF benefit",
@@ -54,6 +70,7 @@ export const RENAL_DATA: DoseEntry[] = [
     drug: "Dapagliflozin",
     drugClass: "SGLT2 Inhibitor",
     normalDose: "5–10 mg/day",
+    frequency: "OD",
     eGFR60_89: "10 mg/day",
     eGFR45_59: "10 mg/day",
     eGFR30_44: "10 mg/day (CKD/HF benefit); glycemic efficacy reduced",
@@ -66,6 +83,7 @@ export const RENAL_DATA: DoseEntry[] = [
     drug: "Canagliflozin",
     drugClass: "SGLT2 Inhibitor",
     normalDose: "100–300 mg/day",
+    frequency: "OD",
     eGFR60_89: "100–300 mg/day",
     eGFR45_59: "Max 100 mg/day",
     eGFR30_44: "100 mg/day (CKD benefit; do not initiate for glycemia)",
@@ -78,8 +96,8 @@ export const RENAL_DATA: DoseEntry[] = [
     drug: "Ertugliflozin",
     drugClass: "SGLT2 Inhibitor",
     normalDose: "5–15 mg/day",
+    frequency: "OD",
     eGFR60_89: "5–15 mg/day",
-    eGFR45_59: "5–15 mg/day",
     eGFR30_44: "Not recommended (insufficient glycemic efficacy)",
     eGFR15_29: "Contraindicated",
     eGFRBelow15: "Contraindicated",
@@ -505,6 +523,8 @@ const RenalDoseAdjustment = () => {
               <TableRow className="bg-muted/50">
                 <TableHead className="min-w-[140px] sticky left-0 bg-muted/50 z-10">Drug</TableHead>
                 <TableHead className="min-w-[100px]">Class</TableHead>
+                <TableHead className="min-w-[80px]">Freq</TableHead>
+                <TableHead className="min-w-[80px]">Freq</TableHead>
                 <TableHead className="min-w-[120px]">Normal Dose</TableHead>
                 {eGFRColumns.map(col => (
                   <TableHead key={col.key} className="min-w-[110px] text-center">
@@ -524,6 +544,7 @@ const RenalDoseAdjustment = () => {
                     </div>
                   </TableCell>
                   <TableCell className="text-xs text-muted-foreground">{d.drugClass}</TableCell>
+                  <TableCell className="text-xs">{d.frequency || inferFrequency(d.normalDose)}</TableCell>
                   <TableCell className="text-xs">{d.normalDose}</TableCell>
                   {eGFRColumns.map(col => (
                     <TableCell key={col.key} className={`text-xs text-center ${cellStyle(d[col.key])}`}>
