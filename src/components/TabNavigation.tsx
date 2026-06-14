@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from "react";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate, useSearchParams } from "react-router-dom";
 import { ChevronLeft, ChevronRight, Search, X, Pill, FileText } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { RENAL_DATA } from "@/calculators/diabetes/RenalDosing";
