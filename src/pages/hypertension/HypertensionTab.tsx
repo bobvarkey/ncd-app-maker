@@ -204,9 +204,9 @@ export default function HypertensionTab() {
         </div>
       </div>
 
-      {/* Expand/Collapse All */}
-      <section className="max-w-6xl mx-auto px-6 pb-4">
-        <div className="flex flex-wrap gap-2">
+      {/* Expand/Collapse All - Sticky */}
+      <section className="sticky top-0 z-50 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 border-b border-border/40 py-3 -mt-2">
+        <div className="max-w-6xl mx-auto px-6 flex flex-wrap gap-2">
           <Button
             variant="outline"
             size="sm"

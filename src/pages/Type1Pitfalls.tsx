@@ -133,7 +133,7 @@ const Type1Pitfalls = () => {
       </div>
 
       {/* Expand All / Collapse All */}
-      <div className="flex gap-2 mb-3">
+      <div className="sticky top-0 z-50 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 border-b border-border/40 py-3 -mt-2 px-6 flex gap-2 mb-3">
         <button
           onClick={() => setExpanded(sections[sections.length - 1]?.id || null)}
           className="text-xs px-3 py-1.5 rounded-lg bg-muted/50 hover:bg-muted"

@@ -216,7 +216,7 @@ const HypoRiskCalculator = () => {
       )}
 
       {/* Expand All / Collapse All */}
-      <div className="flex gap-2">
+      <div className="sticky top-0 z-50 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 border-b border-border/40 py-3 -mt-2 px-6 flex gap-2">
         <button
           onClick={() => setExpandedCats(new Set(["demographic", "clinical", "medication", "history"]))}
           className="text-xs px-3 py-1.5 rounded-lg bg-muted/50 hover:bg-muted"
