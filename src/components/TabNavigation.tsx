@@ -127,6 +127,7 @@ const navItems: NavItem[] = [
   { path: "/anemia",                  label: "Blood",     icon: "🩸", active: "bg-sky-500/10 text-primary border-sky-500/30" },
   { path: "/fatigue",                label: "Fatigue",   icon: "😴", active: "bg-warning/100/10 text-warning border-amber-500/30" },
   { path: "/infections",             label: "Infections", icon: "🦠", active: "bg-rose-500/10 text-destructive border-rose-500/30" },
+  { path: "/pep",                   label: "PEP",       icon: "🛡️", active: "bg-amber-500/10 text-amber-400 border-amber-500/30" },
 ];
 
 export function TabNavigation() {

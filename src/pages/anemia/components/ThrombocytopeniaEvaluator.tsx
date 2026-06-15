@@ -390,10 +390,45 @@ export default function ThrombocytopeniaEvaluator() {
                   <div className="flex flex-col items-center w-36">
                     <div className="rounded-md border border-emerald-500/50 bg-emerald-500/10 px-3 py-1 text-xs font-bold text-emerald-400">NO</div>
                     <ArrowDown className="h-4 w-4 text-muted-foreground" />
-                    <div className="rounded-xl border border-purple-500/40 bg-purple-500/15 px-4 py-2 text-center">
+                    <div className="rounded-xl border border-purple-500/40 bg-purple-500/15 px-3 py-2 space-y-1.5">
                       <div className="text-xs font-semibold text-foreground">Isolated Thrombocytopenia</div>
                       <div className="text-sm font-bold text-purple-300">ITP</div>
                       <div className="text-[10px] text-muted-foreground">Immune Thrombocytopenic Purpura</div>
+
+                      {/* Vignette */}
+                      <div className="text-[10px] leading-relaxed text-muted-foreground">
+                        Seen in children <span className="font-medium text-purple-200">post-viral infection</span> or <span className="font-medium text-purple-200">women 30s–40s</span>.
+                        Anti-GpIIb/IIIa antibodies destroy platelets.
+                      </div>
+
+                      {/* Mechanism */}
+                      <div className="bg-purple-950/30 rounded-md border border-purple-500/20 p-2 mt-1">
+                        <div className="text-[10px] font-bold text-purple-300 mb-1">MECHANISM</div>
+                        <div className="text-[10px] text-muted-foreground leading-relaxed">
+                          Anti-<span className="font-medium text-purple-200">GpIIb/IIIa</span> antibodies → opsonization → splenic <span className="font-medium text-purple-200">Fcγ receptor-mediated destruction</span> → ↓platelet lifespan
+                        </div>
+                      </div>
+
+                      {/* Labs */}
+                      <div className="bg-purple-950/20 rounded-md border border-purple-500/15 p-2 mt-1">
+                        <div className="text-[10px] font-bold text-purple-300 mb-0.5">LABS</div>
+                        <div className="text-[10px] text-muted-foreground">
+                          <span className="font-medium text-rose-300">Isolated thrombocytopenia</span> | ↓Platelets | ↑Bleeding time | <span className="font-medium text-emerald-300">NO schistocytes</span> | Normal PT/PTT
+                        </div>
+                      </div>
+
+                      {/* Clinical Pearl */}
+                      <div className="bg-yellow-950/30 rounded-md border border-yellow-500/30 p-1.5 mt-1">
+                        <div className="text-[10px] font-bold text-yellow-300">💡 CLINICAL PEARL</div>
+                        <div className="text-[10px] text-yellow-200/90">
+                          <span className="font-bold">If you see schistocytes on smear, it's NOT ITP</span> — think TTP, HUS, or DIC. Platelet transfusion is generally avoided because antibodies destroy transfused platelets too.
+                        </div>
+                      </div>
+
+                      {/* Treatment */}
+                      <div className="text-[10px] text-left font-medium text-emerald-400 mt-1">
+                        TREATMENT: <span className="font-bold text-emerald-300">Steroids</span> (first-line) | <span className="text-emerald-300">IVIG</span> (acute bleeding) | <span className="text-amber-300">Splenectomy</span> (if refractory) | Observation if mild
+                      </div>
                     </div>
                   </div>
 
@@ -422,27 +457,113 @@ export default function ThrombocytopeniaEvaluator() {
 
                     {/* Three sub-branches */}
                     <div className="mt-2 space-y-2 w-full">
-                      {/* TTP */}
-                      <div className="rounded-xl border border-sky-500/40 bg-sky-500/15 px-3 py-2">
+                      {/* TTP — expanded */}
+                      <div className="rounded-xl border border-sky-500/40 bg-sky-500/15 px-3 py-2 space-y-1.5">
                         <div className="font-bold text-sm text-sky-300">TTP</div>
-                        <div className="text-[10px] text-muted-foreground mb-1">Thrombotic Thrombocytopenic Purpura</div>
-                        <div className="text-[10px] text-left space-y-0.5">
-                          <span className="font-medium text-warning">CLUES:</span> fever, neurologic signs, renal failure
+                        <div className="text-[10px] text-muted-foreground">Thrombotic Thrombocytopenic Purpura</div>
+
+                        {/* Vignette */}
+                        <div className="text-[10px] leading-relaxed text-muted-foreground">
+                          Seen in adults, <span className="font-medium text-sky-200">classically young women</span> —
+                          anti-ADAMTS13 antibodies prevent vWF multimer cleavage
                         </div>
-                        <div className="text-[10px] text-left font-medium text-emerald-400">
-                          TREATMENT: plasmapheresis
+
+                        {/* Mechanism + Labs — side by side */}
+                        <div className="grid grid-cols-2 gap-1.5 mt-1">
+                          <div className="bg-sky-950/30 rounded-md border border-sky-500/20 p-2">
+                            <div className="text-[10px] font-bold text-sky-300 mb-1">MECHANISM</div>
+                            <div className="text-[10px] text-muted-foreground leading-relaxed">
+                              Anti-ADAMTS13 Enzyme → ↓ADAMTS13 → <span className="font-medium text-sky-200">vWF multimers accumulate</span> → Adhesion & Occlusion → <span className="font-medium text-rose-300">Thrombocytopenia + MAHA</span>
+                            </div>
+                          </div>
+                          <div className="bg-sky-950/20 rounded-md border border-sky-500/15 p-2">
+                            <div className="text-[10px] font-bold text-sky-300 mb-0.5">LABS</div>
+                            <div className="text-[10px] text-muted-foreground leading-relaxed">
+                              ↓ADAMTS13 activity<br/>
+                              ↑Bleeding time<br/>
+                              Normal PT/PTT<br/>
+                              <span className="font-medium text-rose-300">MAHA</span> + Schistocytes
+                            </div>
+                          </div>
+                        </div>
+
+                        {/* The Pentad */}
+                        <div className="bg-rose-950/20 rounded-md border border-rose-500/20 p-2 mt-1">
+                          <div className="text-[10px] font-bold text-rose-300 mb-0.5">🔴 TTP PENTAD</div>
+                          <div className="text-[10px] text-muted-foreground">
+                            TTP Pentad = HUS triad + <span className="font-medium text-sky-200">Fever</span> + <span className="font-medium text-sky-200">Neurologic signs</span>
+                          </div>
+                        </div>
+
+                        {/* Critical Warning */}
+                        <div className="bg-red-950/30 rounded-md border border-red-500/30 p-1.5 mt-1">
+                          <div className="text-[10px] font-bold text-red-300">⚠ CRITICAL</div>
+                          <div className="text-[10px] text-red-200/90">
+                            <span className="font-bold">AVOID PLATELET TRANSFUSION</span> — fuels systemic thrombotic process ("lvematic process")
+                          </div>
+                        </div>
+
+                        <div className="bg-emerald-950/20 rounded-md border border-emerald-500/20 p-2 mt-1">
+                          <div className="text-[10px] font-bold text-emerald-300 mb-0.5">TREATMENT</div>
+                          <ul className="text-[10px] text-muted-foreground space-y-0.5 list-disc list-inside">
+                            <li><span className="font-bold text-emerald-200">PLASMAPHERESIS</span> — removes antibodies + replaces ADAMTS13 (<span className="text-emerald-200">emergent</span>)</li>
+                            <li><span className="font-bold text-red-300">Do NOT</span> transfuse platelets</li>
+                          </ul>
                         </div>
                       </div>
 
-                      {/* HUS */}
-                      <div className="rounded-xl border border-amber-500/40 bg-amber-500/15 px-3 py-2">
+                      {/* HUS — expanded */}
+                      <div className="rounded-xl border border-amber-500/40 bg-amber-500/15 px-3 py-2 space-y-1.5">
                         <div className="font-bold text-sm text-amber-300">HUS</div>
-                        <div className="text-[10px] text-muted-foreground mb-1">Hemolytic Uremic Syndrome</div>
-                        <div className="text-[10px] text-left space-y-0.5">
-                          <span className="font-medium text-warning">CLUES:</span> bloody diarrhea, renal failure, child
+                        <div className="text-[10px] text-muted-foreground">Hemolytic Uremic Syndrome <span className="text-amber-300 font-medium">(HUD)</span></div>
+                        <div className="text-[9px] italic text-muted-foreground mb-0.5">Hemolysis, Uremia, Diarrhea</div>
+
+                        {/* Epidemiology */}
+                        <div className="text-[10px] leading-relaxed text-muted-foreground">
+                          Seen in children after <span className="font-medium text-amber-200">bloody diarrhea</span>.
+                          Caused by <span className="font-medium text-amber-200">Shiga toxin</span> (EHEC O157:H7 or <em>Shigella</em>).
+                          <span className="text-amber-400"> ⚠ NOT ETEC</span> (does not cause HUS).
                         </div>
-                        <div className="text-[10px] text-left font-medium text-emerald-400">
-                          TREATMENT: supportive care (NO ANTIBIOTICS)
+                        <div className="text-[10px] text-muted-foreground">
+                          <span className="font-medium text-warning">Effect:</span> Renal endothelial damage → microthrombi
+                        </div>
+
+                        {/* Pathophysiology flowchart */}
+                        <div className="bg-amber-950/30 rounded-md border border-amber-500/20 p-2 mt-1">
+                          <div className="text-[10px] font-bold text-amber-300 mb-1">PATHOPHYSIOLOGY</div>
+                          <div className="text-[10px] text-muted-foreground leading-relaxed">
+                            EHEC/Shigella → <span className="font-medium text-amber-200">Shiga Toxin</span> → Toxin targets renal endothelium →<br />
+                            VWF multimers released → <span className="font-medium text-amber-200">Microthrombi</span> → Platelet consumption + RBC fragmentation (schistocytes) → Renal failure
+                          </div>
+                        </div>
+
+                        {/* Labs */}
+                        <div className="bg-amber-950/20 rounded-md border border-amber-500/15 p-2 mt-1">
+                          <div className="text-[10px] font-bold text-amber-300 mb-0.5">LABS</div>
+                          <div className="text-[10px] text-muted-foreground">
+                            ↓Platelets (Thrombocytopenia) | <span className="font-medium text-rose-300">Schistocytes present</span> (MAHA) | ↑BUN/Creatinine (Renal Failure)
+                          </div>
+                        </div>
+
+                        {/* The Triad */}
+                        <div className="bg-rose-950/20 rounded-md border border-rose-500/20 p-2 mt-1">
+                          <div className="text-[10px] font-bold text-rose-300 mb-0.5">🔴 THE TRIAD</div>
+                          <div className="text-[10px] text-muted-foreground">
+                            <span className="font-medium text-amber-300">Thrombocytopenia</span> + <span className="font-medium text-amber-300">Schistocytes</span> + <span className="font-medium text-amber-300">Renal Failure</span>
+                          </div>
+                          <div className="text-[10px] text-muted-foreground">(Low platelets + ↑BUN/Creatinine + schistocytes)</div>
+                        </div>
+
+                        {/* Clinical Pearl */}
+                        <div className="bg-yellow-950/30 rounded-md border border-yellow-500/30 p-1.5 mt-1">
+                          <div className="text-[10px] font-bold text-yellow-300">💡 CLINICAL PEARL</div>
+                          <div className="text-[10px] text-yellow-200/90">
+                            Avoid antibiotics for EHEC. Antibiotics <span className="font-bold">increase Shiga toxin release</span> and worsen HUS.
+                          </div>
+                        </div>
+
+                        <div className="text-[10px] text-left font-medium text-emerald-400 mt-1">
+                          TREATMENT: Supportive care — IV fluids + renal monitoring | <span className="text-rose-300">NO ANTIBIOTICS</span> | Dialysis if needed
                         </div>
                       </div>
 
@@ -474,11 +595,46 @@ export default function ThrombocytopeniaEvaluator() {
                     <span className="rounded-md border border-emerald-500/50 bg-emerald-500/10 px-2 py-0.5 text-xs font-bold text-emerald-400">YES</span>
                   </div>
                   <ArrowDown className="h-4 w-4 text-muted-foreground" />
-                  <div className="rounded-xl border border-red-500/50 bg-red-500/20 px-5 py-2.5 text-center">
-                    <div className="text-sm font-bold text-red-300">HIT</div>
-                    <div className="text-[10px] text-muted-foreground">Heparin-Induced Thrombocytopenia</div>
-                    <div className="text-[10px] text-left mt-1">🔴 <span className="font-medium">CLUES:</span> heparin exposure + thrombosis + platelet fall &gt;50%</div>
-                    <div className="text-[10px] text-left font-medium text-emerald-400">TREATMENT: stop heparin → direct thrombin inhibitor (argatroban, bivalirudin)</div>
+                  <div className="rounded-xl border border-red-500/50 bg-red-500/20 px-3 py-2.5 space-y-1.5 text-left">
+                    <div className="text-sm font-bold text-red-300 text-center">HIT</div>
+                    <div className="text-[10px] text-muted-foreground text-center">Heparin-Induced Thrombocytopenia</div>
+
+                    {/* Timing */}
+                    <div className="text-[10px] leading-relaxed text-muted-foreground">
+                      Seen <span className="font-medium text-red-200">5–10 days</span> after starting heparin. Paradoxical prothrombotic state — bleeding is rare; <span className="font-medium text-red-200">thrombosis</span> is the hallmark.
+                    </div>
+
+                    {/* Mechanism */}
+                    <div className="bg-red-950/30 rounded-md border border-red-500/20 p-2 mt-1">
+                      <div className="text-[10px] font-bold text-red-300 mb-1">MECHANISM</div>
+                      <div className="text-[10px] text-muted-foreground leading-relaxed">
+                        <span className="font-medium text-red-200">IgG antibodies</span> bind to <span className="font-medium text-red-200">PF4-heparin complex</span> → Fcγ receptor activation → platelet activation/consumption → <span className="font-medium text-amber-200">paradoxical thrombosis</span>
+                      </div>
+                    </div>
+
+                    {/* Clinical Features */}
+                    <div className="bg-red-950/20 rounded-md border border-red-500/15 p-2 mt-1">
+                      <div className="text-[10px] font-bold text-red-300 mb-0.5">CLINICAL FEATURES</div>
+                      <div className="text-[10px] text-muted-foreground">
+                        🔴 <span className="font-medium">Thrombosis</span> (paradoxical) | 🩸 <span className="font-medium">Thrombocytopenia</span> | ⚪ <span className="font-medium text-rose-300">Bleeding is FALSE</span> — comment: <span className="italic">"Low platelets with new clot, not bleeding"</span>
+                      </div>
+                    </div>
+
+                    {/* Management */}
+                    <div className="bg-green-950/30 rounded-md border border-green-500/20 p-2 mt-1">
+                      <div className="text-[10px] font-bold text-green-300 mb-1">MANAGEMENT</div>
+                      <div className="text-[10px] text-muted-foreground">
+                        <span className="font-medium text-red-200">Immediate: STOP all heparin</span> | <span className="font-medium text-emerald-300">Preferred:</span> <span className="text-emerald-200">Argatroban</span> or <span className="text-emerald-200">Bivalirudin</span> (direct thrombin inhibitors) | <span className="font-medium text-rose-300">Avoid: Warfarin</span>
+                      </div>
+                    </div>
+
+                    {/* Warfarin Warning */}
+                    <div className="bg-rose-950/30 rounded-md border border-rose-500/30 p-1.5 mt-1">
+                      <div className="text-[10px] font-bold text-rose-300">⚠ WARFARIN WARNING</div>
+                      <div className="text-[10px] text-rose-200/90">
+                        Warfarin <span className="font-bold">worsens HIT</span> — depletes protein C early → worsens hypercoagulability → may cause <span className="font-bold">skin necrosis</span>. Never start warfarin until platelets recover >150.
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>

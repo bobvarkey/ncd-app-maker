@@ -108,6 +108,9 @@ import Fatigue from "@/pages/Fatigue";
 // Infections
 import Infections from "@/pages/Infections";
 
+// PEP
+import PEP from "@/pages/PEP";
+
 // Hyperglycemic Emergency
 import HyperglycemicEmergency from "@/pages/HyperglycemicEmergency";
 
@@ -225,6 +228,7 @@ const App = () => (
           <Route path="/thyroid" element={<><TabNavigation /><ThyroidCalculator /></>} />
           <Route path="/fatigue" element={<><TabNavigation /><Fatigue /></>} />
           <Route path="/infections" element={<><TabNavigation /><Infections /></>} />
+          <Route path="/pep" element={<><TabNavigation /><PEP /></>} />
           <Route path="/hyperglycemic-emergency" element={<><TabNavigation /><HyperglycemicEmergency /></>} />
           <Route path="/type1-treatment-algorithm" element={<><TabNavigation /><Type1TreatmentAlgorithm /></>} />
           <Route path="/type2-treatment-algorithm" element={<><TabNavigation /><Type2TreatmentAlgorithm /></>} />
