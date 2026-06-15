@@ -667,6 +667,16 @@ export default function Electrolytes() {
     ]
   );
 
+  const copyJson = useCallback(async () => {
+    try {
+      await navigator.clipboard.writeText(jsonOutput);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 1200);
+    } catch {
+      // fallback
+    }
+  }, [jsonOutput]);
+
   const PRIORITY_STYLES = {
     danger: "bg-red-950/20 border-red-500/30 text-red-300",
     warn: "bg-amber-950/20 border-amber-500/30 text-amber-300",
