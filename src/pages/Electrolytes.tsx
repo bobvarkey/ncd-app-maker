@@ -14,8 +14,8 @@ import {
   Zap,
   Heart,
   Brain,
-  Kidney,
-  Muscle,
+  Bean,
+  Dumbbell,
 } from "lucide-react";
 
 type ElectrolyteKey =
@@ -59,8 +59,8 @@ const ELECTROLYTE_ICONS: Record<ElectrolyteKey, React.ReactNode> = {
   hypercalcemia: <Bone className="h-4 w-4" />,
   hypomagnesemia: <Activity className="h-4 w-4" />,
   hypermagnesemia: <Activity className="h-4 w-4" />,
-  hypophosphatemia: <Muscle className="h-4 w-4" />,
-  hyperphosphatemia: <Muscle className="h-4 w-4" />,
+  hypophosphatemia: <Dumbbell className="h-4 w-4" />,
+  hyperphosphatemia: <Dumbbell className="h-4 w-4" />,
 };
 
 const RULES: Record<ElectrolyteKey, ElectrolyteRule> = {
