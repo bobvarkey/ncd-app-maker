@@ -397,6 +397,22 @@ const REFERENCE_RANGES: Record<
   hyperphosphatemia: { unit: "mg/dL", normalLow: 2.5, normalHigh: 4.5, severeHigh: 7 },
 };
 
+const SEVERITY_RANGES: Record<
+  ElectrolyteKey,
+  { mild: string; moderate: string; severe: string }
+> = {
+  hyponatremia: { mild: "130–134", moderate: "120–129", severe: "<120" },
+  hypernatremia: { mild: "146–149", moderate: "150–154", severe: "≥155" },
+  hypokalemia: { mild: "3.0–3.4", moderate: "2.5–2.9", severe: "<2.5" },
+  hyperkalemia: { mild: "5.1–5.5", moderate: "5.6–6.4", severe: "≥6.5" },
+  hypocalcemia: { mild: "7.5–8.4", moderate: "7.0–7.4", severe: "<7.0" },
+  hypercalcemia: { mild: "10.6–11.9", moderate: "12.0–12.9", severe: "≥13.0" },
+  hypomagnesemia: { mild: "1.4–1.6", moderate: "1.2–1.3", severe: "<1.2" },
+  hypermagnesemia: { mild: "2.5–4.9", moderate: "5.0–6.9", severe: "≥7.0" },
+  hypophosphatemia: { mild: "2.0–2.4", moderate: "1.5–1.9", severe: "<1.5" },
+  hyperphosphatemia: { mild: "4.6–5.9", moderate: "6.0–6.9", severe: "≥7.0" },
+};
+
 const FLAG_LABELS: Record<Flag, { label: string; icon: React.ReactNode }> = {
   arrhythmia: { label: "Arrhythmia", icon: <Heart className="h-3.5 w-3.5" /> },
   seizure: { label: "Seizure", icon: <Brain className="h-3.5 w-3.5" /> },
@@ -746,19 +762,27 @@ export default function Electrolytes() {
                 Severity
               </span>
               <div className="flex flex-wrap gap-2">
-                {(["mild", "moderate", "severe"] as Severity[]).map((s) => (
-                  <button
-                    key={s}
-                    onClick={() => setSeverity(s)}
-                    className={`px-3 py-1.5 rounded-full text-xs font-medium border transition-colors min-h-[36px] ${
-                      severity === s
-                        ? SEVERITY_COLORS[s]
-                        : "border-border bg-surface-2 text-muted-foreground hover:text-foreground"
-                    }`}
-                  >
-                    {titleCase(s)}
-                  </button>
-                ))}
+                {(["mild", "moderate", "severe"] as Severity[]).map((s) => {
+                  const range = SEVERITY_RANGES[electrolyte]?.[s];
+                  return (
+                    <button
+                      key={s}
+                      onClick={() => setSeverity(s)}
+                      className={`px-3 py-1.5 rounded-full text-xs font-medium border transition-colors min-h-[36px] ${
+                        severity === s
+                          ? SEVERITY_COLORS[s]
+                          : "border-border bg-surface-2 text-muted-foreground hover:text-foreground"
+                      }`}
+                    >
+                      {titleCase(s)}
+                      {range && (
+                        <span className="ml-1.5 opacity-70 font-normal">
+                          {range} {ref?.unit}
+                        </span>
+                      )}
+                    </button>
+                  );
+                })}
               </div>
             </div>
 
