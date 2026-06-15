@@ -771,12 +771,12 @@ export default function Electrolytes() {
                       className={`px-3 py-1.5 rounded-full text-xs font-medium border transition-colors min-h-[36px] ${
                         severity === s
                           ? SEVERITY_COLORS[s]
-                          : "border-border bg-surface-2 text-muted-foreground hover:text-foreground"
+                          : "border-border bg-surface-2 text-foreground hover:bg-muted"
                       }`}
                     >
-                      {titleCase(s)}
+                      <span className="text-foreground">{titleCase(s)}</span>
                       {range && (
-                        <span className="ml-1.5 opacity-70 font-normal">
+                        <span className="ml-1.5 font-normal text-muted-foreground">
                           {range} {ref?.unit}
                         </span>
                       )}
@@ -800,11 +800,11 @@ export default function Electrolytes() {
                       className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-medium border transition-colors min-h-[36px] ${
                         flags.has(key)
                           ? "bg-primary/15 text-primary border-primary/30"
-                          : "border-border bg-surface-2 text-muted-foreground hover:text-foreground"
+                          : "border-border bg-surface-2 text-foreground hover:bg-muted"
                       }`}
                     >
                       {val.icon}
-                      {val.label}
+                      <span className="text-foreground">{val.label}</span>
                     </button>
                   )
                 )}
@@ -825,10 +825,10 @@ export default function Electrolytes() {
                       className={`px-3 py-1.5 rounded-full text-xs font-medium border transition-colors min-h-[36px] ${
                         volume === v
                           ? "bg-cyan-500/15 text-cyan-400 border-cyan-500/30"
-                          : "border-border bg-surface-2 text-muted-foreground hover:text-foreground"
+                          : "border-border bg-surface-2 text-foreground hover:bg-muted"
                       }`}
                     >
-                      {titleCase(v)}
+                      <span className="text-foreground">{titleCase(v)}</span>
                     </button>
                   )
                 )}
