@@ -518,15 +518,8 @@ export default function Electrolytes() {
     setNotes("");
   }, []);
 
-  const copyJson = useCallback(async () => {
-    try {
-      await navigator.clipboard.writeText(jsonOutput);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 1200);
-    } catch {
-      // fallback
-    }
-  }, [jsonOutput]);
+
+
 
   const data = RULES[electrolyte];
   const actions = useMemo(() => {
@@ -673,6 +666,16 @@ export default function Electrolytes() {
       monitoring,
     ]
   );
+
+  const copyJson = useCallback(async () => {
+    try {
+      await navigator.clipboard.writeText(jsonOutput);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 1200);
+    } catch {
+      // fallback
+    }
+  }, [jsonOutput]);
 
   const PRIORITY_STYLES = {
     danger: "bg-red-950/20 border-red-500/30 text-red-300",
