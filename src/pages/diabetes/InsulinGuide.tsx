@@ -294,6 +294,83 @@ export default function InsulinGuide() {
         </CardContent>
       </Card>
 
+      {/* 30/70 Premixed Insulin (Human Mixtard) */}
+      <Card className="clinical-card border-2 border-sky-500/40">
+        <CardHeader className="pb-3">
+          <div className="flex items-center gap-2">
+            <div className="w-8 h-8 rounded-lg bg-sky-500/10 flex items-center justify-center">
+              <Syringe className="h-4 w-4 text-sky-500" />
+            </div>
+            <div>
+              <CardTitle className="text-base">30/70 Premixed Insulin (Human Mixtard)</CardTitle>
+              <p className="text-xs text-muted-foreground mt-0.5">
+                30% regular insulin + 70% NPH insulin — <strong>twice daily, at least 8 hours apart, always with a meal</strong>
+              </p>
+            </div>
+          </div>
+        </CardHeader>
+        <CardContent className="space-y-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+              <h4 className="text-xs font-semibold text-muted-foreground uppercase tracking-wide mb-2">Administration</h4>
+              <table className="w-full text-xs">
+                <thead>
+                  <tr className="border-b">
+                    <th className="text-left py-1.5 pr-3">Aspect</th>
+                    <th className="text-left py-1.5">Recommendation</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr className="border-b border-border/30">
+                    <td className="py-1.5 pr-3 font-medium whitespace-nowrap">Frequency</td>
+                    <td className="py-1.5">Twice daily (before breakfast &amp; before dinner)</td>
+                  </tr>
+                  <tr className="border-b border-border/30">
+                    <td className="py-1.5 pr-3 font-medium whitespace-nowrap">Timing</td>
+                    <td className="py-1.5">30 min before meals (for human regular/NPH 70/30)</td>
+                  </tr>
+                  <tr className="border-b border-border/30">
+                    <td className="py-1.5 pr-3 font-medium whitespace-nowrap">Dose spacing</td>
+                    <td className="py-1.5">At least 8 hours between doses</td>
+                  </tr>
+                  <tr className="border-b border-border/30">
+                    <td className="py-1.5 pr-3 font-medium whitespace-nowrap">Starting dose</td>
+                    <td className="py-1.5">10 units twice daily <em>or</em> 0.1–0.2 units/kg/day divided equally</td>
+                  </tr>
+                  <tr>
+                    <td className="py-1.5 pr-3 font-medium whitespace-nowrap">Alternative</td>
+                    <td className="py-1.5">Once daily (12 units before dinner) in select patients, though BID provides better control</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div className="space-y-3">
+              <div className="p-3 rounded-lg bg-rose-500/10 border border-rose-500/30">
+                <p className="text-xs font-semibold text-rose-600 flex items-center gap-1.5">
+                  <AlertCircle className="h-3.5 w-3.5" />
+                  Maximum frequency
+                </p>
+                <p className="text-xs text-rose-600/80 mt-1">
+                  Never give more than twice daily as a standard regimen — the NPH component's duration (14–18 hours) makes thrice-daily dosing unsafe except in specialized settings like continuous enteral nutrition.
+                </p>
+              </div>
+              <div className="p-3 rounded-lg bg-muted/30">
+                <p className="text-xs font-medium mb-1">Dose titration</p>
+                <p className="text-xs text-muted-foreground">
+                  Adjustments every 2 weeks based on blood glucose monitoring.
+                </p>
+              </div>
+              <div className="p-3 rounded-lg bg-muted/30">
+                <p className="text-xs font-medium mb-1">Naming note</p>
+                <p className="text-xs text-muted-foreground">
+                  30/70 = 70/30 (named differently by region/brand). Both refer to 30% regular + 70% NPH. Known brands: Humulin 70/30, Novolin 70/30, Human Mixtard 30/70.
+                </p>
+              </div>
+            </div>
+          </div>
+        </CardContent>
+      </Card>
+
       {/* Mixing Instructions */}
       <Card className="clinical-card border-2 border-warning/40">
         <CardHeader className="pb-3">
