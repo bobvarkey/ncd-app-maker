@@ -9,6 +9,12 @@ import {
   ArrowRight,
   RotateCcw,
   CheckCircle2,
+  ChevronDown,
+  ChevronUp,
+  FileText,
+  Pill,
+  HeartPulse,
+  Info,
 } from "lucide-react";
 import { SectionCard } from "@/components/ui/section-card";
 import {
@@ -624,6 +630,7 @@ function RecommendationCard({ rec }: { rec: Recommendation }) {
 
 export default function BleedingClottingEvaluator() {
   const [mode, setMode] = useState<Mode>("");
+  const [showDicReference, setShowDicReference] = useState(false);
 
   if (mode === "") {
     return (
@@ -654,6 +661,134 @@ export default function BleedingClottingEvaluator() {
             <p className="text-xs text-muted-foreground">Patient has thrombosis — work through provoked vs unprovoked → site → risk score → targeted panel.</p>
           </button>
         </div>
+
+        {/* DIC Reference Card */}
+        <button
+          onClick={() => setShowDicReference(!showDicReference)}
+          className="w-full flex items-center justify-between rounded-lg border border-teal-500/30 bg-teal-500/5 p-4 hover:bg-teal-500/10 transition-colors"
+        >
+          <div className="flex items-center gap-2">
+            <FileText className="h-5 w-5 text-teal-400" />
+            <span className="font-semibold text-foreground">DIC (Disseminated Intravascular Coagulation) — Reference</span>
+          </div>
+          {showDicReference ? <ChevronUp className="h-4 w-4 text-muted-foreground" /> : <ChevronDown className="h-4 w-4 text-muted-foreground" />}
+        </button>
+
+        {showDicReference && (
+          <div className="rounded-xl border border-border bg-card p-4 space-y-5 text-sm">
+            <div className="grid gap-4 sm:grid-cols-3">
+              {/* Triggers */}
+              <div className="rounded-lg border border-teal-500/30 bg-teal-500/5 p-3">
+                <h4 className="text-xs font-semibold text-teal-400 uppercase tracking-wide mb-2">Triggers</h4>
+                <ul className="space-y-1.5 text-xs text-muted-foreground">
+                  <li className="flex items-start gap-1.5">🦠 <span>Sepsis — most common</span></li>
+                  <li className="flex items-start gap-1.5">🦴 <span>Trauma / major surgery</span></li>
+                  <li className="flex items-start gap-1.5">🤰 <span>Amniotic fluid embolism (AFE)</span></li>
+                  <li className="flex items-start gap-1.5">🧬 <span>AML (esp. acute promyelocytic — M3)</span></li>
+                  <li className="flex items-start gap-1.5">🩸 <span>Massive transfusion</span></li>
+                </ul>
+              </div>
+
+              {/* Key Feature */}
+              <div className="rounded-lg border border-teal-500/30 bg-teal-500/5 p-3">
+                <h4 className="text-xs font-semibold text-teal-400 uppercase tracking-wide mb-2">Key Feature</h4>
+                <p className="text-xs text-foreground font-medium">Systemic Clotting → Simultaneous clotting & bleeding → Systemic Bleeding 🩸</p>
+                <p className="text-xs text-muted-foreground mt-1">Pathophysiology: massive thrombin generation → consumption of platelets & clotting factors → microthrombi formation + concurrent fibrinolysis → D-dimer rise.</p>
+              </div>
+
+              {/* Labs */}
+              <div className="rounded-lg border border-teal-500/30 bg-teal-500/5 p-3">
+                <h4 className="text-xs font-semibold text-teal-400 uppercase tracking-wide mb-2">Labs — DIC Profile</h4>
+                <div className="space-y-1 text-xs">
+                  <div className="flex justify-between"><span>🔻 Platelets</span><span className="text-destructive font-medium">Decreased</span></div>
+                  <div className="flex justify-between"><span>🔻 Fibrinogen</span><span className="text-destructive font-medium">Decreased</span></div>
+                  <div className="flex justify-between"><span>🔺 PT</span><span className="text-amber-400 font-medium">Increased</span></div>
+                  <div className="flex justify-between"><span>🔺 PTT</span><span className="text-amber-400 font-medium">Increased</span></div>
+                  <div className="flex justify-between"><span>🔺 D-dimer</span><span className="text-rose-400 font-medium">Increased</span></div>
+                  <div className="flex justify-between"><span>🔬 Schistocytes</span><span className="text-rose-400 font-medium">Present</span></div>
+                </div>
+              </div>
+            </div>
+
+            {/* Pathophysiology flow */}
+            <div className="rounded-lg border border-border bg-muted/30 p-3">
+              <h4 className="text-xs font-semibold text-foreground mb-3">Mechanism of DIC</h4>
+              <div className="flex flex-wrap items-center gap-2 text-xs">
+                <span className="rounded-md bg-destructive/10 border border-destructive/30 px-2 py-1 text-destructive font-medium">Trigger (sepsis, trauma, AFE, AML)</span>
+                <ArrowRight className="h-3 w-3 text-muted-foreground" />
+                <span className="rounded-md bg-amber-500/10 border border-amber-500/30 px-2 py-1 text-amber-400 font-medium">Massive clotting cascade activation</span>
+                <ArrowRight className="h-3 w-3 text-muted-foreground" />
+                <span className="rounded-md bg-purple-500/10 border border-purple-500/30 px-2 py-1 text-purple-300 font-medium">Consumption of platelets & clotting factors</span>
+                <ArrowRight className="h-3 w-3 text-muted-foreground" />
+                <span className="rounded-md bg-rose-500/10 border border-rose-500/30 px-2 py-1 text-rose-300 font-medium">Microthrombi formation</span>
+                <ArrowRight className="h-3 w-3 text-muted-foreground" />
+                <span className="rounded-md bg-sky-500/10 border border-sky-500/30 px-2 py-1 text-sky-300 font-medium">Concurrent fibrinolysis → D-dimer</span>
+              </div>
+              <div className="text-[10px] text-muted-foreground mt-2 flex items-center gap-1.5">
+                <Info className="h-3 w-3" />
+                <span>Anti-PF4-heparin complexes → paradoxical thrombosis in HIT (separate mechanism).</span>
+              </div>
+            </div>
+
+            {/* Management */}
+            <div className="grid gap-3 sm:grid-cols-4">
+              <div className="rounded-lg border border-emerald-500/30 bg-emerald-500/10 p-3">
+                <h5 className="text-xs font-bold text-emerald-400 mb-1">1. Treat cause</h5>
+                <p className="text-[10px] text-muted-foreground">Antibiotics for sepsis, surgical control, treat malignancy, deliver fetus in AFE</p>
+              </div>
+              <div className="rounded-lg border border-sky-500/30 bg-sky-500/10 p-3">
+                <h5 className="text-xs font-bold text-sky-300 mb-1">2. FFP</h5>
+                <p className="text-[10px] text-muted-foreground">Replaces clotting factors (10–15 mL/kg). Start if PT/PTT prolonged + active bleeding.</p>
+              </div>
+              <div className="rounded-lg border border-purple-500/30 bg-purple-500/10 p-3">
+                <h5 className="text-xs font-bold text-purple-300 mb-1">3. Cryoprecipitate</h5>
+                <p className="text-[10px] text-muted-foreground">For fibrinogen replacement if &lt;100–150 mg/dL with bleeding. 10–15 pooled units.</p>
+              </div>
+              <div className="rounded-lg border border-amber-500/30 bg-amber-500/10 p-3">
+                <h5 className="text-xs font-bold text-amber-300 mb-1">4. Platelets</h5>
+                <p className="text-[10px] text-muted-foreground">Transfuse if &lt;50,000/μL with active bleeding or &lt;20,000/μL with no bleeding.</p>
+              </div>
+            </div>
+
+            {/* ISTH DIC Score */}
+            <div className="rounded-lg border border-amber-500/30 bg-amber-500/5 p-3">
+              <h4 className="text-xs font-semibold text-amber-300 mb-2">ISTH DIC Score</h4>
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 text-xs">
+                <div className="bg-muted rounded-md px-2 py-1.5">
+                  <span className="block text-muted-foreground">Platelets</span>
+                  <span className="font-medium">&gt;100K=0 / 50–100K=1 / &lt;50K=2</span>
+                </div>
+                <div className="bg-muted rounded-md px-2 py-1.5">
+                  <span className="block text-muted-foreground">D-dimer</span>
+                  <span className="font-medium">Mod=2 / Strong=3</span>
+                </div>
+                <div className="bg-muted rounded-md px-2 py-1.5">
+                  <span className="block text-muted-foreground">PT prolonged</span>
+                  <span className="font-medium">&lt;3s=0 / 3–6s=1 / &gt;6s=2</span>
+                </div>
+                <div className="bg-muted rounded-md px-2 py-1.5">
+                  <span className="block text-muted-foreground">Fibrinogen</span>
+                  <span className="font-medium">&gt;1g=0 / &lt;1g=1</span>
+                </div>
+              </div>
+              <p className="text-xs text-amber-400 mt-2 font-medium">Score ≥5 → overt DIC (ISTH diagnostic)</p>
+            </div>
+
+            {/* Pearl */}
+            <div className="rounded-lg border border-amber-500/30 bg-warning/5 px-3 py-2 flex items-start gap-2">
+              <HeartPulse className="h-4 w-4 text-amber-400 mt-0.5 shrink-0" />
+              <div>
+                <span className="text-xs font-semibold text-amber-300">DIC Pearls</span>
+                <p className="text-xs text-muted-foreground mt-0.5">Catheter & IV site bleeding often suggests DIC. Exception: dilutional thrombocytopenia from massive transfusion. DIC co-presence with TTP is rare — rule out TTP first if schistocytes + neuro/renal signs without coagulopathy.</p>
+              </div>
+            </div>
+
+            <p className="text-[10px] text-muted-foreground">
+              Sources: ISTH DIC Scoring (Taylor et al. 2001, Thromb Haemost); British Committee for Standards in Haematology DIC Guidelines (2009); UpToDate 2024.
+            </p>
+          </div>
+        )}
+
         <div className="flex items-start gap-2 rounded-md border border-amber-500/30 bg-warning/100/5 px-3 py-2 text-xs text-amber-700 dark:text-warning">
           <AlertTriangle className="h-3.5 w-3.5 mt-0.5 flex-shrink-0" />
           <span>Decision-support only. Confirm all recommendations with current guidelines and clinical context.</span>
