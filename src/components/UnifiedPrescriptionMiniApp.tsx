@@ -12,8 +12,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { toast } from "@/hooks/use-toast";
-import SmartLabelUpload from "@/components/SmartLabelUpload/SmartLabelUpload";
-import { DIABETES_FIELDS, HTN_FIELDS, LIPID_FIELDS, OBESITY_FIELDS, THYROID_FIELDS, CBC_FIELDS, RENAL_FIELDS } from "@/components/SmartLabelUpload";
+import { SmartLabelUpload, DIABETES_FIELDS, HTN_FIELDS, LIPID_FIELDS, OBESITY_FIELDS, RENAL_FIELDS } from "@/components/SmartLabelUpload";
 import {
   Activity,
   Heart,
