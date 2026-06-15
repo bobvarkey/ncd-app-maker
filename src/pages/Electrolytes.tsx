@@ -14,8 +14,8 @@ import {
   Zap,
   Heart,
   Brain,
-  Kidney,
-  Muscle,
+  Bean,
+  Dumbbell,
 } from "lucide-react";
 
 type ElectrolyteKey =
@@ -59,8 +59,8 @@ const ELECTROLYTE_ICONS: Record<ElectrolyteKey, React.ReactNode> = {
   hypercalcemia: <Bone className="h-4 w-4" />,
   hypomagnesemia: <Activity className="h-4 w-4" />,
   hypermagnesemia: <Activity className="h-4 w-4" />,
-  hypophosphatemia: <Muscle className="h-4 w-4" />,
-  hyperphosphatemia: <Muscle className="h-4 w-4" />,
+  hypophosphatemia: <Dumbbell className="h-4 w-4" />,
+  hyperphosphatemia: <Dumbbell className="h-4 w-4" />,
 };
 
 const RULES: Record<ElectrolyteKey, ElectrolyteRule> = {
@@ -380,9 +380,9 @@ const FLAG_LABELS: Record<Flag, { label: string; icon: React.ReactNode }> = {
   arrhythmia: { label: "Arrhythmia", icon: <Heart className="h-3.5 w-3.5" /> },
   seizure: { label: "Seizure", icon: <Brain className="h-3.5 w-3.5" /> },
   confusion: { label: "Confusion", icon: <Brain className="h-3.5 w-3.5" /> },
-  weakness: { label: "Weakness", icon: <Muscle className="h-3.5 w-3.5" /> },
+  weakness: { label: "Weakness", icon: <Dumbbell className="h-3.5 w-3.5" /> },
   ecg_changes: { label: "ECG changes", icon: <Activity className="h-3.5 w-3.5" /> },
-  renal_failure: { label: "Renal failure", icon: <Kidney className="h-3.5 w-3.5" /> },
+  renal_failure: { label: "Renal failure", icon: <Bean className="h-3.5 w-3.5" /> },
 };
 
 const ALL_ELECTROLYTES = Object.keys(RULES) as ElectrolyteKey[];
@@ -621,7 +621,7 @@ export default function Electrolytes() {
                 Symptoms / Danger Markers
               </span>
               <div className="flex flex-wrap gap-2">
-                {(Object.entries(FLAG_LABELS) as [Flag, typeof FLAG_LABELS[Flag][]][0][]).map(
+                {(Object.entries(FLAG_LABELS) as [Flag, (typeof FLAG_LABELS)[Flag]][]).map(
                   ([key, val]) => (
                     <button
                       key={key}
