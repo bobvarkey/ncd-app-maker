@@ -632,7 +632,7 @@ export default function ThrombocytopeniaEvaluator() {
                     <div className="bg-rose-950/30 rounded-md border border-rose-500/30 p-1.5 mt-1">
                       <div className="text-[10px] font-bold text-rose-300">⚠ WARFARIN WARNING</div>
                       <div className="text-[10px] text-rose-200/90">
-                        Warfarin <span className="font-bold">worsens HIT</span> — depletes protein C early → worsens hypercoagulability → may cause <span className="font-bold">skin necrosis</span>. Never start warfarin until platelets recover >150.
+                        Warfarin <span className="font-bold">worsens HIT</span> — depletes protein C early → worsens hypercoagulability → may cause <span className="font-bold">skin necrosis</span>. Never start warfarin until platelets recover &gt;150.
                       </div>
                     </div>
                   </div>
