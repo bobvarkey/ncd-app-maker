@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Droplet, AlertTriangle, ChevronDown, ChevronUp, Activity, Stethoscope, TestTube, Pill, Info } from 'lucide-react';
+import { Droplet, AlertTriangle, ChevronDown, ChevronUp, Activity, Stethoscope, TestTube, Pill, Info, ArrowDown } from 'lucide-react';
 
 const commonDITPDrugs = {
   antibiotics: [
@@ -369,7 +369,167 @@ export default function ThrombocytopeniaEvaluator() {
         </button>
 
         {showAlgorithm && (
-          <div className="bg-card rounded-xl p-5 space-y-4 text-sm border border-border">
+          <div className="bg-card rounded-xl p-5 space-y-6 text-sm border border-border">
+            {/* 🧩 VISUAL ALGORITHM FLOWCHART */}
+            <div className="text-center">
+              <h3 className="text-base font-bold text-foreground mb-4">🩸 Differential Diagnosis of Thrombocytopenia</h3>
+
+              <div className="inline-flex flex-col items-center">
+                {/* START NODE */}
+                <div className="rounded-full border-2 border-destructive bg-rose-500/15 px-6 py-2 text-sm font-bold text-foreground">
+                  🟡 DECREASED PLATELETS
+                </div>
+
+                <div className="flex justify-center">
+                  <ArrowDown className="h-5 w-5 text-muted-foreground my-1" />
+                </div>
+
+                {/* MAIN DECISION — MAHA? */}
+                <div className="flex flex-col sm:flex-row items-start sm:items-center gap-1 sm:gap-3">
+                  {/* NO → ITP */}
+                  <div className="flex flex-col items-center w-36">
+                    <div className="rounded-md border border-emerald-500/50 bg-emerald-500/10 px-3 py-1 text-xs font-bold text-emerald-400">NO</div>
+                    <ArrowDown className="h-4 w-4 text-muted-foreground" />
+                    <div className="rounded-xl border border-purple-500/40 bg-purple-500/15 px-4 py-2 text-center">
+                      <div className="text-xs font-semibold text-foreground">Isolated Thrombocytopenia</div>
+                      <div className="text-sm font-bold text-purple-300">ITP</div>
+                      <div className="text-[10px] text-muted-foreground">Immune Thrombocytopenic Purpura</div>
+                    </div>
+                  </div>
+
+                  {/* DECISION DIAMOND */}
+                  <div className="flex flex-col items-center my-2 sm:my-0">
+                    <div className="bg-card border-2 border-border rounded-md px-4 py-2 text-center">
+                      <div className="text-xs font-bold text-foreground">Is there MAHA</div>
+                      <div className="text-xs text-muted-foreground">(schistocytes)?</div>
+                    </div>
+                    <div className="flex items-center gap-1 mt-1">
+                      <span className="text-xs text-muted-foreground">🔴 schistocytes</span>
+                    </div>
+                  </div>
+
+                  {/* YES → MAHA BRANCH */}
+                  <div className="flex flex-col items-center w-40">
+                    <div className="rounded-md border border-rose-500/50 bg-rose-500/10 px-3 py-1 text-xs font-bold text-rose-400">YES</div>
+                    <ArrowDown className="h-4 w-4 text-muted-foreground" />
+                    <div className="rounded-lg bg-muted/60 border border-border px-3 py-1.5 text-xs text-muted-foreground">
+                      MAHA PRESENT
+                    </div>
+                    <ArrowDown className="h-4 w-4 text-muted-foreground" />
+                    <div className="rounded-md bg-muted border border-border px-3 py-1.5 text-xs text-muted-foreground">
+                      Consider TTP, HUS, or DIC
+                    </div>
+
+                    {/* Three sub-branches */}
+                    <div className="mt-2 space-y-2 w-full">
+                      {/* TTP */}
+                      <div className="rounded-xl border border-sky-500/40 bg-sky-500/15 px-3 py-2">
+                        <div className="font-bold text-sm text-sky-300">TTP</div>
+                        <div className="text-[10px] text-muted-foreground mb-1">Thrombotic Thrombocytopenic Purpura</div>
+                        <div className="text-[10px] text-left space-y-0.5">
+                          <span className="font-medium text-warning">CLUES:</span> fever, neurologic signs, renal failure
+                        </div>
+                        <div className="text-[10px] text-left font-medium text-emerald-400">
+                          TREATMENT: plasmapheresis
+                        </div>
+                      </div>
+
+                      {/* HUS */}
+                      <div className="rounded-xl border border-amber-500/40 bg-amber-500/15 px-3 py-2">
+                        <div className="font-bold text-sm text-amber-300">HUS</div>
+                        <div className="text-[10px] text-muted-foreground mb-1">Hemolytic Uremic Syndrome</div>
+                        <div className="text-[10px] text-left space-y-0.5">
+                          <span className="font-medium text-warning">CLUES:</span> bloody diarrhea, renal failure, child
+                        </div>
+                        <div className="text-[10px] text-left font-medium text-emerald-400">
+                          TREATMENT: supportive care (NO ANTIBIOTICS)
+                        </div>
+                      </div>
+
+                      {/* DIC */}
+                      <div className="rounded-xl border border-rose-400/40 bg-rose-500/15 px-3 py-2">
+                        <div className="font-bold text-sm text-rose-300">DIC</div>
+                        <div className="text-[10px] text-muted-foreground mb-1">Disseminated Intravascular Coagulation</div>
+                        <div className="text-[10px] text-left space-y-0.5">
+                          <span className="font-medium text-warning">CLUES:</span> systemic trigger (sepsis, trauma), coag abnormalities (↑PT, ↑PTT, ↑D-dimer)
+                        </div>
+                        <div className="text-[10px] text-left font-medium text-emerald-400">
+                          TREATMENT: treat cause + FFP
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* HORIZONTAL SEPARATOR */}
+                <div className="w-full border-t border-border my-4" />
+
+                {/* HIT BRANCH */}
+                <div className="flex flex-col items-center">
+                  <div className="rounded-lg bg-card border-2 border-border px-4 py-2 text-center">
+                    <div className="text-xs font-bold text-foreground">New thrombosis +</div>
+                    <div className="text-xs font-bold text-foreground">heparin exposure?</div>
+                  </div>
+                  <div className="flex items-center gap-1 mt-1">
+                    <span className="rounded-md border border-emerald-500/50 bg-emerald-500/10 px-2 py-0.5 text-xs font-bold text-emerald-400">YES</span>
+                  </div>
+                  <ArrowDown className="h-4 w-4 text-muted-foreground" />
+                  <div className="rounded-xl border border-red-500/50 bg-red-500/20 px-5 py-2.5 text-center">
+                    <div className="text-sm font-bold text-red-300">HIT</div>
+                    <div className="text-[10px] text-muted-foreground">Heparin-Induced Thrombocytopenia</div>
+                    <div className="text-[10px] text-left mt-1">🔴 <span className="font-medium">CLUES:</span> heparin exposure + thrombosis + platelet fall &gt;50%</div>
+                    <div className="text-[10px] text-left font-medium text-emerald-400">TREATMENT: stop heparin → direct thrombin inhibitor (argatroban, bivalirudin)</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* SUMMARY TABLE */}
+            <div className="overflow-x-auto rounded-lg border border-border">
+              <table className="w-full text-xs">
+                <thead className="bg-muted">
+                  <tr>
+                    <th className="px-3 py-2 text-left font-semibold text-foreground">Diagnosis</th>
+                    <th className="px-3 py-2 text-left font-semibold text-foreground">MAHA / Schistocytes</th>
+                    <th className="px-3 py-2 text-left font-semibold text-foreground">Key Clues</th>
+                    <th className="px-3 py-2 text-left font-semibold text-foreground">Treatment</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr className="border-t border-border">
+                    <td className="px-3 py-2 font-semibold text-purple-400">ITP</td>
+                    <td className="px-3 py-2 text-muted-foreground">—</td>
+                    <td className="px-3 py-2 text-muted-foreground">Isolated low platelets, no systemic illness</td>
+                    <td className="px-3 py-2 font-medium text-emerald-400">Steroids / IVIG</td>
+                  </tr>
+                  <tr className="border-t border-border">
+                    <td className="px-3 py-2 font-semibold text-sky-400">TTP</td>
+                    <td className="px-3 py-2 text-rose-400">YES</td>
+                    <td className="px-3 py-2 text-muted-foreground">Fever, neuro signs, renal failure</td>
+                    <td className="px-3 py-2 font-medium text-emerald-400">Plasmapheresis</td>
+                  </tr>
+                  <tr className="border-t border-border">
+                    <td className="px-3 py-2 font-semibold text-amber-400">HUS</td>
+                    <td className="px-3 py-2 text-rose-400">YES</td>
+                    <td className="px-3 py-2 text-muted-foreground">Bloody diarrhea, renal failure, child</td>
+                    <td className="px-3 py-2 font-medium text-emerald-400">Supportive care (NO abx)</td>
+                  </tr>
+                  <tr className="border-t border-border">
+                    <td className="px-3 py-2 font-semibold text-rose-400">DIC</td>
+                    <td className="px-3 py-2 text-rose-400">YES</td>
+                    <td className="px-3 py-2 text-muted-foreground">Systemic trigger (sepsis/trauma), ↑PT/PTT/D-dimer</td>
+                    <td className="px-3 py-2 font-medium text-emerald-400">Treat cause + FFP</td>
+                  </tr>
+                  <tr className="border-t border-border">
+                    <td className="px-3 py-2 font-semibold text-red-400">HIT</td>
+                    <td className="px-3 py-2 text-muted-foreground">—</td>
+                    <td className="px-3 py-2 text-muted-foreground">Heparin exposure + thrombosis, platelet fall &gt;50%</td>
+                    <td className="px-3 py-2 font-medium text-emerald-400">Stop heparin → DTI (argatroban)</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
             <p className="text-muted-foreground">
               Based on Al-Samkari H, Kuter DJ. <em>How I diagnose and treat thrombocytopenia in geriatric patients.</em> Blood 2024.
             </p>
