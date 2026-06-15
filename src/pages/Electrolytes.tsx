@@ -518,16 +518,8 @@ export default function Electrolytes() {
     setNotes("");
   }, []);
 
-  const copyJson = useCallback(async () => {
-    try {
-      await navigator.clipboard.writeText(jsonOutput);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 1200);
-    } catch {
-      // fallback
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+
+
 
   const data = RULES[electrolyte];
   const actions = useMemo(() => {
