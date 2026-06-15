@@ -2,6 +2,8 @@ import { useState, useMemo, useCallback } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import {
   Copy,
   RotateCcw,
@@ -16,6 +18,8 @@ import {
   Brain,
   Bean,
   Dumbbell,
+  FlaskConical,
+  Info,
 } from "lucide-react";
 
 type ElectrolyteKey =
@@ -376,6 +380,23 @@ const RULES: Record<ElectrolyteKey, ElectrolyteRule> = {
   },
 };
 
+// ── Numeric lab reference ranges ──
+const REFERENCE_RANGES: Record<
+  ElectrolyteKey,
+  { unit: string; normalLow: number; normalHigh: number; severeLow?: number; severeHigh?: number }
+> = {
+  hyponatremia: { unit: "mmol/L", normalLow: 135, normalHigh: 145, severeLow: 120 },
+  hypernatremia: { unit: "mmol/L", normalLow: 135, normalHigh: 145, severeHigh: 155 },
+  hypokalemia: { unit: "mmol/L", normalLow: 3.5, normalHigh: 5, severeLow: 2.5 },
+  hyperkalemia: { unit: "mmol/L", normalLow: 3.5, normalHigh: 5, severeHigh: 6.5 },
+  hypocalcemia: { unit: "mg/dL", normalLow: 8.5, normalHigh: 10.5, severeLow: 7 },
+  hypercalcemia: { unit: "mg/dL", normalLow: 8.5, normalHigh: 10.5, severeHigh: 13 },
+  hypomagnesemia: { unit: "mg/dL", normalLow: 1.7, normalHigh: 2.4, severeLow: 1.2 },
+  hypermagnesemia: { unit: "mg/dL", normalLow: 1.7, normalHigh: 2.4, severeHigh: 4 },
+  hypophosphatemia: { unit: "mg/dL", normalLow: 2.5, normalHigh: 4.5, severeLow: 1.5 },
+  hyperphosphatemia: { unit: "mg/dL", normalLow: 2.5, normalHigh: 4.5, severeHigh: 7 },
+};
+
 const FLAG_LABELS: Record<Flag, { label: string; icon: React.ReactNode }> = {
   arrhythmia: { label: "Arrhythmia", icon: <Heart className="h-3.5 w-3.5" /> },
   seizure: { label: "Seizure", icon: <Brain className="h-3.5 w-3.5" /> },
@@ -388,9 +409,9 @@ const FLAG_LABELS: Record<Flag, { label: string; icon: React.ReactNode }> = {
 const ALL_ELECTROLYTES = Object.keys(RULES) as ElectrolyteKey[];
 
 const SEVERITY_COLORS: Record<Severity, string> = {
-  mild: "bg-emerald-500/15 text-emerald-400 border-emerald-500/30",
-  moderate: "bg-amber-500/15 text-amber-400 border-amber-500/30",
-  severe: "bg-red-500/15 text-red-400 border-red-500/30",
+  mild: "bg-white text-black border-emerald-400 shadow-sm",
+  moderate: "bg-white text-black border-amber-400 shadow-sm",
+  severe: "bg-white text-black border-red-500 shadow-sm",
 };
 
 function titleCase(str: string) {
@@ -399,6 +420,14 @@ function titleCase(str: string) {
 
 export default function Electrolytes() {
   const [electrolyte, setElectrolyte] = useState<ElectrolyteKey>("hyponatremia");
+  const [serumValue, setSerumValue] = useState("");
+  const [serumRangeLow, setSerumRangeLow] = useState("");
+  const [serumRangeHigh, setSerumRangeHigh] = useState("");
+  const [useRange, setUseRange] = useState(false);
+  const [osmolality, setOsmolality] = useState("");
+  const [urineNa, setUrineNa] = useState("");
+  const [urineOsm, setUrineOsm] = useState("");
+  const [manualSeverity, setManualSeverity] = useState<Severity | null>(null);
   const [severity, setSeverity] = useState<Severity>("mild");
   const [volume, setVolume] = useState<Volume>("unknown");
   const [flags, setFlags] = useState<Set<Flag>>(new Set());
@@ -414,8 +443,75 @@ export default function Electrolytes() {
     });
   }, []);
 
+  const ref = REFERENCE_RANGES[electrolyte];
+
+  // ── Auto-severity from value ──
+  const autoSeverity = useMemo((): Severity | null => {
+    const val = useRange
+      ? parseFloat(serumRangeLow)
+      : parseFloat(serumValue);
+    if (isNaN(val) || !ref) return null;
+    const v = val;
+    // For low-type disorders
+    if (ref.severeLow !== undefined && v <= ref.severeLow) return "severe";
+    if (v < ref.normalLow) return "moderate";
+    // For high-type disorders
+    if (ref.severeHigh !== undefined && v >= ref.severeHigh) return "severe";
+    if (v > ref.normalHigh) return "moderate";
+    return "mild";
+  }, [serumValue, serumRangeLow, useRange, ref]);
+
+  // Use auto if available, fall back to manual
+  const effectiveSeverity = manualSeverity ?? autoSeverity ?? severity;
+  const setEffectiveSeverity = useCallback(
+    (s: Severity) => {
+      setSeverity(s);
+      setManualSeverity(s);
+    },
+    []
+  );
+
+  // ── Osmolality annotation for sodium ──
+  const osmoAnnotation = useMemo(() => {
+    if (!osmolality || (electrolyte !== "hyponatremia" && electrolyte !== "hypernatremia"))
+      return null;
+    const osm = parseFloat(osmolality);
+    if (isNaN(osm)) return null;
+    if (electrolyte === "hyponatremia") {
+      if (osm < 275) return "Hypotonic hyponatremia — true hyponatremia; proceed with volume assessment";
+      if (osm >= 275 && osm <= 295) return "Isotonic hyponatremia — pseudohyponatremia (hyperlipidemia, hyperproteinemia) or isotonic irrigant (TURP)";
+      return "Hypertonic hyponatremia — translocational (hyperglycemia, mannitol). Correct Na for glucose.";
+    }
+    // hypernatremia
+    if (osm > 300) return "Hyperosmolality confirmed — true hypernatremia. Assess water loss.";
+    return "Osmolality not elevated — consider lab error or pseudohypernatremia.";
+  }, [osmolality, electrolyte]);
+
+  // ── Urine studies annotation ──
+  const urineAnnotation = useMemo(() => {
+    if (!urineNa || !urineOsm || (electrolyte !== "hyponatremia" && electrolyte !== "hypernatremia"))
+      return null;
+    const uNa = parseFloat(urineNa);
+    const uOsm = parseFloat(urineOsm);
+    if (isNaN(uNa) || isNaN(uOsm)) return null;
+    if (electrolyte === "hyponatremia") {
+      if (uNa < 20) return `FENa <1% — hypovolemic (extrarenal losses) or hypervolemic (CHF, cirrhosis). UOsm ${uOsm} supports this.`;
+      return `FENa >2% — SIADH, cerebral salt wasting, or renal losses/hypovolemia with ongoing Na excretion. UOsm ${uOsm} ${uOsm > 300 ? "(concentrated — SIADH pattern)" : "(dilute — consider primary polydipsia)"}.`;
+    }
+    // hypernatremia
+    return `Urine output and concentrating ability: UOsm ${uOsm}. ${uOsm < 300 ? "Dilute urine — consider diabetes insipidus" : uOsm > 600 ? "Concentrated urine — extrarenal water loss" : "Intermediate — mixed picture"}.`;
+  }, [urineNa, urineOsm, electrolyte]);
+
   const reset = useCallback(() => {
     setElectrolyte("hyponatremia");
+    setSerumValue("");
+    setSerumRangeLow("");
+    setSerumRangeHigh("");
+    setUseRange(false);
+    setOsmolality("");
+    setUrineNa("");
+    setUrineOsm("");
+    setManualSeverity(null);
     setSeverity("mild");
     setVolume("unknown");
     setFlags(new Set());
@@ -430,27 +526,46 @@ export default function Electrolytes() {
     } catch {
       // fallback
     }
-  }, []);
+  }, [jsonOutput]);
 
   const data = RULES[electrolyte];
   const actions = useMemo(() => {
-    const result = [...data[severity].actions];
+    const result = [...data[effectiveSeverity].actions];
     if (
       (electrolyte === "hyponatremia" || electrolyte === "hypernatremia") &&
       volume !== "unknown"
     ) {
       result.push(`Volume context: ${titleCase(volume)}.`);
     }
+    if (osmoAnnotation) {
+      result.push(`Osmolality interpretation: ${osmoAnnotation}`);
+    }
+    if (urineAnnotation) {
+      result.push(`Urine studies: ${urineAnnotation}`);
+    }
     if (flags.has("renal_failure")) {
       result.push(
         "Adjust replacement or removal strategy to renal function and dialysis availability."
       );
     }
+    // Add value-contextual action for all
+    if (!useRange && serumValue) {
+      result.push(`Serum level: ${serumValue} ${ref?.unit || ""}.`);
+    } else if (useRange && serumRangeLow && serumRangeHigh) {
+      result.push(`Serum range: ${serumRangeLow}–${serumRangeHigh} ${ref?.unit || ""}.`);
+    }
     return result;
-  }, [electrolyte, severity, volume, flags, data]);
+  }, [data, effectiveSeverity, electrolyte, volume, osmoAnnotation, urineAnnotation, flags, serumValue, useRange, serumRangeLow, serumRangeHigh, ref]);
 
   const evals = useMemo(() => {
     const result = [...data.eval];
+    if (autoSeverity !== null) {
+      result.unshift(
+        `Auto-severity from value: ${effectiveSeverity.toUpperCase()} (value: ${
+          useRange ? `${serumRangeLow}–${serumRangeHigh}` : serumValue
+        } ${ref?.unit || ""}, normal ${ref?.normalLow}–${ref?.normalHigh}).`
+      );
+    }
     if (flags.size > 0) {
       result.push(
         `Red flags present: ${Array.from(flags)
@@ -462,7 +577,7 @@ export default function Electrolytes() {
       result.push(`Context note: ${notes.trim()}`);
     }
     return result;
-  }, [data.eval, flags, notes]);
+  }, [data.eval, flags, notes, autoSeverity, effectiveSeverity, useRange, serumValue, serumRangeLow, serumRangeHigh, ref]);
 
   const monitoring = useMemo(() => {
     const result = [...data.monitoring];
@@ -479,11 +594,11 @@ export default function Electrolytes() {
 
   const priority = useMemo(() => {
     const danger =
-      severity === "severe" ||
+      effectiveSeverity === "severe" ||
       ["arrhythmia", "seizure", "ecg_changes"].some((f) => flags.has(f as Flag));
     if (
       electrolyte === "hyperkalemia" &&
-      (flags.has("ecg_changes") || severity === "severe")
+      (flags.has("ecg_changes") || effectiveSeverity === "severe")
     ) {
       return {
         tone: "danger" as const,
@@ -496,7 +611,7 @@ export default function Electrolytes() {
         text: "High priority: this profile needs urgent correction, close monitoring, and frequent reassessment.",
       };
     }
-    if (flags.size > 0 || severity === "moderate") {
+    if (flags.size > 0 || effectiveSeverity === "moderate") {
       return {
         tone: "warn" as const,
         text: "Intermediate priority: investigate the cause promptly and correct with monitored therapy.",
@@ -506,17 +621,26 @@ export default function Electrolytes() {
       tone: "good" as const,
       text: "Lower immediate risk: focus on cause, structured replacement or restriction, and serial labs.",
     };
-  }, [electrolyte, severity, flags]);
+  }, [electrolyte, effectiveSeverity, flags]);
 
   const jsonOutput = useMemo(
     () =>
       JSON.stringify(
         {
           electrolyte,
-          severity,
+          serum_level: useRange
+            ? `${serumRangeLow}–${serumRangeHigh}`
+            : serumValue || undefined,
+          unit: ref?.unit,
+          auto_severity: autoSeverity,
+          effective_severity: effectiveSeverity,
+          osmolality: osmolality || undefined,
+          osmolality_interpretation: osmoAnnotation,
+          urine_sodium: urineNa || undefined,
+          urine_osmolality: urineOsm || undefined,
           volume_status: volume,
           red_flags: Array.from(flags),
-          notes: notes.trim(),
+          notes: notes.trim() || undefined,
           algorithm: {
             priority: priority.text,
             immediate_actions: actions,
@@ -527,7 +651,27 @@ export default function Electrolytes() {
         null,
         2
       ),
-    [electrolyte, severity, volume, flags, notes, priority.text, actions, evals, monitoring]
+    [
+      electrolyte,
+      serumValue,
+      useRange,
+      serumRangeLow,
+      serumRangeHigh,
+      ref,
+      autoSeverity,
+      effectiveSeverity,
+      osmolality,
+      osmoAnnotation,
+      urineNa,
+      urineOsm,
+      volume,
+      flags,
+      notes,
+      priority.text,
+      actions,
+      evals,
+      monitoring,
+    ]
   );
 
   const PRIORITY_STYLES = {
