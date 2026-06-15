@@ -526,7 +526,8 @@ export default function Electrolytes() {
     } catch {
       // fallback
     }
-  }, [jsonOutput]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const data = RULES[electrolyte];
   const actions = useMemo(() => {
