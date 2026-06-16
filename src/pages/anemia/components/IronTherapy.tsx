@@ -1,7 +1,11 @@
 import { useState } from 'react';
-import { Syringe, ChevronDown, ChevronUp, FlaskConical, Truck } from 'lucide-react';
+import { Syringe, ChevronDown, ChevronUp, FlaskConical, Truck, IceCream, Layers, Moon } from 'lucide-react';
 import ferritinTsatChart from '@/assets/ferritin-tsat-thresholds.png.asset.json';
 import ironTransportImg from '@/assets/iron-transport-hepcidin.jpeg.asset.json';
+import ironIceCreamImg from '@/assets/iron-ice-cream-analogy.jpeg.asset.json';
+import ironStagesImg from '@/assets/iron-deficiency-stages.png.asset.json';
+import rlsAlgo1 from '@/assets/rls-iron-algorithm-1.png.asset.json';
+import rlsAlgo2 from '@/assets/rls-iron-algorithm-2.png.asset.json';
 
 const ivComparison = [
   { feature: 'Max Dose Per Sitting',  is: '200–300 mg',              fcm: 'Up to 1000 mg (single dose)' },
