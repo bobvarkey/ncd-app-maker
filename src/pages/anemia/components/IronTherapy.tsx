@@ -1,5 +1,7 @@
 import { useState } from 'react';
-import { Syringe, ChevronDown, ChevronUp, FlaskConical } from 'lucide-react';
+import { Syringe, ChevronDown, ChevronUp, FlaskConical, Truck } from 'lucide-react';
+import ferritinTsatChart from '@/assets/ferritin-tsat-thresholds.png.asset.json';
+import ironTransportImg from '@/assets/iron-transport-hepcidin.jpeg.asset.json';
 
 const ivComparison = [
   { feature: 'Max Dose Per Sitting',  is: '200–300 mg',              fcm: 'Up to 1000 mg (single dose)' },
