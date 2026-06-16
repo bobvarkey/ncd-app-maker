@@ -1,7 +1,11 @@
 import { useState } from 'react';
-import { Syringe, ChevronDown, ChevronUp, FlaskConical, Truck } from 'lucide-react';
+import { Syringe, ChevronDown, ChevronUp, FlaskConical, Truck, IceCream, Layers, Moon } from 'lucide-react';
 import ferritinTsatChart from '@/assets/ferritin-tsat-thresholds.png.asset.json';
 import ironTransportImg from '@/assets/iron-transport-hepcidin.jpeg.asset.json';
+import ironIceCreamImg from '@/assets/iron-ice-cream-analogy.jpeg.asset.json';
+import ironStagesImg from '@/assets/iron-deficiency-stages.png.asset.json';
+import rlsAlgo1 from '@/assets/rls-iron-algorithm-1.png.asset.json';
+import rlsAlgo2 from '@/assets/rls-iron-algorithm-2.png.asset.json';
 
 const ivComparison = [
   { feature: 'Max Dose Per Sitting',  is: '200–300 mg',              fcm: 'Up to 1000 mg (single dose)' },
@@ -229,6 +233,85 @@ export default function IronTherapy() {
               />
             </div>
           </div>
+
+          {/* Ice Cream Shop analogy */}
+          <div>
+            <div className="flex items-center gap-2 mb-1">
+              <IceCream className="w-4 h-4 text-primary" />
+              <h3 className="text-sm font-semibold text-foreground">Iron Parameters — Visual Analogy</h3>
+            </div>
+            <p className="text-xs text-muted-foreground mb-3 leading-relaxed">
+              A simple way to remember the key iron parameters: the <strong className="text-foreground">storage fridge</strong> represents
+              ferritin (stored iron in hepatocytes/macrophages), the <strong className="text-foreground">free ice cream</strong> stands for the
+              labile free iron pool, and the <strong className="text-foreground">delivery cones</strong> are transferrin — filled cones are serum
+              iron, empty cones are unsaturated transferrin, and all cones together form TIBC. TSAT = filled / total × 100.
+            </p>
+            <div className="rounded-xl border border-border overflow-hidden bg-white">
+              <img
+                src={ironIceCreamImg.url}
+                alt="Ice cream shop analogy explaining ferritin storage, free iron pool, transferrin, serum iron, TIBC, and TSAT"
+                className="w-full h-auto"
+                loading="lazy"
+              />
+            </div>
+          </div>
+
+          {/* Iron deficiency stages table */}
+          <div>
+            <div className="flex items-center gap-2 mb-1">
+              <Layers className="w-4 h-4 text-primary" />
+              <h3 className="text-sm font-semibold text-foreground">Stages of Iron Deficiency — Lab Pattern</h3>
+            </div>
+            <p className="text-xs text-muted-foreground mb-3 leading-relaxed">
+              Iron deficiency progresses sequentially: <strong className="text-foreground">iron depletion</strong> (ferritin drops first) →
+              <strong className="text-foreground"> iron-deficient erythropoiesis</strong> (TSAT &lt; 15%, sTfR ↑, ZPP ↑) →
+              <strong className="text-foreground"> iron deficiency anemia</strong> (Hgb &lt; 12 g/dL, microcytosis). Hemoglobin falls last.
+            </p>
+            <div className="rounded-xl border border-border overflow-hidden bg-white">
+              <img
+                src={ironStagesImg.url}
+                alt="Table comparing MCV, RDW, sTfR, ferritin, TIBC, ZPP, plasma iron, transferrin saturation and other markers across normal, iron depletion, iron deficient erythropoiesis and iron deficiency anemia"
+                className="w-full h-auto"
+                loading="lazy"
+              />
+            </div>
+          </div>
+
+          {/* RLS Iron Therapy Algorithms */}
+          <div>
+            <div className="flex items-center gap-2 mb-1">
+              <Moon className="w-4 h-4 text-primary" />
+              <h3 className="text-sm font-semibold text-foreground">Iron Therapy for Restless Legs Syndrome (RLS)</h3>
+            </div>
+            <p className="text-xs text-muted-foreground mb-3 leading-relaxed">
+              Iron is central to RLS management. Target ferritin &gt; 100 µg/L and TSAT &lt; 45% to qualify for replacement. Oral iron
+              is first-line; IV iron (preferably FCM 1000 mg) is reserved for moderate-to-severe RLS with oral failure,
+              malabsorption, or need for rapid response.
+            </p>
+            <div className="grid grid-cols-1 gap-3">
+              <div className="rounded-xl border border-border overflow-hidden bg-white">
+                <img
+                  src={rlsAlgo1.url}
+                  alt="RLS iron therapy algorithm: diagnosis, iron assessment, TSAT and ferritin thresholds, oral iron treatment pathway"
+                  className="w-full h-auto"
+                  loading="lazy"
+                />
+              </div>
+              <div className="rounded-xl border border-border overflow-hidden bg-white">
+                <img
+                  src={rlsAlgo2.url}
+                  alt="IV iron algorithm for RLS: indications, FCM and LMW iron dextran dosing, follow-up and repeat infusion criteria"
+                  className="w-full h-auto"
+                  loading="lazy"
+                />
+              </div>
+            </div>
+            <p className="text-xs text-muted-foreground mt-2 leading-relaxed">
+              Source: Allen RP et al., IRLSSG iron therapy consensus algorithms.
+            </p>
+          </div>
+
+
 
           <p className="text-xs text-muted-foreground">
             References: Camaschella C. NEJM 2015; Cappellini MD et al. Am J Hematol 2020; Ponikowski P et al. ESC HF Guidelines 2021;
