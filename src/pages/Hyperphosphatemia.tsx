@@ -343,7 +343,7 @@ export default function Hyperphosphatemia() {
                     </p>
                   </>
                 ) : <p>Enter PO₄ and Ca²⁺ to calculate</p>}
-                <p className="mt-1 text-[10px]">Threshold: >70 mg²/dL² increases calcification risk</p>
+                <p className="mt-1 text-[10px]">Threshold: &gt;70 mg²/dL² increases calcification risk</p>
               </div>
               <div className="p-3 rounded-lg border border-blue-500/10 bg-blue-500/5 text-xs text-muted-foreground">
                 <p className="font-semibold text-blue-400 mb-1">Pseudohyperphosphatemia suspects:</p>
