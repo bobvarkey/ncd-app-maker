@@ -112,6 +112,47 @@ type NavItem = {
   active: string;
 };
 
+const electrolyteSubItems = [
+  { path: "/hyponatremia", label: "Hyponatremia", icon: "🧂" },
+  { path: "/hypernatremia", label: "Hypernatremia", icon: "🌡️" },
+  { path: "/hyperkalemia", label: "Hyperkalemia", icon: "💥" },
+  { path: "/hypokalemia", label: "Hypokalemia", icon: "⚡" },
+  { path: "/hypocalcemia", label: "Hypocalcemia", icon: "🦴" },
+  { path: "/hypercalcemia", label: "Hypercalcemia", icon: "🔥" },
+  { path: "/hypomagnesemia", label: "Hypomagnesemia", icon: "🦴" },
+  { path: "/hypermagnesemia", label: "Hypermagnesemia", icon: "🪨" },
+  { path: "/hypophosphatemia", label: "Hypophosphatemia", icon: "🦷" },
+  { path: "/hyperphosphatemia", label: "Hyperphosphatemia", icon: "🪨" },
+];
+
+function ElectrolyteSubNav() {
+  const location = useLocation();
+  return (
+    <ul className="mt-1 ml-4 flex flex-col gap-0.5 border-l border-border pl-2">
+      {electrolyteSubItems.map((s) => {
+        const isActive = location.pathname === s.path;
+        return (
+          <li key={s.path}>
+            <Link
+              to={s.path}
+              className={cn(
+                "flex items-center gap-2 px-2 py-1.5 rounded-md text-xs font-medium transition-colors",
+                isActive
+                  ? "bg-cyan-500/10 text-cyan-400"
+                  : "text-muted-foreground hover:bg-muted hover:text-foreground"
+              )}
+              aria-current={isActive ? "page" : undefined}
+            >
+              <span className="text-sm leading-none">{s.icon}</span>
+              <span className="truncate">{s.label}</span>
+            </Link>
+          </li>
+        );
+      })}
+    </ul>
+  );
+}
+
 const navItems: NavItem[] = [
   { path: "/home",                    label: "Home",      icon: "🏠", active: "bg-primary/10 text-primary border-primary/30" },
   { path: "/simple",                  label: "Simple",    icon: "⚡", active: "bg-blue-500/10 text-blue-400 border-blue-500/30" },
@@ -128,17 +169,7 @@ const navItems: NavItem[] = [
   { path: "/fatigue",                label: "Fatigue",   icon: "😴", active: "bg-warning/100/10 text-warning border-amber-500/30" },
   { path: "/infections",             label: "Infections", icon: "🦠", active: "bg-rose-500/10 text-destructive border-rose-500/30" },
   { path: "/pep",                   label: "PEP",       icon: "🛡️", active: "bg-amber-500/10 text-amber-400 border-amber-500/30" },
-  { path: "/electrolytes",          label: "Electrolytes", icon: "⚡", active: "bg-cyan-500/10 text-cyan-400 border-cyan-500/30" },
-  { path: "/hyponatremia",         label: "Hyponatremia", icon: "🧂", active: "bg-blue-500/10 text-blue-400 border-blue-500/30" },
-  { path: "/hypernatremia",        label: "Hypernatremia", icon: "🌡️", active: "bg-orange-500/10 text-orange-400 border-orange-500/30" },
-  { path: "/hyperkalemia",         label: "Hyperkalemia",  icon: "💥", active: "bg-red-500/10 text-red-400 border-red-500/30" },
-  { path: "/hypocalcemia",         label: "Hypocalcemia",  icon: "🦴", active: "bg-yellow-500/10 text-yellow-400 border-yellow-500/30" },
-  { path: "/hypercalcemia",        label: "Hypercalcemia", icon: "🔥", active: "bg-rose-500/10 text-rose-400 border-rose-500/30" },
-  { path: "/hypokalemia",         label: "Hypokalemia",  icon: "⚡", active: "bg-yellow-500/10 text-yellow-400 border-yellow-500/30" },
-  { path: "/hypomagnesemia",      label: "Hypomagnesemia", icon: "🦴", active: "bg-purple-500/10 text-purple-400 border-purple-500/30" },
-  { path: "/hypermagnesemia",      label: "Hypermagnesemia", icon: "🪨", active: "bg-orange-500/10 text-orange-400 border-orange-500/30" },
-  { path: "/hypophosphatemia",     label: "Hypophosphatemia", icon: "🦷", active: "bg-cyan-500/10 text-cyan-400 border-cyan-500/30" },
-  { path: "/hyperphosphatemia",    label: "Hyperphosphatemia", icon: "🪨", active: "bg-amber-500/10 text-amber-400 border-amber-500/30" },
+  { path: "/electrolytes",          label: "Electrolyte Disturbances", icon: "⚡", active: "bg-cyan-500/10 text-cyan-400 border-cyan-500/30" },
 ];
 
 export function TabNavigation() {
@@ -384,8 +415,10 @@ export function TabNavigation() {
               (item.path !== "/home" && currentPath.startsWith(item.path + "/"));
             const isBlood = item.path === "/anemia";
             const isHtn = item.path === "/hypertension";
+            const isElectrolyte = item.path === "/electrolytes";
             const showBloodSubs = isBlood && currentPath.startsWith("/anemia") && !collapsed;
             const showHtnSubs = isHtn && currentPath.startsWith("/hypertension") && !collapsed;
+            const showElectrolyteSubs = isElectrolyte && (currentPath.startsWith("/electrolytes") || electrolyteSubItems.some(s => currentPath.startsWith(s.path))) && !collapsed;
             return (
               <li key={item.path}>
                 <Link
@@ -405,6 +438,7 @@ export function TabNavigation() {
                 </Link>
                 {showBloodSubs && <BloodSubNav />}
                 {showHtnSubs && <HtnSubNav />}
+                {showElectrolyteSubs && <ElectrolyteSubNav />}
               </li>
             );
           })}
