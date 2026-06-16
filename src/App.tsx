@@ -123,6 +123,7 @@ import Hyperkalemia from "@/pages/Hyperkalemia";
 import Hypocalcemia from "@/pages/Hypocalcemia";
 import Hypercalcemia from "@/pages/Hypercalcemia";
 import Hypokalemia from "@/pages/Hypokalemia";
+import Hypomagnesemia from "@/pages/Hypomagnesemia";
 
 // Hyperglycemic Emergency
 import HyperglycemicEmergency from "@/pages/HyperglycemicEmergency";
@@ -249,6 +250,7 @@ const App = () => (
           <Route path="/hypocalcemia" element={<><TabNavigation /><Hypocalcemia /></>} />
           <Route path="/hypercalcemia" element={<><TabNavigation /><Hypercalcemia /></>} />
           <Route path="/hypokalemia" element={<><TabNavigation /><Hypokalemia /></>} />
+          <Route path="/hypomagnesemia" element={<><TabNavigation /><Hypomagnesemia /></>} />
           <Route path="/hyperglycemic-emergency" element={<><TabNavigation /><HyperglycemicEmergency /></>} />
           <Route path="/type1-treatment-algorithm" element={<><TabNavigation /><Type1TreatmentAlgorithm /></>} />
           <Route path="/type2-treatment-algorithm" element={<><TabNavigation /><Type2TreatmentAlgorithm /></>} />
