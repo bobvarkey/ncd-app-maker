@@ -129,6 +129,12 @@ const navItems: NavItem[] = [
   { path: "/infections",             label: "Infections", icon: "🦠", active: "bg-rose-500/10 text-destructive border-rose-500/30" },
   { path: "/pep",                   label: "PEP",       icon: "🛡️", active: "bg-amber-500/10 text-amber-400 border-amber-500/30" },
   { path: "/electrolytes",          label: "Electrolytes", icon: "⚡", active: "bg-cyan-500/10 text-cyan-400 border-cyan-500/30" },
+  { path: "/hyponatremia",         label: "Hyponatremia", icon: "🧂", active: "bg-blue-500/10 text-blue-400 border-blue-500/30" },
+  { path: "/hypernatremia",        label: "Hypernatremia", icon: "🌡️", active: "bg-orange-500/10 text-orange-400 border-orange-500/30" },
+  { path: "/hyperkalemia",         label: "Hyperkalemia",  icon: "💥", active: "bg-red-500/10 text-red-400 border-red-500/30" },
+  { path: "/hypocalcemia",         label: "Hypocalcemia",  icon: "🦴", active: "bg-yellow-500/10 text-yellow-400 border-yellow-500/30" },
+  { path: "/hypercalcemia",        label: "Hypercalcemia", icon: "🔥", active: "bg-rose-500/10 text-rose-400 border-rose-500/30" },
+  { path: "/hypokalemia",         label: "Hypokalemia",  icon: "⚡", active: "bg-yellow-500/10 text-yellow-400 border-yellow-500/30" },
 ];
 
 export function TabNavigation() {

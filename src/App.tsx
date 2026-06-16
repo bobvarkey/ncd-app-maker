@@ -114,6 +114,16 @@ import PEP from "@/pages/PEP";
 // Electrolytes
 import Electrolytes from "@/pages/Electrolytes";
 
+// Hyponatremia / Hypernatremia
+import Hyponatremia from "@/pages/Hyponatremia";
+import Hypernatremia from "@/pages/Hypernatremia";
+
+// Hyperkalemia / Hypocalcemia / Hypercalcemia
+import Hyperkalemia from "@/pages/Hyperkalemia";
+import Hypocalcemia from "@/pages/Hypocalcemia";
+import Hypercalcemia from "@/pages/Hypercalcemia";
+import Hypokalemia from "@/pages/Hypokalemia";
+
 // Hyperglycemic Emergency
 import HyperglycemicEmergency from "@/pages/HyperglycemicEmergency";
 
@@ -233,6 +243,12 @@ const App = () => (
           <Route path="/infections" element={<><TabNavigation /><Infections /></>} />
           <Route path="/pep" element={<><TabNavigation /><PEP /></>} />
           <Route path="/electrolytes" element={<><TabNavigation /><Electrolytes /></>} />
+          <Route path="/hyponatremia" element={<><TabNavigation /><Hyponatremia /></>} />
+          <Route path="/hypernatremia" element={<><TabNavigation /><Hypernatremia /></>} />
+          <Route path="/hyperkalemia" element={<><TabNavigation /><Hyperkalemia /></>} />
+          <Route path="/hypocalcemia" element={<><TabNavigation /><Hypocalcemia /></>} />
+          <Route path="/hypercalcemia" element={<><TabNavigation /><Hypercalcemia /></>} />
+          <Route path="/hypokalemia" element={<><TabNavigation /><Hypokalemia /></>} />
           <Route path="/hyperglycemic-emergency" element={<><TabNavigation /><HyperglycemicEmergency /></>} />
           <Route path="/type1-treatment-algorithm" element={<><TabNavigation /><Type1TreatmentAlgorithm /></>} />
           <Route path="/type2-treatment-algorithm" element={<><TabNavigation /><Type2TreatmentAlgorithm /></>} />
