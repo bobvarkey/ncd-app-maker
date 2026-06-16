@@ -9,7 +9,7 @@ import {
   AlertTriangle, Droplets, Stethoscope, FlaskConical, Heart,
   HeartPulse, Brain, Pill, Syringe, Activity, Copy,
   Download, Clock, ShieldAlert, ChevronRight, ChevronDown,
-  Calculator, Kidney, Zap, Bone,
+  Calculator, Zap, Bone,
 } from "lucide-react";
 import { downloadTextFile } from "@/lib/clinical-utils";
 import { toast } from "sonner";
@@ -95,7 +95,7 @@ const SAFETY_RULES = [
     border: "border-purple-500/20",
   },
   {
-    icon: <Kidney className="h-4 w-4" />,
+    icon: <Droplets className="h-4 w-4" />,
     title: "Dialyze When Refractory or Severe",
     detail: "Hemodialysis is the fastest phosphate removal. Indications: severe hyperphosphatemia, symptomatic hypocalcemia, renal failure, refractory electrolyte derangements.",
     color: "text-cyan-500",
@@ -343,7 +343,7 @@ export default function Hyperphosphatemia() {
                     </p>
                   </>
                 ) : <p>Enter PO₄ and Ca²⁺ to calculate</p>}
-                <p className="mt-1 text-[10px]">Threshold: >70 mg²/dL² increases calcification risk</p>
+                <p className="mt-1 text-[10px]">Threshold: &gt;70 mg²/dL² increases calcification risk</p>
               </div>
               <div className="p-3 rounded-lg border border-blue-500/10 bg-blue-500/5 text-xs text-muted-foreground">
                 <p className="font-semibold text-blue-400 mb-1">Pseudohyperphosphatemia suspects:</p>
@@ -633,7 +633,7 @@ export default function Hyperphosphatemia() {
             {/* Dialysis */}
             <div className={`p-4 rounded-lg border ${dialysisIndicated === true ? "border-red-500/20 bg-red-500/5" : "border-border"}`}>
               <div className="flex items-center gap-2 mb-2">
-                <Kidney className={`h-5 w-5 ${dialysisIndicated === true ? "text-red-400" : "text-muted-foreground"}`} />
+                <Droplets className={`h-5 w-5 ${dialysisIndicated === true ? "text-red-400" : "text-muted-foreground"}`} />
                 <h3 className="font-semibold text-sm">Dialysis</h3>
                 {dialysisIndicated === true && <Badge className="text-[10px] bg-red-500/20 text-red-400">INDICATED</Badge>}
               </div>

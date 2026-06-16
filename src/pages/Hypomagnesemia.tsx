@@ -9,7 +9,7 @@ import {
   AlertTriangle, Droplets, Stethoscope, FlaskConical, Heart,
   HeartPulse, Brain, Pill, Syringe, Activity, Copy,
   Download, Clock, ShieldAlert, ChevronRight, ChevronDown,
-  Calculator, Kidney, Zap, Bone,
+  Calculator, Zap, Bone,
 } from "lucide-react";
 import { downloadTextFile } from "@/lib/clinical-utils";
 import { toast } from "sonner";
@@ -75,7 +75,7 @@ const FEMG_CRITERIA = [
 
 const SAFETY_RULES = [
   {
-    icon: <Kidney className="h-4 w-4" />,
+    icon: <Droplets className="h-4 w-4" />,
     title: "Check Renal Function Before IV Mg",
     detail: "Renal impairment significantly reduces Mg²⁺ clearance — reduce dose and monitor closely to avoid dangerous hypermagnesemia.",
     color: "text-red-500",
@@ -581,7 +581,7 @@ export default function Hypomagnesemia() {
           <CardHeader className="pb-3">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2">
-                <Kidney className="h-5 w-5 text-teal-400" />
+                <Droplets className="h-5 w-5 text-teal-400" />
                 <CardTitle className="text-base">Step 4: Find the Cause</CardTitle>
               </div>
               {expandedSection === "step4" ? <ChevronDown className="h-4 w-4" /> : <ChevronRight className="h-4 w-4" />}
