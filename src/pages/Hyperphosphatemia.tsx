@@ -18,14 +18,15 @@ import { toast } from "sonner";
 // Types
 // ══════════════════════════════════════════════
 
-type Severity = "mild" | "moderate" | "severe" | null;
-type CauseBranch = "ckd" | "excess_intake" | "cellular_release" | "other" | null;
+type Severity = "mild" | "moderate" | "severe" | "critical" | null;
+type CauseBranch = "ckd" | "cellular_release" | "hypoparathyroid" | "exogenous" | "other" | null;
 
 interface StepState {
   step1_complete: boolean;
   step2_complete: boolean;
   step3_complete: boolean;
   step4_complete: boolean;
+  step5_complete: boolean;
 }
 
 // ══════════════════════════════════════════════
@@ -46,9 +47,22 @@ const DEFINITION = "Serum PO₄ >4.5 mg/dL (>1.46 mmol/L)";
 // ══════════════════════════════════════════════
 
 const SEVERITY_RANGES = [
-  { level: "Mild", range: "4.5–5.5 mg/dL", color: "text-green-400", bg: "bg-green-500/5", border: "border-green-500/20" },
-  { level: "Moderate", range: "5.5–7.0 mg/dL", color: "text-yellow-400", bg: "bg-yellow-500/5", border: "border-yellow-500/20" },
-  { level: "Severe", range: ">7.0 mg/dL", color: "text-red-400", bg: "bg-red-500/5", border: "border-red-500/20" },
+  { level: "Mild", range: "4.6–5.5 mg/dL", color: "text-green-400", bg: "bg-green-500/5", border: "border-green-500/20" },
+  { level: "Moderate", range: "5.6–7.0 mg/dL", color: "text-yellow-400", bg: "bg-yellow-500/5", border: "border-yellow-500/20" },
+  { level: "Severe", range: ">7.0 mg/dL", color: "text-orange-400", bg: "bg-orange-500/5", border: "border-orange-500/20" },
+  { level: "Critical", range: "≥10.0 mg/dL", color: "text-red-400", bg: "bg-red-500/5", border: "border-red-500/20" },
+];
+
+// ══════════════════════════════════════════════
+// Binder options
+// ══════════════════════════════════════════════
+
+const BINDER_OPTIONS = [
+  { name: "Calcium acetate", type: "Ca-based", note: "Effective, less Ca absorption vs carbonate", hypercalcemia_risk: "Moderate" },
+  { name: "Calcium carbonate", type: "Ca-based", note: "Widely available, give with meals", hypercalcemia_risk: "Higher" },
+  { name: "Sevelamer (carbonate/HCl)", type: "Non-Ca", note: "No Ca absorption, reduces LDL, may cause GI issues", hypercalcemia_risk: "None" },
+  { name: "Lanthanum carbonate", type: "Non-Ca", note: "Potent, chewable tablet, minimal absorption", hypercalcemia_risk: "None" },
+  { name: "Sucroferric oxyhydroxide", type: "Non-Ca", note: "Iron-based, low pill burden", hypercalcemia_risk: "None" },
 ];
 
 // ══════════════════════════════════════════════
@@ -57,33 +71,33 @@ const SEVERITY_RANGES = [
 
 const SAFETY_RULES = [
   {
-    icon: <Kidney className="h-4 w-4" />,
-    title: "Correct Hypocalcemia If Present",
-    detail: "Hyperphosphatemia causes Ca²⁺ × PO₄ precipitation. Check calcium and correct if low to prevent tetany and soft tissue calcification.",
+    icon: <HeartPulse className="h-4 w-4" />,
+    title: "Treat Symptomatic Hypocalcemia First",
+    detail: "Phosphate correction can worsen calcium symptoms. If hypocalcemia is symptomatic (tetany, paresthesias, QT prolongation), give IV calcium gluconate first before lowering phosphate.",
     color: "text-red-500",
     bg: "bg-red-500/5",
     border: "border-red-500/20",
   },
   {
-    icon: <Pill className="h-4 w-4" />,
-    title: "Use Phosphate Binders with Meals",
-    detail: "Binders (Ca-based, sevelamer, lanthanum) must be taken with food to chelate dietary phosphate. Dosing depends on meal size. Start with meals containing the most phosphate.",
-    color: "text-amber-500",
-    bg: "bg-amber-500/5",
-    border: "border-amber-500/20",
+    icon: <AlertTriangle className="h-4 w-4" />,
+    title: "Avoid Overcorrection of Calcium",
+    detail: "Overcorrecting Ca²⁺ raises Ca × PO₄ product → increases metastatic calcification risk. Keep product <55 mg²/dL².",
+    color: "text-orange-500",
+    bg: "bg-orange-500/5",
+    border: "border-orange-500/20",
   },
   {
-    icon: <Brain className="h-4 w-4" />,
+    icon: <Bone className="h-4 w-4" />,
     title: "Restrict Ca-Based Binders When Hypercalcemic or Low PTH",
-    detail: "Risk of vascular calcification — prefer sevelamer or lanthanum in adynamic bone disease / low PTH states.",
+    detail: "Risk of vascular calcification — prefer sevelamer, lanthanum, or sucroferric oxyhydroxide in adynamic bone disease / low PTH states.",
     color: "text-purple-500",
     bg: "bg-purple-500/5",
     border: "border-purple-500/20",
   },
   {
-    icon: <Droplets className="h-4 w-4" />,
+    icon: <Kidney className="h-4 w-4" />,
     title: "Dialyze When Refractory or Severe",
-    detail: "Hemodialysis is the fastest way to remove phosphate. Indicated for severe AKI/CKD with refractory hyperphosphatemia or life-threatening Ca × PO₄ product.",
+    detail: "Hemodialysis is the fastest phosphate removal. Indications: severe hyperphosphatemia, symptomatic hypocalcemia, renal failure, refractory electrolyte derangements.",
     color: "text-cyan-500",
     bg: "bg-cyan-500/5",
     border: "border-cyan-500/20",
@@ -99,20 +113,26 @@ export default function Hyperphosphatemia() {
   const [serumPhos, setSerumPhos] = useState("");
   const [confirmed, setConfirmed] = useState<boolean | null>(null);
   const [serumCa, setSerumCa] = useState("");
+  const [serumAlb, setSerumAlb] = useState("");
 
-  // ── Step 2: Severity ──
+  // ── Step 2: Severity & Risk ──
   const [severity, setSeverity] = useState<Severity>(null);
-  const [hasHypocalcemia, setHasHypocalcemia] = useState<boolean | null>(null);
+  const [hasHypocalcemiaSymptoms, setHasHypocalcemiaSymptoms] = useState<boolean | null>(null);
+  const [hasRiskFlags, setHasRiskFlags] = useState<boolean | null>(null);
   const [egfr, setEgfr] = useState("");
 
-  // ── Step 3: Treatment ──
-  const [dietRestriction, setDietRestriction] = useState<boolean | null>(null);
-  const [bindersStarted, setBindersStarted] = useState<boolean | null>(null);
-
-  // ── Step 4: Cause ──
+  // ── Step 3: Find Cause ──
   const [cause, setCause] = useState<CauseBranch>(null);
   const [hasCkd, setHasCkd] = useState<boolean | null>(null);
-  const [hasRelease, setHasRelease] = useState<boolean | null>(null);
+  const [hasCellLysis, setHasCellLysis] = useState<boolean | null>(null);
+  const [hasLowPTH, setHasLowPTH] = useState<boolean | null>(null);
+
+  // ── Step 4: Treat Hypocalcemia ──
+  const [calciumGiven, setCalciumGiven] = useState<boolean | null>(null);
+
+  // ── Step 5: Treatment ──
+  const [bindersStarted, setBindersStarted] = useState<boolean | null>(null);
+  const [dialysisIndicated, setDialysisIndicated] = useState<boolean | null>(null);
 
   // ── UI state ──
   const [expandedSection, setExpandedSection] = useState<string | null>("step1");
@@ -121,13 +141,22 @@ export default function Hyperphosphatemia() {
   const steps: StepState = useMemo(() => ({
     step1_complete: confirmed === true,
     step2_complete: severity !== null,
-    step3_complete: dietRestriction !== null,
-    step4_complete: cause !== null,
-  }), [confirmed, severity, dietRestriction, cause]);
+    step3_complete: cause !== null,
+    step4_complete: calciumGiven !== null,
+    step5_complete: bindersStarted !== null,
+  }), [confirmed, severity, cause, calciumGiven, bindersStarted]);
 
   // ── Unit conversion ──
   const phosMgDl = serumPhos ? parseFloat(serumPhos) : null;
   const phosMmolL = phosMgDl !== null && !isNaN(phosMgDl) ? (phosMgDl / 3.1).toFixed(2) : null;
+
+  // ── Ca × PO₄ product ──
+  const caPhosProduct = useMemo(() => {
+    const ca = parseFloat(serumCa);
+    const phos = parseFloat(serumPhos);
+    if (isNaN(ca) || isNaN(phos)) return null;
+    return ca * phos;
+  }, [serumCa, serumPhos]);
 
   // ── Step 1 ──
   const confirmHyperphosphatemia = () => {
@@ -143,37 +172,53 @@ export default function Hyperphosphatemia() {
   const classifySeverity = () => {
     const phos = parseFloat(serumPhos);
     if (isNaN(phos)) return;
-    if (phos > 7.0) { setSeverity("severe"); toast.error("Severe hyperphosphatemia"); }
+    if (phos >= 10.0) { setSeverity("critical"); toast.error("Critical hyperphosphatemia — emergency"); }
+    else if (phos > 7.0) { setSeverity("severe"); toast.error("Severe hyperphosphatemia"); }
     else if (phos > 5.5) { setSeverity("moderate"); toast.warning("Moderate hyperphosphatemia"); }
     else { setSeverity("mild"); toast.info("Mild hyperphosphatemia"); }
     setExpandedSection("step3");
   };
 
   // ── Step 3 ──
-  const initTreatment = () => {
-    setDietRestriction(true);
-    if (severity === "severe" || severity === "moderate" || hasCkd === true) {
-      setBindersStarted(true);
-      toast.info("Dietary restriction + phosphate binders indicated");
-    } else {
-      setBindersStarted(false);
-      toast.success("Dietary restriction may be sufficient for mild cases");
-    }
+  const determineCause = () => {
+    if (hasCkd === true) setCause("ckd");
+    else if (hasCellLysis === true) setCause("cellular_release");
+    else if (hasLowPTH === true) setCause("hypoparathyroid");
+    else setCause("exogenous");
+    toast.success("Cause identified. Check for hypocalcemia symptoms.");
     setExpandedSection("step4");
   };
 
   // ── Step 4 ──
-  const determineCause = () => {
-    if (hasCkd === true) {
-      setCause("ckd");
-      toast.info("CKD-related — impaired renal excretion");
-    } else if (hasRelease === true) {
-      setCause("cellular_release");
-      toast.info("Cellular release — tumor lysis, rhabdomyolysis, hemolysis");
+  const handleHypocalcemia = () => {
+    if (hasHypocalcemiaSymptoms === true) {
+      setCalciumGiven(true);
+      toast.info("IV calcium gluconate indicated for symptomatic hypocalcemia");
     } else {
-      setCause("excess_intake");
-      toast.info("Excess intake — diet, supplements, enemas");
+      setCalciumGiven(false);
+      toast.success("No symptomatic hypocalcemia — proceed to treatment");
     }
+    setExpandedSection("step5");
+  };
+
+  // ── Step 5 ──
+  const initTreatment = () => {
+    const isSevere = severity === "severe" || severity === "critical";
+    const isCkd = cause === "ckd";
+    const isCellLysis = cause === "cellular_release";
+
+    if (isSevere || isCkd || isCellLysis) {
+      setBindersStarted(true);
+      if (isCellLysis || (isSevere && (isCkd || (parseFloat(egfr) || 0) < 30))) {
+        setDialysisIndicated(true);
+      } else {
+        setDialysisIndicated(false);
+      }
+    } else {
+      setBindersStarted(false);
+      setDialysisIndicated(false);
+    }
+    toast.success("Treatment plan generated");
   };
 
   // ── Clinical note ──
@@ -182,26 +227,32 @@ export default function Hyperphosphatemia() {
       "═══ Hyperphosphatemia Clinical Summary ═══",
       `Serum PO₄: ${serumPhos || "—"} mg/dL (${phosMmolL || "—"} mmol/L)`,
       `Serum Ca²⁺: ${serumCa || "—"} mg/dL`,
+      caPhosProduct !== null ? `Ca × PO₄ product: ${caPhosProduct.toFixed(0)} mg²/dL²` : "",
       "",
     ];
     if (steps.step2_complete) {
       lines.push(`Severity: ${severity?.toUpperCase() || "?"}`);
       lines.push(`eGFR: ${egfr || "—"} mL/min/1.73m²`);
-      lines.push(`Hypocalcemia: ${hasHypocalcemia === null ? "?" : hasHypocalcemia ? "Yes" : "No"}`);
       lines.push("");
     }
     if (steps.step3_complete) {
-      lines.push("Management:");
-      lines.push("  • Dietary phosphate restriction");
-      lines.push(bindersStarted ? "  • Phosphate binders (with meals): Ca-based / sevelamer / lanthanum" : "  • No binders needed at this time");
-      lines.push("");
-    }
-    if (steps.step4_complete) {
       lines.push(`Etiology: ${
         cause === "ckd" ? "CKD (impaired excretion)" :
         cause === "cellular_release" ? "Cellular release (tumor lysis / rhabdomyolysis)" :
-        "Excess intake"
+        cause === "hypoparathyroid" ? "Hypoparathyroidism" :
+        "Exogenous phosphate load"
       }`);
+      lines.push("");
+    }
+    if (steps.step4_complete) {
+      lines.push(`Symptomatic hypocalcemia treated: ${calciumGiven ? "Yes (IV calcium given)" : "No"}`);
+      lines.push("");
+    }
+    if (steps.step5_complete) {
+      lines.push("Management:");
+      lines.push("  • Stop phosphate sources, dietary restriction");
+      if (bindersStarted) lines.push("  • Phosphate binders started");
+      if (dialysisIndicated) lines.push("  • Hemodialysis / CRRT indicated");
     }
     return lines.join("\n");
   };
@@ -209,9 +260,11 @@ export default function Hyperphosphatemia() {
   const copyNote = () => { navigator.clipboard.writeText(generateNote()); toast.success("Copied"); };
   const downloadNote = () => { downloadTextFile(generateNote(), `hyperphosphatemia-${Date.now()}.txt`); toast.success("Downloaded"); };
   const resetAll = () => {
-    setSerumPhos(""); setConfirmed(null); setSerumCa(""); setSeverity(null);
-    setHasHypocalcemia(null); setEgfr(""); setDietRestriction(null); setBindersStarted(null);
-    setCause(null); setHasCkd(null); setHasRelease(null); setExpandedSection("step1");
+    setSerumPhos(""); setConfirmed(null); setSerumCa(""); setSerumAlb("");
+    setSeverity(null); setHasHypocalcemiaSymptoms(null); setHasRiskFlags(null); setEgfr("");
+    setCause(null); setHasCkd(null); setHasCellLysis(null); setHasLowPTH(null);
+    setCalciumGiven(null); setBindersStarted(null); setDialysisIndicated(null);
+    setExpandedSection("step1");
     toast.info("Reset");
   };
 
@@ -239,12 +292,14 @@ export default function Hyperphosphatemia() {
         <ChevronRight className="h-3 w-3" />
         <Badge variant={steps.step2_complete ? "default" : "outline"}>Step 2: Severity</Badge>
         <ChevronRight className="h-3 w-3" />
-        <Badge variant={steps.step3_complete ? "default" : "outline"}>Step 3: Treatment</Badge>
+        <Badge variant={steps.step3_complete ? "default" : "outline"}>Step 3: Cause</Badge>
         <ChevronRight className="h-3 w-3" />
-        <Badge variant={steps.step4_complete ? "default" : "outline"}>Step 4: Cause</Badge>
+        <Badge variant={steps.step4_complete ? "default" : "outline"}>Step 4: Ca²⁺</Badge>
+        <ChevronRight className="h-3 w-3" />
+        <Badge variant={steps.step5_complete ? "default" : "outline"}>Step 5: Treat</Badge>
       </div>
 
-      {/* STEP 1 */}
+      {/* STEP 1: Confirm */}
       <Card className="border-blue-500/20">
         <button onClick={() => setExpandedSection(expandedSection === "step1" ? null : "step1")} className="w-full text-left">
           <CardHeader className="pb-3">
@@ -255,7 +310,7 @@ export default function Hyperphosphatemia() {
               </div>
               {expandedSection === "step1" ? <ChevronDown className="h-4 w-4" /> : <ChevronRight className="h-4 w-4" />}
             </div>
-            <CardDescription>Check serum phosphate and calcium, assess renal function</CardDescription>
+            <CardDescription>Check serum phosphate, calcium, albumin, eGFR — rule out pseudohyperphosphatemia</CardDescription>
           </CardHeader>
         </button>
         {expandedSection === "step1" && (
@@ -270,36 +325,48 @@ export default function Hyperphosphatemia() {
                 <Input type="number" step="0.1" placeholder="e.g. 8.5" value={serumCa} onChange={(e) => setSerumCa(e.target.value)} />
               </div>
               <div className="space-y-2">
-                <Label>Conversion</Label>
-                <div className="text-xs text-muted-foreground p-2 rounded bg-muted/50">
-                  {phosMmolL ? <p><span className="font-semibold">{phosMgDl?.toFixed(1)} mg/dL</span> = <span className="font-semibold">{phosMmolL} mmol/L</span></p> : <p>Normal: 2.5–4.5 mg/dL</p>}
-                  <p>mg/dL ÷ 3.1 = mmol/L</p>
-                </div>
+                <Label>Serum Albumin (g/dL)</Label>
+                <Input type="number" step="0.1" placeholder="e.g. 4.0" value={serumAlb} onChange={(e) => setSerumAlb(e.target.value)} />
               </div>
             </div>
 
-            <div className="p-3 rounded-lg border border-orange-500/10 bg-orange-500/5 text-xs text-muted-foreground">
-              <p className="font-semibold text-orange-400 mb-1">⚠ Check Ca × PO₄ product:</p>
-              <p>If both elevated → risk of metastatic calcification. Keep Ca × PO₄ &lt;55 mg²/dL² (or &lt;4.4 mmol²/L²).</p>
-              {serumCa && phosMgDl && !isNaN(parseFloat(serumCa)) ? (
-                <p className="mt-1">
-                  Current product: <span className="font-semibold">{(parseFloat(serumCa) * phosMgDl).toFixed(0)}</span> mg²/dL²
-                  {(parseFloat(serumCa) * phosMgDl) >= 55 ? <span className="text-red-400"> — HIGH RISK</span> : <span className="text-green-400"> — OK</span>}
-                </p>
-              ) : null}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+              <div className="p-3 rounded-lg border border-orange-500/10 bg-orange-500/5 text-xs text-muted-foreground">
+                <p className="font-semibold text-orange-400 mb-1">Ca × PO₄ Product:</p>
+                {caPhosProduct !== null ? (
+                  <>
+                    <p><span className="font-semibold">{caPhosProduct.toFixed(0)}</span> mg²/dL²</p>
+                    <p className={`mt-1 ${caPhosProduct >= 70 ? "text-red-400 font-semibold" : caPhosProduct >= 55 ? "text-amber-400" : "text-green-400"}`}>
+                      {caPhosProduct >= 70 ? "⚠ High risk — metastatic calcification risk" :
+                       caPhosProduct >= 55 ? "⚠ Borderline — monitor closely" :
+                       "✓ Acceptable"}
+                    </p>
+                  </>
+                ) : <p>Enter PO₄ and Ca²⁺ to calculate</p>}
+                <p className="mt-1 text-[10px]">Threshold: >70 mg²/dL² increases calcification risk</p>
+              </div>
+              <div className="p-3 rounded-lg border border-blue-500/10 bg-blue-500/5 text-xs text-muted-foreground">
+                <p className="font-semibold text-blue-400 mb-1">Pseudohyperphosphatemia suspects:</p>
+                <ul className="list-disc list-inside space-y-0.5">
+                  <li>Hemolyzed sample</li>
+                  <li>Recent phosphate load</li>
+                  <li>Sample timing (post-prandial)</li>
+                  <li>Hyperlipidemia / paraproteinemia</li>
+                </ul>
+              </div>
             </div>
 
             <Button onClick={confirmHyperphosphatemia} className="w-full" disabled={!serumPhos}>Confirm Hyperphosphatemia</Button>
             {confirmed === true && (
               <div className="p-3 rounded-lg border bg-amber-500/5 border-amber-500/20 text-sm">
-                <p className="font-semibold text-amber-400">⚠ True hyperphosphatemia confirmed</p>
+                <p className="font-semibold text-amber-400">⚠ True hyperphosphatemia confirmed (PO₄ &gt;4.5 mg/dL)</p>
               </div>
             )}
           </CardContent>
         )}
       </Card>
 
-      {/* STEP 2 */}
+      {/* STEP 2: Severity */}
       <Card className={`border-${severity ? "green" : "purple"}-500/20 ${!steps.step1_complete ? "opacity-50 pointer-events-none" : ""}`}>
         <button onClick={() => setExpandedSection(expandedSection === "step2" ? null : "step2")} className="w-full text-left">
           <CardHeader className="pb-3">
@@ -310,14 +377,14 @@ export default function Hyperphosphatemia() {
               </div>
               {expandedSection === "step2" ? <ChevronDown className="h-4 w-4" /> : <ChevronRight className="h-4 w-4" />}
             </div>
-            <CardDescription>Classify severity, check eGFR, assess hypocalcemia risk</CardDescription>
+            <CardDescription>Classify severity, assess eGFR, and identify risk flags</CardDescription>
           </CardHeader>
         </button>
         {expandedSection === "step2" && (
           <CardContent className="space-y-4 pt-0">
             <Button onClick={classifySeverity} className="w-full" disabled={!serumPhos}>Classify Severity</Button>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-2">
+            <div className="grid grid-cols-1 md:grid-cols-4 gap-2">
               {SEVERITY_RANGES.map((sr) => (
                 <div key={sr.level} className={`p-3 rounded-lg border ${sr.border} ${sr.bg}`}>
                   <div className={`text-sm font-bold ${sr.color}`}>{sr.level}</div>
@@ -328,14 +395,16 @@ export default function Hyperphosphatemia() {
 
             {severity && (
               <div className={`p-3 rounded-lg border text-sm ${
-                severity === "severe" ? "bg-red-500/5 border-red-500/20 text-red-400" :
+                severity === "critical" ? "bg-red-500/5 border-red-500/20 text-red-400" :
+                severity === "severe" ? "bg-orange-500/5 border-orange-500/20 text-orange-400" :
                 severity === "moderate" ? "bg-yellow-500/5 border-yellow-500/20 text-yellow-400" :
                 "bg-green-500/5 border-green-500/20 text-green-400"
               }`}>
                 <p className="font-semibold">
-                  {severity === "severe" && "⚠ Severe (>7.0 mg/dL) — aggressive treatment"}
-                  {severity === "moderate" && "⚠ Moderate (5.5–7.0 mg/dL)"}
-                  {severity === "mild" && "✓ Mild (4.5–5.5 mg/dL)"}
+                  {severity === "critical" && "🚨 Critical (≥10.0 mg/dL) — emergency"}
+                  {severity === "severe" && "⚠ Severe (>7.0 mg/dL)"}
+                  {severity === "moderate" && "⚠ Moderate (5.6–7.0 mg/dL)"}
+                  {severity === "mild" && "✓ Mild (4.6–5.5 mg/dL)"}
                 </p>
               </div>
             )}
@@ -345,102 +414,67 @@ export default function Hyperphosphatemia() {
                 <Label>eGFR (mL/min/1.73m²)</Label>
                 <Input type="number" placeholder="e.g. 35" value={egfr} onChange={(e) => setEgfr(e.target.value)} />
               </div>
-              <div>
-                <Label className="mb-2 block">Hypocalcemia?</Label>
-                <div className="grid grid-cols-2 gap-2">
-                  <Button variant={hasHypocalcemia === true ? "default" : "outline"} size="sm" onClick={() => setHasHypocalcemia(true)} className={hasHypocalcemia === true ? "bg-orange-500/20 text-orange-400 border-orange-500/30" : ""}>Yes</Button>
-                  <Button variant={hasHypocalcemia === false ? "default" : "outline"} size="sm" onClick={() => setHasHypocalcemia(false)}>No</Button>
-                </div>
-              </div>
+            </div>
+
+            <div className="p-3 rounded-lg border border-red-500/10 bg-red-500/5 text-xs text-muted-foreground">
+              <p className="font-semibold text-red-400 mb-1">Risk Flags:</p>
+              <ul className="list-disc list-inside space-y-0.5">
+                <li>Symptomatic hypocalcemia</li>
+                <li>CKD / eGFR &lt;30</li>
+                <li>Tumor lysis syndrome</li>
+                <li>Rhabdomyolysis</li>
+                <li>Hypoparathyroidism</li>
+                <li>High Ca × PO₄ product (&gt;70)</li>
+              </ul>
             </div>
           </CardContent>
         )}
       </Card>
 
-      {/* STEP 3 */}
-      <Card className={`border-${dietRestriction !== null ? "green" : "rose"}-500/20 ${!steps.step2_complete ? "opacity-50 pointer-events-none" : ""}`}>
+      {/* STEP 3: Find Cause */}
+      <Card className={`border-${cause ? "green" : "teal"}-500/20 ${!steps.step2_complete ? "opacity-50 pointer-events-none" : ""}`}>
         <button onClick={() => setExpandedSection(expandedSection === "step3" ? null : "step3")} className="w-full text-left">
           <CardHeader className="pb-3">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2">
-                <Pill className="h-5 w-5 text-rose-400" />
-                <CardTitle className="text-base">Step 3: Treatment</CardTitle>
+                <Stethoscope className="h-5 w-5 text-teal-400" />
+                <CardTitle className="text-base">Step 3: Find the Cause</CardTitle>
               </div>
               {expandedSection === "step3" ? <ChevronDown className="h-4 w-4" /> : <ChevronRight className="h-4 w-4" />}
             </div>
-            <CardDescription>Dietary restriction → Phosphate binders → Dialysis</CardDescription>
+            <CardDescription>CKD → Cell lysis → Hypoparathyroidism → Exogenous load</CardDescription>
           </CardHeader>
         </button>
         {expandedSection === "step3" && (
           <CardContent className="space-y-4 pt-0">
-            <Button onClick={initTreatment} className="w-full">Initiate Management</Button>
-
-            <div className="p-4 rounded-lg border border-green-500/10 bg-green-500/5">
-              <div className="flex items-center gap-2 mb-2">
-                <Pill className="h-5 w-5 text-green-400" />
-                <h3 className="font-semibold text-sm">1. Dietary Phosphate Restriction</h3>
-              </div>
-              <p className="text-xs text-muted-foreground">Limit high-phosphate foods: dairy, nuts, seeds, organ meats, cola drinks, whole grains. Aim for 800–1000 mg/day in CKD.</p>
-            </div>
-
-            <div className={`p-4 rounded-lg border ${bindersStarted === true ? "border-amber-500/20 bg-amber-500/5" : "border-border"}`}>
-              <div className="flex items-center gap-2 mb-2">
-                <Pill className={`h-5 w-5 ${bindersStarted === true ? "text-amber-400" : "text-muted-foreground"}`} />
-                <h3 className="font-semibold text-sm">2. Phosphate Binders</h3>
-                {bindersStarted === true && <Badge className="text-[10px] bg-amber-500/20 text-amber-400">INDICATED</Badge>}
-              </div>
-              <div className="text-xs text-muted-foreground space-y-1">
-                <p>• <span className="font-semibold">Must be taken with meals</span> to chelate dietary phosphate</p>
-                <p>• <span className="font-semibold">Ca-based:</span> Calcium carbonate / acetate — effective but risk of hypercalcemia</p>
-                <p>• <span className="font-semibold">Non-Ca-based:</span> Sevelamer (carbonate/HCl), Lanthanum carbonate</p>
-                <p>• <span className="font-semibold">Dosing:</span> Start with largest meal. Titrate based on PO₄ levels.</p>
-                <p>• <span className="font-semibold">CKD-MBD:</span> Use non-Ca binders in adynamic bone / low PTH / hypercalcemia</p>
-              </div>
-            </div>
-
-            <div className="p-4 rounded-lg border border-cyan-500/10 bg-cyan-500/5">
-              <div className="flex items-center gap-2 mb-2">
-                <Droplets className="h-5 w-5 text-cyan-400" />
-                <h3 className="font-semibold text-sm">3. Dialysis (if refractory / severe)</h3>
-              </div>
-              <p className="text-xs text-muted-foreground">Hemodialysis is fastest PO₄ removal. Indicated for severe AKI/CKD with refractory hyperphosphatemia, life-threatening Ca × PO₄ product.</p>
-            </div>
-          </CardContent>
-        )}
-      </Card>
-
-      {/* STEP 4 */}
-      <Card className={`border-${cause ? "green" : "teal"}-500/20 ${!steps.step3_complete ? "opacity-50 pointer-events-none" : ""}`}>
-        <button onClick={() => setExpandedSection(expandedSection === "step4" ? null : "step4")} className="w-full text-left">
-          <CardHeader className="pb-3">
-            <div className="flex items-center justify-between">
-              <div className="flex items-center gap-2">
-                <Stethoscope className="h-5 w-5 text-teal-400" />
-                <CardTitle className="text-base">Step 4: Find the Cause</CardTitle>
-              </div>
-              {expandedSection === "step4" ? <ChevronDown className="h-4 w-4" /> : <ChevronRight className="h-4 w-4" />}
-            </div>
-            <CardDescription>CKD → Cellular release → Excess intake</CardDescription>
-          </CardHeader>
-        </button>
-        {expandedSection === "step4" && (
-          <CardContent className="space-y-4 pt-0">
             <div>
-              <Label className="mb-2 block">Does the patient have CKD (eGFR &lt;30) or AKI?</Label>
+              <Label className="mb-2 block">CKD or eGFR &lt;30?</Label>
               <div className="grid grid-cols-2 gap-2">
-                <Button variant={hasCkd === true ? "default" : "outline"} onClick={() => setHasCkd(true)} className={hasCkd === true ? "bg-red-500/20 text-red-400 border-red-500/30" : ""}>Yes — CKD/AKI</Button>
-                <Button variant={hasCkd === false ? "default" : "outline"} onClick={() => setHasCkd(false)}>No</Button>
+                <Button variant={hasCkd === true ? "default" : "outline"} onClick={() => setHasCkd(true)} className={hasCkd === true ? "bg-red-500/20 text-red-400 border-red-500/30" : ""}>Yes</Button>
+                <Button variant={hasCkd === false ? "default" : "outline"} onClick={() => { setHasCkd(false); }}>No</Button>
               </div>
             </div>
 
             {hasCkd === false && (
-              <div>
-                <Label className="mb-2 block">Evidence of cellular release? (tumor lysis, rhabdomyolysis, hemolysis, acidosis)</Label>
-                <div className="grid grid-cols-2 gap-2">
-                  <Button variant={hasRelease === true ? "default" : "outline"} onClick={() => setHasRelease(true)} className={hasRelease === true ? "bg-orange-500/20 text-orange-400 border-orange-500/30" : ""}>Yes</Button>
-                  <Button variant={hasRelease === false ? "default" : "outline"} onClick={() => setHasRelease(false)}>No</Button>
+              <>
+                <div>
+                  <Label className="mb-2 block">Acute cell lysis pattern? (tumor lysis, rhabdomyolysis, hemolysis, acidosis)</Label>
+                  <div className="grid grid-cols-2 gap-2">
+                    <Button variant={hasCellLysis === true ? "default" : "outline"} onClick={() => setHasCellLysis(true)} className={hasCellLysis === true ? "bg-orange-500/20 text-orange-400 border-orange-500/30" : ""}>Yes</Button>
+                    <Button variant={hasCellLysis === false ? "default" : "outline"} onClick={() => { setHasCellLysis(false); }}>No</Button>
+                  </div>
                 </div>
-              </div>
+
+                {hasCellLysis === false && (
+                  <div>
+                    <Label className="mb-2 block">PTH low (hypoparathyroidism)?</Label>
+                    <div className="grid grid-cols-2 gap-2">
+                      <Button variant={hasLowPTH === true ? "default" : "outline"} onClick={() => setHasLowPTH(true)} className={hasLowPTH === true ? "bg-purple-500/20 text-purple-400 border-purple-500/30" : ""}>Yes</Button>
+                      <Button variant={hasLowPTH === false ? "default" : "outline"} onClick={() => setHasLowPTH(false)}>No</Button>
+                    </div>
+                  </div>
+                )}
+              </>
             )}
 
             <Button onClick={determineCause} className="w-full" disabled={hasCkd === null}>Determine Cause</Button>
@@ -449,42 +483,170 @@ export default function Hyperphosphatemia() {
               <div className={`p-4 rounded-lg border ${
                 cause === "ckd" ? "border-red-500/20 bg-red-500/5" :
                 cause === "cellular_release" ? "border-orange-500/20 bg-orange-500/5" :
+                cause === "hypoparathyroid" ? "border-purple-500/20 bg-purple-500/5" :
                 "border-green-500/20 bg-green-500/5"
               }`}>
                 <h3 className="text-sm font-bold mb-2">
                   {cause === "ckd" ? "🫘 CKD — Impaired Excretion" :
                    cause === "cellular_release" ? "💥 Cellular Release" :
-                   "🍽️ Excess Intake"}
+                   cause === "hypoparathyroid" ? "🦋 Hypoparathyroidism" :
+                   "🍽️ Exogenous Phosphate Load"}
                 </h3>
-                <ul className="text-xs text-muted-foreground space-y-0.5 list-disc list-inside">
-                  {cause === "ckd" && <>
-                    <li>eGFR &lt;30 → impaired phosphate excretion</li>
-                    <li>Combine dietary restriction + binders + dialysis as needed</li>
-                    <li>Monitor Ca × PO₄ product, PTH, vitamin D</li>
-                    <li>Avoid Ca-based binders if PTH low / hypercalcemic</li>
-                  </>}
-                  {cause === "cellular_release" && <>
-                    <li>Tumor lysis syndrome, rhabdomyolysis, hemolysis, severe acidosis</li>
-                    <li>Treat underlying cause aggressively</li>
-                    <li>Rasburicase for tumor lysis (if uric acid also elevated)</li>
-                    <li>Dialysis may be needed for severe cases</li>
-                  </>}
-                  {cause === "excess_intake" && <>
-                    <li>Excessive dietary intake, phosphate-containing enemas, supplements</li>
-                    <li>Source removal + dietary counseling usually sufficient</li>
-                    <li>Binders if moderate-severe or persistent</li>
-                  </>}
-                </ul>
+                <p className="text-xs text-muted-foreground">
+                  {cause === "ckd" && "eGFR <30 → impaired phosphate excretion. Dietary restriction + binders + consider dialysis."}
+                  {cause === "cellular_release" && "Tumor lysis, rhabdomyolysis, hemolysis. Treat underlying cause. Aggressive hydration ± dialysis."}
+                  {cause === "hypoparathyroid" && "Low PTH → decreased renal phosphate excretion. Manage with active vitamin D + calcium."}
+                  {cause === "exogenous" && "Excessive dietary intake, phosphate-containing enemas, supplements. Source removal + dietary counseling."}
+                </p>
               </div>
             )}
 
+            {/* Workup reference */}
             <Separator />
             <div className="p-3 rounded-lg border border-blue-500/10 bg-blue-500/5 text-xs text-muted-foreground">
-              <p className="font-semibold text-blue-400 mb-1">Common causes summary:</p>
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-2">
-                <div><p className="font-semibold">🫘 Impaired excretion</p><p>CKD, AKI</p></div>
-                <div><p className="font-semibold">💥 Cellular release</p><p>Tumor lysis, rhabdo, hemolysis, acidosis</p></div>
-                <div><p className="font-semibold">🍽️ Excess intake</p><p>Diet, enemas, supplements, vitamin D excess</p></div>
+              <p className="font-semibold text-blue-400 mb-1">Suggested Workup:</p>
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-2">
+                {["Urine output", "eGFR", "Calcium", "PTH", "Uric acid", "Potassium", "LDH", "CK"].map((item) => (
+                  <span key={item} className="bg-card/50 px-2 py-1 rounded text-center">{item}</span>
+                ))}
+              </div>
+            </div>
+          </CardContent>
+        )}
+      </Card>
+
+      {/* STEP 4: Treat Hypocalcemia */}
+      <Card className={`border-${calciumGiven !== null ? "green" : "rose"}-500/20 ${!steps.step3_complete ? "opacity-50 pointer-events-none" : ""}`}>
+        <button onClick={() => setExpandedSection(expandedSection === "step4" ? null : "step4")} className="w-full text-left">
+          <CardHeader className="pb-3">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-2">
+                <HeartPulse className="h-5 w-5 text-rose-400" />
+                <CardTitle className="text-base">Step 4: Treat Hypocalcemia If Present</CardTitle>
+              </div>
+              {expandedSection === "step4" ? <ChevronDown className="h-4 w-4" /> : <ChevronRight className="h-4 w-4" />}
+            </div>
+            <CardDescription>Correct symptomatic hypocalcemia before lowering phosphate</CardDescription>
+          </CardHeader>
+        </button>
+        {expandedSection === "step4" && (
+          <CardContent className="space-y-4 pt-0">
+            <div className="p-3 rounded-lg border border-red-500/10 bg-red-500/5 text-xs text-muted-foreground">
+              <p className="font-semibold text-red-400">⚠ Critical rule: Treat symptomatic hypocalcemia FIRST</p>
+              <p className="mt-1">Phosphate correction can worsen calcium symptoms. If hypocalcemia is symptomatic (tetany, paresthesias, QT prolongation), give IV calcium gluconate first.</p>
+            </div>
+
+            <div>
+              <Label className="mb-2 block">Symptomatic Hypocalcemia?</Label>
+              <div className="grid grid-cols-2 gap-2">
+                <Button variant={hasHypocalcemiaSymptoms === true ? "default" : "outline"} onClick={() => setHasHypocalcemiaSymptoms(true)} className={hasHypocalcemiaSymptoms === true ? "bg-red-500/20 text-red-400 border-red-500/30" : ""}>Yes — tetany, paresthesias, QT ↑</Button>
+                <Button variant={hasHypocalcemiaSymptoms === false ? "default" : "outline"} onClick={() => setHasHypocalcemiaSymptoms(false)}>No</Button>
+              </div>
+            </div>
+
+            <Button onClick={handleHypocalcemia} className="w-full" disabled={hasHypocalcemiaSymptoms === null}>Assess & Treat Calcium</Button>
+
+            {calciumGiven === true && (
+              <div className="p-3 rounded-lg border border-red-500/20 bg-red-500/5 text-sm">
+                <p className="font-semibold text-red-400">💉 IV Calcium Gluconate Indicated</p>
+                <p className="text-xs text-muted-foreground">10–20 mL of 10% calcium gluconate IV over 10–15 min. Monitor ECG. Reassess symptoms before proceeding to phosphate treatment.</p>
+              </div>
+            )}
+            {calciumGiven === false && (
+              <div className="p-3 rounded-lg border bg-green-500/5 border-green-500/20 text-sm">
+                <p className="font-semibold text-green-400">✓ No symptomatic hypocalcemia — proceed to treatment</p>
+              </div>
+            )}
+          </CardContent>
+        )}
+      </Card>
+
+      {/* STEP 5: Treatment */}
+      <Card className={`border-${bindersStarted !== null ? "green" : "rose"}-500/20 ${!steps.step4_complete ? "opacity-50 pointer-events-none" : ""}`}>
+        <button onClick={() => setExpandedSection(expandedSection === "step5" ? null : "step5")} className="w-full text-left">
+          <CardHeader className="pb-3">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-2">
+                <Pill className="h-5 w-5 text-rose-400" />
+                <CardTitle className="text-base">Step 5: Treatment</CardTitle>
+              </div>
+              {expandedSection === "step5" ? <ChevronDown className="h-4 w-4" /> : <ChevronRight className="h-4 w-4" />}
+            </div>
+            <CardDescription>General measures → Binders → Dialysis</CardDescription>
+          </CardHeader>
+        </button>
+        {expandedSection === "step5" && (
+          <CardContent className="space-y-4 pt-0">
+            {/* General */}
+            <div className="p-3 rounded-lg border border-blue-500/10 bg-blue-500/5 text-xs text-muted-foreground">
+              <p className="font-semibold text-blue-400 mb-1">General Measures (all patients):</p>
+              <ul className="list-disc list-inside space-y-0.5">
+                <li>Stop all phosphate sources (enemas, laxatives, supplements)</li>
+                <li>Dietary phosphate restriction (800–1000 mg/day if CKD)</li>
+                <li>Treat underlying cause</li>
+              </ul>
+            </div>
+
+            {/* Fluids (if renal function preserved) */}
+            <div className="p-3 rounded-lg border border-cyan-500/10 bg-cyan-500/5">
+              <div className="flex items-center gap-2 mb-2">
+                <Droplets className="h-5 w-5 text-cyan-400" />
+                <h3 className="font-semibold text-sm">If Renal Function Preserved</h3>
+              </div>
+              <p className="text-xs text-muted-foreground">0.9% saline IVF to increase phosphaturia. Consider loop diuretic after volume repletion.</p>
+            </div>
+
+            <Button onClick={initTreatment} className="w-full">Generate Treatment Plan</Button>
+
+            {/* Binders */}
+            <div className={`p-4 rounded-lg border ${bindersStarted === true ? "border-amber-500/20 bg-amber-500/5" : "border-border"}`}>
+              <div className="flex items-center gap-2 mb-2">
+                <Pill className={`h-5 w-5 ${bindersStarted === true ? "text-amber-400" : "text-muted-foreground"}`} />
+                <h3 className="font-semibold text-sm">Phosphate Binders (if CKD or severe)</h3>
+                {bindersStarted === true && <Badge className="text-[10px] bg-amber-500/20 text-amber-400">INDICATED</Badge>}
+              </div>
+              <div className="overflow-x-auto">
+                <table className="w-full text-xs border-collapse">
+                  <thead>
+                    <tr className="border-b border-border">
+                      <th className="text-left py-2 px-2 font-medium">Binder</th>
+                      <th className="text-left py-2 px-2 font-medium">Type</th>
+                      <th className="text-left py-2 px-2 font-medium">Note</th>
+                      <th className="text-left py-2 px-2 font-medium">Ca Risk</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {BINDER_OPTIONS.map((b, i) => (
+                      <tr key={i} className="border-b border-border/50">
+                        <td className="py-1.5 px-2 font-medium">{b.name}</td>
+                        <td className="py-1.5 px-2">{b.type}</td>
+                        <td className="py-1.5 px-2 text-muted-foreground">{b.note}</td>
+                        <td className="py-1.5 px-2">{b.hypercalcemia_risk}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+              <p className="text-xs text-muted-foreground mt-2">Selection logic: choose based on calcium level, PTH, pill burden, and tolerance.</p>
+            </div>
+
+            {/* Dialysis */}
+            <div className={`p-4 rounded-lg border ${dialysisIndicated === true ? "border-red-500/20 bg-red-500/5" : "border-border"}`}>
+              <div className="flex items-center gap-2 mb-2">
+                <Kidney className={`h-5 w-5 ${dialysisIndicated === true ? "text-red-400" : "text-muted-foreground"}`} />
+                <h3 className="font-semibold text-sm">Dialysis</h3>
+                {dialysisIndicated === true && <Badge className="text-[10px] bg-red-500/20 text-red-400">INDICATED</Badge>}
+              </div>
+              <div className="text-xs text-muted-foreground">
+                <p className="font-semibold text-red-400">Indications:</p>
+                <ul className="list-disc list-inside space-y-0.5 mt-1">
+                  <li>Severe hyperphosphatemia</li>
+                  <li>Symptomatic hypocalcemia</li>
+                  <li>Renal failure</li>
+                  <li>Refractory electrolyte derangements</li>
+                  <li>Tumor lysis syndrome with AKI</li>
+                </ul>
+                <p className="mt-1">Modalities: Hemodialysis (most efficient) or CRRT if hemodynamically unstable</p>
               </div>
             </div>
           </CardContent>
