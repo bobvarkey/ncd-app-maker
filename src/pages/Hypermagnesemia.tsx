@@ -9,7 +9,7 @@ import {
   AlertTriangle, Droplets, Stethoscope, FlaskConical, Heart,
   HeartPulse, Brain, Pill, Syringe, Activity, Copy,
   Download, Clock, ShieldAlert, ChevronRight, ChevronDown,
-  Calculator, Kidney, Zap, Bone,
+  Calculator, Droplets, Zap, Bone,
 } from "lucide-react";
 import { downloadTextFile } from "@/lib/clinical-utils";
 import { toast } from "sonner";
@@ -97,7 +97,7 @@ const SAFETY_RULES = [
     border: "border-orange-500/20",
   },
   {
-    icon: <Kidney className="h-4 w-4" />,
+    icon: <Droplets className="h-4 w-4" />,
     title: "Dialyze If Renal Excretion Inadequate",
     detail: "Hemodialysis is definitive removal in renal failure, anuria/oliguria, critical levels (≥12 mg/dL), refractory symptoms, or life-threatening arrhythmia.",
     color: "text-purple-500",
@@ -575,7 +575,7 @@ export default function Hypermagnesemia() {
             {/* Dialysis */}
             <div className="p-4 rounded-lg border border-purple-500/10 bg-purple-500/5">
               <div className="flex items-center gap-2 mb-2">
-                <Kidney className="h-5 w-5 text-purple-400" />
+                <Droplets className="h-5 w-5 text-purple-400" />
                 <h3 className="font-semibold text-sm">Dialysis</h3>
               </div>
               <div className="text-xs text-muted-foreground">
