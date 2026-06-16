@@ -184,6 +184,52 @@ export default function IronTherapy() {
             </div>
           </div>
 
+          {/* Threshold visualization */}
+          <div className="rounded-xl border border-border bg-muted/30 overflow-hidden">
+            <div className="p-4 border-b border-border">
+              <h4 className="text-sm font-semibold text-foreground">Suggested Ferritin and TSAT Thresholds by Clinical Context</h4>
+              <p className="text-xs text-muted-foreground mt-1 leading-relaxed">
+                Comparison of ferritin (ng/mL) and TSAT (%) thresholds across common clinical settings. Ferritin
+                thresholds vary with inflammation, while TSAT &lt;20% is a common marker of iron-restricted erythropoiesis.
+              </p>
+            </div>
+            <img
+              src={ferritinTsatChart.url}
+              alt="Bar chart and table of suggested ferritin and TSAT thresholds by clinical context"
+              className="w-full h-auto bg-white"
+              loading="lazy"
+            />
+            <div className="p-4 border-t border-border">
+              <div className="text-xs font-semibold text-foreground mb-2">Notes</div>
+              <ul className="space-y-1.5 text-xs text-muted-foreground leading-relaxed">
+                <li>• Ferritin thresholds are context-dependent and increase in inflammatory states.</li>
+                <li>• TSAT &lt;20% remains a widely used indicator of iron-restricted erythropoiesis across many chronic diseases.</li>
+                <li>• In conditions such as CHF, CKD, IBD, and other inflammatory disorders, ferritin should be interpreted together with TSAT rather than in isolation.</li>
+              </ul>
+            </div>
+          </div>
+
+          {/* Iron Transport & Hepcidin */}
+          <div>
+            <div className="flex items-center gap-2 mb-1">
+              <Truck className="w-4 h-4 text-primary" />
+              <h3 className="text-sm font-semibold text-foreground">Iron Transport &amp; Hepcidin Regulation</h3>
+            </div>
+            <p className="text-xs text-muted-foreground mb-3 leading-relaxed">
+              Hepcidin acts as the body's iron "gatekeeper" — storage ferritin holds iron in reserve, while transferrin
+              shuttles free iron to tissues. High hepcidin (as in inflammation) locks iron in storage and reduces gut
+              absorption, lowering serum iron despite adequate or elevated ferritin.
+            </p>
+            <div className="rounded-xl border border-border overflow-hidden bg-white">
+              <img
+                src={ironTransportImg.url}
+                alt="Illustration of iron storage (ferritin), free iron pool, transferrin transport, and hepcidin regulation"
+                className="w-full h-auto"
+                loading="lazy"
+              />
+            </div>
+          </div>
+
           <p className="text-xs text-muted-foreground">
             References: Camaschella C. NEJM 2015; Cappellini MD et al. Am J Hematol 2020; Ponikowski P et al. ESC HF Guidelines 2021;
             KDIGO CKD Guidelines 2012/2024; Trenkwalder C et al. Lancet Neurol 2018.
