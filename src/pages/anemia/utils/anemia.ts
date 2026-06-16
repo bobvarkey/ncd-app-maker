@@ -70,6 +70,7 @@ export function evaluate(cbc: CBCValues, sex: Sex): EvaluationResult {
         interpretation: mentzer > 13 ? 'IDA' : 'Thalassemia',
         direction: '> 13 → IDA  |  ≤ 13 → Thalassemia',
         reference: 'Mentzer WC, 1973',
+        explanation: 'A simple ratio of MCV to RBC count. Values >13 suggest iron deficiency (larger, fewer cells), while ≤13 suggest thalassemia trait (many small cells driving MCV down).',
       });
     }
 
@@ -84,6 +85,7 @@ export function evaluate(cbc: CBCValues, sex: Sex): EvaluationResult {
         interpretation: ef > 0 ? 'IDA' : 'Thalassemia',
         direction: '> 0 → IDA  |  ≤ 0 → Thalassemia',
         reference: 'England JM & Fraser PM, 1973',
+        explanation: 'Combines MCV, RBC, and hemoglobin. A positive value suggests IDA; negative suggests thalassemia. Accounts for the degree of anemia along with cell size and count.',
       });
     }
 
@@ -98,6 +100,7 @@ export function evaluate(cbc: CBCValues, sex: Sex): EvaluationResult {
         interpretation: sl > 1530 ? 'IDA' : 'Thalassemia',
         direction: '> 1530 → IDA  |  ≤ 1530 → Thalassemia',
         reference: 'Shine I & Lal S, 1977',
+        explanation: 'Uses MCV squared times MCH. Higher values (>1530) indicate IDA because iron-deficient cells are more heterogeneous in size and hemoglobin content.',
       });
     }
 
@@ -112,6 +115,7 @@ export function evaluate(cbc: CBCValues, sex: Sex): EvaluationResult {
         interpretation: gk > 65 ? 'IDA' : 'Thalassemia',
         direction: '> 65 → IDA  |  ≤ 65 → Thalassemia',
         reference: 'Green R & King R, 1989',
+        explanation: 'Incorporates RDW (red cell distribution width) — a key differentiator. IDA typically has elevated RDW (wide variation), while thalassemia has normal RDW with uniform microcytosis.',
       });
     }
 
@@ -126,6 +130,7 @@ export function evaluate(cbc: CBCValues, sex: Sex): EvaluationResult {
         interpretation: rdwi > 220 ? 'IDA' : 'Thalassemia',
         direction: '> 220 → IDA  |  ≤ 220 → Thalassemia',
         reference: 'Jayabose S et al., 1999',
+        explanation: 'Combines MCV, RDW, and RBC count. High RDW with low RBC (IDA) pushes the index above 220. Thalassemia has high RBC count with normal RDW, keeping it low.',
       });
     }
 
@@ -140,6 +145,7 @@ export function evaluate(cbc: CBCValues, sex: Sex): EvaluationResult {
         interpretation: sri > 3.8 ? 'IDA' : 'Thalassemia',
         direction: '> 3.8 → IDA  |  ≤ 3.8 → Thalassemia',
         reference: 'Srivastava PC, 1973',
+        explanation: 'Ratio of MCH to RBC count. In IDA, MCH is low but RBC is even lower, giving a higher ratio. In thalassemia, RBC count is relatively preserved, keeping the ratio low.',
       });
     }
 
@@ -154,6 +160,7 @@ export function evaluate(cbc: CBCValues, sex: Sex): EvaluationResult {
         interpretation: ric > 4.4 ? 'IDA' : 'Thalassemia',
         direction: '> 4.4 → IDA  |  ≤ 4.4 → Thalassemia',
         reference: 'Ricerca BM et al., 1987',
+        explanation: 'Simple RDW-to-RBC ratio. IDA has elevated RDW with low RBC → ratio >4.4. Thalassemia has normal RDW with high RBC → ratio stays low.',
       });
     }
 
@@ -168,6 +175,7 @@ export function evaluate(cbc: CBCValues, sex: Sex): EvaluationResult {
         interpretation: dg > 0 ? 'Thalassemia' : 'IDA',
         direction: '< 0 → IDA  |  > 0 → Thalassemia',
         reference: 'Das Gupta A et al., 1994',
+        explanation: 'A linear discriminant function. Weights RBC positively (higher in thalassemia) and RDW negatively (higher in IDA). Positive value favors thalassemia; negative favors IDA.',
       });
     }
 
@@ -182,6 +190,7 @@ export function evaluate(cbc: CBCValues, sex: Sex): EvaluationResult {
         interpretation: bord > 44.76 ? 'IDA' : 'Thalassemia',
         direction: '> 44.76 → IDA  |  ≤ 44.76 → Thalassemia',
         reference: 'Bordbar E et al., 2010',
+        explanation: 'Measures deviation from normal MCV (80) and MCH (27). IDA deviates more in both dimensions (more microcytic and hypochromic) → product >44.76.',
       });
     }
 

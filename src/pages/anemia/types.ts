@@ -18,6 +18,7 @@ export interface DiscriminantResult {
   interpretation: 'IDA' | 'Thalassemia' | 'N/A';
   direction: string; // e.g. ">13 = IDA"
   reference: string;
+  explanation: string;
 }
 
 export interface AnemiaClassification {

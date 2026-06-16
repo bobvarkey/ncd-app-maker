@@ -101,7 +101,7 @@ export default function DiscriminantTable({ results, idaCount, thalCount, consen
                       <th className="text-right py-3 px-4 font-semibold text-muted-foreground text-xs uppercase tracking-wide">Value</th>
                       <th className="text-right py-3 px-4 font-semibold text-muted-foreground text-xs uppercase tracking-wide">Cutoff</th>
                       <th className="text-center py-3 px-4 font-semibold text-muted-foreground text-xs uppercase tracking-wide">Result</th>
-                      <th className="text-left py-3 px-4 font-semibold text-muted-foreground text-xs uppercase tracking-wide hidden lg:table-cell">Reference</th>
+                      <th className="text-left py-3 px-4 font-semibold text-muted-foreground text-xs uppercase tracking-wide hidden lg:table-cell">Explanation</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -129,7 +129,7 @@ export default function DiscriminantTable({ results, idaCount, thalCount, consen
                             <span className="px-2.5 py-1 rounded-full text-xs font-semibold bg-sky-900/30 text-primary border border-sky-800">Thalassemia</span>
                           )}
                         </td>
-                        <td className="py-3 px-4 text-xs text-muted-foreground hidden lg:table-cell">{r.reference}</td>
+                        <td className="py-3 px-4 text-xs text-muted-foreground hidden lg:table-cell max-w-[300px] leading-relaxed">{r.explanation}</td>
                       </tr>
                     ))}
                   </tbody>
