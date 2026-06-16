@@ -628,7 +628,7 @@ export default function Hypocalcemia() {
             {correctedCa && (
               <div className="p-3 rounded-lg border border-cyan-500/20 bg-cyan-500/5 text-sm">
                 <p className="font-semibold text-cyan-400">
-                  Corrected Calcium = {totalCa} + 0.8 × (4 − {albumin}) = <span className="text-base">{correctedCa} mmol/L</span>
+                  Corrected Calcium = {totalCalcium} + 0.8 × (4 − {albumin}) = <span className="text-base">{correctedCa} mmol/L</span>
                 </p>
                 <p className="text-xs text-muted-foreground mt-1">
                   Formula: total Ca + 0.8 × (4 − albumin). Normal: 2.1–2.6 mmol/L.
