@@ -189,128 +189,151 @@ export default function IronTherapy() {
             </div>
           </div>
 
-          {/* Threshold visualization */}
-          <div className="rounded-xl border border-border bg-muted/30 overflow-hidden">
-            <div className="p-4 border-b border-border">
-              <h4 className="text-sm font-semibold text-foreground">Suggested Ferritin and TSAT Thresholds by Clinical Context</h4>
-              <p className="text-xs text-muted-foreground mt-1 leading-relaxed">
-                Comparison of ferritin (ng/mL) and TSAT (%) thresholds across common clinical settings. Ferritin
-                thresholds vary with inflammation, while TSAT &lt;20% is a common marker of iron-restricted erythropoiesis.
-              </p>
-            </div>
-            <img
-              src={ferritinTsatChart.url}
-              alt="Bar chart and table of suggested ferritin and TSAT thresholds by clinical context"
-              className="w-full h-auto bg-white"
-              loading="lazy"
-            />
-            <div className="p-4 border-t border-border">
-              <div className="text-xs font-semibold text-foreground mb-2">Notes</div>
-              <ul className="space-y-1.5 text-xs text-muted-foreground leading-relaxed">
-                <li>• Ferritin thresholds are context-dependent and increase in inflammatory states.</li>
-                <li>• TSAT &lt;20% remains a widely used indicator of iron-restricted erythropoiesis across many chronic diseases.</li>
-                <li>• In conditions such as CHF, CKD, IBD, and other inflammatory disorders, ferritin should be interpreted together with TSAT rather than in isolation.</li>
-              </ul>
-            </div>
-          </div>
-
-          {/* Iron Transport & Hepcidin */}
-          <div>
-            <div className="flex items-center gap-2 mb-1">
-              <Truck className="w-4 h-4 text-primary" />
-              <h3 className="text-sm font-semibold text-foreground">Iron Transport &amp; Hepcidin Regulation</h3>
-            </div>
-            <p className="text-xs text-muted-foreground mb-3 leading-relaxed">
-              Hepcidin acts as the body's iron "gatekeeper" — storage ferritin holds iron in reserve, while transferrin
-              shuttles free iron to tissues. High hepcidin (as in inflammation) locks iron in storage and reduces gut
-              absorption, lowering serum iron despite adequate or elevated ferritin.
-            </p>
-            <div className="rounded-xl border border-border overflow-hidden bg-white">
-              <img
-                src={ironTransportImg.url}
-                alt="Illustration of iron storage (ferritin), free iron pool, transferrin transport, and hepcidin regulation"
-                className="w-full h-auto"
-                loading="lazy"
-              />
-            </div>
-          </div>
-
-          {/* Ice Cream Shop analogy */}
-          <div>
-            <div className="flex items-center gap-2 mb-1">
-              <IceCream className="w-4 h-4 text-primary" />
-              <h3 className="text-sm font-semibold text-foreground">Iron Parameters — Visual Analogy</h3>
-            </div>
-            <p className="text-xs text-muted-foreground mb-3 leading-relaxed">
-              A simple way to remember the key iron parameters: the <strong className="text-foreground">storage fridge</strong> represents
-              ferritin (stored iron in hepatocytes/macrophages), the <strong className="text-foreground">free ice cream</strong> stands for the
-              labile free iron pool, and the <strong className="text-foreground">delivery cones</strong> are transferrin — filled cones are serum
-              iron, empty cones are unsaturated transferrin, and all cones together form TIBC. TSAT = filled / total × 100.
-            </p>
-            <div className="rounded-xl border border-border overflow-hidden bg-white">
-              <img
-                src={ironIceCreamImg.url}
-                alt="Ice cream shop analogy explaining ferritin storage, free iron pool, transferrin, serum iron, TIBC, and TSAT"
-                className="w-full h-auto"
-                loading="lazy"
-              />
-            </div>
-          </div>
-
-          {/* Iron deficiency stages table */}
-          <div>
-            <div className="flex items-center gap-2 mb-1">
-              <Layers className="w-4 h-4 text-primary" />
-              <h3 className="text-sm font-semibold text-foreground">Stages of Iron Deficiency — Lab Pattern</h3>
-            </div>
-            <p className="text-xs text-muted-foreground mb-3 leading-relaxed">
-              Iron deficiency progresses sequentially: <strong className="text-foreground">iron depletion</strong> (ferritin drops first) →
-              <strong className="text-foreground"> iron-deficient erythropoiesis</strong> (TSAT &lt; 15%, sTfR ↑, ZPP ↑) →
-              <strong className="text-foreground"> iron deficiency anemia</strong> (Hgb &lt; 12 g/dL, microcytosis). Hemoglobin falls last.
-            </p>
-            <div className="rounded-xl border border-border overflow-hidden bg-white">
-              <img
-                src={ironStagesImg.url}
-                alt="Table comparing MCV, RDW, sTfR, ferritin, TIBC, ZPP, plasma iron, transferrin saturation and other markers across normal, iron depletion, iron deficient erythropoiesis and iron deficiency anemia"
-                className="w-full h-auto"
-                loading="lazy"
-              />
-            </div>
-          </div>
-
-          {/* RLS Iron Therapy Algorithms */}
-          <div>
-            <div className="flex items-center gap-2 mb-1">
-              <Moon className="w-4 h-4 text-primary" />
-              <h3 className="text-sm font-semibold text-foreground">Iron Therapy for Restless Legs Syndrome (RLS)</h3>
-            </div>
-            <p className="text-xs text-muted-foreground mb-3 leading-relaxed">
-              Iron is central to RLS management. Target ferritin &gt; 100 µg/L and TSAT &lt; 45% to qualify for replacement. Oral iron
-              is first-line; IV iron (preferably FCM 1000 mg) is reserved for moderate-to-severe RLS with oral failure,
-              malabsorption, or need for rapid response.
-            </p>
-            <div className="grid grid-cols-1 gap-3">
-              <div className="rounded-xl border border-border overflow-hidden bg-white">
-                <img
-                  src={rlsAlgo1.url}
-                  alt="RLS iron therapy algorithm: diagnosis, iron assessment, TSAT and ferritin thresholds, oral iron treatment pathway"
-                  className="w-full h-auto"
-                  loading="lazy"
-                />
+          {/* Iron Parameters — collapsible group of visual references */}
+          <div className="rounded-2xl border border-border overflow-hidden">
+            <button
+              type="button"
+              onClick={() => setParamsOpen(v => !v)}
+              className="w-full flex items-center justify-between p-4 bg-muted/40 hover:bg-muted/60 transition-colors"
+            >
+              <div className="flex items-center gap-2">
+                <FlaskConical className="w-4 h-4 text-primary" />
+                <span className="text-sm font-semibold text-foreground">Iron Parameters — Visual References</span>
+                <span className="text-[10px] uppercase tracking-wide bg-sky-900/30 text-primary border border-sky-800 px-2 py-0.5 rounded-full">
+                  5 images
+                </span>
               </div>
-              <div className="rounded-xl border border-border overflow-hidden bg-white">
-                <img
-                  src={rlsAlgo2.url}
-                  alt="IV iron algorithm for RLS: indications, FCM and LMW iron dextran dosing, follow-up and repeat infusion criteria"
-                  className="w-full h-auto"
-                  loading="lazy"
-                />
+              {paramsOpen ? <ChevronUp className="w-4 h-4 text-muted-foreground" /> : <ChevronDown className="w-4 h-4 text-muted-foreground" />}
+            </button>
+
+            {paramsOpen && (
+              <div className="p-4 space-y-7 border-t border-border">
+                {/* Threshold visualization */}
+                <div className="rounded-xl border border-border bg-muted/30 overflow-hidden">
+                  <div className="p-4 border-b border-border">
+                    <h4 className="text-sm font-semibold text-foreground">Suggested Ferritin and TSAT Thresholds by Clinical Context</h4>
+                    <p className="text-xs text-muted-foreground mt-1 leading-relaxed">
+                      Comparison of ferritin (ng/mL) and TSAT (%) thresholds across common clinical settings. Ferritin
+                      thresholds vary with inflammation, while TSAT &lt;20% is a common marker of iron-restricted erythropoiesis.
+                    </p>
+                  </div>
+                  <img
+                    src={ferritinTsatChart.url}
+                    alt="Bar chart and table of suggested ferritin and TSAT thresholds by clinical context"
+                    className="w-full h-auto bg-white"
+                    loading="lazy"
+                  />
+                  <div className="p-4 border-t border-border">
+                    <div className="text-xs font-semibold text-foreground mb-2">Notes</div>
+                    <ul className="space-y-1.5 text-xs text-muted-foreground leading-relaxed">
+                      <li>• Ferritin thresholds are context-dependent and increase in inflammatory states.</li>
+                      <li>• TSAT &lt;20% remains a widely used indicator of iron-restricted erythropoiesis across many chronic diseases.</li>
+                      <li>• In conditions such as CHF, CKD, IBD, and other inflammatory disorders, ferritin should be interpreted together with TSAT rather than in isolation.</li>
+                    </ul>
+                  </div>
+                </div>
+
+                {/* Iron Transport & Hepcidin */}
+                <div>
+                  <div className="flex items-center gap-2 mb-1">
+                    <Truck className="w-4 h-4 text-primary" />
+                    <h3 className="text-sm font-semibold text-foreground">Iron Transport &amp; Hepcidin Regulation</h3>
+                  </div>
+                  <p className="text-xs text-muted-foreground mb-3 leading-relaxed">
+                    Hepcidin acts as the body's iron "gatekeeper" — storage ferritin holds iron in reserve, while transferrin
+                    shuttles free iron to tissues. High hepcidin (as in inflammation) locks iron in storage and reduces gut
+                    absorption, lowering serum iron despite adequate or elevated ferritin.
+                  </p>
+                  <div className="rounded-xl border border-border overflow-hidden bg-white">
+                    <img
+                      src={ironTransportImg.url}
+                      alt="Illustration of iron storage (ferritin), free iron pool, transferrin transport, and hepcidin regulation"
+                      className="w-full h-auto"
+                      loading="lazy"
+                    />
+                  </div>
+                </div>
+
+                {/* Ice Cream Shop analogy */}
+                <div>
+                  <div className="flex items-center gap-2 mb-1">
+                    <IceCream className="w-4 h-4 text-primary" />
+                    <h3 className="text-sm font-semibold text-foreground">Iron Parameters — Visual Analogy</h3>
+                  </div>
+                  <p className="text-xs text-muted-foreground mb-3 leading-relaxed">
+                    A simple way to remember the key iron parameters: the <strong className="text-foreground">storage fridge</strong> represents
+                    ferritin (stored iron in hepatocytes/macrophages), the <strong className="text-foreground">free ice cream</strong> stands for the
+                    labile free iron pool, and the <strong className="text-foreground">delivery cones</strong> are transferrin — filled cones are serum
+                    iron, empty cones are unsaturated transferrin, and all cones together form TIBC. TSAT = filled / total × 100.
+                  </p>
+                  <div className="rounded-xl border border-border overflow-hidden bg-white">
+                    <img
+                      src={ironIceCreamImg.url}
+                      alt="Ice cream shop analogy explaining ferritin storage, free iron pool, transferrin, serum iron, TIBC, and TSAT"
+                      className="w-full h-auto"
+                      loading="lazy"
+                    />
+                  </div>
+                </div>
+
+                {/* Iron deficiency stages table */}
+                <div>
+                  <div className="flex items-center gap-2 mb-1">
+                    <Layers className="w-4 h-4 text-primary" />
+                    <h3 className="text-sm font-semibold text-foreground">Stages of Iron Deficiency — Lab Pattern</h3>
+                  </div>
+                  <p className="text-xs text-muted-foreground mb-3 leading-relaxed">
+                    Iron deficiency progresses sequentially: <strong className="text-foreground">iron depletion</strong> (ferritin drops first) →
+                    <strong className="text-foreground"> iron-deficient erythropoiesis</strong> (TSAT &lt; 15%, sTfR ↑, ZPP ↑) →
+                    <strong className="text-foreground"> iron deficiency anemia</strong> (Hgb &lt; 12 g/dL, microcytosis). Hemoglobin falls last.
+                  </p>
+                  <div className="rounded-xl border border-border overflow-hidden bg-white">
+                    <img
+                      src={ironStagesImg.url}
+                      alt="Table comparing MCV, RDW, sTfR, ferritin, TIBC, ZPP, plasma iron, transferrin saturation and other markers across normal, iron depletion, iron deficient erythropoiesis and iron deficiency anemia"
+                      className="w-full h-auto"
+                      loading="lazy"
+                    />
+                  </div>
+                </div>
+
+                {/* RLS Iron Therapy Algorithms */}
+                <div>
+                  <div className="flex items-center gap-2 mb-1">
+                    <Moon className="w-4 h-4 text-primary" />
+                    <h3 className="text-sm font-semibold text-foreground">Iron Therapy for Restless Legs Syndrome (RLS)</h3>
+                  </div>
+                  <p className="text-xs text-muted-foreground mb-3 leading-relaxed">
+                    Iron is central to RLS management. Target ferritin &gt; 100 µg/L and TSAT &lt; 45% to qualify for replacement. Oral iron
+                    is first-line; IV iron (preferably FCM 1000 mg) is reserved for moderate-to-severe RLS with oral failure,
+                    malabsorption, or need for rapid response.
+                  </p>
+                  <div className="grid grid-cols-1 gap-3">
+                    <div className="rounded-xl border border-border overflow-hidden bg-white">
+                      <img
+                        src={rlsAlgo1.url}
+                        alt="RLS iron therapy algorithm: diagnosis, iron assessment, TSAT and ferritin thresholds, oral iron treatment pathway"
+                        className="w-full h-auto"
+                        loading="lazy"
+                      />
+                    </div>
+                    <div className="rounded-xl border border-border overflow-hidden bg-white">
+                      <img
+                        src={rlsAlgo2.url}
+                        alt="IV iron algorithm for RLS: indications, FCM and LMW iron dextran dosing, follow-up and repeat infusion criteria"
+                        className="w-full h-auto"
+                        loading="lazy"
+                      />
+                    </div>
+                  </div>
+                  <p className="text-xs text-muted-foreground mt-2 leading-relaxed">
+                    Source: Allen RP et al., IRLSSG iron therapy consensus algorithms.
+                  </p>
+                </div>
               </div>
-            </div>
-            <p className="text-xs text-muted-foreground mt-2 leading-relaxed">
-              Source: Allen RP et al., IRLSSG iron therapy consensus algorithms.
-            </p>
+            )}
           </div>
+
 
 
 
