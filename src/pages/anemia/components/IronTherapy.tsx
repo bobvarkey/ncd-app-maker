@@ -67,6 +67,7 @@ const severityColor = {
 
 export default function IronTherapy() {
   const [open, setOpen] = useState(false);
+  const [paramsOpen, setParamsOpen] = useState(false);
 
   return (
     <div className="bg-card rounded-2xl shadow-sm border border-border overflow-hidden">
