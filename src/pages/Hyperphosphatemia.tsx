@@ -35,9 +35,9 @@ interface StepState {
 
 const GUIDELINES = [
   "MSD Manual 2025",
-  "KDIGO CKD-MBD",
-  "KDOQI",
-  "RCH guideline",
+  "RCH Guideline",
+  "NICE CKD phosphate binders",
+  "PMC CKD hyperphosphatemia reviews",
 ];
 
 const DEFINITION = "Serum PO₄ >4.5 mg/dL (>1.46 mmol/L)";
@@ -96,11 +96,19 @@ const SAFETY_RULES = [
   },
   {
     icon: <Droplets className="h-4 w-4" />,
-    title: "Dialyze When Refractory or Severe",
-    detail: "Hemodialysis is the fastest phosphate removal. Indications: severe hyperphosphatemia, symptomatic hypocalcemia, renal failure, refractory electrolyte derangements.",
+    title: "Address Dialysis Inadequacy",
+    detail: "Diet or binders alone may be insufficient in dialysis patients. Optimize dialysis dose/frequency for persistent hyperphosphatemia. Hemodialysis is the fastest phosphate removal.",
     color: "text-cyan-500",
     bg: "bg-cyan-500/5",
     border: "border-cyan-500/20",
+  },
+  {
+    icon: <AlertTriangle className="h-4 w-4" />,
+    title: "Don't Treat Isolated Single Value Aggressively",
+    detail: "Confirm progressive or persistent elevation before escalating therapy. Transient post-prandial rises are normal.",
+    color: "text-amber-500",
+    bg: "bg-amber-500/5",
+    border: "border-amber-500/20",
   },
 ];
 
@@ -417,7 +425,7 @@ export default function Hyperphosphatemia() {
             </div>
 
             <div className="p-3 rounded-lg border border-red-500/10 bg-red-500/5 text-xs text-muted-foreground">
-              <p className="font-semibold text-red-400 mb-1">Risk Flags:</p>
+              <p className="font-semibold text-red-400 mb-1">Risk Flags & Complications:</p>
               <ul className="list-disc list-inside space-y-0.5">
                 <li>Symptomatic hypocalcemia</li>
                 <li>CKD / eGFR &lt;30</li>
@@ -425,6 +433,9 @@ export default function Hyperphosphatemia() {
                 <li>Rhabdomyolysis</li>
                 <li>Hypoparathyroidism</li>
                 <li>High Ca × PO₄ product (&gt;70)</li>
+                <li>Pruritus (uremic itching)</li>
+                <li>Calciphylaxis risk (Ca × PO₄ &gt;70 + CKD)</li>
+                <li>Soft tissue / vascular calcification</li>
               </ul>
             </div>
           </CardContent>
@@ -627,7 +638,22 @@ export default function Hyperphosphatemia() {
                   </tbody>
                 </table>
               </div>
-              <p className="text-xs text-muted-foreground mt-2">Selection logic: choose based on calcium level, PTH, pill burden, and tolerance.</p>
+              <p className="text-xs text-muted-foreground mt-2">Selection logic — choose based on calcium, PTH, and clinical context:</p>
+              <div className="mt-2 grid grid-cols-1 md:grid-cols-3 gap-2 text-xs">
+                <div className="p-2 rounded bg-green-500/5 border border-green-500/20">
+                  <p className="font-semibold text-green-400">Ca normal + PTH elevated</p>
+                  <p className="text-muted-foreground">Ca acetate, Ca carbonate, sevelamer, lanthanum</p>
+                </div>
+                <div className="p-2 rounded bg-orange-500/5 border border-orange-500/20">
+                  <p className="font-semibold text-orange-400">Hypercalcemia</p>
+                  <p className="text-muted-foreground">Sevelamer, lanthanum, sucroferric — avoid Ca-based</p>
+                </div>
+                <div className="p-2 rounded bg-purple-500/5 border border-purple-500/20">
+                  <p className="font-semibold text-purple-400">Low PTH / adynamic bone / vascular calcification</p>
+                  <p className="text-muted-foreground">Non-Ca binders only — avoid all Ca-based binders</p>
+                </div>
+              </div>
+              <p className="text-xs text-muted-foreground mt-2">Short-term only: aluminum-based binders when needed for brief course.</p>
             </div>
 
             {/* Dialysis */}
@@ -678,6 +704,47 @@ export default function Hyperphosphatemia() {
                 </div>
               </div>
             ))}
+          </CardContent>
+        )}
+      </Card>
+
+      {/* Monitoring */}
+      <Card className="border-cyan-500/20">
+        <button onClick={() => setExpandedSection(expandedSection === "monitoring" ? null : "monitoring")} className="w-full text-left">
+          <CardHeader className="pb-3">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-2">
+                <Activity className="h-5 w-5 text-cyan-400" />
+                <CardTitle className="text-base">Monitoring</CardTitle>
+              </div>
+              {expandedSection === "monitoring" ? <ChevronDown className="h-4 w-4" /> : <ChevronRight className="h-4 w-4" />}
+            </div>
+            <CardDescription>Acute/inpatient vs CKD/dialysis monitoring</CardDescription>
+          </CardHeader>
+        </button>
+        {expandedSection === "monitoring" && (
+          <CardContent className="space-y-4 pt-0">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="p-4 rounded-lg border border-orange-500/10 bg-orange-500/5">
+                <h3 className="text-sm font-semibold text-orange-400 mb-2">Acute / Inpatient</h3>
+                <ul className="text-xs text-muted-foreground space-y-1 list-disc list-inside">
+                  <li>Serial phosphate, calcium, PTH</li>
+                  <li>Renal function (creatinine, eGFR)</li>
+                  <li>ECG if hypocalcemia present</li>
+                  <li>Frequency: q6–12h during active treatment</li>
+                </ul>
+              </div>
+              <div className="p-4 rounded-lg border border-blue-500/10 bg-blue-500/5">
+                <h3 className="text-sm font-semibold text-blue-400 mb-2">CKD / Dialysis</h3>
+                <ul className="text-xs text-muted-foreground space-y-1 list-disc list-inside">
+                  <li>Monthly or per-protocol phosphate</li>
+                  <li>Calcium, PTH, bicarbonate</li>
+                  <li>Binder adherence review</li>
+                  <li>Dietary review</li>
+                  <li>Goal: return phosphate toward normal range</li>
+                </ul>
+              </div>
+            </div>
           </CardContent>
         )}
       </Card>
