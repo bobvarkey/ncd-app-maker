@@ -136,6 +136,7 @@ const navItems: NavItem[] = [
   { path: "/hypercalcemia",        label: "Hypercalcemia", icon: "🔥", active: "bg-rose-500/10 text-rose-400 border-rose-500/30" },
   { path: "/hypokalemia",         label: "Hypokalemia",  icon: "⚡", active: "bg-yellow-500/10 text-yellow-400 border-yellow-500/30" },
   { path: "/hypomagnesemia",      label: "Hypomagnesemia", icon: "🦴", active: "bg-purple-500/10 text-purple-400 border-purple-500/30" },
+  { path: "/hypermagnesemia",      label: "Hypermagnesemia", icon: "🪨", active: "bg-orange-500/10 text-orange-400 border-orange-500/30" },
 ];
 
 export function TabNavigation() {
