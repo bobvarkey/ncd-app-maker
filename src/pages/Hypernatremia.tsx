@@ -48,17 +48,17 @@ const DEFINITION = "Serum Na⁺ >145 mmol/L";
 // Volume / urine diagnostic reference
 // ══════════════════════════════════════════════
 
-const VOLUME_DIAGNOSTICS = [
+const VOLUME_DIAGNOSTICS: { volume: Exclude<VolumeStatus, null>; causes: string[] }[] = [
   {
-    volume: "Hypovolemic" as const,
+    volume: "hypovolemic",
     causes: ["GI loss", "Renal loss", "Osmotic diuresis", "Diuretics", "DI", "Poor intake"],
   },
   {
-    volume: "Euvolemic" as const,
+    volume: "euvolemic",
     causes: ["Diabetes insipidus", "Insensible loss", "Inadequate water intake"],
   },
   {
-    volume: "Hypervolemic" as const,
+    volume: "hypervolemic",
     causes: ["Hypertonic sodium load", "Iatrogenic saline", "Salt poisoning", "Positive fluid balance"],
   },
 ];
