@@ -44,7 +44,7 @@ export default function DiscriminantTable({ results, idaCount, thalCount, consen
               <Info className="w-4 h-4 mt-0.5 flex-shrink-0 text-muted-foreground" />
               <div>
                 Discriminant indices apply to <strong className="text-muted-foreground">microcytic anemia (MCV &lt; 80 fL)</strong>.
-                Provide Hemoglobin, RBC, MCV, MCH, and RDW to enable this analysis.
+                Enter at least MCV + RBC to compute the Mentzer Index. Add more fields for additional indices.
               </div>
             </div>
           ) : (
