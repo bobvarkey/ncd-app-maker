@@ -1,3 +1,4 @@
+import lipidTargetGuide from "@/assets/lipid-target-guide.png.asset.json";
 import { useState, useMemo } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
