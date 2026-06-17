@@ -758,7 +758,23 @@ export default function AscvdEmr() {
           <div className="space-y-2 text-sm">
             <Row label="10-Year ASCVD Risk" value={computed != null ? `${computed.toFixed(1)}%` : "—"} />
             <Row label="Risk Category" value={category} />
-            <Row label="LDL Goal" value={ldlGoal} />
+            {southAsian && laiSubclass && (
+              <div className="rounded-lg border border-danger/30 bg-danger/5 px-3 py-2">
+                <div className="flex items-center justify-between gap-2">
+                  <span className="text-xs font-semibold text-muted-foreground">
+                    LAI 2023 (South Asian)
+                  </span>
+                  <span className="rounded-full bg-danger/15 px-2 py-0.5 text-[11px] font-bold text-danger">
+                    {laiSubclass}
+                  </span>
+                </div>
+                <p className="mt-1 text-xs text-foreground">{LAI_LABEL[laiSubclass]}</p>
+                <p className="mt-0.5 text-[11px] text-muted-foreground">
+                  LDL target: {LAI_LDL[laiSubclass]}
+                </p>
+              </div>
+            )}
+            <Row label="LDL Goal" value={southAsian && laiSubclass ? LAI_LDL[laiSubclass] : ldlGoal} />
             <Row label="Recommended Therapy" value={therapy} />
             <div>
               <div className="flex items-center justify-between">
