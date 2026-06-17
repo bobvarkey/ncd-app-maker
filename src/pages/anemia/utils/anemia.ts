@@ -31,6 +31,13 @@ export function classifyAnemia(hgb: number, mcv: number, sex: Sex): AnemiaClassi
   };
 }
 
+const parseNum = (v: string | number | undefined): number => {
+  if (typeof v === 'number') return v;
+  if (!v) return NaN;
+  const n = parseFloat(String(v));
+  return isNaN(n) ? NaN : n;
+};
+
 export function evaluate(cbc: CBCValues, sex: Sex): EvaluationResult {
   const hgb = parseNum(cbc.hgb);
   const mcv = parseNum(cbc.mcv);
@@ -48,6 +55,9 @@ export function evaluate(cbc: CBCValues, sex: Sex): EvaluationResult {
   const classification = !isNaN(hgb) && !isNaN(mcv)
     ? classifyAnemia(hgb, mcv, sex)
     : { severity: 'N/A' as AnemiaClassification['severity'], morphology: 'N/A' as AnemiaClassification['morphology'], hgbThreshold: { mild: 0, moderate: 0, severe: 0 } };
+
+  const hasAnemia = !isNaN(hgb) && classification.severity !== 'None' && classification.severity !== 'N/A';
+  const isMicrocytic = classification.morphology === 'Microcytic';
 
   // Compute discriminant indices for microcytic anemia — allow partial entry
   let discriminantResults: DiscriminantResult[] = [];
