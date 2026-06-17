@@ -355,7 +355,6 @@ export default function AscvdEmr() {
     { key: "smoker", label: "Current Smoker" },
     { key: "ckd", label: "Chronic Kidney Disease" },
     { key: "famHx", label: "Family Hx Premature ASCVD" },
-    { key: "southAsian", label: "South Asian Ethnicity" },
   ];
 
   const enhList: { key: keyof Enhancers; label: string }[] = [
