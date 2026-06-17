@@ -195,11 +195,12 @@ export default function AscvdEmr() {
   const ldlN = num(labs.ldl);
   const hdlN = num(labs.hdl);
   const hasCore = !!ageN && !!ldlN && !!hdlN;
+  const southAsian = patient.ethnicity === "south_asian";
 
   const baseInputs: ScoreInputs = {
     age: ageN, ldl: ldlN, hdl: hdlN,
     smoker: risk.smoker, diabetes: risk.diabetes, htn: risk.htn,
-    ckd: risk.ckd, famHx: risk.famHx, southAsian: risk.southAsian,
+    ckd: risk.ckd, famHx: risk.famHx, southAsian,
     lpaHigh: auto.lpaHigh, apoBHigh: auto.apoBHigh,
     persistLdl: auto.persistLdl, persistTg: auto.persistTg,
     metSyn: enh.metSyn, inflam: enh.inflam, hsCrp: enh.hsCrp,
