@@ -126,41 +126,85 @@ export default function AscvdEmr() {
   const [advLipidsOpen, setAdvLipidsOpen] = useState(false);
   const [enhOpen, setEnhOpen] = useState(false);
 
-  // ─── Automatic detection from labs ───
+  // ─── Automatic detection from labs + CKD stage ───
   const auto = useMemo(() => {
     const ldl = num(labs.ldl);
     const tg = num(labs.tg);
     const apoB = num(labs.apoB);
     const lpaMg = num(labs.lpaMg);
     const lpaNmol = num(labs.lpaNmol);
+    const advancedCkd =
+      risk.ckd && (risk.ckdStage === "3b" || risk.ckdStage === "4" || risk.ckdStage === "5");
     return {
       persistLdl: ldl >= 160,
       persistTg: tg >= 175,
       apoBHigh: apoB >= 130,
       lpaHigh: lpaMg >= 50 || lpaNmol >= 125,
+      ckdEnhancer: advancedCkd,
     };
-  }, [labs]);
+  }, [labs, risk.ckd, risk.ckdStage]);
 
-  // ─── Simplified 10-year ASCVD risk estimate ───
-  const computed = useMemo(() => {
-    const age = num(patient.age);
-    const ldl = num(labs.ldl);
-    const hdl = num(labs.hdl);
-    if (!age || !ldl || !hdl) return null;
+  // ─── Pure scoring engine (also used for per-driver contribution) ───
+  type ScoreInputs = {
+    age: number; ldl: number; hdl: number;
+    smoker: boolean; diabetes: boolean; htn: boolean;
+    ckd: boolean; famHx: boolean; southAsian: boolean;
+    lpaHigh: boolean; apoBHigh: boolean;
+    persistLdl: boolean; persistTg: boolean;
+    metSyn: boolean; inflam: boolean; hsCrp: boolean;
+    subclinical: boolean; abi: boolean;
+    prematureMeno: boolean; preeclampsia: boolean;
+    ckdEnhancer: boolean;
+  };
+
+  const scoreRisk = (i: ScoreInputs): number => {
     let r = 0;
-    r += (age - 30) * 0.6;
-    r += (ldl - 100) * 0.12;
-    r -= (hdl - 40) * 0.25;
-    if (risk.smoker) r += 10;
-    if (risk.diabetes) r += 12;
-    if (risk.htn) r += 6;
-    if (risk.ckd) r += 5;
-    if (risk.famHx) r += 3;
-    if (risk.southAsian) r += 2;
-    if (auto.lpaHigh) r += 3;
-    if (auto.apoBHigh) r += 2;
+    r += (i.age - 30) * 0.6;
+    r += (i.ldl - 100) * 0.12;
+    r -= (i.hdl - 40) * 0.25;
+    if (i.smoker) r += 10;
+    if (i.diabetes) r += 12;
+    if (i.htn) r += 6;
+    if (i.ckd) r += 5;
+    if (i.ckdEnhancer) r += 2;
+    if (i.famHx) r += 3;
+    if (i.southAsian) r += 2;
+    if (i.lpaHigh) r += 3;
+    if (i.apoBHigh) r += 2;
+    if (i.persistLdl) r += 3;
+    if (i.persistTg) r += 1.5;
+    if (i.metSyn) r += 2;
+    if (i.inflam) r += 1.5;
+    if (i.hsCrp) r += 1.5;
+    if (i.subclinical) r += 4;
+    if (i.abi) r += 2;
+    if (i.prematureMeno) r += 1;
+    if (i.preeclampsia) r += 1;
     return Math.max(1, Math.min(r, 40));
-  }, [patient.age, labs.ldl, labs.hdl, risk, auto]);
+  };
+
+  const ageN = num(patient.age);
+  const ldlN = num(labs.ldl);
+  const hdlN = num(labs.hdl);
+  const hasCore = !!ageN && !!ldlN && !!hdlN;
+
+  const baseInputs: ScoreInputs = {
+    age: ageN, ldl: ldlN, hdl: hdlN,
+    smoker: risk.smoker, diabetes: risk.diabetes, htn: risk.htn,
+    ckd: risk.ckd, famHx: risk.famHx, southAsian: risk.southAsian,
+    lpaHigh: auto.lpaHigh, apoBHigh: auto.apoBHigh,
+    persistLdl: auto.persistLdl, persistTg: auto.persistTg,
+    metSyn: enh.metSyn, inflam: enh.inflam, hsCrp: enh.hsCrp,
+    subclinical: enh.subclinical, abi: enh.abi,
+    prematureMeno: enh.prematureMeno, preeclampsia: enh.preeclampsia,
+    ckdEnhancer: auto.ckdEnhancer,
+  };
+
+  const computed = useMemo(
+    () => (hasCore ? scoreRisk(baseInputs) : null),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [hasCore, JSON.stringify(baseInputs)]
+  );
 
   const category = useMemo(() => {
     if (risk.ascvd) return "HIGH" as const;
@@ -189,31 +233,68 @@ export default function AscvdEmr() {
       ? "Discuss statin; consider CAC for refinement"
       : "Lifestyle therapy";
 
-  const drivers = useMemo(() => {
-    const d: string[] = [];
-    if (risk.ascvd) d.push("Established ASCVD");
-    if (risk.diabetes) d.push("Diabetes");
-    if (risk.smoker) d.push("Current smoker");
-    if (risk.htn) d.push("Hypertension");
-    if (risk.ckd)
-      d.push(`CKD${risk.ckdStage ? ` stage ${risk.ckdStage.toUpperCase()}` : ""}`);
-    if (risk.famHx) d.push("Family hx premature ASCVD");
-    if (risk.southAsian) d.push("South Asian ethnicity");
-    const ldl = num(labs.ldl);
-    if (ldl) d.push(`LDL ${ldl} mg/dL`);
-    if (auto.persistLdl) d.push("Persistent ↑ LDL-C (≥160)");
-    if (auto.persistTg) d.push("Persistent ↑ TG (≥175)");
-    if (auto.apoBHigh) d.push("ApoB ≥130");
-    if (auto.lpaHigh) d.push("Lp(a) elevated");
-    if (enh.metSyn) d.push("Metabolic syndrome");
-    if (enh.inflam) d.push("Chronic inflammation");
-    if (enh.hsCrp) d.push("hs-CRP >2");
-    if (enh.subclinical) d.push("Subclinical atherosclerosis");
-    if (enh.abi) d.push("ABI <0.9");
-    if (enh.prematureMeno) d.push("Premature menopause");
-    if (enh.preeclampsia) d.push("Preeclampsia hx");
-    return d;
-  }, [risk, labs.ldl, auto, enh]);
+  // ─── Per-driver impact (real-time, ranked) ───
+  type Driver = { label: string; delta: number; auto?: boolean };
+  const drivers = useMemo<Driver[]>(() => {
+    if (!hasCore) return [];
+    const base = scoreRisk(baseInputs);
+    const list: Driver[] = [];
+
+    const tryFlag = (label: string, key: keyof ScoreInputs, isAuto = false) => {
+      if (!baseInputs[key]) return;
+      const alt = { ...baseInputs, [key]: false } as ScoreInputs;
+      const d = base - scoreRisk(alt);
+      if (d !== 0) list.push({ label, delta: d, auto: isAuto });
+    };
+
+    // Continuous (numeric) drivers — counterfactual = reference value
+    const ldlRef = { ...baseInputs, ldl: 100 };
+    const ldlDelta = base - scoreRisk(ldlRef);
+    if (Math.abs(ldlDelta) >= 0.1)
+      list.push({ label: `LDL-C ${ldlN} mg/dL`, delta: ldlDelta });
+
+    const hdlRef = { ...baseInputs, hdl: 50 };
+    const hdlDelta = base - scoreRisk(hdlRef);
+    if (Math.abs(hdlDelta) >= 0.1)
+      list.push({ label: `HDL-C ${hdlN} mg/dL`, delta: hdlDelta });
+
+    const ageRef = { ...baseInputs, age: 40 };
+    const ageDelta = base - scoreRisk(ageRef);
+    if (Math.abs(ageDelta) >= 0.1)
+      list.push({ label: `Age ${ageN} y`, delta: ageDelta });
+
+    // Major risk factors
+    tryFlag("Diabetes", "diabetes");
+    tryFlag("Current smoker", "smoker");
+    tryFlag("Hypertension", "htn");
+    tryFlag(
+      `CKD${risk.ckdStage ? ` stage ${risk.ckdStage.toUpperCase()}` : ""}`,
+      "ckd"
+    );
+    tryFlag("Family hx premature ASCVD", "famHx");
+    tryFlag("South Asian ethnicity", "southAsian");
+
+    // Auto-detected enhancers
+    tryFlag("Lp(a) elevated", "lpaHigh", true);
+    tryFlag("ApoB ≥130", "apoBHigh", true);
+    tryFlag("Persistent ↑ LDL-C (≥160)", "persistLdl", true);
+    tryFlag("Persistent ↑ TG (≥175)", "persistTg", true);
+    tryFlag("Advanced CKD enhancer", "ckdEnhancer", true);
+
+    // User enhancers
+    tryFlag("Metabolic syndrome", "metSyn");
+    tryFlag("Chronic inflammation", "inflam");
+    tryFlag("hs-CRP >2", "hsCrp");
+    tryFlag("Subclinical atherosclerosis", "subclinical");
+    tryFlag("ABI <0.9", "abi");
+    tryFlag("Premature menopause", "prematureMeno");
+    tryFlag("Preeclampsia hx", "preeclampsia");
+
+    return list.sort((a, b) => Math.abs(b.delta) - Math.abs(a.delta));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [hasCore, JSON.stringify(baseInputs), risk.ckdStage]);
+
+
 
   // ─── EMR Note ───
   const note = useMemo(() => {
