@@ -496,6 +496,34 @@ export default function AscvdEmr() {
             </div>
             <div className="col-span-2">
               <label className="mb-1 block text-xs font-semibold text-muted-foreground">
+                Ethnicity
+              </label>
+              <Select
+                value={patient.ethnicity}
+                onValueChange={(v) =>
+                  setPatient({ ...patient, ethnicity: v as Ethnicity })
+                }
+              >
+                <SelectTrigger>
+                  <SelectValue placeholder="Select ethnicity" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="south_asian">South Asian (LAI 2023 sub-classification)</SelectItem>
+                  <SelectItem value="east_asian">East Asian</SelectItem>
+                  <SelectItem value="white">White / Caucasian</SelectItem>
+                  <SelectItem value="black">Black / African ancestry</SelectItem>
+                  <SelectItem value="hispanic">Hispanic / Latino</SelectItem>
+                  <SelectItem value="other">Other</SelectItem>
+                </SelectContent>
+              </Select>
+              {southAsian && (
+                <p className="mt-1 text-[11px] text-muted-foreground">
+                  South Asian selected — risk auto-enhanced and LAI 2023 VHR/EHR sub-classification enabled.
+                </p>
+              )}
+            </div>
+            <div className="col-span-2">
+              <label className="mb-1 block text-xs font-semibold text-muted-foreground">
                 MRN (optional)
               </label>
               <Input
