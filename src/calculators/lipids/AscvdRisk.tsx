@@ -538,20 +538,25 @@ export default function AscvdEmr() {
           {(auto.persistLdl ||
             auto.persistTg ||
             auto.apoBHigh ||
-            auto.lpaHigh) && (
+            auto.lpaHigh ||
+            auto.ckdEnhancer) && (
             <div className="mt-3 rounded-lg bg-warning/8 px-3 py-2 text-xs">
               <div className="mb-1 flex items-center gap-1.5 font-semibold text-warning">
                 <Sparkles className="h-3.5 w-3.5" />
-                Auto-detected risk enhancers
+                Auto-detected risk enhancers (live)
               </div>
               <ul className="ml-1 space-y-0.5 text-foreground">
                 {auto.persistLdl && <li>• Persistent primary hypercholesterolemia (LDL ≥160)</li>}
                 {auto.persistTg && <li>• Persistent hypertriglyceridemia (TG ≥175)</li>}
                 {auto.apoBHigh && <li>• ApoB ≥130 mg/dL</li>}
-                {auto.lpaHigh && <li>• Lipoprotein(a) elevated</li>}
+                {auto.lpaHigh && <li>• Lipoprotein(a) elevated (≥50 mg/dL or ≥125 nmol/L)</li>}
+                {auto.ckdEnhancer && (
+                  <li>• Advanced CKD enhancer (stage {risk.ckdStage.toUpperCase()})</li>
+                )}
               </ul>
             </div>
           )}
+
 
           {/* Advanced lipids collapsible */}
           <Collapsible
