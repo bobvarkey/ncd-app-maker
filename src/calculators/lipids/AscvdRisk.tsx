@@ -676,22 +676,54 @@ export default function AscvdEmr() {
             <Row label="LDL Goal" value={ldlGoal} />
             <Row label="Recommended Therapy" value={therapy} />
             <div>
-              <div className="text-xs font-semibold text-muted-foreground">Key Drivers</div>
+              <div className="flex items-center justify-between">
+                <div className="text-xs font-semibold text-muted-foreground">Key Drivers</div>
+                <div className="text-[10px] text-muted-foreground">Δ vs. reference patient</div>
+              </div>
               {drivers.length === 0 ? (
-                <div className="text-muted-foreground text-sm">None recorded</div>
-              ) : (
-                <div className="mt-1 flex flex-wrap gap-1.5">
-                  {drivers.map((d) => (
-                    <span
-                      key={d}
-                      className="rounded-full bg-muted px-2 py-0.5 text-xs text-foreground"
-                    >
-                      {d}
-                    </span>
-                  ))}
+                <div className="text-muted-foreground text-sm mt-1">
+                  Enter age, LDL, HDL and risk factors to see contributions.
                 </div>
+              ) : (
+                <ul className="mt-1.5 space-y-1">
+                  {drivers.map((d) => {
+                    const pos = d.delta >= 0;
+                    const mag = Math.min(100, (Math.abs(d.delta) / Math.max(1, Math.abs(drivers[0].delta))) * 100);
+                    return (
+                      <li
+                        key={d.label}
+                        className="relative overflow-hidden rounded-md border border-border/60 bg-muted/30 px-2.5 py-1.5"
+                      >
+                        <div
+                          aria-hidden
+                          className={`absolute inset-y-0 left-0 ${pos ? "bg-danger/10" : "bg-accent/15"}`}
+                          style={{ width: `${mag}%` }}
+                        />
+                        <div className="relative flex items-center justify-between gap-2 text-xs">
+                          <span className="flex items-center gap-1.5 text-foreground">
+                            {d.label}
+                            {d.auto && (
+                              <span className="rounded bg-warning/15 px-1 py-0.5 text-[9px] font-bold uppercase tracking-wider text-warning">
+                                auto
+                              </span>
+                            )}
+                          </span>
+                          <span
+                            className={`font-mono font-semibold ${
+                              pos ? "text-danger" : "text-accent"
+                            }`}
+                          >
+                            {pos ? "+" : ""}
+                            {d.delta.toFixed(1)}%
+                          </span>
+                        </div>
+                      </li>
+                    );
+                  })}
+                </ul>
               )}
             </div>
+
           </div>
         </SectionCard>
 
