@@ -38,12 +38,21 @@ import { toast } from "sonner";
 
 type Sex = "" | "male" | "female";
 type CkdStage = "" | "3a" | "3b" | "4" | "5";
+type Ethnicity =
+  | ""
+  | "south_asian"
+  | "east_asian"
+  | "white"
+  | "black"
+  | "hispanic"
+  | "other";
 
 interface Patient {
   name: string;
   age: string;
   sex: Sex;
   mrn: string;
+  ethnicity: Ethnicity;
 }
 
 interface MajorRisk {
