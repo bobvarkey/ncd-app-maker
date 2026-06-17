@@ -77,6 +77,7 @@ interface Inputs {
   obNafld: boolean;
   // ckd
   egfr: string;
+  creatinine: string;
   uacr: string;
   ckdDm: boolean;
   ckdHtn: boolean;
