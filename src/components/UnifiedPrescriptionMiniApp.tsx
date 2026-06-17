@@ -544,6 +544,19 @@ export default function UnifiedPrescriptionMiniApp() {
     setInputs((p) => ({ ...p, ...updates }));
   };
 
+  // Auto-calculate eGFR from creatinine + age + sex (CKD-EPI 2021)
+  useEffect(() => {
+    const cr = parseFloat(inputs.creatinine);
+    const ageNum = parseFloat(inputs.age);
+    if (!isNaN(cr) && cr > 0 && !isNaN(ageNum) && ageNum > 0) {
+      const gender = inputs.sex === "female" ? "F" : "M";
+      const computed = calculateEGFR(cr, ageNum, gender);
+      if (computed > 0 && String(computed) !== inputs.egfr) {
+        setInputs((p) => ({ ...p, egfr: String(computed) }));
+      }
+    }
+  }, [inputs.creatinine, inputs.age, inputs.sex]);
+
   const result = useMemo(() => ENGINES[domain](inputs), [domain, inputs]);
 
   const reset = () => setInputs(DEFAULTS);
