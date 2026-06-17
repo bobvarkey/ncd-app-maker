@@ -784,6 +784,36 @@ export default function UnifiedPrescriptionMiniApp() {
               <RangeOrExactField label="eGFR" unit="mL/min/1.73m²" fieldKey="egfr" value={inputs.egfr} onChange={(v) => set("egfr", v)} />
               <RangeOrExactField label="UACR" unit="mg/g" fieldKey="uacr" value={inputs.uacr} onChange={(v) => set("uacr", v)} />
             </div>
+            {(() => {
+              const egfr = parseFloat(inputs.egfr);
+              const uacr = parseFloat(inputs.uacr);
+              if (isNaN(egfr) || egfr <= 0) return null;
+              let g = "G1", gLabel = "Normal/High";
+              if (egfr < 15) { g = "G5"; gLabel = "Kidney failure"; }
+              else if (egfr < 30) { g = "G4"; gLabel = "Severely decreased"; }
+              else if (egfr < 45) { g = "G3b"; gLabel = "Moderate–severe ↓"; }
+              else if (egfr < 60) { g = "G3a"; gLabel = "Mild–moderate ↓"; }
+              else if (egfr < 90) { g = "G2"; gLabel = "Mildly decreased"; }
+              let a = "—", aLabel = "albuminuria unknown";
+              if (!isNaN(uacr) && uacr >= 0) {
+                if (uacr > 300) { a = "A3"; aLabel = "Severely increased (>300)"; }
+                else if (uacr >= 30) { a = "A2"; aLabel = "Moderately increased (30–300)"; }
+                else { a = "A1"; aLabel = "Normal–mildly increased (<30)"; }
+              }
+              const risk =
+                (g === "G1" || g === "G2") && a === "A1" ? { label: "Low risk", cls: "bg-success/20 text-success border-success/30" }
+                : (g === "G1" && a === "A2") || (g === "G2" && a === "A2") || (g === "G3a" && a === "A1") ? { label: "Moderately ↑ risk", cls: "bg-warning/20 text-warning border-warning/30" }
+                : (g === "G1" && a === "A3") || (g === "G2" && a === "A3") || (g === "G3a" && a === "A2") || (g === "G3b" && a === "A1") ? { label: "High risk", cls: "bg-warning/30 text-warning border-warning/40" }
+                : { label: "Very high risk", cls: "bg-destructive/20 text-destructive border-destructive/30" };
+              return (
+                <div className="rounded-lg border border-border bg-card/60 p-3 flex flex-wrap items-center gap-2">
+                  <span className="text-xs text-muted-foreground">KDIGO classification:</span>
+                  <Badge className="bg-primary/15 text-primary border-primary/30">{g} / {a}</Badge>
+                  <span className="text-xs text-muted-foreground">{gLabel} · {aLabel}</span>
+                  <Badge className={`ml-auto ${risk.cls}`}>{risk.label}</Badge>
+                </div>
+              );
+            })()}
             <div className="flex flex-wrap gap-2">
               <Chip active={inputs.ckdDm} onClick={() => set("ckdDm", !inputs.ckdDm)}>Diabetes</Chip>
               <Chip active={inputs.ckdHtn} onClick={() => set("ckdHtn", !inputs.ckdHtn)}>Hypertension</Chip>
