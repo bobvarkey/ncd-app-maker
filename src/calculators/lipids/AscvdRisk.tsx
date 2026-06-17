@@ -224,6 +224,50 @@ export default function AscvdEmr() {
     return "LOW" as const;
   }, [computed, risk.ascvd]);
 
+  // ─── LAI 2023 sub-classification (South Asians) ───
+  // Activated only when ethnicity = South Asian. Stratifies into VHR / EHR-A/B/C
+  // based on established ASCVD, polyvascular/extreme markers, and high-risk features.
+  type LaiSub = "" | "VHR" | "EHR-A" | "EHR-B" | "EHR-C";
+  const laiSubclass = useMemo<LaiSub>(() => {
+    if (!southAsian || !hasCore) return "";
+    const hrfCount = [
+      risk.famHx,
+      auto.ckdEnhancer,
+      auto.apoBHigh,
+      auto.lpaHigh,
+      auto.persistLdl,
+      enh.metSyn,
+    ].filter(Boolean).length;
+    const polyvascular = enh.subclinical && enh.abi;
+    const extreme = auto.apoBHigh && auto.lpaHigh;
+
+    if (risk.ascvd) {
+      // Recurrent / refractory proxy: ASCVD + persistent LDL ≥160 despite enhancers
+      if (auto.persistLdl) return "EHR-C";
+      if (polyvascular || extreme) return "EHR-B";
+      return "EHR-A";
+    }
+    if (risk.diabetes && hrfCount >= 2) return "EHR-A";
+    if (ldlN >= 190) return "VHR";
+    if (hrfCount >= 2) return "VHR";
+    if (risk.diabetes && hrfCount >= 1) return "VHR";
+    return "";
+  }, [southAsian, hasCore, risk.ascvd, risk.diabetes, risk.famHx, auto, enh, ldlN]);
+
+  const LAI_LABEL: Record<Exclude<LaiSub, "">, string> = {
+    VHR: "Very High Risk",
+    "EHR-A": "Extreme Risk — Category A",
+    "EHR-B": "Extreme Risk — Category B (polyvascular / extreme markers)",
+    "EHR-C": "Extreme Risk — Category C (refractory / recurrent)",
+  };
+  const LAI_LDL: Record<Exclude<LaiSub, "">, string> = {
+    VHR: "<50 mg/dL",
+    "EHR-A": "<50 mg/dL (optional ≤30)",
+    "EHR-B": "≤30 mg/dL",
+    "EHR-C": "10–15 mg/dL (consider further lowering)",
+  };
+
+
   const ldlGoal =
     category === "HIGH"
       ? "<55 mg/dL (secondary prevention) or <70 mg/dL"
