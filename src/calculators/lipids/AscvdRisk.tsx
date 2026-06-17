@@ -99,6 +99,7 @@ export default function AscvdEmr() {
     age: "",
     sex: "",
     mrn: "",
+    ethnicity: "",
   });
 
   const [risk, setRisk] = useState<MajorRisk>({
