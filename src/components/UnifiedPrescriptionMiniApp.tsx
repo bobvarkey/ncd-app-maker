@@ -109,6 +109,7 @@ const DEFAULTS: Inputs = {
   obOsa: false,
   obNafld: false,
   egfr: "",
+  creatinine: "",
   uacr: "",
   ckdDm: false,
   ckdHtn: false,
