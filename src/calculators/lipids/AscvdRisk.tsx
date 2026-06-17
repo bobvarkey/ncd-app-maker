@@ -38,12 +38,21 @@ import { toast } from "sonner";
 
 type Sex = "" | "male" | "female";
 type CkdStage = "" | "3a" | "3b" | "4" | "5";
+type Ethnicity =
+  | ""
+  | "south_asian"
+  | "east_asian"
+  | "white"
+  | "black"
+  | "hispanic"
+  | "other";
 
 interface Patient {
   name: string;
   age: string;
   sex: Sex;
   mrn: string;
+  ethnicity: Ethnicity;
 }
 
 interface MajorRisk {
@@ -54,7 +63,6 @@ interface MajorRisk {
   ckd: boolean;
   ckdStage: CkdStage;
   famHx: boolean;
-  southAsian: boolean;
 }
 
 interface Labs {
@@ -90,6 +98,7 @@ export default function AscvdEmr() {
     age: "",
     sex: "",
     mrn: "",
+    ethnicity: "",
   });
 
   const [risk, setRisk] = useState<MajorRisk>({
@@ -100,7 +109,6 @@ export default function AscvdEmr() {
     ckd: false,
     ckdStage: "",
     famHx: false,
-    southAsian: false,
   });
 
   const [labs, setLabs] = useState<Labs>({
@@ -187,11 +195,12 @@ export default function AscvdEmr() {
   const ldlN = num(labs.ldl);
   const hdlN = num(labs.hdl);
   const hasCore = !!ageN && !!ldlN && !!hdlN;
+  const southAsian = patient.ethnicity === "south_asian";
 
   const baseInputs: ScoreInputs = {
     age: ageN, ldl: ldlN, hdl: hdlN,
     smoker: risk.smoker, diabetes: risk.diabetes, htn: risk.htn,
-    ckd: risk.ckd, famHx: risk.famHx, southAsian: risk.southAsian,
+    ckd: risk.ckd, famHx: risk.famHx, southAsian,
     lpaHigh: auto.lpaHigh, apoBHigh: auto.apoBHigh,
     persistLdl: auto.persistLdl, persistTg: auto.persistTg,
     metSyn: enh.metSyn, inflam: enh.inflam, hsCrp: enh.hsCrp,
@@ -214,6 +223,50 @@ export default function AscvdEmr() {
     if (computed >= 5) return "BORDERLINE" as const;
     return "LOW" as const;
   }, [computed, risk.ascvd]);
+
+  // ─── LAI 2023 sub-classification (South Asians) ───
+  // Activated only when ethnicity = South Asian. Stratifies into VHR / EHR-A/B/C
+  // based on established ASCVD, polyvascular/extreme markers, and high-risk features.
+  type LaiSub = "" | "VHR" | "EHR-A" | "EHR-B" | "EHR-C";
+  const laiSubclass = useMemo<LaiSub>(() => {
+    if (!southAsian || !hasCore) return "";
+    const hrfCount = [
+      risk.famHx,
+      auto.ckdEnhancer,
+      auto.apoBHigh,
+      auto.lpaHigh,
+      auto.persistLdl,
+      enh.metSyn,
+    ].filter(Boolean).length;
+    const polyvascular = enh.subclinical && enh.abi;
+    const extreme = auto.apoBHigh && auto.lpaHigh;
+
+    if (risk.ascvd) {
+      // Recurrent / refractory proxy: ASCVD + persistent LDL ≥160 despite enhancers
+      if (auto.persistLdl) return "EHR-C";
+      if (polyvascular || extreme) return "EHR-B";
+      return "EHR-A";
+    }
+    if (risk.diabetes && hrfCount >= 2) return "EHR-A";
+    if (ldlN >= 190) return "VHR";
+    if (hrfCount >= 2) return "VHR";
+    if (risk.diabetes && hrfCount >= 1) return "VHR";
+    return "";
+  }, [southAsian, hasCore, risk.ascvd, risk.diabetes, risk.famHx, auto, enh, ldlN]);
+
+  const LAI_LABEL: Record<Exclude<LaiSub, "">, string> = {
+    VHR: "Very High Risk",
+    "EHR-A": "Extreme Risk — Category A",
+    "EHR-B": "Extreme Risk — Category B (polyvascular / extreme markers)",
+    "EHR-C": "Extreme Risk — Category C (refractory / recurrent)",
+  };
+  const LAI_LDL: Record<Exclude<LaiSub, "">, string> = {
+    VHR: "<50 mg/dL",
+    "EHR-A": "<50 mg/dL (optional ≤30)",
+    "EHR-B": "≤30 mg/dL",
+    "EHR-C": "10–15 mg/dL (consider further lowering)",
+  };
+
 
   const ldlGoal =
     category === "HIGH"
@@ -310,7 +363,7 @@ export default function AscvdEmr() {
       "ASCVD RISK ASSESSMENT",
       "",
       `Patient: ${patient.name || "—"}${patient.mrn ? ` (MRN ${patient.mrn})` : ""}`,
-      `Age: ${patient.age || "—"}    Sex: ${patient.sex || "—"}`,
+      `Age: ${patient.age || "—"}    Sex: ${patient.sex || "—"}    Ethnicity: ${patient.ethnicity || "—"}`,
       "",
       "Major Risk Factors / Drivers:",
       factorList,
@@ -326,10 +379,13 @@ export default function AscvdEmr() {
         : []),
       "",
       `10-Year ASCVD Risk: ${computed != null ? computed.toFixed(1) + "%" : "—"}  (${category})`,
-      `LDL Goal: ${ldlGoal}`,
+      ...(southAsian && laiSubclass
+        ? [`LAI 2023 Sub-classification: ${laiSubclass} — ${LAI_LABEL[laiSubclass]}`]
+        : []),
+      `LDL Goal: ${southAsian && laiSubclass ? LAI_LDL[laiSubclass] : ldlGoal}`,
       `Recommendation: ${therapy}`,
     ].join("\n");
-  }, [patient, labs, computed, category, ldlGoal, therapy, drivers]);
+  }, [patient, labs, computed, category, ldlGoal, therapy, drivers, southAsian, laiSubclass]);
 
   const setM = (k: keyof MajorRisk, v: boolean) =>
     setRisk((p) => ({ ...p, [k]: v }));
@@ -345,7 +401,6 @@ export default function AscvdEmr() {
     { key: "smoker", label: "Current Smoker" },
     { key: "ckd", label: "Chronic Kidney Disease" },
     { key: "famHx", label: "Family Hx Premature ASCVD" },
-    { key: "southAsian", label: "South Asian Ethnicity" },
   ];
 
   const enhList: { key: keyof Enhancers; label: string }[] = [
@@ -441,6 +496,34 @@ export default function AscvdEmr() {
                   <SelectItem value="female">Female</SelectItem>
                 </SelectContent>
               </Select>
+            </div>
+            <div className="col-span-2">
+              <label className="mb-1 block text-xs font-semibold text-muted-foreground">
+                Ethnicity
+              </label>
+              <Select
+                value={patient.ethnicity}
+                onValueChange={(v) =>
+                  setPatient({ ...patient, ethnicity: v as Ethnicity })
+                }
+              >
+                <SelectTrigger>
+                  <SelectValue placeholder="Select ethnicity" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="south_asian">South Asian (LAI 2023 sub-classification)</SelectItem>
+                  <SelectItem value="east_asian">East Asian</SelectItem>
+                  <SelectItem value="white">White / Caucasian</SelectItem>
+                  <SelectItem value="black">Black / African ancestry</SelectItem>
+                  <SelectItem value="hispanic">Hispanic / Latino</SelectItem>
+                  <SelectItem value="other">Other</SelectItem>
+                </SelectContent>
+              </Select>
+              {southAsian && (
+                <p className="mt-1 text-[11px] text-muted-foreground">
+                  South Asian selected — risk auto-enhanced and LAI 2023 VHR/EHR sub-classification enabled.
+                </p>
+              )}
             </div>
             <div className="col-span-2">
               <label className="mb-1 block text-xs font-semibold text-muted-foreground">
@@ -678,7 +761,23 @@ export default function AscvdEmr() {
           <div className="space-y-2 text-sm">
             <Row label="10-Year ASCVD Risk" value={computed != null ? `${computed.toFixed(1)}%` : "—"} />
             <Row label="Risk Category" value={category} />
-            <Row label="LDL Goal" value={ldlGoal} />
+            {southAsian && laiSubclass && (
+              <div className="rounded-lg border border-danger/30 bg-danger/5 px-3 py-2">
+                <div className="flex items-center justify-between gap-2">
+                  <span className="text-xs font-semibold text-muted-foreground">
+                    LAI 2023 (South Asian)
+                  </span>
+                  <span className="rounded-full bg-danger/15 px-2 py-0.5 text-[11px] font-bold text-danger">
+                    {laiSubclass}
+                  </span>
+                </div>
+                <p className="mt-1 text-xs text-foreground">{LAI_LABEL[laiSubclass]}</p>
+                <p className="mt-0.5 text-[11px] text-muted-foreground">
+                  LDL target: {LAI_LDL[laiSubclass]}
+                </p>
+              </div>
+            )}
+            <Row label="LDL Goal" value={southAsian && laiSubclass ? LAI_LDL[laiSubclass] : ldlGoal} />
             <Row label="Recommended Therapy" value={therapy} />
             <div>
               <div className="flex items-center justify-between">
