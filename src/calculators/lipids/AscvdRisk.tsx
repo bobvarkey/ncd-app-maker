@@ -298,7 +298,14 @@ export default function AscvdEmr() {
 
   // ─── EMR Note ───
   const note = useMemo(() => {
-    const factorList = drivers.length ? drivers.map((d) => `  • ${d}`).join("\n") : "  • None recorded";
+    const factorList = drivers.length
+      ? drivers
+          .map(
+            (d) =>
+              `  • ${d.label}  (${d.delta >= 0 ? "+" : ""}${d.delta.toFixed(1)}%)${d.auto ? "  [auto]" : ""}`
+          )
+          .join("\n")
+      : "  • None recorded";
     return [
       "ASCVD RISK ASSESSMENT",
       "",
