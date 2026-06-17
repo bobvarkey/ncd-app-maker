@@ -767,7 +767,20 @@ export default function UnifiedPrescriptionMiniApp() {
 
         {domain === "ckd" && (
           <div className="space-y-3">
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+              <div className="space-y-1.5">
+                <Label className="text-xs text-muted-foreground">Serum Creatinine (mg/dL)</Label>
+                <Input
+                  type="number"
+                  step="0.01"
+                  min="0.1"
+                  max="30"
+                  placeholder="e.g. 1.2"
+                  value={inputs.creatinine}
+                  onChange={(e) => set("creatinine", e.target.value)}
+                />
+                <p className="text-[10px] text-muted-foreground">Auto-fills eGFR using CKD-EPI 2021 (needs age + sex).</p>
+              </div>
               <RangeOrExactField label="eGFR" unit="mL/min/1.73m²" fieldKey="egfr" value={inputs.egfr} onChange={(v) => set("egfr", v)} />
               <RangeOrExactField label="UACR" unit="mg/g" fieldKey="uacr" value={inputs.uacr} onChange={(v) => set("uacr", v)} />
             </div>
