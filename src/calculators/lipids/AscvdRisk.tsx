@@ -109,7 +109,6 @@ export default function AscvdEmr() {
     ckd: false,
     ckdStage: "",
     famHx: false,
-    southAsian: false,
   });
 
   const [labs, setLabs] = useState<Labs>({
