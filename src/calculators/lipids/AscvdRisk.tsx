@@ -363,7 +363,7 @@ export default function AscvdEmr() {
       "ASCVD RISK ASSESSMENT",
       "",
       `Patient: ${patient.name || "—"}${patient.mrn ? ` (MRN ${patient.mrn})` : ""}`,
-      `Age: ${patient.age || "—"}    Sex: ${patient.sex || "—"}`,
+      `Age: ${patient.age || "—"}    Sex: ${patient.sex || "—"}    Ethnicity: ${patient.ethnicity || "—"}`,
       "",
       "Major Risk Factors / Drivers:",
       factorList,
@@ -379,10 +379,13 @@ export default function AscvdEmr() {
         : []),
       "",
       `10-Year ASCVD Risk: ${computed != null ? computed.toFixed(1) + "%" : "—"}  (${category})`,
-      `LDL Goal: ${ldlGoal}`,
+      ...(southAsian && laiSubclass
+        ? [`LAI 2023 Sub-classification: ${laiSubclass} — ${LAI_LABEL[laiSubclass]}`]
+        : []),
+      `LDL Goal: ${southAsian && laiSubclass ? LAI_LDL[laiSubclass] : ldlGoal}`,
       `Recommendation: ${therapy}`,
     ].join("\n");
-  }, [patient, labs, computed, category, ldlGoal, therapy, drivers]);
+  }, [patient, labs, computed, category, ldlGoal, therapy, drivers, southAsian, laiSubclass]);
 
   const setM = (k: keyof MajorRisk, v: boolean) =>
     setRisk((p) => ({ ...p, [k]: v }));
