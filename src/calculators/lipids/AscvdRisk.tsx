@@ -830,6 +830,18 @@ export default function AscvdEmr() {
               )}
             </div>
 
+            {/* Lipid Targets Reference */}
+            <div className="mt-3">
+              <div className="text-xs font-semibold text-muted-foreground mb-2">
+                Lipid Targets by Risk Category
+              </div>
+              <img
+                src={lipidTargetGuide.url}
+                alt="Lipid targets guide by risk category — LDL-C and ApoB goals"
+                className="w-full rounded-lg border border-border/60"
+                loading="lazy"
+              />
+            </div>
           </div>
         </SectionCard>
 
