@@ -63,7 +63,6 @@ interface MajorRisk {
   ckd: boolean;
   ckdStage: CkdStage;
   famHx: boolean;
-  southAsian: boolean;
 }
 
 interface Labs {
