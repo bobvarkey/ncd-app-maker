@@ -854,6 +854,14 @@ function BleedingAlgorithm({ onBack }: { onBack: () => void }) {
         </SectionCard>
       )}
 
+      {/* Bleeding algorithm reference image */}
+      <ZoomableImage
+        src="/images/bleed-algorithm.png"
+        alt="Bleeding disorders algorithm reference"
+        className="rounded-lg border border-border"
+      />
+      <p className="text-xs text-muted-foreground text-center mt-1">Bleeding disorders diagnostic algorithm reference</p>
+
       <div className="flex items-start gap-2 rounded-md border border-amber-500/30 bg-warning/100/5 px-3 py-2 text-xs text-amber-700 dark:text-warning">
         <AlertTriangle className="h-3.5 w-3.5 mt-0.5 flex-shrink-0" />
         <span>Decision-support only. Confirm all recommendations with current guidelines and clinical context.</span>
@@ -1129,6 +1137,14 @@ function ThrombosisAlgorithm() {
       )}
 
       {renderNode(currentNode)}
+
+      {/* Thrombosis algorithm reference image */}
+      <ZoomableImage
+        src="/images/thrombosis-algorithm.png"
+        alt="Thrombotic disorders algorithm reference"
+        className="rounded-lg border border-border"
+      />
+      <p className="text-xs text-muted-foreground text-center mt-1">Thrombotic disorders diagnostic algorithm reference</p>
 
       <div className="flex items-start gap-2 rounded-md border border-amber-500/30 bg-warning/100/5 px-3 py-2 text-xs text-amber-700 dark:text-warning">
         <AlertTriangle className="h-3.5 w-3.5 mt-0.5 flex-shrink-0" />

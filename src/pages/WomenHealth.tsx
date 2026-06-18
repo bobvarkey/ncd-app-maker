@@ -956,6 +956,14 @@ function HrtAlgorithm() {
         </CardContent>
       </Card>
 
+      {/* HRT algorithm reference image */}
+      <ZoomableImage
+        src="/images/hrt-algorithm.png"
+        alt="HRT decision algorithm reference"
+        className="rounded-lg border border-border"
+      />
+      <p className="text-xs text-muted-foreground text-center mt-1">HRT decision algorithm reference</p>
+
       {/* Side branches */}
       <div className="space-y-3">
         <button
