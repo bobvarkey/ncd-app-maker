@@ -41,6 +41,7 @@ const bloodSubItems = [
   { tab: "thrombocytopenia", label: "Thrombocytopenia", icon: "💧" },
   { tab: "bleeding-clotting", label: "Bleeding / Clotting", icon: "🩹" },
   { tab: "iron", label: "Iron Parameters", icon: "💉" },
+  { tab: "esr", label: "ESR", icon: "⏱️" },
 ];
 
 function BloodSubNav() {

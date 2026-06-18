@@ -77,37 +77,7 @@ export default function Anemia() {
             </div>
           </div>
 
-          {/* Tab Navigation */}
-          <div className="flex gap-2 overflow-x-auto pb-1">
-            {[
-              { id: 'anemia', label: 'Anemia', icon: <Droplet className="w-4 h-4" /> },
-              { id: 'thrombocytopenia', label: 'Thrombocytopenia', icon: <Activity className="w-4 h-4" /> },
-              { id: 'bleeding-clotting', label: 'Bleeding / Clotting', icon: <Syringe className="w-4 h-4" /> },
-              { id: 'iron', label: 'Iron Replacement', icon: <Droplet className="w-4 h-4" /> },
-              { id: 'esr', label: 'ESR', icon: <Timer className="w-4 h-4" /> },
-            ].map((tab) => {
-              const isActive = activeTab === tab.id;
-              return (
-                <button
-                  key={tab.id}
-                  onClick={() => {
-                    const url = new URL(window.location.href);
-                    url.searchParams.set('tab', tab.id);
-                    window.history.replaceState({}, '', url);
-                    window.dispatchEvent(new PopStateEvent('popstate'));
-                  }}
-                  className={`flex items-center gap-1.5 px-3 py-2 rounded-lg text-sm font-medium border whitespace-nowrap transition-all ${
-                    isActive
-                      ? 'bg-primary text-white border-sky-600'
-                      : 'bg-card text-foreground border-border hover:border-muted-foreground'
-                  }`}
-                >
-                  {tab.icon}
-                  {tab.label}
-                </button>
-              );
-            })}
-          </div>
+          {/* Sub-navigation hint — use sidebar tabs */}
         </div>
       </header>
 

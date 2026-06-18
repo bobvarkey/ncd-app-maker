@@ -963,13 +963,33 @@ function ThrombosisAlgorithm() {
   const [currentNode, setCurrentNode] = useState<AlgorithmNode>(THROMBOSIS_ALGORITHM);
 
   const handleChoice = (key: string, child: AlgorithmNode) => {
-    setPath((prev) => [...prev, key]);
-    setCurrentNode(child);
+    // If the child has a `next` node, advance through it automatically
+    if (child.type === "action" && child.next) {
+      setPath((prev) => [...prev, key, "_next"]);
+      setCurrentNode(child.next);
+    } else {
+      setPath((prev) => [...prev, key]);
+      setCurrentNode(child);
+    }
   };
 
   const handleBack = () => {
     if (path.length === 0) return;
     const newPath = path.slice(0, -1);
+    // If the last step was an auto-advance through `next`, go back two
+    if (newPath.length > 0 && newPath[newPath.length - 1] === "_next") {
+      setPath(path.slice(0, -2));
+      let node: AlgorithmNode = THROMBOSIS_ALGORITHM;
+      for (const step of path.slice(0, -2)) {
+        if (node.options?.[step]) {
+          node = node.options[step];
+        } else if (node.next) {
+          node = node.next;
+        }
+      }
+      setCurrentNode(node);
+      return;
+    }
     let node: AlgorithmNode = THROMBOSIS_ALGORITHM;
     for (const step of newPath) {
       if (node.options?.[step]) {
@@ -985,6 +1005,38 @@ function ThrombosisAlgorithm() {
   const handleReset = () => {
     setPath([]);
     setCurrentNode(THROMBOSIS_ALGORITHM);
+  };
+
+  const formatOptionLabel = (key: string, node?: AlgorithmNode): string => {
+    // Check for node-level custom label
+    if (node?.id === "blood_products") return "🩸 Blood products (1:1:1)";
+    if (node?.id === "fibrinogen_target") return "🧬 Fibrinogen target ≥200";
+    if (node?.id === "platelet_target") return "🩸 Platelet target ≥50K";
+    if (node?.id === "hemoglobin_target") return "🩸 Hb target ≥7 g/dL";
+    if (node?.id === "pt_aPTT_target") return "⏱️ PT/aPTT <1.5× control";
+    if (node?.id === "warmth") return "🌡️ Maintain warmth";
+    if (node?.id === "txA") return "💊 TXA (tranexamic acid)";
+    if (node?.id === "dvt_prophylaxis") return "🩹 DVT prophylaxis";
+    if (node?.id === "treat_cause") return "🏥 Treat underlying cause";
+    
+    // Standard label mapping
+    const labels: Record<string, string> = {
+      vte: "🩸 Venous Thromboembolism (VTE)",
+      dic: "🩸 DIC (Disseminated Intravascular Coagulation)",
+      yes: "✅ Yes",
+      no: "❌ No",
+      low_unlikely: "📉 Low / Unlikely",
+      intermediate: "📊 Intermediate",
+      high_likely: "📈 High / Likely",
+      d_dimer_first: "🧪 D‑dimer first",
+      imaging_direct: "🖼️ Direct imaging",
+      negative: "⬇️ Negative",
+      positive: "⬆️ Positive",
+      warfarin: "💊 Warfarin",
+      doac: "💊 DOAC",
+      heparin_lmwh: "💉 Heparin / LMWH",
+    };
+    return labels[key] || key.replace(/_/g, " ").replace(/\b\w/g, (c) => c.toUpperCase());
   };
 
   const renderNode = (node: AlgorithmNode) => {
@@ -1203,9 +1255,9 @@ export default function BleedingClottingEvaluator() {
         >
           <div className="flex items-center gap-2 mb-1">
             <HeartPulse className="h-5 w-5 text-rose-400" />
-            <span className="font-semibold text-foreground">Thrombotic Disorders — VTE Algorithm</span>
+            <span className="font-semibold text-foreground">Thrombotic Disorders — VTE Algorithm (v1.4)</span>
           </div>
-          <p className="text-xs text-muted-foreground">Structured decision tree: VTE suspicion → pretest probability → D‑dimer/imaging → cancer branch → thrombophilia testing strategy.</p>
+          <p className="text-xs text-muted-foreground">Structured decision tree: VTE suspicion → pretest probability → D‑dimer/imaging → cancer branch → thrombophilia testing strategy. Also includes DIC diagnostic/management pathway (ISTH score + treatment actions).</p>
         </button>
 
         {/* DIC Reference Card */}
