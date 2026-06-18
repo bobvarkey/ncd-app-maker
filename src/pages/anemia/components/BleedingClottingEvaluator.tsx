@@ -1,4 +1,5 @@
 import { useMemo, useState } from "react";
+import { THROMBOSIS_ALGORITHM } from "./thrombosisAlgorithm";
 import {
   Activity,
   Droplets,
@@ -27,7 +28,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 
-type Mode = "" | "bleeding" | "clotting" | "algorithm";
+type Mode = "" | "bleeding" | "clotting" | "algorithm" | "thrombosis_algorithm";
 
 /* ============================ BLEEDING WIZARD ============================ */
 
@@ -955,6 +956,198 @@ function BleedingAlgorithm() {
   );
 }
 
+/* ============================ THROMBOSIS ALGORITHM ============================ */
+
+function ThrombosisAlgorithm() {
+  const [path, setPath] = useState<string[]>([]);
+  const [currentNode, setCurrentNode] = useState<AlgorithmNode>(THROMBOSIS_ALGORITHM);
+
+  const handleChoice = (key: string, child: AlgorithmNode) => {
+    setPath((prev) => [...prev, key]);
+    setCurrentNode(child);
+  };
+
+  const handleBack = () => {
+    if (path.length === 0) return;
+    const newPath = path.slice(0, -1);
+    let node: AlgorithmNode = THROMBOSIS_ALGORITHM;
+    for (const step of newPath) {
+      if (node.options?.[step]) {
+        node = node.options[step];
+      } else if (node.next) {
+        node = node.next;
+      }
+    }
+    setPath(newPath);
+    setCurrentNode(node);
+  };
+
+  const handleReset = () => {
+    setPath([]);
+    setCurrentNode(THROMBOSIS_ALGORITHM);
+  };
+
+  const renderNode = (node: AlgorithmNode) => {
+    if (node.type === "action") {
+      return (
+        <div className="space-y-3">
+          <SectionCard
+            title="Recommendation"
+            icon={<CheckCircle2 className="h-4 w-4" />}
+            tone="emerald"
+            defaultOpen
+          >
+            <div className="rounded-md border border-emerald-500/30 bg-emerald-500/5 px-4 py-3 text-sm text-foreground">
+              {node.recommendation}
+            </div>
+          </SectionCard>
+
+          {node.tests && node.tests.length > 0 && (
+            <SectionCard title="Tests to Order" icon={<FlaskConical className="h-4 w-4" />} tone="sky" defaultOpen>
+              <ul className="space-y-1 text-sm text-foreground">
+                {node.tests.map((t, i) => (
+                  <li key={i} className="flex items-start gap-2">
+                    <span className="text-sky-400 mt-0.5">•</span>
+                    <span>{t}</span>
+                  </li>
+                ))}
+              </ul>
+            </SectionCard>
+          )}
+
+          {node.screening_tests && node.screening_tests.length > 0 && (
+            <SectionCard title="Screening Tests" icon={<Stethoscope className="h-4 w-4" />} tone="sky" defaultOpen>
+              <ul className="space-y-1 text-sm text-foreground">
+                {node.screening_tests.map((t, i) => (
+                  <li key={i} className="flex items-start gap-2">
+                    <span className="text-sky-400 mt-0.5">•</span>
+                    <span>{t}</span>
+                  </li>
+                ))}
+              </ul>
+            </SectionCard>
+          )}
+
+          {node.tests_if_essential && node.tests_if_essential.length > 0 && (
+            <SectionCard title="Tests (If Essential)" icon={<FlaskConical className="h-4 w-4" />} tone="amber" defaultOpen>
+              <ul className="space-y-1 text-sm text-foreground">
+                {node.tests_if_essential.map((t, i) => (
+                  <li key={i} className="flex items-start gap-2">
+                    <span className="text-amber-400 mt-0.5">•</span>
+                    <span>{t}</span>
+                  </li>
+                ))}
+              </ul>
+            </SectionCard>
+          )}
+
+          {node.cautions && node.cautions.length > 0 && (
+            <SectionCard title="Cautions" icon={<AlertTriangle className="h-4 w-4" />} tone="amber" defaultOpen>
+              <ul className="space-y-1 text-sm text-foreground">
+                {node.cautions.map((c, i) => (
+                  <li key={i} className="flex items-start gap-2">
+                    <span className="text-amber-400 mt-0.5">⚠</span>
+                    <span>{c}</span>
+                  </li>
+                ))}
+              </ul>
+            </SectionCard>
+          )}
+
+          {node.principles && node.principles.length > 0 && (
+            <SectionCard title="Principles" icon={<Info className="h-4 w-4" />} tone="purple" defaultOpen>
+              <ul className="space-y-1 text-sm text-foreground">
+                {node.principles.map((p, i) => (
+                  <li key={i} className="flex items-start gap-2">
+                    <span className="text-purple-400 mt-0.5">•</span>
+                    <span>{p}</span>
+                  </li>
+                ))}
+              </ul>
+            </SectionCard>
+          )}
+
+          {path.length > 0 && (
+            <button
+              onClick={handleBack}
+              className="flex items-center gap-1 text-xs text-muted-foreground hover:text-foreground transition-colors"
+            >
+              ← Back to previous question
+            </button>
+          )}
+        </div>
+      );
+    }
+
+    return (
+      <div className="space-y-3">
+        <SectionCard
+          title={node.question || ""}
+          icon={<ClipboardList className="h-4 w-4" />}
+          tone="violet"
+          defaultOpen
+        >
+          <div className="grid gap-2">
+            {node.options &&
+              Object.entries(node.options).map(([key, child]) => (
+                <button
+                  key={key}
+                  onClick={() => handleChoice(key, child)}
+                  className="text-left rounded-md border border-border bg-muted/20 hover:bg-muted/40 hover:border-primary/30 px-3 py-2 text-sm text-foreground transition-colors"
+                >
+                  {key === "yes" ? "✅ Yes" : key === "no" ? "❌ No" : key === "low_unlikely" ? "📉 Low / Unlikely" : key === "intermediate" ? "📊 Intermediate" : key === "high_likely" ? "📈 High / Likely" : key === "d_dimer_first" ? "🧪 D‑dimer first" : key === "imaging_direct" ? "🖼️ Direct imaging" : key === "negative" ? "⬇️ Negative" : key === "positive" ? "⬆️ Positive" : key === "warfarin" ? "💊 Warfarin" : key === "doac" ? "💊 DOAC" : key === "heparin_lmwh" ? "💉 Heparin / LMWH" : key.replace(/_/g, " ").replace(/\b\w/g, (c) => c.toUpperCase())}
+                </button>
+              ))}
+          </div>
+        </SectionCard>
+
+        {path.length > 0 && (
+          <button
+            onClick={handleBack}
+            className="flex items-center gap-1 text-xs text-muted-foreground hover:text-foreground transition-colors"
+          >
+            ← Back to previous question
+          </button>
+        )}
+      </div>
+    );
+  };
+
+  return (
+    <div className="space-y-4">
+      <div className="flex items-center justify-between">
+        <h3 className="font-display text-sm font-bold text-foreground">Thrombotic Disorders — VTE with Thrombophilia & Cancer Branch</h3>
+        <button
+          onClick={handleReset}
+          className="flex items-center gap-1 text-xs text-muted-foreground hover:text-foreground transition-colors"
+        >
+          <RotateCcw className="h-3 w-3" /> Restart
+        </button>
+      </div>
+
+      {/* Breadcrumb */}
+      {path.length > 0 && (
+        <div className="flex flex-wrap items-center gap-1 text-[10px] text-muted-foreground">
+          <span className="text-primary font-medium">Start</span>
+          {path.map((step, i) => (
+            <span key={i} className="flex items-center gap-1">
+              <ArrowRight className="h-2.5 w-2.5" />
+              <span>{step.replace(/_/g, " ")}</span>
+            </span>
+          ))}
+        </div>
+      )}
+
+      {renderNode(currentNode)}
+
+      <div className="flex items-start gap-2 rounded-md border border-amber-500/30 bg-warning/100/5 px-3 py-2 text-xs text-amber-700 dark:text-warning">
+        <AlertTriangle className="h-3.5 w-3.5 mt-0.5 flex-shrink-0" />
+        <span>Decision-support only. Confirm all recommendations with current guidelines and clinical context.</span>
+      </div>
+    </div>
+  );
+}
+
 /* ================================ ROOT ================================== */
 
 export default function BleedingClottingEvaluator() {
@@ -1001,6 +1194,18 @@ export default function BleedingClottingEvaluator() {
             <span className="font-semibold text-foreground">Bleeding Disorders — Basic Screen Algorithm</span>
           </div>
           <p className="text-xs text-muted-foreground">Structured decision tree: bleeding history → labs → PT/aPTT pattern → diagnosis. Based on ISTH/BAT screening approach.</p>
+        </button>
+
+        {/* Thrombosis Algorithm card */}
+        <button
+          onClick={() => setMode("thrombosis_algorithm")}
+          className="w-full text-left rounded-lg border border-rose-500/30 bg-rose-500/5 hover:bg-rose-500/10 p-4 transition-colors"
+        >
+          <div className="flex items-center gap-2 mb-1">
+            <HeartPulse className="h-5 w-5 text-rose-400" />
+            <span className="font-semibold text-foreground">Thrombotic Disorders — VTE Algorithm</span>
+          </div>
+          <p className="text-xs text-muted-foreground">Structured decision tree: VTE suspicion → pretest probability → D‑dimer/imaging → cancer branch → thrombophilia testing strategy.</p>
         </button>
 
         {/* DIC Reference Card */}
@@ -1152,5 +1357,7 @@ export default function BleedingClottingEvaluator() {
     ? <BleedingWizard onBack={() => setMode("")} />
     : mode === "clotting"
     ? <ClottingWizard onBack={() => setMode("")} />
-    : <BleedingAlgorithm />;
+    : mode === "algorithm"
+    ? <BleedingAlgorithm />
+    : <ThrombosisAlgorithm />;
 }

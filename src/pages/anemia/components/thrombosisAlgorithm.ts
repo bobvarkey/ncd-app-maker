@@ -1,0 +1,288 @@
+export interface AlgorithmNode {
+  id: string;
+  type: "decision" | "action";
+  question?: string;
+  field?: string;
+  options?: Record<string, AlgorithmNode>;
+  next?: AlgorithmNode;
+  recommendation?: string;
+  tests?: string[];
+  cautions?: string[];
+  principles?: string[];
+  tests_if_essential?: string[];
+  screening_tests?: string[];
+}
+
+export const THROMBOSIS_ALGORITHM: AlgorithmNode = {
+  "id": "start",
+  "type": "decision",
+  "question": "Is there clinical suspicion of acute venous thromboembolism (DVT or PE)?",
+  "field": "suspected_vte",
+  "options": {
+    "no": {
+      "type": "action",
+      "id": "no_vte_suspicion",
+      "recommendation": "Consider alternative diagnoses. Use thrombosis risk assessment and prophylaxis tools as appropriate for hospitalization or surgery."
+    },
+    "yes": {
+      "type": "decision",
+      "id": "pretest_probability",
+      "question": "Clinical pretest probability (e.g., Wells score category)?",
+      "field": "vte_pretest_probability",
+      "options": {
+        "low_unlikely": {
+          "type": "decision",
+          "id": "low_prob_d_dimer",
+          "question": "Is a high‑sensitivity D‑dimer test available and appropriate?",
+          "field": "d_dimer_available",
+          "options": {
+            "no": {
+              "type": "action",
+              "id": "low_prob_no_d_dimer",
+              "recommendation": "If D‑dimer is not available, proceed to appropriate imaging (compression ultrasound for DVT, CTPA/VQ for PE) based on clinical judgment."
+            },
+            "yes": {
+              "type": "decision",
+              "id": "d_dimer_result",
+              "question": "D‑dimer result (age‑adjusted or guideline‑specified threshold)?",
+              "field": "d_dimer_category",
+              "options": {
+                "negative": {
+                  "type": "action",
+                  "id": "vte_ruled_out_low_prob",
+                  "recommendation": "VTE effectively ruled out; no imaging needed. Reassess if symptoms progress or new risk factors arise."
+                },
+                "positive": {
+                  "type": "action",
+                  "id": "low_prob_positive_d_dimer",
+                  "recommendation": "Obtain imaging (compression ultrasound for suspected DVT; CTPA/VQ scan for suspected PE) to confirm or exclude VTE."
+                }
+              }
+            }
+          }
+        },
+        "intermediate": {
+          "type": "decision",
+          "id": "intermediate_prob_branch",
+          "question": "Local practice: D‑dimer first vs direct imaging?",
+          "field": "intermediate_strategy",
+          "options": {
+            "d_dimer_first": {
+              "type": "decision",
+              "id": "intermediate_d_dimer_result",
+              "question": "D‑dimer result?",
+              "field": "d_dimer_category",
+              "options": {
+                "negative": {
+                  "type": "action",
+                  "id": "vte_unlikely_intermediate",
+                  "recommendation": "VTE unlikely; consider alternative diagnoses and clinical follow‑up."
+                },
+                "positive": {
+                  "type": "action",
+                  "id": "intermediate_positive_d_dimer",
+                  "recommendation": "Proceed to imaging (compression ultrasound for DVT; CTPA/VQ scan for PE) to confirm or exclude VTE."
+                }
+              }
+            },
+            "imaging_direct": {
+              "type": "action",
+              "id": "intermediate_direct_imaging",
+              "recommendation": "Proceed directly to imaging (compression ultrasound for DVT; CTPA/VQ scan for PE). Consider empiric anticoagulation if imaging delayed and risk is significant."
+            }
+          }
+        },
+        "high_likely": {
+          "type": "action",
+          "id": "high_prob_direct_imaging",
+          "recommendation": "High pretest probability: perform imaging urgently (compression ultrasound for DVT; CTPA/VQ scan for PE). Do not use D‑dimer to rule out VTE. Consider starting anticoagulation while awaiting imaging unless contraindicated."
+        }
+      }
+    }
+  },
+  "next": {
+    "id": "vte_confirmed_branch",
+    "type": "decision",
+    "question": "Is VTE confirmed by imaging?",
+    "field": "vte_confirmed",
+    "options": {
+      "no": {
+        "type": "action",
+        "id": "vte_not_confirmed",
+        "recommendation": "VTE not confirmed. Consider alternative diagnoses and evaluate for non‑thrombotic causes of symptoms. Reassess if clinical picture changes."
+      },
+      "yes": {
+        "type": "decision",
+        "id": "cancer_status_check",
+        "question": "Does the patient have active or newly diagnosed cancer?",
+        "field": "cancer_active_or_new",
+        "options": {
+          "no": {
+            "type": "decision",
+            "id": "on_anticoagulants_check_no_cancer",
+            "question": "Is the patient currently on anticoagulation therapy?",
+            "field": "patient_on_anticoagulants",
+            "options": {
+              "no": {
+                "type": "decision",
+                "id": "thrombophilia_appropriateness_no_anticoag_no_cancer",
+                "question": "Does this patient meet criteria for appropriate inherited thrombophilia testing?",
+                "field": "thrombophilia_appropriate",
+                "options": {
+                  "no": {
+                    "type": "action",
+                    "id": "no_thrombophilia_testing_no_cancer",
+                    "recommendation": "Do not test for inherited thrombophilia. Manage anticoagulation duration based on clinical features (provoked vs unprovoked, recurrence). Use standard duration guidance."
+                  },
+                  "yes": {
+                    "type": "action",
+                    "id": "order_thrombophilia_tests_no_anticoag_no_cancer",
+                    "recommendation": "Order inherited thrombophilia tests when indicated (see criteria below).",
+                    "tests": [
+                      "Antithrombin activity",
+                      "Protein C activity",
+                      "Protein S activity",
+                      "Factor V Leiden (FV G1691A)",
+                      "Prothrombin G20210A mutation",
+                      "Consider additional genetic testing if clinically indicated"
+                    ],
+                    "cautions": [
+                      "Do not test during acute thrombotic event; results can be inaccurate.",
+                      "Repeat abnormal or borderline results: at least 2 abnormal results before final diagnosis.",
+                      "Test results alone should not determine duration of anticoagulation; use clinical risk and recurrence patterns."
+                    ]
+                  }
+                }
+              },
+              "yes": {
+                "type": "decision",
+                "id": "anticoagulant_thrombophilia_strategy_no_cancer",
+                "question": "Is thrombophilia testing likely to change management?",
+                "field": "thrombophilia_changes_management",
+                "options": {
+                  "no": {
+                    "type": "action",
+                    "id": "defer_testing_not_likely_to_help_no_cancer",
+                    "recommendation": "Do not test for thrombophilia while on anticoagulants if results will not change management. Manage based on clinical features (provoked vs unprovoked, recurrence)."
+                  },
+                  "yes": {
+                    "type": "decision",
+                    "id": "which_anticoagulant_no_cancer",
+                    "question": "Which anticoagulant is the patient on?",
+                    "field": "current_anticoagulant_type",
+                    "options": {
+                      "warfarin": {
+                        "type": "action",
+                        "id": "pause_warfarin_and_test_no_cancer",
+                        "recommendation": "Hold warfarin at least 2 weeks before thrombophilia testing. After stopping warfarin, wait 2 weeks, then test for Protein C, Protein S, antithrombin, and lupus anticoagulant. Genetic tests (Factor V Leiden, Prothrombin G20210A) can be done regardless of anticoagulation."
+                      },
+                      "doac": {
+                        "type": "action",
+                        "id": "pause_doac_and_test_no_cancer",
+                        "recommendation": "Hold DOAC at least 2 days (48 hours) before thrombophilia testing; if renal dysfunction, consider longer hold. After stopping DOAC, wait 2 days, then test for Protein C, Protein S, lupus anticoagulant, and antithrombin. Genetic tests (Factor V Leiden, Prothrombin G20210A) can be done regardless of anticoagulation."
+                      },
+                      "heparin_lmwh": {
+                        "type": "action",
+                        "id": "pause_heparin_and_test_no_cancer",
+                        "recommendation": "Hold heparin at least 24 hours (or 2 days for LMWH) before thrombophilia testing. Test for Protein C, Protein S, antithrombin, lupus anticoagulant. Genetic tests (Factor V Leiden, Prothrombin G20210A) can be done regardless of anticoagulation."
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "yes": {
+            "type": "decision",
+            "id": "cancer_vte_pathway",
+            "question": "Is this cancer‑associated thrombosis (active cancer and VTE)?",
+            "field": "cancer_associated_vte",
+            "options": {
+              "no": {
+                "type": "decision",
+                "id": "cancer_screening_unprovoked_vte",
+                "question": "Is VTE unprovoked and patient age >40 years?",
+                "field": "unprovoked_vte_age_gt40",
+                "options": {
+                  "no": {
+                    "type": "action",
+                    "id": "limited_cancer_screen_age_or_provoked",
+                    "recommendation": "Age‑appropriate routine screening for occult malignancy is sufficient (e.g., mammography, colonoscopy per guidelines). No need for extensive cancer screening unless new symptoms or risk factors emerge."
+                  },
+                  "yes": {
+                    "type": "action",
+                    "id": "screen_for_occult_malignancy",
+                    "recommendation": "In unprovoked VTE in patients >40 years, consider limited screening for occult malignancy: history, physical exam, CBC, creatinine, LFTs, urinalysis; age‑appropriate screening (mammography, colon cancer screening). Consider CT abdomen/pelvis and/or chest CT if high risk (e.g., bilateral DVT, very high D‑dimer, early recurrence).",
+                    "screening_tests": [
+                      "History and physical exam",
+                      "CBC, creatinine, LFTs, urinalysis",
+                      "Age‑appropriate screening (mammography, colonoscopy)",
+                      "Consider CT chest/abdomen/pelvis if high risk features"
+                    ]
+                  }
+                }
+              },
+              "yes": {
+                "type": "decision",
+                "id": "cancer_thrombosis_testing_strategy",
+                "question": "Is inherited thrombophilia testing likely to change management in this cancer patient?",
+                "field": "cancer_thrombophilia_changes_management",
+                "options": {
+                  "no": {
+                    "type": "action",
+                    "id": "no_cancer_thrombophilia_testing",
+                    "recommendation": "Do not routinely test for inherited thrombophilia in patients with cancer‑associated VTE. Anticoagulation decisions should be based on cancer status (active vs cured), bleeding risk, and thrombosis risk, not thrombophilia results."
+                  },
+                  "yes": {
+                    "type": "decision",
+                    "id": "cancer_anticoagulation_status",
+                    "question": "Is the patient on anticoagulation for cancer‑associated VTE?",
+                    "field": "cancer_patient_on_anticoagulation",
+                    "options": {
+                      "no": {
+                        "type": "action",
+                        "id": "cancer_no_anticoag_thrombophilia_test",
+                        "recommendation": "If thrombophilia testing is essential (e.g., very strong family history of high‑risk thrombophilia, unusual site VTE, and management could change), consider testing after VTE is stable and at least 3 months post‑event. Avoid testing during acute thrombotic event. Use same timing rules as non‑cancer patients (hold warfarin 2 weeks, DOAC 2 days, heparin 24 h).",
+                        "tests": [
+                          "Antithrombin activity",
+                          "Protein C activity",
+                          "Protein S activity",
+                          "Factor V Leiden (FV G1691A)",
+                          "Prothrombin G20210A mutation",
+                          "Consider additional genetic testing if clinically indicated"
+                        ]
+                      },
+                      "yes": {
+                        "type": "action",
+                        "id": "cancer_on_anticoag_thrombophilia_strategy",
+                        "recommendation": "In cancer patients on anticoagulation for VTE, inherited thrombophilia testing is rarely needed. If testing is considered for specific scenarios (e.g., planning anticoagulation duration in low‑intermediate thrombosis risk cancer with strong family history), use these principles:",
+                        "principles": [
+                          "Wait until patient is stable, at least 3 months post‑VTE diagnosis.",
+                          "If possible, hold warfarin ≥2 weeks, DOAC ≥2 days, or heparin/LMWH ≥24–48 h before testing functional assays.",
+                          "Genetic tests (Factor V Leiden, Prothrombin G20210A) can be done regardless of anticoagulation.",
+                          "Functional assays (Protein C/S, antithrombin, lupus anticoagulant) should be interpreted with caution in cancer and may be affected by anticoagulants.",
+                          "Thrombophilia results should not routinely alter anticoagulation duration in active cancer; decisions primarily based on cancer status and bleeding risk."
+                        ],
+                        "tests_if_essential": [
+                          "Factor V Leiden (FV G1691A)",
+                          "Prothrombin G20210A mutation",
+                          "Consider additional genetic testing if clinically indicated"
+                        ],
+                        "cautions": [
+                          "Avoid testing during acute thrombotic event.",
+                          "Cancer itself can alter Protein C/S, antithrombin, and lupus anticoagulant assays.",
+                          "Repeat abnormal or borderline results: at least 2 abnormal results before final diagnosis.",
+                          "Thrombophilia results alone should not determine duration of anticoagulation in cancer patients."
+                        ]
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+};
