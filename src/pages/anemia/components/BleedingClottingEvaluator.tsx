@@ -626,6 +626,104 @@ function RecommendationCard({ rec }: { rec: Recommendation }) {
   );
 }
 
+/* ============================ DIC Score Calculator ============================ */
+
+function DicScoreCalculator() {
+  const [platelets, setPlatelets] = useState<"" | ">100" | "50-100" | "<50">("");
+  const [ddimer, setDdimer] = useState<"" | "normal" | "moderate" | "strong">("");
+  const [pt, setPt] = useState<"" | "<3" | "3-6" | ">6">("");
+  const [fibrinogen, setFibrinogen] = useState<"" | ">1" | "<1">("");
+
+  const score = useMemo(() => {
+    let s = 0;
+    if (platelets === "50-100") s += 1;
+    else if (platelets === "<50") s += 2;
+    if (ddimer === "moderate") s += 2;
+    else if (ddimer === "strong") s += 3;
+    if (pt === "3-6") s += 1;
+    else if (pt === ">6") s += 2;
+    if (fibrinogen === "<1") s += 1;
+    return s;
+  }, [platelets, ddimer, pt, fibrinogen]);
+
+  const hasAny = platelets !== "" || ddimer !== "" || pt !== "" || fibrinogen !== "";
+
+  const resultColor = score >= 5 ? "text-rose-400" : score >= 3 ? "text-amber-400" : "text-emerald-400";
+  const resultBg = score >= 5 ? "bg-rose-500/10 border-rose-500/30" : score >= 3 ? "bg-amber-500/10 border-amber-500/30" : "bg-emerald-500/10 border-emerald-500/30";
+
+  const selectClass = "w-full rounded-md border border-border bg-muted px-2 py-1.5 text-xs text-foreground focus:outline-none focus:ring-1 focus:ring-primary";
+
+  return (
+    <div className="rounded-lg border border-amber-500/30 bg-amber-500/5 p-3">
+      <h4 className="text-xs font-semibold text-amber-300 mb-3 flex items-center gap-1.5">
+        <ClipboardList className="h-3.5 w-3.5" />
+        ISTH DIC Score — Calculator
+      </h4>
+      <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 text-xs">
+        {/* Platelets */}
+        <div>
+          <label className="block text-muted-foreground mb-1">Platelets (×10³/μL)</label>
+          <select value={platelets} onChange={e => setPlatelets(e.target.value as typeof platelets)} className={selectClass}>
+            <option value="">Select...</option>
+            <option value=">100">&gt;100 (0 pts)</option>
+            <option value="50-100">50–100 (1 pt)</option>
+            <option value="<50">&lt;50 (2 pts)</option>
+          </select>
+        </div>
+        {/* D-dimer */}
+        <div>
+          <label className="block text-muted-foreground mb-1">D-dimer elevation</label>
+          <select value={ddimer} onChange={e => setDdimer(e.target.value as typeof ddimer)} className={selectClass}>
+            <option value="">Select...</option>
+            <option value="normal">None (0 pts)</option>
+            <option value="moderate">Moderate (2 pts)</option>
+            <option value="strong">Strong (3 pts)</option>
+          </select>
+        </div>
+        {/* PT prolonged */}
+        <div>
+          <label className="block text-muted-foreground mb-1">PT prolonged (s)</label>
+          <select value={pt} onChange={e => setPt(e.target.value as typeof pt)} className={selectClass}>
+            <option value="">Select...</option>
+            <option value="<3">&lt;3 (0 pts)</option>
+            <option value="3-6">3–6 (1 pt)</option>
+            <option value=">6">&gt;6 (2 pts)</option>
+          </select>
+        </div>
+        {/* Fibrinogen */}
+        <div>
+          <label className="block text-muted-foreground mb-1">Fibrinogen (g/L)</label>
+          <select value={fibrinogen} onChange={e => setFibrinogen(e.target.value as typeof fibrinogen)} className={selectClass}>
+            <option value="">Select...</option>
+            <option value=">1">&gt;1 (0 pts)</option>
+            <option value="<1">&lt;1 (1 pt)</option>
+          </select>
+        </div>
+      </div>
+
+      {hasAny && (
+        <div className={`mt-3 rounded-md border px-3 py-2 text-xs font-medium ${resultBg}`}>
+          <span className="text-muted-foreground">Total ISTH DIC Score: </span>
+          <span className={`text-base font-bold ${resultColor}`}>{score}</span>
+          <span className="text-muted-foreground"> / 8</span>
+          <span className="ml-2">
+            {score >= 5
+              ? <span className="text-rose-400 font-semibold">→ Overt DIC (ISTH diagnostic)</span>
+              : score >= 3
+                ? <span className="text-amber-400 font-semibold">→ Suggestive — repeat in 1–2 d or correlate clinically</span>
+                : <span className="text-emerald-400 font-semibold">→ Unlikely DIC</span>
+            }
+          </span>
+        </div>
+      )}
+
+      <p className="text-[10px] text-muted-foreground mt-2">
+        ISTH overt DIC diagnostic criteria (Taylor et al. 2001, Thromb Haemost). Score ≥5 = overt DIC; repeat scoring daily.
+      </p>
+    </div>
+  );
+}
+
 /* ================================ ROOT ================================== */
 
 export default function BleedingClottingEvaluator() {
@@ -750,9 +848,9 @@ export default function BleedingClottingEvaluator() {
               </div>
             </div>
 
-            {/* ISTH DIC Score */}
+            {/* ISTH DIC Score — Static Reference */}
             <div className="rounded-lg border border-amber-500/30 bg-amber-500/5 p-3">
-              <h4 className="text-xs font-semibold text-amber-300 mb-2">ISTH DIC Score</h4>
+              <h4 className="text-xs font-semibold text-amber-300 mb-2">ISTH DIC Score — Reference</h4>
               <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 text-xs">
                 <div className="bg-muted rounded-md px-2 py-1.5">
                   <span className="block text-muted-foreground">Platelets</span>
@@ -773,6 +871,9 @@ export default function BleedingClottingEvaluator() {
               </div>
               <p className="text-xs text-amber-400 mt-2 font-medium">Score ≥5 → overt DIC (ISTH diagnostic)</p>
             </div>
+
+            {/* Interactive ISTH DIC Score Calculator */}
+            <DicScoreCalculator />
 
             {/* Pearl */}
             <div className="rounded-lg border border-amber-500/30 bg-warning/5 px-3 py-2 flex items-start gap-2">
