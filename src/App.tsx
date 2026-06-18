@@ -111,6 +111,9 @@ import VitaminD from "@/pages/VitaminD";
 // PCOS
 import PCOS from "@/pages/PCOS";
 
+// Women's Health
+import WomenHealth from "@/pages/WomenHealth";
+
 // Infections
 import Infections from "@/pages/Infections";
 
@@ -252,6 +255,7 @@ const App = () => (
           <Route path="/fatigue" element={<><TabNavigation /><Fatigue /></>} />
           <Route path="/vitamin-d" element={<><TabNavigation /><VitaminD /></>} />
           <Route path="/pcos" element={<><TabNavigation /><PCOS /></>} />
+          <Route path="/women-health" element={<><TabNavigation /><WomenHealth /></>} />
           <Route path="/infections" element={<><TabNavigation /><Infections /></>} />
           <Route path="/pep" element={<><TabNavigation /><PEP /></>} />
           <Route path="/electrolytes" element={<><TabNavigation /><Electrolytes /></>} />

@@ -189,6 +189,11 @@ const miscItems: NavItem[] = [
   { path: "/pcos",                   label: "PCOS",        icon: "🩺", active: "bg-rose-500/10 text-rose-400 border-rose-500/30" },
 ];
 
+const womenHealthItems: NavItem[] = [
+  { path: "/women-health?tab=pmos",  label: "PMOS / PCOS", icon: "🩺", active: "bg-rose-500/10 text-rose-400 border-rose-500/30" },
+  { path: "/women-health?tab=hrt",  label: "HRT Algorithm", icon: "❤️", active: "bg-pink-500/10 text-pink-400 border-pink-500/30" },
+];
+
 export function TabNavigation() {
   const location = useLocation();
   const currentPath = location.pathname;
@@ -456,6 +461,30 @@ export function TabNavigation() {
                 {showBloodSubs && <BloodSubNav />}
                 {showHtnSubs && <HtnSubNav />}
                 {showElectrolyteSubs && <ElectrolyteSubNav />}
+              </li>
+            );
+          })}
+          {/* Women's Health section */}
+          <SectionLabel label="Women's Health" collapsed={collapsed} />
+          {womenHealthItems.map((item) => {
+            const isActive = currentPath.startsWith("/women-health") && currentPath === item.path;
+            return (
+              <li key={item.path}>
+                <Link
+                  to={item.path}
+                  title={item.label}
+                  className={cn(
+                    "flex items-center gap-2 px-2 py-2 rounded-md text-sm font-medium transition-all border",
+                    collapsed && "justify-center",
+                    isActive
+                      ? item.active
+                      : "border-transparent text-muted-foreground hover:bg-muted hover:text-foreground"
+                  )}
+                  aria-current={isActive ? "page" : undefined}
+                >
+                  <span className="text-base leading-none">{item.icon}</span>
+                  {!collapsed && <span className="truncate">{item.label}</span>}
+                </Link>
               </li>
             );
           })}
