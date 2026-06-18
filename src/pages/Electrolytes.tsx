@@ -860,7 +860,7 @@ export default function Electrolytes() {
             </h2>
             <Badge
               variant="outline"
-              className="text-xs px-3 py-1 border-primary/30 text-primary bg-primary/5"
+              className="text-xs px-3 py-1 border-primary/30 text-foreground bg-primary/5"
             >
               {ELECTROLYTE_LABELS[electrolyte]} · {titleCase(severity)}
             </Badge>
