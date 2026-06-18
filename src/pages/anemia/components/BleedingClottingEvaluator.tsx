@@ -1125,6 +1125,32 @@ function ThrombosisAlgorithm() {
             </SectionCard>
           )}
 
+          {node.dic_features && node.dic_features.length > 0 && (
+            <SectionCard title="DIC Features" icon={<Droplets className="h-4 w-4" />} tone="rose" defaultOpen>
+              <ul className="space-y-1 text-sm text-foreground">
+                {node.dic_features.map((f, i) => (
+                  <li key={i} className="flex items-start gap-2">
+                    <span className="text-rose-400 mt-0.5">•</span>
+                    <span>{f.text}</span>
+                  </li>
+                ))}
+              </ul>
+            </SectionCard>
+          )}
+
+          {node.vte_thrombophilia_features && node.vte_thrombophilia_features.length > 0 && (
+            <SectionCard title="VTE/Thrombophilia Features" icon={<Activity className="h-4 w-4" />} tone="sky" defaultOpen>
+              <ul className="space-y-1 text-sm text-foreground">
+                {node.vte_thrombophilia_features.map((f, i) => (
+                  <li key={i} className="flex items-start gap-2">
+                    <span className="text-sky-400 mt-0.5">•</span>
+                    <span>{f.text}</span>
+                  </li>
+                ))}
+              </ul>
+            </SectionCard>
+          )}
+
           {path.length > 0 && (
             <button
               onClick={handleBack}

@@ -12,6 +12,8 @@ export interface AlgorithmNode {
   principles?: string[];
   tests_if_essential?: string[];
   screening_tests?: string[];
+  dic_features?: Array<{ id: string; text: string }>;
+  vte_thrombophilia_features?: Array<{ id: string; text: string }>;
 }
 
 export const THROMBOSIS_ALGORITHM: AlgorithmNode = {
@@ -399,6 +401,21 @@ export const THROMBOSIS_ALGORITHM: AlgorithmNode = {
                         recommendation: "Serial monitoring essential to track progression or resolution.",
                         tests: ["CBC", "PT/aPTT", "Fibrinogen", "FDPs/D-dimer"],
                         frequency: "Serial monitoring essential to track progression or resolution"
+                      },
+                      discriminating_dic_from_vte: {
+                        type: "action",
+                        id: "discriminating_dic_from_vte",
+                        recommendation: "Key differences between DIC and VTE/thrombophilia to avoid misdiagnosis.",
+                        dic_features: [
+                          { id: "bleeding_predominant", text: "DIC typically presents with bleeding + microthrombi‑induced organ dysfunction, not isolated VTE." },
+                          { id: "multisystem_labs", text: "DIC shows multisystem coagulation abnormalities: low platelets, prolonged PT/aPTT, low fibrinogen, elevated D‑dimer/FDP." },
+                          { id: "underlying_acute", text: "DIC usually has acute underlying condition (sepsis, trauma, obstetric hemorrhage, malignancy)." }
+                        ],
+                        vte_thrombophilia_features: [
+                          { id: "isolated_vte", text: "VTE presents as isolated DVT/PE without multisystem coagulation abnormalities." },
+                          { id: "normal_coags", text: "In VTE, PT/aPTT, fibrinogen, and platelet count are typically normal." },
+                          { id: "chronic_risk", text: "VTE/thrombophilia usually involves chronic/genetic risk factors (Factor V Leiden, prothrombin mutation, antiphospholipid syndrome), not acute triggers." }
+                        ]
                       }
                     }
                   }
