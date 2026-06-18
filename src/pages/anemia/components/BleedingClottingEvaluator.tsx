@@ -27,7 +27,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 
-type Mode = "" | "bleeding" | "clotting";
+type Mode = "" | "bleeding" | "clotting" | "algorithm";
 
 /* ============================ BLEEDING WIZARD ============================ */
 
@@ -725,6 +725,236 @@ function DicScoreCalculator() {
   );
 }
 
+/* ============================ BLEEDING DISORDERS ALGORITHM ============================ */
+
+const ALGORITHM_TREE = {
+  "algorithm_name": "bleeding_disorders_basic_screen",
+  "version": "1.0",
+  "root": {
+    "id": "start",
+    "type": "decision",
+    "question": "Is there a clinically significant bleeding history (abnormal BAT score or convincing history)?",
+    "field": "bleeding_history_abnormal",
+    "options": {
+      "no": {
+        "type": "action",
+        "id": "reassure_monitor",
+        "recommendation": "No strong evidence of a bleeding disorder. Consider alternative diagnoses, repeat assessment if clinical picture changes."
+      },
+      "yes": {
+        "type": "decision",
+        "id": "initial_labs",
+        "question": "Initial labs: CBC with platelet count, PT/INR, aPTT, fibrinogen (+/- thrombin time) available?",
+        "field": "basic_coag_labs_available",
+        "options": {
+          "no": {
+            "type": "action",
+            "id": "order_labs",
+            "recommendation": "Order CBC with platelet count, PT/INR, aPTT, fibrinogen (+/- thrombin time) before further classification."
+          },
+          "yes": {
+            "type": "decision",
+            "id": "platelet_count_branch",
+            "question": "What is the platelet count?",
+            "field": "platelet_category",
+            "options": {
+              "low": {
+                "type": "action",
+                "id": "thrombocytopenia_pathway",
+                "recommendation": "Suspected thrombocytopenia-related bleeding. Evaluate for immune thrombocytopenia, marrow failure/infiltration, drug- or infection-related causes, hypersplenism; review smear."
+              },
+              "normal_or_high": {
+                "type": "decision",
+                "id": "pt_aptt_pattern",
+                "question": "Pattern of PT and aPTT results?",
+                "field": "pt_aptt_pattern",
+                "options": {
+                  "both_normal": {
+                    "type": "decision",
+                    "id": "primary_hemostasis_vs_vwf",
+                    "question": "Is the bleeding predominantly mucocutaneous (epistaxis, gum bleeding, menorrhagia, easy bruising, petechiae)?",
+                    "field": "mucocutaneous_bleeding",
+                    "options": {
+                      "no": {
+                        "type": "action",
+                        "id": "consider_nonhematologic",
+                        "recommendation": "Normal PT/aPTT and non-mucocutaneous pattern. Consider local/anatomical causes, vascular/connective tissue disorders, medications, or hypermobility syndromes; hematology referral if doubt persists."
+                      },
+                      "yes": {
+                        "type": "action",
+                        "id": "vwd_or_platelet_function",
+                        "recommendation": "Suspect von Willebrand disease or qualitative platelet function defect. Order VWF antigen, VWF activity, FVIII, and platelet function testing; refer to hematology."
+                      }
+                    }
+                  },
+                  "isolated_prolonged_aptt": {
+                    "type": "action",
+                    "id": "intrinsic_pathway_defect",
+                    "recommendation": "Suspect intrinsic pathway factor deficiency (e.g., VIII, IX, XI) or inhibitor. Perform mixing study; if corrects, assay factors; if not, evaluate for inhibitor (e.g., acquired hemophilia, lupus anticoagulant) with urgent hematology input if bleeding significant."
+                  },
+                  "isolated_prolonged_pt": {
+                    "type": "action",
+                    "id": "extrinsic_or_vit_k",
+                    "recommendation": "Isolated prolonged PT suggests factor VII deficiency or early vitamin K deficiency/warfarin effect, or liver disease. Review medications, nutrition, liver function, and consider factor assays."
+                  },
+                  "prolonged_pt_and_aptt": {
+                    "type": "decision",
+                    "id": "global_defect_branch",
+                    "question": "Is fibrinogen low or thrombin time prolonged?",
+                    "field": "fibrinogen_or_tt_abnormal",
+                    "options": {
+                      "yes": {
+                        "type": "action",
+                        "id": "fibrinogen_or_disseminated",
+                        "recommendation": "Suspect disseminated intravascular coagulation, advanced liver disease, or congenital/acquired hypofibrinogenemia/dysfibrinogenemia. Check D-dimer, liver function, and consult hematology urgently if clinically unstable."
+                      },
+                      "no": {
+                        "type": "action",
+                        "id": "multiple_factor_deficiency",
+                        "recommendation": "Prolonged PT and aPTT with normal fibrinogen suggests multiple factor deficiencies (e.g., severe vitamin K deficiency, advanced liver disease, massive transfusion). Evaluate liver function, vitamin K status, and consider factor assays; involve hematology."
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+};
+
+type AlgorithmNode = {
+  id: string;
+  type: "decision" | "action";
+  question?: string;
+  field?: string;
+  options?: Record<string, AlgorithmNode>;
+  recommendation?: string;
+};
+
+function BleedingAlgorithm() {
+  const [path, setPath] = useState<string[]>([]);
+  const [currentNode, setCurrentNode] = useState<AlgorithmNode>(ALGORITHM_TREE.root);
+
+  const handleChoice = (key: string, child: AlgorithmNode) => {
+    setPath((prev) => [...prev, key]);
+    setCurrentNode(child);
+  };
+
+  const handleReset = () => {
+    setPath([]);
+    setCurrentNode(ALGORITHM_TREE.root);
+  };
+
+  const handleBack = () => {
+    if (path.length === 0) return;
+    const newPath = path.slice(0, -1);
+    let node: AlgorithmNode = ALGORITHM_TREE.root;
+    for (const step of newPath) {
+      node = node.options![step];
+    }
+    setPath(newPath);
+    setCurrentNode(node);
+  };
+
+  return (
+    <div className="space-y-4">
+      <div className="flex items-center justify-between gap-2">
+        <h2 className="font-display text-base font-bold text-foreground">Bleeding Disorders — Basic Screen Algorithm</h2>
+        <div className="flex gap-2">
+          <button
+            onClick={handleReset}
+            className="flex items-center gap-1 px-3 py-1.5 rounded-md text-xs font-medium bg-secondary text-secondary-foreground hover:bg-secondary/80"
+          >
+            <RotateCcw className="h-3 w-3" /> Reset
+          </button>
+          <button
+            onClick={() => setMode("")}
+            className="flex items-center gap-1 px-3 py-1.5 rounded-md text-xs font-medium bg-secondary text-secondary-foreground hover:bg-secondary/80"
+          >
+            ← Change pathway
+          </button>
+        </div>
+      </div>
+
+      {/* Breadcrumb */}
+      {path.length > 0 && (
+        <div className="flex flex-wrap items-center gap-1 text-xs text-muted-foreground">
+          <button onClick={handleReset} className="hover:text-foreground transition-colors">Start</button>
+          {path.map((step, i) => (
+            <span key={i} className="flex items-center gap-1">
+              <ArrowRight className="h-3 w-3" />
+              <button
+                onClick={() => {
+                  const newPath = path.slice(0, i + 1);
+                  let node: AlgorithmNode = ALGORITHM_TREE.root;
+                  for (const s of newPath) {
+                    node = node.options![s];
+                  }
+                  setPath(newPath);
+                  setCurrentNode(node);
+                }}
+                className="hover:text-foreground transition-colors"
+              >
+                {step.replace(/_/g, " ")}
+              </button>
+            </span>
+          ))}
+        </div>
+      )}
+
+      {currentNode.type === "decision" && currentNode.options ? (
+        <SectionCard
+          title={currentNode.question || ""}
+          icon={<Stethoscope className="h-4 w-4" />}
+          tone="primary"
+          defaultOpen
+        >
+          <div className="grid gap-2 sm:grid-cols-2">
+            {Object.entries(currentNode.options).map(([key, child]) => (
+              <button
+                key={key}
+                onClick={() => handleChoice(key, child)}
+                className="text-left rounded-md border border-border bg-card hover:bg-muted/30 p-3 transition-colors"
+              >
+                <div className="text-sm font-semibold text-foreground">
+                  {key === "yes" ? "✅ Yes" : key === "no" ? "❌ No" : key === "low" ? "🔻 Low (< 150 K)" : key === "normal_or_high" ? "✅ Normal or high" : key === "both_normal" ? "✅ Both normal" : key === "isolated_prolonged_aptt" ? "⏱ Isolated prolonged aPTT" : key === "isolated_prolonged_pt" ? "⏱ Isolated prolonged PT" : key === "prolonged_pt_and_aptt" ? "⏱ Both prolonged" : key === "mucocutaneous_yes" || key === "yes_mucocutaneous" ? "✅ Yes — mucocutaneous" : key === "mucocutaneous_no" ? "❌ No — deep/mixed" : key.replace(/_/g, " ")}
+                </div>
+              </button>
+            ))}
+          </div>
+        </SectionCard>
+      ) : (
+        <SectionCard
+          title="Recommendation"
+          icon={<CheckCircle2 className="h-4 w-4" />}
+          tone="emerald"
+          defaultOpen
+        >
+          <div className="rounded-md border border-emerald-500/30 bg-emerald-500/5 px-4 py-3 text-sm text-foreground">
+            {currentNode.recommendation}
+          </div>
+          {path.length > 0 && (
+            <button
+              onClick={handleBack}
+              className="mt-3 flex items-center gap-1 text-xs text-muted-foreground hover:text-foreground transition-colors"
+            >
+              ← Back to previous question
+            </button>
+          )}
+        </SectionCard>
+      )}
+
+      <div className="flex items-start gap-2 rounded-md border border-amber-500/30 bg-warning/100/5 px-3 py-2 text-xs text-amber-700 dark:text-warning">
+        <AlertTriangle className="h-3.5 w-3.5 mt-0.5 flex-shrink-0" />
+        <span>Decision-support only. Confirm all recommendations with current guidelines and clinical context.</span>
+      </div>
+    </div>
+  );
+}
+
 /* ================================ ROOT ================================== */
 
 export default function BleedingClottingEvaluator() {
@@ -760,6 +990,18 @@ export default function BleedingClottingEvaluator() {
             <p className="text-xs text-muted-foreground">Patient has thrombosis — work through provoked vs unprovoked → site → risk score → targeted panel.</p>
           </button>
         </div>
+
+        {/* Algorithm pathway card */}
+        <button
+          onClick={() => setMode("algorithm")}
+          className="w-full text-left rounded-lg border border-violet-500/30 bg-violet-500/5 hover:bg-violet-500/10 p-4 transition-colors"
+        >
+          <div className="flex items-center gap-2 mb-1">
+            <ClipboardList className="h-5 w-5 text-violet-400" />
+            <span className="font-semibold text-foreground">Bleeding Disorders — Basic Screen Algorithm</span>
+          </div>
+          <p className="text-xs text-muted-foreground">Structured decision tree: bleeding history → labs → PT/aPTT pattern → diagnosis. Based on ISTH/BAT screening approach.</p>
+        </button>
 
         {/* DIC Reference Card */}
         <button
@@ -908,5 +1150,7 @@ export default function BleedingClottingEvaluator() {
 
   return mode === "bleeding"
     ? <BleedingWizard onBack={() => setMode("")} />
-    : <ClottingWizard onBack={() => setMode("")} />;
+    : mode === "clotting"
+    ? <ClottingWizard onBack={() => setMode("")} />
+    : <BleedingAlgorithm />;
 }
