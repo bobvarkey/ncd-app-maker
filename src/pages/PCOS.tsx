@@ -1,6 +1,6 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Sun, Stethoscope, FlaskConical, Activity, Scan, ClipboardList } from "lucide-react";
+import { Sun, Stethoscope, FlaskConical, Activity, Scan, ClipboardList, BookOpen, AlertTriangle, GitBranch, Users, FileText } from "lucide-react";
 import ZoomableImage from "@/components/ZoomableImage";
 
 export default function PCOS() {
@@ -9,11 +9,11 @@ export default function PCOS() {
       {/* Header */}
       <div className="text-center space-y-3">
         <Badge variant="outline" className="text-sm px-4 py-1 border-rose-400/40 text-rose-400">
-          PCOS
+          PMOS / PCOS
         </Badge>
-        <h1 className="text-3xl font-bold tracking-tight">Polycystic Ovary Syndrome (PCOS) Evaluation</h1>
+        <h1 className="text-3xl font-bold tracking-tight">Polyendocrine Metabolic Ovarian Syndrome (PMOS) — formerly PCOS</h1>
         <p className="text-muted-foreground max-w-2xl mx-auto">
-          Diagnosis, laboratory evaluation, metabolic assessment, and imaging for PCOS.
+          Diagnosis, laboratory evaluation, metabolic assessment, and imaging for PMOS (previously PCOS).
         </p>
       </div>
 
@@ -396,6 +396,153 @@ export default function PCOS() {
         </CardContent>
       </Card>
 
+      {/* 2023 International Evidence-based PCOS/PMOS Guideline */}
+      <Card className="border-border/60">
+        <CardHeader className="pb-3">
+          <CardTitle className="text-lg flex items-center gap-2">
+            <BookOpen className="h-5 w-5 text-rose-400" />
+            2023 International Evidence-based PCOS/PMOS Guideline
+          </CardTitle>
+        </CardHeader>
+        <CardContent className="space-y-6">
+          <p className="text-sm text-muted-foreground">
+            The safest anchor for a diagnostic calculator is the{" "}
+            <strong>2023 International Evidence‑based PCOS Guideline</strong>{" "}
+            (which remains the basis while PMOS terminology is being rolled out).{" "}
+            <a href="https://pubmed.ncbi.nlm.nih.gov/37983875/" target="_blank" rel="noopener noreferrer" className="text-rose-400 hover:underline">
+              PubMed
+            </a>
+          </p>
+
+          {/* 1. Core Adult Diagnostic Criteria */}
+          <div>
+            <h3 className="text-sm font-semibold mb-2 flex items-center gap-1.5">
+              <ClipboardList className="h-4 w-4 text-rose-400" />
+              1. Core Adult Diagnostic Criteria (Rotterdam-based)
+            </h3>
+            <p className="text-sm text-muted-foreground mb-2">
+              The 2023 guideline explicitly re‑endorses Rotterdam, but with evidence‑based refinements.{" "}
+              <a href="https://www.eshre.eu/-/media/sitecore-files/Accreditation/Nurses/reading-list/Documents/PCOS_dey256.pdf" target="_blank" rel="noopener noreferrer" className="text-rose-400 hover:underline">
+                ESHRE
+              </a>
+            </p>
+            <p className="text-sm text-muted-foreground mb-2">
+              Require <strong>at least 2 of 3</strong>:
+            </p>
+            <ol className="list-decimal list-inside space-y-2 text-sm text-muted-foreground ml-2">
+              <li>
+                <strong className="text-foreground">Oligo‑ or anovulation</strong> — cycle &gt;35 days, &lt;8 cycles/year, or amenorrhea.{" "}
+                <a href="https://academic.oup.com/humrep/article/38/9/1655/7241786" target="_blank" rel="noopener noreferrer" className="text-rose-400 hover:underline">Hum Reprod</a>
+              </li>
+              <li>
+                <strong className="text-foreground">Clinical and/or biochemical hyperandrogenism</strong> — hirsutism scores or elevated total/free testosterone, using local lab cut‑offs.{" "}
+                <a href="https://academic.oup.com/humrep/article/38/9/1655/7241786" target="_blank" rel="noopener noreferrer" className="text-rose-400 hover:underline">Hum Reprod</a>
+              </li>
+              <li>
+                <strong className="text-foreground">Polycystic ovarian morphology (PCOM)</strong> on ultrasound <strong>or</strong> elevated AMH.{" "}
+                <a href="https://obgyn.onlinelibrary.wiley.com/doi/10.1111/aogs.14725" target="_blank" rel="noopener noreferrer" className="text-rose-400 hover:underline">Acta Obstet Gynecol Scand</a>
+              </li>
+            </ol>
+            <div className="mt-2 p-3 rounded-lg bg-amber-500/5 border border-amber-500/20">
+              <p className="text-xs text-muted-foreground">
+                <strong className="text-amber-400">Mandatory exclusion:</strong> After confirming 2 of 3, prompt exclusion of other causes — thyroid dysfunction, hyperprolactinemia, non‑classic CAH, androgen‑secreting tumors, Cushing's, etc.{" "}
+                <a href="https://www.eshre.eu/-/media/sitecore-files/Accreditation/Nurses/reading-list/Documents/PCOS_dey256.pdf" target="_blank" rel="noopener noreferrer" className="text-rose-400 hover:underline">ESHRE</a>
+              </p>
+            </div>
+            <p className="text-xs text-muted-foreground mt-2">
+              A "PMOS/PCOS likelihood" output can simply map these combinations plus exclusion workup.
+            </p>
+          </div>
+
+          {/* 2. Updated PCOM / AMH Handling */}
+          <div>
+            <h3 className="text-sm font-semibold mb-2 flex items-center gap-1.5">
+              <GitBranch className="h-4 w-4 text-rose-400" />
+              2. Updated PCOM / AMH Handling
+            </h3>
+            <p className="text-sm text-muted-foreground mb-2">
+              The 2023 update's big practical change: PCOM can be defined by <strong>either ultrasound OR AMH</strong>:{" "}
+              <a href="https://pubmed.ncbi.nlm.nih.gov/37983875/" target="_blank" rel="noopener noreferrer" className="text-rose-400 hover:underline">PubMed</a>
+            </p>
+            <ul className="list-disc list-inside space-y-1.5 text-sm text-muted-foreground ml-2">
+              <li>
+                <strong className="text-foreground">Ultrasound:</strong> transvaginal preferred; use updated follicle number per ovary (FNPO) or ovarian volume thresholds.{" "}
+                <a href="https://www.rcog.org.uk/guidance/browse-all-guidance/other-guidelines-and-reports/international-evidence-based-guideline-on-polycystic-ovary-syndrome/" target="_blank" rel="noopener noreferrer" className="text-rose-400 hover:underline">RCOG</a>
+              </li>
+              <li>
+                <strong className="text-foreground">AMH:</strong> an elevated AMH can substitute for PCOM when using validated assay‑ and age‑specific cut‑offs; the guideline stresses using <strong>platform‑specific thresholds</strong>, not a single universal number.{" "}
+                <a href="https://pubmed.ncbi.nlm.nih.gov/37983875/" target="_blank" rel="noopener noreferrer" className="text-rose-400 hover:underline">PubMed</a>
+              </li>
+            </ul>
+            <div className="mt-2 p-3 rounded-lg bg-rose-500/5 border border-rose-500/20">
+              <p className="text-xs font-semibold text-rose-400 mb-1">Calculator Implementation</p>
+              <ul className="list-disc list-inside space-y-0.5 text-xs text-muted-foreground">
+                <li>A toggle for "Ultrasound available? yes/no"</li>
+                <li>If yes: ask FNPO and/or ovarian volume and compare to stored cut‑off tables</li>
+                <li>If no: ask for AMH value + assay/platform, then compare to stored reference ranges (or at least flag "elevated vs not elevated" based on user‑configured thresholds)</li>
+              </ul>
+            </div>
+          </div>
+
+          {/* 3. Adolescents vs Adults Logic */}
+          <div>
+            <h3 className="text-sm font-semibold mb-2 flex items-center gap-1.5">
+              <Users className="h-4 w-4 text-rose-400" />
+              3. Adolescents vs Adults Logic
+            </h3>
+            <p className="text-sm text-muted-foreground mb-2">
+              The 2023 recommendations are much stricter in adolescents to avoid over‑diagnosis:{" "}
+              <a href="https://www.slideshare.net/slideshow/2023-recommendations-for-adolescent-pcospptx/262678101" target="_blank" rel="noopener noreferrer" className="text-rose-400 hover:underline">Slideshare</a>
+            </p>
+            <p className="text-sm text-muted-foreground mb-2">
+              Adolescents should have <strong>both</strong>:
+            </p>
+            <ul className="list-disc list-inside space-y-1.5 text-sm text-muted-foreground ml-2">
+              <li>Persistent menstrual irregularity for the time since menarche (using age‑specific definitions)</li>
+              <li>Clear hyperandrogenism (clinical and/or biochemical)</li>
+            </ul>
+            <div className="mt-2 p-3 rounded-lg bg-amber-500/5 border border-amber-500/20">
+              <p className="text-xs text-muted-foreground">
+                <strong className="text-amber-400">PCOM/AMH should not be used as a diagnostic criterion in early adolescence</strong>, but can support risk stratification and follow‑up.{" "}
+                <a href="https://www.slideshare.net/slideshow/2023-recommendations-for-adolescent-pcospptx/262678101" target="_blank" rel="noopener noreferrer" className="text-rose-400 hover:underline">Slideshare</a>
+              </p>
+            </div>
+            <div className="mt-2 p-3 rounded-lg bg-rose-500/5 border border-rose-500/20">
+              <p className="text-xs font-semibold text-rose-400 mb-1">Calculator Implementation</p>
+              <ul className="list-disc list-inside space-y-0.5 text-xs text-muted-foreground">
+                <li>First branch on age and time since menarche</li>
+                <li>If adolescent: requires the two criteria above; uses ovarian morphology/AMH only as a "supportive / at‑risk phenotype" flag, not to make a definitive diagnosis</li>
+              </ul>
+            </div>
+          </div>
+
+          {/* 4. PMOS Terminology */}
+          <div>
+            <h3 className="text-sm font-semibold mb-2 flex items-center gap-1.5">
+              <FileText className="h-4 w-4 text-rose-400" />
+              4. PMOS Terminology and Upcoming Guidance
+            </h3>
+            <ul className="list-disc list-inside space-y-1.5 text-sm text-muted-foreground ml-2">
+              <li>
+                NICE now has a PMOS guideline in development (scope published, draft due July–Aug 2026, final Dec 2026), but no new diagnostic cut‑offs yet.{" "}
+                <a href="https://www.nice.org.uk/guidance/indevelopment/gid-ng10436" target="_blank" rel="noopener noreferrer" className="text-rose-400 hover:underline">NICE</a>
+              </li>
+              <li>
+                For the next couple of years, tools should follow the 2023 PCOS guideline structure and just surface the PMOS terminology as <strong>"PMOS (previously PCOS)"</strong> in the UI and outputs.{" "}
+                <a href="https://www.endocrinology.org/news/item/23445/polyendocrine-metabolic-ovarian-syndrome-(pmos)-is-the-new-name-for-pcos" target="_blank" rel="noopener noreferrer" className="text-rose-400 hover:underline">Endocrinology</a>
+              </li>
+            </ul>
+            <div className="mt-2 p-3 rounded-lg bg-rose-500/5 border border-rose-500/20">
+              <p className="text-xs font-semibold text-rose-400 mb-1">Clean Output Pattern</p>
+              <ul className="list-disc list-inside space-y-0.5 text-xs text-muted-foreground">
+                <li>"Meets criteria for PMOS/PCOS (Rotterdam 2/3) – adult criteria."</li>
+                <li>"Adolescent at risk for PMOS/PCOS – full criteria not met; guideline recommends follow‑up and re‑evaluation."</li>
+              </ul>
+            </div>
+          </div>
+        </CardContent>
+      </Card>
+
       {/* PMOS Diagnostic Evaluation Image */}
       <Card className="border-border/60 overflow-hidden">
         <CardHeader className="pb-2">
@@ -415,7 +562,7 @@ export default function PCOS() {
 
       {/* Footer note */}
       <p className="text-xs text-muted-foreground/60 italic border-t border-border/40 pt-4">
-        This evaluation aligns with the latest recommendations from the International PCOS Network and the Endocrine Society for diagnosis and metabolic risk assessment.
+        This evaluation aligns with the latest recommendations from the International PCOS Network and the Endocrine Society for diagnosis and metabolic risk assessment. PMOS (Polyendocrine Metabolic Ovarian Syndrome) is the new terminology replacing PCOS.
       </p>
     </div>
   );
