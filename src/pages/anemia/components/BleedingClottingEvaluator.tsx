@@ -17,6 +17,7 @@ import {
   Info,
 } from "lucide-react";
 import { SectionCard } from "@/components/ui/section-card";
+import ZoomableImage from "@/components/ZoomableImage";
 import {
   Table,
   TableBody,
@@ -871,6 +872,13 @@ export default function BleedingClottingEvaluator() {
               </div>
               <p className="text-xs text-amber-400 mt-2 font-medium">Score ≥5 → overt DIC (ISTH diagnostic)</p>
             </div>
+
+            {/* ISTH DIC Score — Image */}
+            <ZoomableImage
+              src="/images/dic-isth-score.webp"
+              alt="ISTH DIC scoring criteria table"
+              className="rounded-lg border border-border"
+            />
 
             {/* Interactive ISTH DIC Score Calculator */}
             <DicScoreCalculator />
