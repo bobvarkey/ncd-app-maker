@@ -4,7 +4,7 @@ import {
   DialogContent,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { ZoomIn } from "lucide-react";
+import { ZoomIn, ZoomOut, Maximize } from "lucide-react";
 
 interface ZoomableImageProps {
   src: string;
@@ -24,9 +24,18 @@ export default function ZoomableImage({
   loading = "lazy",
 }: ZoomableImageProps) {
   const [open, setOpen] = useState(false);
+  const [zoom, setZoom] = useState(1);
+
+  const zoomLevels = [1, 2, 3];
+  const cycleZoom = () => {
+    setZoom((prev) => {
+      const idx = zoomLevels.indexOf(prev);
+      return zoomLevels[(idx + 1) % zoomLevels.length];
+    });
+  };
 
   return (
-    <Dialog open={open} onOpenChange={setOpen}>
+    <Dialog open={open} onOpenChange={(o) => { setOpen(o); if (!o) setZoom(1); }}>
       <DialogTrigger asChild>
         <button
           type="button"
@@ -52,11 +61,22 @@ export default function ZoomableImage({
           <img
             src={src}
             alt={alt}
-            className="max-w-full max-h-[85vh] object-contain rounded-md"
+            className="max-w-full max-h-[85vh] object-contain rounded-md transition-transform duration-200"
+            style={{ transform: `scale(${zoom})` }}
             draggable={false}
           />
         </div>
-        <p className="text-xs text-center text-muted-foreground mt-1">{alt}</p>
+        <div className="flex items-center justify-center gap-3 mt-1">
+          <button
+            type="button"
+            onClick={cycleZoom}
+            className="inline-flex items-center gap-1.5 px-3 py-1 rounded-md text-xs font-medium bg-muted hover:bg-muted/80 text-foreground transition-colors"
+          >
+            {zoom === 1 ? <ZoomIn className="h-3.5 w-3.5" /> : zoom === 3 ? <ZoomOut className="h-3.5 w-3.5" /> : <Maximize className="h-3.5 w-3.5" />}
+            {zoom}×
+          </button>
+          <p className="text-xs text-muted-foreground">{alt}</p>
+        </div>
       </DialogContent>
     </Dialog>
   );
