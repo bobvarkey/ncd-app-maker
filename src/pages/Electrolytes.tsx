@@ -936,7 +936,7 @@ export default function Electrolytes() {
               <textarea
                 readOnly
                 value={jsonOutput}
-                className="w-full bg-surface-2 text-foreground border border-border rounded-lg px-3 py-2 text-xs font-mono min-h-[260px] resize-y focus:outline-none"
+                className="w-full bg-surface-2 text-foreground border border-border rounded-lg px-3 py-2 text-xs font-mono min-h-[100px] resize-y focus:outline-none"
               />
             </CardContent>
           </Card>
