@@ -8,6 +8,7 @@ export interface AlgorithmNode {
   recommendation?: string;
   tests?: string[];
   cautions?: string[];
+  frequency?: string;
   principles?: string[];
   tests_if_essential?: string[];
   screening_tests?: string[];
@@ -391,6 +392,13 @@ export const THROMBOSIS_ALGORITHM: AlgorithmNode = {
                           "Use LMWH preferentially — avoid warfarin in acute DIC",
                           "Reassess daily as DIC can shift phenotype"
                         ]
+                      },
+                      monitoring: {
+                        type: "action",
+                        id: "monitoring",
+                        recommendation: "Serial monitoring essential to track progression or resolution.",
+                        tests: ["CBC", "PT/aPTT", "Fibrinogen", "FDPs/D-dimer"],
+                        frequency: "Serial monitoring essential to track progression or resolution"
                       }
                     }
                   }

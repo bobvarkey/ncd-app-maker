@@ -1067,6 +1067,12 @@ function ThrombosisAlgorithm() {
             </SectionCard>
           )}
 
+          {node.frequency && (
+            <SectionCard title="Frequency" icon={<Clock className="h-4 w-4" />} tone="emerald" defaultOpen>
+              <p className="text-sm text-foreground">{node.frequency}</p>
+            </SectionCard>
+          )}
+
           {node.screening_tests && node.screening_tests.length > 0 && (
             <SectionCard title="Screening Tests" icon={<Stethoscope className="h-4 w-4" />} tone="sky" defaultOpen>
               <ul className="space-y-1 text-sm text-foreground">
