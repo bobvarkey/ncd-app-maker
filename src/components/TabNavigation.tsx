@@ -172,6 +172,22 @@ const navItems: NavItem[] = [
   { path: "/electrolytes",          label: "Electrolyte Disturbances", icon: "⚡", active: "bg-cyan-500/10 text-cyan-400 border-cyan-500/30" },
 ];
 
+// Section separator helper
+function SectionLabel({ label, collapsed }: { label: string; collapsed: boolean }) {
+  if (collapsed) return null;
+  return (
+    <li className="px-2 pt-4 pb-1">
+      <span className="text-[10px] uppercase tracking-widest text-muted-foreground/50 font-semibold">
+        {label}
+      </span>
+    </li>
+  );
+}
+
+const miscItems: NavItem[] = [
+  { path: "/vitamin-d",              label: "Vitamin D",   icon: "☀️", active: "bg-amber-500/10 text-amber-400 border-amber-500/30" },
+];
+
 export function TabNavigation() {
   const location = useLocation();
   const currentPath = location.pathname;
@@ -439,6 +455,30 @@ export function TabNavigation() {
                 {showBloodSubs && <BloodSubNav />}
                 {showHtnSubs && <HtnSubNav />}
                 {showElectrolyteSubs && <ElectrolyteSubNav />}
+              </li>
+            );
+          })}
+          {/* Miscellaneous section */}
+          <SectionLabel label="Miscellaneous" collapsed={collapsed} />
+          {miscItems.map((item) => {
+            const isActive = currentPath === item.path;
+            return (
+              <li key={item.path}>
+                <Link
+                  to={item.path}
+                  title={item.label}
+                  className={cn(
+                    "flex items-center gap-2 px-2 py-2 rounded-md text-sm font-medium transition-all border",
+                    collapsed && "justify-center",
+                    isActive
+                      ? item.active
+                      : "border-transparent text-muted-foreground hover:bg-muted hover:text-foreground"
+                  )}
+                  aria-current={isActive ? "page" : undefined}
+                >
+                  <span className="text-base leading-none">{item.icon}</span>
+                  {!collapsed && <span className="truncate">{item.label}</span>}
+                </Link>
               </li>
             );
           })}

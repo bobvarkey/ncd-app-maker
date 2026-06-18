@@ -707,118 +707,138 @@ export default function UnifiedPrescriptionMiniApp() {
           </div>
         </details>
 
-                {domain === "diabetes" && (
-          <div className="space-y-3">
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-              <RangeOrExactField label="HbA1c" unit="%" fieldKey="a1c" value={inputs.a1c} onChange={(v) => set("a1c", v)} />
-              <RangeOrExactField label="FPG" unit="mg/dL" fieldKey="fpg" value={inputs.fpg} onChange={(v) => set("fpg", v)} />
-              <RangeOrExactField label="2-hr PPG" unit="mg/dL" fieldKey="ppg" value={inputs.ppg} onChange={(v) => set("ppg", v)} />
+        {/* Domain-specific fields — collapsed by default */}
+        {domain === "diabetes" && (
+          <details className="group rounded-lg border border-border/60 bg-muted/10">
+            <summary className="flex items-center gap-2 px-3 py-2 text-xs font-medium text-muted-foreground cursor-pointer hover:text-foreground transition select-none">
+              <Droplet className="h-3.5 w-3.5" />
+              Diabetes Inputs
+              <ChevronDown className="h-3 w-3 ml-auto transition-transform group-open:rotate-180" />
+            </summary>
+            <div className="px-3 pb-3 space-y-3">
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                <RangeOrExactField label="HbA1c" unit="%" fieldKey="a1c" value={inputs.a1c} onChange={(v) => set("a1c", v)} />
+                <RangeOrExactField label="FPG" unit="mg/dL" fieldKey="fpg" value={inputs.fpg} onChange={(v) => set("fpg", v)} />
+                <RangeOrExactField label="2-hr PPG" unit="mg/dL" fieldKey="ppg" value={inputs.ppg} onChange={(v) => set("ppg", v)} />
+              </div>
+              <div className="flex flex-wrap gap-2">
+                <Chip active={inputs.dmAscvd} onClick={() => set("dmAscvd", !inputs.dmAscvd)}>ASCVD</Chip>
+                <Chip active={inputs.dmHf} onClick={() => set("dmHf", !inputs.dmHf)}>Heart failure</Chip>
+                <Chip active={inputs.dmCkd} onClick={() => set("dmCkd", !inputs.dmCkd)}>CKD</Chip>
+              </div>
             </div>
-            <div className="flex flex-wrap gap-2">
-              <Chip active={inputs.dmAscvd} onClick={() => set("dmAscvd", !inputs.dmAscvd)}>ASCVD</Chip>
-              <Chip active={inputs.dmHf} onClick={() => set("dmHf", !inputs.dmHf)}>Heart failure</Chip>
-              <Chip active={inputs.dmCkd} onClick={() => set("dmCkd", !inputs.dmCkd)}>CKD</Chip>
-            </div>
-          </div>
+          </details>
         )}
 
         {domain === "hypertension" && (
-          <div className="space-y-3">
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-              <RangeOrExactField label="SBP" unit="mmHg" fieldKey="sbp" value={inputs.sbp} onChange={(v) => set("sbp", v)} />
-              <RangeOrExactField label="DBP" unit="mmHg" fieldKey="dbp" value={inputs.dbp} onChange={(v) => set("dbp", v)} />
+          <details className="group rounded-lg border border-border/60 bg-muted/10">
+            <summary className="flex items-center gap-2 px-3 py-2 text-xs font-medium text-muted-foreground cursor-pointer hover:text-foreground transition select-none">
+              <Activity className="h-3.5 w-3.5" />
+              Hypertension Inputs
+              <ChevronDown className="h-3 w-3 ml-auto transition-transform group-open:rotate-180" />
+            </summary>
+            <div className="px-3 pb-3 space-y-3">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                <RangeOrExactField label="SBP" unit="mmHg" fieldKey="sbp" value={inputs.sbp} onChange={(v) => set("sbp", v)} />
+                <RangeOrExactField label="DBP" unit="mmHg" fieldKey="dbp" value={inputs.dbp} onChange={(v) => set("dbp", v)} />
+              </div>
+              <div className="flex flex-wrap gap-2">
+                <Chip active={inputs.htnAscvd} onClick={() => set("htnAscvd", !inputs.htnAscvd)}>ASCVD</Chip>
+                <Chip active={inputs.htnDm} onClick={() => set("htnDm", !inputs.htnDm)}>Diabetes</Chip>
+                <Chip active={inputs.htnCkd} onClick={() => set("htnCkd", !inputs.htnCkd)}>CKD</Chip>
+              </div>
             </div>
-            <div className="flex flex-wrap gap-2">
-              <Chip active={inputs.htnAscvd} onClick={() => set("htnAscvd", !inputs.htnAscvd)}>ASCVD</Chip>
-              <Chip active={inputs.htnDm} onClick={() => set("htnDm", !inputs.htnDm)}>Diabetes</Chip>
-              <Chip active={inputs.htnCkd} onClick={() => set("htnCkd", !inputs.htnCkd)}>CKD</Chip>
-            </div>
-          </div>
+          </details>
         )}
 
         {domain === "lipids" && (
-          <div className="space-y-3">
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
-              <RangeOrExactField label="LDL-C" unit="mg/dL" fieldKey="ldl" value={inputs.ldl} onChange={(v) => set("ldl", v)} />
-              <RangeOrExactField label="HDL-C" unit="mg/dL" fieldKey="hdl" value={inputs.hdl} onChange={(v) => set("hdl", v)} />
-              <RangeOrExactField label="Triglycerides" unit="mg/dL" fieldKey="tg" value={inputs.tg} onChange={(v) => set("tg", v)} />
-              <RangeOrExactField label="hsCRP" unit="mg/L" fieldKey="hsCrp" value={inputs.hsCrp} onChange={(v) => set("hsCrp", v)} />
+          <details className="group rounded-lg border border-border/60 bg-muted/10">
+            <summary className="flex items-center gap-2 px-3 py-2 text-xs font-medium text-muted-foreground cursor-pointer hover:text-foreground transition select-none">
+              <Heart className="h-3.5 w-3.5" />
+              Lipids Inputs
+              <ChevronDown className="h-3 w-3 ml-auto transition-transform group-open:rotate-180" />
+            </summary>
+            <div className="px-3 pb-3 space-y-3">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
+                <RangeOrExactField label="LDL-C" unit="mg/dL" fieldKey="ldl" value={inputs.ldl} onChange={(v) => set("ldl", v)} />
+                <RangeOrExactField label="HDL-C" unit="mg/dL" fieldKey="hdl" value={inputs.hdl} onChange={(v) => set("hdl", v)} />
+                <RangeOrExactField label="Triglycerides" unit="mg/dL" fieldKey="tg" value={inputs.tg} onChange={(v) => set("tg", v)} />
+                <RangeOrExactField label="hsCRP" unit="mg/L" fieldKey="hsCrp" value={inputs.hsCrp} onChange={(v) => set("hsCrp", v)} />
+              </div>
+              <div className="flex flex-wrap gap-2">
+                <Chip active={inputs.lipAscvd} onClick={() => set("lipAscvd", !inputs.lipAscvd)}>Established ASCVD</Chip>
+                <Chip active={inputs.lipDm} onClick={() => set("lipDm", !inputs.lipDm)}>Diabetes</Chip>
+              </div>
             </div>
-            <div className="flex flex-wrap gap-2">
-              <Chip active={inputs.lipAscvd} onClick={() => set("lipAscvd", !inputs.lipAscvd)}>Established ASCVD</Chip>
-              <Chip active={inputs.lipDm} onClick={() => set("lipDm", !inputs.lipDm)}>Diabetes</Chip>
-            </div>
-          </div>
+          </details>
         )}
 
         {domain === "obesity" && (
-          <div className="space-y-3">
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-              <RangeOrExactField label="BMI" unit="kg/m²" fieldKey="bmi" value={inputs.bmi} onChange={(v) => set("bmi", v)} />
-              <RangeOrExactField label="Waist" unit="cm" fieldKey="waist" value={inputs.waist} onChange={(v) => set("waist", v)} />
+          <details className="group rounded-lg border border-border/60 bg-muted/10">
+            <summary className="flex items-center gap-2 px-3 py-2 text-xs font-medium text-muted-foreground cursor-pointer hover:text-foreground transition select-none">
+              <Scale className="h-3.5 w-3.5" />
+              Obesity Inputs
+              <ChevronDown className="h-3 w-3 ml-auto transition-transform group-open:rotate-180" />
+            </summary>
+            <div className="px-3 pb-3 space-y-3">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                <RangeOrExactField label="BMI" unit="kg/m²" fieldKey="bmi" value={inputs.bmi} onChange={(v) => set("bmi", v)} />
+                <RangeOrExactField label="Waist" unit="cm" fieldKey="waist" value={inputs.waist} onChange={(v) => set("waist", v)} />
+              </div>
+              <div className="flex flex-wrap gap-2">
+                <Chip active={inputs.obDm} onClick={() => set("obDm", !inputs.obDm)}>Diabetes</Chip>
+                <Chip active={inputs.obOsa} onClick={() => set("obOsa", !inputs.obOsa)}>OSA</Chip>
+                <Chip active={inputs.obNafld} onClick={() => set("obNafld", !inputs.obNafld)}>NAFLD / MASLD</Chip>
+              </div>
             </div>
-            <div className="flex flex-wrap gap-2">
-              <Chip active={inputs.obDm} onClick={() => set("obDm", !inputs.obDm)}>Diabetes</Chip>
-              <Chip active={inputs.obOsa} onClick={() => set("obOsa", !inputs.obOsa)}>OSA</Chip>
-              <Chip active={inputs.obNafld} onClick={() => set("obNafld", !inputs.obNafld)}>NAFLD / MASLD</Chip>
-            </div>
-          </div>
+          </details>
         )}
 
         {domain === "ckd" && (
-          <div className="space-y-3">
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-              <div className="space-y-1.5">
-                <Label className="text-xs text-muted-foreground">Serum Creatinine (mg/dL)</Label>
-                <Input
-                  type="number"
-                  step="0.01"
-                  min="0.1"
-                  max="30"
-                  placeholder="e.g. 1.2"
-                  value={inputs.creatinine}
-                  onChange={(e) => set("creatinine", e.target.value)}
-                />
-                <p className="text-[10px] text-muted-foreground">Auto-fills eGFR using CKD-EPI 2021 (needs age + sex).</p>
-              </div>
-              <RangeOrExactField label="eGFR" unit="mL/min/1.73m²" fieldKey="egfr" value={inputs.egfr} onChange={(v) => set("egfr", v)} />
-              <RangeOrExactField label="UACR" unit="mg/g" fieldKey="uacr" value={inputs.uacr} onChange={(v) => set("uacr", v)} />
-            </div>
-            {(() => {
-              const egfr = parseFloat(inputs.egfr);
-              const uacr = parseFloat(inputs.uacr);
-              if (isNaN(egfr) || egfr <= 0) return null;
-              let g = "G1", gLabel = "Normal/High";
-              if (egfr < 15) { g = "G5"; gLabel = "Kidney failure"; }
-              else if (egfr < 30) { g = "G4"; gLabel = "Severely decreased"; }
-              else if (egfr < 45) { g = "G3b"; gLabel = "Moderate–severe ↓"; }
-              else if (egfr < 60) { g = "G3a"; gLabel = "Mild–moderate ↓"; }
-              else if (egfr < 90) { g = "G2"; gLabel = "Mildly decreased"; }
-              let a = "—", aLabel = "albuminuria unknown";
-              if (!isNaN(uacr) && uacr >= 0) {
-                if (uacr > 300) { a = "A3"; aLabel = "Severely increased (>300)"; }
-                else if (uacr >= 30) { a = "A2"; aLabel = "Moderately increased (30–300)"; }
-                else { a = "A1"; aLabel = "Normal–mildly increased (<30)"; }
-              }
-              const risk =
-                (g === "G1" || g === "G2") && a === "A1" ? { label: "Low risk", cls: "bg-success/20 text-success border-success/30" }
-                : (g === "G1" && a === "A2") || (g === "G2" && a === "A2") || (g === "G3a" && a === "A1") ? { label: "Moderately ↑ risk", cls: "bg-warning/20 text-warning border-warning/30" }
-                : (g === "G1" && a === "A3") || (g === "G2" && a === "A3") || (g === "G3a" && a === "A2") || (g === "G3b" && a === "A1") ? { label: "High risk", cls: "bg-warning/30 text-warning border-warning/40" }
-                : { label: "Very high risk", cls: "bg-destructive/20 text-destructive border-destructive/30" };
-              return (
-                <div className="rounded-lg border border-border bg-card/60 p-3 flex flex-wrap items-center gap-2">
-                  <span className="text-xs text-muted-foreground">KDIGO classification:</span>
-                  <Badge className="bg-primary/15 text-primary border-primary/30">{g} / {a}</Badge>
-                  <span className="text-xs text-muted-foreground">{gLabel} · {aLabel}</span>
-                  <Badge className={`ml-auto ${risk.cls}`}>{risk.label}</Badge>
+          <details className="group rounded-lg border border-border/60 bg-muted/10">
+            <summary className="flex items-center gap-2 px-3 py-2 text-xs font-medium text-muted-foreground cursor-pointer hover:text-foreground transition select-none">
+              <Stethoscope className="h-3.5 w-3.5" />
+              CKD / Renal Inputs
+              <ChevronDown className="h-3 w-3 ml-auto transition-transform group-open:rotate-180" />
+            </summary>
+            <div className="px-3 pb-3 space-y-3">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                <div className="space-y-1.5">
+                  <RangeOrExactField label="eGFR" unit="mL/min/1.73m²" fieldKey="egfr" value={inputs.egfr} onChange={(v) => set("egfr", v)} />
+                  {inputs.egfr && (() => {
+                    const e = parseFloat(inputs.egfr);
+                    if (isNaN(e)) return null;
+                    let stage = "G1";
+                    if (e < 15) stage = "G5";
+                    else if (e < 30) stage = "G4";
+                    else if (e < 45) stage = "G3b";
+                    else if (e < 60) stage = "G3a";
+                    else if (e < 90) stage = "G2";
+                    const colors: Record<string, string> = {
+                      "G1": "bg-green-100 text-green-800 border-green-300",
+                      "G2": "bg-yellow-100 text-yellow-800 border-yellow-300",
+                      "G3a": "bg-orange-100 text-orange-800 border-orange-300",
+                      "G3b": "bg-red-100 text-red-800 border-red-300",
+                      "G4": "bg-red-200 text-red-900 border-red-400",
+                      "G5": "bg-purple-100 text-purple-800 border-purple-300",
+                    };
+                    return (
+                      <div className="flex items-center gap-1.5 mt-1">
+                        <span className={`text-[10px] font-medium px-1.5 py-0.5 rounded-full border ${colors[stage] || "bg-muted text-muted-foreground border-border"}`}>
+                          KDIGO {stage}
+                        </span>
+                      </div>
+                    );
+                  })()}
                 </div>
-              );
-            })()}
-            <div className="flex flex-wrap gap-2">
-              <Chip active={inputs.ckdDm} onClick={() => set("ckdDm", !inputs.ckdDm)}>Diabetes</Chip>
-              <Chip active={inputs.ckdHtn} onClick={() => set("ckdHtn", !inputs.ckdHtn)}>Hypertension</Chip>
+                <RangeOrExactField label="UACR" unit="mg/g" fieldKey="uacr" value={inputs.uacr} onChange={(v) => set("uacr", v)} />
+              </div>
+              <div className="flex flex-wrap gap-2">
+                <Chip active={inputs.ckdDm} onClick={() => set("ckdDm", !inputs.ckdDm)}>Diabetes</Chip>
+                <Chip active={inputs.ckdHtn} onClick={() => set("ckdHtn", !inputs.ckdHtn)}>Hypertension</Chip>
+              </div>
             </div>
-          </div>
+          </details>
         )}
 
         {/* Result panel */}

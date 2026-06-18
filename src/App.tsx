@@ -105,6 +105,9 @@ import NotFound from "@/components/NotFound";
 // Fatigue
 import Fatigue from "@/pages/Fatigue";
 
+// Vitamin D
+import VitaminD from "@/pages/VitaminD";
+
 // Infections
 import Infections from "@/pages/Infections";
 
@@ -244,6 +247,7 @@ const App = () => (
           <Route path="/iron-calculator" element={<><TabNavigation /><IronReplacementCalculator /></>} />
           <Route path="/thyroid" element={<><TabNavigation /><ThyroidCalculator /></>} />
           <Route path="/fatigue" element={<><TabNavigation /><Fatigue /></>} />
+          <Route path="/vitamin-d" element={<><TabNavigation /><VitaminD /></>} />
           <Route path="/infections" element={<><TabNavigation /><Infections /></>} />
           <Route path="/pep" element={<><TabNavigation /><PEP /></>} />
           <Route path="/electrolytes" element={<><TabNavigation /><Electrolytes /></>} />

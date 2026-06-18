@@ -1537,6 +1537,15 @@ export default function LipidCalculator() {
                               </ul>
                             </div>
 
+                            {/* PMOS Biochemical Evaluation Image */}
+                            <div className="mt-2 rounded-lg overflow-hidden border border-border">
+                              <ZoomableImage
+                                src="/images/pmos-dx-eval.png"
+                                alt="PMOS Diagnostic Evaluation Algorithm"
+                                className="w-full object-contain"
+                              />
+                            </div>
+
                             <p className="text-xs text-muted-foreground italic border-t border-border pt-2">
                               Ref: 2026 Lancet Consensus on PMOS Diagnostic Framework
                             </p>
