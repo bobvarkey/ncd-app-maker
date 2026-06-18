@@ -384,7 +384,7 @@ export const THROMBOSIS_ALGORITHM: AlgorithmNode = {
                       dvt_prophylaxis: {
                         type: "action",
                         id: "dvt_prophylaxis",
-                        recommendation: "Once bleeding is controlled and platelet count >50,000/microL, consider pharmacologic DVT prophylaxis with LMWH or unfractionated heparin. DIC patients are at risk for both bleeding and thrombosis — start prophylaxis when hemostasis allows.",
+                        recommendation: "LMWH for DVT prophylaxis according to local guidelines (unless severe bleeding).",
                         cautions: [
                           "Do not start anticoagulation while actively bleeding or platelets <50K",
                           "Monitor for signs of both bleeding and thrombosis",
