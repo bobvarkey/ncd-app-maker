@@ -2,6 +2,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Sun, ZoomIn } from "lucide-react";
 import ZoomableImage from "@/components/ZoomableImage";
+import VitaminDDosingCalculator from "@/calculators/vitamind/VitaminDDosingCalculator";
 
 export default function VitaminD() {
   return (
@@ -17,6 +18,9 @@ export default function VitaminD() {
           covering screening indications, dosing protocols, and monitoring.
         </p>
       </div>
+
+      {/* Interactive Dosing Calculator */}
+      <VitaminDDosingCalculator />
 
       {/* Reference Image */}
       <Card className="border-border/60 overflow-hidden">
