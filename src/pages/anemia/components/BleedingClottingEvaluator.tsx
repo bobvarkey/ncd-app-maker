@@ -1,5 +1,12 @@
 import { useMemo, useState } from "react";
 import { THROMBOSIS_ALGORITHM } from "./thrombosisAlgorithm";
+import { BLEEDING_ALGORITHM } from "./bleedingAlgorithm";
+import type {
+  BleedingAlgorithmNode,
+  DicScoringSection,
+  DicTreatmentPrinciples,
+  DiscriminatingSection,
+} from "./bleedingAlgorithm";
 import {
   Activity,
   Droplets,
@@ -728,131 +735,30 @@ function DicScoreCalculator() {
 
 /* ============================ BLEEDING DISORDERS ALGORITHM ============================ */
 
-const ALGORITHM_TREE = {
-  "algorithm_name": "bleeding_disorders_basic_screen",
-  "version": "1.0",
-  "root": {
-    "id": "start",
-    "type": "decision",
-    "question": "Is there a clinically significant bleeding history (abnormal BAT score or convincing history)?",
-    "field": "bleeding_history_abnormal",
-    "options": {
-      "no": {
-        "type": "action",
-        "id": "reassure_monitor",
-        "recommendation": "No strong evidence of a bleeding disorder. Consider alternative diagnoses, repeat assessment if clinical picture changes."
-      },
-      "yes": {
-        "type": "decision",
-        "id": "initial_labs",
-        "question": "Initial labs: CBC with platelet count, PT/INR, aPTT, fibrinogen (+/- thrombin time) available?",
-        "field": "basic_coag_labs_available",
-        "options": {
-          "no": {
-            "type": "action",
-            "id": "order_labs",
-            "recommendation": "Order CBC with platelet count, PT/INR, aPTT, fibrinogen (+/- thrombin time) before further classification."
-          },
-          "yes": {
-            "type": "decision",
-            "id": "platelet_count_branch",
-            "question": "What is the platelet count?",
-            "field": "platelet_category",
-            "options": {
-              "low": {
-                "type": "action",
-                "id": "thrombocytopenia_pathway",
-                "recommendation": "Suspected thrombocytopenia-related bleeding. Evaluate for immune thrombocytopenia, marrow failure/infiltration, drug- or infection-related causes, hypersplenism; review smear."
-              },
-              "normal_or_high": {
-                "type": "decision",
-                "id": "pt_aptt_pattern",
-                "question": "Pattern of PT and aPTT results?",
-                "field": "pt_aptt_pattern",
-                "options": {
-                  "both_normal": {
-                    "type": "decision",
-                    "id": "primary_hemostasis_vs_vwf",
-                    "question": "Is the bleeding predominantly mucocutaneous (epistaxis, gum bleeding, menorrhagia, easy bruising, petechiae)?",
-                    "field": "mucocutaneous_bleeding",
-                    "options": {
-                      "no": {
-                        "type": "action",
-                        "id": "consider_nonhematologic",
-                        "recommendation": "Normal PT/aPTT and non-mucocutaneous pattern. Consider local/anatomical causes, vascular/connective tissue disorders, medications, or hypermobility syndromes; hematology referral if doubt persists."
-                      },
-                      "yes": {
-                        "type": "action",
-                        "id": "vwd_or_platelet_function",
-                        "recommendation": "Suspect von Willebrand disease or qualitative platelet function defect. Order VWF antigen, VWF activity, FVIII, and platelet function testing; refer to hematology."
-                      }
-                    }
-                  },
-                  "isolated_prolonged_aptt": {
-                    "type": "action",
-                    "id": "intrinsic_pathway_defect",
-                    "recommendation": "Suspect intrinsic pathway factor deficiency (e.g., VIII, IX, XI) or inhibitor. Perform mixing study; if corrects, assay factors; if not, evaluate for inhibitor (e.g., acquired hemophilia, lupus anticoagulant) with urgent hematology input if bleeding significant."
-                  },
-                  "isolated_prolonged_pt": {
-                    "type": "action",
-                    "id": "extrinsic_or_vit_k",
-                    "recommendation": "Isolated prolonged PT suggests factor VII deficiency or early vitamin K deficiency/warfarin effect, or liver disease. Review medications, nutrition, liver function, and consider factor assays."
-                  },
-                  "prolonged_pt_and_aptt": {
-                    "type": "decision",
-                    "id": "global_defect_branch",
-                    "question": "Is fibrinogen low or thrombin time prolonged?",
-                    "field": "fibrinogen_or_tt_abnormal",
-                    "options": {
-                      "yes": {
-                        "type": "action",
-                        "id": "fibrinogen_or_disseminated",
-                        "recommendation": "Suspect disseminated intravascular coagulation, advanced liver disease, or congenital/acquired hypofibrinogenemia/dysfibrinogenemia. Check D-dimer, liver function, and consult hematology urgently if clinically unstable."
-                      },
-                      "no": {
-                        "type": "action",
-                        "id": "multiple_factor_deficiency",
-                        "recommendation": "Prolonged PT and aPTT with normal fibrinogen suggests multiple factor deficiencies (e.g., severe vitamin K deficiency, advanced liver disease, massive transfusion). Evaluate liver function, vitamin K status, and consider factor assays; involve hematology."
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    }
-  }
-};
+const BleedingAlgorithmNode_type = null as unknown as BleedingAlgorithmNode;
 
-type AlgorithmNode = {
-  id: string;
-  type: "decision" | "action";
-  question?: string;
-  field?: string;
-  options?: Record<string, AlgorithmNode>;
-  recommendation?: string;
-};
+// The BleedingAlgorithm component uses BLEEDING_ALGORITHM.root from bleedingAlgorithm.ts
+// which includes DIC suspicion routing, SIC score, ISTH scoring, treatment principles,
+// and discriminating features sections.
 
-function BleedingAlgorithm() {
+function BleedingAlgorithm({ onBack }: { onBack: () => void }) {
   const [path, setPath] = useState<string[]>([]);
-  const [currentNode, setCurrentNode] = useState<AlgorithmNode>(ALGORITHM_TREE.root);
+  const [currentNode, setCurrentNode] = useState<BleedingAlgorithmNode>(BLEEDING_ALGORITHM.root);
 
-  const handleChoice = (key: string, child: AlgorithmNode) => {
+  const handleChoice = (key: string, child: BleedingAlgorithmNode) => {
     setPath((prev) => [...prev, key]);
     setCurrentNode(child);
   };
 
   const handleReset = () => {
     setPath([]);
-    setCurrentNode(ALGORITHM_TREE.root);
+    setCurrentNode(BLEEDING_ALGORITHM.root);
   };
 
   const handleBack = () => {
     if (path.length === 0) return;
     const newPath = path.slice(0, -1);
-    let node: AlgorithmNode = ALGORITHM_TREE.root;
+    let node: BleedingAlgorithmNode = BLEEDING_ALGORITHM.root;
     for (const step of newPath) {
       node = node.options![step];
     }
@@ -872,7 +778,7 @@ function BleedingAlgorithm() {
             <RotateCcw className="h-3 w-3" /> Reset
           </button>
           <button
-            onClick={() => setMode("")}
+            onClick={onBack}
             className="flex items-center gap-1 px-3 py-1.5 rounded-md text-xs font-medium bg-secondary text-secondary-foreground hover:bg-secondary/80"
           >
             ← Change pathway
@@ -890,7 +796,7 @@ function BleedingAlgorithm() {
               <button
                 onClick={() => {
                   const newPath = path.slice(0, i + 1);
-                  let node: AlgorithmNode = ALGORITHM_TREE.root;
+                  let node: BleedingAlgorithmNode = BLEEDING_ALGORITHM.root;
                   for (const s of newPath) {
                     node = node.options![s];
                   }
@@ -1442,6 +1348,6 @@ export default function BleedingClottingEvaluator() {
     : mode === "clotting"
     ? <ClottingWizard onBack={() => setMode("")} />
     : mode === "algorithm"
-    ? <BleedingAlgorithm />
+    ? <BleedingAlgorithm onBack={() => setMode("")} />
     : <ThrombosisAlgorithm />;
 }
