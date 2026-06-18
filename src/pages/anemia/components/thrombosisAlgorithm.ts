@@ -414,7 +414,8 @@ export const THROMBOSIS_ALGORITHM: AlgorithmNode = {
                         vte_thrombophilia_features: [
                           { id: "isolated_vte", text: "VTE presents as isolated DVT/PE without multisystem coagulation abnormalities." },
                           { id: "normal_coags", text: "In VTE, PT/aPTT, fibrinogen, and platelet count are typically normal." },
-                          { id: "chronic_risk", text: "VTE/thrombophilia usually involves chronic/genetic risk factors (Factor V Leiden, prothrombin mutation, antiphospholipid syndrome), not acute triggers." }
+                          { id: "chronic_risk", text: "VTE/thrombophilia usually involves chronic/genetic risk factors (Factor V Leiden, prothrombin mutation, antiphospholipid syndrome), not acute triggers." },
+                          { id: "thrombophilia_risk", text: "Thrombophilia may increase VTE risk but does not cause DIC laboratory pattern." }
                         ]
                       }
                     }
