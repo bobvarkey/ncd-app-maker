@@ -4,6 +4,7 @@ import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 import { AlertCircle, CheckCircle2, Heart, Activity, Droplet, AlertTriangle, ChevronDown, ChevronRight, Stethoscope } from "lucide-react";
 import { FrequencyBadge } from "@/components/FrequencyBadge";
+import ZoomableImage from "@/components/ZoomableImage";
 
 /** Extract frequency tag from a dose range string like "8–16 mg OD" -> "OD" */
 function extractCardFreq(dose: string): string {
@@ -261,6 +262,17 @@ export default function HypertensionMedicationGuide() {
 
   return (
     <div className="space-y-6">
+      {/* HTN Rx Image — always visible at top */}
+      <Card className="clinical-card overflow-hidden">
+        <CardContent className="p-0">
+          <ZoomableImage
+            src="/images/htn-rx.png"
+            alt="Hypertension drugs overview — antihypertensive medication classes, dosing, and clinical pearls"
+            className="w-full h-auto"
+          />
+        </CardContent>
+      </Card>
+
       {/* Navigation Tabs */}
       <div className="flex flex-wrap gap-2">
         {[
