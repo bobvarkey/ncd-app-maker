@@ -26,6 +26,7 @@ import {
 import { downloadTextFile } from "@/lib/clinical-utils";
 import ZoomableImage from "@/components/ZoomableImage";
 import foodPoisoningImg from "@/assets/food-poisoning-poster.jpg";
+import foodPoisoningImg2 from "@/assets/food-poisoning-poster-2.jpg";
 import { toast } from "sonner";
 
 /* ── Hand-drawn style helpers ──────────────────────────────────── */
@@ -411,7 +412,7 @@ export default function FoodPoisoning() {
 
       {/* Images */}
       <CollapsibleSection title="Images" icon={ImageIcon} defaultOpen={false}>
-        <div className="mx-auto max-w-lg">
+        <div className="mx-auto max-w-lg space-y-4">
           <ZoomableImage
             src={foodPoisoningImg}
             alt="Food poisoning classification and management poster"
@@ -419,6 +420,14 @@ export default function FoodPoisoning() {
           />
           <p className="mt-2 text-center font-handwritten text-xs text-amber-700/60">
             Click to zoom · Classification by incubation period and clinical syndrome
+          </p>
+          <ZoomableImage
+            src={foodPoisoningImg2}
+            alt="Food poisoning reference poster — additional clinical detail"
+            className="w-full rounded-xl border-2 border-amber-700/25"
+          />
+          <p className="mt-2 text-center font-handwritten text-xs text-amber-700/60">
+            Click to zoom · Food poisoning reference poster
           </p>
         </div>
       </CollapsibleSection>
