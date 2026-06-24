@@ -156,8 +156,6 @@ function ElectrolyteSubNav() {
 
 const navItems: NavItem[] = [
   { path: "/home",                    label: "Home",      icon: "🏠", active: "bg-primary/10 text-primary border-primary/30" },
-  { path: "/simple",                  label: "Simple",    icon: "⚡", active: "bg-blue-500/10 text-blue-400 border-blue-500/30" },
-  { path: "/moderate",                label: "Moderate",  icon: "🏥", active: "bg-purple-500/10 text-purple-400 border-purple-500/30" },
   { path: "/diabetes",                label: "Diabetes",  icon: "💉", active: "bg-destructive/100/10 text-destructive border-red-500/30" },
   { path: "/hypertension",            label: "Hypertension", icon: "❤️", active: "bg-warning/100/10 text-warning border-warning/30" },
   { path: "/lipids",                  label: "Lipids",    icon: "💧", active: "bg-blue-500/10 text-blue-400 border-blue-500/30" },
