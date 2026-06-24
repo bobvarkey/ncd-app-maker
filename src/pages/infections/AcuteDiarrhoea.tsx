@@ -54,7 +54,7 @@ const HISTORY_ITEMS = [
   { icon: Clock, label: "Onset & duration", detail: "Sudden vs gradual; hours to days" },
   { icon: Droplets, label: "Stool character", detail: "Watery, bloody (dysentery), mucous, frequency" },
   { icon: Thermometer, label: "Fever", detail: "High fever suggests invasive pathogen" },
-  { icon: Utensils, label: "Food history", detail: "Undercooked meat, seafood, raw eggs, unpasteurised milk" },
+  { icon: Utensils, label: "Food history", detail: "Undercooked meat / poultry / beef, seafood, shellfish, raw eggs, unpasteurised milk / juice, fried rice, deli meats, soft cheese, mayonnaise, custards, home-canned foods, honey, pork, gravy, buffets, large reef fish" },
   { icon: Plane, label: "Travel", detail: "Recent travel, camping, daycare, nursing home" },
   { icon: Pill, label: "Antibiotics", detail: "Recent abx use → C. difficile suspicion" },
   { icon: User, label: "Host factors", detail: "Age >65, immunocompromised, IBD, pregnancy" },
