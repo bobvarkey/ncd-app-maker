@@ -55,6 +55,7 @@ import SlidingScaleInsulinCalc from "@/calculators/diabetes/SlidingScale";
 import DiabetesMedicationAlgorithmCalc from "@/calculators/diabetes/DiabetesMedicationAlgorithm";
 import AscvdEmrCalc from "@/calculators/lipids/AscvdRisk";
 import LipidPanelCalc from "@/calculators/lipids/LipidPanel";
+import LipidRiskMiniCalc from "@/calculators/lipids/LipidRiskMini";
 import GfrCalculatorCalc from "@/calculators/htn/GfrCalculator";
 import DrugInteractionCheckerCalc from "@/calculators/htn/DrugInteractions";
 import AntihypertensiveTreatmentAlgorithmCalc from "@/calculators/htn/AntihypertensiveTreatmentAlgorithm";
@@ -119,6 +120,9 @@ import Infections from "@/pages/Infections";
 
 // PEP
 import PEP from "@/pages/PEP";
+
+// Adult Vaccinations
+import AdultVaccinations from "@/pages/AdultVaccinations";
 
 // Electrolytes
 import Electrolytes from "@/pages/Electrolytes";
@@ -242,6 +246,7 @@ const App = () => (
           <Route path="/diabetes/medication-algorithm" element={<><TabNavigation /><DiabetesMedicationAlgorithmCalc /></>} />
           <Route path="/lipid-panel" element={<><TabNavigation /><LipidPanelCalc /></>} />
           <Route path="/ascvd-risk" element={<><TabNavigation /><AscvdEmrCalc /></>} />
+          <Route path="/lipid-risk-mini" element={<><TabNavigation /><LipidRiskMiniCalc /></>} />
           <Route path="/gfr-calculator" element={<><TabNavigation /><GfrCalculatorCalc /></>} />
           <Route path="/drug-interactions" element={<><TabNavigation /><DrugInteractionCheckerCalc /></>} />
           <Route path="/htn/treatment-algorithm" element={<><TabNavigation /><AntihypertensiveTreatmentAlgorithmCalc /></>} />
@@ -258,6 +263,7 @@ const App = () => (
           <Route path="/women-health" element={<><TabNavigation /><WomenHealth /></>} />
           <Route path="/infections" element={<><TabNavigation /><Infections /></>} />
           <Route path="/pep" element={<><TabNavigation /><PEP /></>} />
+          <Route path="/adult-vaccinations" element={<><TabNavigation /><AdultVaccinations /></>} />
           <Route path="/electrolytes" element={<><TabNavigation /><Electrolytes /></>} />
           <Route path="/hyponatremia" element={<><TabNavigation /><Hyponatremia /></>} />
           <Route path="/hypernatremia" element={<><TabNavigation /><Hypernatremia /></>} />

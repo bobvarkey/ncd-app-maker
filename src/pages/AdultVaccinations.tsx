@@ -1,0 +1,717 @@
+import { useMemo, useState } from "react";
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
+import { Checkbox } from "@/components/ui/checkbox";
+import {
+  Syringe, Shield, Clock, Baby, FlaskConical,
+  Printer, Copy, Download, AlertTriangle, Info,
+  CheckCircle2, XCircle, AlertCircle, ChevronDown, ChevronUp,
+} from "lucide-react";
+import { downloadTextFile } from "@/lib/clinical-utils";
+import { toast } from "sonner";
+
+// ══════════════════════════════════════════════
+// Vaccine Data Schema
+// ══════════════════════════════════════════════
+
+type VaccineSchedule = {
+  dose_schedule?: string;
+  doses?: number;
+  interval?: string;
+};
+
+type ImplementationGuidance = {
+  age_restriction?: string;
+  pre_vaccination_testing?: string;
+  dose_schedule?: string;
+  special_notes?: string;
+};
+
+type Vaccine = {
+  id: string;
+  name: string;
+  type: "live-attenuated" | "inactivated" | "inactivated/recombinant" | "inactivated/conjugate and polysaccharide" | "inactivated/non-replicating (platform-dependent)";
+  age_min: number;
+  age_max: number | null;
+  routine_adult_schedule: string;
+  timing_before_immunosuppression?: string;
+  timing_before_travel?: string;
+  contraindications: string[];
+  notes: string;
+  recommendation: "ESSENTIAL" | "RECOMMENDED" | "CONSIDER" | "CONTRAINDICATED";
+  implementation_guidance?: ImplementationGuidance;
+};
+
+// ─── Vaccine Database ───
+const VACCINES: Vaccine[] = [
+  {
+    id: "mmr",
+    name: "MMR (Measles, Mumps, Rubella)",
+    type: "live-attenuated",
+    age_min: 18,
+    age_max: null,
+    routine_adult_schedule: "Single dose if non-immune; second dose per catch-up rules",
+    timing_before_immunosuppression: "At least 6 weeks before initiating immunosuppression",
+    contraindications: ["Severe immunosuppression", "Pregnancy"],
+    notes: "Live vaccine — contraindicated after immunosuppression; verify serology if unknown",
+    recommendation: "ESSENTIAL"
+  },
+  {
+    id: "varicella",
+    name: "Varicella (Chickenpox)",
+    type: "live-attenuated",
+    age_min: 18,
+    age_max: null,
+    routine_adult_schedule: "2 doses, 4–8 weeks apart if non-immune",
+    timing_before_immunosuppression: "At least 6 weeks before initiating immunosuppression",
+    contraindications: ["Severe immunosuppression", "Pregnancy"],
+    notes: "Live vaccine — high risk of severe VZV disease when given during immunosuppression",
+    recommendation: "ESSENTIAL"
+  },
+  {
+    id: "yellow_fever",
+    name: "Yellow Fever",
+    type: "live-attenuated",
+    age_min: 18,
+    age_max: null,
+    routine_adult_schedule: "Single dose; booster per country rules",
+    timing_before_travel: "At least 6 weeks before travel",
+    timing_before_immunosuppression: "At least 6 weeks before initiating immunosuppression",
+    contraindications: ["Severe immunosuppression", "Certain egg allergies (check product)"],
+    notes: "Use only when travel risk warrants; weigh risks in older adults",
+    recommendation: "CONSIDER"
+  },
+  {
+    id: "laiv_flu_mist",
+    name: "LAIV (Live intranasal influenza, FluMist)",
+    type: "live-attenuated",
+    age_min: 18,
+    age_max: null,
+    routine_adult_schedule: "Not routinely used in adults; single seasonal dose where indicated",
+    timing_before_immunosuppression: "At least 4 weeks before initiating immunosuppression",
+    contraindications: ["Severe immunosuppression", "Pregnancy"],
+    notes: "Intranasal live vaccine; most adult programs use inactivated injectable seasonal influenza instead",
+    recommendation: "RECOMMENDED"
+  },
+  {
+    id: "influenza_inactivated",
+    name: "Influenza (Injectable, inactivated - seasonal quadrivalent)",
+    type: "inactivated",
+    age_min: 18,
+    age_max: null,
+    routine_adult_schedule: "Annual single dose each influenza season; high-dose or adjuvanted formulations for older adults as per local guidance",
+    timing_before_immunosuppression: "Preferably at least 2 weeks before initiating immunosuppression",
+    contraindications: ["Severe allergy to vaccine component"],
+    notes: "Strong annual recommendation for immunocompromised and adults at risk",
+    recommendation: "ESSENTIAL"
+  },
+  {
+    id: "covid19_mrna_protein",
+    name: "COVID-19 (mRNA / protein-based vaccines)",
+    type: "inactivated/non-replicating (platform-dependent)",
+    age_min: 18,
+    age_max: null,
+    routine_adult_schedule: "Primary series per product; boosters per current guidance",
+    timing_before_immunosuppression: "At least 2 weeks before starting immunosuppression for primary series; boosters ideally ≥4 weeks before",
+    contraindications: ["Severe allergy to vaccine component"],
+    notes: "Primary series and boosters are critical prior to immunosuppression to optimize protection",
+    recommendation: "ESSENTIAL"
+  },
+  {
+    id: "pneumococcal",
+    name: "Pneumococcal (PCV20 / PCV21 or PCV15 + PPSV23)",
+    type: "inactivated/conjugate and polysaccharide",
+    age_min: 18,
+    age_max: null,
+    routine_adult_schedule: "Single dose PCV20/21 OR PCV15 followed by PPSV23 per interval guidance; additional doses for certain high-risk groups",
+    timing_before_immunosuppression: "At least 2 weeks before initiating immunosuppression",
+    contraindications: ["Severe allergy to vaccine component"],
+    notes: "Recommended for all immunocompromised adults; choice of schedule depends on product availability",
+    recommendation: "ESSENTIAL"
+  },
+  {
+    id: "hepatitis_b",
+    name: "Hepatitis B",
+    type: "inactivated/recombinant",
+    age_min: 18,
+    age_max: null,
+    routine_adult_schedule: "Typical series 0, 1, 6 months (or accelerated/2-dose depending on product)",
+    timing_before_immunosuppression: "Start and preferably complete series before B-cell depleting therapy; at least 4 weeks before first dose advised in some protocols",
+    contraindications: ["Severe allergy to vaccine component"],
+    notes: "Screen for HBsAg/anti-HBs pre-therapy when possible; ensure immunity before anti-CD20 therapies",
+    recommendation: "ESSENTIAL"
+  },
+  {
+    id: "hepatitis_a",
+    name: "Hepatitis A",
+    type: "inactivated",
+    age_min: 18,
+    age_max: null,
+    routine_adult_schedule: "Two-dose series, 0 and 6–12 months (product-dependent)",
+    timing_before_immunosuppression: "At least 2–4 weeks before initiating immunosuppression if feasible",
+    contraindications: ["Severe allergy to vaccine component"],
+    notes: "Consider for travel to endemic areas or for those with liver disease",
+    recommendation: "RECOMMENDED"
+  },
+  {
+    id: "tdap",
+    name: "Tdap (Tetanus, Diphtheria, Pertussis)",
+    type: "inactivated",
+    age_min: 18,
+    age_max: null,
+    routine_adult_schedule: "One dose of Tdap as adult booster if not previously received, then Td/Tdap every 10 years as needed",
+    timing_before_immunosuppression: "Ideally before starting immunosuppression (booster timing per routine)",
+    contraindications: ["Severe allergy to vaccine component"],
+    notes: "Adult booster recommended; important for wound management and maternal vaccination during pregnancy",
+    recommendation: "ESSENTIAL"
+  },
+  {
+    id: "meningococcal_menacwy",
+    name: "Meningococcal (MenACWY)",
+    type: "inactivated/conjugate",
+    age_min: 18,
+    age_max: null,
+    routine_adult_schedule: "Single or two-dose series in specific risk groups; booster per risk/exposure",
+    timing_before_immunosuppression: "At least 2 weeks before initiating immunosuppression",
+    contraindications: ["Severe allergy to vaccine component"],
+    notes: "Recommend for complement deficiency, asplenia, or outbreak exposure",
+    recommendation: "CONSIDER"
+  },
+  {
+    id: "hpv",
+    name: "HPV (Human Papillomavirus)",
+    type: "inactivated/recombinant",
+    age_min: 18,
+    age_max: 45,
+    routine_adult_schedule: "2- or 3-dose series depending on age at initiation (0,1–2,6 months typical schedules)",
+    timing_before_immunosuppression: "At least 2 weeks before initiating immunosuppression if possible",
+    contraindications: ["Severe allergy to vaccine component"],
+    notes: "Consider vaccination up to age 45 based on shared clinical decision-making",
+    recommendation: "RECOMMENDED"
+  },
+  {
+    id: "herpes_zoster_shingrix",
+    name: "Herpes Zoster (Shingrix, recombinant)",
+    type: "inactivated/recombinant subunit",
+    age_min: 18,
+    age_max: null,
+    routine_adult_schedule: "Two-dose series, 2–6 months apart (some guidance allows 1–2 months depending on product)",
+    timing_before_immunosuppression: "Preferably at least 2 weeks before initiating immunosuppression",
+    contraindications: ["Severe allergy to vaccine component"],
+    notes: "Recombinant (non-live) vaccine — safe for many immunocompromised adults and strongly recommended",
+    recommendation: "ESSENTIAL"
+  },
+  {
+    id: "japanese_encephalitis",
+    name: "Japanese Encephalitis",
+    type: "inactivated",
+    age_min: 18,
+    age_max: null,
+    routine_adult_schedule: "2-dose primary series (product-dependent) with boosters per travel exposure guidance",
+    timing_before_travel: "At least 1 week (product-dependent) before travel to endemic areas",
+    contraindications: ["Severe allergy to vaccine component"],
+    notes: "Recommend for travelers to endemic rural/long-stay destinations",
+    recommendation: "CONSIDER"
+  },
+  {
+    id: "rabies",
+    name: "Rabies (pre- and post-exposure)",
+    type: "inactivated",
+    age_min: 18,
+    age_max: null,
+    routine_adult_schedule: "Pre-exposure: 2–3 doses depending on product; Post-exposure: wound care + vaccine series with/without rabies immunoglobulin per protocol",
+    timing_before_travel: "Pre-exposure series may be given before travel to endemic areas",
+    contraindications: ["Severe allergy to vaccine component"],
+    notes: "Standard protocol for post-exposure prophylaxis irrespective of immune status; consult specialist for immunocompromised",
+    recommendation: "CONSIDER"
+  },
+  {
+    id: "dengue_qdenga",
+    name: "Dengue (Qdenga/TAK-003 — India Approved)",
+    type: "live-attenuated",
+    age_min: 4,
+    age_max: 60,
+    routine_adult_schedule: "Two-dose series administered 3 months apart; protects against all four dengue serotypes",
+    timing_before_immunosuppression: "Contraindicated in severe immunosuppression; consult specialist for timing",
+    timing_before_travel: "Complete series before travel to endemic areas if feasible",
+    contraindications: ["Severe immunosuppression", "Pregnancy", "Breastfeeding", "Severe allergy to vaccine component"],
+    notes: "India approved Qdenga (TAK-003) in 2024 for ages 4-60. NO prior dengue testing required (unlike Dengvaxia). Highly effective against DENV-2, lower efficacy against DENV-3/DENV-4 in dengue-naïve individuals. Safe for both dengue-naïve and previously infected individuals.",
+    recommendation: "CONSIDER",
+    implementation_guidance: {
+      age_restriction: "Approved in India for ages 4-60 years",
+      pre_vaccination_testing: "NOT required for Qdenga (unlike Dengvaxia) — safe for both dengue-naïve and previously infected individuals",
+      dose_schedule: "2 doses, 3 months apart",
+      special_notes: "India's first approved dengue vaccine (DCGI/Subject Expert Committee cleared). No pre-vaccination serostatus testing needed. Efficacy ~84% against DENV-2, lower against DENV-3/DENV-4 (~50-65%) in seronegative individuals. Dengvaxia requires prior infection documentation and is NOT approved in India."
+    }
+  },
+  {
+    id: "dengue_dengvaxia",
+    name: "Dengue (Dengvaxia — NOT Available in India)",
+    type: "live-attenuated",
+    age_min: 9,
+    age_max: 16,
+    routine_adult_schedule: "Three-dose series at 0, 6, and 12 months (only for laboratory-confirmed prior dengue infection)",
+    timing_before_immunosuppression: "Contraindicated in immunosuppressed individuals",
+    contraindications: ["No laboratory evidence of prior dengue infection", "Severe immunosuppression", "Pregnancy", "Breastfeeding", "Age >16 years (outside approved indication)"],
+    notes: "NOT approved in India. Requires proof of prior dengue infection (serology or documented history). Risk of severe dengue if given to dengue-naïve persons. Limited adult use in some jurisdictions with strict prior-infection requirements.",
+    recommendation: "CONTRAINDICATED",
+    implementation_guidance: {
+      age_restriction: "Approved for 9-16 years in most jurisdictions; adult use off-label and restricted",
+      pre_vaccination_testing: "MANDATORY — must document prior dengue infection via serology or documented history",
+      dose_schedule: "3 doses at 0, 6, 12 months",
+      special_notes: "⚠ CRITICAL: Do NOT vaccinate dengue-seronegative individuals — risk of severe dengue. NOT available in India. Use Qdenga instead."
+    }
+  }
+];
+
+// ─── Helper functions ───
+
+function getRecommendationBadge(recommendation: Vaccine["recommendation"]) {
+  switch (recommendation) {
+    case "ESSENTIAL":
+      return <Badge className="bg-emerald-500/10 text-emerald-400 border-emerald-500/30">ESSENTIAL</Badge>;
+    case "RECOMMENDED":
+      return <Badge className="bg-blue-500/10 text-blue-400 border-blue-500/30">RECOMMENDED</Badge>;
+    case "CONSIDER":
+      return <Badge className="bg-amber-500/10 text-amber-400 border-amber-500/30">CONSIDER</Badge>;
+    case "CONTRAINDICATED":
+      return <Badge className="bg-red-500/10 text-red-400 border-red-500/30">CONTRAINDICATED</Badge>;
+  }
+}
+
+function getTypeBadge(type: Vaccine["type"]) {
+  if (type.includes("live")) {
+    return <Badge variant="outline" className="text-rose-400 border-rose-400/40">Live-attenuated</Badge>;
+  }
+  return <Badge variant="outline" className="text-sky-400 border-sky-400/40">Inactivated</Badge>;
+}
+
+function formatAgeRange(age_min: number, age_max: number | null): string {
+  if (age_max === null) {
+    return `${age_min}+ years`;
+  }
+  return `${age_min}–${age_max} years`;
+}
+
+// ─── Main Component ───
+
+export default function AdultVaccinations() {
+  const [searchTerm, setSearchTerm] = useState("");
+  const [filterType, setFilterType] = useState<"all" | "live" | "inactivated">("all");
+  const [filterRecommendation, setFilterRecommendation] = useState<"all" | "ESSENTIAL" | "RECOMMENDED" | "CONSIDER" | "CONTRAINDICATED">("all");
+  const [expandedVaccine, setExpandedVaccine] = useState<string | null>(null);
+  const [planningForImmunosuppression, setPlanningForImmunosuppression] = useState(false);
+  const [planningForTravel, setPlanningForTravel] = useState(false);
+
+  // Filter vaccines
+  const filteredVaccines = useMemo(() => {
+    return VACCINES.filter(v => {
+      const matchesSearch = searchTerm === "" ||
+        v.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        v.id.toLowerCase().includes(searchTerm.toLowerCase());
+      const matchesType = filterType === "all" ||
+        (filterType === "live" && v.type.includes("live")) ||
+        (filterType === "inactivated" && !v.type.includes("live"));
+      const matchesRecommendation = filterRecommendation === "all" || v.recommendation === filterRecommendation;
+      return matchesSearch && matchesType && matchesRecommendation;
+    });
+  }, [searchTerm, filterType, filterRecommendation]);
+
+  // Get pre-immunosuppression vaccines
+  const preImmunosuppressionVaccines = useMemo(() => {
+    if (!planningForImmunosuppression) return [];
+    return VACCINES.filter(v => v.timing_before_immunosuppression);
+  }, [planningForImmunosuppression]);
+
+  // Export function
+  const handleExport = () => {
+    let content = "ADULT VACCINATION QUICK REFERENCE\n";
+    content += "=================================\n\n";
+
+    // Group by recommendation
+    const essential = VACCINES.filter(v => v.recommendation === "ESSENTIAL");
+    const recommended = VACCINES.filter(v => v.recommendation === "RECOMMENDED");
+    const consider = VACCINES.filter(v => v.recommendation === "CONSIDER");
+
+    content += "ESSENTIAL VACCINES\n";
+    content += "------------------\n";
+    essential.forEach(v => {
+      content += `\n${v.name}\n`;
+      content += `  Type: ${v.type}\n`;
+      content += `  Age: ${formatAgeRange(v.age_min, v.age_max)}\n`;
+      content += `  Schedule: ${v.routine_adult_schedule}\n`;
+      if (v.timing_before_immunosuppression) {
+        content += `  Pre-immunosuppression: ${v.timing_before_immunosuppression}\n`;
+      }
+      content += `  Contraindications: ${v.contraindications.join(", ")}\n`;
+    });
+
+    content += "\n\nRECOMMENDED VACCINES\n";
+    content += "-------------------\n";
+    recommended.forEach(v => {
+      content += `\n${v.name}\n`;
+      content += `  Type: ${v.type}\n`;
+      content += `  Age: ${formatAgeRange(v.age_min, v.age_max)}\n`;
+      content += `  Schedule: ${v.routine_adult_schedule}\n`;
+    });
+
+    content += "\n\nCONSIDER (Risk-Based)\n";
+    content += "--------------------\n";
+    consider.forEach(v => {
+      content += `\n${v.name}\n`;
+      content += `  Type: ${v.type}\n`;
+      content += `  Schedule: ${v.routine_adult_schedule}\n`;
+    });
+
+    downloadTextFile(content, "adult-vaccinations-reference.txt");
+    toast.success("Vaccination reference exported");
+  };
+
+  const handleCopy = () => {
+    const text = VACCINES.map(v =>
+      `${v.name} (${v.recommendation}): ${v.routine_adult_schedule}`
+    ).join("\n");
+    navigator.clipboard.writeText(text);
+    toast.success("Vaccination list copied to clipboard");
+  };
+
+  return (
+    <div className="max-w-6xl mx-auto px-4 py-8 space-y-6">
+      {/* Header */}
+      <div className="text-center space-y-3">
+        <Badge variant="outline" className="text-sm px-4 py-1 border-emerald-400/40 text-emerald-400">
+          <Syringe className="h-4 w-4 mr-1.5" />
+          Adult Vaccinations
+        </Badge>
+        <h1 className="text-3xl font-bold tracking-tight">Adult Vaccination Clinical Reference</h1>
+        <p className="text-muted-foreground max-w-2xl mx-auto">
+          Comprehensive guide for adult vaccination schedules, including pre-immunosuppression planning
+          and travel vaccines — with contraindications and timing recommendations.
+        </p>
+      </div>
+
+      {/* Action Buttons */}
+      <div className="flex justify-end gap-2">
+        <Button variant="outline" size="sm" onClick={handleCopy}>
+          <Copy className="h-4 w-4 mr-1.5" />
+          Copy List
+        </Button>
+        <Button variant="outline" size="sm" onClick={handleExport}>
+          <Download className="h-4 w-4 mr-1.5" />
+          Export Reference
+        </Button>
+      </div>
+
+      {/* Clinical Context Checkboxes */}
+      <Card className="border-border/60">
+        <CardHeader className="pb-3">
+          <CardTitle className="text-lg flex items-center gap-2">
+            <AlertCircle className="h-5 w-5 text-amber-400" />
+            Clinical Context
+          </CardTitle>
+        </CardHeader>
+        <CardContent className="space-y-3">
+          <div className="flex items-center space-x-3">
+            <Checkbox
+              id="planning-immunosuppression"
+              checked={planningForImmunosuppression}
+              onCheckedChange={(checked) => setPlanningForImmunosuppression(!!checked)}
+            />
+            <Label htmlFor="planning-immunosuppression" className="text-sm cursor-pointer">
+              Planning for immunosuppression / biologic therapy
+            </Label>
+          </div>
+          <div className="flex items-center space-x-3">
+            <Checkbox
+              id="planning-travel"
+              checked={planningForTravel}
+              onCheckedChange={(checked) => setPlanningForTravel(!!checked)}
+            />
+            <Label htmlFor="planning-travel" className="text-sm cursor-pointer">
+              Planning travel to endemic areas
+            </Label>
+          </div>
+        </CardContent>
+      </Card>
+
+      {/* Pre-Immunosuppression Checklist */}
+      {planningForImmunosuppression && (
+        <Card className="border-amber-500/40 bg-amber-500/5">
+          <CardHeader className="pb-3">
+            <CardTitle className="text-lg flex items-center gap-2 text-amber-400">
+              <Shield className="h-5 w-5" />
+              Pre-Immunosuppression Vaccine Checklist
+            </CardTitle>
+            <CardDescription className="text-amber-200/70">
+              Complete these vaccines before initiating immunosuppressive therapy
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <div className="space-y-3">
+              {preImmunosuppressionVaccines
+                .filter(v => v.type.includes("live"))
+                .map(v => (
+                  <div key={v.id} className="flex items-start gap-3 p-3 rounded-lg bg-rose-500/10 border border-rose-500/30">
+                    <AlertTriangle className="h-5 w-5 text-rose-400 shrink-0 mt-0.5" />
+                    <div className="flex-1">
+                      <div className="flex items-center gap-2 mb-1">
+                        <span className="font-semibold">{v.name}</span>
+                        {getRecommendationBadge(v.recommendation)}
+                        <Badge variant="outline" className="text-rose-400 border-rose-400/40 text-xs">LIVE</Badge>
+                      </div>
+                      <p className="text-sm text-muted-foreground mb-1">{v.timing_before_immunosuppression}</p>
+                      <p className="text-xs text-rose-300/80">{v.notes}</p>
+                    </div>
+                  </div>
+                ))}
+              {preImmunosuppressionVaccines
+                .filter(v => !v.type.includes("live"))
+                .map(v => (
+                  <div key={v.id} className="flex items-start gap-3 p-3 rounded-lg bg-emerald-500/5 border border-emerald-500/20">
+                    <CheckCircle2 className="h-5 w-5 text-emerald-400 shrink-0 mt-0.5" />
+                    <div className="flex-1">
+                      <div className="flex items-center gap-2 mb-1">
+                        <span className="font-semibold">{v.name}</span>
+                        {getRecommendationBadge(v.recommendation)}
+                      </div>
+                      <p className="text-sm text-muted-foreground">{v.timing_before_immunosuppression}</p>
+                    </div>
+                  </div>
+                ))}
+            </div>
+          </CardContent>
+        </Card>
+      )}
+
+      {/* Filters */}
+      <Card className="border-border/60">
+        <CardContent className="pt-4 space-y-4">
+          <div className="flex flex-wrap gap-4">
+            <div className="flex-1 min-w-[200px]">
+              <Label className="text-sm font-medium mb-1.5 block">Search</Label>
+              <Input
+                placeholder="Search vaccines..."
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                className="h-9"
+              />
+            </div>
+            <div className="w-[180px]">
+              <Label className="text-sm font-medium mb-1.5 block">Type</Label>
+              <select
+                value={filterType}
+                onChange={(e) => setFilterType(e.target.value as typeof filterType)}
+                className="w-full h-9 rounded-md border border-input bg-background px-3 text-sm"
+              >
+                <option value="all">All Types</option>
+                <option value="live">Live-Attenuated</option>
+                <option value="inactivated">Inactivated</option>
+              </select>
+            </div>
+            <div className="w-[180px]">
+              <Label className="text-sm font-medium mb-1.5 block">Priority</Label>
+              <select
+                value={filterRecommendation}
+                onChange={(e) => setFilterRecommendation(e.target.value as typeof filterRecommendation)}
+                className="w-full h-9 rounded-md border border-input bg-background px-3 text-sm"
+              >
+                <option value="all">All Priorities</option>
+                <option value="ESSENTIAL">Essential</option>
+                <option value="RECOMMENDED">Recommended</option>
+                <option value="CONSIDER">Consider</option>
+                <option value="CONTRAINDICATED">Contraindicated</option>
+              </select>
+            </div>
+          </div>
+        </CardContent>
+      </Card>
+
+      {/* Vaccine Cards */}
+      <div className="space-y-3">
+        {filteredVaccines.length === 0 ? (
+          <Card className="border-border/60">
+            <CardContent className="py-8 text-center text-muted-foreground">
+              No vaccines match your search criteria.
+            </CardContent>
+          </Card>
+        ) : (
+          filteredVaccines.map((vaccine) => (
+            <Card
+              key={vaccine.id}
+              className={`border-border/60 overflow-hidden transition-colors ${
+                expandedVaccine === vaccine.id ? "border-primary/40" : ""
+              }`}
+            >
+              <CardContent className="p-0">
+                <button
+                  onClick={() => setExpandedVaccine(expandedVaccine === vaccine.id ? null : vaccine.id)}
+                  className="w-full p-4 text-left hover:bg-muted/30 transition-colors"
+                >
+                  <div className="flex items-start justify-between gap-4">
+                    <div className="flex-1">
+                      <div className="flex flex-wrap items-center gap-2 mb-2">
+                        <h3 className="font-semibold text-lg">{vaccine.name}</h3>
+                        {getRecommendationBadge(vaccine.recommendation)}
+                        {getTypeBadge(vaccine.type)}
+                      </div>
+                      <p className="text-sm text-muted-foreground">{vaccine.routine_adult_schedule}</p>
+                    </div>
+                    <div className="flex items-center gap-2 shrink-0">
+                      <Badge variant="outline" className="text-xs">
+                        {formatAgeRange(vaccine.age_min, vaccine.age_max)}
+                      </Badge>
+                      {expandedVaccine === vaccine.id ? (
+                        <ChevronUp className="h-5 w-5 text-muted-foreground" />
+                      ) : (
+                        <ChevronDown className="h-5 w-5 text-muted-foreground" />
+                      )}
+                    </div>
+                  </div>
+                </button>
+
+                {expandedVaccine === vaccine.id && (
+                  <div className="px-4 pb-4 pt-2 border-t border-border/40 space-y-4">
+                    {/* Timing info */}
+                    {(vaccine.timing_before_immunosuppression || vaccine.timing_before_travel) && (
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                        {vaccine.timing_before_immunosuppression && (
+                          <div className="p-3 rounded-lg bg-amber-500/10 border border-amber-500/30">
+                            <div className="flex items-center gap-2 mb-1">
+                              <Clock className="h-4 w-4 text-amber-400" />
+                              <span className="text-sm font-semibold text-amber-400">Pre-Immunosuppression</span>
+                            </div>
+                            <p className="text-sm text-muted-foreground">{vaccine.timing_before_immunosuppression}</p>
+                          </div>
+                        )}
+                        {vaccine.timing_before_travel && (
+                          <div className="p-3 rounded-lg bg-sky-500/10 border border-sky-500/30">
+                            <div className="flex items-center gap-2 mb-1">
+                              <Clock className="h-4 w-4 text-sky-400" />
+                              <span className="text-sm font-semibold text-sky-400">Pre-Travel</span>
+                            </div>
+                            <p className="text-sm text-muted-foreground">{vaccine.timing_before_travel}</p>
+                          </div>
+                        )}
+                      </div>
+                    )}
+
+                    {/* Contraindications */}
+                    {vaccine.contraindications.length > 0 && (
+                      <div>
+                        <h4 className="text-sm font-semibold mb-2 flex items-center gap-2">
+                          <XCircle className="h-4 w-4 text-red-400" />
+                          Contraindications
+                        </h4>
+                        <div className="flex flex-wrap gap-2">
+                          {vaccine.contraindications.map((c, i) => (
+                            <Badge key={i} variant="outline" className="text-red-400 border-red-400/40">
+                              {c}
+                            </Badge>
+                          ))}
+                        </div>
+                      </div>
+                    )}
+
+                    {/* Notes */}
+                    <div>
+                      <h4 className="text-sm font-semibold mb-2 flex items-center gap-2">
+                        <Info className="h-4 w-4 text-blue-400" />
+                        Clinical Notes
+                      </h4>
+                      <p className="text-sm text-muted-foreground">{vaccine.notes}</p>
+                    </div>
+
+                    {/* Implementation Guidance (for Dengue) */}
+                    {vaccine.implementation_guidance && (
+                      <div className="p-3 rounded-lg bg-rose-500/10 border border-rose-500/30">
+                        <h4 className="text-sm font-semibold mb-2 text-rose-400">Implementation Guidance</h4>
+                        {vaccine.implementation_guidance.age_restriction && (
+                          <p className="text-sm text-muted-foreground mb-1">
+                            <span className="font-medium">Age Restriction:</span> {vaccine.implementation_guidance.age_restriction}
+                          </p>
+                        )}
+                        {vaccine.implementation_guidance.pre_vaccination_testing && (
+                          <p className="text-sm text-muted-foreground mb-1">
+                            <span className="font-medium">Pre-Vaccination Testing:</span> {vaccine.implementation_guidance.pre_vaccination_testing}
+                          </p>
+                        )}
+                        {vaccine.implementation_guidance.dose_schedule && (
+                          <p className="text-sm text-muted-foreground mb-1">
+                            <span className="font-medium">Dose Schedule:</span> {vaccine.implementation_guidance.dose_schedule}
+                          </p>
+                        )}
+                        {vaccine.implementation_guidance.special_notes && (
+                          <p className="text-sm text-rose-300/80">
+                            <span className="font-medium">⚠ Special Notes:</span> {vaccine.implementation_guidance.special_notes}
+                          </p>
+                        )}
+                      </div>
+                    )}
+                  </div>
+                )}
+              </CardContent>
+            </Card>
+          ))
+        )}
+      </div>
+
+      {/* Summary Statistics */}
+      <Card className="border-border/60">
+        <CardHeader className="pb-3">
+          <CardTitle className="text-lg">Vaccine Summary</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <div className="grid grid-cols-2 md:grid-cols-5 gap-4 text-center">
+            <div className="p-3 rounded-lg bg-emerald-500/10 border border-emerald-500/30">
+              <div className="text-2xl font-bold text-emerald-400">
+                {VACCINES.filter(v => v.recommendation === "ESSENTIAL").length}
+              </div>
+              <div className="text-sm text-muted-foreground">Essential</div>
+            </div>
+            <div className="p-3 rounded-lg bg-blue-500/10 border border-blue-500/30">
+              <div className="text-2xl font-bold text-blue-400">
+                {VACCINES.filter(v => v.recommendation === "RECOMMENDED").length}
+              </div>
+              <div className="text-sm text-muted-foreground">Recommended</div>
+            </div>
+            <div className="p-3 rounded-lg bg-amber-500/10 border border-amber-500/30">
+              <div className="text-2xl font-bold text-amber-400">
+                {VACCINES.filter(v => v.recommendation === "CONSIDER").length}
+              </div>
+              <div className="text-sm text-muted-foreground">Consider</div>
+            </div>
+            <div className="p-3 rounded-lg bg-red-500/10 border border-red-500/30">
+              <div className="text-2xl font-bold text-red-400">
+                {VACCINES.filter(v => v.recommendation === "CONTRAINDICATED").length}
+              </div>
+              <div className="text-sm text-muted-foreground">Contraindicated</div>
+            </div>
+            <div className="p-3 rounded-lg bg-rose-500/10 border border-rose-500/30">
+              <div className="text-2xl font-bold text-rose-400">
+                {VACCINES.filter(v => v.type.includes("live")).length}
+              </div>
+              <div className="text-sm text-muted-foreground">Live Vaccines</div>
+            </div>
+          </div>
+        </CardContent>
+      </Card>
+
+      {/* Disclaimer */}
+      <Card className="border-amber-500/30 bg-amber-500/5">
+        <CardContent className="pt-4">
+          <div className="flex items-start gap-3">
+            <AlertTriangle className="h-5 w-5 text-amber-400 shrink-0 mt-0.5" />
+            <div className="text-sm text-muted-foreground">
+              <strong className="text-amber-400">Disclaimer:</strong> This reference is informational and should be mapped to authoritative local
+              immunization schedules and product monographs before clinical use. Always verify current guidelines and
+              individual patient factors before vaccination.
+            </div>
+          </div>
+        </CardContent>
+      </Card>
+    </div>
+  );
+}
