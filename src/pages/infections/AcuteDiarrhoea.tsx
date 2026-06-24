@@ -21,8 +21,12 @@ import {
   Download,
   Printer,
   Copy,
+  Image as ImageIcon,
 } from "lucide-react";
 import { downloadTextFile } from "@/lib/clinical-utils";
+import ZoomableImage from "@/components/ZoomableImage";
+import acuteDiarrhoeaImg from "@/assets/acute-diarrhoea-poster.jpg";
+import foodPoisoningImg from "@/assets/food-poisoning-algorithm.jpg";
 import { toast } from "sonner";
 
 /* ── Hand-drawn style helpers ──────────────────────────────────── */
@@ -125,6 +129,82 @@ const PATHOGEN_TABLE = [
   { pathogen: "EHEC (O157:H7)", incubation: "3–4 d", features: "Bloody, no fever, HUS risk", treatment: "Supportive ONLY — NO abx, NO loperamide" },
   { pathogen: "Giardia", incubation: "1–3 wk", features: "Watery, foul, bloating, greasy stool", treatment: "Metronidazole 500 mg TID ×5–7d or tinidazole ×1" },
   { pathogen: "Amoebiasis (E. histolytica)", incubation: "2–4 wk", features: "Bloody, mucoid, tenesmus, liver abscess", treatment: "Metronidazole + paromomycin (luminal agent)" },
+];
+
+/* ── Food Poisoning Algorithm Data ──────────────────────────────── */
+
+const FP_TRIAGE = [
+  "Assess dehydration, shock, severe abdominal pain, altered mental status, blood in stool, high fever, or neurologic signs.",
+  "Start oral rehydration if possible; use IV fluids if unable to tolerate PO or if dehydrated.",
+  "Escalate urgently for infant botulism, pregnancy, immunocompromise, HUS risk, sepsis, or severe bloody diarrhea.",
+];
+
+const FP_TIMELINE = [
+  {
+    window: "0–6 h",
+    pattern: "Sudden vomiting",
+    category: "Preformed toxin",
+    organisms: [
+      { name: "Staphylococcus aureus", food: "Mayonnaise, custards, dairy left out", feature: "Sudden vomiting, usually resolves within a day" },
+      { name: "Bacillus cereus", food: "Reheated fried rice", feature: "Sudden vomiting, usually resolves within a day" },
+      { name: "Clostridium botulinum", food: "Home-canned foods, honey in infants", feature: "Descending paralysis, not diarrhea" },
+    ],
+  },
+  {
+    window: "8–16 h",
+    pattern: "Watery diarrhea",
+    category: "Toxin made in gut",
+    organisms: [
+      { name: "Clostridium perfringens", food: "Reheated meats, gravy, buffets", feature: "Watery diarrhea, no fever" },
+      { name: "Vibrio cholerae", food: "Shellfish, contaminated water", feature: "High-volume rice-water stools" },
+      { name: "ETEC", food: "Travel abroad, food/water exposure", feature: "Watery traveler's diarrhea" },
+    ],
+  },
+  {
+    window: ">16 h",
+    pattern: "Fever and/or bloody diarrhea",
+    category: "Invasive bacteria",
+    organisms: [
+      { name: "Salmonella", food: "Eggs, poultry, reptiles", feature: "Bloody diarrhea, fever" },
+      { name: "Campylobacter", food: "Undercooked poultry, unpasteurized milk", feature: "Bloody diarrhea, fever; later Guillain-Barre" },
+      { name: "Shigella", food: "Person-to-person, fecal-oral, daycare", feature: "High fever; human-only" },
+      { name: "EHEC (E. coli O157:H7)", food: "Undercooked beef, hamburgers", feature: "Shiga toxin, HUS risk" },
+      { name: "Yersinia", food: "Pork", feature: "Pseudoappendicitis, RLQ pain" },
+      { name: "Listeria", food: "Deli meats, soft cheese", feature: "Pregnancy and immunocompromised risk" },
+      { name: "Vibrio parahaemolyticus / vulnificus", food: "Raw seafood", feature: "Vulnificus can cause sepsis and wound infections, especially with liver disease" },
+    ],
+  },
+  {
+    window: "Variable",
+    pattern: "Outbreak watery gastroenteritis",
+    category: "Viral",
+    organisms: [
+      { name: "Norovirus", food: "Cruise ships, shellfish", feature: "Explosive vomiting and watery diarrhea" },
+      { name: "Rotavirus", food: "Young kids, daycare", feature: "Watery diarrhea; vaccine-preventable" },
+    ],
+  },
+  {
+    window: "Variable",
+    pattern: "Flushing/rash after fish",
+    category: "Ingested toxin",
+    organisms: [
+      { name: "Scombroid", food: "Spoiled tuna or mahi-mahi", feature: "Histamine release, flushing and rash; treat with antihistamines" },
+      { name: "Ciguatera", food: "Large reef fish like barracuda or grouper", feature: "Neurologic symptoms and hot-cold temperature reversal" },
+    ],
+  },
+];
+
+const FP_DECISION_RULES = [
+  "Fast vomiting = preformed toxin.",
+  "Watery diarrhea = toxin in gut or viral illness.",
+  "Bloody diarrhea plus fever = invasive bacterial infection.",
+  "Fish/seafood with flushing, rash, or neurologic symptoms = scombroid or ciguatera.",
+  "Paralysis after canned food or honey exposure = botulism.",
+];
+
+const FP_URGENT_WARNINGS = [
+  "Do not miss botulism, HUS, sepsis, dehydration, or meningitis-risk Listeria.",
+  "Avoid routine assumptions that all bloody diarrhea should receive antibiotics.",
 ];
 
 /* ── Collapsible section ──────────────────────────────────────── */
@@ -365,6 +445,143 @@ Disclaimer: Decision-support only. Does not replace clinical judgement.`;
           </div>
         </div>
       </div>
+
+      {/* Images */}
+      <CollapsibleSection title="Images" icon={ImageIcon} defaultOpen={false}>
+        <div className="mx-auto max-w-lg">
+          <ZoomableImage
+            src={acuteDiarrhoeaImg}
+            alt="Acute diarrhoea clinical poster — risk stratification and management overview"
+            className="w-full rounded-xl border-2 border-amber-700/25"
+          />
+          <p className="mt-2 text-center font-handwritten text-xs text-amber-700/60">
+            Click to zoom · Risk stratification and management overview
+          </p>
+        </div>
+      </CollapsibleSection>
+
+      {/* ── Food Poisoning Subsection ──────────────────────────────── */}
+      <div className="relative overflow-hidden rounded-2xl border-2 border-amber-800/30 bg-gradient-to-br from-amber-50 via-orange-50/60 to-yellow-50/80 p-5">
+        <div className="absolute -top-3 -right-3 h-20 w-20 rounded-full border-4 border-amber-200/40" />
+        <div className="absolute -bottom-4 -left-4 h-16 w-16 rounded-full border-4 border-amber-200/30" />
+        <div className="relative">
+          <div className="flex items-center gap-3">
+            <div className="flex h-12 w-12 items-center justify-center rounded-xl border-2 border-amber-600/40 bg-amber-100/80">
+              <Utensils className="h-6 w-6 text-amber-800" />
+            </div>
+            <div>
+              <h3 className="font-handwritten text-xl font-bold text-amber-900">
+                Acute Gastroenteritis / Food Poisoning Algorithm
+              </h3>
+              <p className="font-handwritten text-xs text-amber-700/70">
+                Incubation-based classification &amp; syndrome approach
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* FP: Triage */}
+      <CollapsibleSection title="Triage — Initial Assessment" icon={AlertTriangle} defaultOpen>
+        <div className="rounded-xl border-2 border-dashed border-red-300/60 bg-red-50/60 p-3">
+          <ul className="space-y-1.5">
+            {FP_TRIAGE.map((item, i) => (
+              <li key={i} className="flex items-start gap-2 font-handwritten text-sm text-red-800">
+                <span className="mt-0.5 h-2 w-2 shrink-0 rounded-full bg-red-400" />
+                {item}
+              </li>
+            ))}
+          </ul>
+        </div>
+      </CollapsibleSection>
+
+      {/* FP: Timeline-based algorithm */}
+      <CollapsibleSection title="Incubation-Based Classification" icon={Clock} defaultOpen>
+        <div className="space-y-3">
+          {FP_TIMELINE.map((group) => (
+            <div key={group.window + group.category} className={doodleBox}>
+              <div className="mb-2 flex flex-wrap items-center gap-2">
+                <span className="inline-flex items-center gap-1 rounded-full border border-amber-700/30 bg-amber-100/60 px-2.5 py-0.5 font-handwritten text-xs font-bold text-amber-900">
+                  {group.window}
+                </span>
+                <span className="inline-flex items-center gap-1 rounded-full border border-amber-600/30 bg-amber-200/50 px-2.5 py-0.5 font-handwritten text-xs font-bold text-amber-800">
+                  {group.pattern}
+                </span>
+                <span className="font-handwritten text-xs text-amber-700/70 italic">
+                  {group.category}
+                </span>
+              </div>
+              <div className="space-y-1.5">
+                {group.organisms.map((org) => (
+                  <div key={org.name} className="flex items-start gap-2">
+                    <span className="mt-1 h-1.5 w-1.5 shrink-0 rounded-full bg-amber-500" />
+                    <div className="font-handwritten text-xs text-amber-800/80">
+                      <strong className="text-amber-900">{org.name}</strong>
+                      <span className="text-amber-700/60"> — {org.food}</span>
+                      <br />
+                      <span className="italic text-amber-700/70">{org.feature}</span>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          ))}
+        </div>
+      </CollapsibleSection>
+
+      {/* FP: Decision rules */}
+      <div className="relative rounded-2xl border-2 border-amber-600/30 bg-gradient-to-br from-amber-100/80 to-yellow-50/80 p-4">
+        <div className="absolute -top-2 -left-2 flex h-7 w-7 items-center justify-center rounded-full border-2 border-amber-600/40 bg-amber-200">
+          <Info className="h-3.5 w-3.5 text-amber-900" />
+        </div>
+        <div className="ml-2">
+          <div className="font-handwritten text-sm font-bold text-amber-900">
+            Decision Rules
+          </div>
+          <ul className="mt-2 space-y-1">
+            {FP_DECISION_RULES.map((rule, i) => (
+              <li key={i} className="flex items-start gap-2 font-handwritten text-xs text-amber-800/80">
+                <span className="mt-1 h-1.5 w-1.5 shrink-0 rounded-full bg-amber-500" />
+                {rule}
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
+
+      {/* FP: Urgent warnings */}
+      <div className="relative rounded-2xl border-2 border-red-300/60 bg-gradient-to-br from-red-50/80 to-orange-50/80 p-4">
+        <div className="absolute -top-2 -left-2 flex h-7 w-7 items-center justify-center rounded-full border-2 border-red-400/50 bg-red-200">
+          <AlertTriangle className="h-3.5 w-3.5 text-red-700" />
+        </div>
+        <div className="ml-2">
+          <div className="font-handwritten text-sm font-bold text-red-800">
+            ⚠️ Urgent Warnings
+          </div>
+          <ul className="mt-2 space-y-1">
+            {FP_URGENT_WARNINGS.map((warn, i) => (
+              <li key={i} className="flex items-start gap-2 font-handwritten text-xs text-red-700">
+                <span className="mt-1 h-1.5 w-1.5 shrink-0 rounded-full bg-red-400" />
+                {warn}
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
+
+      {/* FP: Image */}
+      <CollapsibleSection title="Food Poisoning — Reference Poster" icon={ImageIcon} defaultOpen={false}>
+        <div className="mx-auto max-w-lg">
+          <ZoomableImage
+            src={foodPoisoningImg}
+            alt="Food poisoning / acute gastroenteritis algorithm poster — incubation-based classification"
+            className="w-full rounded-xl border-2 border-amber-700/25"
+          />
+          <p className="mt-2 text-center font-handwritten text-xs text-amber-700/60">
+            Click to zoom · Food poisoning algorithm reference
+          </p>
+        </div>
+      </CollapsibleSection>
 
       {/* Step 4: Management */}
       <CollapsibleSection title="4. Management" icon={Syringe} defaultOpen>
