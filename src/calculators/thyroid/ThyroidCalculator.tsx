@@ -25,10 +25,12 @@ import {
   Copy,
   Printer,
   Download,
+  ImageIcon,
 } from "lucide-react";
 import { copyToClipboard, formatClinicalNote, downloadTextFile } from "@/lib/clinical-utils";
 import { cn } from "@/lib/utils";
 import { AbbreviationHover, AbbrText } from "@/components/AbbreviationHover";
+import ZoomableImage from "@/components/ZoomableImage";
 
 type TabKey = "calculator" | "reference" | "about";
 
@@ -681,6 +683,26 @@ export default function ThyroidCalculator() {
                     </div>
                   ))}
                 </div>
+              </CardContent>
+            </Card>
+
+            {/* ── Hyperthyroidism Algorithm Image ── */}
+            <Card className="clinical-card">
+              <CardHeader>
+                <CardTitle className="text-base flex items-center gap-2">
+                  <ImageIcon className="h-4 w-4 text-primary" />
+                  Hyperthyroidism Algorithm
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <ZoomableImage
+                  src="/images/hyperthyroidism-algorithm.jpg"
+                  alt="Hyperthyroidism diagnostic and management algorithm reference"
+                  className="w-full rounded-lg border border-border/60"
+                />
+                <p className="mt-3 text-xs text-muted-foreground">
+                  Click/tap to zoom. Reference algorithm for hyperthyroidism evaluation and management.
+                </p>
               </CardContent>
             </Card>
           </div>
