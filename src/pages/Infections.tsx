@@ -1,11 +1,10 @@
 import { FrequencyBadge } from "@/components/FrequencyBadge";
 import { useMemo, useState } from "react";
 import { useSearchParams } from "react-router-dom";
-import { AlertTriangle, Pill, Printer, Copy, Download, ShieldAlert, Baby, Activity, Hospital, FlaskConical, Droplets } from "lucide-react";
+import { AlertTriangle, Pill, Printer, Copy, Download, ShieldAlert, Baby, Activity, Hospital, FlaskConical } from "lucide-react";
 import { downloadTextFile } from "@/lib/clinical-utils";
 import { toast } from "sonner";
 import SeriousInfections from "./infections/SeriousInfections";
-import AcuteDiarrhoea from "./infections/AcuteDiarrhoea";
 import { ANTIBIOTICS_DATA } from "@/calculators/diabetes/antibiotics-data";
 
 function egfrBand(egfr: number): "normal" | "eGFR60_89" | "eGFR45_59" | "eGFR30_44" | "eGFR15_29" | "eGFRBelow15" {
@@ -308,8 +307,8 @@ const PILL_INPUT =
 
 export default function Infections() {
   const [searchParams, setSearchParams] = useSearchParams();
-  const urlTab = searchParams.get("tab") as "primary" | "serious" | "diarrhoea" | null;
-  const [tab, setTab] = useState<"primary" | "serious" | "diarrhoea">(urlTab ?? "primary");
+  const urlTab = searchParams.get("tab") as "primary" | "serious" | null;
+  const [tab, setTab] = useState<"primary" | "serious">(urlTab ?? "primary");
   const [conditionId, setConditionId] = useState<string>("strep");
   const [severity, setSeverity] = useState<Severity>("mild");
   const [pregnant, setPregnant] = useState(false);
@@ -444,20 +443,10 @@ export default function Infections() {
           >
             <Hospital className="h-4 w-4" /> Serious & nosocomial
           </button>
-          <button
-            onClick={() => { setTab("diarrhoea"); setSearchParams({ tab: "diarrhoea" }); }}
-            className={`px-3 py-2 text-sm font-medium border-b-2 -mb-px inline-flex items-center gap-1.5 ${
-              tab === "diarrhoea" ? "border-primary text-primary" : "border-transparent text-muted-foreground hover:text-foreground"
-            }`}
-          >
-            <Droplets className="h-4 w-4" /> Acute diarrhoea
-          </button>
         </div>
 
         {tab === "serious" ? (
           <SeriousInfections />
-        ) : tab === "diarrhoea" ? (
-          <AcuteDiarrhoea />
         ) : (
         <>
         <div className="rounded-md border border-warning/30 bg-warning/10 px-3 py-2 text-xs text-amber-900 flex gap-2">

@@ -10,11 +10,6 @@ import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import { TabNavigation } from "@/components/TabNavigation";
 import { AppSidebar } from "@/components/AppSidebar";
 
-// Mode Pages
-import ModeSelector from "@/pages/ModeSelector";
-import SimpleMode, { ModeNav as ModeNavSimple } from "@/pages/SimpleMode";
-import ModerateMode, { ModeNav as ModeNavModerate } from "@/pages/ModerateMode";
-
 // Big Four NCD Pages
 import Home from "@/pages/Home";
 import Diabetes from "@/pages/Diabetes";
@@ -70,8 +65,6 @@ import IronReplacementCalculator from "@/calculators/iron/IronReplacementCalcula
 import ThyroidCalculator from "@/calculators/thyroid/ThyroidCalculator";
 
 // Diabetes Buddy Pages
-import LandingPage from "@/pages/LandingPage";
-import AssessmentGrid from "@/pages/AssessmentGrid";
 import Dashboard from "@/pages/Dashboard";
 import PatientInput from "@/pages/PatientInput";
 import FoodDatabase from "@/pages/FoodDatabase";
@@ -85,8 +78,6 @@ import SlidingScalePage from "@/pages/SlidingScaleInsulin";
 import HypoRiskPage from "@/pages/HypoRiskCalculator";
 import RenalDosePage from "@/pages/RenalDoseAdjustment";
 import RespiratoryPage from "@/pages/Respiratory";
-import RespiratorySimple from "@/pages/RespiratorySimple";
-import RespiratoryModerate from "@/pages/RespiratoryModerate";
 import PrediabetesAlgorithm from "@/pages/PrediabetesAlgorithm";
 import CKDGuideline from "@/pages/CKDGuideline";
 import PrivacyPolicy from "@/pages/PrivacyPolicy";
@@ -117,6 +108,9 @@ import WomenHealth from "@/pages/WomenHealth";
 
 // Infections
 import Infections from "@/pages/Infections";
+
+// Acute Diarrhoea
+import AcuteDiarrhoeaPage from "@/pages/AcuteDiarrhoeaPage";
 
 // PEP
 import PEP from "@/pages/PEP";
@@ -199,21 +193,21 @@ const App = () => (
       <BrowserRouter>
         <CommandPalette />
         <Routes>
-          {/* Mode Selector — landing */}
-          <Route path="/" element={<LandingPage />} />
-          <Route path="/index" element={<LandingPage />} />
-          <Route path="/simple" element={<SimpleMode />} />
-          <Route path="/moderate" element={<ModerateMode />} />
-          <Route path="/hard" element={<Navigate to="/home" replace />} />
+          {/* Landing — redirect to main app */}
+          <Route path="/" element={<Navigate to="/home" replace />} />
+          <Route path="/index" element={<Navigate to="/home" replace />} />
 
-          {/* Full-screen routes — no sidebar */}
-          <Route path="/landing" element={<LandingPage />} />
-          <Route path="/app" element={<AssessmentGrid />} />
+          {/* Legacy redirects */}
+          <Route path="/simple" element={<Navigate to="/home" replace />} />
+          <Route path="/moderate" element={<Navigate to="/home" replace />} />
+          <Route path="/hard" element={<Navigate to="/home" replace />} />
+          <Route path="/landing" element={<Navigate to="/home" replace />} />
+          <Route path="/app" element={<Navigate to="/home" replace />} />
 
           {/* Diabetes Buddy routes with sidebar */}
           <Route path="/db/*" element={<SidebarProvider><DiabetesBuddyLayout /></SidebarProvider>} />
 
-          {/* Hard Mode (full app) — all under /home or direct paths */}
+          {/* Main App — unified interface */}
           <Route path="/home" element={<><TabNavigation /><Home /></>} />
           <Route path="/diabetes" element={<><TabNavigation /><Diabetes /></>} />
           <Route path="/hypertension" element={<><TabNavigation /><Hypertension /></>} />
@@ -240,9 +234,9 @@ const App = () => (
           <Route path="/sliding-scale" element={<><TabNavigation /><SlidingScaleInsulinCalc /></>} />
           <Route path="/hypo-risk" element={<><TabNavigation /><HypoRiskCalculatorCalc /></>} />
           <Route path="/renal-dosing" element={<><TabNavigation /><RenalDoseAdjustmentCalc /></>} />
-          <Route path="/respiratory/simple" element={<><ModeNavSimple /><RespiratorySimple /></>} />
-          <Route path="/respiratory/moderate" element={<><ModeNavModerate /><RespiratoryModerate /></>} />
           <Route path="/respiratory" element={<><TabNavigation /><RespiratoryPage /></>} />
+          <Route path="/respiratory/simple" element={<Navigate to="/respiratory" replace />} />
+          <Route path="/respiratory/moderate" element={<Navigate to="/respiratory" replace />} />
           <Route path="/diabetes/medication-algorithm" element={<><TabNavigation /><DiabetesMedicationAlgorithmCalc /></>} />
           <Route path="/lipid-panel" element={<><TabNavigation /><LipidPanelCalc /></>} />
           <Route path="/ascvd-risk" element={<><TabNavigation /><AscvdEmrCalc /></>} />
@@ -262,6 +256,7 @@ const App = () => (
           <Route path="/pcos" element={<><TabNavigation /><PCOS /></>} />
           <Route path="/women-health" element={<><TabNavigation /><WomenHealth /></>} />
           <Route path="/infections" element={<><TabNavigation /><Infections /></>} />
+          <Route path="/acute-diarrhoea" element={<><TabNavigation /><AcuteDiarrhoeaPage /></>} />
           <Route path="/pep" element={<><TabNavigation /><PEP /></>} />
           <Route path="/adult-vaccinations" element={<><TabNavigation /><AdultVaccinations /></>} />
           <Route path="/electrolytes" element={<><TabNavigation /><Electrolytes /></>} />
