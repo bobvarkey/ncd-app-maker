@@ -21,8 +21,11 @@ import {
   Download,
   Printer,
   Copy,
+  Image as ImageIcon,
 } from "lucide-react";
 import { downloadTextFile } from "@/lib/clinical-utils";
+import ZoomableImage from "@/components/ZoomableImage";
+import acuteDiarrhoeaImg from "@/assets/acute-diarrhoea-poster.jpg";
 import { toast } from "sonner";
 
 /* ── Hand-drawn style helpers ──────────────────────────────────── */
@@ -365,6 +368,20 @@ Disclaimer: Decision-support only. Does not replace clinical judgement.`;
           </div>
         </div>
       </div>
+
+      {/* Images */}
+      <CollapsibleSection title="Images" icon={ImageIcon} defaultOpen={false}>
+        <div className="mx-auto max-w-lg">
+          <ZoomableImage
+            src={acuteDiarrhoeaImg}
+            alt="Acute diarrhoea clinical poster — risk stratification and management overview"
+            className="w-full rounded-xl border-2 border-amber-700/25"
+          />
+          <p className="mt-2 text-center font-handwritten text-xs text-amber-700/60">
+            Click to zoom · Risk stratification and management overview
+          </p>
+        </div>
+      </CollapsibleSection>
 
       {/* Step 4: Management */}
       <CollapsibleSection title="4. Management" icon={Syringe} defaultOpen>
