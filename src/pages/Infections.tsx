@@ -1,5 +1,6 @@
 import { FrequencyBadge } from "@/components/FrequencyBadge";
 import { useMemo, useState } from "react";
+import { useSearchParams } from "react-router-dom";
 import { AlertTriangle, Pill, Printer, Copy, Download, ShieldAlert, Baby, Activity, Hospital, FlaskConical, Droplets } from "lucide-react";
 import { downloadTextFile } from "@/lib/clinical-utils";
 import { toast } from "sonner";
@@ -306,7 +307,9 @@ const PILL_INPUT =
   "w-full rounded-md border border-border bg-background px-3 py-2 text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-primary/30";
 
 export default function Infections() {
-  const [tab, setTab] = useState<"primary" | "serious" | "diarrhoea">("primary");
+  const [searchParams, setSearchParams] = useSearchParams();
+  const urlTab = searchParams.get("tab") as "primary" | "serious" | "diarrhoea" | null;
+  const [tab, setTab] = useState<"primary" | "serious" | "diarrhoea">(urlTab ?? "primary");
   const [conditionId, setConditionId] = useState<string>("strep");
   const [severity, setSeverity] = useState<Severity>("mild");
   const [pregnant, setPregnant] = useState(false);
@@ -426,7 +429,7 @@ export default function Infections() {
         {/* Tabs */}
         <div className="flex gap-1 border-b border-border print:hidden">
           <button
-            onClick={() => setTab("primary")}
+            onClick={() => { setTab("primary"); setSearchParams({}); }}
             className={`px-3 py-2 text-sm font-medium border-b-2 -mb-px inline-flex items-center gap-1.5 ${
               tab === "primary" ? "border-primary text-primary" : "border-transparent text-muted-foreground hover:text-foreground"
             }`}
@@ -434,7 +437,7 @@ export default function Infections() {
             <Pill className="h-4 w-4" /> Primary care
           </button>
           <button
-            onClick={() => setTab("serious")}
+            onClick={() => { setTab("serious"); setSearchParams({ tab: "serious" }); }}
             className={`px-3 py-2 text-sm font-medium border-b-2 -mb-px inline-flex items-center gap-1.5 ${
               tab === "serious" ? "border-primary text-primary" : "border-transparent text-muted-foreground hover:text-foreground"
             }`}
@@ -442,7 +445,7 @@ export default function Infections() {
             <Hospital className="h-4 w-4" /> Serious & nosocomial
           </button>
           <button
-            onClick={() => setTab("diarrhoea")}
+            onClick={() => { setTab("diarrhoea"); setSearchParams({ tab: "diarrhoea" }); }}
             className={`px-3 py-2 text-sm font-medium border-b-2 -mb-px inline-flex items-center gap-1.5 ${
               tab === "diarrhoea" ? "border-primary text-primary" : "border-transparent text-muted-foreground hover:text-foreground"
             }`}

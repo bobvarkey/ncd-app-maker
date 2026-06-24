@@ -189,6 +189,39 @@ const miscItems: NavItem[] = [
   { path: "/pcos",                   label: "PCOS",        icon: "🩺", active: "bg-rose-500/10 text-rose-400 border-rose-500/30" },
 ];
 
+const infectionsSubItems = [
+  { tab: "diarrhoea", label: "Acute Diarrhoea", icon: "💧" },
+];
+
+function InfectionsSubNav() {
+  const [searchParams] = useSearchParams();
+  const current = searchParams.get("tab") ?? "primary";
+  return (
+    <ul className="mt-1 ml-4 flex flex-col gap-0.5 border-l border-border pl-2">
+      {infectionsSubItems.map((s) => {
+        const isActive = current === s.tab;
+        return (
+          <li key={s.tab}>
+            <Link
+              to={`/infections?tab=${s.tab}`}
+              className={cn(
+                "flex items-center gap-2 px-2 py-1.5 rounded-md text-xs font-medium transition-colors",
+                isActive
+                  ? "bg-rose-500/10 text-rose-400"
+                  : "text-muted-foreground hover:bg-muted hover:text-foreground"
+              )}
+              aria-current={isActive ? "page" : undefined}
+            >
+              <span className="text-sm leading-none">{s.icon}</span>
+              <span className="truncate">{s.label}</span>
+            </Link>
+          </li>
+        );
+      })}
+    </ul>
+  );
+}
+
 const womenHealthItems: NavItem[] = [
   { path: "/women-health?tab=pmos",  label: "PMOS / PCOS", icon: "🩺", active: "bg-rose-500/10 text-rose-400 border-rose-500/30" },
   { path: "/women-health?tab=hrt",  label: "HRT Algorithm", icon: "❤️", active: "bg-pink-500/10 text-pink-400 border-pink-500/30" },
@@ -438,9 +471,11 @@ export function TabNavigation() {
             const isBlood = item.path === "/anemia";
             const isHtn = item.path === "/hypertension";
             const isElectrolyte = item.path === "/electrolytes";
+            const isInfections = item.path === "/infections";
             const showBloodSubs = isBlood && currentPath.startsWith("/anemia") && !collapsed;
             const showHtnSubs = isHtn && currentPath.startsWith("/hypertension") && !collapsed;
             const showElectrolyteSubs = isElectrolyte && (currentPath.startsWith("/electrolytes") || electrolyteSubItems.some(s => currentPath.startsWith(s.path))) && !collapsed;
+            const showInfectionsSubs = isInfections && currentPath.startsWith("/infections") && !collapsed;
             return (
               <li key={item.path}>
                 <Link
@@ -461,6 +496,7 @@ export function TabNavigation() {
                 {showBloodSubs && <BloodSubNav />}
                 {showHtnSubs && <HtnSubNav />}
                 {showElectrolyteSubs && <ElectrolyteSubNav />}
+                {showInfectionsSubs && <InfectionsSubNav />}
               </li>
             );
           })}
