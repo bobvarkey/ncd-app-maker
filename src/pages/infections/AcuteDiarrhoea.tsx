@@ -70,6 +70,7 @@ const RED_FLAGS = [
 const WORKUP = [
   { label: "Stool culture", when: "Bloody stool, severe, travel, outbreak, immunocompromised" },
   { label: "Stool WBC / lactoferrin", when: "Suggests inflammatory diarrhoea" },
+  { label: "Fecal calprotectin", when: "Inflammatory vs non‑inflammatory triage; bloody stools, systemic features, moderate–severe" },
   { label: "C. difficile toxin", when: "Recent abx, hospitalisation, persistent after 7d" },
   { label: "O&P (ova & parasites)", when: "Persistent >14d, travel, waterborne, daycare" },
   { label: "CBC / CRP / BMP", when: "Moderate–severe, dehydration, elderly" },
@@ -288,6 +289,82 @@ Disclaimer: Decision-support only. Does not replace clinical judgement.`;
           </table>
         </div>
       </CollapsibleSection>
+
+      {/* fCal — Clinical Interpretation Guide */}
+      <div className="relative rounded-2xl border-2 border-amber-600/30 bg-gradient-to-br from-amber-100/80 to-yellow-50/80 p-4">
+        <div className="absolute -top-2 -left-2 flex h-7 w-7 items-center justify-center rounded-full border-2 border-amber-600/40 bg-amber-200">
+          <FlaskConical className="h-3.5 w-3.5 text-amber-900" />
+        </div>
+        <div className="ml-2">
+          <div className="font-handwritten text-sm font-bold text-amber-900">
+            Fecal Calprotectin (fCal) — Interpretation
+          </div>
+          <div className="mt-2 space-y-2 font-handwritten text-xs text-amber-800/80">
+            <p>
+              Use fCal as an adjunct test when the key clinical question is
+              <strong> inflammatory vs non‑inflammatory </strong> diarrhoea
+              (eg, bloody stools, systemic features, or moderate–severe
+              disease). Interpret alongside history, exam, stool
+              microscopy/PCR, and medication history (NSAIDs).
+            </p>
+            <div className="flex items-start gap-2">
+              <span className="mt-1 h-1.5 w-1.5 shrink-0 rounded-full bg-amber-500" />
+              <span>
+                <strong>Positive</strong> + clinical suspicion for invasive infection
+                → prioritise stool culture/PCR and consider empiric therapy per
+                local protocols.
+              </span>
+            </div>
+            <div className="flex items-start gap-2">
+              <span className="mt-1 h-1.5 w-1.5 shrink-0 rounded-full bg-amber-500" />
+              <span>
+                <strong>Negative</strong> + low clinical concern → favour
+                supportive care.
+              </span>
+            </div>
+            <div className="flex items-start gap-2">
+              <span className="mt-1 h-1.5 w-1.5 shrink-0 rounded-full bg-amber-500" />
+              <span>
+                Know your lab's assay cutoffs and pretest probability —
+                thresholds and performance characteristics vary between
+                populations and settings.
+              </span>
+            </div>
+            <div className="flex items-start gap-2">
+              <span className="mt-1 h-1.5 w-1.5 shrink-0 rounded-full bg-amber-500" />
+              <span>
+                <strong>Mild, self‑limited, non‑bloody</strong> → supportive
+                care is usually enough. fCal adds limited value as most
+                uncomplicated viral diarrhoeas resolve without testing.
+              </span>
+            </div>
+            <div className="flex items-start gap-2">
+              <span className="mt-1 h-1.5 w-1.5 shrink-0 rounded-full bg-amber-500" />
+              <span>
+                <strong>Diagnosis uncertain</strong> → fCal helps triage. A
+                higher value supports an inflammatory process; one multicentre
+                study reported sensitivity 83% and specificity 87% for acute
+                bacterial diarrhoea, outperforming lactoferrin and FOBT.
+              </span>
+            </div>
+            <div className="flex items-start gap-2">
+              <span className="mt-1 h-1.5 w-1.5 shrink-0 rounded-full bg-amber-500" />
+              <span>
+                <strong>Elevated</strong> → send stool PCR/culture and manage
+                based on the clinical picture. Do NOT treat as proof of
+                bacterial infection — IBD, NSAIDs, and other inflammatory
+                states can also raise fCal.
+              </span>
+            </div>
+            <div className="flex items-start gap-2">
+              <span className="mt-1 h-1.5 w-1.5 shrink-0 rounded-full bg-amber-500" />
+              <span>
+                <strong>Low</strong> → invasive bacterial diarrhoea is less likely.
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
 
       {/* Step 4: Management */}
       <CollapsibleSection title="4. Management" icon={Syringe} defaultOpen>
