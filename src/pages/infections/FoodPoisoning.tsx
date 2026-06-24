@@ -72,7 +72,7 @@ const ALGORITHM_STEPS = [
 ];
 
 const HISTORY_ITEMS = [
-  { icon: Utensils, label: "Food history", detail: "Undercooked meat / poultry / eggs, seafood, raw milk, fried rice, deli meats, unpasteurised juice" },
+  { icon: Utensils, label: "Food history", detail: "Undercooked meat / poultry / beef, seafood, shellfish, raw eggs, unpasteurised milk / juice, fried rice, deli meats, soft cheese, mayonnaise, custards, home-canned foods, honey, pork, gravy, buffets, large reef fish" },
   { icon: Clock, label: "Incubation period", detail: "Hours to days — key to narrowing aetiology" },
   { icon: Droplets, label: "Stool character", detail: "Watery, bloody, mucous — suggests invasive vs non‑invasive" },
   { icon: Thermometer, label: "Fever", detail: "High fever favours invasive bacterial pathogen" },
