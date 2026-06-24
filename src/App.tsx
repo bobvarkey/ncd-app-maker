@@ -109,6 +109,9 @@ import WomenHealth from "@/pages/WomenHealth";
 // Infections
 import Infections from "@/pages/Infections";
 
+// Acute Diarrhoea
+import AcuteDiarrhoeaPage from "@/pages/AcuteDiarrhoeaPage";
+
 // PEP
 import PEP from "@/pages/PEP";
 
@@ -253,6 +256,7 @@ const App = () => (
           <Route path="/pcos" element={<><TabNavigation /><PCOS /></>} />
           <Route path="/women-health" element={<><TabNavigation /><WomenHealth /></>} />
           <Route path="/infections" element={<><TabNavigation /><Infections /></>} />
+          <Route path="/acute-diarrhoea" element={<><TabNavigation /><AcuteDiarrhoeaPage /></>} />
           <Route path="/pep" element={<><TabNavigation /><PEP /></>} />
           <Route path="/adult-vaccinations" element={<><TabNavigation /><AdultVaccinations /></>} />
           <Route path="/electrolytes" element={<><TabNavigation /><Electrolytes /></>} />
