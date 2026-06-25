@@ -483,6 +483,18 @@ export default function LipidsAssessment({ onClassificationChange, onNavigateToT
             </a>
           </figcaption>
         </figure>
+        <figure className="space-y-2 mt-4">
+          <ZoomableImage
+            src="/images/hypertriglyceridemia-cac-lai.jpg"
+            alt="Hypertriglyceridemia and CAC — Additional Reference"
+          />
+          <figcaption className="text-xs text-muted-foreground">
+            Hypertriglyceridemia and CAC risk stratification reference. Source: LAI 2023.
+            <a href="https://doi.org/10.1016/j.jacl.2024.01.006" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline ml-1">
+              doi:10.1016/j.jacl.2024.01.006
+            </a>
+          </figcaption>
+        </figure>
       </SectionCard>
 
       {/* ─── CACS Risk Stratification ─── */}
@@ -495,6 +507,18 @@ export default function LipidsAssessment({ onClassificationChange, onNavigateToT
           <figcaption className="text-xs text-muted-foreground">
             Coronary Artery Calcium Score (CACS) risk classification for refining ASCVD risk. 
             Source: Lipid Association of India 2023.
+            <a href="https://doi.org/10.1016/j.jacl.2024.01.006" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline ml-1">
+              doi:10.1016/j.jacl.2024.01.006
+            </a>
+          </figcaption>
+        </figure>
+        <figure className="space-y-2 mt-4">
+          <ZoomableImage
+            src="/images/hypertriglyceridemia-cac-lai.jpg"
+            alt="Hypertriglyceridemia and CAC — Additional Reference"
+          />
+          <figcaption className="text-xs text-muted-foreground">
+            Hypertriglyceridemia and CAC risk stratification reference. Source: LAI 2023.
             <a href="https://doi.org/10.1016/j.jacl.2024.01.006" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline ml-1">
               doi:10.1016/j.jacl.2024.01.006
             </a>
