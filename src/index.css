@@ -25,10 +25,10 @@
     --background: 0 0% 0%;              /* pure black */
     --foreground: 0 0% 100%;            /* pure white */
 
-    --card: 0 0% 0% / 0.55;             /* semi-transparent black — lets gradient show through */
+    --card: 0 0% 3%;                    /* barely off-black */
     --card-foreground: 0 0% 100%;
 
-    --popover: 0 0% 0% / 0.55;
+    --popover: 0 0% 3%;
     --popover-foreground: 0 0% 100%;
 
     --primary: 185 60% 50%;            /* teal accent — keep for visual pop */
@@ -66,7 +66,7 @@
     --mode-complex: 265 60% 55%;
 
     /* Sidebar tokens */
-    --sidebar-background: 0 0% 0% / 0.6;
+    --sidebar-background: 0 0% 2%;
     --sidebar-foreground: 0 0% 100%;
     --sidebar-primary: 185 60% 50%;
     --sidebar-primary-foreground: 0 0% 100%;
@@ -80,35 +80,10 @@
     @apply border-border;
   }
   html {
-    background: linear-gradient(
-      180deg,
-      rgb(2, 41, 100) 0%,
-      rgb(31, 62, 123) 3%,
-      rgb(63, 77, 140) 6%,
-      rgb(82, 112, 154) 10%,
-      rgb(106, 138, 183) 16%,
-      rgb(127, 152, 188) 20%,
-      rgb(150, 191, 221) 26%,
-      rgb(164, 185, 199) 30%,
-      rgb(147, 153, 160) 35%,
-      rgb(118, 123, 132) 40%,
-      rgb(81, 108, 107) 44%,
-      rgb(123, 146, 69) 46%,
-      rgb(149, 147, 58) 48%,
-      rgb(130, 124, 93) 52%,
-      rgb(121, 94, 74) 58%,
-      rgb(118, 78, 66) 66%,
-      rgb(90, 82, 91) 74%,
-      rgb(65, 59, 54) 82%,
-      rgb(31, 30, 30) 90%,
-      rgb(13, 16, 21) 100%
-    );
-    background-attachment: fixed;
-    min-height: 100%;
+    @apply bg-background;
   }
   body {
-    @apply text-foreground font-sans antialiased;
-    background: transparent;
+    @apply bg-background text-foreground font-sans antialiased;
     font-family: 'DM Sans', system-ui, sans-serif;
   }
 
@@ -210,7 +185,7 @@
 
 @layer components {
   .clinical-card {
-    @apply rounded-xl border border-border/60 bg-card/80 backdrop-blur-sm shadow-sm transition-shadow duration-200 hover:shadow-md;
+    @apply rounded-xl border border-border bg-card shadow-sm transition-shadow duration-200 hover:shadow-md;
   }
   .stat-badge {
     @apply inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-sm font-medium;
