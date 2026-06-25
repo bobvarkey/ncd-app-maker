@@ -29,6 +29,20 @@ export default function ZoomableImage({
   const [dragging, setDragging] = useState(false);
   const [dragStart, setDragStart] = useState({ x: 0, y: 0 });
   const imageRef = useRef<HTMLImageElement>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  /** Clamp position so the image stays within panning bounds */
+  const clampPosition = useCallback((pos: { x: number; y: number }, currentZoom: number) => {
+    if (currentZoom <= 1) return { x: 0, y: 0 };
+    const container = containerRef.current;
+    if (!container) return pos;
+    const maxX = ((currentZoom - 1) * container.offsetWidth) / 2;
+    const maxY = ((currentZoom - 1) * container.offsetHeight) / 2;
+    return {
+      x: Math.max(-maxX, Math.min(maxX, pos.x)),
+      y: Math.max(-maxY, Math.min(maxY, pos.y)),
+    };
+  }, []);
 
   const reset = useCallback(() => {
     setZoom(1);
@@ -36,8 +50,13 @@ export default function ZoomableImage({
   }, []);
 
   const zoomIn = useCallback(() => {
-    setZoom((prev) => Math.min(prev * 1.5, 10));
-  }, []);
+    setZoom((prev) => {
+      const next = Math.min(prev * 1.5, 10);
+      // Adjust position so the center stays centered
+      setPosition((pos) => clampPosition(pos, next));
+      return next;
+    });
+  }, [clampPosition]);
 
   const zoomOut = useCallback(() => {
     setZoom((prev) => {
@@ -46,15 +65,20 @@ export default function ZoomableImage({
         setPosition({ x: 0, y: 0 });
         return 1;
       }
+      setPosition((pos) => clampPosition(pos, next));
       return next;
     });
-  }, []);
+  }, [clampPosition]);
 
   // Mouse wheel zoom
   const handleWheel = useCallback((e: React.WheelEvent) => {
     e.preventDefault();
     if (e.deltaY < 0) {
-      setZoom((prev) => Math.min(prev * 1.2, 10));
+      setZoom((prev) => {
+        const next = Math.min(prev * 1.2, 10);
+        setPosition((pos) => clampPosition(pos, next));
+        return next;
+      });
     } else {
       setZoom((prev) => {
         const next = prev / 1.2;
@@ -62,10 +86,11 @@ export default function ZoomableImage({
           setPosition({ x: 0, y: 0 });
           return 1;
         }
+        setPosition((pos) => clampPosition(pos, next));
         return next;
       });
     }
-  }, []);
+  }, [clampPosition]);
 
   // Mouse drag to pan
   const handleMouseDown = useCallback((e: React.MouseEvent) => {
@@ -77,11 +102,16 @@ export default function ZoomableImage({
 
   const handleMouseMove = useCallback((e: React.MouseEvent) => {
     if (!dragging || zoom <= 1) return;
-    setPosition({
-      x: e.clientX - dragStart.x,
-      y: e.clientY - dragStart.y,
-    });
-  }, [dragging, zoom, dragStart]);
+    setPosition(
+      clampPosition(
+        {
+          x: e.clientX - dragStart.x,
+          y: e.clientY - dragStart.y,
+        },
+        zoom
+      )
+    );
+  }, [dragging, zoom, dragStart, clampPosition]);
 
   const handleMouseUp = useCallback(() => {
     setDragging(false);
@@ -98,11 +128,16 @@ export default function ZoomableImage({
   const handleTouchMove = useCallback((e: React.TouchEvent) => {
     if (!dragging || zoom <= 1) return;
     const touch = e.touches[0];
-    setPosition({
-      x: touch.clientX - dragStart.x,
-      y: touch.clientY - dragStart.y,
-    });
-  }, [dragging, zoom, dragStart]);
+    setPosition(
+      clampPosition(
+        {
+          x: touch.clientX - dragStart.x,
+          y: touch.clientY - dragStart.y,
+        },
+        zoom
+      )
+    );
+  }, [dragging, zoom, dragStart, clampPosition]);
 
   const handleTouchEnd = useCallback(() => {
     setDragging(false);
@@ -201,6 +236,7 @@ export default function ZoomableImage({
 
           {/* Image area */}
           <div
+            ref={containerRef}
             className="flex-1 flex items-center justify-center overflow-hidden select-none"
             onWheel={handleWheel}
             onMouseDown={handleMouseDown}
@@ -222,6 +258,7 @@ export default function ZoomableImage({
               className="max-w-full max-h-full select-none pointer-events-none"
               style={{
                 transform: `translate(${position.x}px, ${position.y}px) scale(${zoom}) rotate(${rotation}deg)`,
+                transformOrigin: "center center",
                 transition: dragging ? "none" : "transform 0.15s ease-out",
               }}
             />
