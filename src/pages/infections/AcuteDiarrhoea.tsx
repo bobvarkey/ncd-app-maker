@@ -381,65 +381,37 @@ Disclaimer: Decision-support only. Does not replace clinical judgement.`;
           </div>
           <div className="mt-2 space-y-2 font-handwritten text-xs text-amber-800/80">
             <p>
-              Use fCal as an adjunct test when the key clinical question is
-              <strong> inflammatory vs non‑inflammatory </strong> diarrhoea
-              (eg, bloody stools, systemic features, or moderate–severe
-              disease). Interpret alongside history, exam, stool
-              microscopy/PCR, and medication history (NSAIDs).
+              Adjunct test for <strong>inflammatory vs non‑inflammatory</strong> triage
+              (bloody stools, systemic features, moderate–severe). Interpret alongside
+              history, exam, stool PCR, and NSAID use.
             </p>
             <div className="flex items-start gap-2">
               <span className="mt-1 h-1.5 w-1.5 shrink-0 rounded-full bg-amber-500" />
               <span>
-                <strong>Positive</strong> + clinical suspicion for invasive infection
-                → prioritise stool culture/PCR and consider empiric therapy per
-                local protocols.
+                <strong>Elevated</strong> → send stool PCR/culture. Not proof of
+                bacterial infection — IBD, NSAIDs, and other inflammatory states
+                also raise fCal.
               </span>
             </div>
             <div className="flex items-start gap-2">
               <span className="mt-1 h-1.5 w-1.5 shrink-0 rounded-full bg-amber-500" />
               <span>
-                <strong>Negative</strong> + low clinical concern → favour
-                supportive care.
+                <strong>Low / Negative</strong> + low clinical concern → invasive
+                bacterial diarrhoea less likely; supportive care suffices.
               </span>
             </div>
             <div className="flex items-start gap-2">
               <span className="mt-1 h-1.5 w-1.5 shrink-0 rounded-full bg-amber-500" />
               <span>
-                Know your lab's assay cutoffs and pretest probability —
-                thresholds and performance characteristics vary between
-                populations and settings.
+                <strong>Mild, self‑limited, non‑bloody</strong> → fCal adds limited
+                value; most uncomplicated viral diarrhoeas resolve without testing.
               </span>
             </div>
             <div className="flex items-start gap-2">
               <span className="mt-1 h-1.5 w-1.5 shrink-0 rounded-full bg-amber-500" />
               <span>
-                <strong>Mild, self‑limited, non‑bloody</strong> → supportive
-                care is usually enough. fCal adds limited value as most
-                uncomplicated viral diarrhoeas resolve without testing.
-              </span>
-            </div>
-            <div className="flex items-start gap-2">
-              <span className="mt-1 h-1.5 w-1.5 shrink-0 rounded-full bg-amber-500" />
-              <span>
-                <strong>Diagnosis uncertain</strong> → fCal helps triage. A
-                higher value supports an inflammatory process; one multicentre
-                study reported sensitivity 83% and specificity 87% for acute
-                bacterial diarrhoea, outperforming lactoferrin and FOBT.
-              </span>
-            </div>
-            <div className="flex items-start gap-2">
-              <span className="mt-1 h-1.5 w-1.5 shrink-0 rounded-full bg-amber-500" />
-              <span>
-                <strong>Elevated</strong> → send stool PCR/culture and manage
-                based on the clinical picture. Do NOT treat as proof of
-                bacterial infection — IBD, NSAIDs, and other inflammatory
-                states can also raise fCal.
-              </span>
-            </div>
-            <div className="flex items-start gap-2">
-              <span className="mt-1 h-1.5 w-1.5 shrink-0 rounded-full bg-amber-500" />
-              <span>
-                <strong>Low</strong> → invasive bacterial diarrhoea is less likely.
+                Know your lab's assay cutoffs — thresholds and performance vary
+                between populations and settings.
               </span>
             </div>
           </div>
