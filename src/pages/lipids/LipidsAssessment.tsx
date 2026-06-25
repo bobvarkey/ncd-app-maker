@@ -524,6 +524,19 @@ export default function LipidsAssessment({ onClassificationChange, onNavigateToT
             </a>
           </figcaption>
         </figure>
+        <figure className="space-y-2 mt-4">
+          <ZoomableImage
+            src="/images/cacs-risk-targets-lai.jpg"
+            alt="CACS-Based Risk Stratification and Lipid Targets"
+          />
+          <figcaption className="text-xs text-muted-foreground">
+            Risk stratification and lipid targets based on CACS score: ≥75th percentile → LDL-C target &lt;70 mg/dl. 
+            CACS = Coronary Artery Calcium Score. Based on Indian guidelines and risk stratification.
+            <a href="https://doi.org/10.1016/j.jacl.2024.01.006" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline ml-1">
+              doi:10.1016/j.jacl.2024.01.006
+            </a>
+          </figcaption>
+        </figure>
       </SectionCard>
 
       {/* ─── Diabetes + Lipid Management Algorithm ─── */}
