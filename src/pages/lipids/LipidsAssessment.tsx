@@ -145,28 +145,28 @@ function classifyLAI(
 }
 
 const BUCKET_DETAILS: Record<string, { ldl: string; nonHdl: string; apoB: string; intensity: string; drug: string }> = {
-  "EHR-A": { ldl: "< 55", nonHdl: "< 85", apoB: "< 70", intensity: "High-Intensity Statin", drug: "Atorva 40-80 / Rosuva 20-40 + Ezetimibe ± PCSK9i" },
-  "EHR-B": { ldl: "< 55", nonHdl: "< 85", apoB: "< 70", intensity: "High-Intensity Statin + Add-on", drug: "Atorva 40-80 / Rosuva 20-40 + Ezetimibe + PCSK9i" },
-  "EHR-C": { ldl: "< 55", nonHdl: "< 85", apoB: "< 70", intensity: "Maximal Therapy", drug: "Max statin + Ezetimibe + PCSK9i + Bempedoic acid" },
-  "VHR-A": { ldl: "< 55", nonHdl: "< 85", apoB: "< 70", intensity: "High-Intensity Statin", drug: "Atorva 40-80 / Rosuva 20-40 ± Ezetimibe" },
-  "VHR-B": { ldl: "< 55", nonHdl: "< 85", apoB: "< 70", intensity: "High-Intensity Statin + Add-on", drug: "Atorva 40-80 / Rosuva 20-40 + Ezetimibe" },
-  "VHR-C": { ldl: "< 55", nonHdl: "< 85", apoB: "< 70", intensity: "Maximal Therapy", drug: "Max statin + Ezetimibe ± PCSK9i" },
+  "EHR-A": { ldl: "< 50", nonHdl: "< 80", apoB: "< 65", intensity: "High-Intensity Statin", drug: "Atorva 40-80 / Rosuva 20-40 + Ezetimibe ± PCSK9i" },
+  "EHR-B": { ldl: "≤ 30", nonHdl: "≤ 60", apoB: "< 50", intensity: "High-Intensity Statin + Add-on", drug: "Atorva 40-80 / Rosuva 20-40 + Ezetimibe + PCSK9i" },
+  "EHR-C": { ldl: "10-15", nonHdl: "40-45", apoB: "—", intensity: "Maximal Therapy", drug: "Max statin + Ezetimibe + PCSK9i + Bempedoic acid" },
+  "VHR-A": { ldl: "< 50", nonHdl: "< 80", apoB: "< 65", intensity: "High-Intensity Statin", drug: "Atorva 40-80 / Rosuva 20-40 ± Ezetimibe" },
+  "VHR-B": { ldl: "< 50", nonHdl: "< 80", apoB: "< 65", intensity: "High-Intensity Statin + Add-on", drug: "Atorva 40-80 / Rosuva 20-40 + Ezetimibe" },
+  "VHR-C": { ldl: "< 50", nonHdl: "< 80", apoB: "< 65", intensity: "Maximal Therapy", drug: "Max statin + Ezetimibe ± PCSK9i" },
   "HR":    { ldl: "< 70", nonHdl: "< 100", apoB: "< 80", intensity: "High-Intensity Statin", drug: "Atorva 20-40 / Rosuva 10-20" },
-  "MOD":   { ldl: "< 100", nonHdl: "< 130", apoB: "< 100", intensity: "Moderate-Intensity Statin", drug: "Atorva 10-20 / Rosuva 5-10" },
-  "LOW":   { ldl: "< 130", nonHdl: "< 160", apoB: "< 130", intensity: "Lifestyle", drug: "No pharmacotherapy indicated" },
+  "MOD":   { ldl: "< 100", nonHdl: "< 130", apoB: "< 90", intensity: "Moderate-Intensity Statin", drug: "Atorva 10-20 / Rosuva 5-10" },
+  "LOW":   { ldl: "< 100", nonHdl: "< 130", apoB: "< 90", intensity: "Lifestyle", drug: "No pharmacotherapy indicated" },
 };
 
 // ─── Treatment recommendations per category ───
 const TREATMENT_RECS: Record<string, { title: string; drug: string; rationale: string; followUp: string; alternative: string }> = {
-  "EHR-A": { title: "High-Intensity Statin + Ezetimibe", drug: "Atorvastatin 40-80 mg OD or Rosuvastatin 20-40 mg OD + Ezetimibe 10 mg OD", rationale: "ASCVD alone or with minor risk features. Dual therapy achieves ~55-65% LDL reduction, targeting <55 mg/dL.", followUp: "Recheck lipids at 6 weeks. If LDL >55, add PCSK9i (Evolocumab 140 mg SC q2w / Alirocumab 75-150 mg SC q2w).", alternative: "If intolerant: Rosuvastatin 5-10 mg + Ezetimibe + Bempedoic acid 180 mg OD" },
+  "EHR-A": { title: "High-Intensity Statin + Ezetimibe", drug: "Atorvastatin 40-80 mg OD or Rosuvastatin 20-40 mg OD + Ezetimibe 10 mg OD", rationale: "ASCVD alone or with minor risk features. Dual therapy achieves ~55-65% LDL reduction, targeting <50 mg/dL.", followUp: "Recheck lipids at 6 weeks. If LDL >50, add PCSK9i (Evolocumab 140 mg SC q2w / Alirocumab 75-150 mg SC q2w).", alternative: "If intolerant: Rosuvastatin 5-10 mg + Ezetimibe + Bempedoic acid 180 mg OD" },
   "EHR-B": { title: "Maximal Lipid-Lowering", drug: "Atorvastatin 80 mg OD + Ezetimibe 10 mg OD + PCSK9i (Evolocumab 140 mg SC q2w)", rationale: "ASCVD + ≥1 high-risk feature or polyvascular disease. Triple therapy needed for target ≤30 mg/dL.", followUp: "LDL at 4 weeks. Consider Bempedoic acid if PCSK9i not tolerated.", alternative: "Rosuvastatin 40 mg + Ezetimibe + Inclisiran 284 mg SC initially + 3 months" },
-  "EHR-C": { title: "Ultra-Maximal Therapy", drug: "Max statin + Ezetimibe + PCSK9i + Bempedoic acid 180 mg OD", rationale: "Recurrent/progressive events despite therapy. Multi-mechanism approach targeting LDL <30 mg/dL.", followUp: "Monthly monitoring. Consider Lp(a) apheresis if LDL at goal but events persist.", alternative: "Add Colchicine 0.5 mg OD for anti-inflammatory benefit (CANTOS/COLCOT)" },
-  "VHR-A": { title: "High-Intensity Statin", drug: "Atorvastatin 40-80 mg OD or Rosuvastatin 20-40 mg OD", rationale: "Very high risk equivalent. Statin alone may suffice; add Ezetimibe if not at target <55.", followUp: "Lipids at 6-8 weeks. Add Ezetimibe if LDL >55.", alternative: "If statin-intolerant: Bempedoic acid 180 mg OD + Ezetimibe" },
-  "VHR-B": { title: "High-Intensity Statin + Ezetimibe", drug: "Atorvastatin 40-80 mg OD + Ezetimibe 10 mg OD", rationale: "DM with TOD — combination therapy indicated from the start.", followUp: "Lipids at 6 weeks. Consider PCSK9i if LDL >55.", alternative: "Rosuvastatin 20-40 mg + Ezetimibe" },
+  "EHR-C": { title: "Ultra-Maximal Therapy", drug: "Max statin + Ezetimibe + PCSK9i + Bempedoic acid 180 mg OD", rationale: "Recurrent/progressive events despite therapy. Multi-mechanism approach targeting LDL 10-15 mg/dL.", followUp: "Monthly monitoring. Consider Lp(a) apheresis if LDL at goal but events persist.", alternative: "Add Colchicine 0.5 mg OD for anti-inflammatory benefit (CANTOS/COLCOT)" },
+  "VHR-A": { title: "High-Intensity Statin", drug: "Atorvastatin 40-80 mg OD or Rosuvastatin 20-40 mg OD", rationale: "Very high risk equivalent. Statin alone may suffice; add Ezetimibe if not at target <50.", followUp: "Lipids at 6-8 weeks. Add Ezetimibe if LDL >50.", alternative: "If statin-intolerant: Bempedoic acid 180 mg OD + Ezetimibe" },
+  "VHR-B": { title: "High-Intensity Statin + Ezetimibe", drug: "Atorvastatin 40-80 mg OD + Ezetimibe 10 mg OD", rationale: "DM with TOD — combination therapy indicated from the start.", followUp: "Lipids at 6 weeks. Consider PCSK9i if LDL >50.", alternative: "Rosuvastatin 20-40 mg + Ezetimibe" },
   "VHR-C": { title: "Maximal Therapy (Triple)", drug: "Max tolerated statin + Ezetimibe ± PCSK9i", rationale: "CKD 3B-4, FH, or LDL ≥190. High residual risk — triple therapy often needed.", followUp: "Lipids at 4-6 weeks. Add PCSK9i early if >1 high-risk feature.", alternative: "Consider Inclisiran 284 mg SC (6-monthly dosing) for adherence" },
   "HR": { title: "High-Intensity Statin", drug: "Atorvastatin 20-40 mg OD or Rosuvastatin 10-20 mg OD", rationale: "Multiple risk factors or diabetes alone. Target LDL <70 mg/dL.", followUp: "Lipids at 12 weeks. Intensify if not at target.", alternative: "Moderate statin + Ezetimibe if high-dose not tolerated" },
-  "MOD": { title: "Moderate-Intensity Statin", drug: "Atorvastatin 10-20 mg OD or Rosuvastatin 5-10 mg OD", rationale: "Intermediate risk. Moderate statin expected to achieve <100 mg/dL.", followUp: "Recheck lipids at 12 weeks. Escalate if not at target.", alternative: "Lifestyle modification (3-month trial) if LDL 100-129 with borderline risk" },
-  "LOW": { title: "Lifestyle Modification", drug: "No pharmacotherapy indicated", rationale: "Low risk. Diet, exercise, and periodic surveillance.", followUp: "Recheck lipids in 6-12 months.", alternative: "Consider statin if CAC >0 or Lp(a) ≥50 on shared decision-making" },
+  "MOD": { title: "Moderate-Intensity Statin", drug: "Atorvastatin 10-20 mg OD or Rosuvastatin 5-10 mg OD", rationale: "Intermediate risk. Moderate statin expected to achieve <100 mg/dL. Consider optional <70 target if high-risk features emerge.", followUp: "Recheck lipids at 12 weeks. Escalate if not at target.", alternative: "Lifestyle modification (3-month trial) if LDL 100-129 with borderline risk" },
+  "LOW": { title: "Lifestyle Modification", drug: "No pharmacotherapy indicated", rationale: "Low risk. Target LDL <100 mg/dL. Diet, exercise, and periodic surveillance.", followUp: "Recheck lipids in 6-12 months.", alternative: "Consider statin if CAC >0 or Lp(a) ≥50 on shared decision-making" },
 };
 
 // ─── Secondary HTN algorithm data ───
@@ -237,8 +237,12 @@ export default function LipidsAssessment({ onClassificationChange, onNavigateToT
   const details = BUCKET_DETAILS[key] || BUCKET_DETAILS["LOW"];
   const rec = TREATMENT_RECS[key] || TREATMENT_RECS["LOW"];
 
-  const targetNum = parseInt(details.ldl.replace(/[< >]/g, ""));
-  const atTarget = !isNaN(l) && l <= targetNum;
+  // Parse target: "< 50" → 50, "≤ 30" → 30, "10-15" → 15 (upper bound), "—" → Infinity
+  const targetStr = details.ldl.replace(/[<≤> ]/g, "");
+  const targetNum = targetStr.includes("-")
+    ? parseInt(targetStr.split("-")[1]) // "10-15" → 15
+    : parseInt(targetStr);
+  const atTarget = !isNaN(l) && !isNaN(targetNum) && l <= targetNum;
 
   const modifierCounts = useMemo(() => {
     const r: Record<string, number> = {};
@@ -483,6 +487,18 @@ export default function LipidsAssessment({ onClassificationChange, onNavigateToT
             </a>
           </figcaption>
         </figure>
+        <figure className="space-y-2 mt-4">
+          <ZoomableImage
+            src="/images/hypertriglyceridemia-cac-lai.jpg"
+            alt="Hypertriglyceridemia and CAC — Additional Reference"
+          />
+          <figcaption className="text-xs text-muted-foreground">
+            Hypertriglyceridemia and CAC risk stratification reference. Source: LAI 2023.
+            <a href="https://doi.org/10.1016/j.jacl.2024.01.006" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline ml-1">
+              doi:10.1016/j.jacl.2024.01.006
+            </a>
+          </figcaption>
+        </figure>
       </SectionCard>
 
       {/* ─── CACS Risk Stratification ─── */}
@@ -495,6 +511,31 @@ export default function LipidsAssessment({ onClassificationChange, onNavigateToT
           <figcaption className="text-xs text-muted-foreground">
             Coronary Artery Calcium Score (CACS) risk classification for refining ASCVD risk. 
             Source: Lipid Association of India 2023.
+            <a href="https://doi.org/10.1016/j.jacl.2024.01.006" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline ml-1">
+              doi:10.1016/j.jacl.2024.01.006
+            </a>
+          </figcaption>
+        </figure>
+        <figure className="space-y-2 mt-4">
+          <ZoomableImage
+            src="/images/hypertriglyceridemia-cac-lai.jpg"
+            alt="Hypertriglyceridemia and CAC — Additional Reference"
+          />
+          <figcaption className="text-xs text-muted-foreground">
+            Hypertriglyceridemia and CAC risk stratification reference. Source: LAI 2023.
+            <a href="https://doi.org/10.1016/j.jacl.2024.01.006" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline ml-1">
+              doi:10.1016/j.jacl.2024.01.006
+            </a>
+          </figcaption>
+        </figure>
+        <figure className="space-y-2 mt-4">
+          <ZoomableImage
+            src="/images/cacs-risk-targets-lai.jpg"
+            alt="CACS-Based Risk Stratification and Lipid Targets"
+          />
+          <figcaption className="text-xs text-muted-foreground">
+            Risk stratification and lipid targets based on CACS score: ≥75th percentile → LDL-C target &lt;70 mg/dl. 
+            CACS = Coronary Artery Calcium Score. Based on Indian guidelines and risk stratification.
             <a href="https://doi.org/10.1016/j.jacl.2024.01.006" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline ml-1">
               doi:10.1016/j.jacl.2024.01.006
             </a>

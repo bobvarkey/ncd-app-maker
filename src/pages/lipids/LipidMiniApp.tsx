@@ -149,21 +149,21 @@ const TARGETS: Record<
   LOW: { ldl: "<100 mg/dL", nonHdl: "<130 mg/dL", apoB: "<90 mg/dL" },
   MOD: {
     ldl: "<100 mg/dL (optional <70)",
-    nonHdl: "<130 mg/dL",
+    nonHdl: "<130 mg/dL (optional <100)",
     apoB: "<90 mg/dL",
   },
   HR: { ldl: "<70 mg/dL", nonHdl: "<100 mg/dL", apoB: "<80 mg/dL" },
   VHR: { ldl: "<50 mg/dL", nonHdl: "<80 mg/dL", apoB: "<65 mg/dL" },
   "EHR-A": {
     ldl: "<50 mg/dL (optional ≤30)",
-    nonHdl: "<60 mg/dL",
-    apoB: "<50 mg/dL",
+    nonHdl: "<80 mg/dL (optional ≤60)",
+    apoB: "<65 mg/dL",
   },
-  "EHR-B": { ldl: "≤30 mg/dL", nonHdl: "<60 mg/dL", apoB: "<50 mg/dL" },
+  "EHR-B": { ldl: "≤30 mg/dL", nonHdl: "≤60 mg/dL", apoB: "<50 mg/dL" },
   "EHR-C": {
-    ldl: "Consider further lowering to 10–15 mg/dL",
-    nonHdl: "<60 mg/dL",
-    apoB: "<50 mg/dL",
+    ldl: "10–15 mg/dL",
+    nonHdl: "40–45 mg/dL",
+    apoB: "—",
   },
 };
 
