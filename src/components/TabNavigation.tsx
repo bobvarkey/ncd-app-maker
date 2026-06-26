@@ -188,7 +188,6 @@ function SectionLabel({ label, collapsed }: { label: string; collapsed: boolean 
 
 const miscItems: NavItem[] = [
   { path: "/vitamin-d",              label: "Vitamin D",   icon: "☀️", active: "bg-amber-500/10 text-amber-400 border-amber-500/30" },
-  { path: "/pcos",                   label: "PCOS",        icon: "🩺", active: "bg-rose-500/10 text-rose-400 border-rose-500/30" },
 ];
 
 const womenHealthItems: NavItem[] = [
