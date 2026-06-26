@@ -14,6 +14,7 @@ import {
 } from "@/components/ui/select";
 import { toast } from "@/hooks/use-toast";
 import { SmartLabelUpload, DIABETES_FIELDS, HTN_FIELDS, LIPID_FIELDS, OBESITY_FIELDS, RENAL_FIELDS } from "@/components/SmartLabelUpload";
+import KDIGOStagingCalculator from "@/calculators/renal/KDIGOStagingCalculator";
 import {
   Activity,
   Heart,
@@ -795,7 +796,11 @@ export default function UnifiedPrescriptionMiniApp() {
         )}
 
         {domain === "ckd" && (
-          <details className="group rounded-lg border border-border/60 bg-muted/10">
+          <>
+            {/* eGFR + UACR Calculator at top of CKD section */}
+            <KDIGOStagingCalculator />
+
+            <details className="group rounded-lg border border-border/60 bg-muted/10">
             <summary className="flex items-center gap-2 px-3 py-2 text-xs font-medium text-muted-foreground cursor-pointer hover:text-foreground transition select-none">
               <Stethoscope className="h-3.5 w-3.5" />
               CKD / Renal Inputs
@@ -839,6 +844,7 @@ export default function UnifiedPrescriptionMiniApp() {
               </div>
             </div>
           </details>
+          </>
         )}
 
         {/* Result panel */}
