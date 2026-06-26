@@ -29,7 +29,7 @@ const categoryColors = {
   border: "rgba(251,146,60,0.2)",
 };
 
-// AHA 2017 Blood Pressure Classification
+// AHA 2025 Blood Pressure Classification
 interface BPStage {
   category: string;
   sbp: string;
@@ -244,10 +244,10 @@ export default function HypertensionOverview({ onNavigateToEmergencies, onNaviga
         <CardHeader>
           <div className="flex items-center gap-2">
             <Activity className="h-5 w-5" style={{ color: categoryColors.accent }} />
-            <CardTitle className="text-lg">AHA 2017 BP Classification</CardTitle>
+            <CardTitle className="text-lg">AHA 2025 BP Classification</CardTitle>
           </div>
           <p className="text-xs text-muted-foreground">
-            Based on office blood pressure measurements (mmHg) — ACC/AHA 2017 guidelines
+            Based on office blood pressure measurements (mmHg) — ACC/AHA 2025 guidelines
           </p>
         </CardHeader>
         <CardContent>
@@ -301,7 +301,7 @@ export default function HypertensionOverview({ onNavigateToEmergencies, onNaviga
             <CardTitle className="text-lg">Treatment Algorithm</CardTitle>
           </div>
           <p className="text-xs text-muted-foreground">
-            Step-care approach and comorbidity-guided selection — ACC/AHA 2017 &amp; ESC 2024
+            Step-care approach and comorbidity-guided selection — ACC/AHA 2025 &amp; ESC 2024
           </p>
         </CardHeader>
         <CardContent className="space-y-5">

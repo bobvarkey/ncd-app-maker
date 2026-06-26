@@ -377,7 +377,7 @@ export default function HypertensionClinicalCards() {
             <CardHeader className="pb-2">
               <CardTitle className="text-base flex items-center gap-2">
                 <Gauge className="h-4 w-4" />
-                BP Classification (ACC/AHA 2017)
+                BP Classification (ACC/AHA 2025)
               </CardTitle>
             </CardHeader>
             <CardContent>
