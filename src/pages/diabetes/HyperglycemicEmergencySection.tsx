@@ -306,6 +306,14 @@ export default function HyperglycemicEmergencySection() {
     return null;
   }, [glucose, sodium, bun]);
 
+  // Computed: effective osm (without BUN)
+  const effectiveOsm = useMemo(() => {
+    const g = n(glucose);
+    const na = n(sodium);
+    if (g && na) return 2 * na + g / 18;
+    return null;
+  }, [glucose, sodium]);
+
   // DKA classification
   const dka = useMemo(() => classifyDKA(
     n(glucose),
@@ -343,6 +351,33 @@ export default function HyperglycemicEmergencySection() {
     sglt2iUse,
     anionGap ? n(anionGap) : null,
   ), [glucose, ketones, sglt2iUse, anionGap]);
+
+  // DKA criteria evaluation
+  const dkaCriteria = useMemo(() => {
+    const g = n(glucose);
+    const b = bicarb ? n(bicarb) : null;
+    const p = ph ? n(ph) : null;
+    const bhb = betaOHB ? n(betaOHB) : null;
+    return {
+      hyperglycemia: g > 200 || type1DM,
+      ketosis: bhb !== null ? bhb >= 3.0 : (ketones === "moderate" || ketones === "large"),
+      acidosis: (p !== null && p < 7.3) || (b !== null && b < 18),
+    };
+  }, [glucose, bicarb, ph, betaOHB, ketones, type1DM]);
+
+  // HHS criteria evaluation
+  const hhsCriteria = useMemo(() => {
+    const g = n(glucose);
+    const b = bicarb ? n(bicarb) : null;
+    const p = ph ? n(ph) : null;
+    const bhb = betaOHB ? n(betaOHB) : null;
+    return {
+      hyperglycemia: g > 600,
+      hyperosmolality: (effectiveOsm !== null && effectiveOsm > 300) || (osm !== null && osm > 320),
+      noKetosis: bhb !== null ? bhb < 3.0 : (ketones === "" || ketones === "negative" || ketones === "trace" || ketones === "small"),
+      noAcidosis: (p === null || p >= 7.3) && (b === null || b >= 18),
+    };
+  }, [glucose, bicarb, ph, betaOHB, ketones, osm, effectiveOsm]);
 
   // Red flags
   const redFlags = useMemo(() => {
@@ -733,16 +768,100 @@ export default function HyperglycemicEmergencySection() {
         </Card>
       </Collapsible>
 
-      {/* ─── Management pathway ─── */}
+      {/* ─── Diagnostic Criteria + Management Pathway ─── */}
       <Card>
         <CardHeader className="pb-2">
           <div className="flex items-center gap-2">
-            <Syringe className="h-4 w-4 text-primary" />
-            <CardTitle className="text-sm">Management Pathway</CardTitle>
+            <FlaskConical className="h-4 w-4 text-primary" />
+            <CardTitle className="text-sm">Diagnostic Criteria &amp; Management Pathway</CardTitle>
           </div>
         </CardHeader>
-        <CardContent>
-          <p className="text-xs leading-relaxed">{overlap.management}</p>
+        <CardContent className="space-y-4">
+          {/* DKA Criteria */}
+          <div>
+            <h4 className="text-xs font-semibold mb-2 flex items-center gap-1.5">
+              <span className="text-destructive">DKA Criteria</span>
+              {dka.severity && <Badge className="text-[10px] h-5 bg-destructive/15 text-destructive border-destructive/30">Met</Badge>}
+            </h4>
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 text-xs">
+              <div className={`rounded-md border p-2 ${dkaCriteria.hyperglycemia ? 'border-emerald-500/30 bg-emerald-500/5' : 'border-border'}`}>
+                <div className="flex items-center gap-1 mb-1">
+                  <span className={dkaCriteria.hyperglycemia ? 'text-emerald-400' : 'text-muted-foreground'}>{dkaCriteria.hyperglycemia ? '✓' : '○'}</span>
+                  <span className="font-medium">Hyperglycemia</span>
+                </div>
+                <p className="text-muted-foreground">Glucose &gt;200 mg/dL <span className="text-foreground">or</span> known diabetes</p>
+                {n(glucose) > 0 && <p className="text-foreground mt-1">Current: {glucose} mg/dL</p>}
+              </div>
+              <div className={`rounded-md border p-2 ${dkaCriteria.ketosis ? 'border-emerald-500/30 bg-emerald-500/5' : 'border-border'}`}>
+                <div className="flex items-center gap-1 mb-1">
+                  <span className={dkaCriteria.ketosis ? 'text-emerald-400' : 'text-muted-foreground'}>{dkaCriteria.ketosis ? '✓' : '○'}</span>
+                  <span className="font-medium">Ketosis</span>
+                </div>
+                <p className="text-muted-foreground">β-OHB ≥3.0 mmol/L <span className="text-foreground">or</span> urine ketones ≥2+</p>
+                {betaOHB && <p className="text-foreground mt-1">β-OHB: {betaOHB} mmol/L</p>}
+              </div>
+              <div className={`rounded-md border p-2 ${dkaCriteria.acidosis ? 'border-emerald-500/30 bg-emerald-500/5' : 'border-border'}`}>
+                <div className="flex items-center gap-1 mb-1">
+                  <span className={dkaCriteria.acidosis ? 'text-emerald-400' : 'text-muted-foreground'}>{dkaCriteria.acidosis ? '✓' : '○'}</span>
+                  <span className="font-medium">Acidosis</span>
+                </div>
+                <p className="text-muted-foreground">pH &lt;7.3 <span className="text-foreground">or</span> HCO₃⁻ &lt;18 mmol/L</p>
+                {ph && <p className="text-foreground mt-1">pH: {ph}</p>}
+                {bicarb && <p className="text-foreground">HCO₃⁻: {bicarb} mmol/L</p>}
+              </div>
+            </div>
+          </div>
+
+          {/* HHS Criteria */}
+          <div>
+            <h4 className="text-xs font-semibold mb-2 flex items-center gap-1.5">
+              <span className="text-amber-500">HHS Criteria</span>
+              {hhs.isHHS && <Badge className="text-[10px] h-5 bg-amber-500/15 text-amber-500 border-amber-500/30">Met</Badge>}
+            </h4>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2 text-xs">
+              <div className={`rounded-md border p-2 ${hhsCriteria.hyperglycemia ? 'border-emerald-500/30 bg-emerald-500/5' : 'border-border'}`}>
+                <div className="flex items-center gap-1 mb-1">
+                  <span className={hhsCriteria.hyperglycemia ? 'text-emerald-400' : 'text-muted-foreground'}>{hhsCriteria.hyperglycemia ? '✓' : '○'}</span>
+                  <span className="font-medium">Glucose &gt;600</span>
+                </div>
+                {n(glucose) > 0 && <p className="text-foreground">Current: {glucose} mg/dL</p>}
+              </div>
+              <div className={`rounded-md border p-2 ${hhsCriteria.hyperosmolality ? 'border-emerald-500/30 bg-emerald-500/5' : 'border-border'}`}>
+                <div className="flex items-center gap-1 mb-1">
+                  <span className={hhsCriteria.hyperosmolality ? 'text-emerald-400' : 'text-muted-foreground'}>{hhsCriteria.hyperosmolality ? '✓' : '○'}</span>
+                  <span className="font-medium">Hyperosmolality</span>
+                </div>
+                <p className="text-muted-foreground">Eff. Osm &gt;300 <span className="text-foreground">or</span> Total Osm &gt;320</p>
+                {osm !== null && <p className="text-foreground mt-1">Osm: {osm.toFixed(0)} mOsm/kg</p>}
+              </div>
+              <div className={`rounded-md border p-2 ${hhsCriteria.noKetosis ? 'border-emerald-500/30 bg-emerald-500/5' : 'border-border'}`}>
+                <div className="flex items-center gap-1 mb-1">
+                  <span className={hhsCriteria.noKetosis ? 'text-emerald-400' : 'text-muted-foreground'}>{hhsCriteria.noKetosis ? '✓' : '○'}</span>
+                  <span className="font-medium">No Ketosis</span>
+                </div>
+                <p className="text-muted-foreground">β-OHB &lt;3.0 <span className="text-foreground">or</span> urine ketones &lt;2+</p>
+                {betaOHB && <p className="text-foreground mt-1">β-OHB: {betaOHB} mmol/L</p>}
+              </div>
+              <div className={`rounded-md border p-2 ${hhsCriteria.noAcidosis ? 'border-emerald-500/30 bg-emerald-500/5' : 'border-border'}`}>
+                <div className="flex items-center gap-1 mb-1">
+                  <span className={hhsCriteria.noAcidosis ? 'text-emerald-400' : 'text-muted-foreground'}>{hhsCriteria.noAcidosis ? '✓' : '○'}</span>
+                  <span className="font-medium">No Acidosis</span>
+                </div>
+                <p className="text-muted-foreground">pH ≥7.3 <span className="text-foreground">and</span> HCO₃⁻ ≥18</p>
+                {ph && <p className="text-foreground mt-1">pH: {ph}</p>}
+                {bicarb && <p className="text-foreground">HCO₃⁻: {bicarb} mmol/L</p>}
+              </div>
+            </div>
+          </div>
+
+          {/* Management Pathway */}
+          <div className="border-t border-border pt-3">
+            <h4 className="text-xs font-semibold mb-2 flex items-center gap-1.5">
+              <Syringe className="h-3.5 w-3.5 text-primary" />
+              Management Pathway
+            </h4>
+            <p className="text-xs leading-relaxed">{overlap.management}</p>
+          </div>
         </CardContent>
       </Card>
 
