@@ -16,12 +16,14 @@ import {
   Stethoscope,
   Search,
   AlertTriangle,
+  Crosshair,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import HypertensionOverview from "./HypertensionOverview";
 import HypertensionAssessment from "./HypertensionAssessment";
 import HypertensionTreatment from "./HypertensionTreatment";
 import HypertensionClinicalCards from "./HypertensionClinicalCards";
+import HypertensionDrugSelection from "./HypertensionDrugSelection";
 
 // Category colors for hypertension (orange theme)
 const categoryColors = {
@@ -136,9 +138,16 @@ export default function HypertensionTab() {
       description: "Secondary hypertension workup, clinical vignettes, investigation flowchart",
       component: <HypertensionClinicalCards />,
     },
+    {
+      id: "drug-selection",
+      title: "Drug Selection by Comorbidity",
+      icon: <Crosshair />,
+      description: "Antihypertensive selection guide by comorbidity, age, pregnancy, and special populations",
+      component: <HypertensionDrugSelection />,
+    },
   ];
 
-  const sectionOrder = ["overview", "assessment", "treatment", "workup"];
+  const sectionOrder = ["overview", "assessment", "treatment", "workup", "drug-selection"];
 
   return (
     <div className="min-h-screen bg-background">
