@@ -116,14 +116,14 @@ export default function HypertensionTab() {
       id: "overview",
       title: "Overview & Guidelines",
       icon: <BookOpen />,
-      description: "ESC 2024 classification, definitions, and diagnostic criteria",
+      description: "AHA 2017 classification, definitions, and diagnostic criteria",
       component: <HypertensionOverview onNavigateToEmergencies={() => scrollToSection("treatment")} onNavigateToAssessment={() => scrollToSection("assessment")} />,
     },
     {
       id: "assessment",
       title: "Assessment Tools",
       icon: <Stethoscope />,
-      description: "BP classification, GFR calculator, drug interactions, and risk stratification",
+      description: "BP classification (AHA 2017), GFR calculator, drug interactions, and risk stratification",
       component: <HypertensionAssessment />,
     },
     {

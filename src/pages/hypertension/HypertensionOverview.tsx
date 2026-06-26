@@ -28,7 +28,7 @@ const categoryColors = {
   border: "rgba(251,146,60,0.2)",
 };
 
-// ESC 2024 Blood Pressure Classification
+// AHA 2017 Blood Pressure Classification
 interface BPStage {
   category: string;
   sbp: string;
@@ -39,46 +39,39 @@ interface BPStage {
 
 const bpClassification: BPStage[] = [
   {
-    category: "Optimal",
+    category: "Normal",
     sbp: "< 120",
     dbp: "< 80",
     color: "bg-emerald-500/20 text-success border-emerald-500/30",
-    description: "Continue healthy lifestyle",
+    description: "Continue healthy lifestyle; recheck in 1 year",
   },
   {
-    category: "Normal",
+    category: "Elevated",
     sbp: "120-129",
-    dbp: "80-84",
+    dbp: "< 80",
     color: "bg-success/100/20 text-success border-green-500/30",
-    description: "Lifestyle counseling",
+    description: "Non-pharmacologic therapy (diet, exercise, weight loss); recheck in 3-6 months",
   },
   {
-    category: "High Normal",
+    category: "Stage 1 HTN",
     sbp: "130-139",
-    dbp: "85-89",
+    dbp: "80-89",
     color: "bg-warning/20 text-warning border-yellow-500/30",
-    description: "Lifestyle modification, monitor closely",
+    description: "ASCVD risk ≥10% → initiate pharmacotherapy; <10% → lifestyle + recheck in 3-6 months",
   },
   {
-    category: "Grade 1 Hypertension",
-    sbp: "140-159",
-    dbp: "90-99",
+    category: "Stage 2 HTN",
+    sbp: "≥ 140",
+    dbp: "≥ 90",
     color: "bg-warning/100/20 text-warning border-warning/30",
-    description: "Confirm with repeated measurements; consider pharmacotherapy",
+    description: "Initiate pharmacotherapy (2-drug combination if BP >20/10 above target)",
   },
   {
-    category: "Grade 2 Hypertension",
-    sbp: "160-179",
-    dbp: "100-109",
-    color: "bg-destructive/100/20 text-destructive border-red-500/30",
-    description: "Initiate antihypertensive therapy",
-  },
-  {
-    category: "Grade 3 Hypertension",
+    category: "Hypertensive Crisis",
     sbp: "≥ 180",
-    dbp: "≥ 110",
+    dbp: "≥ 120",
     color: "bg-destructive/20 text-destructive border-destructive/30",
-    description: "Urgent evaluation and treatment required",
+    description: "Urgent evaluation; if acute end-organ damage → IV therapy",
   },
 ];
 
@@ -250,10 +243,10 @@ export default function HypertensionOverview({ onNavigateToEmergencies, onNaviga
         <CardHeader>
           <div className="flex items-center gap-2">
             <Activity className="h-5 w-5" style={{ color: categoryColors.accent }} />
-            <CardTitle className="text-lg">ESC 2024 BP Classification</CardTitle>
+            <CardTitle className="text-lg">AHA 2017 BP Classification</CardTitle>
           </div>
           <p className="text-xs text-muted-foreground">
-            Based on office blood pressure measurements (mmHg)
+            Based on office blood pressure measurements (mmHg) — ACC/AHA 2017 guidelines
           </p>
         </CardHeader>
         <CardContent>
