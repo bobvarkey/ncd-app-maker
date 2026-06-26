@@ -51,16 +51,20 @@ function classifyDKA(
 }
 
 // ─── HHS diagnostic criteria ───
+// Per reference image: glucose >600, effective osm >300 OR total osm >320, no significant ketosis (β-OHB <3.0 or urine ketones <2+), no acidosis
 function classifyHHS(
   glucose: number,
   osm: number | null,
+  effectiveOsm: number | null,
   bicarb: number | null,
   anionGap: number | null,
   betaOHB: number | null,
+  urineKetones: string | null,
 ): { isHHS: boolean; confidence: "definite" | "probable" | "unlikely"; reason: string } {
-  const hhsGlucose = glucose >= 600;
-  const hhsOsm = osm !== null && osm > 320;
-  const noDKA = (bicarb === null || bicarb >= 18) && (anionGap === null || anionGap <= 12) && (betaOHB === null || betaOHB < 1.5);
+  const hhsGlucose = glucose > 600;
+  // Effective osm >300 OR total osm >320 (per reference image)
+  const hhsOsm = (effectiveOsm !== null && effectiveOsm > 300) || (osm !== null && osm > 320);
+  const noDKA = (bicarb === null || bicarb >= 18) && (anionGap === null || anionGap <= 12) && (betaOHB === null || betaOHB < 3.0) && (urineKetones === null || urineKetones === "negative" || urineKetones === "trace" || urineKetones === "small");
 
   if (hhsGlucose && hhsOsm && noDKA) return { isHHS: true, confidence: "definite", reason: `Glucose ${glucose} mg/dL, osm ${osm} mOsm/kg, no significant ketoacidosis. Classic HHS.` };
   if (hhsGlucose && hhsOsm && !noDKA) return { isHHS: true, confidence: "probable", reason: `Glucose ${glucose} mg/dL, osm ${osm} mOsm/kg, with mild ketosis — mixed DKA/HHS picture.` };
@@ -308,6 +312,14 @@ export default function HyperglycemicEmergency() {
     return null;
   }, [glucose, sodium, bun]);
 
+  // Effective osmolality (2×Na + glucose/18, no urea) — for HHS effective osm >300 criterion
+  const effectiveOsm = useMemo(() => {
+    const g = n(glucose);
+    const na = n(sodium);
+    if (g && na) return 2 * na + g / 18;
+    return null;
+  }, [glucose, sodium]);
+
   // DKA classification
   const dka = useMemo(() => classifyDKA(
     n(glucose),
@@ -321,10 +333,12 @@ export default function HyperglycemicEmergency() {
   const hhs = useMemo(() => classifyHHS(
     n(glucose),
     osm,
+    effectiveOsm,
     bicarb ? n(bicarb) : null,
     anionGap ? n(anionGap) : null,
     betaOHB ? n(betaOHB) : null,
-  ), [glucose, osm, bicarb, anionGap, betaOHB]);
+    ketones || null,
+  ), [glucose, osm, effectiveOsm, bicarb, anionGap, betaOHB, ketones]);
 
   // Overlap
   const overlap = useMemo(() => classifyOverlap(dka, hhs), [dka, hhs]);
