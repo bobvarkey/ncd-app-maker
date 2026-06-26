@@ -19,6 +19,7 @@ import {
   CheckCircle,
   Info,
   Stethoscope,
+  Pill,
 } from "lucide-react";
 
 // Category colors for hypertension (orange theme)
@@ -288,6 +289,87 @@ export default function HypertensionOverview({ onNavigateToEmergencies, onNaviga
               the higher category applies. Classification should be based on at least 2 readings on
               2 separate occasions.
             </p>
+          </div>
+        </CardContent>
+      </Card>
+
+      {/* Treatment Algorithm — Step Care + Comorbidity Selection */}
+      <Card>
+        <CardHeader>
+          <div className="flex items-center gap-2">
+            <Pill className="h-5 w-5" style={{ color: categoryColors.accent }} />
+            <CardTitle className="text-lg">Treatment Algorithm</CardTitle>
+          </div>
+          <p className="text-xs text-muted-foreground">
+            Step-care approach and comorbidity-guided selection — ACC/AHA 2017 &amp; ESC 2024
+          </p>
+        </CardHeader>
+        <CardContent className="space-y-5">
+          {/* Step-Care Algorithm */}
+          <div>
+            <p className="text-sm font-medium mb-3" style={{ color: categoryColors.accent }}>
+              Step-Care Algorithm (ACD Approach)
+            </p>
+            <div className="grid grid-cols-1 sm:grid-cols-4 gap-3">
+              {[
+                { step: "Step 1", label: "A", desc: "ACEi or ARB", color: "border-l-blue-500" },
+                { step: "Step 2", label: "A + C or A + D", desc: "Add CCB or Thiazide", color: "border-l-emerald-500" },
+                { step: "Step 3", label: "A + C + D", desc: "Triple therapy", color: "border-l-amber-500" },
+                { step: "Step 4", label: "Add MRA", desc: "Spironolactone 25 mg", color: "border-l-red-500" },
+              ].map((s) => (
+                <div key={s.step} className={`p-3 rounded-lg border-l-4 ${s.color} bg-muted/20 border border-border/30`}>
+                  <p className="text-xs font-semibold text-muted-foreground mb-1">{s.step}</p>
+                  <p className="text-sm font-bold">{s.label}</p>
+                  <p className="text-xs text-muted-foreground mt-0.5">{s.desc}</p>
+                </div>
+              ))}
+            </div>
+            <p className="text-xs text-muted-foreground mt-2">
+              <Info className="h-3 w-3 inline mr-1" />
+              NICE/BHS ACD algorithm. Step 4 (resistant): Add Spironolactone 25 mg (PATHWAY-2). Target BP &lt; 140/90 mmHg (&lt; 130/80 if high risk).
+            </p>
+          </div>
+
+          <Separator className="my-2" />
+
+          {/* Comorbidity-Based Selection */}
+          <div>
+            <p className="text-sm font-medium mb-3" style={{ color: categoryColors.accent }}>
+              Selection by Comorbidity
+            </p>
+            <div className="overflow-x-auto">
+              <table className="w-full text-sm">
+                <thead>
+                  <tr className="border-b border-border">
+                    <th className="text-left py-2 px-2 font-medium">Condition</th>
+                    <th className="text-left py-2 px-2 font-medium">First-Line</th>
+                    <th className="text-center py-2 px-2 font-medium">Target BP</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {[
+                    { condition: "Diabetes + Proteinuria", firstLine: "ACEi or ARB", target: "< 130/80" },
+                    { condition: "CKD + Proteinuria", firstLine: "ACEi or ARB (max dose)", target: "< 130/80" },
+                    { condition: "HFrEF", firstLine: "ACEi/ARB + BB + MRA", target: "< 130/80" },
+                    { condition: "Post-MI", firstLine: "BB + ACEi", target: "< 130/80" },
+                    { condition: "Stroke Prevention", firstLine: "ACEi + Thiazide", target: "< 130/80" },
+                    { condition: "Isolated Systolic (Elderly)", firstLine: "Thiazide or CCB", target: "< 140/90" },
+                    { condition: "Black Patients", firstLine: "CCB or Thiazide", target: "< 130/80" },
+                    { condition: "Pregnancy", firstLine: "Methyldopa / Labetalol / Nifedipine", target: "< 140/90" },
+                  ].map((row, i) => (
+                    <tr key={i} className="border-b border-border/50 hover:bg-muted/30 transition-colors">
+                      <td className="py-2 px-2 font-medium text-xs">{row.condition}</td>
+                      <td className="py-2 px-2 text-xs text-muted-foreground">{row.firstLine}</td>
+                      <td className="py-2 px-2 text-center">
+                        <Badge variant="outline" style={{ color: categoryColors.accent, borderColor: categoryColors.border, fontSize: "0.7rem" }}>
+                          {row.target}
+                        </Badge>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
           </div>
         </CardContent>
       </Card>
