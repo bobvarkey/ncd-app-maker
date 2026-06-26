@@ -3,6 +3,7 @@ import { loadPatient, PatientData } from "@/lib/patient-data";
 import { ChevronDown, ChevronUp, AlertTriangle, Check, ArrowDown, Heart, Shield, Pill, Activity } from "lucide-react";
 import niceAlgorithmImg from "@/assets/nice-ckd-algorithm.png";
 import ZoomableImage from "@/components/ZoomableImage";
+import KDIGOStagingCalculator from "@/calculators/renal/KDIGOStagingCalculator";
 
 type CKDStage = "none" | "micro" | "macro" | "t2d-ckd" | "cvd" | "advanced";
 
@@ -130,6 +131,9 @@ const CKDGuideline = () => {
         <h1 className="text-xl font-heading font-bold">NICE CKD Guideline</h1>
         <p className="text-sm text-muted-foreground">Chronic Kidney Disease management in adults with Type 2 Diabetes — NICE 2026</p>
       </div>
+
+      {/* eGFR + UACR Calculator at top */}
+      <KDIGOStagingCalculator />
 
       {/* Patient CKD status */}
       {patient && activeStage && (
