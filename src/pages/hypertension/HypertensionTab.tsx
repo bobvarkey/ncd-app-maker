@@ -17,6 +17,7 @@ import {
   Search,
   AlertTriangle,
   Crosshair,
+  FlaskConical,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import HypertensionOverview from "./HypertensionOverview";
@@ -24,6 +25,7 @@ import HypertensionAssessment from "./HypertensionAssessment";
 import HypertensionTreatment from "./HypertensionTreatment";
 import HypertensionClinicalCards from "./HypertensionClinicalCards";
 import HypertensionDrugSelection from "./HypertensionDrugSelection";
+import HypertensionElectrolyteRisk from "./HypertensionElectrolyteRisk";
 
 // Category colors for hypertension (orange theme)
 const categoryColors = {
@@ -145,9 +147,16 @@ export default function HypertensionTab() {
       description: "Antihypertensive selection guide by comorbidity, age, pregnancy, and special populations",
       component: <HypertensionDrugSelection />,
     },
+    {
+      id: "electrolyte-risk",
+      title: "Electrolyte Risk Assessment",
+      icon: <FlaskConical />,
+      description: "Risk assessment for hyperkalemia, hypokalemia, and hyponatremia — no lab values required",
+      component: <HypertensionElectrolyteRisk />,
+    },
   ];
 
-  const sectionOrder = ["overview", "assessment", "treatment", "workup", "drug-selection"];
+  const sectionOrder = ["overview", "assessment", "treatment", "workup", "drug-selection", "electrolyte-risk"];
 
   return (
     <div className="min-h-screen bg-background">
