@@ -136,11 +136,18 @@ export function classifyHyperglycemicCrisis(input: DKA_HHS_Input): DerivedCrisis
     ? labs.beta_hydroxybutyrate_mmol_l >= 3.0
     : (labs.serum_ketones === "moderate" || labs.serum_ketones === "large" || labs.urine_ketones === "moderate" || labs.urine_ketones === "large");
   const has_acidosis = labs.pH < 7.3 || labs.bicarbonate_meq_l < 18;
+  // HHS criteria (per image): glucose >600, effective osm >300 OR total osm >320, no significant ketosis (β-OHB <3.0 or urine ketones <2+), no acidosis
   const is_hyperosmolar = (labs.osmolality_mosm_kg || corrected_osmolality) > 320;
+  const effective_osm = 2 * labs.sodium_meq_l + labs.glucose_mg_dl / 18;
+  const meets_hhs_osm = (labs.osmolality_mosm_kg || corrected_osmolality) > 320 || effective_osm > 300;
+  const no_significant_ketosis = labs.beta_hydroxybutyrate_mmol_l !== undefined
+    ? labs.beta_hydroxybutyrate_mmol_l < 3.0
+    : (labs.serum_ketones === "negative" || labs.serum_ketones === "trace" || labs.serum_ketones === "small" || labs.serum_ketones === undefined)
+      && (labs.urine_ketones === "negative" || labs.urine_ketones === "trace" || labs.urine_ketones === "small" || labs.urine_ketones === undefined);
 
   if (has_ketosis && has_acidosis && !is_hyperosmolar) {
     crisis_type = "dka";
-  } else if (is_hyperosmolar && !has_acidosis && labs.glucose_mg_dl >= 600) {
+  } else if (meets_hhs_osm && !has_acidosis && no_significant_ketosis && labs.glucose_mg_dl > 600) {
     crisis_type = "hhs";
   } else if ((has_ketosis || has_acidosis) && is_hyperosmolar) {
     crisis_type = "mixed_dka_hhs";
