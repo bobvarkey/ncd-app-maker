@@ -21,7 +21,9 @@ function classifyDKA(
   ph: number | null,
   anionGap: number | null,
   betaOHB: number | null,
+  knownDiabetes: boolean = false,
 ): { severity: DKASeverity; label: string; description: string } {
+  // DKA diagnostic criteria: glucose >200 OR known diabetes, AND ketosis (β-OHB ≥3.0), AND acidosis (pH <7.3 or bicarb <18)
   if (!bicarb && !ph && !anionGap) return { severity: null, label: "Insufficient data", description: "Enter bicarb, pH, or anion gap to classify DKA severity." };
 
   // By bicarb
@@ -58,7 +60,7 @@ function classifyHHS(
 ): { isHHS: boolean; confidence: "definite" | "probable" | "unlikely"; reason: string } {
   const hhsGlucose = glucose >= 600;
   const hhsOsm = osm !== null && osm > 320;
-  const noDKA = (bicarb === null || bicarb > 18) && (anionGap === null || anionGap <= 12) && (betaOHB === null || betaOHB < 1.5);
+  const noDKA = (bicarb === null || bicarb >= 18) && (anionGap === null || anionGap <= 12) && (betaOHB === null || betaOHB < 1.5);
 
   if (hhsGlucose && hhsOsm && noDKA) return { isHHS: true, confidence: "definite", reason: `Glucose ${glucose} mg/dL, osm ${osm} mOsm/kg, no significant ketoacidosis. Classic HHS.` };
   if (hhsGlucose && hhsOsm && !noDKA) return { isHHS: true, confidence: "probable", reason: `Glucose ${glucose} mg/dL, osm ${osm} mOsm/kg, with mild ketosis — mixed DKA/HHS picture.` };

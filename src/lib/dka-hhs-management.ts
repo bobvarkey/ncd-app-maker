@@ -130,9 +130,12 @@ export function classifyHyperglycemicCrisis(input: DKA_HHS_Input): DerivedCrisis
 
   // Classify crisis type
   let crisis_type: HyperglycemicCrisisType;
-  const is_hyperglycemic = labs.glucose_mg_dl >= 250;
-  const has_ketosis = ketosis_level !== "none";
-  const has_acidosis = acidosis_level !== "none";
+  // DKA diagnostic criteria (per image): glucose >200 OR prior diabetes, AND ketosis (β-OHB ≥3.0 or urine ketones 2+), AND acidosis (pH <7.3 or bicarb <18)
+  const is_hyperglycemic = labs.glucose_mg_dl > 200 || input.clinical_context.known_diabetes;
+  const has_ketosis = labs.beta_hydroxybutyrate_mmol_l !== undefined
+    ? labs.beta_hydroxybutyrate_mmol_l >= 3.0
+    : (labs.serum_ketones === "moderate" || labs.serum_ketones === "large" || labs.urine_ketones === "moderate" || labs.urine_ketones === "large");
+  const has_acidosis = labs.pH < 7.3 || labs.bicarbonate_meq_l < 18;
   const is_hyperosmolar = (labs.osmolality_mosm_kg || corrected_osmolality) > 320;
 
   if (has_ketosis && has_acidosis && !is_hyperosmolar) {
