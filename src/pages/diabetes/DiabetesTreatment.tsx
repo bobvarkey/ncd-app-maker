@@ -603,6 +603,15 @@ const DrugClassesComparison = () => {
       advantages: ["Durable control", "NASH benefit", "Low hypoglycemia", "Inexpensive"],
       disadvantages: ["Weight gain", "Edema", "HF contraindication", "Fracture risk"],
     },
+    {
+      class: "Meglitinides",
+      mechanism: "Rapid-acting insulin secretagogues — stimulate β-cell insulin release",
+      a1cReduction: "0.5-1.0%",
+      weight: "Gain 1-2 kg",
+      hypoRisk: "Moderate",
+      advantages: ["Rapid onset/short duration", "Flexible meal-time dosing", "Ideal for irregular meals", "Renally safe"],
+      disadvantages: ["TDS dosing", "Moderate hypoglycemia", "Weight gain", "Cost"],
+    },
   ];
 
   return (
