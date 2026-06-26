@@ -5,7 +5,7 @@ import { Input } from "@/components/ui/input";
 import {
   Table, TableHeader, TableBody, TableHead, TableRow, TableCell,
 } from "@/components/ui/table";
-import GfrCalculator from "@/calculators/htn/GfrCalculator";
+import KDIGOStagingCalculator from "@/calculators/renal/KDIGOStagingCalculator";
 import { ADDITIONAL_MEDS_DATA } from "@/calculators/diabetes/additional-meds-data";
 import { ANTIBIOTICS_DATA } from "@/calculators/diabetes/antibiotics-data";
 import { ANTICOAGULANTS_DATA } from "@/calculators/diabetes/anticoagulants-data";
@@ -781,8 +781,8 @@ const RenalDoseAdjustment = () => {
         <p className="text-sm text-muted-foreground">eGFR-based dose modifications for diabetes medications (ADA 2026 + KDIGO)</p>
       </div>
 
-      {/* eGFR Calculator */}
-      <GfrCalculator />
+      {/* eGFR + UACR Calculator */}
+      <KDIGOStagingCalculator />
 
       {/* Formula Reference */}
       <details className="clinical-card p-3 group">
@@ -824,8 +824,18 @@ const RenalDoseAdjustment = () => {
         </div>
       </details>
 
+      {/* Drug Dosing Section — collapsible master wrapper */}
+      <details className="clinical-card p-0 overflow-hidden group" defaultChecked>
+        <summary className="flex items-center gap-2 px-4 py-3 cursor-pointer select-none list-none hover:bg-muted/30 transition-colors sticky top-0 bg-card z-10">
+          <ChevronDown className="w-4 h-4 text-primary shrink-0 group-open:rotate-0 -rotate-90 transition-transform" />
+          <Pill className="w-4 h-4 text-primary shrink-0" />
+          <span className="text-sm font-semibold">Drug Dosing Tables</span>
+          <span className="text-[11px] text-muted-foreground ml-auto">{ALL_RENAL_DATA.length} drugs</span>
+        </summary>
+        <div className="border-t border-border p-4 space-y-4">
+
       {/* Legend */}
-      <div className="clinical-card p-3 flex flex-wrap gap-4 text-xs">
+      <div className="flex flex-wrap gap-4 text-xs">
         <span className="flex items-center gap-1.5"><span className="w-3 h-3 rounded bg-destructive/20 border border-destructive/30" /> Contraindicated / Avoid</span>
         <span className="flex items-center gap-1.5"><span className="w-3 h-3 rounded bg-warning/20 border border-warning/30" /> Dose adjustment required</span>
         <span className="flex items-center gap-1.5"><span className="w-3 h-3 rounded bg-muted border border-border" /> Limited data</span>
@@ -980,6 +990,9 @@ const RenalDoseAdjustment = () => {
           </div>
         ) : null;
       })()}
+
+        </div>
+      </details>
     </div>
   );
 };
