@@ -127,7 +127,7 @@ const CLINICAL_TOPICS = [
   { id: "vitamin-d", label: "Vitamin D", path: "/vitamin-d", keywords: ["vitamin d", "vitamin d deficiency", "25-oh", "calcitriol"] },
 
   // ── PCOS ──
-  { id: "pcos", label: "PCOS (Polycystic Ovary Syndrome)", path: "/pcos", keywords: ["pcos", "polycystic ovary", "anovulation", "hirsutism", "metformin"] },
+  { id: "pmos", label: "PMOS (Polyendocrine Metabolic Ovarian Syndrome)", path: "/women-health?tab=pmos", keywords: ["pmos", "pcos", "polycystic ovary", "polyendocrine metabolic ovarian", "anovulation", "hirsutism", "metformin"] },
 
   // ── Women's Health ──
   { id: "women-health", label: "Women's Health", path: "/women-health", keywords: ["women health", "women's health", "pmos", "hrt"] },

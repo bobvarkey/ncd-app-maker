@@ -102,7 +102,7 @@ import Fatigue from "@/pages/Fatigue";
 import VitaminD from "@/pages/VitaminD";
 
 // PCOS
-import PCOS from "@/pages/PCOS";
+// import PCOS from "@/pages/PCOS"; // removed — merged into WomenHealth
 
 // Women's Health
 import WomenHealth from "@/pages/WomenHealth";
@@ -258,7 +258,7 @@ const App = () => (
           <Route path="/thyroid" element={<><TabNavigation /><ThyroidCalculator /></>} />
           <Route path="/fatigue" element={<><TabNavigation /><Fatigue /></>} />
           <Route path="/vitamin-d" element={<><TabNavigation /><VitaminD /></>} />
-          <Route path="/pcos" element={<><TabNavigation /><PCOS /></>} />
+          <Route path="/pcos" element={<Navigate to="/women-health?tab=pmos" replace />} />
           <Route path="/women-health" element={<><TabNavigation /><WomenHealth /></>} />
           <Route path="/infections" element={<><TabNavigation /><Infections /></>} />
           <Route path="/acute-diarrhoea" element={<><TabNavigation /><AcuteDiarrhoeaPage /></>} />
