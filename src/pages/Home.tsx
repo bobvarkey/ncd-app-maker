@@ -1,5 +1,6 @@
 import React, { useState, useRef } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { createWorker } from "tesseract.js";
 import { Activity, Droplets, Heart, Scale, Syringe, Activity as PulseIcon, Dna, FileText, ChevronRight, Info, ChevronDown, Upload, Sparkles, Calculator, Stethoscope, FileSearch, UtensilsCrossed, Scan, CheckCircle2, X, AlertTriangle } from "lucide-react";
 import ZoomableImage from "@/components/ZoomableImage";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -379,7 +380,7 @@ function SmartLabUploadForm() {
     setOcrText("");
 
     try {
-      const { createWorker } = await import("tesseract.js");
+      
       const worker = await createWorker("eng");
       const { data } = await worker.recognize(file);
       const text = data.text;
