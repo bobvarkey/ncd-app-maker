@@ -1,5 +1,5 @@
 import { useMemo, useState } from "react";
-import { THROMBOSIS_ALGORITHM } from "./thrombosisAlgorithm";
+import { THROMBOSIS_ALGORITHM, type AlgorithmNode } from "./thrombosisAlgorithm";
 import { BLEEDING_ALGORITHM } from "./bleedingAlgorithm";
 import type {
   BleedingAlgorithmNode,

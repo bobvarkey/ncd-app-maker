@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { Link, useLocation, useNavigate, useSearchParams } from "react-router-dom";
-import { ChevronLeft, ChevronRight, Search, X, Pill, FileText, Home, Droplets, Heart, Droplet, Dna, Microscope, Weight, AirVent, Bean, Moon, Bug, UtensilsCrossed, Shield, Syringe, Zap, Bandage, Timer, Thermometer, Flame, Bone, Gem, Smile, Sun, Stethoscope } from "lucide-react";
+import { ChevronLeft, ChevronRight, Search, X, Pill, FileText, Home, Droplets, Heart, Droplet, Dna, Microscope, Weight, AirVent, Bean, Moon, Bug, UtensilsCrossed, Shield, Syringe, Zap, Bandage, Timer, Thermometer, Flame, Bone, Gem, Smile, Sun, Stethoscope, Filter } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { RENAL_DATA } from "@/calculators/diabetes/RenalDosing";
 import { ANTIBIOTICS_DATA } from "@/calculators/diabetes/antibiotics-data";
@@ -122,7 +122,7 @@ const electrolyteSubItems: { path: string; label: string; icon: React.ComponentT
   { path: "/hypercalcemia", label: "Hypercalcemia", icon: Flame },
   { path: "/hypomagnesemia", label: "Hypomagnesemia", icon: Bone },
   { path: "/hypermagnesemia", label: "Hypermagnesemia", icon: Gem },
-  { path: "/hypophosphatemia", label: "Hypophosphatemia", icon: Tooth },
+  { path: "/hypophosphatemia", label: "Hypophosphatemia", icon: Bone },
   { path: "/hyperphosphatemia", label: "Hyperphosphatemia", icon: Gem },
 ];
 

@@ -292,17 +292,18 @@ export default function VitaminDDosingCalculator() {
     if (!result) return;
     const note = formatClinicalNote({
       title: "Vitamin D Dosing Plan",
-      sections: [
-        { heading: "Patient", content: `Age: ${inputs.age} yr (${ageGroup}) | Weight: ${inputs.weight || "—"} kg` },
-        { heading: "Lab", content: `25(OH)D: ${inputs.vitDLevel} ng/mL — ${result.severityLabel}` },
-        { heading: "Correction", content: `${result.correctionDose} for ${result.correctionDuration}` },
-        { heading: "Maintenance", content: result.maintenanceDose },
-        { heading: "Target", content: result.targetLevel },
-        { heading: "Follow-up", content: result.followUp },
-        ...(result.specialNotes.length
-          ? [{ heading: "Notes", content: result.specialNotes.join("\n") }]
-          : []),
-      ],
+      inputs: {
+        Age: `${inputs.age} yr (${ageGroup})`,
+        Weight: `${inputs.weight || "—"} kg`,
+        "25(OH)D": `${inputs.vitDLevel} ng/mL — ${result.severityLabel}`,
+      },
+      results: {
+        Correction: `${result.correctionDose} for ${result.correctionDuration}`,
+        Maintenance: result.maintenanceDose,
+        Target: result.targetLevel,
+        "Follow-up": result.followUp,
+      },
+      recommendations: result.specialNotes,
     });
     downloadTextFile(note, `vitamin-d-plan-${Date.now()}.txt`);
   };
