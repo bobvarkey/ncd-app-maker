@@ -23,6 +23,7 @@ import {
   Pill,
   HeartPulse,
   Info,
+  Clock,
 } from "lucide-react";
 import { SectionCard } from "@/components/ui/section-card";
 import ZoomableImage from "@/components/ZoomableImage";
