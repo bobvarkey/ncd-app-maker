@@ -171,7 +171,7 @@ const VACCINES: Vaccine[] = [
   {
     id: "meningococcal_menacwy",
     name: "Meningococcal (MenACWY)",
-    type: "inactivated/conjugate",
+    type: "inactivated/conjugate and polysaccharide",
     age_min: 18,
     age_max: null,
     routine_adult_schedule: "Single or two-dose series in specific risk groups; booster per risk/exposure",
@@ -195,7 +195,7 @@ const VACCINES: Vaccine[] = [
   {
     id: "herpes_zoster_shingrix",
     name: "Herpes Zoster (Shingrix, recombinant)",
-    type: "inactivated/recombinant subunit",
+    type: "inactivated/recombinant",
     age_min: 18,
     age_max: null,
     routine_adult_schedule: "Two-dose series, 2–6 months apart (some guidance allows 1–2 months depending on product)",

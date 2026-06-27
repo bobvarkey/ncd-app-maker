@@ -142,8 +142,8 @@ export function classifyHyperglycemicCrisis(input: DKA_HHS_Input): DerivedCrisis
   const meets_hhs_osm = (labs.osmolality_mosm_kg || corrected_osmolality) > 320 || effective_osm > 300;
   const no_significant_ketosis = labs.beta_hydroxybutyrate_mmol_l !== undefined
     ? labs.beta_hydroxybutyrate_mmol_l < 3.0
-    : (labs.serum_ketones === "negative" || labs.serum_ketones === "trace" || labs.serum_ketones === "small" || labs.serum_ketones === undefined)
-      && (labs.urine_ketones === "negative" || labs.urine_ketones === "trace" || labs.urine_ketones === "small" || labs.urine_ketones === undefined);
+    : (labs.serum_ketones === "negative" || labs.serum_ketones === "small" || labs.serum_ketones === undefined)
+      && (labs.urine_ketones === "negative" || labs.urine_ketones === "small" || labs.urine_ketones === undefined);
 
   if (has_ketosis && has_acidosis && !is_hyperosmolar) {
     crisis_type = "dka";

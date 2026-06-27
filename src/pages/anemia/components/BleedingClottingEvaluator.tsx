@@ -1,5 +1,5 @@
 import { useMemo, useState } from "react";
-import { THROMBOSIS_ALGORITHM } from "./thrombosisAlgorithm";
+import { THROMBOSIS_ALGORITHM, type AlgorithmNode } from "./thrombosisAlgorithm";
 import { BLEEDING_ALGORITHM } from "./bleedingAlgorithm";
 import type {
   BleedingAlgorithmNode,
@@ -23,6 +23,7 @@ import {
   Pill,
   HeartPulse,
   Info,
+  Clock,
 } from "lucide-react";
 import { SectionCard } from "@/components/ui/section-card";
 import ZoomableImage from "@/components/ZoomableImage";
@@ -969,7 +970,7 @@ function ThrombosisAlgorithm() {
           </SectionCard>
 
           {node.tests && node.tests.length > 0 && (
-            <SectionCard title="Tests to Order" icon={<FlaskConical className="h-4 w-4" />} tone="sky" defaultOpen>
+            <SectionCard title="Tests to Order" icon={<FlaskConical className="h-4 w-4" />} tone="cyan" defaultOpen>
               <ul className="space-y-1 text-sm text-foreground">
                 {node.tests.map((t, i) => (
                   <li key={i} className="flex items-start gap-2">
@@ -988,7 +989,7 @@ function ThrombosisAlgorithm() {
           )}
 
           {node.screening_tests && node.screening_tests.length > 0 && (
-            <SectionCard title="Screening Tests" icon={<Stethoscope className="h-4 w-4" />} tone="sky" defaultOpen>
+            <SectionCard title="Screening Tests" icon={<Stethoscope className="h-4 w-4" />} tone="cyan" defaultOpen>
               <ul className="space-y-1 text-sm text-foreground">
                 {node.screening_tests.map((t, i) => (
                   <li key={i} className="flex items-start gap-2">
@@ -1040,7 +1041,7 @@ function ThrombosisAlgorithm() {
           )}
 
           {node.dic_features && node.dic_features.length > 0 && (
-            <SectionCard title="DIC Features" icon={<Droplets className="h-4 w-4" />} tone="rose" defaultOpen>
+            <SectionCard title="DIC Features" icon={<Droplets className="h-4 w-4" />} tone="danger" defaultOpen>
               <ul className="space-y-1 text-sm text-foreground">
                 {node.dic_features.map((f, i) => (
                   <li key={i} className="flex items-start gap-2">
@@ -1053,7 +1054,7 @@ function ThrombosisAlgorithm() {
           )}
 
           {node.vte_thrombophilia_features && node.vte_thrombophilia_features.length > 0 && (
-            <SectionCard title="VTE/Thrombophilia Features" icon={<Activity className="h-4 w-4" />} tone="sky" defaultOpen>
+            <SectionCard title="VTE/Thrombophilia Features" icon={<Activity className="h-4 w-4" />} tone="cyan" defaultOpen>
               <ul className="space-y-1 text-sm text-foreground">
                 {node.vte_thrombophilia_features.map((f, i) => (
                   <li key={i} className="flex items-start gap-2">
@@ -1082,7 +1083,7 @@ function ThrombosisAlgorithm() {
         <SectionCard
           title={node.question || ""}
           icon={<ClipboardList className="h-4 w-4" />}
-          tone="violet"
+          tone="purple"
           defaultOpen
         >
           <div className="grid gap-2">
