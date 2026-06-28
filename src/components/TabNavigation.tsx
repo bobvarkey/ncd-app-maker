@@ -111,6 +111,7 @@ type NavItem = {
   icon: React.ComponentType<{ className?: string }>;
   /** Tailwind classes for active state (must be static so JIT picks them up) */
   active: string;
+  emoji?: string;
 };
 
 const electrolyteSubItems: { path: string; label: string; icon: React.ComponentType<{ className?: string }> }[] = [
@@ -155,23 +156,23 @@ function ElectrolyteSubNav() {
 }
 
 const navItems: NavItem[] = [
-  { path: "/home",                    label: "Home",      icon: Home, active: "bg-primary/10 text-primary border-primary/30" },
-  { path: "/diabetes",                label: "Diabetes",  icon: Droplets, active: "bg-destructive/100/10 text-destructive border-red-500/30" },
-  { path: "/hypertension",            label: "Hypertension", icon: Heart, active: "bg-warning/100/10 text-warning border-warning/30" },
-  { path: "/lipids",                  label: "Lipids",    icon: Droplet, active: "bg-blue-500/10 text-blue-400 border-blue-500/30" },
-  { path: "/liver",                   label: "Liver",     icon: Dna, active: "bg-lime-500/10 text-lime-400 border-lime-500/30" },
-  { path: "/thyroid",                 label: "Thyroid",   icon: Microscope, active: "bg-emerald-500/10 text-emerald-400 border-emerald-500/30" },
-  { path: "/obesity/bmi-calculator",  label: "Obesity",   icon: Weight, active: "bg-violet-500/10 text-violet-400 border-violet-500/30" },
-  { path: "/respiratory",             label: "COPD",      icon: AirVent, active: "bg-cyan-500/10 text-cyan-400 border-cyan-500/30" },
-  { path: "/renal-dosing",            label: "Renal",     icon: Filter, active: "bg-warning/100/10 text-warning border-amber-500/30" },
-  { path: "/anemia",                  label: "Blood",     icon: Droplet, active: "bg-sky-500/10 text-primary border-sky-500/30" },
-  { path: "/fatigue",                label: "Fatigue",   icon: Moon, active: "bg-warning/100/10 text-warning border-amber-500/30" },
-  { path: "/infections",             label: "Infections", icon: Bug, active: "bg-rose-500/10 text-destructive border-rose-500/30" },
-  { path: "/acute-diarrhoea",        label: "Acute Diarrhoea", icon: UtensilsCrossed, active: "bg-amber-500/10 text-amber-400 border-amber-500/30" },
-  { path: "/food-poisoning",        label: "Food Poisoning", icon: UtensilsCrossed, active: "bg-amber-500/10 text-amber-400 border-amber-500/30" },
-  { path: "/pep",                   label: "PEP",       icon: Shield, active: "bg-amber-500/10 text-amber-400 border-amber-500/30" },
-  { path: "/adult-vaccinations",    label: "Vaccines",  icon: Syringe, active: "bg-emerald-500/10 text-emerald-400 border-emerald-500/30" },
-  { path: "/electrolytes",          label: "Electrolyte Disturbances", icon: Zap, active: "bg-cyan-500/10 text-cyan-400 border-cyan-500/30" },
+  { path: "/home",                    label: "Home",      icon: Home, active: "bg-primary/10 text-primary border-primary/30", emoji: "🏠" },
+  { path: "/diabetes",                label: "Diabetes",  icon: Droplets, active: "bg-red-500/10 text-red-400 border-red-500/30", emoji: "🩸" },
+  { path: "/hypertension",            label: "Hypertension", icon: Heart, active: "bg-orange-500/10 text-orange-400 border-orange-500/30", emoji: "❤️" },
+  { path: "/lipids",                  label: "Lipids",    icon: Droplet, active: "bg-blue-500/10 text-blue-400 border-blue-500/30", emoji: "💧" },
+  { path: "/liver",                   label: "Liver",     icon: Dna, active: "bg-lime-500/10 text-lime-400 border-lime-500/30", emoji: "🫀" },
+  { path: "/thyroid",                 label: "Thyroid",   icon: Microscope, active: "bg-emerald-500/10 text-emerald-400 border-emerald-500/30", emoji: "🦋" },
+  { path: "/obesity/bmi-calculator",  label: "Obesity",   icon: Weight, active: "bg-violet-500/10 text-violet-400 border-violet-500/30", emoji: "⚖️" },
+  { path: "/respiratory",             label: "COPD",      icon: AirVent, active: "bg-cyan-500/10 text-cyan-400 border-cyan-500/30", emoji: "🫁" },
+  { path: "/renal-dosing",            label: "Renal",     icon: Filter, active: "bg-amber-500/10 text-amber-400 border-amber-500/30", emoji: "🫘" },
+  { path: "/anemia",                  label: "Blood",     icon: Droplet, active: "bg-sky-500/10 text-sky-400 border-sky-500/30", emoji: "🩸" },
+  { path: "/fatigue",                label: "Fatigue",   icon: Moon, active: "bg-indigo-500/10 text-indigo-400 border-indigo-500/30", emoji: "😴" },
+  { path: "/infections",             label: "Infections", icon: Bug, active: "bg-rose-500/10 text-rose-400 border-rose-500/30", emoji: "🦠" },
+  { path: "/acute-diarrhoea",        label: "Diarrhoea", icon: UtensilsCrossed, active: "bg-amber-500/10 text-amber-400 border-amber-500/30", emoji: "💩" },
+  { path: "/food-poisoning",        label: "Food Poison", icon: UtensilsCrossed, active: "bg-amber-500/10 text-amber-400 border-amber-500/30", emoji: "🤢" },
+  { path: "/pep",                   label: "PEP",       icon: Shield, active: "bg-emerald-500/10 text-emerald-400 border-emerald-500/30", emoji: "💉" },
+  { path: "/adult-vaccinations",    label: "Vaccines",  icon: Syringe, active: "bg-teal-500/10 text-teal-400 border-teal-500/30", emoji: "💉" },
+  { path: "/electrolytes",          label: "Electrolytes", icon: Zap, active: "bg-cyan-500/10 text-cyan-400 border-cyan-500/30", emoji: "⚡" },
 ];
 
 // Section separator helper
@@ -187,12 +188,12 @@ function SectionLabel({ label, collapsed }: { label: string; collapsed: boolean 
 }
 
 const miscItems: NavItem[] = [
-  { path: "/vitamin-d",              label: "Vitamin D",   icon: Sun, active: "bg-amber-500/10 text-amber-400 border-amber-500/30" },
+  { path: "/vitamin-d",              label: "Vitamin D",   icon: Sun, active: "bg-amber-500/10 text-amber-400 border-amber-500/30", emoji: "☀️" },
 ];
 
 const womenHealthItems: NavItem[] = [
-  { path: "/women-health?tab=pmos",  label: "PMOS / PCOS", icon: Stethoscope, active: "bg-rose-500/10 text-rose-400 border-rose-500/30" },
-  { path: "/women-health?tab=hrt",  label: "HRT Algorithm", icon: Heart, active: "bg-pink-500/10 text-pink-400 border-pink-500/30" },
+  { path: "/women-health?tab=pmos",  label: "PMOS / PCOS", icon: Stethoscope, active: "bg-rose-500/10 text-rose-400 border-rose-500/30", emoji: "🌸" },
+  { path: "/women-health?tab=hrt",  label: "HRT Algorithm", icon: Heart, active: "bg-pink-500/10 text-pink-400 border-pink-500/30", emoji: "💊" },
 ];
 
 export function TabNavigation() {
@@ -456,7 +457,7 @@ export function TabNavigation() {
                   )}
                   aria-current={isActive ? "page" : undefined}
                 >
-                  <item.icon className="h-5 w-5 shrink-0" />
+                  {item.emoji && <span className="text-base">{item.emoji}</span>}
                   {!collapsed && <span className="truncate">{item.label}</span>}
                 </Link>
                 {showBloodSubs && <BloodSubNav />}
@@ -483,7 +484,7 @@ export function TabNavigation() {
                   )}
                   aria-current={isActive ? "page" : undefined}
                 >
-                  <item.icon className="h-5 w-5 shrink-0" />
+                  {item.emoji && <span className="text-base">{item.emoji}</span>}
                   {!collapsed && <span className="truncate">{item.label}</span>}
                 </Link>
               </li>
@@ -507,7 +508,7 @@ export function TabNavigation() {
                   )}
                   aria-current={isActive ? "page" : undefined}
                 >
-                  <item.icon className="h-5 w-5 shrink-0" />
+                  {item.emoji && <span className="text-base">{item.emoji}</span>}
                   {!collapsed && <span className="truncate">{item.label}</span>}
                 </Link>
               </li>
