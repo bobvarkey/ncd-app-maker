@@ -14,6 +14,11 @@ import { AlgorithmFlowchart } from "@/components/med/AlgorithmFlowchart";
 import { ClinicalGuidelines } from "@/components/med/ClinicalGuidelines";
 import { NextBestMed } from "@/components/med/NextBestMed";
 import { GLP1ObesityAlgorithm } from "@/components/med/GLP1ObesityAlgorithm";
+import {
+  Collapsible,
+  CollapsibleContent,
+  CollapsibleTrigger,
+} from "@/components/ui/collapsible";
 
 const categoryIcon: Record<AlgorithmPriority, typeof Heart> = {
   "cvkd-risk": Heart,
@@ -44,7 +49,7 @@ const MedOptimizer = () => {
   const contentRef = useRef<HTMLDivElement>(null);
   const [patient, setPatient] = useState<PatientData | null>(null);
   const [exporting, setExporting] = useState(false);
-  const [expandedCards, setExpandedCards] = useState<Set<number>>(new Set([0, 1, 2]));
+  const [expandedGroups, setExpandedGroups] = useState<Set<string>>(new Set(["cvkd-risk", "glycemic-control"])); // Default expand first two groups
   const [mode, setMode] = useState<"new-patient" | "optimize-current">("new-patient");
 
   useEffect(() => {
@@ -177,10 +182,10 @@ const MedOptimizer = () => {
     );
   }
 
-  const toggleCard = (idx: number) => {
-    setExpandedCards(prev => {
+  const toggleGroup = (category: string) => {
+    setExpandedGroups(prev => {
       const next = new Set(prev);
-      if (next.has(idx)) { next.delete(idx); } else { next.add(idx); }
+      if (next.has(category)) { next.delete(category); } else { next.add(category); }
       return next;
     });
   };
@@ -343,105 +348,112 @@ const MedOptimizer = () => {
       {/* GLP-1 Obesity Algorithm */}
       <GLP1ObesityAlgorithm patient={patient} />
 
-      {/* Grouped medication cards */}
-      {grouped.map((group) => (
-        <div key={group.category} className="space-y-2">
-          <div className={`flex items-center gap-2 px-3 py-2 rounded-lg ${categoryBg[group.category]}`}>
-            {(() => { const Icon = categoryIcon[group.category]; return <Icon className="w-4 h-4" />; })()}
-            <h2 className="text-base font-heading font-semibold">{group.label}</h2>
-            <span className="text-xs text-muted-foreground ml-auto">{group.meds.length} medication{group.meds.length > 1 ? "s" : ""}</span>
-          </div>
+      {/* Grouped medication cards - groups are collapsible */}
+      {grouped.map((group) => {
+        const isGroupExpanded = expandedGroups.has(group.category);
+        return (
+          <Collapsible
+            key={group.category}
+            open={isGroupExpanded}
+            onOpenChange={() => toggleGroup(group.category)}
+            className="space-y-2"
+          >
+            <CollapsibleTrigger asChild>
+              <button className={`w-full flex items-center gap-2 px-3 py-2 rounded-lg ${categoryBg[group.category]} hover:opacity-80 transition-opacity`}>
+                {(() => { const Icon = categoryIcon[group.category]; return <Icon className="w-4 h-4" />; })()}
+                <h2 className="text-base font-heading font-semibold">{group.label}</h2>
+                <span className="text-xs text-muted-foreground ml-auto">{group.meds.length} medication{group.meds.length > 1 ? "s" : ""}</span>
+                {isGroupExpanded ? <ChevronUp className="w-4 h-4 text-muted-foreground ml-2" /> : <ChevronDown className="w-4 h-4 text-muted-foreground ml-2" />}
+              </button>
+            </CollapsibleTrigger>
 
-          {group.meds.map((med) => {
-            const idx = globalIdx++;
-            const isExpanded = expandedCards.has(idx);
-            return (
-              <div key={idx} className={`clinical-card border-l-4 ${categoryColor[group.category]}`}>
-                <button onClick={() => toggleCard(idx)} className="w-full text-left">
-                  <div className="flex items-start justify-between mb-1">
-                    <div className="flex items-center gap-2 flex-1 min-w-0">
-                      <Pill className="w-4 h-4 text-primary shrink-0" />
-                      <div className="min-w-0">
-                        <h3 className="font-semibold text-base truncate">{med.drug}</h3>
-                        <p className="text-xs text-muted-foreground">{getDrugClassLabel(med.drugClass)}</p>
+            <CollapsibleContent>
+              {group.meds.map((med) => {
+                const idx = globalIdx++;
+                return (
+                  <div key={idx} className={`clinical-card border-l-4 ${categoryColor[group.category]}`}>
+                    {/* Drug header - always visible */}
+                    <div className="flex items-start justify-between mb-1">
+                      <div className="flex items-center gap-2 flex-1 min-w-0">
+                        <Pill className="w-4 h-4 text-primary shrink-0" />
+                        <div className="min-w-0">
+                          <h3 className="font-semibold text-base truncate">{med.drug}</h3>
+                          <p className="text-xs text-muted-foreground">{getDrugClassLabel(med.drugClass)}</p>
+                        </div>
                       </div>
-                    </div>
-                    <div className="flex items-center gap-2 shrink-0">
                       <span className={`stat-badge text-xs py-1 px-2.5 border ${priorityBadge(med.priority)}`}>
                         {med.priority}
                       </span>
-                      {isExpanded ? <ChevronUp className="w-3.5 h-3.5 text-muted-foreground" /> : <ChevronDown className="w-3.5 h-3.5 text-muted-foreground" />}
                     </div>
-                  </div>
 
-                  {/* Always visible summary */}
-                  <div className="bg-muted/50 rounded-lg p-3 mt-2">
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm">
-                      <div><span className="text-muted-foreground text-xs font-medium">Dose:</span> <strong className="text-base">{med.dose}</strong></div>
-                      <div className="flex items-center gap-2"><span className="text-muted-foreground text-xs font-medium">Freq:</span> <strong className="text-base">{med.frequency}</strong> <FrequencyBadge frequency={med.frequency} /></div>
-                    </div>
-                  </div>
-                </button>
-
-                {isExpanded && (
-                  <div className="mt-3 space-y-3 animate-slide-in">
-                    {/* Reason */}
-                    <p className="text-xs text-muted-foreground">{med.reason}</p>
-
-                    {/* Quick stats */}
-                    <div className="grid grid-cols-1 sm:grid-cols-2 sm:grid-cols-3 gap-2 text-center">
-                      <div className="p-2 rounded bg-muted/30">
-                        <span className="text-xs text-muted-foreground block font-medium">HbA1c ↓</span>
-                        <span className="text-sm font-semibold">{med.hba1cReduction}</span>
-                      </div>
-                      <div className="p-2 rounded bg-muted/30">
-                        <span className="text-xs text-muted-foreground block font-medium">Weight</span>
-                        <span className={`text-sm font-semibold ${weightColor(med.weightEffect)}`}>{weightIcon(med.weightEffect)}</span>
-                      </div>
-                      <div className="p-2 rounded bg-muted/30">
-                        <span className="text-xs text-muted-foreground block font-medium">CV Benefit</span>
-                        <span className={`text-sm font-semibold ${med.cvBenefit ? "text-success" : "text-muted-foreground"}`}>
-                          {med.cvBenefit ? "✓ Proven" : "— Neutral"}
-                        </span>
+                    {/* Always visible summary */}
+                    <div className="bg-muted/50 rounded-lg p-3 mt-2">
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm">
+                        <div><span className="text-muted-foreground text-xs font-medium">Dose:</span> <strong className="text-base">{med.dose}</strong></div>
+                        <div className="flex items-center gap-2"><span className="text-muted-foreground text-xs font-medium">Freq:</span> <strong className="text-base">{med.frequency}</strong> <FrequencyBadge frequency={med.frequency} /></div>
                       </div>
                     </div>
 
-                    {/* Warnings */}
-                    {med.warnings.length > 0 && (
-                      <div className="space-y-1">
-                        {med.warnings.map((w, wi) => (
-                          <div key={wi} className="flex items-start gap-1.5 text-xs">
-                            <AlertTriangle className="w-3 h-3 text-warning mt-0.5 shrink-0" />
-                            <span>{w}</span>
-                          </div>
-                        ))}
-                      </div>
-                    )}
+                    {/* Details - always visible */}
+                    <div className="mt-3 space-y-3">
+                      {/* Reason */}
+                      <p className="text-xs text-muted-foreground">{med.reason}</p>
 
-                    {/* Contraindications */}
-                    {med.contraindications.length > 0 && (
-                      <div>
-                        <span className="text-xs font-semibold text-destructive block mb-2">Contraindications:</span>
-                        <div className="flex flex-wrap gap-1.5">
-                          {med.contraindications.map((c, ci) => (
-                            <span key={ci} className="text-xs bg-destructive/10 text-destructive px-2.5 py-1 rounded-full">{c}</span>
-                          ))}
+                      {/* Quick stats */}
+                      <div className="grid grid-cols-1 sm:grid-cols-2 sm:grid-cols-3 gap-2 text-center">
+                        <div className="p-2 rounded bg-muted/30">
+                          <span className="text-xs text-muted-foreground block font-medium">HbA1c ↓</span>
+                          <span className="text-sm font-semibold">{med.hba1cReduction}</span>
+                        </div>
+                        <div className="p-2 rounded bg-muted/30">
+                          <span className="text-xs text-muted-foreground block font-medium">Weight</span>
+                          <span className={`text-sm font-semibold ${weightColor(med.weightEffect)}`}>{weightIcon(med.weightEffect)}</span>
+                        </div>
+                        <div className="p-2 rounded bg-muted/30">
+                          <span className="text-xs text-muted-foreground block font-medium">CV Benefit</span>
+                          <span className={`text-sm font-semibold ${med.cvBenefit ? "text-success" : "text-muted-foreground"}`}>
+                            {med.cvBenefit ? "✓ Proven" : "— Neutral"}
+                          </span>
                         </div>
                       </div>
-                    )}
 
-                    <div className="border-t border-muted-foreground/10 pt-2 mt-2">
-                      <p className="text-xs text-muted-foreground leading-relaxed">
-                        {med.adaReference}
-                      </p>
+                      {/* Warnings */}
+                      {med.warnings.length > 0 && (
+                        <div className="space-y-1">
+                          {med.warnings.map((w, wi) => (
+                            <div key={wi} className="flex items-start gap-1.5 text-xs">
+                              <AlertTriangle className="w-3 h-3 text-warning mt-0.5 shrink-0" />
+                              <span>{w}</span>
+                            </div>
+                          ))}
+                        </div>
+                      )}
+
+                      {/* Contraindications */}
+                      {med.contraindications.length > 0 && (
+                        <div>
+                          <span className="text-xs font-semibold text-destructive block mb-2">Contraindications:</span>
+                          <div className="flex flex-wrap gap-1.5">
+                            {med.contraindications.map((c, ci) => (
+                              <span key={ci} className="text-xs bg-destructive/10 text-destructive px-2.5 py-1 rounded-full">{c}</span>
+                            ))}
+                          </div>
+                        </div>
+                      )}
+
+                      <div className="border-t border-muted-foreground/10 pt-2 mt-2">
+                        <p className="text-xs text-muted-foreground leading-relaxed">
+                          {med.adaReference}
+                        </p>
+                      </div>
                     </div>
                   </div>
-                )}
-              </div>
-            );
-          })}
-        </div>
-      ))}
+                );
+              })}
+            </CollapsibleContent>
+          </Collapsible>
+        );
+      })}
 
       {/* Lipid targets */}
       <div className="clinical-card">
