@@ -614,7 +614,7 @@ function PrescriptionEngine() {
   }, [weight, height]);
 
   // Calculate eGFR using CKD-EPI 2021 equation
-  const calculateEGFR = () => {
+  const calculateEGFR = React.useCallback(() => {
     const ageNum = parseInt(age);
     const creatinineNum = parseFloat(creatinine);
 
@@ -636,7 +636,7 @@ function PrescriptionEngine() {
       genderFactor;
 
     return Math.round(eGFRValue);
-  };
+  }, [age, creatinine, sex]);
 
   // Auto-update eGFR when inputs change
   React.useEffect(() => {
@@ -644,7 +644,7 @@ function PrescriptionEngine() {
     if (calculated !== null) {
       setEgfr(calculated.toString());
     }
-  }, [age, creatinine, sex]);
+  }, [age, creatinine, sex, calculateEGFR]);
 
   const generatePrescription = () => {
     const prescriptions: string[] = [];

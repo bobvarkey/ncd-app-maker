@@ -34,7 +34,7 @@ export default function Anemia() {
 
   // Auto-save
   useEffect(() => { localStorage.setItem('ncd_anemia_cbc', JSON.stringify(cbc)); }, [cbc]);
-  useEffect(() => { sex && localStorage.setItem('ncd_anemia_sex', sex); }, [sex]);
+  useEffect(() => { if (sex) localStorage.setItem('ncd_anemia_sex', sex); }, [sex]);
 
   function handleChange(field: keyof CBCValues, value: string) {
     setCbc(prev => ({ ...prev, [field]: value }));

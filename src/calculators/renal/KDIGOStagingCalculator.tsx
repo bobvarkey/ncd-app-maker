@@ -112,7 +112,7 @@ export default function KDIGOStagingCalculator() {
 
   useEffect(() => { localStorage.setItem("ncd_kdigo_creatinine", creatinine); }, [creatinine]);
   useEffect(() => { localStorage.setItem("ncd_kdigo_age", age); }, [age]);
-  useEffect(() => { sex && localStorage.setItem("ncd_kdigo_sex", sex); }, [sex]);
+  useEffect(() => { if (sex) localStorage.setItem("ncd_kdigo_sex", sex); }, [sex]);
   useEffect(() => { localStorage.setItem("ncd_kdigo_unit", unit); }, [unit]);
   useEffect(() => { localStorage.setItem("ncd_kdigo_uacr", uacr); }, [uacr]);
   useEffect(() => { localStorage.setItem("ncd_kdigo_uacr_unit", uacrUnit); }, [uacrUnit]);

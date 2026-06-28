@@ -439,7 +439,7 @@ function getTetanusPep(
   const needBooster = vax === "unknown" || vax === "never" || vax === "not-updated" || (vax === "up-to-date" && lastBoosterYears !== null && lastBoosterYears >= 5 && woundInfo.atRisk) || (vax === "up-to-date" && lastBoosterYears !== null && lastBoosterYears >= 10);
 
   let rationale = "";
-  let keyPoints: string[] = [];
+  const keyPoints: string[] = [];
 
   if (vax === "up-to-date" && !woundInfo.atRisk) {
     rationale = "Up-to-date tetanus vaccination + clean minor wound. Neither TIG nor booster needed.";

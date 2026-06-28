@@ -67,7 +67,7 @@ export default function GfrCalculator({ onResultChange }: GfrCalculatorProps) {
   // Auto-save
   useEffect(() => { localStorage.setItem("ncd_gfr_creatinine", creatinine); }, [creatinine]);
   useEffect(() => { localStorage.setItem("ncd_gfr_age", age); }, [age]);
-  useEffect(() => { sex && localStorage.setItem("ncd_gfr_sex", sex); }, [sex]);
+  useEffect(() => { if (sex) localStorage.setItem("ncd_gfr_sex", sex); }, [sex]);
   useEffect(() => { localStorage.setItem("ncd_gfr_unit", unit); }, [unit]);
 
   const toggleUnit = () => {

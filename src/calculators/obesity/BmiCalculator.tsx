@@ -83,7 +83,9 @@ export default function BmiCalculator() {
           // Can't easily set defaults after mount without setValue, skip
         }
       }
-    } catch {}
+    } catch {
+      // localStorage not available or invalid JSON
+    }
   }, []);
 
   const selectedEthnicity = watch("ethnicity") || "standard";
@@ -106,11 +108,13 @@ export default function BmiCalculator() {
     });
     setTreatmentData(treatment);
     setShowTreatment(false);
-    
+
     // Save to localStorage
     try {
       localStorage.setItem("ncd_bmi_last", JSON.stringify(data));
-    } catch {}
+    } catch {
+      // localStorage not available
+    }
   };
 
   const reset = () => {

@@ -101,8 +101,8 @@ function computeDosing(
   let correctionDose = "";
   let correctionDuration = "";
   let maintenanceDose = "";
-  let targetLevel = "≥30 ng/mL (75 nmol/L)";
-  let followUp = "Recheck 25(OH)D after 8–12 weeks";
+  const targetLevel = "≥30 ng/mL (75 nmol/L)";
+  const followUp = "Recheck 25(OH)D after 8–12 weeks";
   const specialNotes: string[] = [];
 
   switch (severity) {
