@@ -26,12 +26,6 @@ import {
   CollapsibleContent,
   CollapsibleTrigger,
 } from "@/components/ui/collapsible";
-import UnifiedPrescriptionMiniApp from "@/components/UnifiedPrescriptionMiniApp";
-
-interface PrescriptionState {
-  content: React.ReactNode;
-  severity?: string;
-}
 
 const fullForms: Record<string, string> = {
   // Diabetes
@@ -1412,9 +1406,6 @@ export default function Home() {
       </header>
 
       <main className="max-w-6xl mx-auto px-6 pb-16 space-y-8">
-        {/* Unified Mini-App — TOP */}
-        <UnifiedPrescriptionMiniApp />
-
         {/* Prescription Engine */}
         <PrescriptionEngine />
 
