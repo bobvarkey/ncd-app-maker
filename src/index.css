@@ -184,11 +184,41 @@
 }
 
 @layer components {
+  /* Claymorphism base — soft, rounded, with depth */
+  .clay-card {
+    @apply rounded-2xl border border-white/[0.06] bg-gradient-to-br from-white/[0.04] to-white/[0.01] shadow-[0_8px_32px_rgba(0,0,0,0.4),inset_0_1px_0_rgba(255,255,255,0.06),inset_0_-1px_0_rgba(0,0,0,0.2)] transition-all duration-300;
+  }
+  .clay-card:hover {
+    @apply shadow-[0_12px_40px_rgba(0,0,0,0.5),inset_0_1px_0_rgba(255,255,255,0.08),inset_0_-1px_0_rgba(0,0,0,0.2)] -translate-y-0.5;
+  }
+  .clay-card-flat {
+    @apply rounded-2xl border border-white/[0.06] bg-gradient-to-br from-white/[0.03] to-white/[0.01] shadow-[0_4px_16px_rgba(0,0,0,0.3),inset_0_1px_0_rgba(255,255,255,0.04)];
+  }
+  .clay-button {
+    @apply rounded-xl border border-white/[0.08] bg-gradient-to-br from-white/[0.06] to-white/[0.02] shadow-[0_4px_12px_rgba(0,0,0,0.3),inset_0_1px_0_rgba(255,255,255,0.08)] transition-all duration-200 active:shadow-[0_1px_4px_rgba(0,0,0,0.3),inset_0_1px_0_rgba(255,255,255,0.04)] active:translate-y-0.5;
+  }
+  .clay-input {
+    @apply rounded-xl border border-white/[0.08] bg-gradient-to-br from-black/40 to-black/20 shadow-[inset_0_2px_8px_rgba(0,0,0,0.3),0_1px_0_rgba(255,255,255,0.04)] transition-all duration-200 focus:shadow-[inset_0_2px_8px_rgba(0,0,0,0.4),0_0_0_1px_rgba(56,189,248,0.3)];
+  }
+  .clay-tab {
+    @apply rounded-xl border border-transparent transition-all duration-200 data-[state=active]:border-white/[0.08] data-[state=active]:bg-gradient-to-br data-[state=active]:from-white/[0.06] data-[state=active]:to-white/[0.02] data-[state=active]:shadow-[0_4px_12px_rgba(0,0,0,0.3),inset_0_1px_0_rgba(255,255,255,0.06)];
+  }
+  .clay-sidebar-item {
+    @apply rounded-xl transition-all duration-200 hover:bg-white/[0.04] hover:shadow-[inset_0_1px_0_rgba(255,255,255,0.04)] data-[active=true]:bg-gradient-to-br data-[active=true]:from-white/[0.06] data-[active=true]:to-white/[0.02] data-[active=true]:shadow-[0_2px_8px_rgba(0,0,0,0.3),inset_0_1px_0_rgba(255,255,255,0.06)];
+  }
+  .clay-badge {
+    @apply rounded-xl border border-white/[0.06] bg-gradient-to-br from-white/[0.05] to-white/[0.01] shadow-[0_2px_6px_rgba(0,0,0,0.2),inset_0_1px_0_rgba(255,255,255,0.06)];
+  }
+  .clay-section {
+    @apply rounded-2xl border border-white/[0.06] bg-gradient-to-br from-white/[0.03] to-transparent shadow-[0_4px_20px_rgba(0,0,0,0.3),inset_0_1px_0_rgba(255,255,255,0.04)];
+  }
+
+  /* Keep original clinical-card as alias for backward compat */
   .clinical-card {
-    @apply rounded-xl border border-border bg-card shadow-sm transition-all duration-200;
+    @apply clay-card;
   }
   .clinical-card:hover {
-    @apply shadow-lg border-primary/20;
+    @apply shadow-[0_12px_40px_rgba(0,0,0,0.5),inset_0_1px_0_rgba(255,255,255,0.08),inset_0_-1px_0_rgba(0,0,0,0.2)] -translate-y-0.5;
   }
 
   /* Focus ring for accessibility */
