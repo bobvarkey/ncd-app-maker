@@ -66,6 +66,7 @@ type Inputs = {
   metSyn: boolean;
   naflFibrosis: boolean;
   southAsian: boolean;
+  polyvascular: boolean;
   // ACS specifics
   acsGroup: StatinGroup | "";
   // DM specifics
@@ -101,6 +102,7 @@ const EMPTY: Inputs = {
   metSyn: false,
   naflFibrosis: false,
   southAsian: false,
+  polyvascular: false,
   acsGroup: "",
   dmAscvd: "",
   dmMods: "",
@@ -194,6 +196,7 @@ function classifyGeneral(i: Inputs): RiskGroup {
   const rf = countMajorRF(i);
   const hrf = countHighRiskFeatures(i);
 
+  if (i.polyvascular) return "EHR-B";
   if (i.cac === ">=300") return "EHR-A";
   if (i.cac === "100-299" || i.cac === "1-99_ge75") return "VHR";
 
@@ -946,6 +949,20 @@ export default function LipidMiniApp() {
               </Chip>
               <Chip active={i.southAsian} onClick={() => set("southAsian", !i.southAsian)}>
                 South Asian ethnicity
+              </Chip>
+            </div>
+          </div>
+        )}
+
+        {/* Polyvascular disease — direct EHR-B criterion */}
+        {showHighRiskFeatures && (
+          <div className="mb-4">
+            <Label className="text-xs text-muted-foreground mb-1.5 block">
+              Polyvascular disease (≥2 beds) — <span className="text-destructive font-semibold">direct EHR-B</span>
+            </Label>
+            <div className="flex flex-wrap gap-2">
+              <Chip active={i.polyvascular} onClick={() => set("polyvascular", !i.polyvascular)}>
+                Polyvascular disease (≥2 beds)
               </Chip>
             </div>
           </div>
