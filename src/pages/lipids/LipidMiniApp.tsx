@@ -65,6 +65,7 @@ type Inputs = {
   lpaHigh: boolean;
   metSyn: boolean;
   naflFibrosis: boolean;
+  southAsian: boolean;
   // ACS specifics
   acsGroup: StatinGroup | "";
   // DM specifics
@@ -99,6 +100,7 @@ const EMPTY: Inputs = {
   lpaHigh: false,
   metSyn: false,
   naflFibrosis: false,
+  southAsian: false,
   acsGroup: "",
   dmAscvd: "",
   dmMods: "",
@@ -183,6 +185,7 @@ function countHighRiskFeatures(i: Inputs): number {
   if (i.lpaHigh) n++;
   if (i.metSyn) n++;
   if (i.naflFibrosis) n++;
+  if (i.southAsian) n++;
   return n;
 }
 
@@ -940,6 +943,9 @@ export default function LipidMiniApp() {
               </Chip>
               <Chip active={i.naflFibrosis} onClick={() => set("naflFibrosis", !i.naflFibrosis)}>
                 NAFLD fibrosis 2/3
+              </Chip>
+              <Chip active={i.southAsian} onClick={() => set("southAsian", !i.southAsian)}>
+                South Asian ethnicity
               </Chip>
             </div>
           </div>
