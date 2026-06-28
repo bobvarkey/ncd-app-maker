@@ -321,7 +321,7 @@ export function TabNavigation() {
   return (
     <aside
       className={cn(
-        "fixed top-0 left-0 z-50 h-screen bg-card/95 backdrop-blur-md border-r border-border shadow-sm flex flex-col transition-[width] duration-200",
+        "fixed top-0 left-0 z-50 h-screen bg-card/95 backdrop-blur-md border-r border-border shadow-sm flex flex-col transition-[width] duration-200 ease-out",
         collapsed ? "w-14" : "w-56"
       )}
       aria-label="Primary"
