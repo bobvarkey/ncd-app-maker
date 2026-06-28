@@ -1,7 +1,7 @@
 import React, { useState, useRef } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import {
-  Activity, Droplets, Heart, Scale, Syringe, Dna, FileText, ChevronRight, Info,
+  Activity, Droplet, Droplets, Heart, Scale, Syringe, Dna, FileText, ChevronRight, Info,
   ChevronDown, Upload, Sparkles, Calculator, Stethoscope, FileSearch, UtensilsCrossed,
   Scan, CheckCircle2, X, AlertTriangle, Weight, AirVent, Filter, Moon, Bug, Shield,
   Zap, Sun, Bone, Thermometer, Flame, Gem, Smile, Bandage, Timer, Microscope, Pill,
