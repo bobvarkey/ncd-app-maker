@@ -4,13 +4,16 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Calculator, RotateCcw, ArrowLeftRight } from "lucide-react";
+import { Calculator, RotateCcw, ArrowLeftRight, Info } from "lucide-react";
 
 type CreatinineUnit = "mgdl" | "umol";
 type Sex = "male" | "female" | null;
+type UacrUnit = "mg_g" | "mg_mmol";
 
 // Conversion: 1 mg/dL = 88.42 µmol/L
 const UMOL_TO_MGDL = 1 / 88.42;
+// Conversion: 1 mg/g = 0.113 mg/mmol
+const MMOL_TO_MG_G = 1 / 0.113;
 
 export interface GfrResult {
   gfr: number;
@@ -19,7 +22,47 @@ export interface GfrResult {
   creatinine: number;
   age: number;
   sex: "male" | "female";
+  uacr?: number;
+  kdigoStage?: string;
+  kdigoRisk?: string;
 }
+
+// KDIGO G stages
+const G_STAGES = [
+  { stage: "G1", label: "Normal or High", gfrRange: "≥90", color: "bg-success/20 text-success border-success/30" },
+  { stage: "G2", label: "Mildly Decreased", gfrRange: "60–89", color: "bg-success/20 text-success border-success/30" },
+  { stage: "G3a", label: "Mild–Moderate", gfrRange: "45–59", color: "bg-warning/20 text-warning border-yellow-500/30" },
+  { stage: "G3b", label: "Moderate–Severe", gfrRange: "30–44", color: "bg-orange-100/20 text-orange-600 border-orange-400/30" },
+  { stage: "G4", label: "Severely Decreased", gfrRange: "15–29", color: "bg-destructive/20 text-destructive border-destructive/30" },
+  { stage: "G5", label: "Kidney Failure", gfrRange: "<15", color: "bg-destructive/30 text-destructive border-destructive/40" },
+];
+
+// KDIGO A stages (albuminuria)
+const A_STAGES = [
+  { stage: "A1", label: "Normal–Mildly Increased", uacrRange: "<30 mg/g", color: "bg-success/20 text-success border-success/30" },
+  { stage: "A2", label: "Moderately Increased", uacrRange: "30–300 mg/g", color: "bg-warning/20 text-warning border-yellow-500/30" },
+  { stage: "A3", label: "Severely Increased", uacrRange: ">300 mg/g", color: "bg-destructive/20 text-destructive border-destructive/30" },
+];
+
+// KDIGO risk matrix: rows = G stage index, cols = A stage index
+// 0=low, 1=moderate, 2=high, 3=very high risk
+const RISK_MATRIX: number[][] = [
+  // A1  A2  A3
+  [0,  1,  2],  // G1
+  [0,  1,  2],  // G2
+  [1,  2,  3],  // G3a
+  [2,  3,  3],  // G3b
+  [3,  3,  3],  // G4
+  [3,  3,  3],  // G5
+];
+
+const RISK_LABELS = ["Low Risk", "Moderate Risk", "High Risk", "Very High Risk"];
+const RISK_COLORS = [
+  "bg-success/10 text-success border-success/30",
+  "bg-warning/10 text-warning border-yellow-500/30",
+  "bg-orange-100/10 text-orange-600 border-orange-400/30",
+  "bg-destructive/10 text-destructive border-destructive/30",
+];
 
 function calculateCkdEpi(creatinine: number, age: number, sex: "male" | "female"): number {
   const isFemale = sex === "female";
@@ -35,13 +78,27 @@ function calculateCkdEpi(creatinine: number, age: number, sex: "male" | "female"
   return Math.round(gfr * 10) / 10;
 }
 
-export function getGfrStage(gfr: number): { stage: string; label: string; color: string } {
-  if (gfr >= 90) return { stage: "G1", label: "Normal or High", color: "bg-success/20 text-success border-success/30" };
-  if (gfr >= 60) return { stage: "G2", label: "Mildly Decreased", color: "bg-success/20 text-success border-success/30" };
-  if (gfr >= 45) return { stage: "G3a", label: "Mild-Moderate Decrease", color: "bg-warning/20 text-warning border-yellow-500/30" };
-  if (gfr >= 30) return { stage: "G3b", label: "Moderate-Severe Decrease", color: "bg-warning/100/20 text-warning border-warning/30" };
-  if (gfr >= 15) return { stage: "G4", label: "Severely Decreased", color: "bg-destructive/20 text-destructive border-destructive/30" };
-  return { stage: "G5", label: "Kidney Failure", color: "bg-destructive/30 text-destructive border-destructive/40" };
+function getGfrStage(gfr: number): { stage: string; label: string; color: string; index: number } {
+  if (gfr >= 90) return { ...G_STAGES[0], index: 0 };
+  if (gfr >= 60) return { ...G_STAGES[1], index: 1 };
+  if (gfr >= 45) return { ...G_STAGES[2], index: 2 };
+  if (gfr >= 30) return { ...G_STAGES[3], index: 3 };
+  if (gfr >= 15) return { ...G_STAGES[4], index: 4 };
+  return { ...G_STAGES[5], index: 5 };
+}
+
+function getAStage(uacrMgG: number): { stage: string; label: string; color: string; index: number } {
+  if (uacrMgG < 30) return { ...A_STAGES[0], index: 0 };
+  if (uacrMgG <= 300) return { ...A_STAGES[1], index: 1 };
+  return { ...A_STAGES[2], index: 2 };
+}
+
+function getKdigoRisk(gfrIndex: number, aIndex: number): { label: string; color: string } {
+  const riskIndex = RISK_MATRIX[gfrIndex]?.[aIndex] ?? 0;
+  return {
+    label: RISK_LABELS[riskIndex],
+    color: RISK_COLORS[riskIndex],
+  };
 }
 
 interface GfrCalculatorProps {
@@ -61,6 +118,13 @@ export default function GfrCalculator({ onResultChange }: GfrCalculatorProps) {
   const [unit, setUnit] = useState<CreatinineUnit>(() => {
     try { return (localStorage.getItem("ncd_gfr_unit") as CreatinineUnit) || "mgdl"; } catch { return "mgdl"; }
   });
+  // UACR state (optional)
+  const [uacr, setUacr] = useState(() => {
+    try { return localStorage.getItem("ncd_gfr_uacr") || ""; } catch { return ""; }
+  });
+  const [uacrUnit, setUacrUnit] = useState<UacrUnit>(() => {
+    try { return (localStorage.getItem("ncd_gfr_uacr_unit") as UacrUnit) || "mg_g"; } catch { return "mg_g"; }
+  });
   const [result, setResult] = useState<number | null>(null);
   const [errors, setErrors] = useState<Record<string, string>>({});
 
@@ -69,6 +133,8 @@ export default function GfrCalculator({ onResultChange }: GfrCalculatorProps) {
   useEffect(() => { localStorage.setItem("ncd_gfr_age", age); }, [age]);
   useEffect(() => { if (sex) localStorage.setItem("ncd_gfr_sex", sex); }, [sex]);
   useEffect(() => { localStorage.setItem("ncd_gfr_unit", unit); }, [unit]);
+  useEffect(() => { localStorage.setItem("ncd_gfr_uacr", uacr); }, [uacr]);
+  useEffect(() => { localStorage.setItem("ncd_gfr_uacr_unit", uacrUnit); }, [uacrUnit]);
 
   const toggleUnit = () => {
     const crVal = parseFloat(creatinine);
@@ -83,9 +149,27 @@ export default function GfrCalculator({ onResultChange }: GfrCalculatorProps) {
     setErrors((p) => ({ ...p, creatinine: "" }));
   };
 
+  const toggleUacrUnit = () => {
+    const uacrVal = parseFloat(uacr);
+    if (!isNaN(uacrVal) && uacrVal > 0) {
+      if (uacrUnit === "mg_g") {
+        setUacr((uacrVal / 0.113).toFixed(0));
+      } else {
+        setUacr((uacrVal * 0.113).toFixed(0));
+      }
+    }
+    setUacrUnit((prev) => (prev === "mg_g" ? "mg_mmol" : "mg_g"));
+    setErrors((p) => ({ ...p, uacr: "" }));
+  };
+
   const getCreatinineMgdl = (): number => {
     const val = parseFloat(creatinine);
     return unit === "umol" ? val * UMOL_TO_MGDL : val;
+  };
+
+  const getUacrMgG = (): number => {
+    const val = parseFloat(uacr);
+    return uacrUnit === "mg_mmol" ? val * 0.113 : val;
   };
 
   const validate = (): boolean => {
@@ -114,6 +198,21 @@ export default function GfrCalculator({ onResultChange }: GfrCalculatorProps) {
     const gfr = calculateCkdEpi(crMgdl, parseInt(age), sex!);
     setResult(gfr);
     const stageInfo = getGfrStage(gfr);
+    
+    // Calculate KDIGO staging if UACR is provided
+    const uacrValue = uacr.trim() ? parseFloat(uacr) : null;
+    let kdigoStage: string | undefined;
+    let kdigoRisk: string | undefined;
+    let uacrMgG: number | undefined;
+    
+    if (uacrValue !== null && !isNaN(uacrValue) && uacrValue > 0) {
+      uacrMgG = getUacrMgG();
+      const aStage = getAStage(uacrMgG);
+      kdigoStage = `${stageInfo.stage}/${aStage.stage}`;
+      const risk = getKdigoRisk(stageInfo.index, aStage.index);
+      kdigoRisk = risk.label;
+    }
+    
     onResultChange?.({
       gfr,
       stage: stageInfo.stage,
@@ -121,6 +220,9 @@ export default function GfrCalculator({ onResultChange }: GfrCalculatorProps) {
       creatinine: crMgdl,
       age: parseInt(age),
       sex: sex!,
+      uacr: uacrMgG,
+      kdigoStage,
+      kdigoRisk,
     });
   };
 
@@ -129,6 +231,8 @@ export default function GfrCalculator({ onResultChange }: GfrCalculatorProps) {
     setAge("");
     setSex(null);
     setUnit("mgdl");
+    setUacr("");
+    setUacrUnit("mg_g");
     setResult(null);
     setErrors({});
     onResultChange?.(null);
@@ -251,9 +355,54 @@ export default function GfrCalculator({ onResultChange }: GfrCalculatorProps) {
           </div>
         </div>
 
-        <Button onClick={calculate} className="w-full sm:w-auto">
+        {/* Optional UACR input for KDIGO staging */}
+        <div className="mt-4 p-3 rounded-lg bg-muted/30 border border-border/50">
+          <div className="flex items-center gap-2 mb-3">
+            <Info className="h-4 w-4 text-muted-foreground" />
+            <span className="text-sm text-muted-foreground">Optional: Add UACR for KDIGO G,A staging</span>
+          </div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div className="space-y-1.5">
+              <div className="flex items-center justify-between">
+                <Label htmlFor="gfr-uacr" className="text-sm font-medium">
+                  UACR ({uacrUnit === "mg_g" ? "mg/g" : "mg/mmol"})
+                </Label>
+                <button
+                  type="button"
+                  onClick={toggleUacrUnit}
+                  className="flex items-center gap-1 text-xs text-primary hover:underline font-medium"
+                >
+                  <ArrowLeftRight className="h-3 w-3" />
+                  {uacrUnit === "mg_g" ? "mg/mmol" : "mg/g"}
+                </button>
+              </div>
+              <Input
+                id="gfr-uacr"
+                type="number"
+                step="1"
+                min="0"
+                placeholder={uacrUnit === "mg_g" ? "e.g. 30" : "e.g. 3"}
+                value={uacr}
+                onChange={(e) => {
+                  setUacr(e.target.value);
+                  if (errors.uacr) setErrors((p) => ({ ...p, uacr: "" }));
+                }}
+              />
+              <p className="text-xs text-muted-foreground">Urine Albumin-to-Creatinine Ratio</p>
+            </div>
+            <div className="space-y-1.5 flex items-end">
+              <p className="text-xs text-muted-foreground">
+                <strong>A1:</strong> &lt;30 mg/g{" "}
+                <strong className="ml-2">A2:</strong> 30–300 mg/g{" "}
+                <strong className="ml-2">A3:</strong> &gt;300 mg/g
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <Button onClick={calculate} className="w-full sm:w-auto mt-4">
           <Calculator className="h-4 w-4 mr-2" />
-          Calculate eGFR
+          Calculate eGFR{uacr.trim() && " & KDIGO Stage"}
         </Button>
 
         {result !== null && stage && (
@@ -272,6 +421,35 @@ export default function GfrCalculator({ onResultChange }: GfrCalculatorProps) {
                 <span className="text-xs text-muted-foreground">{stage.label}</span>
               </div>
             </div>
+            
+            {/* KDIGO G,A staging when UACR provided */}
+            {uacr.trim() && parseFloat(uacr) > 0 && !isNaN(parseFloat(uacr)) && (() => {
+              const uacrMgG = getUacrMgG();
+              const aStage = getAStage(uacrMgG);
+              const risk = getKdigoRisk(stage.index, aStage.index);
+              return (
+                <div className="mt-4 pt-4 border-t border-border">
+                  <div className="flex items-center gap-2 mb-2">
+                    <span className="text-sm font-semibold text-foreground">KDIGO Stage:</span>
+                    <Badge className={"border " + aStage.color}>
+                      {stage.stage}/{aStage.stage}
+                    </Badge>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <span className="text-sm text-muted-foreground">Albuminuria:</span>
+                    <span className="text-sm font-medium">{aStage.label}</span>
+                    <span className="text-xs text-muted-foreground">({uacrMgG.toFixed(0)} mg/g)</span>
+                  </div>
+                  <div className="flex items-center gap-2 mt-2">
+                    <span className="text-sm font-semibold">Risk:</span>
+                    <Badge className={"border " + risk.color}>
+                      {risk.label}
+                    </Badge>
+                  </div>
+                </div>
+              );
+            })()}
+            
             {result < 60 && (
               <p className="mt-3 text-xs text-destructive font-medium border-t border-border pt-3">
                 ⚠️ GFR &lt; 60: Review renal dosing adjustments for all medications above
