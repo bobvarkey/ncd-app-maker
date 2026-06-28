@@ -321,13 +321,13 @@ export function TabNavigation() {
   return (
     <aside
       className={cn(
-        "fixed top-0 left-0 z-50 h-screen bg-card/95 backdrop-blur-md border-r border-border shadow-sm flex flex-col transition-[width] duration-200 ease-out",
+        "fixed top-0 left-0 z-50 h-screen clay-sidebar flex flex-col transition-[width] duration-200 ease-out",
         collapsed ? "w-14" : "w-56"
       )}
       aria-label="Primary"
     >
       {/* Header */}
-      <div className="flex items-center justify-between h-12 px-2 border-b border-border shrink-0">
+      <div className="flex items-center justify-between h-12 px-2 border-b border-white/[0.06] shrink-0">
         {!collapsed && (
           <button
             type="button"
@@ -448,7 +448,7 @@ export function TabNavigation() {
                   to={item.path}
                   title={item.label}
                   className={cn(
-                    "flex items-center gap-2 px-2 py-2 rounded-md text-sm font-medium transition-all border",
+                    "flex items-center gap-2 px-2 py-2 rounded-xl text-sm font-medium transition-all border border-white/[0.06]",
                     collapsed && "justify-center",
                     isActive
                       ? item.active
@@ -475,7 +475,7 @@ export function TabNavigation() {
                   to={item.path}
                   title={item.label}
                   className={cn(
-                    "flex items-center gap-2 px-2 py-2 rounded-md text-sm font-medium transition-all border",
+                    "flex items-center gap-2 px-2 py-2 rounded-xl text-sm font-medium transition-all border border-white/[0.06]",
                     collapsed && "justify-center",
                     isActive
                       ? item.active
@@ -499,7 +499,7 @@ export function TabNavigation() {
                   to={item.path}
                   title={item.label}
                   className={cn(
-                    "flex items-center gap-2 px-2 py-2 rounded-md text-sm font-medium transition-all border",
+                    "flex items-center gap-2 px-2 py-2 rounded-xl text-sm font-medium transition-all border border-white/[0.06]",
                     collapsed && "justify-center",
                     isActive
                       ? item.active
