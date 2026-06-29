@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { Link, useLocation, useNavigate, useSearchParams } from "react-router-dom";
-import { ChevronLeft, ChevronRight, Search, X, Pill, FileText, Home, Droplets, Heart, Droplet, Dna, Microscope, Weight, AirVent, Bean, Moon, Bug, UtensilsCrossed, Shield, Syringe, Zap, Bandage, Timer, Thermometer, Flame, Bone, Gem, Smile, Sun, Stethoscope, Filter } from "lucide-react";
+import { ChevronLeft, ChevronRight, Search, X, Pill, FileText, Home, Droplets, Heart, Droplet, Dna, Microscope, Weight, AirVent, Bean, Moon, Bug, UtensilsCrossed, Shield, Syringe, Zap, Bandage, Timer, Thermometer, Flame, Bone, Gem, Smile, Sun, Stethoscope, Filter, User } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { RENAL_DATA } from "@/calculators/diabetes/RenalDosing";
 import { ANTIBIOTICS_DATA } from "@/calculators/diabetes/antibiotics-data";
