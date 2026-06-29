@@ -821,10 +821,10 @@ export default function Home() {
             accent="bg-cyan-500"
           />
           <DiseaseCard
-            title="Metabolic Alkalosis"
-            description="Differential diagnosis algorithm — urine chloride, saline response, Bartter, Gitelman, hyperaldosteronism, Cushing, ectopic ACTH"
+            title="Acid-Base Disorders"
+            description="ABG interpretation, Winter's formula, anion gap, delta-delta, metabolic alkalosis algorithm"
             icon={<FlaskConical className="h-5 w-5 text-orange-400" />}
-            to="/metabolic-alkalosis"
+            to="/acid-base"
             accent="bg-orange-500"
           />
           <DiseaseCard
