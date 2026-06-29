@@ -128,6 +128,8 @@ import AKICriteria from "@/pages/AKICriteria";
 import AcidBaseDisorders from "@/pages/AcidBaseDisorders";
 // Metabolic Alkalosis
 import MetabolicAlkalosis from "@/pages/MetabolicAlkalosis";
+// Geriatrics
+import Geriatrics from "@/pages/Geriatrics";
 
 // Electrolytes
 import Electrolytes from "@/pages/Electrolytes";
@@ -249,6 +251,7 @@ const App = () => (
           <Route path="/aki-criteria" element={<><TabNavigation /><AKICriteria /></>} />
           <Route path="/acid-base" element={<><TabNavigation /><AcidBaseDisorders /></>} />
           <Route path="/metabolic-alkalosis" element={<Navigate to="/acid-base?tab=metabolic-alkalosis" replace />} />
+          <Route path="/geriatrics" element={<><TabNavigation /><Geriatrics /></>} />
           <Route path="/respiratory" element={<><TabNavigation /><RespiratoryPage /></>} />
           <Route path="/respiratory/simple" element={<Navigate to="/respiratory" replace />} />
           <Route path="/respiratory/moderate" element={<Navigate to="/respiratory" replace />} />

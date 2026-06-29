@@ -2,7 +2,7 @@ import { FrequencyBadge } from "@/components/FrequencyBadge";
 import React, { useState } from "react";
 import { AbbreviationHover, AbbrText } from "@/components/AbbreviationHover";
 import { Link } from "react-router-dom";
-import { Pill, Syringe, ChevronRight, ChevronDown, ArrowRight, CheckCircle2, AlertTriangle, Heart, Activity, Scale, Brain, ArrowDown, FileText, BookOpen, Shield } from "lucide-react";
+import { Pill, Syringe, ChevronRight, ChevronDown, ArrowRight, CheckCircle2, AlertTriangle, Heart, Activity, Scale, Brain, ArrowDown, FileText, BookOpen, Shield, Users, Stethoscope, Info, Footprints, Search, ClipboardList, RotateCcw, XCircle, AlertCircle } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -839,9 +839,488 @@ function CKDSafeDrugs() {
   );
 }
 
+// ─── Geriatric Syndromes Tab ──────────────────────────────────────────────
+
+const GERIATRIC_SYNDROMES_LIST = [
+  { name: "Falls", icon: <Footprints className="h-4 w-4" />, color: "text-red-400" },
+  { name: "Incontinence", icon: <Activity className="h-4 w-4" />, color: "text-blue-400" },
+  { name: "Delirium", icon: <Brain className="h-4 w-4" />, color: "text-orange-400" },
+  { name: "Cognitive Impairment", icon: <Brain className="h-4 w-4" />, color: "text-purple-400" },
+  { name: "Depression", icon: <Heart className="h-4 w-4" />, color: "text-rose-400" },
+  { name: "Isolation", icon: <Users className="h-4 w-4" />, color: "text-amber-400" },
+  { name: "Frailty", icon: <Activity className="h-4 w-4" />, color: "text-yellow-400" },
+  { name: "Sarcopenia", icon: <Scale className="h-4 w-4" />, color: "text-lime-400" },
+  { name: "Polypharmacy", icon: <Pill className="h-4 w-4" />, color: "text-cyan-400" },
+  { name: "Medication Mismanagement", icon: <Pill className="h-4 w-4" />, color: "text-pink-400" },
+];
+
+const RISK_FLAGS = [
+  { id: "falls", label: "Recent fall or fear of falling" },
+  { id: "weight_loss", label: "Unintentional weight loss" },
+  { id: "memory", label: "Memory complaint or confusion" },
+  { id: "incontinence", label: "Urinary incontinence" },
+  { id: "depression", label: "Depressive symptoms or social isolation" },
+  { id: "adl", label: "Difficulty with ADL or IADL" },
+  { id: "polypharmacy", label: "Use of 5 or more medications" },
+  { id: "sensory", label: "Sensory impairment (vision/hearing)" },
+];
+
+const SCREENING_DOMAINS = [
+  { domain: "Cognition", tools: "Mini-Cog, AMT-4, MoCA if indicated" },
+  { domain: "Delirium", tools: "4AT, CAM in acute settings" },
+  { domain: "Mood", tools: "PHQ-2, GDS-5" },
+  { domain: "Mobility & Falls", tools: "Timed Up and Go, Gait speed, Orthostatic vitals" },
+  { domain: "Frailty", tools: "Clinical Frailty Scale, Fried phenotype features" },
+  { domain: "Function", tools: "ADL, IADL" },
+  { domain: "Nutrition", tools: "MNA-SF, BMI, Recent weight loss" },
+  { domain: "Medication Burden", tools: "Medication reconciliation, High-risk medication review" },
+  { domain: "Sensory Status", tools: "Vision screen, Hearing screen" },
+  { domain: "Continence", tools: "Urinary and fecal continence history" },
+  { domain: "Social Support", tools: "Caregiver assessment, Living situation review" },
+];
+
+const URGENT_FLAGS = [
+  { id: "delirium", label: "Acute delirium" },
+  { id: "syncope", label: "Syncope or recurrent unexplained falls" },
+  { id: "rapid_decline", label: "Rapid functional decline" },
+  { id: "abuse", label: "Suspected abuse or neglect" },
+  { id: "toxicity", label: "Medication toxicity" },
+  { id: "malnutrition", label: "Malnutrition or dehydration" },
+  { id: "neuro_deficit", label: "New focal neurological deficit" },
+];
+
+function GeriatricSyndromes() {
+  const [flags, setFlags] = useState<string[]>([]);
+  const [showScreen, setShowScreen] = useState(false);
+  const [complexity, setComplexity] = useState<"low" | "intermediate" | "high" | null>(null);
+  const [urgentFlags, setUrgentFlags] = useState<string[]>([]);
+
+  const toggleFlag = (id: string) => {
+    setFlags((prev) =>
+      prev.includes(id) ? prev.filter((f) => f !== id) : [...prev, id]
+    );
+  };
+
+  const toggleUrgent = (id: string) => {
+    setUrgentFlags((prev) =>
+      prev.includes(id) ? prev.filter((f) => f !== id) : [...prev, id]
+    );
+  };
+
+  const assessComplexity = () => {
+    const count = flags.length;
+    if (count === 0) setComplexity("low");
+    else if (count <= 2) setComplexity("intermediate");
+    else setComplexity("high");
+  };
+
+  const reset = () => {
+    setFlags([]);
+    setShowScreen(false);
+    setComplexity(null);
+    setUrgentFlags([]);
+  };
+
+  return (
+    <div className="space-y-6">
+      {/* Title */}
+      <div>
+        <h2 className="text-xl font-bold flex items-center gap-2">
+          <Users className="h-6 w-6 text-primary" />
+          Understanding Geriatric Syndromes
+        </h2>
+        <p className="text-muted-foreground text-sm mt-1">The Common Disorders of Aging</p>
+      </div>
+
+      {/* Section 1: Definition and Overview */}
+      <Card>
+        <CardHeader>
+          <CardTitle className="flex items-center gap-2 text-lg">
+            <Info className="h-5 w-5 text-primary" />
+            Definition & Overview
+          </CardTitle>
+        </CardHeader>
+        <CardContent className="space-y-3">
+          <p className="text-sm">
+            Geriatric syndromes are multifactorial health conditions common in older adults, resulting from the interaction of aging, disease, and environmental stressors.
+          </p>
+          <div className="flex flex-wrap gap-2">
+            <Badge variant="secondary" className="text-xs">Frailty</Badge>
+            <Badge variant="secondary" className="text-xs">Multimorbidity</Badge>
+            <Badge variant="secondary" className="text-xs">Functional Decline</Badge>
+          </div>
+          <div>
+            <p className="text-sm font-semibold mb-2">Age-Related Changes</p>
+            <ul className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm">
+              {[
+                "Reduced physiologic reserve",
+                "Stiffened vessels",
+                "Decline in senses such as vision and hearing",
+                "Musculoskeletal decline",
+                "Cognitive and psychosocial changes",
+              ].map((item) => (
+                <li key={item} className="flex items-start gap-2">
+                  <span className="text-primary mt-0.5">•</span>
+                  <span className="text-muted-foreground">{item}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </CardContent>
+      </Card>
+
+      {/* Section 2: Clinical Assessment */}
+      <Card>
+        <CardHeader>
+          <CardTitle className="flex items-center gap-2 text-lg">
+            <Stethoscope className="h-5 w-5 text-emerald-400" />
+            Clinical Assessment
+          </CardTitle>
+        </CardHeader>
+        <CardContent>
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+            <div className="p-3 rounded-lg bg-muted/30 border border-border">
+              <p className="text-sm font-semibold mb-2">Medical History Focus</p>
+              <ul className="space-y-1 text-xs text-muted-foreground">
+                <li>• Functional decline</li>
+                <li>• Social support</li>
+                <li>• Polypharmacy</li>
+              </ul>
+            </div>
+            <div className="p-3 rounded-lg bg-muted/30 border border-border">
+              <p className="text-sm font-semibold mb-2">Physical Exam Focus</p>
+              <ul className="space-y-1 text-xs text-muted-foreground">
+                <li>• Mobility</li>
+                <li>• Balance</li>
+                <li>• Cognition</li>
+                <li>• Sensory function</li>
+              </ul>
+            </div>
+            <div className="p-3 rounded-lg bg-muted/30 border border-border">
+              <p className="text-sm font-semibold mb-2">Cognitive Screen</p>
+              <ul className="space-y-1 text-xs text-muted-foreground">
+                <li>• Mini-Cog</li>
+              </ul>
+            </div>
+          </div>
+        </CardContent>
+      </Card>
+
+      {/* Section 3: Key Geriatric Syndromes */}
+      <Card>
+        <CardHeader>
+          <CardTitle className="flex items-center gap-2 text-lg">
+            <Activity className="h-5 w-5 text-rose-400" />
+            Key Geriatric Syndromes
+          </CardTitle>
+        </CardHeader>
+        <CardContent>
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-2">
+            {GERIATRIC_SYNDROMES_LIST.map((s) => (
+              <div key={s.name} className="flex items-center gap-2 p-2 rounded-lg bg-muted/30 border border-border/50">
+                <span className={s.color}>{s.icon}</span>
+                <span className="text-xs font-medium">{s.name}</span>
+              </div>
+            ))}
+          </div>
+        </CardContent>
+      </Card>
+
+      {/* Section 4: Multidisciplinary Management */}
+      <Card>
+        <CardHeader>
+          <CardTitle className="flex items-center gap-2 text-lg">
+            <Users className="h-5 w-5 text-blue-400" />
+            Multidisciplinary Management
+          </CardTitle>
+        </CardHeader>
+        <CardContent>
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+            <div className="p-3 rounded-lg bg-blue-500/5 border border-blue-500/20">
+              <p className="text-sm font-semibold text-blue-400 mb-2">Coordinated Care</p>
+              <p className="text-xs text-muted-foreground">Primary care, specialists, nurses, and social workers working together</p>
+            </div>
+            <div className="p-3 rounded-lg bg-green-500/5 border border-green-500/20">
+              <p className="text-sm font-semibold text-green-400 mb-2">Goal-Oriented Care</p>
+              <p className="text-xs text-muted-foreground">Focused on function, independence, and quality of life</p>
+            </div>
+            <div className="p-3 rounded-lg bg-purple-500/5 border border-purple-500/20">
+              <p className="text-sm font-semibold text-purple-400 mb-2">Lifestyle Interventions</p>
+              <p className="text-xs text-muted-foreground">Exercise, nutrition, and environmental modification</p>
+            </div>
+          </div>
+        </CardContent>
+      </Card>
+
+      {/* Section 5: Prevention */}
+      <Card>
+        <CardHeader>
+          <CardTitle className="flex items-center gap-2 text-lg">
+            <Shield className="h-5 w-5 text-teal-400" />
+            Prevention & Enhancing Quality of Life
+          </CardTitle>
+        </CardHeader>
+        <CardContent>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            {[
+              { title: "Regular Screenings", desc: "Preventive health check-ups and early detection" },
+              { title: "Social Engagement", desc: "Community activity and social connections" },
+              { title: "Adaptive Strategies", desc: "Assistive devices and cognitive aids" },
+              { title: "Advance Care Planning", desc: "Goals of care, advance directives, surrogate decision-makers" },
+            ].map((item) => (
+              <div key={item.title} className="flex items-start gap-2 p-3 rounded-lg bg-muted/20 border border-border/50">
+                <CheckCircle2 className="h-4 w-4 text-teal-400 mt-0.5 shrink-0" />
+                <div>
+                  <p className="text-sm font-semibold">{item.title}</p>
+                  <p className="text-xs text-muted-foreground">{item.desc}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </CardContent>
+      </Card>
+
+      {/* ── Screening Algorithm ── */}
+      <Card className="border-2 border-primary/10">
+        <CardHeader>
+          <CardTitle className="flex items-center gap-2 text-lg">
+            <ClipboardList className="h-5 w-5 text-primary" />
+            Rapid Geriatric Screening Algorithm
+          </CardTitle>
+        </CardHeader>
+        <CardContent className="space-y-6">
+          <p className="text-sm text-muted-foreground">
+            For older adults in primary care, internal medicine, neurology, or hospital follow-up settings.
+          </p>
+
+          {/* Entry Criteria */}
+          <div className="p-3 rounded-lg border-2 border-primary/20 bg-primary/5">
+            <p className="text-sm font-semibold mb-1">Target Population</p>
+            <p className="text-sm text-muted-foreground">
+              Age 65 years or older <strong>OR</strong> any age with functional decline, recurrent falls, cognitive concern, weight loss, polypharmacy, or caregiver concern
+            </p>
+          </div>
+
+          {/* Step 1: Risk Flags */}
+          <div>
+            <h4 className="text-sm font-semibold flex items-center gap-2 mb-3">
+              <AlertTriangle className="h-4 w-4 text-amber-400" />
+              Step 1: Identify Risk Flags
+            </h4>
+            <p className="text-xs text-muted-foreground mb-3">
+              Check any risk flags present. If any are positive, proceed to focused geriatric screen.
+            </p>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+              {RISK_FLAGS.map((flag) => (
+                <label
+                  key={flag.id}
+                  className={`flex items-center gap-3 p-3 rounded-lg border cursor-pointer transition-colors ${
+                    flags.includes(flag.id)
+                      ? "border-amber-500/50 bg-amber-500/10"
+                      : "border-border/50 bg-card hover:bg-muted/30"
+                  }`}
+                >
+                  <input
+                    type="checkbox"
+                    className="h-4 w-4 rounded border-gray-300"
+                    checked={flags.includes(flag.id)}
+                    onChange={() => toggleFlag(flag.id)}
+                  />
+                  <span className="text-sm">{flag.label}</span>
+                </label>
+              ))}
+            </div>
+            <div className="mt-4 flex gap-2">
+              <Button onClick={() => setShowScreen(true)} disabled={flags.length === 0}>
+                Proceed to Screening
+              </Button>
+              {flags.length > 0 && (
+                <Button variant="ghost" size="sm" onClick={reset}>
+                  <RotateCcw className="h-4 w-4 mr-1" /> Reset
+                </Button>
+              )}
+            </div>
+          </div>
+
+          {/* Step 2: Focused Geriatric Screen */}
+          {showScreen && (
+            <div>
+              <h4 className="text-sm font-semibold flex items-center gap-2 mb-3">
+                <Search className="h-4 w-4 text-cyan-400" />
+                Step 2: Focused Geriatric Screen
+              </h4>
+              <div className="overflow-x-auto">
+                <table className="w-full text-sm">
+                  <thead>
+                    <tr className="border-b border-border">
+                      <th className="text-left py-2 px-3 font-semibold">Domain</th>
+                      <th className="text-left py-2 px-3 font-semibold">Screening Tools</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {SCREENING_DOMAINS.map((d) => (
+                      <tr key={d.domain} className="border-b border-border/50">
+                        <td className="py-2 px-3 font-medium">{d.domain}</td>
+                        <td className="py-2 px-3 text-muted-foreground text-xs">{d.tools}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          )}
+
+          {/* Step 3: Stratify Complexity */}
+          {showScreen && (
+            <div>
+              <h4 className="text-sm font-semibold flex items-center gap-2 mb-3">
+                <Activity className="h-4 w-4 text-violet-400" />
+                Step 3: Stratify Complexity
+              </h4>
+              <p className="text-xs text-muted-foreground mb-3">
+                Based on {flags.length} risk flag(s) identified:
+              </p>
+              <Button onClick={assessComplexity} size="sm" className="mb-4">
+                Assess Complexity
+              </Button>
+
+              {complexity && (
+                <div className="space-y-3">
+                  {complexity === "low" && (
+                    <div className="p-4 rounded-lg border-2 border-green-500/30 bg-green-500/5">
+                      <div className="flex items-center gap-2 mb-2">
+                        <CheckCircle2 className="h-5 w-5 text-green-500" />
+                        <span className="text-lg font-bold text-green-500">Low Risk 🟢</span>
+                      </div>
+                      <ul className="text-sm text-muted-foreground space-y-1">
+                        <li>• No major deficits</li>
+                        <li>• Independent function</li>
+                        <li>• No recent falls or delirium</li>
+                      </ul>
+                      <p className="text-sm font-medium mt-2 text-green-500">Action: Routine preventive follow-up and annual rescreening.</p>
+                    </div>
+                  )}
+                  {complexity === "intermediate" && (
+                    <div className="p-4 rounded-lg border-2 border-amber-500/30 bg-amber-500/5">
+                      <div className="flex items-center gap-2 mb-2">
+                        <AlertCircle className="h-5 w-5 text-amber-500" />
+                        <span className="text-lg font-bold text-amber-500">Intermediate Risk 🟡</span>
+                      </div>
+                      <ul className="text-sm text-muted-foreground space-y-1">
+                        <li>• Impairment in 1–2 domains</li>
+                        <li>• Early frailty, mild cognitive concern, or polypharmacy</li>
+                      </ul>
+                      <p className="text-sm font-medium mt-2 text-amber-500">Action: Targeted interventions, medication review, PT/OT, nutrition, follow-up within 1–3 months.</p>
+                    </div>
+                  )}
+                  {complexity === "high" && (
+                    <div className="p-4 rounded-lg border-2 border-red-500/30 bg-red-500/5">
+                      <div className="flex items-center gap-2 mb-2">
+                        <XCircle className="h-5 w-5 text-red-500" />
+                        <span className="text-lg font-bold text-red-500">High Risk 🔴</span>
+                      </div>
+                      <ul className="text-sm text-muted-foreground space-y-1">
+                        <li>• Multiple domain deficits</li>
+                        <li>• Delirium, recurrent falls, major functional decline</li>
+                        <li>• Caregiver strain or severe frailty</li>
+                      </ul>
+                      <p className="text-sm font-medium mt-2 text-red-500">Action: Comprehensive Geriatric Assessment and multidisciplinary management.</p>
+                    </div>
+                  )}
+                </div>
+              )}
+            </div>
+          )}
+
+          {/* Step 4: Urgent Evaluation */}
+          {showScreen && (
+            <div>
+              <h4 className="text-sm font-semibold flex items-center gap-2 mb-3">
+                <AlertTriangle className="h-4 w-4 text-red-400" />
+                Step 4: Trigger Urgent Evaluation 🚨
+              </h4>
+              <p className="text-xs text-muted-foreground mb-3">
+                Check any of the following that apply — these require urgent medical assessment:
+              </p>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                {URGENT_FLAGS.map((flag) => (
+                  <label
+                    key={flag.id}
+                    className={`flex items-center gap-3 p-3 rounded-lg border cursor-pointer transition-colors ${
+                      urgentFlags.includes(flag.id)
+                        ? "border-red-500/50 bg-red-500/10"
+                        : "border-border/50 bg-card hover:bg-muted/30"
+                    }`}
+                  >
+                    <input
+                      type="checkbox"
+                      className="h-4 w-4 rounded border-gray-300"
+                      checked={urgentFlags.includes(flag.id)}
+                      onChange={() => toggleUrgent(flag.id)}
+                    />
+                    <span className="text-sm">{flag.label}</span>
+                  </label>
+                ))}
+              </div>
+              {urgentFlags.length > 0 && (
+                <div className="mt-4 p-3 rounded-lg bg-red-500/10 border border-red-500/30">
+                  <p className="text-sm font-semibold text-red-500">
+                    🚨 Urgent medical assessment or hospital-level evaluation required
+                  </p>
+                </div>
+              )}
+            </div>
+          )}
+
+          {/* Step 5: Care Plan */}
+          {showScreen && (
+            <div>
+              <h4 className="text-sm font-semibold flex items-center gap-2 mb-3">
+                <ClipboardList className="h-4 w-4 text-emerald-400" />
+                Step 5: Care Plan Generation
+              </h4>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                {[
+                  { title: "Problem List", desc: "By geriatric domain" },
+                  { title: "Medication Optimization", desc: "Deprescribing, high-risk medication review" },
+                  { title: "Fall Prevention Plan", desc: "Home safety, balance training, assistive devices" },
+                  { title: "Exercise & Nutrition", desc: "Strength training, protein intake, vitamin D" },
+                  { title: "Cognitive & Mood", desc: "Cognitive stimulation, social engagement, depression management" },
+                  { title: "Caregiver Support", desc: "Respite, education, advance care planning" },
+                ].map((item) => (
+                  <div key={item.title} className="flex items-start gap-2 p-3 rounded-lg bg-muted/20 border border-border/50">
+                    <CheckCircle2 className="h-4 w-4 text-emerald-400 mt-0.5 shrink-0" />
+                    <div>
+                      <p className="text-sm font-semibold">{item.title}</p>
+                      <p className="text-xs text-muted-foreground">{item.desc}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {/* Implementation Notes */}
+          {showScreen && (
+            <div className="p-3 rounded-lg bg-blue-500/5 border border-blue-500/20">
+              <p className="text-sm font-semibold text-blue-400 mb-2">Recommended Workflow</p>
+              <ul className="text-xs text-muted-foreground space-y-1">
+                <li>• Use a brief intake screen at triage or nursing station</li>
+                <li>• Auto-trigger domain tools when any flag is positive</li>
+                <li>• Escalate high-risk cases to CGA pathway</li>
+                <li>• Track longitudinal decline in function, cognition, falls, and weight</li>
+              </ul>
+            </div>
+          )}
+        </CardContent>
+      </Card>
+    </div>
+  );
+}
+
 // ─── Main Component ────────────────────────────────────────────────────────
 export default function DiabetesTreatment() {
-  const [activeTab, setActiveTab] = useState<"algorithm" | "glp1" | "drugs" | "insulin" | "checklist" | "emergency" | "ckd">("algorithm");
+  const [activeTab, setActiveTab] = useState<"algorithm" | "glp1" | "drugs" | "insulin" | "checklist" | "emergency" | "ckd" | "geriatric">("algorithm");
 
   return (
     <div className="space-y-4">
@@ -855,6 +1334,7 @@ export default function DiabetesTreatment() {
           { id: "checklist", label: "Care Checklist", icon: FileText },
           { id: "emergency", label: "DKA/HHS Guide", icon: AlertTriangle },
           { id: "ckd", label: "CKD Safe Drugs", icon: Shield },
+          { id: "geriatric", label: "Geriatric Syndromes", icon: Users },
         ].map((tab) => (
           <button
             key={tab.id}
@@ -878,6 +1358,7 @@ export default function DiabetesTreatment() {
       {activeTab === "checklist" && <ManagementChecklist />}
       {activeTab === "emergency" && <HyperglycemicEmergencySection />}
       {activeTab === "ckd" && <CKDSafeDrugs />}
+      {activeTab === "geriatric" && <GeriatricSyndromes />}
     </div>
   );
 }
