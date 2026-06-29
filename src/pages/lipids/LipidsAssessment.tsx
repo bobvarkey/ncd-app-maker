@@ -17,7 +17,6 @@ import {
   ChevronDown, ClipboardCopy, TrendingUp, User, Heart, TestTube,
   AlertTriangle, Target, Dna, Scale, Stethoscope, ArrowRight, Info,
   Pill, BookOpen, ZoomIn,
-  User,
 } from "lucide-react";
 import { SectionCard } from "@/components/ui/section-card";
 import { toast } from "sonner";
