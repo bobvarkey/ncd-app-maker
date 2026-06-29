@@ -1461,7 +1461,7 @@ function GeriatricSyndromes() {
 
 // ─── Main Component ────────────────────────────────────────────────────────
 export default function DiabetesTreatment() {
-  const [activeTab, setActiveTab] = useState<"algorithm" | "glp1" | "drugs" | "insulin" | "checklist" | "emergency" | "ckd" | "geriatric">("algorithm");
+  const [activeTab, setActiveTab] = useState<"algorithm" | "glp1" | "drugs" | "insulin" | "checklist" | "emergency" | "ckd">("algorithm");
 
   return (
     <div className="space-y-4">
@@ -1475,7 +1475,6 @@ export default function DiabetesTreatment() {
           { id: "checklist", label: "Care Checklist", icon: FileText },
           { id: "emergency", label: "DKA/HHS Guide", icon: AlertTriangle },
           { id: "ckd", label: "CKD Safe Drugs", icon: Shield },
-          { id: "geriatric", label: "Geriatric Syndromes", icon: Users },
         ].map((tab) => (
           <button
             key={tab.id}
@@ -1499,7 +1498,6 @@ export default function DiabetesTreatment() {
       {activeTab === "checklist" && <ManagementChecklist />}
       {activeTab === "emergency" && <HyperglycemicEmergencySection />}
       {activeTab === "ckd" && <CKDSafeDrugs />}
-      {activeTab === "geriatric" && <GeriatricSyndromes />}
     </div>
   );
 }
