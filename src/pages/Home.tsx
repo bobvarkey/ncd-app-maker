@@ -827,13 +827,6 @@ export default function Home() {
             to="/acid-base"
             accent="bg-orange-500"
           />
-          <DiseaseCard
-            title="Vitamin D"
-            description="Vitamin D deficiency assessment, supplementation guidelines, interpretation of 25-OH-D levels"
-            icon={<Sun className="h-5 w-5 text-amber-400" />}
-            to="/vitamin-d"
-            accent="bg-amber-500"
-          />
         </DiseaseGroup>
 
         <DiseaseGroup title="Infections & Acute Care" icon={<Bug className="h-3.5 w-3.5 text-rose-400" />}>
@@ -868,7 +861,7 @@ export default function Home() {
           />
         </DiseaseGroup>
 
-        <DiseaseGroup title="Women's Health & Other" icon={<Stethoscope className="h-3.5 w-3.5 text-pink-400" />}>
+        <DiseaseGroup title="Women's Health" icon={<Stethoscope className="h-3.5 w-3.5 text-pink-400" />}>
           <DiseaseCard
             title="PMOS / PCOS"
             description="Polyendocrine Metabolic Ovarian Syndrome: Rotterdam criteria, metabolic workup, treatment algorithm"
@@ -883,6 +876,9 @@ export default function Home() {
             to="/women-health?tab=hrt"
             accent="bg-pink-500"
           />
+        </DiseaseGroup>
+
+        <DiseaseGroup title="Preventive & General" icon={<Shield className="h-3.5 w-3.5 text-emerald-400" />}>
           <DiseaseCard
             title="Adult Vaccinations"
             description="CDC/ACIP schedule: influenza, pneumococcal, shingles, Tdap, HPV, COVID-19, travel vaccines"
@@ -892,10 +888,10 @@ export default function Home() {
             badge="ACIP"
           />
           <DiseaseCard
-            title="Fatigue"
-            description="Approach to chronic fatigue: differential diagnosis, investigations, management strategies"
-            icon={<Moon className="h-5 w-5 text-amber-400" />}
-            to="/fatigue"
+            title="Vitamin D"
+            description="Vitamin D deficiency assessment, supplementation guidelines, interpretation of 25-OH-D levels"
+            icon={<Sun className="h-5 w-5 text-amber-400" />}
+            to="/vitamin-d"
             accent="bg-amber-500"
           />
           <DiseaseCard
@@ -904,6 +900,13 @@ export default function Home() {
             icon={<User className="h-5 w-5 text-sky-400" />}
             to="/geriatrics"
             accent="bg-sky-500"
+          />
+          <DiseaseCard
+            title="Fatigue"
+            description="Approach to chronic fatigue: differential diagnosis, investigations, management strategies"
+            icon={<Moon className="h-5 w-5 text-amber-400" />}
+            to="/fatigue"
+            accent="bg-amber-500"
           />
         </DiseaseGroup>
 
