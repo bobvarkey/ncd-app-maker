@@ -122,6 +122,11 @@ import PEP from "@/pages/PEP";
 // Adult Vaccinations
 import AdultVaccinations from "@/pages/AdultVaccinations";
 
+// AKI Criteria
+import AKICriteria from "@/pages/AKICriteria";
+// Metabolic Alkalosis
+import MetabolicAlkalosis from "@/pages/MetabolicAlkalosis";
+
 // Electrolytes
 import Electrolytes from "@/pages/Electrolytes";
 
@@ -238,7 +243,9 @@ const App = () => (
           <Route path="/insulin-titration" element={<><TabNavigation /><InsulinTitrationCalc /></>} />
           <Route path="/sliding-scale" element={<><TabNavigation /><SlidingScaleInsulinCalc /></>} />
           <Route path="/hypo-risk" element={<><TabNavigation /><HypoRiskCalculatorCalc /></>} />
-          <Route path="/renal-dosing" element={<><TabNavigation /><RenalDoseAdjustmentCalc /></>} />
+          <Route path="/renal-dosing" element={<><TabNavigation /><RenalDosePage /></>} />
+          <Route path="/aki-criteria" element={<><TabNavigation /><AKICriteria /></>} />
+          <Route path="/metabolic-alkalosis" element={<><TabNavigation /><MetabolicAlkalosis /></>} />
           <Route path="/respiratory" element={<><TabNavigation /><RespiratoryPage /></>} />
           <Route path="/respiratory/simple" element={<Navigate to="/respiratory" replace />} />
           <Route path="/respiratory/moderate" element={<Navigate to="/respiratory" replace />} />

@@ -1,10 +1,11 @@
 import { FrequencyBadge } from "@/components/FrequencyBadge";
-import { useState } from "react";
-import { Pill, FlaskConical, Search, AlertTriangle, ChevronDown } from "lucide-react";
+import { useState, useEffect } from "react";
+import { Pill, FlaskConical, Search, AlertTriangle, ChevronDown, Calculator, RotateCcw, ArrowLeftRight, Info } from "lucide-react";
 import { Input } from "@/components/ui/input";
-import {
-  Table, TableHeader, TableBody, TableHead, TableRow, TableCell,
-} from "@/components/ui/table";
+import { Label } from "@/components/ui/label";
+import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
+import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import KDIGOStagingCalculator from "@/calculators/renal/KDIGOStagingCalculator";
 import { ADDITIONAL_MEDS_DATA } from "@/calculators/diabetes/additional-meds-data";
 import { ANTIBIOTICS_DATA } from "@/calculators/diabetes/antibiotics-data";
@@ -748,6 +749,233 @@ const ALL_RENAL_DATA: DoseEntry[] = [
   ...ANTICOAGULANTS_DATA.map(wrapExternal),
 ];
 
+// ── eGFR Calculator (CKD-EPI 2021) with optional UACR ──
+function EgfrCalculator() {
+  const [cr, setCr] = useState(() => { try { return localStorage.getItem("ncd_egfr_cr") || ""; } catch { return ""; } });
+  const [crUnit, setCrUnit] = useState<"mgdl" | "umol">(() => { try { return (localStorage.getItem("ncd_egfr_cr_unit") as "mgdl" | "umol") || "mgdl"; } catch { return "mgdl"; } });
+  const [age, setAge] = useState(() => { try { return localStorage.getItem("ncd_egfr_age") || ""; } catch { return ""; } });
+  const [sex, setSex] = useState<"male" | "female" | null>(() => { try { return localStorage.getItem("ncd_egfr_sex") as "male" | "female" | null || null; } catch { return null; } });
+  const [uacr, setUacr] = useState(() => { try { return localStorage.getItem("ncd_egfr_uacr") || ""; } catch { return ""; } });
+  const [uacrUnit, setUacrUnit] = useState<"mg_g" | "mg_mmol">(() => { try { return (localStorage.getItem("ncd_egfr_uacr_unit") as "mg_g" | "mg_mmol") || "mg_g"; } catch { return "mg_g"; } });
+  const [result, setResult] = useState<{ gfr: number; gStage: string; gLabel: string; aStage?: string; aLabel?: string; risk?: string; riskColor?: string } | null>(null);
+  const [errors, setErrors] = useState<Record<string, string>>({});
+
+  useEffect(() => { localStorage.setItem("ncd_egfr_cr", cr); }, [cr]);
+  useEffect(() => { localStorage.setItem("ncd_egfr_cr_unit", crUnit); }, [crUnit]);
+  useEffect(() => { localStorage.setItem("ncd_egfr_age", age); }, [age]);
+  useEffect(() => { if (sex) localStorage.setItem("ncd_egfr_sex", sex); }, [sex]);
+  useEffect(() => { localStorage.setItem("ncd_egfr_uacr", uacr); }, [uacr]);
+  useEffect(() => { localStorage.setItem("ncd_egfr_uacr_unit", uacrUnit); }, [uacrUnit]);
+
+  const getCrMgdl = () => {
+    const v = parseFloat(cr);
+    return crUnit === "umol" ? v / 88.42 : v;
+  };
+
+  const getUacrMgG = () => {
+    const v = parseFloat(uacr);
+    return uacrUnit === "mg_mmol" ? v * 10 : v;
+  };
+
+  const calcCkdEpi = (creat: number, a: number, s: "male" | "female") => {
+    const isF = s === "female";
+    const k = isF ? 0.7 : 0.9;
+    const al = isF ? -0.241 : -0.302;
+    const sf = isF ? 1.012 : 1.0;
+    const r = creat / k;
+    return Math.round(142 * Math.pow(Math.min(r, 1), al) * Math.pow(Math.max(r, 1), -1.200) * Math.pow(0.9938, a) * sf * 10) / 10;
+  };
+
+  const getGStage = (g: number) => {
+    if (g >= 90) return { stage: "G1", label: "Normal or High" };
+    if (g >= 60) return { stage: "G2", label: "Mildly Decreased" };
+    if (g >= 45) return { stage: "G3a", label: "Mild–Moderate Decrease" };
+    if (g >= 30) return { stage: "G3b", label: "Moderate–Severe Decrease" };
+    if (g >= 15) return { stage: "G4", label: "Severely Decreased" };
+    return { stage: "G5", label: "Kidney Failure" };
+  };
+
+  const getAStage = (u: number) => {
+    if (u < 30) return { stage: "A1", label: "Normal–Mildly Increased" };
+    if (u <= 300) return { stage: "A2", label: "Moderately Increased" };
+    return { stage: "A3", label: "Severely Increased" };
+  };
+
+  const RISK_MATRIX: number[][] = [
+    [0, 1, 2], [0, 1, 2], [1, 2, 3], [2, 3, 3], [3, 3, 3], [3, 3, 3],
+  ];
+  const RISK_LABELS = ["Low Risk", "Moderate Risk", "High Risk", "Very High Risk"];
+  const RISK_COLORS = ["text-success", "text-warning", "text-orange-500", "text-destructive"];
+  const G_STAGES = ["G1","G2","G3a","G3b","G4","G5"];
+  const A_STAGES = ["A1","A2","A3"];
+
+  const validate = () => {
+    const e: Record<string, string> = {};
+    const cv = parseFloat(cr);
+    const maxCr = crUnit === "mgdl" ? 30 : 2652;
+    if (!cr.trim() || isNaN(cv) || cv <= 0 || cv > maxCr) e.cr = `Valid creatinine (0.1–${maxCr} ${crUnit === "mgdl" ? "mg/dL" : "µmol/L"})`;
+    if (!age.trim() || isNaN(parseInt(age)) || parseInt(age) < 18 || parseInt(age) > 120) e.age = "Age 18–120";
+    if (!sex) e.sex = "Select sex";
+    if (uacr.trim()) {
+      const uv = parseFloat(uacr);
+      if (isNaN(uv) || uv < 0 || uv > (uacrUnit === "mg_g" ? 5000 : 500)) e.uacr = `UACR 0–${uacrUnit === "mg_g" ? "5000 mg/g" : "500 mg/mmol"}`;
+    }
+    setErrors(e);
+    return Object.keys(e).length === 0;
+  };
+
+  const calculate = () => {
+    if (!validate()) return;
+    const gfr = calcCkdEpi(getCrMgdl(), parseInt(age), sex!);
+    const gs = getGStage(gfr);
+    let aStage: { stage: string; label: string } | undefined;
+    let risk: string | undefined;
+    let riskColor: string | undefined;
+    if (uacr.trim()) {
+      const u = getUacrMgG();
+      aStage = getAStage(u);
+      const gi = G_STAGES.indexOf(gs.stage);
+      const ai = A_STAGES.indexOf(aStage.stage);
+      const rl = RISK_MATRIX[gi][ai];
+      risk = RISK_LABELS[rl];
+      riskColor = RISK_COLORS[rl];
+    }
+    setResult({ gfr, gStage: gs.stage, gLabel: gs.label, aStage: aStage?.stage, aLabel: aStage?.label, risk, riskColor });
+  };
+
+  const reset = () => {
+    setCr(""); setAge(""); setSex(null); setUacr(""); setResult(null); setErrors({});
+  };
+
+  return (
+    <Card className="border-2 border-primary/20 bg-gradient-to-br from-primary/5 to-muted/5">
+      <CardHeader className="pb-3">
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-2">
+            <Calculator className="h-5 w-5 text-primary" />
+            <CardTitle className="text-lg">eGFR Calculator</CardTitle>
+          </div>
+          {result && (
+            <Button variant="ghost" size="sm" onClick={reset} className="text-muted-foreground">
+              <RotateCcw className="h-4 w-4 mr-1" /> Reset
+            </Button>
+          )}
+        </div>
+        <p className="text-xs text-muted-foreground">CKD-EPI 2021 (race-free) — UACR optional for KDIGO staging</p>
+      </CardHeader>
+      <CardContent>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-4">
+          {/* Creatinine */}
+          <div className="space-y-1.5">
+            <div className="flex items-center justify-between">
+              <Label className="text-sm font-medium">Creatinine ({crUnit === "mgdl" ? "mg/dL" : "µmol/L"})</Label>
+              <button type="button" onClick={() => {
+                const v = parseFloat(cr);
+                if (!isNaN(v) && v > 0) setCr(crUnit === "mgdl" ? (v * 88.42).toFixed(0) : (v / 88.42).toFixed(2));
+                setCrUnit(p => p === "mgdl" ? "umol" : "mgdl");
+              }} className="flex items-center gap-1 text-xs text-primary hover:underline font-medium">
+                <ArrowLeftRight className="h-3 w-3" /> {crUnit === "mgdl" ? "µmol/L" : "mg/dL"}
+              </button>
+            </div>
+            <Input type="number" step={crUnit === "mgdl" ? "0.01" : "1"} placeholder={crUnit === "mgdl" ? "e.g. 1.2" : "e.g. 106"} value={cr} onChange={e => { setCr(e.target.value); if (errors.cr) setErrors(p => ({ ...p, cr: "" })); }} className={errors.cr ? "border-destructive" : ""} />
+            {errors.cr && <p className="text-xs text-destructive">{errors.cr}</p>}
+          </div>
+          {/* Age */}
+          <div className="space-y-1.5">
+            <Label className="text-sm font-medium">Age (years)</Label>
+            <Input type="number" min="18" max="120" placeholder="e.g. 55" value={age} onChange={e => { setAge(e.target.value); if (errors.age) setErrors(p => ({ ...p, age: "" })); }} className={errors.age ? "border-destructive" : ""} />
+            {errors.age && <p className="text-xs text-destructive">{errors.age}</p>}
+          </div>
+          {/* Sex */}
+          <div className="space-y-1.5">
+            <Label className="text-sm font-medium">Sex</Label>
+            <div className="flex gap-2">
+              <Button type="button" variant={sex === "male" ? "default" : "outline"} size="sm" className="flex-1" onClick={() => { setSex("male"); if (errors.sex) setErrors(p => ({ ...p, sex: "" })); }}>Male</Button>
+              <Button type="button" variant={sex === "female" ? "default" : "outline"} size="sm" className="flex-1" onClick={() => { setSex("female"); if (errors.sex) setErrors(p => ({ ...p, sex: "" })); }}>Female</Button>
+            </div>
+            {errors.sex && <p className="text-xs text-destructive">{errors.sex}</p>}
+          </div>
+          {/* UACR (optional) */}
+          <div className="space-y-1.5">
+            <div className="flex items-center justify-between">
+              <Label className="text-sm font-medium">UACR <span className="text-xs text-muted-foreground font-normal">(optional)</span></Label>
+              <button type="button" onClick={() => {
+                const v = parseFloat(uacr);
+                if (!isNaN(v) && v > 0) setUacr(uacrUnit === "mg_g" ? (v / 10).toFixed(1) : (v * 10).toFixed(0));
+                setUacrUnit(p => p === "mg_g" ? "mg_mmol" : "mg_g");
+              }} className="flex items-center gap-1 text-xs text-primary hover:underline font-medium">
+                <ArrowLeftRight className="h-3 w-3" /> {uacrUnit === "mg_g" ? "mg/mmol" : "mg/g"}
+              </button>
+            </div>
+            <Input type="number" step="0.1" placeholder={uacrUnit === "mg_g" ? "e.g. 30" : "e.g. 3"} value={uacr} onChange={e => { setUacr(e.target.value); if (errors.uacr) setErrors(p => ({ ...p, uacr: "" })); }} className={errors.uacr ? "border-destructive" : ""} />
+            {errors.uacr && <p className="text-xs text-destructive">{errors.uacr}</p>}
+          </div>
+        </div>
+
+        <Button onClick={calculate} className="w-full sm:w-auto">
+          <Calculator className="h-4 w-4 mr-2" />
+          Calculate eGFR
+        </Button>
+
+        {result && (
+          <div className="mt-4 space-y-3">
+            {/* eGFR result */}
+            <div className="p-4 rounded-lg bg-card border-2 border-border">
+              <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+                <div>
+                  <p className="text-sm text-muted-foreground">eGFR (CKD-EPI 2021)</p>
+                  <p className="text-3xl font-bold text-foreground">
+                    {result.gfr} <span className="text-sm font-normal text-muted-foreground">mL/min/1.73m²</span>
+                  </p>
+                </div>
+                <Badge className={result.gfr >= 60 ? "bg-success/20 text-success border-success/30" : result.gfr >= 30 ? "bg-warning/20 text-warning border-yellow-500/30" : "bg-destructive/20 text-destructive border-destructive/30"}>
+                  {result.gStage} — {result.gLabel}
+                </Badge>
+              </div>
+            </div>
+
+            {/* UACR + A stage (if provided) */}
+            {result.aStage && (
+              <div className="p-4 rounded-lg bg-card border-2 border-border">
+                <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+                  <div>
+                    <p className="text-sm text-muted-foreground">UACR</p>
+                    <p className="text-3xl font-bold text-foreground">
+                      {getUacrMgG().toFixed(0)} <span className="text-sm font-normal text-muted-foreground">mg/g</span>
+                    </p>
+                  </div>
+                  <Badge className={result.aStage === "A1" ? "bg-success/20 text-success border-success/30" : result.aStage === "A2" ? "bg-warning/20 text-warning border-yellow-500/30" : "bg-destructive/20 text-destructive border-destructive/30"}>
+                    {result.aStage} — {result.aLabel}
+                  </Badge>
+                </div>
+              </div>
+            )}
+
+            {/* Combined KDIGO risk */}
+            {result.risk && (
+              <div className={`p-4 rounded-lg border-2 ${result.riskColor === "text-success" ? "bg-success/10 text-success border-success/30" : result.riskColor === "text-warning" ? "bg-warning/10 text-warning border-yellow-500/30" : result.riskColor === "text-orange-500" ? "bg-orange-100/20 text-orange-600 border-orange-400/30" : "bg-destructive/20 text-destructive border-destructive/30"}`}>
+                <div className="flex items-center gap-2 mb-1">
+                  <AlertTriangle className="h-4 w-4" />
+                  <span className="text-sm font-semibold">KDIGO {result.gStage}{result.aStage} — {result.risk}</span>
+                </div>
+                <p className="text-xs text-muted-foreground">
+                  eGFR {result.gfr} mL/min/1.73m² × UACR {getUacrMgG().toFixed(0)} mg/g
+                </p>
+              </div>
+            )}
+
+            {result.gfr < 60 && (
+              <p className="text-xs text-destructive font-medium border-t border-border pt-2">
+                ⚠️ eGFR &lt; 60: Review renal dosing adjustments for all medications below
+              </p>
+            )}
+          </div>
+        )}
+      </CardContent>
+    </Card>
+  );
+}
+
 const RenalDoseAdjustment = () => {
   const [search, setSearch] = useState("");
 
@@ -781,7 +1009,10 @@ const RenalDoseAdjustment = () => {
         <p className="text-sm text-muted-foreground">eGFR-based dose modifications for diabetes medications (ADA 2026 + KDIGO)</p>
       </div>
 
-      {/* eGFR + UACR Calculator */}
+      {/* eGFR Calculator (standalone, above KDIGO) */}
+      <EgfrCalculator />
+
+      {/* Full KDIGO Staging with heatmap */}
       <KDIGOStagingCalculator />
 
       {/* Formula Reference */}
@@ -863,47 +1094,51 @@ const RenalDoseAdjustment = () => {
               {filteredGroups.reduce((acc, [_, drugs]) => acc + drugs.length, 0)} match(es)
             </span>
           </div>
-          <div className="overflow-x-auto">
-            <Table>
-              <TableHeader>
-                <TableRow className="bg-muted/30">
-                  <TableHead className="min-w-[140px]">Drug</TableHead>
-                  <TableHead className="min-w-[90px]">Class</TableHead>
-                  <TableHead className="min-w-[180px]">Dosing</TableHead>
-                  {eGFRColumns.map(col => (
-                    <TableHead key={col.key} className="min-w-[100px] text-center">
-                      <div className="text-xs text-muted-foreground">eGFR</div>
-                      <div>{col.label}</div>
-                    </TableHead>
-                  ))}
-                  <TableHead className="min-w-[180px] hidden md:table-cell">Notes</TableHead>
-                </TableRow>
-              </TableHeader>
-              <TableBody>
-                {filteredGroups.flatMap(([drugClass, drugs]) =>
-                  drugs.map((d, i) => (
-                    <TableRow key={`${drugClass}-${i}`}>
-                      <TableCell className="font-medium">
-                        <div className="flex items-center gap-2">
-                          <span>{d.drug}</span>
-                          <FrequencyBadge frequency={d.frequency} className="text-[10px]" />
-                        </div>
-                      </TableCell>
-                      <TableCell className="text-xs text-muted-foreground">{d.drugClass}</TableCell>
-                      <TableCell className="text-xs"><span>{d.normalDose}</span></TableCell>
-                      {eGFRColumns.map(col => (
-                        <TableCell key={col.key} className={`text-xs text-center ${cellStyle(d[col.key])}`}>
-                          {d[col.key]}
-                        </TableCell>
-                      ))}
-                      <TableCell className="text-xs text-muted-foreground hidden md:table-cell max-w-[200px]">
-                        <span className="line-clamp-2">{d.notes}</span>
-                      </TableCell>
-                    </TableRow>
-                  ))
-                )}
-              </TableBody>
-            </Table>
+          <div className="divide-y divide-border">
+            {filteredGroups.flatMap(([drugClass, drugs]) =>
+              drugs.map((d, i) => (
+                <details key={`${drugClass}-${i}`} className="group/drug" defaultChecked>
+                  <summary className="flex items-center gap-2 px-4 py-2.5 cursor-pointer select-none list-none hover:bg-muted/20 transition-colors text-sm">
+                    <ChevronDown className="w-3.5 h-3.5 text-muted-foreground shrink-0 group-open/drug:rotate-0 -rotate-90 transition-transform" />
+                    <span className="font-medium">{d.drug}</span>
+                    <span className="text-xs text-muted-foreground ml-1">({d.drugClass})</span>
+                    <FrequencyBadge frequency={d.frequency} className="text-[10px] ml-auto" />
+                  </summary>
+                  <div className="px-4 pb-3 pt-1 border-t border-border/50">
+                    <div className="overflow-x-auto mt-2">
+                      <table className="w-full text-xs">
+                        <thead>
+                          <tr className="border-b border-border">
+                            <th className="text-left py-1.5 pr-2 font-medium text-muted-foreground">Normal Dose</th>
+                            {eGFRColumns.map(col => (
+                              <th key={col.key} className="text-center py-1.5 px-1.5 font-medium text-muted-foreground">
+                                <div className="text-[10px]">eGFR</div>
+                                <div>{col.label}</div>
+                              </th>
+                            ))}
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr>
+                            <td className="py-1.5 pr-2 align-top">{d.normalDose}</td>
+                            {eGFRColumns.map(col => (
+                              <td key={col.key} className={`text-center py-1.5 px-1.5 ${cellStyle(d[col.key])}`}>
+                                {d[col.key]}
+                              </td>
+                            ))}
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                    {d.notes && (
+                      <div className="mt-2 text-[11px] text-muted-foreground bg-muted/20 p-2 rounded-md">
+                        {d.notes}
+                      </div>
+                    )}
+                  </div>
+                </details>
+              ))
+            )}
           </div>
           {filteredGroups.length === 0 && (
             <div className="text-center text-muted-foreground py-8 text-sm">
@@ -922,44 +1157,49 @@ const RenalDoseAdjustment = () => {
             <span className="text-sm font-medium">{drugClass}</span>
             <span className="text-[11px] text-muted-foreground ml-auto">{drugs.length} drug{drugs.length !== 1 ? "s" : ""}</span>
           </summary>
-          <div className="overflow-x-auto border-t border-border">
-            <Table>
-              <TableHeader>
-                <TableRow className="bg-muted/30">
-                  <TableHead className="min-w-[140px]">Drug</TableHead>
-                  <TableHead className="min-w-[90px]">Frequency</TableHead>
-                  <TableHead className="min-w-[120px]">Normal Dose</TableHead>
-                  {eGFRColumns.map(col => (
-                    <TableHead key={col.key} className="min-w-[100px] text-center">
-                      <div className="text-xs text-muted-foreground">eGFR</div>
-                      <div>{col.label}</div>
-                    </TableHead>
-                  ))}
-                  <TableHead className="min-w-[180px] hidden md:table-cell">Notes</TableHead>
-                </TableRow>
-              </TableHeader>
-              <TableBody>
-                {drugs.map((d, i) => (
-                  <TableRow key={i}>
-                    <TableCell className="font-medium">
-                      <div className="flex items-center gap-1.5">
-                        {d.drug}
-                      </div>
-                    </TableCell>
-                    <TableCell className="text-xs"><FrequencyBadge frequency={d.frequency} /></TableCell>
-                    <TableCell className="text-xs">{d.normalDose}</TableCell>
-                    {eGFRColumns.map(col => (
-                      <TableCell key={col.key} className={`text-xs text-center ${cellStyle(d[col.key])}`}>
-                        {d[col.key]}
-                      </TableCell>
-                    ))}
-                    <TableCell className="text-xs text-muted-foreground hidden md:table-cell max-w-[200px]">
-                      <span className="line-clamp-2">{d.notes}</span>
-                    </TableCell>
-                  </TableRow>
-                ))}
-              </TableBody>
-            </Table>
+          <div className="border-t border-border divide-y divide-border">
+            {drugs.map((d, i) => (
+              <details key={i} className="group/drug">
+                <summary className="flex items-center gap-2 px-4 py-2.5 cursor-pointer select-none list-none hover:bg-muted/20 transition-colors text-sm">
+                  <ChevronDown className="w-3.5 h-3.5 text-muted-foreground shrink-0 group-open/drug:rotate-0 -rotate-90 transition-transform" />
+                  <span className="font-medium">{d.drug}</span>
+                  <span className="text-xs text-muted-foreground ml-1">({d.drugClass})</span>
+                  <FrequencyBadge frequency={d.frequency} className="text-[10px] ml-auto" />
+                </summary>
+                <div className="px-4 pb-3 pt-1 border-t border-border/50">
+                  <div className="overflow-x-auto mt-2">
+                    <table className="w-full text-xs">
+                      <thead>
+                        <tr className="border-b border-border">
+                          <th className="text-left py-1.5 pr-2 font-medium text-muted-foreground">Normal Dose</th>
+                          {eGFRColumns.map(col => (
+                            <th key={col.key} className="text-center py-1.5 px-1.5 font-medium text-muted-foreground">
+                              <div className="text-[10px]">eGFR</div>
+                              <div>{col.label}</div>
+                            </th>
+                          ))}
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td className="py-1.5 pr-2 align-top">{d.normalDose}</td>
+                          {eGFRColumns.map(col => (
+                            <td key={col.key} className={`text-center py-1.5 px-1.5 ${cellStyle(d[col.key])}`}>
+                              {d[col.key]}
+                            </td>
+                          ))}
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                  {d.notes && (
+                    <div className="mt-2 text-[11px] text-muted-foreground bg-muted/20 p-2 rounded-md">
+                      {d.notes}
+                    </div>
+                  )}
+                </div>
+              </details>
+            ))}
           </div>
         </details>
       ))}
