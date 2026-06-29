@@ -201,7 +201,7 @@ export default function Anticoagulants() {
         {showInfographic && (
           <div className="border-t border-border p-3">
             <img
-              src="/anticoagulation-cheatsheet.jpg"
+              src="/images/anticoagulation-reference.jpg"
               alt="Anticoagulation Cheat Sheet"
               className="w-full max-h-[600px] object-contain rounded-lg"
               loading="lazy"

@@ -332,8 +332,8 @@ export default function LiverMiniApp() {
           <CollapsibleContent>
             <CardContent>
               <img
-                src="/liver-infographic.jpg"
-                alt="Liver disease assessment infographic"
+                src="/anticoagulation-cheatsheet.jpg"
+                alt="NASH / MASLD overview infographic"
                 className="w-full max-w-3xl mx-auto rounded-lg border object-contain"
                 loading="lazy"
               />
