@@ -1282,7 +1282,7 @@ export default function LipidMiniApp() {
         {showSecondaryBlock && (
           <div className="mb-4 space-y-3">
             <div>
-              <Label className="text-xs text-muted-foreground mb-1.5 block">
+              <Label className="text-sm font-semibold text-foreground mb-2 block">
                 Established atherosclerotic condition
               </Label>
               <div className="flex flex-wrap gap-2">
@@ -1303,6 +1303,9 @@ export default function LipidMiniApp() {
               </Chip>
               <Chip active={i.secondaryRecurrent} onClick={() => set("secondaryRecurrent", !i.secondaryRecurrent)}>
                 Recurrent event despite therapy
+              </Chip>
+              <Chip active={i.southAsian} onClick={() => set("southAsian", !i.southAsian)}>
+                South Asian ethnicity
               </Chip>
             </div>
           </div>
@@ -1362,9 +1365,6 @@ export default function LipidMiniApp() {
               </Chip>
               <Chip active={i.naflFibrosis} onClick={() => set("naflFibrosis", !i.naflFibrosis)}>
                 NAFLD fibrosis 2/3
-              </Chip>
-              <Chip active={i.southAsian} onClick={() => set("southAsian", !i.southAsian)}>
-                South Asian ethnicity
               </Chip>
             </div>
           </div>
