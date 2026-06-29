@@ -898,6 +898,13 @@ export default function Home() {
             to="/fatigue"
             accent="bg-amber-500"
           />
+          <DiseaseCard
+            title="Geriatrics"
+            description="Geriatric syndromes, rapid screening algorithm, frailty assessment, multidisciplinary management"
+            icon={<User className="h-5 w-5 text-sky-400" />}
+            to="/geriatrics"
+            accent="bg-sky-500"
+          />
         </DiseaseGroup>
 
         {/* Quick Actions */}
