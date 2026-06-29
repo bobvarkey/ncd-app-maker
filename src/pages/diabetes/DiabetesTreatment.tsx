@@ -979,6 +979,30 @@ function GeriatricSyndromes() {
         </CardContent>
       </Card>
 
+      {/* Geriatric Syndromes Overview Image */}
+      <Card>
+        <CardHeader>
+          <CardTitle className="flex items-center gap-2 text-lg">
+            <BookOpen className="h-5 w-5 text-sky-400" />
+            Geriatric Syndromes Overview
+          </CardTitle>
+        </CardHeader>
+        <CardContent>
+          <figure className="rounded-lg border border-border bg-card overflow-hidden">
+            <div className="w-full overflow-x-auto">
+              <ZoomableImage
+                src="/geriatric-syndromes.jpg"
+                alt="Geriatric syndromes overview diagram showing the common disorders of aging"
+                className="w-full h-auto object-contain rounded-t"
+              />
+            </div>
+            <figcaption className="p-2 text-xs text-muted-foreground text-center border-t border-border">
+              Geriatric Syndromes — The Common Disorders of Aging
+            </figcaption>
+          </figure>
+        </CardContent>
+      </Card>
+
       {/* Section 2: Clinical Assessment */}
       <Card>
         <CardHeader>
