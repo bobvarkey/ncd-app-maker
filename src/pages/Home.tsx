@@ -5,7 +5,7 @@ import {
   ChevronDown, Upload, Sparkles, Calculator, Stethoscope, FileSearch, UtensilsCrossed,
   Scan, CheckCircle2, X, AlertTriangle, Weight, AirVent, Filter, Moon, Bug, Shield,
   Zap, Sun, Bone, Thermometer, Flame, Gem, Smile, Bandage, Timer, Microscope, Pill,
-  Home as HomeIcon, Search, ArrowRight
+  Home as HomeIcon, Search, ArrowRight, FlaskConical
 } from "lucide-react";
 import ZoomableImage from "@/components/ZoomableImage";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -716,6 +716,19 @@ export default function Home() {
       </header>
 
       <main className="max-w-6xl mx-auto px-6 pb-16 space-y-8">
+        {/* Quick Actions — top of page */}
+        <section>
+          <h2 className="text-lg font-semibold mb-4 flex items-center gap-2">
+            <Calculator className="h-5 w-5 text-primary" />
+            Quick Actions
+          </h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
+            {quickActions.map((action) => (
+              <QuickAction key={action.title} {...action} />
+            ))}
+          </div>
+        </section>
+
         {/* ── Disease Condition Grid ── */}
         <DiseaseGroup title="Metabolic & Cardiovascular" icon={<Heart className="h-3.5 w-3.5 text-rose-400" />}>
           <DiseaseCard
@@ -775,6 +788,14 @@ export default function Home() {
             badge="KDIGO"
           />
           <DiseaseCard
+            title="AKI Criteria"
+            description="Acute Kidney Injury staging — KDIGO 2012 &amp; RIFLE criteria with interactive calculator, Cr ratio, urine output, management recommendations"
+            icon={<Activity className="h-5 w-5 text-red-400" />}
+            to="/aki-criteria"
+            accent="bg-red-500"
+            badge="AKI"
+          />
+          <DiseaseCard
             title="COPD / Respiratory"
             description="GOLD guidelines: COPD assessment, spirometry interpretation, inhaler therapy, asthma-COPD overlap"
             icon={<AirVent className="h-5 w-5 text-cyan-400" />}
@@ -798,6 +819,13 @@ export default function Home() {
             icon={<Zap className="h-5 w-5 text-cyan-400" />}
             to="/electrolytes"
             accent="bg-cyan-500"
+          />
+          <DiseaseCard
+            title="Metabolic Alkalosis"
+            description="Differential diagnosis algorithm — urine chloride, saline response, Bartter, Gitelman, hyperaldosteronism, Cushing, ectopic ACTH"
+            icon={<FlaskConical className="h-5 w-5 text-orange-400" />}
+            to="/metabolic-alkalosis"
+            accent="bg-orange-500"
           />
           <DiseaseCard
             title="Vitamin D"
