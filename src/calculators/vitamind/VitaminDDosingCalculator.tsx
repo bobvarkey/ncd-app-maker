@@ -29,6 +29,7 @@ import {
   Heart,
   Pill,
   Droplets,
+  User,
 } from "lucide-react";
 import { copyToClipboard, formatClinicalNote, downloadTextFile } from "@/lib/clinical-utils";
 import { cn } from "@/lib/utils";
