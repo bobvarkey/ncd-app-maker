@@ -202,22 +202,29 @@ function classifyGeneral(i: Inputs): RiskGroup {
   if (i.cac === ">=300") return "EHR-A";
   if (i.cac === "100-299" || i.cac === "1-99_ge75") return "VHR";
 
-  if (!Number.isNaN(ldl) && ldl >= 190) return "VHR";
+  // LAI 2023: South Asian ethnicity lowers LDL thresholds
+  const ldlVhr = i.southAsian ? 160 : 190;
+  const ldlHr = i.southAsian ? 130 : 160;
+  const ldlMod = i.southAsian ? 100 : 130;
+
+  if (!Number.isNaN(ldl) && ldl >= ldlVhr) return "VHR";
   if (hrf >= 2) return "VHR";
   if (hrf >= 1) return "HR";
-  if (!Number.isNaN(ldl) && ldl >= 160) return "HR";
+  if (!Number.isNaN(ldl) && ldl >= ldlHr) return "HR";
   if (rf >= 3) return "HR";
   if (rf === 2) return "MOD";
-  if (!Number.isNaN(ldl) && ldl >= 130) return "MOD";
+  if (!Number.isNaN(ldl) && ldl >= ldlMod) return "MOD";
   return "LOW";
 }
 
 function classifyDm(i: Inputs): RiskGroup {
   const ascvd = i.dmAscvd === "yes";
   const heavy = i.dmMods === "tod_or_2rf";
+  // LAI 2023: South Asian ethnicity with DM is automatically higher risk
   if (ascvd && heavy) return "EHR-B";
   if (ascvd && !heavy) return "EHR-A";
   if (!ascvd && heavy) return "VHR";
+  if (!ascvd && i.southAsian) return "VHR"; // South Asian DM alone = VHR per LAI
   return "HR";
 }
 
@@ -253,7 +260,7 @@ function buildResult(i: Inputs): Result | null {
         { week: "8 wk", action: "Repeat lipid profile; escalate if not at goal" },
         { week: "12 wk", action: "Reassess; target LDL ~10–15 mg/dL if events persist" },
       ],
-      notes: ["Recurrent CV event despite LDL ~30 mg/dL → Extreme-Risk Category C."],
+      notes: ["Recurrent CV event despite LDL ~30 mg/dL → Extreme-Risk Category C.", ...(i.southAsian ? ["LAI 2023: South Asian ethnicity — consider even more aggressive targets and earlier PCSK9i."] : [])],
     };
   }
 
@@ -316,6 +323,7 @@ function buildResult(i: Inputs): Result | null {
         poly ? "Polyvascular disease → Extreme-Risk Category B." : undefined,
         rec ? "Recurrent event despite therapy → Extreme-Risk Category C." : undefined,
         "All secondary prevention patients are at least EHR-A per LAI 2023.",
+        ...(i.southAsian ? ["LAI 2023: South Asian ethnicity — South Asians with ASCVD are automatically EHR-A even without other high-risk features."] : []),
       ].filter(Boolean) as string[],
     };
   }
@@ -355,6 +363,7 @@ function buildResult(i: Inputs): Result | null {
       ],
       notes: [
         "All post-ACS patients are extreme-risk regardless of baseline LDL.",
+        ...(i.southAsian ? ["LAI 2023: South Asian ethnicity — consider PCSK9i earlier and target LDL ≤30 mg/dL if feasible."] : []),
       ],
     };
   }
@@ -392,6 +401,7 @@ function buildResult(i: Inputs): Result | null {
       ],
       notes: [
         "Aggressive lifestyle + glycemic control alongside lipid Rx.",
+        ...(i.southAsian ? ["LAI 2023: South Asian ethnicity — South Asians with DM + 1 risk factor are VHR; with ASCVD are EHR-B. Consider lower LDL threshold."] : []),
       ],
     };
   }
@@ -445,6 +455,7 @@ function buildResult(i: Inputs): Result | null {
       ],
       notes: [
         "Goal: achieve LDL, non-HDL, and Apo-B targets per LAI.",
+        ...(i.southAsian ? ["LAI 2023: South Asian ethnicity — South Asians with TG >150 + low HDL have higher metabolic risk. Consider earlier pharmacotherapy."] : []),
       ],
       triglycerideTrack: track,
     };
@@ -482,7 +493,10 @@ function buildResult(i: Inputs): Result | null {
       { week: "4 wk", action: "Lipid profile incl. Apo-B" },
       { week: "8 wk", action: "Lipid profile; escalate if not at goal" },
     ],
-    notes: ["Aim to reach LDL, non-HDL, and Apo-B targets at the earliest."],
+    notes: [
+      "Aim to reach LDL, non-HDL, and Apo-B targets at the earliest.",
+      ...(i.southAsian ? ["LAI 2023: South Asian ethnicity increases ASCVD risk ~2×. Consider lower LDL threshold for therapy initiation (≥100 mg/dL) and more aggressive targets."] : []),
+    ],
   };
 }
 
@@ -1353,6 +1367,42 @@ export default function LipidMiniApp() {
                 South Asian ethnicity
               </Chip>
             </div>
+          </div>
+        )}
+
+        {/* LAI 2023 South Asian Risk Modifier — prominent callout */}
+        {showHighRiskFeatures && i.southAsian && (
+          <div className="mb-4 p-3 rounded-lg border-2 border-orange-500/30 bg-gradient-to-r from-orange-500/10 to-amber-500/5">
+            <div className="flex items-center gap-2 mb-2">
+              <AlertTriangle className="h-4 w-4 text-orange-400" />
+              <span className="text-xs font-bold text-orange-600 dark:text-orange-400 uppercase tracking-wider">
+                LAI 2023 — South Asian Risk Modifier
+              </span>
+            </div>
+            <p className="text-xs text-foreground leading-relaxed mb-2">
+              South Asian ethnicity is an independent risk modifier per LAI 2023. It <strong>increases ASCVD risk by ~2×</strong> compared to non-South Asians at the same LDL level. This means:
+            </p>
+            <ul className="space-y-1 text-xs text-foreground">
+              <li className="flex items-start gap-1.5">
+                <span className="text-orange-400 mt-0.5">•</span>
+                <span>Lower LDL thresholds for initiating therapy (LDL ≥100 mg/dL may warrant statin in South Asians vs ≥130 in others)</span>
+              </li>
+              <li className="flex items-start gap-1.5">
+                <span className="text-orange-400 mt-0.5">•</span>
+                <span>More aggressive targets: South Asians with ASCVD are automatically EHR-A even without other high-risk features</span>
+              </li>
+              <li className="flex items-start gap-1.5">
+                <span className="text-orange-400 mt-0.5">•</span>
+                <span>Earlier screening recommended (from age 20 vs 40 in general population)</span>
+              </li>
+              <li className="flex items-start gap-1.5">
+                <span className="text-orange-400 mt-0.5">•</span>
+                <span>Higher prevalence of metabolic syndrome, low HDL, high TG, and Lp(a) elevation</span>
+              </li>
+            </ul>
+            <p className="text-[10px] text-muted-foreground mt-1.5 italic">
+              Source: Lipid Association of India (LAI) 2023 Expert Consensus Statement
+            </p>
           </div>
         )}
 
