@@ -2,10 +2,12 @@ import { FrequencyBadge } from "@/components/FrequencyBadge";
 import React, { useState } from "react";
 import { AbbreviationHover, AbbrText } from "@/components/AbbreviationHover";
 import { Link } from "react-router-dom";
-import { Pill, Syringe, ChevronRight, ChevronDown, ArrowRight, CheckCircle2, AlertTriangle, Heart, Activity, Scale, Brain, ArrowDown, FileText, BookOpen, Shield, Users, Stethoscope, Info, Footprints, Search, ClipboardList, RotateCcw, XCircle, AlertCircle } from "lucide-react";
+import { Pill, Syringe, ChevronRight, ChevronDown, ChevronUp, ArrowRight, CheckCircle2, AlertTriangle, Heart, Activity, Scale, Brain, ArrowDown, FileText, BookOpen, Shield, Users, Stethoscope, Info, Footprints, Search, ClipboardList, RotateCcw, XCircle, AlertCircle } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { Textarea } from "@/components/ui/textarea";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Separator } from "@/components/ui/separator";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 import { cn } from "@/lib/utils";
@@ -841,6 +843,12 @@ function CKDSafeDrugs() {
 
 // ─── Geriatric Syndromes Tab ──────────────────────────────────────────────
 
+interface SyndromeQualifier {
+  severity: "mild" | "moderate" | "severe" | "";
+  frequency: "occasional" | "frequent" | "constant" | "";
+  notes: string;
+}
+
 const GERIATRIC_SYNDROMES_LIST = [
   { name: "Falls", icon: <Footprints className="h-4 w-4" />, color: "text-red-400" },
   { name: "Incontinence", icon: <Activity className="h-4 w-4" />, color: "text-blue-400" },
@@ -894,6 +902,8 @@ function GeriatricSyndromes() {
   const [showScreen, setShowScreen] = useState(false);
   const [complexity, setComplexity] = useState<"low" | "intermediate" | "high" | null>(null);
   const [urgentFlags, setUrgentFlags] = useState<string[]>([]);
+  const [selectedSyndrome, setSelectedSyndrome] = useState<string | null>(null);
+  const [qualifiers, setQualifiers] = useState<Record<string, SyndromeQualifier>>({});
 
   const toggleFlag = (id: string) => {
     setFlags((prev) =>
@@ -1013,16 +1023,123 @@ function GeriatricSyndromes() {
             <Activity className="h-5 w-5 text-rose-400" />
             Key Geriatric Syndromes
           </CardTitle>
+          <p className="text-xs text-muted-foreground">Click a syndrome to add qualifiers and notes</p>
         </CardHeader>
-        <CardContent>
+        <CardContent className="space-y-4">
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-2">
-            {GERIATRIC_SYNDROMES_LIST.map((s) => (
-              <div key={s.name} className="flex items-center gap-2 p-2 rounded-lg bg-muted/30 border border-border/50">
-                <span className={s.color}>{s.icon}</span>
-                <span className="text-xs font-medium">{s.name}</span>
-              </div>
-            ))}
+            {GERIATRIC_SYNDROMES_LIST.map((s) => {
+              const isSelected = selectedSyndrome === s.name;
+              const hasQualifiers = qualifiers[s.name] && (qualifiers[s.name].severity || qualifiers[s.name].frequency || qualifiers[s.name].notes);
+              return (
+                <button
+                  key={s.name}
+                  onClick={() => setSelectedSyndrome(isSelected ? null : s.name)}
+                  className={`flex items-center gap-2 p-2 rounded-lg border text-left transition-all ${
+                    isSelected
+                      ? "border-primary bg-primary/10 ring-1 ring-primary/30"
+                      : hasQualifiers
+                        ? "border-emerald-500/50 bg-emerald-500/10"
+                        : "bg-muted/30 border-border/50 hover:border-primary/40 hover:bg-muted/50"
+                  }`}
+                >
+                  <span className={s.color}>{s.icon}</span>
+                  <span className="text-xs font-medium">{s.name}</span>
+                  {hasQualifiers && <CheckCircle2 className="h-3 w-3 text-emerald-400 ml-auto shrink-0" />}
+                </button>
+              );
+            })}
           </div>
+
+          {/* Qualifier panel for selected syndrome */}
+          {selectedSyndrome && (() => {
+            const q = qualifiers[selectedSyndrome] || { severity: "", frequency: "", notes: "" };
+            const updateQualifier = (field: keyof SyndromeQualifier, value: string) => {
+              setQualifiers((prev) => ({
+                ...prev,
+                [selectedSyndrome]: { ...(prev[selectedSyndrome] || { severity: "", frequency: "", notes: "" }), [field]: value },
+              }));
+            };
+            return (
+              <div className="p-4 rounded-lg border border-primary/30 bg-primary/5 space-y-3 animate-in fade-in slide-in-from-top-2 duration-200">
+                <div className="flex items-center justify-between">
+                  <p className="text-sm font-semibold flex items-center gap-2">
+                    {GERIATRIC_SYNDROMES_LIST.find((s) => s.name === selectedSyndrome)?.icon}
+                    {selectedSyndrome}
+                  </p>
+                  <button
+                    onClick={() => setSelectedSyndrome(null)}
+                    className="text-xs text-muted-foreground hover:text-foreground transition-colors"
+                  >
+                    ✕
+                  </button>
+                </div>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                  <div>
+                    <label className="text-xs font-medium text-muted-foreground mb-1 block">Severity</label>
+                    <Select
+                      value={q.severity}
+                      onValueChange={(v) => updateQualifier("severity", v)}
+                    >
+                      <SelectTrigger className="h-8 text-xs">
+                        <SelectValue placeholder="Select severity" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="mild" className="text-xs">Mild</SelectItem>
+                        <SelectItem value="moderate" className="text-xs">Moderate</SelectItem>
+                        <SelectItem value="severe" className="text-xs">Severe</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+                  <div>
+                    <label className="text-xs font-medium text-muted-foreground mb-1 block">Frequency</label>
+                    <Select
+                      value={q.frequency}
+                      onValueChange={(v) => updateQualifier("frequency", v)}
+                    >
+                      <SelectTrigger className="h-8 text-xs">
+                        <SelectValue placeholder="Select frequency" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="occasional" className="text-xs">Occasional</SelectItem>
+                        <SelectItem value="frequent" className="text-xs">Frequent</SelectItem>
+                        <SelectItem value="constant" className="text-xs">Constant</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+                </div>
+                <div>
+                  <label className="text-xs font-medium text-muted-foreground mb-1 block">Notes (optional)</label>
+                  <Textarea
+                    placeholder="Add clinical notes for this syndrome..."
+                    value={q.notes}
+                    onChange={(e) => updateQualifier("notes", e.target.value)}
+                    className="min-h-[60px] text-xs resize-y"
+                  />
+                </div>
+              </div>
+            );
+          })()}
+
+          {/* Summary of selected qualifiers */}
+          {Object.keys(qualifiers).length > 0 && (
+            <div className="p-3 rounded-lg bg-muted/20 border border-border/50">
+              <p className="text-xs font-semibold text-muted-foreground mb-2">Documented Syndromes</p>
+              <div className="flex flex-wrap gap-2">
+                {Object.entries(qualifiers).map(([name, q]) => {
+                  if (!q.severity && !q.frequency && !q.notes) return null;
+                  const parts = [q.severity, q.frequency].filter(Boolean);
+                  return (
+                    <Badge key={name} variant="secondary" className="text-xs gap-1">
+                      {name}
+                      {parts.length > 0 && (
+                        <span className="text-muted-foreground">— {parts.join(", ")}</span>
+                      )}
+                    </Badge>
+                  );
+                })}
+              </div>
+            </div>
+          )}
         </CardContent>
       </Card>
 
