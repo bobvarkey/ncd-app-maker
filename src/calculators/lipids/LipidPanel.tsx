@@ -27,7 +27,6 @@ import {
   Flame, GitBranch, Network, Layers, Cloud, Bug,
   Donut, Soup, Eye, Repeat, AlertOctagon, Syringe,
   ShieldQuestion,
-  User,
 } from "lucide-react";
 import ZoomableImage from "@/components/ZoomableImage";
 import {
