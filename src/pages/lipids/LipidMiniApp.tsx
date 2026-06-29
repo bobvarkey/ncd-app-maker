@@ -30,6 +30,7 @@ import {
   Heart,
   Gauge,
   Calculator,
+  XCircle,
 } from "lucide-react";
 import { downloadTextFile } from "@/lib/clinical-utils";
 
