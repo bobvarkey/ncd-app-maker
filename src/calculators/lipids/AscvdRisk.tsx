@@ -35,6 +35,7 @@ import {
   Shield,
   Stethoscope,
   Calculator,
+  User,
 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
