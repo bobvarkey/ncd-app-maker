@@ -124,6 +124,8 @@ import AdultVaccinations from "@/pages/AdultVaccinations";
 
 // AKI Criteria
 import AKICriteria from "@/pages/AKICriteria";
+// Acid-Base Disorders
+import AcidBaseDisorders from "@/pages/AcidBaseDisorders";
 // Metabolic Alkalosis
 import MetabolicAlkalosis from "@/pages/MetabolicAlkalosis";
 
@@ -245,7 +247,8 @@ const App = () => (
           <Route path="/hypo-risk" element={<><TabNavigation /><HypoRiskCalculatorCalc /></>} />
           <Route path="/renal-dosing" element={<><TabNavigation /><RenalDosePage /></>} />
           <Route path="/aki-criteria" element={<><TabNavigation /><AKICriteria /></>} />
-          <Route path="/metabolic-alkalosis" element={<><TabNavigation /><MetabolicAlkalosis /></>} />
+          <Route path="/acid-base" element={<><TabNavigation /><AcidBaseDisorders /></>} />
+          <Route path="/metabolic-alkalosis" element={<Navigate to="/acid-base?tab=metabolic-alkalosis" replace />} />
           <Route path="/respiratory" element={<><TabNavigation /><RespiratoryPage /></>} />
           <Route path="/respiratory/simple" element={<Navigate to="/respiratory" replace />} />
           <Route path="/respiratory/moderate" element={<Navigate to="/respiratory" replace />} />

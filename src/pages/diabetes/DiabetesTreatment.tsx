@@ -2,7 +2,7 @@ import { FrequencyBadge } from "@/components/FrequencyBadge";
 import React, { useState } from "react";
 import { AbbreviationHover, AbbrText } from "@/components/AbbreviationHover";
 import { Link } from "react-router-dom";
-import { Pill, Syringe, ChevronRight, ChevronDown, ArrowRight, CheckCircle2, AlertTriangle, Heart, Activity, Scale, Brain, ArrowDown, FileText, BookOpen } from "lucide-react";
+import { Pill, Syringe, ChevronRight, ChevronDown, ArrowRight, CheckCircle2, AlertTriangle, Heart, Activity, Scale, Brain, ArrowDown, FileText, BookOpen, Shield } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -734,9 +734,114 @@ const ManagementChecklist = () => {
 import InsulinGuide from "./InsulinGuide";
 import HyperglycemicEmergencySection from "./HyperglycemicEmergencySection";
 
-// Main Component
+// ─── CKD Safe Drugs Component ──────────────────────────────────────────────
+
+function CKDSafeDrugs() {
+  const drugs = [
+    {
+      category: "Insulin",
+      drugs: [{ name: "Insulin (all types)", doseAdj: "No", stages: "All stages", notes: "No dose adjustment required in any stage of CKD" }],
+    },
+    {
+      category: "DPP-4 Inhibitor",
+      drugs: [{ name: "Linagliptin", doseAdj: "No", stages: "All stages", notes: "No dose adjustment required in any stage of CKD" }],
+    },
+    {
+      category: "GLP-1 Receptor Agonists",
+      drugs: [
+        { name: "GLP-1 RAs (except lixisenatide)", doseAdj: "No", stages: "All stages", notes: "No dose adjustment generally required" },
+        { name: "Lixisenatide", doseAdj: "⚠️", stages: "eGFR <15", notes: "Exception — avoid if eGFR <15 mL/min/1.73m²" },
+      ],
+    },
+    {
+      category: "Alpha-Glucosidase Inhibitor",
+      drugs: [{ name: "Acarbose", doseAdj: "No", stages: "All stages", notes: "No dose adjustment required in CKD" }],
+    },
+    {
+      category: "Sulfonylurea",
+      drugs: [{ name: "Sulfonylureas", doseAdj: "No", stages: "All stages", notes: "No dose adjustment required across all CKD stages" }],
+    },
+    {
+      category: "Thiazolidinedione (TZD)",
+      drugs: [
+        {
+          name: "Pioglitazone",
+          doseAdj: "No",
+          stages: "All stages",
+          notes: "No dose adjustment required. Monitor for fluid retention and CHF",
+        },
+      ],
+    },
+  ];
+
+  return (
+    <Card>
+      <CardHeader>
+        <CardTitle className="flex items-center gap-2">
+          <Shield className="h-5 w-5 text-green-400" />
+          Safest Drugs in CKD
+        </CardTitle>
+        <p className="text-sm text-muted-foreground">
+          These medications are generally safe in CKD across all stages without the need for dose adjustment.
+        </p>
+      </CardHeader>
+      <CardContent>
+        <div className="overflow-x-auto">
+          <table className="w-full text-sm">
+            <thead>
+              <tr className="border-b border-border">
+                <th className="text-left py-3 px-3 font-semibold">Drug Class</th>
+                <th className="text-left py-3 px-3 font-semibold">Drug</th>
+                <th className="text-center py-3 px-3 font-semibold">Dose Adjustment Required?</th>
+                <th className="text-center py-3 px-3 font-semibold">CKD Stages</th>
+                <th className="text-left py-3 px-3 font-semibold">Notes / Special Considerations</th>
+              </tr>
+            </thead>
+            <tbody>
+              {drugs.map((group, gi) =>
+                group.drugs.map((drug, di) => (
+                  <tr key={`${gi}-${di}`} className="border-b border-border/50 hover:bg-accent/30">
+                    {di === 0 && (
+                      <td className="py-3 px-3 font-medium text-foreground" rowSpan={group.drugs.length}>
+                        {group.category}
+                      </td>
+                    )}
+                    <td className="py-3 px-3 font-mono text-sm">{drug.name}</td>
+                    <td className="py-3 px-3 text-center">
+                      {drug.doseAdj === "No" ? (
+                        <Badge variant="outline" className="border-green-500/50 text-green-400 text-xs">
+                          No
+                        </Badge>
+                      ) : (
+                        <Badge variant="outline" className="border-amber-500/50 text-amber-400 text-xs">
+                          {drug.doseAdj}
+                        </Badge>
+                      )}
+                    </td>
+                    <td className="py-3 px-3 text-center font-mono text-xs text-muted-foreground">{drug.stages}</td>
+                    <td className="py-3 px-3 text-xs text-muted-foreground">{drug.notes}</td>
+                  </tr>
+                ))
+              )}
+            </tbody>
+          </table>
+        </div>
+
+        <div className="mt-6 p-4 rounded-lg bg-green-500/5 border border-green-500/20">
+          <h4 className="text-sm font-semibold text-green-400 mb-2">Summary: Dose Adjustment</h4>
+          <p className="text-sm text-muted-foreground">
+            These drugs are <strong>preferred options in CKD</strong> for better safety, tolerability, and ease of use.
+            No dose adjustment generally needed. Choose therapy based on eGFR, comorbidities, and patient-specific factors.
+          </p>
+        </div>
+      </CardContent>
+    </Card>
+  );
+}
+
+// ─── Main Component ────────────────────────────────────────────────────────
 export default function DiabetesTreatment() {
-  const [activeTab, setActiveTab] = useState<"algorithm" | "glp1" | "drugs" | "insulin" | "checklist" | "emergency">("algorithm");
+  const [activeTab, setActiveTab] = useState<"algorithm" | "glp1" | "drugs" | "insulin" | "checklist" | "emergency" | "ckd">("algorithm");
 
   return (
     <div className="space-y-4">
@@ -749,6 +854,7 @@ export default function DiabetesTreatment() {
           { id: "drugs", label: "Drug Classes", icon: Pill },
           { id: "checklist", label: "Care Checklist", icon: FileText },
           { id: "emergency", label: "DKA/HHS Guide", icon: AlertTriangle },
+          { id: "ckd", label: "CKD Safe Drugs", icon: Shield },
         ].map((tab) => (
           <button
             key={tab.id}
@@ -771,6 +877,7 @@ export default function DiabetesTreatment() {
       {activeTab === "drugs" && <DrugClassesComparison />}
       {activeTab === "checklist" && <ManagementChecklist />}
       {activeTab === "emergency" && <HyperglycemicEmergencySection />}
+      {activeTab === "ckd" && <CKDSafeDrugs />}
     </div>
   );
 }
