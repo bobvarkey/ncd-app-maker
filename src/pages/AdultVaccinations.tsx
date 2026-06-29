@@ -186,11 +186,17 @@ const VACCINES: Vaccine[] = [
     type: "inactivated/recombinant",
     age_min: 18,
     age_max: 45,
-    routine_adult_schedule: "2- or 3-dose series depending on age at initiation (0,1–2,6 months typical schedules)",
+    routine_adult_schedule: "2 doses (if started <15y: 0, 6–12 months) or 3 doses (if started 15–45y: 0, 1–2, 6 months)",
     timing_before_immunosuppression: "At least 2 weeks before initiating immunosuppression if possible",
-    contraindications: ["Severe allergy to vaccine component"],
-    notes: "Consider vaccination up to age 45 based on shared clinical decision-making",
-    recommendation: "RECOMMENDED"
+    contraindications: ["Severe allergy to vaccine component", "Pregnancy (not recommended during pregnancy)"],
+    notes: "Catch-up vaccination recommended for all adults 19–26 not vaccinated as teens. For ages 27–45, shared clinical decision-making based on risk factors (new partners, sexual history). Protects against HPV types causing cervical, vaginal, vulvar, anal, and throat cancers plus genital warts. Even if exposed to one strain, protects against other high-risk strains. Gardasil 9 is the available formulation.",
+    recommendation: "RECOMMENDED",
+    implementation_guidance: {
+      age_restriction: "18–45 years; catch-up strongly recommended for 19–26; shared decision-making for 27–45",
+      pre_vaccination_testing: "Not required — no serological or HPV DNA testing needed before vaccination",
+      dose_schedule: "<15y at start: 2 doses (0, 6–12 months). 15–45y at start: 3 doses (0, 1–2, 6 months)",
+      special_notes: "Gardasil 9 (9-valent) is the standard. Not recommended during pregnancy. Can be given regardless of prior HPV exposure. Available via CDC Vaccine Finder (US) or local pharmacies/private providers (India)."
+    }
   },
   {
     id: "herpes_zoster_shingrix",
@@ -267,6 +273,84 @@ const VACCINES: Vaccine[] = [
   }
 ];
 
+// ══════════════════════════════════════════════
+// Patient Categories
+// ══════════════════════════════════════════════
+
+type PatientCategory = {
+  id: string;
+  label: string;
+  description: string;
+  icon: string;
+  vaccineIds: string[];
+};
+
+const PATIENT_CATEGORIES: PatientCategory[] = [
+  {
+    id: "elderly",
+    label: "Elderly (≥65 years)",
+    description: "Age-related immune senescence — prioritise high-dose/adjuvanted formulations",
+    icon: "👴",
+    vaccineIds: ["influenza_inactivated", "pneumococcal", "herpes_zoster_shingrix", "covid19_mrna_protein", "tdap"]
+  },
+  {
+    id: "immunocompromised",
+    label: "Immunocompromised",
+    description: "Primary/secondary immunodeficiency, transplant, chemotherapy, biologics",
+    icon: "🛡️",
+    vaccineIds: ["pneumococcal", "influenza_inactivated", "covid19_mrna_protein", "hepatitis_b", "herpes_zoster_shingrix", "meningococcal_menacwy", "tdap"]
+  },
+  {
+    id: "pre_mab",
+    label: "Pre-Monoclonal Antibody / Biologic Therapy",
+    description: "Complete vaccine series before B-cell depleting therapy (anti-CD20, etc.)",
+    icon: "💉",
+    vaccineIds: ["hepatitis_b", "pneumococcal", "influenza_inactivated", "covid19_mrna_protein", "tdap", "herpes_zoster_shingrix", "mmr", "varicella"]
+  },
+  {
+    id: "pregnancy",
+    label: "Pregnancy",
+    description: "Vaccines recommended during or before pregnancy for maternal/neonatal protection",
+    icon: "🤰",
+    vaccineIds: ["tdap", "influenza_inactivated", "covid19_mrna_protein"]
+  },
+  {
+    id: "healthy_adult",
+    label: "Healthy Adult (18–64)",
+    description: "Routine adult immunisation for general population without special risks",
+    icon: "✅",
+    vaccineIds: ["tdap", "hpv", "influenza_inactivated", "covid19_mrna_protein"]
+  },
+  {
+    id: "chronic_disease",
+    label: "Chronic Disease (DM / CLD / CKD / Heart Disease)",
+    description: "Chronic medical conditions that increase vaccine-preventable disease risk",
+    icon: "🏥",
+    vaccineIds: ["pneumococcal", "influenza_inactivated", "covid19_mrna_protein", "hepatitis_b", "herpes_zoster_shingrix", "tdap"]
+  },
+  {
+    id: "healthcare_worker",
+    label: "Healthcare Worker",
+    description: "Occupational exposure risk — protect self and patients",
+    icon: "👨‍⚕️",
+    vaccineIds: ["influenza_inactivated", "covid19_mrna_protein", "hepatitis_b", "mmr", "varicella", "tdap"]
+  },
+  {
+    id: "asplenia",
+    label: "Asplenia / Hyposplenism",
+    description: "High risk of encapsulated bacterial infection — pneumococcal + meningococcal critical",
+    icon: "🫀",
+    vaccineIds: ["pneumococcal", "meningococcal_menacwy", "influenza_inactivated", "covid19_mrna_protein", "tdap"]
+  },
+  {
+    id: "travel",
+    label: "Travel to Endemic Areas",
+    description: "Destination-specific vaccines for international travel",
+    icon: "✈️",
+    vaccineIds: ["hepatitis_a", "yellow_fever", "japanese_encephalitis", "rabies", "dengue_qdenga", "meningococcal_menacwy", "typhoid"]
+  }
+];
+
 // ─── Helper functions ───
 
 function getRecommendationBadge(recommendation: Vaccine["recommendation"]) {
@@ -305,6 +389,8 @@ export default function AdultVaccinations() {
   const [expandedVaccine, setExpandedVaccine] = useState<string | null>(null);
   const [planningForImmunosuppression, setPlanningForImmunosuppression] = useState(false);
   const [planningForTravel, setPlanningForTravel] = useState(false);
+  const [selectedVaccines, setSelectedVaccines] = useState<Set<string>>(new Set());
+  const [activeCategory, setActiveCategory] = useState<string | null>(null);
 
   // Filter vaccines
   const filteredVaccines = useMemo(() => {
@@ -326,19 +412,29 @@ export default function AdultVaccinations() {
     return VACCINES.filter(v => v.timing_before_immunosuppression);
   }, [planningForImmunosuppression]);
 
-  // Export function
+  // Export function — only selected vaccines
   const handleExport = () => {
-    let content = "ADULT VACCINATION QUICK REFERENCE\n";
-    content += "=================================\n\n";
+    const selected = VACCINES.filter(v => selectedVaccines.has(v.id));
+    if (selected.length === 0) {
+      toast.error("Select at least one vaccine to export");
+      return;
+    }
 
-    // Group by recommendation
-    const essential = VACCINES.filter(v => v.recommendation === "ESSENTIAL");
-    const recommended = VACCINES.filter(v => v.recommendation === "RECOMMENDED");
-    const consider = VACCINES.filter(v => v.recommendation === "CONSIDER");
+    let content = "ADULT VACCINATION SELECTION\n";
+    content += "============================\n\n";
 
-    content += "ESSENTIAL VACCINES\n";
-    content += "------------------\n";
-    essential.forEach(v => {
+    // Header with patient category info
+    if (activeCategory) {
+      const cat = PATIENT_CATEGORIES.find(c => c.id === activeCategory);
+      if (cat) {
+        content += `Patient Category: ${cat.label}\n`;
+        content += `Description: ${cat.description}\n\n`;
+      }
+    }
+
+    content += `Selected Vaccines (${selected.length})\n`;
+    content += "----------------------------\n";
+    selected.forEach(v => {
       content += `\n${v.name}\n`;
       content += `  Type: ${v.type}\n`;
       content += `  Age: ${formatAgeRange(v.age_min, v.age_max)}\n`;
@@ -346,28 +442,18 @@ export default function AdultVaccinations() {
       if (v.timing_before_immunosuppression) {
         content += `  Pre-immunosuppression: ${v.timing_before_immunosuppression}\n`;
       }
+      if (v.timing_before_travel) {
+        content += `  Pre-travel: ${v.timing_before_travel}\n`;
+      }
       content += `  Contraindications: ${v.contraindications.join(", ")}\n`;
+      content += `  Notes: ${v.notes}\n`;
     });
 
-    content += "\n\nRECOMMENDED VACCINES\n";
-    content += "-------------------\n";
-    recommended.forEach(v => {
-      content += `\n${v.name}\n`;
-      content += `  Type: ${v.type}\n`;
-      content += `  Age: ${formatAgeRange(v.age_min, v.age_max)}\n`;
-      content += `  Schedule: ${v.routine_adult_schedule}\n`;
-    });
+    content += "\n\n---\n";
+    content += "Generated by ncd-app-maker — Adult Vaccination Clinical Reference\n";
 
-    content += "\n\nCONSIDER (Risk-Based)\n";
-    content += "--------------------\n";
-    consider.forEach(v => {
-      content += `\n${v.name}\n`;
-      content += `  Type: ${v.type}\n`;
-      content += `  Schedule: ${v.routine_adult_schedule}\n`;
-    });
-
-    downloadTextFile(content, "adult-vaccinations-reference.txt");
-    toast.success("Vaccination reference exported");
+    downloadTextFile(content, "vaccination-selection.txt");
+    toast.success(`Exported ${selected.length} vaccine(s)`);
   };
 
   const handleCopy = () => {
@@ -413,7 +499,7 @@ export default function AdultVaccinations() {
             Clinical Context
           </CardTitle>
         </CardHeader>
-        <CardContent className="space-y-3">
+        <CardContent className="space-y-4">
           <div className="flex items-center space-x-3">
             <Checkbox
               id="planning-immunosuppression"
@@ -433,6 +519,43 @@ export default function AdultVaccinations() {
             <Label htmlFor="planning-travel" className="text-sm cursor-pointer">
               Planning travel to endemic areas
             </Label>
+          </div>
+
+          {/* Patient Category Selector */}
+          <div className="border-t border-border/40 pt-4">
+            <Label className="text-sm font-medium mb-2.5 block">
+              Patient Category — auto-selects relevant vaccines
+            </Label>
+            <div className="flex flex-wrap gap-2">
+              {PATIENT_CATEGORIES.map((cat) => (
+                <button
+                  key={cat.id}
+                  onClick={() => {
+                    if (activeCategory === cat.id) {
+                      setActiveCategory(null);
+                      setSelectedVaccines(new Set());
+                    } else {
+                      setActiveCategory(cat.id);
+                      setSelectedVaccines(new Set(cat.vaccineIds));
+                    }
+                  }}
+                  className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full text-sm border transition-colors ${
+                    activeCategory === cat.id
+                      ? "bg-primary/20 border-primary text-primary"
+                      : "bg-muted/30 border-border/60 text-muted-foreground hover:bg-muted/50"
+                  }`}
+                  title={cat.description}
+                >
+                  <span>{cat.icon}</span>
+                  <span>{cat.label}</span>
+                </button>
+              ))}
+            </div>
+            {activeCategory && (
+              <p className="text-xs text-muted-foreground mt-2">
+                {PATIENT_CATEGORIES.find(c => c.id === activeCategory)?.description}
+              </p>
+            )}
           </div>
         </CardContent>
       </Card>
@@ -531,6 +654,47 @@ export default function AdultVaccinations() {
 
       {/* Vaccine Cards */}
       <div className="space-y-3">
+        {/* Selection Controls */}
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-2">
+            <span className="text-sm text-muted-foreground">
+              {selectedVaccines.size > 0
+                ? `${selectedVaccines.size} vaccine${selectedVaccines.size > 1 ? "s" : ""} selected`
+                : "No vaccines selected"}
+            </span>
+          </div>
+          <div className="flex gap-2">
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={() => {
+                const allIds = new Set(filteredVaccines.map(v => v.id));
+                setSelectedVaccines(prev => {
+                  const next = new Set(prev);
+                  allIds.forEach(id => next.add(id));
+                  return next;
+                });
+              }}
+            >
+              Select All
+            </Button>
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={() => {
+                const filteredIds = new Set(filteredVaccines.map(v => v.id));
+                setSelectedVaccines(prev => {
+                  const next = new Set(prev);
+                  filteredIds.forEach(id => next.delete(id));
+                  return next;
+                });
+              }}
+            >
+              Deselect All
+            </Button>
+          </div>
+        </div>
+
         {filteredVaccines.length === 0 ? (
           <Card className="border-border/60">
             <CardContent className="py-8 text-center text-muted-foreground">
@@ -553,6 +717,22 @@ export default function AdultVaccinations() {
                   <div className="flex items-start justify-between gap-4">
                     <div className="flex-1">
                       <div className="flex flex-wrap items-center gap-2 mb-2">
+                        <Checkbox
+                          checked={selectedVaccines.has(vaccine.id)}
+                          onCheckedChange={(checked) => {
+                            setSelectedVaccines(prev => {
+                              const next = new Set(prev);
+                              if (checked) {
+                                next.add(vaccine.id);
+                              } else {
+                                next.delete(vaccine.id);
+                              }
+                              return next;
+                            });
+                          }}
+                          onClick={(e) => e.stopPropagation()}
+                          className="mr-1"
+                        />
                         <h3 className="font-semibold text-lg">{vaccine.name}</h3>
                         {getRecommendationBadge(vaccine.recommendation)}
                         {getTypeBadge(vaccine.type)}

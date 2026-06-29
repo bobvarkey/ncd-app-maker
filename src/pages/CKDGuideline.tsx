@@ -1,6 +1,6 @@
 import { useState, useMemo } from "react";
 import { loadPatient, PatientData } from "@/lib/patient-data";
-import { ChevronDown, ChevronUp, AlertTriangle, Check, ArrowDown, Heart, Shield, Pill, Activity } from "lucide-react";
+import { ChevronDown, ChevronUp, AlertTriangle, Check, ArrowDown, Heart, Shield, Pill, Activity, Info } from "lucide-react";
 import niceAlgorithmImg from "@/assets/nice-ckd-algorithm.png";
 import ZoomableImage from "@/components/ZoomableImage";
 import KDIGOStagingCalculator from "@/calculators/renal/KDIGOStagingCalculator";
@@ -236,6 +236,83 @@ const CKDGuideline = () => {
             </div>
           ))}
         </div>
+      </div>
+
+      {/* Safest Drugs in CKD */}
+      <div className="clinical-card border-2 border-emerald-500/30 bg-gradient-to-br from-emerald-500/5 to-muted/5">
+        <div className="flex items-center gap-2 mb-4">
+          <Shield className="w-5 h-5 text-emerald-400" />
+          <h3 className="section-title">Safest Drugs in CKD</h3>
+          <span className="text-xs text-muted-foreground ml-auto">Drugs in Which Dose Adjustment Is Not Required</span>
+        </div>
+        <p className="text-sm text-muted-foreground mb-4">
+          These medications are generally safe in CKD across all stages without the need for dose adjustment.
+        </p>
+
+        <div className="overflow-x-auto">
+          <table className="w-full text-sm">
+            <thead>
+              <tr className="border-b border-border">
+                <th className="text-left py-2 px-3 font-semibold">Drug</th>
+                <th className="text-left py-2 px-3 font-semibold">Class</th>
+                <th className="text-center py-2 px-3 font-semibold">Dose Adjustment Required?</th>
+                <th className="text-center py-2 px-3 font-semibold">CKD Stages</th>
+                <th className="text-left py-2 px-3 font-semibold">Notes / Special Considerations</th>
+              </tr>
+            </thead>
+            <tbody>
+              {[
+                { drug: "Insulin", cls: "Insulin", note: "No dose adjustment required in any stage of CKD." },
+                { drug: "Linagliptin", cls: "DPP-4 inhibitor", note: "No dose adjustment required in any stage of CKD." },
+                { drug: "GLP-1 Receptor Agonists", cls: "GLP-1 RA", note: "No dose adjustment generally required. <strong>EXCEPTION:</strong> Lixisenatide — avoid if eGFR &lt;15 mL/min/1.73m²." },
+                { drug: "Voglibose", cls: "Alpha-glucosidase inhibitor", note: "No dose adjustment required in CKD." },
+                { drug: "Glipizide", cls: "Sulfonylurea", note: "No dose adjustment required across all CKD stages." },
+                { drug: "Pioglitazone", cls: "Thiazolidinedione (TZD)", note: "No dose adjustment required in CKD. <strong>Monitor for:</strong> Fluid retention, CHF." },
+              ].map((item, i) => (
+                <tr key={i} className="border-b border-border/50 hover:bg-muted/20 transition-colors">
+                  <td className="py-2.5 px-3 font-medium">{item.drug}</td>
+                  <td className="py-2.5 px-3 text-muted-foreground text-xs">{item.cls}</td>
+                  <td className="py-2.5 px-3 text-center">
+                    <span className="inline-flex items-center gap-1 text-xs bg-success/10 text-success px-2 py-0.5 rounded-full border border-success/30">
+                      <Check className="w-3 h-3" /> No
+                    </span>
+                  </td>
+                  <td className="py-2.5 px-3 text-center text-xs text-muted-foreground">All stages</td>
+                  <td className="py-2.5 px-3 text-xs text-muted-foreground" dangerouslySetInnerHTML={{ __html: item.note }} />
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+
+        <div className="mt-4 grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <div className="p-3 rounded-lg bg-emerald-500/10 border border-emerald-500/20">
+            <div className="flex items-center gap-2 mb-1">
+              <Shield className="w-4 h-4 text-emerald-400" />
+              <span className="text-sm font-semibold text-emerald-400">Summary</span>
+            </div>
+            <p className="text-xs text-muted-foreground">Safe and effective choices in CKD.</p>
+          </div>
+          <div className="p-3 rounded-lg bg-blue-500/10 border border-blue-500/20">
+            <div className="flex items-center gap-2 mb-1">
+              <Info className="w-4 h-4 text-blue-400" />
+              <span className="text-sm font-semibold text-blue-400">Dose Adjustment</span>
+            </div>
+            <p className="text-xs text-muted-foreground">No dose adjustment generally needed.</p>
+          </div>
+        </div>
+
+        <div className="mt-4 p-3 rounded-lg bg-amber-500/10 border border-amber-500/20 flex items-start gap-2">
+          <Info className="w-4 h-4 text-amber-400 mt-0.5 shrink-0" />
+          <div>
+            <p className="text-sm font-semibold text-amber-400">Key Takeaway</p>
+            <p className="text-xs text-muted-foreground">These drugs are preferred options in CKD for better safety, tolerability, and ease of use.</p>
+          </div>
+        </div>
+
+        <p className="text-xs text-muted-foreground mt-3 italic flex items-center gap-1">
+          <Activity className="w-3 h-3" /> Always individualize therapy based on eGFR, comorbidities, and patient-specific factors.
+        </p>
       </div>
 
       {/* NICE Algorithm Image */}
