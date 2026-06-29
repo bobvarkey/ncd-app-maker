@@ -1,5 +1,7 @@
 import { Card } from "@/components/ui/card";
 import { AbbreviationHover, AbbrText } from "@/components/AbbreviationHover";
+import ZoomableImage from "@/components/ZoomableImage";
+import lipidPanelDecodedImg from "@/assets/lipid-panel-decoded.jpg";
 import {
   Heart,
   TrendingUp,
@@ -344,6 +346,30 @@ export default function LipidsOverview() {
         </p>
       </Card>
 
+      {/* Infographic Image */}
+      <Card className="border-blue-500/20 bg-card p-4">
+        <div className="flex items-center gap-2 mb-3">
+          <div className="flex h-7 w-7 items-center justify-center rounded-lg bg-blue-500/10">
+            <svg className="h-4 w-4 text-blue-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <rect x="3" y="3" width="18" height="18" rx="2" ry="2" />
+              <circle cx="8.5" cy="8.5" r="1.5" />
+              <polyline points="21 15 16 10 5 21" />
+            </svg>
+          </div>
+          <h3 className="font-display text-sm font-bold text-foreground">
+            Lipid Management Infographic
+          </h3>
+        </div>
+        <div className="rounded-lg overflow-hidden border border-border/50">
+          <img
+            src="/lipids-infographic.jpg"
+            alt="Lipid Management Infographic"
+            className="w-full h-auto object-contain"
+            loading="lazy"
+          />
+        </div>
+      </Card>
+
       {/* LAI 2023 Indian Guidelines Section */}
       <Card className="border-warning/30 bg-warning/100/5 p-5">
         <div className="flex items-center gap-3 mb-4">
@@ -589,6 +615,33 @@ export default function LipidsOverview() {
           </table>
         </div>
       </SectionCard>
+
+      {/* Lipid Panel Decoded — Image */}
+      <Card className="border-emerald-500/30 bg-gradient-to-br from-emerald-500/5 to-muted/5 p-5">
+        <div className="flex items-center gap-3 mb-4">
+          <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-gradient-to-br from-emerald-500/20 to-teal-500/20 backdrop-blur-md border border-emerald-500/30">
+            <Activity className="h-5 w-5 text-emerald-500" />
+          </div>
+          <div>
+            <h3 className="font-display text-lg font-bold text-foreground">
+              Lipid Panel Decoded — Clinical Algorithm
+            </h3>
+            <p className="text-xs text-muted-foreground">
+              A functional medicine approach: Beyond LDL • ApoB • Particles • Patterns • Action
+            </p>
+          </div>
+        </div>
+
+        <ZoomableImage
+          src={lipidPanelDecodedImg}
+          alt="Lipid Panel Decoded — clinical algorithm with 8-step assessment, markers reference, optimal vs lab ranges, 5 lipid patterns, clinical decision guide, and root cause workup"
+          className="w-full rounded-lg border border-border"
+        />
+
+        <p className="text-xs text-muted-foreground mt-3 italic">
+          Functional medicine approach. Note: This uses more aggressive targets than major guidelines (ACC/AHA, ESC/EAS, NICE). Use clinical judgment and evidence-based guidelines to refine risk assessment and treatment.
+        </p>
+      </Card>
 
       {/* Summary Card */}
       <Card className="border-primary/20 bg-primary/5 p-4">

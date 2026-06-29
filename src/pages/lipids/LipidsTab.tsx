@@ -11,6 +11,7 @@ import LipidsOverview from "./LipidsOverview";
 import LipidsAssessment from "./LipidsAssessment";
 import LipidsTreatment from "./LipidsTreatment";
 import LipidMiniApp from "./LipidMiniApp";
+import LipidsComprehensiveAlgorithm from "./LipidsComprehensiveAlgorithm";
 
 export type LAIResult = {
   cat: "EHR" | "VHR" | "HR" | "MOD" | "LOW";
@@ -116,7 +117,7 @@ export default function LipidsTab() {
     </div>
   );
 
-  const sectionOrder = ["assessment", "treatment", "overview"];
+  const sectionOrder = ["assessment", "treatment", "overview", "algorithm"];
 
   const sections = [
     {
@@ -149,6 +150,13 @@ export default function LipidsTab() {
       icon: <BookOpen />,
       description: "Guideline summaries, pathophysiology, and patient education resources",
       component: <LipidsOverview />,
+    },
+    {
+      id: "algorithm",
+      title: "Comprehensive Algorithm",
+      icon: <Sparkles />,
+      description: "Advanced lipid testing interpretation, CV phenotype identification, and root cause evaluation",
+      component: <LipidsComprehensiveAlgorithm />,
     },
   ];
 

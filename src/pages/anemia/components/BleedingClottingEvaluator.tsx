@@ -36,7 +36,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 
-type Mode = "" | "bleeding" | "clotting" | "algorithm" | "thrombosis_algorithm";
+type Mode = "" | "bleeding" | "clotting" | "algorithm" | "thrombosis_algorithm" | "anticoag_reference";
 
 /* ============================ BLEEDING WIZARD ============================ */
 
@@ -1352,10 +1352,53 @@ export default function BleedingClottingEvaluator() {
           </div>
         )}
 
+        {/* Anticoagulation Reference Card */}
+        <button
+          onClick={() => setMode("anticoag_reference")}
+          className="w-full text-left rounded-lg border border-indigo-500/30 bg-indigo-500/5 hover:bg-indigo-500/10 p-4 transition-colors"
+        >
+          <div className="flex items-center gap-2 mb-1">
+            <Pill className="h-5 w-5 text-indigo-400" />
+            <span className="font-semibold text-foreground">Anticoagulation — Complete Clinical Reference</span>
+          </div>
+          <p className="text-xs text-muted-foreground">Comprehensive reference: DOAC comparison, AF/VTE dosing, INR targets, reversal agents, landmark trials, selection guide.</p>
+        </button>
+
         <div className="flex items-start gap-2 rounded-md border border-amber-500/30 bg-warning/100/5 px-3 py-2 text-xs text-amber-700 dark:text-warning">
           <AlertTriangle className="h-3.5 w-3.5 mt-0.5 flex-shrink-0" />
           <span>Decision-support only. Confirm all recommendations with current guidelines and clinical context.</span>
         </div>
+      </div>
+    );
+  }
+
+  // Anticoagulation Reference View
+  if (mode === "anticoag_reference") {
+    return (
+      <div className="space-y-4">
+        <div className="flex items-center justify-between">
+          <div>
+            <h2 className="font-display text-base font-bold text-foreground">Anticoagulation — Complete Clinical Reference</h2>
+            <p className="text-xs text-muted-foreground">DOAC comparison, dosing, reversal, and clinical decision guide</p>
+          </div>
+          <button
+            onClick={() => setMode("")}
+            className="flex items-center gap-1 text-xs text-muted-foreground hover:text-foreground transition-colors"
+          >
+            <RotateCcw className="h-3.5 w-3.5" />
+            Back
+          </button>
+        </div>
+
+        <ZoomableImage
+          src="/images/anticoagulation-reference.jpg"
+          alt="Anticoagulation — Complete Clinical Reference: DOAC comparison, AF/VTE dosing, INR targets, reversal agents, landmark trials, and selection guide"
+          className="w-full rounded-lg border border-border"
+        />
+
+        <p className="text-xs text-muted-foreground italic">
+          Quick-reference guide. Always verify dosing against current product monographs and institutional protocols. Individualize based on renal function, weight, age, and bleeding risk.
+        </p>
       </div>
     );
   }

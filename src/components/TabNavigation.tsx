@@ -42,6 +42,7 @@ const bloodSubItems: { tab: string; label: string; icon: React.ComponentType<{ c
   { tab: "bleeding-clotting", label: "Bleeding / Clotting", icon: Bandage },
   { tab: "iron", label: "Iron Parameters", icon: Syringe },
   { tab: "esr", label: "ESR", icon: Timer },
+  { tab: "anticoagulants", label: "Anticoagulants", icon: Pill },
 ];
 
 function BloodSubNav() {
@@ -517,18 +518,8 @@ export function TabNavigation() {
           })}
         </ul>
       </nav>
-
-      {/* Floating back-to-home button */}
-      <Link
-        to="/home"
-        className="fixed bottom-6 right-6 z-[60] flex items-center justify-center h-12 w-12 rounded-full bg-primary text-primary-foreground shadow-lg hover:bg-primary/90 transition-all hover:scale-105 active:scale-95"
-        aria-label="Back to Home"
-        title="Back to Home"
-      >
-        <Home className="h-5 w-5" />
-      </Link>
     </aside>
   );
-}
+};
 
 export default TabNavigation;

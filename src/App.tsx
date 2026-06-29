@@ -1,8 +1,10 @@
+import { lazy, Suspense } from "react";
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { CommandPalette } from "@/components/CommandPalette";
 import { GlobalMedSearch } from "@/components/GlobalMedSearch";
 import { LabProvider } from "@/components/SmartLabelUpload/GlobalLabContext";
+import BackToHome from "@/components/BackToHome";
 
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
@@ -11,149 +13,98 @@ import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import { TabNavigation } from "@/components/TabNavigation";
 import { AppSidebar } from "@/components/AppSidebar";
 
-// Big Four NCD Pages
-import Home from "@/pages/Home";
-import Diabetes from "@/pages/Diabetes";
-import Hypertension from "@/pages/Hypertension";
-import Lipids from "@/pages/Lipids";
-import Liver from "@/pages/Liver";
-
-// Anemia Page
-import Anemia from "@/pages/Anemia";
-
-// Big Four — Diabetes sub-pages
-import DiabetesAssessment from "@/pages/diabetes/DiabetesAssessment";
-import DiabetesOverview from "@/pages/diabetes/DiabetesOverview";
-import DiabetesTab from "@/pages/diabetes/DiabetesTab";
-import DiabetesTreatment from "@/pages/diabetes/DiabetesTreatment";
-import InsulinGuide from "@/pages/diabetes/InsulinGuide";
-
-// Big Four — Hypertension sub-pages
-import HypertensionAssessment from "@/pages/hypertension/HypertensionAssessment";
-import HypertensionMedicationGuide from "@/pages/hypertension/HypertensionMedicationGuide";
-import HypertensionOverview from "@/pages/hypertension/HypertensionOverview";
-import HypertensionTab from "@/pages/hypertension/HypertensionTab";
-import HypertensionTreatment from "@/pages/hypertension/HypertensionTreatment";
-import HypertensionClinicalCards from "@/pages/hypertension/HypertensionClinicalCards";
-import SecondaryHtnPage from "@/pages/hypertension/SecondaryHtnPage";
-
-// Big Four — Lipids sub-pages
-import LipidsAssessment from "@/pages/lipids/LipidsAssessment";
-import LipidsOverview from "@/pages/lipids/LipidsOverview";
-import LipidsTab from "@/pages/lipids/LipidsTab";
-import LipidsTreatment from "@/pages/lipids/LipidsTreatment";
-
-// Big Four — Calculators
-import InsulinTitrationCalc from "@/calculators/diabetes/InsulinTitration";
-import HypoRiskCalculatorCalc from "@/calculators/diabetes/HypoRisk";
-import RenalDoseAdjustmentCalc from "@/calculators/diabetes/RenalDosing";
-import SlidingScaleInsulinCalc from "@/calculators/diabetes/SlidingScale";
-import DiabetesMedicationAlgorithmCalc from "@/calculators/diabetes/DiabetesMedicationAlgorithm";
-import AscvdEmrCalc from "@/calculators/lipids/AscvdRisk";
-import LipidPanelCalc from "@/calculators/lipids/LipidPanel";
-import LipidRiskMiniCalc from "@/calculators/lipids/LipidRiskMini";
-import GfrCalculatorCalc from "@/calculators/htn/GfrCalculator";
-import DrugInteractionCheckerCalc from "@/calculators/htn/DrugInteractions";
-import AntihypertensiveTreatmentAlgorithmCalc from "@/calculators/htn/AntihypertensiveTreatmentAlgorithm";
-import AntihypertensivePotencyTableCalc from "@/calculators/htn/AntihypertensivePotencyTable";
-import BmiCalculatorCalc from "@/calculators/obesity/BmiCalculator";
-import WaistHeightRatioCalc from "@/calculators/obesity/WaistHeightRatio";
-import GLP1ObesityAlgorithmCalc from "@/calculators/obesity/GLP1ObesityAlgorithm";
-
-// Iron Calculator
-import IronReplacementCalculator from "@/calculators/iron/IronReplacementCalculator";
-// Thyroid Calculator
-import ThyroidCalculator from "@/calculators/thyroid/ThyroidCalculator";
-
-// Diabetes Buddy Pages
-import Dashboard from "@/pages/Dashboard";
-import PatientInput from "@/pages/PatientInput";
-import FoodDatabase from "@/pages/FoodDatabase";
-import PlateMethod from "@/pages/PlateMethod";
-import MedOptimizer from "@/pages/MedOptimizer";
-import DietPlanPage from "@/pages/DietPlanPage";
-import Progress from "@/pages/Progress";
-import SummaryPage from "@/pages/SummaryPage";
-import InsulinTitrationPage from "@/pages/InsulinTitration";
-import SlidingScalePage from "@/pages/SlidingScaleInsulin";
-import HypoRiskPage from "@/pages/HypoRiskCalculator";
-import RenalDosePage from "@/pages/RenalDoseAdjustment";
-import RespiratoryPage from "@/pages/Respiratory";
-import PrediabetesAlgorithm from "@/pages/PrediabetesAlgorithm";
-import CKDGuideline from "@/pages/CKDGuideline";
-import PrivacyPolicy from "@/pages/PrivacyPolicy";
-import TermsOfService from "@/pages/TermsOfService";
-import DisclaimerPage from "@/pages/Disclaimer";
-import GLP1Administration from "@/pages/GLP1Administration";
-import DailyManagementGuide from "@/pages/DailyManagementGuide";
-import Type1DMManagement from "@/pages/Type1DMManagement";
-import InsulinTherapy from "@/pages/InsulinTherapy";
-import Type1Pitfalls from "@/pages/Type1Pitfalls";
-import Type2Transition from "@/pages/Type2Transition";
-import FeedbackTips from "@/pages/FeedbackTips";
-
-// 404
-import NotFound from "@/components/NotFound";
-
-// Fatigue
-import Fatigue from "@/pages/Fatigue";
-
-// Vitamin D
-import VitaminD from "@/pages/VitaminD";
-
-// PCOS
-// import PCOS from "@/pages/PCOS"; // removed — merged into WomenHealth
-
-// Women's Health
-import WomenHealth from "@/pages/WomenHealth";
-
-// Infections
-import Infections from "@/pages/Infections";
-
-// Acute Diarrhoea
-import AcuteDiarrhoeaPage from "@/pages/AcuteDiarrhoeaPage";
-
-// Food Poisoning
-import FoodPoisoningPage from "@/pages/FoodPoisoningPage";
-
-// PEP
-import PEP from "@/pages/PEP";
-
-// Adult Vaccinations
-import AdultVaccinations from "@/pages/AdultVaccinations";
-
-// AKI Criteria
-import AKICriteria from "@/pages/AKICriteria";
-// Acid-Base Disorders
-import AcidBaseDisorders from "@/pages/AcidBaseDisorders";
-// Metabolic Alkalosis
-import MetabolicAlkalosis from "@/pages/MetabolicAlkalosis";
-// Geriatrics
-import Geriatrics from "@/pages/Geriatrics";
-
-// Electrolytes
-import Electrolytes from "@/pages/Electrolytes";
-
-// Hyponatremia / Hypernatremia
-import Hyponatremia from "@/pages/Hyponatremia";
-import Hypernatremia from "@/pages/Hypernatremia";
-
-// Hyperkalemia / Hypocalcemia / Hypercalcemia
-import Hyperkalemia from "@/pages/Hyperkalemia";
-import Hypocalcemia from "@/pages/Hypocalcemia";
-import Hypercalcemia from "@/pages/Hypercalcemia";
-import Hypokalemia from "@/pages/Hypokalemia";
-import Hypomagnesemia from "@/pages/Hypomagnesemia";
-import Hypermagnesemia from "@/pages/Hypermagnesemia";
-import Hypophosphatemia from "@/pages/Hypophosphatemia";
-import Hyperphosphatemia from "@/pages/Hyperphosphatemia";
-
-// Hyperglycemic Emergency
-import HyperglycemicEmergency from "@/pages/HyperglycemicEmergency";
-
-// Treatment Algorithm Pages
-import Type1TreatmentAlgorithm from "@/pages/Type1TreatmentAlgorithm";
-import Type2TreatmentAlgorithm from "@/pages/Type2TreatmentAlgorithm";
+// Lazy-loaded page components
+const Home = lazy(() => import("@/pages/Home"));
+const Diabetes = lazy(() => import("@/pages/Diabetes"));
+const Hypertension = lazy(() => import("@/pages/Hypertension"));
+const Lipids = lazy(() => import("@/pages/Lipids"));
+const Liver = lazy(() => import("@/pages/Liver"));
+const Anemia = lazy(() => import("@/pages/Anemia"));
+const DiabetesAssessment = lazy(() => import("@/pages/diabetes/DiabetesAssessment"));
+const DiabetesOverview = lazy(() => import("@/pages/diabetes/DiabetesOverview"));
+const DiabetesTab = lazy(() => import("@/pages/diabetes/DiabetesTab"));
+const DiabetesTreatment = lazy(() => import("@/pages/diabetes/DiabetesTreatment"));
+const InsulinGuide = lazy(() => import("@/pages/diabetes/InsulinGuide"));
+const HypertensionAssessment = lazy(() => import("@/pages/hypertension/HypertensionAssessment"));
+const HypertensionMedicationGuide = lazy(() => import("@/pages/hypertension/HypertensionMedicationGuide"));
+const HypertensionOverview = lazy(() => import("@/pages/hypertension/HypertensionOverview"));
+const HypertensionTab = lazy(() => import("@/pages/hypertension/HypertensionTab"));
+const HypertensionTreatment = lazy(() => import("@/pages/hypertension/HypertensionTreatment"));
+const HypertensionClinicalCards = lazy(() => import("@/pages/hypertension/HypertensionClinicalCards"));
+const SecondaryHtnPage = lazy(() => import("@/pages/hypertension/SecondaryHtnPage"));
+const LipidsAssessment = lazy(() => import("@/pages/lipids/LipidsAssessment"));
+const LipidsOverview = lazy(() => import("@/pages/lipids/LipidsOverview"));
+const LipidsTab = lazy(() => import("@/pages/lipids/LipidsTab"));
+const LipidsTreatment = lazy(() => import("@/pages/lipids/LipidsTreatment"));
+const InsulinTitrationCalc = lazy(() => import("@/calculators/diabetes/InsulinTitration"));
+const HypoRiskCalculatorCalc = lazy(() => import("@/calculators/diabetes/HypoRisk"));
+const RenalDoseAdjustmentCalc = lazy(() => import("@/calculators/diabetes/RenalDosing"));
+const SlidingScaleInsulinCalc = lazy(() => import("@/calculators/diabetes/SlidingScale"));
+const DiabetesMedicationAlgorithmCalc = lazy(() => import("@/calculators/diabetes/DiabetesMedicationAlgorithm"));
+const AscvdEmrCalc = lazy(() => import("@/calculators/lipids/AscvdRisk"));
+const LipidPanelCalc = lazy(() => import("@/calculators/lipids/LipidPanel"));
+const LipidRiskMiniCalc = lazy(() => import("@/calculators/lipids/LipidRiskMini"));
+const GfrCalculatorCalc = lazy(() => import("@/calculators/htn/GfrCalculator"));
+const DrugInteractionCheckerCalc = lazy(() => import("@/calculators/htn/DrugInteractions"));
+const AntihypertensiveTreatmentAlgorithmCalc = lazy(() => import("@/calculators/htn/AntihypertensiveTreatmentAlgorithm"));
+const AntihypertensivePotencyTableCalc = lazy(() => import("@/calculators/htn/AntihypertensivePotencyTable"));
+const BmiCalculatorCalc = lazy(() => import("@/calculators/obesity/BmiCalculator"));
+const WaistHeightRatioCalc = lazy(() => import("@/calculators/obesity/WaistHeightRatio"));
+const GLP1ObesityAlgorithmCalc = lazy(() => import("@/calculators/obesity/GLP1ObesityAlgorithm"));
+const IronReplacementCalculator = lazy(() => import("@/calculators/iron/IronReplacementCalculator"));
+const ThyroidCalculator = lazy(() => import("@/calculators/thyroid/ThyroidCalculator"));
+const Dashboard = lazy(() => import("@/pages/Dashboard"));
+const PatientInput = lazy(() => import("@/pages/PatientInput"));
+const FoodDatabase = lazy(() => import("@/pages/FoodDatabase"));
+const PlateMethod = lazy(() => import("@/pages/PlateMethod"));
+const MedOptimizer = lazy(() => import("@/pages/MedOptimizer"));
+const DietPlanPage = lazy(() => import("@/pages/DietPlanPage"));
+const Progress = lazy(() => import("@/pages/Progress"));
+const SummaryPage = lazy(() => import("@/pages/SummaryPage"));
+const InsulinTitrationPage = lazy(() => import("@/pages/InsulinTitration"));
+const SlidingScalePage = lazy(() => import("@/pages/SlidingScaleInsulin"));
+const HypoRiskPage = lazy(() => import("@/pages/HypoRiskCalculator"));
+const RenalDosePage = lazy(() => import("@/pages/RenalDoseAdjustment"));
+const RespiratoryPage = lazy(() => import("@/pages/Respiratory"));
+const PrediabetesAlgorithm = lazy(() => import("@/pages/PrediabetesAlgorithm"));
+const CKDGuideline = lazy(() => import("@/pages/CKDGuideline"));
+const PrivacyPolicy = lazy(() => import("@/pages/PrivacyPolicy"));
+const TermsOfService = lazy(() => import("@/pages/TermsOfService"));
+const DisclaimerPage = lazy(() => import("@/pages/Disclaimer"));
+const GLP1Administration = lazy(() => import("@/pages/GLP1Administration"));
+const DailyManagementGuide = lazy(() => import("@/pages/DailyManagementGuide"));
+const Type1DMManagement = lazy(() => import("@/pages/Type1DMManagement"));
+const InsulinTherapy = lazy(() => import("@/pages/InsulinTherapy"));
+const Type1Pitfalls = lazy(() => import("@/pages/Type1Pitfalls"));
+const Type2Transition = lazy(() => import("@/pages/Type2Transition"));
+const FeedbackTips = lazy(() => import("@/pages/FeedbackTips"));
+const NotFound = lazy(() => import("@/components/NotFound"));
+const Fatigue = lazy(() => import("@/pages/Fatigue"));
+const VitaminD = lazy(() => import("@/pages/VitaminD"));
+const WomenHealth = lazy(() => import("@/pages/WomenHealth"));
+const Infections = lazy(() => import("@/pages/Infections"));
+const AcuteDiarrhoeaPage = lazy(() => import("@/pages/AcuteDiarrhoeaPage"));
+const FoodPoisoningPage = lazy(() => import("@/pages/FoodPoisoningPage"));
+const PEP = lazy(() => import("@/pages/PEP"));
+const AdultVaccinations = lazy(() => import("@/pages/AdultVaccinations"));
+const AKICriteria = lazy(() => import("@/pages/AKICriteria"));
+const AcidBaseDisorders = lazy(() => import("@/pages/AcidBaseDisorders"));
+const MetabolicAlkalosis = lazy(() => import("@/pages/MetabolicAlkalosis"));
+const Geriatrics = lazy(() => import("@/pages/Geriatrics"));
+const Electrolytes = lazy(() => import("@/pages/Electrolytes"));
+const Hyponatremia = lazy(() => import("@/pages/Hyponatremia"));
+const Hypernatremia = lazy(() => import("@/pages/Hypernatremia"));
+const Hyperkalemia = lazy(() => import("@/pages/Hyperkalemia"));
+const Hypocalcemia = lazy(() => import("@/pages/Hypocalcemia"));
+const Hypercalcemia = lazy(() => import("@/pages/Hypercalcemia"));
+const Hypokalemia = lazy(() => import("@/pages/Hypokalemia"));
+const Hypomagnesemia = lazy(() => import("@/pages/Hypomagnesemia"));
+const Hypermagnesemia = lazy(() => import("@/pages/Hypermagnesemia"));
+const Hypophosphatemia = lazy(() => import("@/pages/Hypophosphatemia"));
+const Hyperphosphatemia = lazy(() => import("@/pages/Hyperphosphatemia"));
+const HyperglycemicEmergency = lazy(() => import("@/pages/HyperglycemicEmergency"));
+const Type1TreatmentAlgorithm = lazy(() => import("@/pages/Type1TreatmentAlgorithm"));
+const Type2TreatmentAlgorithm = lazy(() => import("@/pages/Type2TreatmentAlgorithm"));
 
 const queryClient = new QueryClient();
 
@@ -168,6 +119,7 @@ const DiabetesBuddyLayout = () => (
         </span>
       </header>
       <main className="flex-1 overflow-y-auto p-4 md:p-6 max-w-4xl">
+        <Suspense fallback={<div className="flex items-center justify-center min-h-[60vh]"><div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div></div>}>
         <Routes>
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/patient" element={<PatientInput />} />
@@ -192,6 +144,7 @@ const DiabetesBuddyLayout = () => (
           <Route path="/db/feedback" element={<FeedbackTips />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
+        </Suspense>
       </main>
     </div>
   </div>
@@ -206,6 +159,7 @@ const App = () => (
       <BrowserRouter>
         <CommandPalette />
         <GlobalMedSearch />
+        <Suspense fallback={<div className="flex items-center justify-center min-h-screen"><div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div></div>}>
         <Routes>
           {/* Landing — redirect to main app */}
           <Route path="/" element={<Navigate to="/home" replace />} />
@@ -301,6 +255,8 @@ const App = () => (
           {/* 404 */}
           <Route path="*" element={<NotFound />} />
         </Routes>
+        </Suspense>
+        <BackToHome />
       </BrowserRouter>
     </TooltipProvider>
     </LabProvider>

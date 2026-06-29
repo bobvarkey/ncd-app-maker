@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
-import { Copy, Printer, Activity, Settings2, ChevronDown, Download } from "lucide-react";
+import { Copy, Printer, Activity, Settings2, ChevronDown, Download, ImageIcon } from "lucide-react";
 import { downloadTextFile } from "@/lib/clinical-utils";
 import { toast } from "@/hooks/use-toast";
 
@@ -163,6 +163,7 @@ export default function LiverMiniApp() {
   const [preset, setPreset] = useState<PresetKey>("aasld");
   const [customCutoffs, setCustomCutoffs] = useState<Cutoffs>(PRESETS.aasld.cutoffs);
   const [showCutoffs, setShowCutoffs] = useState(false);
+  const [showInfographic, setShowInfographic] = useState(false);
   const cutoffs = preset === "custom" ? customCutoffs : PRESETS[preset].cutoffs;
   const setCutoff = (k: keyof Cutoffs, v: string) => {
     setPreset("custom");
@@ -313,6 +314,33 @@ export default function LiverMiniApp() {
           </CardDescription>
         </CardHeader>
       </Card>
+
+      {/* Liver infographic */}
+      <Collapsible open={showInfographic} onOpenChange={setShowInfographic}>
+        <Card>
+          <CollapsibleTrigger asChild>
+            <CardHeader className="py-3 cursor-pointer hover:bg-accent/30 transition-colors">
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-2">
+                  <ImageIcon className="h-4 w-4 text-primary" />
+                  <CardTitle className="text-sm">Overview & Education</CardTitle>
+                </div>
+                <ChevronDown className={`h-4 w-4 text-muted-foreground transition-transform ${showInfographic ? "rotate-180" : ""}`} />
+              </div>
+            </CardHeader>
+          </CollapsibleTrigger>
+          <CollapsibleContent>
+            <CardContent>
+              <img
+                src="/liver-infographic.jpg"
+                alt="Liver disease assessment infographic"
+                className="w-full max-w-3xl mx-auto rounded-lg border object-contain"
+                loading="lazy"
+              />
+            </CardContent>
+          </CollapsibleContent>
+        </Card>
+      </Collapsible>
 
       {/* Cutoff configurator */}
       <Card>
