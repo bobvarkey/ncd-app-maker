@@ -625,6 +625,96 @@ Disclaimer: Decision-support only. Does not replace clinical judgement.`;
         </div>
       </CollapsibleSection>
 
+      {/* ── Cholera Treatment Subsection ──────────────────────────── */}
+      <div className="relative overflow-hidden rounded-2xl border-2 border-red-600/30 bg-gradient-to-br from-red-50/80 to-orange-50/80 p-5">
+        <div className="absolute -top-3 -right-3 h-20 w-20 rounded-full border-4 border-red-200/40" />
+        <div className="absolute -bottom-4 -left-4 h-16 w-16 rounded-full border-4 border-red-200/30" />
+        <div className="relative">
+          <div className="flex items-center gap-3">
+            <div className="flex h-12 w-12 items-center justify-center rounded-xl border-2 border-red-600/40 bg-red-100/80">
+              <Droplets className="h-6 w-6 text-red-800" />
+            </div>
+            <div>
+              <h3 className="font-handwritten text-xl font-bold text-red-900">
+                Cholera Treatment
+              </h3>
+              <p className="font-handwritten text-xs text-red-700/70">
+                Immediate rehydration to replace lost fluids and electrolytes
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Cholera: Rehydration */}
+      <CollapsibleSection title="1. Rehydration Therapy (The Most Important Step)" icon={Droplets} defaultOpen>
+        <div className="space-y-3">
+          <div className={doodleBox}>
+            <div className="mb-2 font-handwritten text-sm font-bold text-amber-900">
+              Replacing the water and electrolytes lost to severe diarrhea and vomiting is critical and can save lives.
+            </div>
+            <ul className="space-y-1.5">
+              <li className="flex items-start gap-2 font-handwritten text-xs text-amber-800/80">
+                <span className="mt-1 h-1.5 w-1.5 shrink-0 rounded-full bg-amber-500" />
+                <strong>Oral Rehydration Solution (ORS):</strong> The cornerstone of treatment. Pre-packaged ORS powders are mixed with boiled or bottled water and should be sipped frequently.
+              </li>
+              <li className="flex items-start gap-2 font-handwritten text-xs text-amber-800/80">
+                <span className="mt-1 h-1.5 w-1.5 shrink-0 rounded-full bg-amber-500" />
+                <strong>Intravenous (IV) Fluids:</strong> Severely dehydrated patients require rapid IV fluid replacement, usually with Ringer's lactate, followed by ORS as soon as they can drink.
+              </li>
+              <li className="flex items-start gap-2 font-handwritten text-xs text-amber-800/80">
+                <span className="mt-1 h-1.5 w-1.5 shrink-0 rounded-full bg-red-400" />
+                <strong>What to Avoid:</strong> Sugary drinks (fruit juices, soda, sports drinks) can actually worsen diarrhea and should be avoided.
+              </li>
+            </ul>
+          </div>
+        </div>
+      </CollapsibleSection>
+
+      {/* Cholera: Medications */}
+      <CollapsibleSection title="2. Medications" icon={Pill} defaultOpen>
+        <div className="space-y-3">
+          <div className={doodleBox}>
+            <div className="mb-2 font-handwritten text-sm font-bold text-amber-900">
+              Antibiotics and other adjuncts help shorten the duration of the disease and reduce the shedding of bacteria, which helps stop the spread.
+            </div>
+            <ul className="space-y-1.5">
+              <li className="flex items-start gap-2 font-handwritten text-xs text-amber-800/80">
+                <span className="mt-1 h-1.5 w-1.5 shrink-0 rounded-full bg-amber-500" />
+                <strong>Antibiotics:</strong> Typically reserved for severely ill patients. Common options include <strong>doxycycline</strong>, <strong>azithromycin</strong>, or <strong>erythromycin</strong>.
+              </li>
+              <li className="flex items-start gap-2 font-handwritten text-xs text-amber-800/80">
+                <span className="mt-1 h-1.5 w-1.5 shrink-0 rounded-full bg-amber-500" />
+                <strong>Zinc Supplements:</strong> Routinely given to children (ages 6 months to 5 years) to reduce the severity and duration of diarrheal illness.
+              </li>
+            </ul>
+          </div>
+        </div>
+      </CollapsibleSection>
+
+      {/* Cholera: General Care */}
+      <CollapsibleSection title="3. General Care & What to Avoid" icon={Heart} defaultOpen>
+        <div className="space-y-3">
+          <div className={doodleBox}>
+            <ul className="space-y-1.5">
+              <li className="flex items-start gap-2 font-handwritten text-xs text-amber-800/80">
+                <span className="mt-1 h-1.5 w-1.5 shrink-0 rounded-full bg-amber-500" />
+                <strong>Diet:</strong> Breastfeeding should continue for infants with watery diarrhea. Adults should resume eating normal foods once vomiting stops.
+              </li>
+              <li className="flex items-start gap-2 font-handwritten text-xs text-amber-800/80">
+                <span className="mt-1 h-1.5 w-1.5 shrink-0 rounded-full bg-red-400" />
+                <strong>Antidiarrheal Drugs:</strong> Do <strong>not</strong> use over-the-counter antidiarrheal medicines (like loperamide). They can trap toxins in the intestines and make the illness worse.
+              </li>
+            </ul>
+          </div>
+          <div className="rounded-xl border-2 border-dashed border-red-300/60 bg-red-50/60 p-3">
+            <p className="font-handwritten text-xs text-red-700">
+              <strong>⚠️ Disclaimer:</strong> Cholera can be fatal within hours if left untreated. If you or a loved one exhibit symptoms of severe watery diarrhea and vomiting, seek professional medical attention immediately.
+            </p>
+          </div>
+        </div>
+      </CollapsibleSection>
+
       {/* Key pearls */}
       <div className="relative rounded-2xl border-2 border-amber-600/30 bg-gradient-to-br from-amber-100/80 to-yellow-50/80 p-4">
         <div className="absolute -top-2 -left-2 flex h-7 w-7 items-center justify-center rounded-full border-2 border-amber-600/40 bg-amber-200">
