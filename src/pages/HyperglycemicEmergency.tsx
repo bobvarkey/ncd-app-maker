@@ -10,7 +10,7 @@ import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/component
 import { AlertTriangle, Activity, Syringe, Droplets, FlaskConical, HeartPulse, Copy, Printer, Download, ChevronDown, Image } from "lucide-react";
 import { downloadTextFile } from "@/lib/clinical-utils";
 import { toast } from "sonner";
-import ZoomableImage from "@/components/ZoomableImage";
+import ImageLink from "@/components/ImageLink";
 
 // ─── DKA severity classification ───
 type DKASeverity = "mild" | "moderate" | "severe" | null;
@@ -761,27 +761,15 @@ export default function HyperglycemicEmergency() {
               <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
                 <div className="space-y-1">
                   <p className="text-xs font-semibold text-foreground">DKA Algorithm</p>
-                  <ZoomableImage
-                    src="/dka-algorithm.jpg"
-                    alt="DKA Algorithm"
-                    className="w-full"
-                  />
+                  <ImageLink imageId="dka-algorithm" label="View DKA Algorithm →" />
                 </div>
                 <div className="space-y-1">
                   <p className="text-xs font-semibold text-foreground">HHS Algorithm</p>
-                  <ZoomableImage
-                    src="/hhs-algorithm.jpg"
-                    alt="HHS Algorithm"
-                    className="w-full"
-                  />
+                  <ImageLink imageId="hhs-algorithm" label="View HHS Algorithm →" />
                 </div>
                 <div className="space-y-1 sm:col-span-2 lg:col-span-1">
                   <p className="text-xs font-semibold text-foreground">Mixed DKA + HHS Algorithm</p>
-                  <ZoomableImage
-                    src="/mixed-dka-hhs-algorithm.jpg"
-                    alt="Mixed DKA + HHS Algorithm"
-                    className="w-full"
-                  />
+                  <ImageLink imageId="mixed-dka-hhs-algorithm" label="View Mixed DKA/HHS Algorithm →" />
                 </div>
               </div>
             </CardContent>

@@ -1,6 +1,6 @@
 import { Card } from "@/components/ui/card";
 import { AbbreviationHover, AbbrText } from "@/components/AbbreviationHover";
-import ZoomableImage from "@/components/ZoomableImage";
+import ImageLink from "@/components/ImageLink";
 import lipidPanelDecodedImg from "@/assets/lipid-panel-decoded.jpg";
 import {
   Heart,
@@ -632,12 +632,9 @@ export default function LipidsOverview() {
           </div>
         </div>
 
-        <ZoomableImage
-          src={lipidPanelDecodedImg}
-          alt="Lipid Panel Decoded — clinical algorithm with 8-step assessment, markers reference, optimal vs lab ranges, 5 lipid patterns, clinical decision guide, and root cause workup"
-          className="w-full rounded-lg border border-border"
-        />
-
+        <div className="mt-3">
+          <ImageLink imageId="lipids-infographic" label="View Lipids Infographic →" />
+        </div>
         <p className="text-xs text-muted-foreground mt-3 italic">
           Functional medicine approach. Note: This uses more aggressive targets than major guidelines (ACC/AHA, ESC/EAS, NICE). Use clinical judgment and evidence-based guidelines to refine risk assessment and treatment.
         </p>

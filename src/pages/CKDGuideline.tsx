@@ -1,8 +1,8 @@
 import { useState, useMemo } from "react";
 import { loadPatient, PatientData } from "@/lib/patient-data";
-import { ChevronDown, ChevronUp, AlertTriangle, Check, ArrowDown, Heart, Shield, Pill, Activity, Info } from "lucide-react";
+import { ChevronDown, ChevronUp, AlertTriangle, Check, ArrowDown, Heart, Shield, Pill, Activity, Info, Syringe, FlaskConical, HeartPulse } from "lucide-react";
+import ImageLink from "@/components/ImageLink";
 import niceAlgorithmImg from "@/assets/nice-ckd-algorithm.png";
-import ZoomableImage from "@/components/ZoomableImage";
 import KDIGOStagingCalculator from "@/calculators/renal/KDIGOStagingCalculator";
 
 type CKDStage = "none" | "micro" | "macro" | "t2d-ckd" | "cvd" | "advanced";
@@ -329,11 +329,7 @@ const CKDGuideline = () => {
         </button>
         {showImage && (
           <div className="mt-3 animate-slide-in">
-            <ZoomableImage
-              src={niceAlgorithmImg}
-              alt="NICE NG28 Type 2 Diabetes glucose-lowering algorithm flowchart showing pathways for no comorbidities, obesity, CKD, early-onset, heart failure, ASCVD, and frailty"
-              className="w-full rounded-lg border border-border"
-            />
+            <ImageLink imageId="nice-ckd-algorithm" label="View NICE CKD Algorithm →" />
             <p className="text-xs text-muted-foreground mt-2 italic">
               Source: NICE NG28 Type 2 diabetes in adults — management. © NICE 2026.
             </p>

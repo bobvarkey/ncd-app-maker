@@ -26,7 +26,7 @@ import {
   Clock,
 } from "lucide-react";
 import { SectionCard } from "@/components/ui/section-card";
-import ZoomableImage from "@/components/ZoomableImage";
+import ImageLink from "@/components/ImageLink";
 import {
   Table,
   TableBody,
@@ -856,11 +856,7 @@ function BleedingAlgorithm({ onBack }: { onBack: () => void }) {
       )}
 
       {/* Bleeding algorithm reference image */}
-      <ZoomableImage
-        src="/images/bleed-algorithm.png"
-        alt="Bleeding disorders algorithm reference"
-        className="rounded-lg border border-border"
-      />
+      <ImageLink imageId="bleed-algorithm" label="View Bleeding Algorithm →" />
       <p className="text-xs text-muted-foreground text-center mt-1">Bleeding disorders diagnostic algorithm reference</p>
 
       <div className="flex items-start gap-2 rounded-md border border-amber-500/30 bg-warning/100/5 px-3 py-2 text-xs text-amber-700 dark:text-warning">
@@ -1140,11 +1136,7 @@ function ThrombosisAlgorithm() {
       {renderNode(currentNode)}
 
       {/* Thrombosis algorithm reference image */}
-      <ZoomableImage
-        src="/images/thrombosis-algorithm.png"
-        alt="Thrombotic disorders algorithm reference"
-        className="rounded-lg border border-border"
-      />
+      <ImageLink imageId="thrombosis-algorithm" label="View Thrombosis Algorithm →" />
       <p className="text-xs text-muted-foreground text-center mt-1">Thrombotic disorders diagnostic algorithm reference</p>
 
       <div className="flex items-start gap-2 rounded-md border border-amber-500/30 bg-warning/100/5 px-3 py-2 text-xs text-amber-700 dark:text-warning">
@@ -1328,11 +1320,7 @@ export default function BleedingClottingEvaluator() {
             </div>
 
             {/* ISTH DIC Score — Image */}
-            <ZoomableImage
-              src="/images/dic-isth-score.webp"
-              alt="ISTH DIC scoring criteria table"
-              className="rounded-lg border border-border"
-            />
+            <ImageLink imageId="dic-isth-score" label="View ISTH DIC Score →" />
 
             {/* Interactive ISTH DIC Score Calculator */}
             <DicScoreCalculator />
@@ -1390,11 +1378,7 @@ export default function BleedingClottingEvaluator() {
           </button>
         </div>
 
-        <ZoomableImage
-          src="/images/anticoagulation-reference.jpg"
-          alt="Anticoagulation — Complete Clinical Reference: DOAC comparison, AF/VTE dosing, INR targets, reversal agents, landmark trials, and selection guide"
-          className="w-full rounded-lg border border-border"
-        />
+        <ImageLink imageId="anticoagulation-reference" label="View Anticoagulation Reference →" />
 
         <p className="text-xs text-muted-foreground italic">
           Quick-reference guide. Always verify dosing against current product monographs and institutional protocols. Individualize based on renal function, weight, age, and bleeding risk.

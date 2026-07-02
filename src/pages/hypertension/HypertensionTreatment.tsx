@@ -12,7 +12,7 @@ import {
   GitBranch, ChevronRight, ChevronDown, RotateCcw, Gauge, CheckCircle, Brain, Baby,
 } from "lucide-react";
 import HtnAlgorithmFlowchart from "@/components/hypertension/HtnAlgorithmFlowchart";
-import ZoomableImage from "@/components/ZoomableImage";
+import ImageLink from "@/components/ImageLink";
 import tampDcmiImg from "@/assets/tamp-dcmi-resistant-htn.png.asset.json";
 import { AbbreviationHover } from "@/components/AbbreviationHover";
 const AbbrText = ({ text }: { text: string }) => <AbbreviationHover term={text}>{text}</AbbreviationHover>;
@@ -792,11 +792,7 @@ export default function HypertensionTreatment() {
           <p className="text-xs text-muted-foreground">Mnemonic-based escalation guide (tap to open full size)</p>
         </CardHeader>
         <CardContent>
-          <ZoomableImage
-            src={tampDcmiImg.url}
-            alt="Stepwise therapy for resistant hypertension: TAMP-DCMI mnemonic"
-            className="w-full h-auto rounded-md border border-border"
-          />
+          <ImageLink imageId="tamp-dcmi" label="View TAMP-DCMI Resistant HTN Guide →" />
         </CardContent>
       </Card>
 

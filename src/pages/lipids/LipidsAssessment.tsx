@@ -23,31 +23,7 @@ import { toast } from "sonner";
 import { cn } from "@/lib/utils";
 import { calculatePrevent, type PreventResult } from "@/lib/prevent";
 import type { LAIResult } from "./LipidsTab";
-
-/** Reusable click-to-zoom image wrapper */
-function ZoomableImage({ src, alt }: { src: string; alt: string }) {
-  const [open, setOpen] = useState(false);
-  return (
-    <>
-      <button type="button" onClick={() => setOpen(true)} className="w-full text-left cursor-zoom-in block">
-        <img
-          src={src}
-          alt={alt}
-          className="w-full rounded-lg border border-border transition-transform hover:opacity-90"
-          loading="lazy"
-        />
-      </button>
-      <Dialog open={open} onOpenChange={setOpen}>
-        <DialogContent className="max-w-[95vw] max-h-[95vh] w-auto h-auto bg-background border-border p-0 overflow-hidden">
-          <DialogTitle className="sr-only">{alt}</DialogTitle>
-          <div className="flex items-center justify-center w-full h-full p-2">
-            <img src={src} alt={alt} className="max-w-full max-h-[90vh] object-contain rounded" />
-          </div>
-        </DialogContent>
-      </Dialog>
-    </>
-  );
-}
+import ImageLink from "@/components/ImageLink";
 
 // ─── LAI 2023 Classification ───
 const MODIFIER_GROUPS = [
@@ -454,12 +430,9 @@ export default function LipidsAssessment({ onClassificationChange, onNavigateToT
 
       {/* ─── LAI 2023 ASCVD Risk Stratification Algorithm ─── */}
       <SectionCard title="LAI 2023 ASCVD Risk Stratification Algorithm" icon={<BookOpen className="h-4 w-4" />} tone="indigo" defaultOpen={false}>
-        <figure className="space-y-2">
-            <ZoomableImage
-              src="/images/ascvd-risk-stratification-lai.jpg"
-              alt="ASCVD Risk Stratification Algorithm — Lipid Association of India 2023"
-            />
-          <figcaption className="text-xs text-muted-foreground">
+        <div className="space-y-2">
+          <ImageLink imageId="ascvd-risk-stratification-lai" label="View ASCVD Risk Algorithm →" />
+          <p className="text-xs text-muted-foreground">
             <strong>Figure 4.</strong> LAI 2023 Cardiovascular risk stratification algorithm for primary prevention. 
             Source: Puri et al., <em>J Clin Lipidol</em> 2024. 
             <a href="https://doi.org/10.1016/j.jacl.2024.01.006" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">
@@ -469,142 +442,115 @@ export default function LipidsAssessment({ onClassificationChange, onNavigateToT
             <a href="https://www.sciencedirect.com/science/article/pii/S1933287424000060#fig0004" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">
               View on ScienceDirect
             </a>
-          </figcaption>
-        </figure>
+          </p>
+        </div>
       </SectionCard>
 
       {/* ─── Hypertriglyceridemia Algorithm ─── */}
       <SectionCard title="Hypertriglyceridemia Management Algorithm (LAI 2023)" icon={<BookOpen className="h-4 w-4" />} tone="indigo" defaultOpen={false}>
-        <figure className="space-y-2">
-          <ZoomableImage
-            src="/images/hypertriglyceridemia-algorithm-lai.jpg"
-            alt="Hypertriglyceridemia Management Algorithm"
-          />
-          <figcaption className="text-xs text-muted-foreground">
+        <div className="space-y-2">
+          <ImageLink imageId="hypertriglyceridemia-algorithm-lai" label="View Hypertriglyceridemia Algorithm →" />
+          <p className="text-xs text-muted-foreground">
             TG-based treatment algorithm. Source: Lipid Association of India 2023 Consensus Statement IV.
             <a href="https://doi.org/10.1016/j.jacl.2024.01.006" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline ml-1">
               doi:10.1016/j.jacl.2024.01.006
             </a>
-          </figcaption>
-        </figure>
-        <figure className="space-y-2 mt-4">
-          <ZoomableImage
-            src="/images/hypertriglyceridemia-cac-lai.jpg"
-            alt="Hypertriglyceridemia and CAC — Additional Reference"
-          />
-          <figcaption className="text-xs text-muted-foreground">
+          </p>
+        </div>
+        <div className="space-y-2 mt-4">
+          <ImageLink imageId="hypertriglyceridemia-cac-lai" label="View Hypertriglyceridemia CAC Reference →" />
+          <p className="text-xs text-muted-foreground">
             Hypertriglyceridemia and CAC risk stratification reference. Source: LAI 2023.
             <a href="https://doi.org/10.1016/j.jacl.2024.01.006" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline ml-1">
               doi:10.1016/j.jacl.2024.01.006
             </a>
-          </figcaption>
-        </figure>
+          </p>
+        </div>
       </SectionCard>
 
       {/* ─── CACS Risk Stratification ─── */}
       <SectionCard title="CACS-Based Risk Stratification (LAI 2023)" icon={<BookOpen className="h-4 w-4" />} tone="indigo" defaultOpen={false}>
-        <figure className="space-y-2">
-          <ZoomableImage
-            src="/images/cacs-risk-stratification-lai.jpg"
-            alt="CACS-Based Risk Stratification Algorithm"
-          />
-          <figcaption className="text-xs text-muted-foreground">
+        <div className="space-y-2">
+          <ImageLink imageId="cacs-risk-stratification-lai" label="View CACS Risk Algorithm →" />
+          <p className="text-xs text-muted-foreground">
             Coronary Artery Calcium Score (CACS) risk classification for refining ASCVD risk. 
             Source: Lipid Association of India 2023.
             <a href="https://doi.org/10.1016/j.jacl.2024.01.006" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline ml-1">
               doi:10.1016/j.jacl.2024.01.006
             </a>
-          </figcaption>
-        </figure>
-        <figure className="space-y-2 mt-4">
-          <ZoomableImage
-            src="/images/hypertriglyceridemia-cac-lai.jpg"
-            alt="Hypertriglyceridemia and CAC — Additional Reference"
-          />
-          <figcaption className="text-xs text-muted-foreground">
+          </p>
+        </div>
+        <div className="space-y-2 mt-4">
+          <ImageLink imageId="hypertriglyceridemia-cac-lai" label="View Hypertriglyceridemia CAC Reference →" />
+          <p className="text-xs text-muted-foreground">
             Hypertriglyceridemia and CAC risk stratification reference. Source: LAI 2023.
             <a href="https://doi.org/10.1016/j.jacl.2024.01.006" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline ml-1">
               doi:10.1016/j.jacl.2024.01.006
             </a>
-          </figcaption>
-        </figure>
-        <figure className="space-y-2 mt-4">
-          <ZoomableImage
-            src="/images/cacs-risk-targets-lai.jpg"
-            alt="CACS-Based Risk Stratification and Lipid Targets"
-          />
-          <figcaption className="text-xs text-muted-foreground">
+          </p>
+        </div>
+        <div className="space-y-2 mt-4">
+          <ImageLink imageId="cacs-risk-targets-lai" label="View CACS Risk Targets →" />
+          <p className="text-xs text-muted-foreground">
             Risk stratification and lipid targets based on CACS score: ≥75th percentile → LDL-C target &lt;70 mg/dl. 
             CACS = Coronary Artery Calcium Score. Based on Indian guidelines and risk stratification.
             <a href="https://doi.org/10.1016/j.jacl.2024.01.006" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline ml-1">
               doi:10.1016/j.jacl.2024.01.006
             </a>
-          </figcaption>
-        </figure>
+          </p>
+        </div>
       </SectionCard>
 
       {/* ─── Diabetes + Lipid Management Algorithm ─── */}
       <SectionCard title="Diabetes + Lipid Management Algorithm (LAI 2023)" icon={<BookOpen className="h-4 w-4" />} tone="danger" defaultOpen={false}>
-        <figure className="space-y-2">
-          <ZoomableImage
-            src="/images/diabetes-lipid-algorithm-lai.jpg"
-            alt="Diabetes Lipid Management Algorithm — LAI 2023"
-          />
-          <figcaption className="text-xs text-muted-foreground">
+        <div className="space-y-2">
+          <ImageLink imageId="diabetes-lipid-algorithm-lai" label="View Diabetes Lipid Algorithm →" />
+          <p className="text-xs text-muted-foreground">
             Risk-stratified lipid targets and treatment algorithm for patients with diabetes mellitus: 
             High Risk (LDL &lt;70) → Very High Risk (&lt;50) → Extreme Cat A (&lt;50, opt ≤30) → Extreme Cat B (≤30). 
             Stepwise therapy at Week 0 → 4 → 8. Source: LAI 2023.
             <a href="https://doi.org/10.1016/j.jacl.2024.01.006" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline ml-1">
               doi:10.1016/j.jacl.2024.01.006
             </a>
-          </figcaption>
-        </figure>
+          </p>
+        </div>
       </SectionCard>
 
       {/* ─── ACS Lipid Management Algorithm ─── */}
       <SectionCard title="ACS Lipid Management Algorithm (LAI 2023)" icon={<BookOpen className="h-4 w-4" />} tone="danger" defaultOpen={false}>
-        <figure className="space-y-2">
-          <ZoomableImage
-            src="/images/acs-lipid-algorithm-lai.jpg"
-            alt="ACS Lipid Management Algorithm — LAI 2023"
-          />
-          <figcaption className="text-xs text-muted-foreground">
+        <div className="space-y-2">
+          <ImageLink imageId="acs-lipid-algorithm-lai" label="View ACS Lipid Algorithm →" />
+          <p className="text-xs text-muted-foreground">
             Post-ACS lipid management protocol: statin-naïve → on low/mod-intensity → on high-intensity → intolerant. 
             Admission workup with Lp(a), initial high-intensity statin + ezetimibe, then Step 1 (2 wk) and Step 2 (4 wk) 
             escalation with PCSK9i / bempedoic acid / LDL apheresis if not at target.
             <a href="https://doi.org/10.1016/j.jacl.2024.01.006" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline ml-1">
               doi:10.1016/j.jacl.2024.01.006
             </a>
-          </figcaption>
-        </figure>
+          </p>
+        </div>
       </SectionCard>
 
       {/* ─── LAI Treatment Algorithm by Risk Group ─── */}
       <SectionCard title="LAI 2023 Treatment Algorithm by Risk Group" icon={<BookOpen className="h-4 w-4" />} tone="indigo" defaultOpen={false}>
-        <figure className="space-y-2">
-          <ZoomableImage
-            src="/images/lai-treatment-algorithm.jpg"
-            alt="LAI 2023 Treatment Algorithm by Risk Group"
-          />
-          <figcaption className="text-xs text-muted-foreground">
+        <div className="space-y-2">
+          <ImageLink imageId="lai-treatment-algorithm" label="View LAI Treatment Algorithm →" />
+          <p className="text-xs text-muted-foreground">
             Full LAI risk-aligned treatment algorithm: Low risk (LDL &lt;100) → Moderate (optional &lt;70) → 
             High (&lt;70) → Very High (&lt;50) → Extreme Cat A (&lt;50, opt ≤30) → Extreme Cat B (≤30). 
             Week 0/4/8 stepped escalation with lipid profile + Apo-B monitoring.
             <a href="https://doi.org/10.1016/j.jacl.2024.01.006" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline ml-1">
               doi:10.1016/j.jacl.2024.01.006
             </a>
-          </figcaption>
-        </figure>
+          </p>
+        </div>
       </SectionCard>
 
       {/* ─── Lipid Management Goals by Risk Group ─── */}
       <SectionCard title="Lipid Management Goals by Risk Group" icon={<Target className="h-4 w-4" />} tone="indigo" defaultOpen={false}>
-        <figure className="space-y-2">
-          <ZoomableImage
-            src="/images/lipid-goals-by-risk-lai.jpg"
-            alt="Lipid Management Goals by Risk Group"
-          />
-          <figcaption className="text-xs text-muted-foreground">
+        <div className="space-y-2">
+          <ImageLink imageId="lipid-goals-by-risk-lai" label="View Lipid Goals by Risk →" />
+          <p className="text-xs text-muted-foreground">
             Quick-reference target table: Low/Moderate (LDL &lt;100 / non-HDL &lt;130) → 
             High (&lt;70 / &lt;100) → Very High (&lt;50 / &lt;80) → Extreme A (&lt;50 opt ≤30 / &lt;80 opt ≤60) → 
             Extreme B (&lt;30 / &lt;60) → Extreme C (&lt;15 / &lt;60). 
@@ -612,8 +558,8 @@ export default function LipidsAssessment({ onClassificationChange, onNavigateToT
             <a href="https://doi.org/10.1016/j.jacl.2024.01.006" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline ml-1">
               doi:10.1016/j.jacl.2024.01.006
             </a>
-          </figcaption>
-        </figure>
+          </p>
+        </div>
       </SectionCard>
 
       {/* ─── Classification Guide Table ─── */}

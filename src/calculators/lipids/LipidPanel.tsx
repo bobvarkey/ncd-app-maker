@@ -28,6 +28,7 @@ import {
   Donut, Soup, Eye, Repeat, AlertOctagon, Syringe,
   ShieldQuestion,
 } from "lucide-react";
+import ImageLink from "@/components/ImageLink";
 import ZoomableImage from "@/components/ZoomableImage";
 import {
   LabInput,
@@ -1539,12 +1540,8 @@ export default function LipidCalculator() {
                             </div>
 
                             {/* PMOS Biochemical Evaluation Image */}
-                            <div className="mt-2 rounded-lg overflow-hidden border border-border">
-                              <ZoomableImage
-                                src="/images/pmos-dx-eval.png"
-                                alt="PMOS Diagnostic Evaluation Algorithm"
-                                className="w-full object-contain"
-                              />
+                            <div className="mt-2">
+                              <ImageLink imageId="pmos-dx-eval" label="View PMOS Diagnostic Evaluation →" />
                             </div>
 
                             <p className="text-xs text-muted-foreground italic border-t border-border pt-2">

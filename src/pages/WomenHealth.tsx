@@ -8,7 +8,7 @@ import {
   Droplets, ArrowRight, RotateCcw, CheckCircle2, ChevronDown, ChevronUp,
   Pill, Syringe, Timer, ShieldAlert, Info, Sparkles
 } from "lucide-react";
-import ZoomableImage from "@/components/ZoomableImage";
+import ImageLink from "@/components/ImageLink";
 
 /* ============================ PMOS TAB ============================ */
 
@@ -289,11 +289,7 @@ function PmosTab() {
           </CardTitle>
         </CardHeader>
         <CardContent>
-          <ZoomableImage
-            src="/images/pmos-dx-eval.png"
-            alt="PMOS Diagnostic Evaluation Reference"
-            className="w-full rounded-lg border border-border/60"
-          />
+          <ImageLink imageId="pmos-dx-eval" label="View PMOS Diagnostic Evaluation →" />
           <p className="text-xs text-muted-foreground mt-2 text-center">
             Ref: 2026 Lancet Consensus on PMOS Diagnostic Framework
           </p>
@@ -957,11 +953,7 @@ function HrtAlgorithm() {
       </Card>
 
       {/* HRT algorithm reference image */}
-      <ZoomableImage
-        src="/images/hrt-algorithm.png"
-        alt="HRT decision algorithm reference"
-        className="rounded-lg border border-border"
-      />
+      <ImageLink imageId="hrt-algorithm" label="View HRT Algorithm →" />
       <p className="text-xs text-muted-foreground text-center mt-1">HRT decision algorithm reference</p>
 
       {/* Side branches */}

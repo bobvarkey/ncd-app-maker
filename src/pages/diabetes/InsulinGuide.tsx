@@ -3,7 +3,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 import { Clock, Activity, AlertCircle, CheckCircle2, Syringe } from "lucide-react";
-import ZoomableImage from "@/components/ZoomableImage";
+import ImageLink from "@/components/ImageLink";
 
 // Insulin Types Data
 const insulinTypes = [
@@ -225,23 +225,14 @@ export default function InsulinGuide() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="space-y-2">
               <p className="text-sm font-medium">Types of Insulin - Quick Reference</p>
-              <ZoomableImage
-                src="/images/Insulins.jpg"
-                alt="Insulin Types Pharmacology Reference"
-                className="w-full rounded-lg border"
-              />
+              <ImageLink imageId="Insulins" label="View Insulin Types Chart →" />
               <p className="text-xs text-muted-foreground">
                 Comprehensive guide showing onset, peak, duration for all insulin types
               </p>
             </div>
             <div className="space-y-2">
               <p className="text-sm font-medium">Insulin Activity Profile</p>
-              <ZoomableImage
-                src="/images/insulin-types-graph.png"
-                alt="Insulin Activity Graph"
-                className="w-full rounded-lg border bg-card"
-                style={{ filter: "invert(1) hue-rotate(180deg) brightness(1.1) contrast(1.05)" }}
-              />
+              <ImageLink imageId="insulin-types-graph" label="View Insulin Activity Graph →" />
               <p className="text-xs text-muted-foreground">
                 Visual graph showing activity intensity over time
               </p>

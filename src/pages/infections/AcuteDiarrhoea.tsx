@@ -24,7 +24,7 @@ import {
   Image as ImageIcon,
 } from "lucide-react";
 import { downloadTextFile } from "@/lib/clinical-utils";
-import ZoomableImage from "@/components/ZoomableImage";
+import ImageLink from "@/components/ImageLink";
 import acuteDiarrhoeaImg from "@/assets/acute-diarrhoea-poster.jpg";
 import foodPoisoningImg from "@/assets/food-poisoning-algorithm.jpg";
 import { toast } from "sonner";
@@ -421,13 +421,9 @@ Disclaimer: Decision-support only. Does not replace clinical judgement.`;
       {/* Images */}
       <CollapsibleSection title="Images" icon={ImageIcon} defaultOpen={false}>
         <div className="mx-auto max-w-lg">
-          <ZoomableImage
-            src={acuteDiarrhoeaImg}
-            alt="Acute diarrhoea clinical poster — risk stratification and management overview"
-            className="w-full rounded-xl border-2 border-amber-700/25"
-          />
+          <ImageLink imageId="acute-diarrhoea-poster" label="View Acute Diarrhoea Poster →" />
           <p className="mt-2 text-center font-handwritten text-xs text-amber-700/60">
-            Click to zoom · Risk stratification and management overview
+            Risk stratification and management overview
           </p>
         </div>
       </CollapsibleSection>
@@ -544,13 +540,9 @@ Disclaimer: Decision-support only. Does not replace clinical judgement.`;
       {/* FP: Image */}
       <CollapsibleSection title="Food Poisoning — Reference Poster" icon={ImageIcon} defaultOpen={false}>
         <div className="mx-auto max-w-lg">
-          <ZoomableImage
-            src={foodPoisoningImg}
-            alt="Food poisoning / acute gastroenteritis algorithm poster — incubation-based classification"
-            className="w-full rounded-xl border-2 border-amber-700/25"
-          />
+          <ImageLink imageId="food-poisoning-algorithm" label="View Food Poisoning Algorithm →" />
           <p className="mt-2 text-center font-handwritten text-xs text-amber-700/60">
-            Click to zoom · Food poisoning algorithm reference
+            Food poisoning algorithm reference
           </p>
         </div>
       </CollapsibleSection>

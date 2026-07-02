@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { Link, useLocation, useNavigate, useSearchParams } from "react-router-dom";
-import { ChevronLeft, ChevronRight, Search, X, Pill, FileText, Home, Droplets, Heart, Droplet, Dna, Microscope, Weight, AirVent, Bean, Moon, Bug, UtensilsCrossed, Shield, Syringe, Zap, Bandage, Timer, Thermometer, Flame, Bone, Gem, Smile, Sun, Stethoscope, Filter, User } from "lucide-react";
+import { ChevronLeft, ChevronRight, Search, X, Pill, FileText, Home, Droplets, Heart, Droplet, Dna, Microscope, Weight, AirVent, Bean, Moon, Bug, UtensilsCrossed, Shield, Syringe, Zap, Bandage, Timer, Thermometer, Flame, Bone, Gem, Smile, Sun, Stethoscope, Filter, User, Image } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { RENAL_DATA } from "@/calculators/diabetes/RenalDosing";
 import { ANTIBIOTICS_DATA } from "@/calculators/diabetes/antibiotics-data";
@@ -176,6 +176,7 @@ const navItems: NavItem[] = [
   { path: "/vitamin-d",            label: "Vitamin D",  icon: Sun, active: "bg-amber-500/10 text-amber-400 border-amber-500/30", emoji: "☀️" },
   { path: "/geriatrics",           label: "Geriatrics", icon: User, active: "bg-sky-500/10 text-sky-400 border-sky-500/30", emoji: "👴" },
   { path: "/electrolytes",          label: "Electrolytes", icon: Zap, active: "bg-cyan-500/10 text-cyan-400 border-cyan-500/30", emoji: "⚡" },
+  { path: "/images",                label: "Images",    icon: Image, active: "bg-purple-500/10 text-purple-400 border-purple-500/30", emoji: "🖼️" },
 ];
 
 // Section separator helper

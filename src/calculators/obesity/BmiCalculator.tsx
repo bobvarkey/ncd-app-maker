@@ -3,7 +3,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import { useNavigate } from "react-router-dom";
-import { Scale, Calculator, Info, ChevronDown, ChevronUp, Pill, Target, Activity, AlertCircle, BookOpen, RotateCcw, Home, InfoIcon } from "lucide-react";
+import { Scale, Calculator, Info, ChevronDown, ChevronUp, Pill, Target, Activity, AlertCircle, BookOpen, RotateCcw, Home, InfoIcon, Heart, AlertTriangle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -48,6 +48,7 @@ interface BmiResult {
 
 const TABS = [
   { key: "calculator", label: "Calculator", icon: <Calculator className="h-4 w-4" /> },
+  { key: "indian-classification", label: "Indian Classification", icon: <Info className="h-4 w-4" /> },
   { key: "guidelines", label: "ADA 2025 Guidelines", icon: <BookOpen className="h-4 w-4" /> },
 ];
 
@@ -586,6 +587,259 @@ export default function BmiCalculator() {
                     </div>
                   </div>
                 )}
+              </CardContent>
+            </Card>
+          </>
+        )}
+
+        {activeTab === "indian-classification" && (
+          <>
+            {/* ─── Asian Indian / WHO Asia-Pacific BMI Classification ─── */}
+            <Card className="clinical-card border-amber-500/30">
+              <CardHeader className="pb-3">
+                <CardTitle className="flex items-center gap-2 text-lg">
+                  <Info className="h-5 w-5 text-amber-500" />
+                  Asian Indian / WHO Asia-Pacific BMI Classification
+                </CardTitle>
+                <p className="text-xs text-muted-foreground">
+                  Used in most Indian clinical practice — 2009 Indian consensus statement
+                </p>
+              </CardHeader>
+              <CardContent>
+                <div className="overflow-x-auto">
+                  <table className="w-full text-sm">
+                    <thead>
+                      <tr className="border-b border-border">
+                        <th className="text-left py-2 pr-4 font-semibold">BMI (kg/m²)</th>
+                        <th className="text-left py-2 font-semibold">Category</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr className="border-b border-border/50">
+                        <td className="py-2 pr-4 font-mono">&lt;18.5</td>
+                        <td className="py-2 text-yellow-500 font-medium">Underweight</td>
+                      </tr>
+                      <tr className="border-b border-border/50">
+                        <td className="py-2 pr-4 font-mono">18.5–22.9</td>
+                        <td className="py-2 text-emerald-500 font-medium">Normal</td>
+                      </tr>
+                      <tr className="border-b border-border/50 bg-amber-500/5">
+                        <td className="py-2 pr-4 font-mono font-bold">23.0–24.9</td>
+                        <td className="py-2 text-amber-500 font-bold">Overweight (At Risk)</td>
+                      </tr>
+                      <tr className="border-b border-border/50 bg-orange-500/5">
+                        <td className="py-2 pr-4 font-mono font-bold">25.0–29.9</td>
+                        <td className="py-2 text-orange-500 font-bold">Obesity Class I</td>
+                      </tr>
+                      <tr className="bg-red-500/5">
+                        <td className="py-2 pr-4 font-mono font-bold">≥30.0</td>
+                        <td className="py-2 text-red-500 font-bold">Obesity Class II</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+                <p className="text-xs text-muted-foreground mt-3">
+                  BMI ≥23 kg/m² marks <strong>overweight/at-risk</strong> in Asian Indians.
+                  BMI ≥25 kg/m² defines <strong>obesity</strong> in both the traditional Indian consensus
+                  and the recent ICMR-INDIAB metabolic phenotype paper.
+                </p>
+              </CardContent>
+            </Card>
+
+            {/* ─── ICMR-INDIAB 2025 Metabolic Phenotypes ─── */}
+            <Card className="clinical-card border-blue-500/30">
+              <CardHeader className="pb-3">
+                <CardTitle className="flex items-center gap-2 text-lg">
+                  <Activity className="h-5 w-5 text-blue-500" />
+                  ICMR-INDIAB 2025 Metabolic Phenotypes
+                </CardTitle>
+                <p className="text-xs text-muted-foreground">
+                  For the purpose of defining the four metabolic phenotypes, the investigators used
+                  BMI &lt;25 kg/m² as non-obese and BMI ≥25 kg/m² as obese, combined with metabolic
+                  health (≥2 metabolic abnormalities).
+                </p>
+              </CardHeader>
+              <CardContent>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                  <div className="rounded-lg bg-emerald-500/10 border border-emerald-500/30 p-4">
+                    <p className="font-bold text-emerald-600 dark:text-emerald-400">MHNO</p>
+                    <p className="text-sm text-muted-foreground mt-1">BMI &lt;25 + Metabolically Healthy</p>
+                    <p className="text-xs text-muted-foreground mt-1">Metabolically healthy normal weight</p>
+                  </div>
+                  <div className="rounded-lg bg-amber-500/10 border border-amber-500/30 p-4">
+                    <p className="font-bold text-amber-600 dark:text-amber-400">MONO</p>
+                    <p className="text-sm text-muted-foreground mt-1">BMI &lt;25 + Metabolically Unhealthy</p>
+                    <p className="text-xs text-muted-foreground mt-1">Metabolically obese normal weight</p>
+                  </div>
+                  <div className="rounded-lg bg-orange-500/10 border border-orange-500/30 p-4">
+                    <p className="font-bold text-orange-600 dark:text-orange-400">MHO</p>
+                    <p className="text-sm text-muted-foreground mt-1">BMI ≥25 + Metabolically Healthy</p>
+                    <p className="text-xs text-muted-foreground mt-1">Metabolically healthy obesity</p>
+                  </div>
+                  <div className="rounded-lg bg-red-500/10 border border-red-500/30 p-4">
+                    <p className="font-bold text-red-600 dark:text-red-400">MOO</p>
+                    <p className="text-sm text-muted-foreground mt-1">BMI ≥25 + Metabolically Unhealthy</p>
+                    <p className="text-xs text-muted-foreground mt-1">Metabolically unhealthy obesity</p>
+                  </div>
+                </div>
+                <Alert className="mt-4 border-info/50 bg-info/10">
+                  <InfoIcon className="h-4 w-4" />
+                  <AlertDescription className="text-xs">
+                    <strong>Both classifications are correct, but they answer different questions.</strong>
+                    BMI ≥23 kg/m² marks overweight/at-risk in Asian Indians.
+                    BMI ≥25 kg/m² defines obesity in both the traditional Indian consensus and the
+                    recent ICMR-INDIAB metabolic phenotype paper.
+                  </AlertDescription>
+                </Alert>
+              </CardContent>
+            </Card>
+
+            {/* ─── Metabolic Syndrome ─── */}
+            <Card className="clinical-card border-rose-500/30">
+              <CardHeader className="pb-3">
+                <CardTitle className="flex items-center gap-2 text-lg">
+                  <Heart className="h-5 w-5 text-rose-500" />
+                  Metabolic Syndrome
+                </CardTitle>
+                <p className="text-xs text-muted-foreground">
+                  A cluster of cardiometabolic risk factors increasing the risk of Type 2 Diabetes,
+                  ASCVD, and chronic kidney disease
+                </p>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                {/* Diagnostic Criteria */}
+                <div>
+                  <p className="text-sm font-semibold mb-2">
+                    Diagnostic Criteria (Harmonized International Definition) —{' '}
+                    <span className="text-primary">≥3 of 5 = Metabolic Syndrome</span>
+                  </p>
+                  <div className="overflow-x-auto">
+                    <table className="w-full text-sm">
+                      <thead>
+                        <tr className="border-b border-border">
+                          <th className="text-left py-2 pr-4 font-semibold">Component</th>
+                          <th className="text-left py-2 font-semibold">Cut-off for Asian Indians</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr className="border-b border-border/50">
+                          <td className="py-2 pr-4">Abdominal obesity</td>
+                          <td className="py-2 font-mono">Waist ≥90 cm (men), ≥80 cm (women)</td>
+                        </tr>
+                        <tr className="border-b border-border/50">
+                          <td className="py-2 pr-4">Triglycerides</td>
+                          <td className="py-2 font-mono">≥150 mg/dL (1.7 mmol/L) or on treatment</td>
+                        </tr>
+                        <tr className="border-b border-border/50">
+                          <td className="py-2 pr-4">HDL cholesterol</td>
+                          <td className="py-2 font-mono">&lt;40 mg/dL (men), &lt;50 mg/dL (women) or on treatment</td>
+                        </tr>
+                        <tr className="border-b border-border/50">
+                          <td className="py-2 pr-4">Blood pressure</td>
+                          <td className="py-2 font-mono">≥130/85 mmHg or on antihypertensive treatment</td>
+                        </tr>
+                        <tr>
+                          <td className="py-2 pr-4">Fasting plasma glucose</td>
+                          <td className="py-2 font-mono">≥100 mg/dL (5.6 mmol/L) or diagnosed diabetes</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+
+                {/* The Deadly Five */}
+                <div className="rounded-lg bg-rose-500/5 border border-rose-500/20 p-4">
+                  <p className="text-sm font-semibold mb-2 flex items-center gap-2">
+                    <AlertTriangle className="h-4 w-4 text-rose-500" />
+                    The "Deadly Five"
+                  </p>
+                  <ul className="space-y-1 text-sm">
+                    <li className="flex items-center gap-2"><span className="text-rose-500">•</span> Increased waist circumference</li>
+                    <li className="flex items-center gap-2"><span className="text-rose-500">•</span> High triglycerides</li>
+                    <li className="flex items-center gap-2"><span className="text-rose-500">•</span> Low HDL cholesterol</li>
+                    <li className="flex items-center gap-2"><span className="text-rose-500">•</span> Elevated blood pressure</li>
+                    <li className="flex items-center gap-2"><span className="text-rose-500">•</span> Elevated fasting blood glucose</li>
+                  </ul>
+                  <p className="text-sm font-semibold mt-2 text-primary">Diagnosis: ≥3 of 5 = Metabolic Syndrome</p>
+                </div>
+
+                {/* Indian Waist Cut-offs */}
+                <Alert className="border-amber-500/30 bg-amber-500/5">
+                  <InfoIcon className="h-4 w-4" />
+                  <AlertDescription>
+                    <p className="text-sm font-semibold mb-1">Indian Waist Circumference Cut-offs</p>
+                    <p className="text-sm">Men: <strong>≥90 cm</strong> | Women: <strong>≥80 cm</strong></p>
+                    <p className="text-xs text-muted-foreground mt-1">
+                      These lower cut-offs reflect the higher cardiometabolic risk among South Asians.
+                    </p>
+                  </AlertDescription>
+                </Alert>
+
+                {/* Clinical Significance */}
+                <div className="rounded-lg bg-card/50 border border-border p-4">
+                  <p className="text-sm font-semibold mb-2">Clinical Significance</p>
+                  <p className="text-sm text-muted-foreground mb-2">
+                    Patients with metabolic syndrome have:
+                  </p>
+                  <ul className="space-y-1 text-sm">
+                    <li className="flex items-start gap-2">
+                      <span className="text-rose-500 mt-1">•</span>
+                      <span>Approximately <strong>2-fold higher risk</strong> of cardiovascular disease</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <span className="text-rose-500 mt-1">•</span>
+                      <span>Approximately <strong>5-fold higher risk</strong> of developing Type 2 diabetes</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <span className="text-rose-500 mt-1">•</span>
+                      <span>Increased risk of fatty liver disease, chronic kidney disease, obstructive sleep apnea, and premature mortality</span>
+                    </li>
+                  </ul>
+                </div>
+
+                {/* Difference Table */}
+                <div>
+                  <p className="text-sm font-semibold mb-2">
+                    Difference Between Metabolic Syndrome and the ICMR-INDIAB Metabolic Phenotypes
+                  </p>
+                  <div className="overflow-x-auto">
+                    <table className="w-full text-sm">
+                      <thead>
+                        <tr className="border-b border-border">
+                          <th className="text-left py-2 pr-4 font-semibold">Metabolic Syndrome</th>
+                          <th className="text-left py-2 font-semibold">ICMR-INDIAB Metabolic Phenotypes</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr className="border-b border-border/50">
+                          <td className="py-2 pr-4">Requires <strong>≥3 of 5</strong> metabolic abnormalities</td>
+                          <td className="py-2">Metabolically unhealthy is defined as <strong>≥2 metabolic abnormalities</strong></td>
+                        </tr>
+                        <tr className="border-b border-border/50">
+                          <td className="py-2 pr-4">Used for routine clinical diagnosis</td>
+                          <td className="py-2">Used to classify obesity phenotypes in population studies</td>
+                        </tr>
+                        <tr className="border-b border-border/50">
+                          <td className="py-2 pr-4">Does not include BMI</td>
+                          <td className="py-2">Combines BMI (&lt;25 or ≥25 kg/m²) with metabolic health</td>
+                        </tr>
+                        <tr>
+                          <td className="py-2 pr-4">Internationally accepted (IDF, AHA/NHLBI, etc.)</td>
+                          <td className="py-2">Specific to the ICMR-INDIAB research framework</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                  <Alert className="mt-3 border-warning/30 bg-warning/5">
+                    <AlertTriangle className="h-4 w-4" />
+                    <AlertDescription className="text-xs">
+                      This distinction is important because a person may be classified as{' '}
+                      <strong>metabolically unhealthy</strong> in the ICMR-INDIAB system (having 2
+                      abnormalities) without yet meeting the formal criteria for{' '}
+                      <strong>metabolic syndrome</strong>, which requires at least 3 abnormalities.
+                    </AlertDescription>
+                  </Alert>
+                </div>
               </CardContent>
             </Card>
           </>

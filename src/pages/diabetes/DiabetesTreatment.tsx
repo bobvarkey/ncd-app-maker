@@ -11,8 +11,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Separator } from "@/components/ui/separator";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 import { cn } from "@/lib/utils";
-import treatmentAlgorithmImage from "@/assets/diabetes-treatment-algorithm.png.asset.json";
-import ZoomableImage from "@/components/ZoomableImage";
+import ImageLink from "@/components/ImageLink";
 
 // Algorithm Step Component
 interface AlgorithmStepProps {
@@ -344,18 +343,12 @@ const TreatmentAlgorithm = () => {
         </div>
       </CardHeader>
       <CardContent>
-        <figure className="mb-4 rounded-lg border border-border bg-card overflow-hidden">
-          <div className="w-full overflow-x-auto">
-            <ZoomableImage
-              src={treatmentAlgorithmImage.url}
-              alt="Diabetes treatment algorithm: HbA1c-based stepped approach from monotherapy to dual, triple therapy and insulin"
-              className="w-full h-auto min-w-[320px] object-contain rounded-t"
-            />
-          </div>
-          <figcaption className="px-3 py-2 text-xs text-muted-foreground text-center bg-card">
-            Goal therapy: HbA1c &lt;7% (individualised) — stepped pharmacotherapy by entry HbA1c
-          </figcaption>
-        </figure>
+        <div className="mb-4">
+          <ImageLink imageId="diabetes-treatment-algorithm" label="View Diabetes Treatment Algorithm →" />
+          <p className="px-3 py-2 text-xs text-muted-foreground text-center">
+            Goal therapy: HbA1c {'<'}7% (individualised) — stepped pharmacotherapy by entry HbA1c
+          </p>
+        </div>
         <div className="space-y-2">
           {steps.map((step, index) => (
             <AlgorithmStep
@@ -990,11 +983,7 @@ function GeriatricSyndromes() {
         <CardContent>
           <figure className="rounded-lg border border-border bg-card overflow-hidden">
             <div className="w-full overflow-x-auto">
-              <ZoomableImage
-                src="/geriatric-syndromes.jpg"
-                alt="Geriatric syndromes overview diagram showing the common disorders of aging"
-                className="w-full h-auto object-contain rounded-t"
-              />
+              <ImageLink imageId="geriatric-syndromes" label="View Geriatric Syndromes Chart →" />
             </div>
             <figcaption className="p-2 text-xs text-muted-foreground text-center border-t border-border">
               Geriatric Syndromes — The Common Disorders of Aging

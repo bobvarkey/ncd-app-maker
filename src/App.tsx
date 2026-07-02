@@ -71,6 +71,7 @@ const CKDGuideline = lazy(() => import("@/pages/CKDGuideline"));
 const PrivacyPolicy = lazy(() => import("@/pages/PrivacyPolicy"));
 const TermsOfService = lazy(() => import("@/pages/TermsOfService"));
 const DisclaimerPage = lazy(() => import("@/pages/Disclaimer"));
+const ImageGallery = lazy(() => import("@/pages/ImageGallery"));
 const GLP1Administration = lazy(() => import("@/pages/GLP1Administration"));
 const DailyManagementGuide = lazy(() => import("@/pages/DailyManagementGuide"));
 const Type1DMManagement = lazy(() => import("@/pages/Type1DMManagement"));
@@ -251,6 +252,7 @@ const App = () => (
           <Route path="/privacy" element={<><TabNavigation /><PrivacyPolicy /></>} />
           <Route path="/terms" element={<><TabNavigation /><TermsOfService /></>} />
           <Route path="/disclaimer" element={<><TabNavigation /><DisclaimerPage /></>} />
+          <Route path="/images" element={<><TabNavigation /><ImageGallery /></>} />
 
           {/* 404 */}
           <Route path="*" element={<NotFound />} />

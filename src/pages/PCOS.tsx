@@ -1,7 +1,7 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Sun, Stethoscope, FlaskConical, Activity, Scan, ClipboardList, BookOpen, AlertTriangle, GitBranch, Users, FileText } from "lucide-react";
-import ZoomableImage from "@/components/ZoomableImage";
+import ImageLink from "@/components/ImageLink";
 
 export default function PCOS() {
   return (
@@ -552,11 +552,7 @@ export default function PCOS() {
           </CardTitle>
         </CardHeader>
         <CardContent>
-          <ZoomableImage
-            src="/images/pmos-dx-eval.png"
-            alt="PMOS Diagnostic Evaluation Reference"
-            className="w-full h-auto rounded-lg border border-border/40"
-          />
+          <ImageLink imageId="pmos-dx-eval" label="View PMOS Diagnostic Evaluation →" />
         </CardContent>
       </Card>
 

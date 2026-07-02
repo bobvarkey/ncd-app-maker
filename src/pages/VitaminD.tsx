@@ -1,7 +1,7 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Sun, ZoomIn } from "lucide-react";
-import ZoomableImage from "@/components/ZoomableImage";
+import ImageLink from "@/components/ImageLink";
 import VitaminDDosingCalculator from "@/calculators/vitamind/VitaminDDosingCalculator";
 
 export default function VitaminD() {
@@ -31,11 +31,7 @@ export default function VitaminD() {
           </CardTitle>
         </CardHeader>
         <CardContent>
-          <ZoomableImage
-            src="/images/vitamin-d.png"
-            alt="Vitamin D Clinical Reference"
-            className="w-full h-auto rounded-lg border border-border/40"
-          />
+          <ImageLink imageId="vitamin-d" label="View Vitamin D Reference Chart →" />
         </CardContent>
       </Card>
 
