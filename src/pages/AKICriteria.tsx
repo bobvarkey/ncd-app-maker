@@ -8,8 +8,9 @@ import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import {
   Calculator, RotateCcw, ArrowLeftRight, AlertTriangle, Info,
   Activity, Droplets, Gauge, Stethoscope, Heart, TrendingUp,
-  ChevronDown, ChevronUp, ArrowRight
+  ChevronDown, ChevronUp, ArrowRight, FlaskConical, ExternalLink
 } from "lucide-react";
+import ImageLink from "@/components/ImageLink";
 
 type CreatinineUnit = "mgdl" | "umol";
 type Sex = "male" | "female";
@@ -771,6 +772,37 @@ export default function AKICriteria() {
                 </tr>
               </tbody>
             </table>
+          </div>
+        </CardContent>
+      </Card>
+
+      {/* ─── Furosemide Stress Test Infographic ─────────────────────── */}
+      <Card className="border-2 border-primary/20 bg-gradient-to-br from-primary/5 to-muted/5">
+        <CardHeader className="pb-3">
+          <div className="flex items-center space-x-2">
+            <FlaskConical className="h-5 w-5 text-primary" />
+            <CardTitle className="text-xl">Furosemide Stress Test (FST)</CardTitle>
+          </div>
+          <p className="text-xs text-muted-foreground">
+            A functional test of tubular integrity to predict AKI progression
+          </p>
+        </CardHeader>
+        <CardContent className="space-y-4">
+          <div className="rounded-lg overflow-hidden border border-border">
+            <a href="/images/fst-infographic.png" target="_blank" rel="noopener noreferrer" className="block">
+              <img
+                src="/images/fst-infographic.png"
+                alt="Furosemide Stress Test Infographic"
+                className="w-full h-auto object-contain"
+                loading="lazy"
+              />
+            </a>
+          </div>
+          <div className="flex items-center justify-between">
+            <p className="text-xs text-muted-foreground">
+              Click image to view full size
+            </p>
+            <ImageLink imageId="fst-infographic" label="View in Image Gallery →" />
           </div>
         </CardContent>
       </Card>

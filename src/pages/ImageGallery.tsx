@@ -59,6 +59,9 @@ const IMAGE_CATALOG: ImageEntry[] = [
   { id: "fatigue-flowchart", src: "/fatigue-flowchart.jpg", label: "Fatigue Flowchart", category: "Other", description: "Fatigue evaluation flowchart", sourcePages: [{ label: "Fatigue", path: "/fatigue" }] },
   { id: "anticoagulation-cheatsheet", src: "/anticoagulation-cheatsheet.jpg", label: "Anticoagulation Cheatsheet", category: "Other", description: "Anticoagulation quick reference", sourcePages: [{ label: "Liver Mini App", path: "/liver" }] },
   { id: "doctor-monitors", src: "/doctor-monitors.jpg", label: "Doctor Monitors", category: "Other", description: "Landing page hero image", sourcePages: [{ label: "Landing Page", path: "/" }] },
+
+  // ─── Renal / AKI ───
+  { id: "fst-infographic", src: "/images/fst-infographic.png", label: "FST Infographic", category: "Renal / AKI", description: "Furosemide Stress Test — predicting AKI progression", sourcePages: [{ label: "AKI Criteria", path: "/aki-criteria" }] },
 ];
 
 const CATEGORIES = [...new Set(IMAGE_CATALOG.map((img) => img.category))];
