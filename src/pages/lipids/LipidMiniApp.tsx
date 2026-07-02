@@ -31,8 +31,17 @@ import {
   Gauge,
   Calculator,
   XCircle,
+  Info,
 } from "lucide-react";
 import { downloadTextFile } from "@/lib/clinical-utils";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
 
 /* ============================================================
    Lipid Management Mini-App (fully client-side)
@@ -1259,18 +1268,115 @@ export default function LipidMiniApp() {
         {showDmBlock && (
           <div className="grid md:grid-cols-2 gap-4 mb-4">
             <div>
-              <Label className="text-xs text-muted-foreground mb-1.5 block">
-                Established ASCVD?
-              </Label>
+              <div className="flex items-center gap-2 mb-1.5">
+                <Label className="text-xs text-muted-foreground">
+                  Established ASCVD?
+                </Label>
+                <Dialog>
+                  <DialogTrigger asChild>
+                    <button type="button" className="inline-flex items-center text-muted-foreground hover:text-foreground transition-colors" title="What counts as established ASCVD?">
+                      <Info className="h-3.5 w-3.5" />
+                    </button>
+                  </DialogTrigger>
+                  <DialogContent className="max-w-md">
+                    <DialogHeader>
+                      <DialogTitle>Established ASCVD</DialogTitle>
+                      <DialogDescription>
+                        Defined as a history of any of the following atherosclerotic cardiovascular disease events.
+                      </DialogDescription>
+                    </DialogHeader>
+                    <div className="space-y-2 text-sm">
+                      <div className="p-3 rounded-lg border border-border bg-muted/20">
+                        <p className="font-semibold text-foreground">Acute Coronary Syndrome (ACS)</p>
+                        <p className="text-xs text-muted-foreground mt-1">MI, unstable angina, or coronary revascularization (PCI/CABG)</p>
+                      </div>
+                      <div className="p-3 rounded-lg border border-border bg-muted/20">
+                        <p className="font-semibold text-foreground">Stroke / TIA</p>
+                        <p className="text-xs text-muted-foreground mt-1">Ischemic cerebrovascular event or transient ischemic attack</p>
+                      </div>
+                      <div className="p-3 rounded-lg border border-border bg-muted/20">
+                        <p className="font-semibold text-foreground">Peripheral Arterial Disease (PAD)</p>
+                        <p className="text-xs text-muted-foreground mt-1">ABI &lt;0.9, claudication, or prior peripheral revascularization/amputation due to atherosclerosis</p>
+                      </div>
+                      <div className="p-3 rounded-lg border border-border bg-muted/20">
+                        <p className="font-semibold text-foreground">Other</p>
+                        <p className="text-xs text-muted-foreground mt-1">Carotid artery disease (&gt;50% stenosis), aortic aneurysm, or prior carotid revascularization</p>
+                      </div>
+                      <p className="text-xs text-muted-foreground italic">Per LAI 2023: DM + ASCVD = Extreme Risk (EHR-A or EHR-B depending on additional features)</p>
+                    </div>
+                  </DialogContent>
+                </Dialog>
+              </div>
               <div className="flex gap-2">
                 <Chip active={i.dmAscvd === "no"} onClick={() => set("dmAscvd", "no")}>No</Chip>
                 <Chip active={i.dmAscvd === "yes"} onClick={() => set("dmAscvd", "yes")}>Yes</Chip>
               </div>
             </div>
             <div>
-              <Label className="text-xs text-muted-foreground mb-1.5 block">
-                Target-organ damage OR ≥2 ASCVD RFs?
-              </Label>
+              <div className="flex items-center gap-2 mb-1.5">
+                <Label className="text-xs text-muted-foreground">
+                  Target-organ damage OR ≥2 ASCVD RFs?
+                </Label>
+                <Dialog>
+                  <DialogTrigger asChild>
+                    <button type="button" className="inline-flex items-center text-muted-foreground hover:text-foreground transition-colors" title="What counts as TOD and ASCVD RFs?">
+                      <Info className="h-3.5 w-3.5" />
+                    </button>
+                  </DialogTrigger>
+                  <DialogContent className="max-w-md">
+                    <DialogHeader>
+                      <DialogTitle>Target-Organ Damage &amp; ASCVD Risk Factors</DialogTitle>
+                      <DialogDescription>
+                        These modifiers upgrade risk in diabetic patients per LAI 2023.
+                      </DialogDescription>
+                    </DialogHeader>
+                    <div className="space-y-3 text-sm">
+                      <div>
+                        <p className="font-semibold text-foreground mb-1.5">Target-Organ Damage (TOD)</p>
+                        <div className="space-y-1.5">
+                          <div className="p-2.5 rounded-lg border border-border bg-muted/20">
+                            <p className="text-xs font-medium text-foreground">Albuminuria</p>
+                            <p className="text-[11px] text-muted-foreground">UACR ≥30 mg/g (micro- or macroalbuminuria)</p>
+                          </div>
+                          <div className="p-2.5 rounded-lg border border-border bg-muted/20">
+                            <p className="text-xs font-medium text-foreground">CKD</p>
+                            <p className="text-[11px] text-muted-foreground">eGFR &lt;60 mL/min/1.73m²</p>
+                          </div>
+                          <div className="p-2.5 rounded-lg border border-border bg-muted/20">
+                            <p className="text-xs font-medium text-foreground">LVH</p>
+                            <p className="text-[11px] text-muted-foreground">Left ventricular hypertrophy on ECG or echocardiography</p>
+                          </div>
+                          <div className="p-2.5 rounded-lg border border-border bg-muted/20">
+                            <p className="text-xs font-medium text-foreground">Retinopathy</p>
+                            <p className="text-[11px] text-muted-foreground">Diabetic retinopathy on fundoscopy</p>
+                          </div>
+                        </div>
+                      </div>
+                      <div>
+                        <p className="font-semibold text-foreground mb-1.5">ASCVD Risk Factors (RFs)</p>
+                        <div className="grid grid-cols-2 gap-1.5">
+                          {[
+                            { name: "Age", detail: "≥45 ♂ / ≥55 ♀" },
+                            { name: "Smoking", detail: "Current tobacco use" },
+                            { name: "Hypertension", detail: "BP ≥130/80 or on Rx" },
+                            { name: "Low HDL-C", detail: "&lt;40 ♂ / &lt;50 ♀ mg/dL" },
+                            { name: "High LDL-C", detail: "≥160 mg/dL" },
+                            { name: "Obesity", detail: "BMI ≥30 kg/m²" },
+                          ].map((rf, i) => (
+                            <div key={i} className="p-2 rounded-lg border border-border bg-muted/20">
+                              <p className="text-xs font-medium text-foreground">{rf.name}</p>
+                              <p className="text-[10px] text-muted-foreground">{rf.detail}</p>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                      <p className="text-xs text-muted-foreground italic">
+                        Per LAI 2023: DM + TOD or ≥2 RFs = Very High Risk (VHR). DM + ASCVD + TOD/≥2 RFs = Extreme Risk B (EHR-B).
+                      </p>
+                    </div>
+                  </DialogContent>
+                </Dialog>
+              </div>
               <div className="flex gap-2">
                 <Chip active={i.dmMods === "none"} onClick={() => set("dmMods", "none")}>None / 0–1 RF</Chip>
                 <Chip active={i.dmMods === "tod_or_2rf"} onClick={() => set("dmMods", "tod_or_2rf")}>TOD or ≥2 RF</Chip>
@@ -1322,9 +1428,44 @@ export default function LipidMiniApp() {
         {/* Major ASCVD risk factors */}
         {showGeneralRF && (
           <div className="mb-4">
-            <Label className="text-xs text-muted-foreground mb-1.5 block">
-              Major ASCVD risk factors
-            </Label>
+            <div className="flex items-center gap-2 mb-1.5">
+              <Label className="text-xs text-muted-foreground">
+                Major ASCVD risk factors
+              </Label>
+              <Dialog>
+                <DialogTrigger asChild>
+                  <button type="button" className="inline-flex items-center text-muted-foreground hover:text-foreground transition-colors" title="What are these risk factors?">
+                    <Info className="h-3.5 w-3.5" />
+                  </button>
+                </DialogTrigger>
+                <DialogContent className="max-w-md">
+                  <DialogHeader>
+                    <DialogTitle>Major ASCVD Risk Factors</DialogTitle>
+                    <DialogDescription>
+                      These are the traditional risk factors used in ASCVD risk stratification. Each one independently increases cardiovascular risk.
+                    </DialogDescription>
+                  </DialogHeader>
+                  <div className="space-y-3 text-sm">
+                    <div className="p-3 rounded-lg border border-border bg-muted/20">
+                      <p className="font-semibold text-foreground">Age ≥45 (♂) / ≥55 (♀)</p>
+                      <p className="text-xs text-muted-foreground mt-1">Age is the strongest non-modifiable risk factor. ASCVD risk increases exponentially with age. The threshold differs by sex because women typically develop ASCVD ~10 years later than men due to estrogen's cardioprotective effect.</p>
+                    </div>
+                    <div className="p-3 rounded-lg border border-border bg-muted/20">
+                      <p className="font-semibold text-foreground">Current Smoker</p>
+                      <p className="text-xs text-muted-foreground mt-1">Smoking causes endothelial dysfunction, promotes atherosclerosis, increases oxidative stress, and raises fibrinogen levels. Risk is dose-dependent and partially reversible with cessation. Even 1–5 cigarettes/day significantly increases ASCVD risk.</p>
+                    </div>
+                    <div className="p-3 rounded-lg border border-border bg-muted/20">
+                      <p className="font-semibold text-foreground">Hypertension</p>
+                      <p className="text-xs text-muted-foreground mt-1">Chronic hypertension damages arterial endothelium, accelerates atherosclerosis, and increases left ventricular afterload. Each 20 mmHg increase in SBP doubles ASCVD mortality. BP ≥130/80 is considered elevated per ACC/AHA guidelines.</p>
+                    </div>
+                    <div className="p-3 rounded-lg border border-border bg-muted/20">
+                      <p className="font-semibold text-foreground">Low HDL-C (&lt;40 mg/dL ♂ / &lt;50 mg/dL ♀)</p>
+                      <p className="text-xs text-muted-foreground mt-1">Low HDL-C is an independent ASCVD risk marker. HDL normally promotes reverse cholesterol transport, has anti-inflammatory and antioxidant properties. Low HDL often clusters with insulin resistance, high TG, and small dense LDL particles.</p>
+                    </div>
+                  </div>
+                </DialogContent>
+              </Dialog>
+            </div>
             <div className="flex flex-wrap gap-2">
               <Chip active={i.ageMale45OrFemale55} onClick={() => set("ageMale45OrFemale55", !i.ageMale45OrFemale55)}>
                 Age ≥45 ♂ / ≥55 ♀
@@ -1345,9 +1486,52 @@ export default function LipidMiniApp() {
         {/* High-risk features */}
         {showHighRiskFeatures && (
           <div className="mb-4">
-            <Label className="text-xs text-muted-foreground mb-1.5 block">
-              High-risk features
-            </Label>
+            <div className="flex items-center gap-2 mb-1.5">
+              <Label className="text-xs text-muted-foreground">
+                High-risk features
+              </Label>
+              <Dialog>
+                <DialogTrigger asChild>
+                  <button type="button" className="inline-flex items-center text-muted-foreground hover:text-foreground transition-colors" title="What are these high-risk features?">
+                    <Info className="h-3.5 w-3.5" />
+                  </button>
+                </DialogTrigger>
+                <DialogContent className="max-w-md">
+                  <DialogHeader>
+                    <DialogTitle>High-Risk Features</DialogTitle>
+                    <DialogDescription>
+                      These features further amplify ASCVD risk beyond traditional risk factors. Presence of any one may upgrade risk category per LAI 2023.
+                    </DialogDescription>
+                  </DialogHeader>
+                  <div className="space-y-3 text-sm">
+                    <div className="p-3 rounded-lg border border-border bg-muted/20">
+                      <p className="font-semibold text-foreground">Family History of Premature ASCVD</p>
+                      <p className="text-xs text-muted-foreground mt-1">Defined as ASCVD in a first-degree relative (♂ &lt;55 yr, ♀ &lt;65 yr). Suggests genetic predisposition to early atherosclerosis. Increases risk ~1.5–2× independent of other factors.</p>
+                    </div>
+                    <div className="p-3 rounded-lg border border-border bg-muted/20">
+                      <p className="font-semibold text-foreground">CKD Stage 3B/4</p>
+                      <p className="text-xs text-muted-foreground mt-1">eGFR &lt;45 mL/min/1.73m². CKD is an independent ASCVD risk equivalent. Uremic milieu promotes vascular calcification, inflammation, and oxidative stress. Risk of CV death exceeds risk of progression to ESRD in most patients.</p>
+                    </div>
+                    <div className="p-3 rounded-lg border border-border bg-muted/20">
+                      <p className="font-semibold text-foreground">Apo-B &gt;130 mg/dL</p>
+                      <p className="text-xs text-muted-foreground mt-1">Apo-B reflects total atherogenic particle count (VLDL, IDL, LDL, Lp(a)). It may be elevated even when LDL-C is normal (discordance). Each 10 mg/dL increase in Apo-B raises ASCVD risk by ~12%.</p>
+                    </div>
+                    <div className="p-3 rounded-lg border border-border bg-muted/20">
+                      <p className="font-semibold text-foreground">Lp(a) ≥50 mg/dL</p>
+                      <p className="text-xs text-muted-foreground mt-1">Lipoprotein(a) is a genetically determined, pro-atherosclerotic and pro-thrombotic particle. Levels are largely unaffected by lifestyle or statins. Elevated Lp(a) increases ASCVD risk ~1.5–2×. PCSK9i and emerging therapies (pelacarsen, olpasiran) can lower it.</p>
+                    </div>
+                    <div className="p-3 rounded-lg border border-border bg-muted/20">
+                      <p className="font-semibold text-foreground">Metabolic Syndrome</p>
+                      <p className="text-xs text-muted-foreground mt-1">Defined by ≥3 of: central obesity, high TG, low HDL, elevated BP, elevated fasting glucose. Clusters multiple risk factors and amplifies ASCVD risk beyond the sum of its components. Strongly linked to insulin resistance.</p>
+                    </div>
+                    <div className="p-3 rounded-lg border border-border bg-muted/20">
+                      <p className="font-semibold text-foreground">NAFLD with Fibrosis Stage 2/3</p>
+                      <p className="text-xs text-muted-foreground mt-1">NAFLD with significant fibrosis is an independent ASCVD risk factor. Hepatic inflammation and insulin resistance drive systemic pro-atherogenic changes. FIB-4 score &gt;2.67 or NFS &gt;0.676 suggests advanced fibrosis.</p>
+                    </div>
+                  </div>
+                </DialogContent>
+              </Dialog>
+            </div>
             <div className="flex flex-wrap gap-2">
               <Chip active={i.famHxPremature} onClick={() => set("famHxPremature", !i.famHxPremature)}>
                 FHx premature ASCVD

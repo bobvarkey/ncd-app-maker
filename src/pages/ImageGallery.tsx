@@ -62,6 +62,9 @@ const IMAGE_CATALOG: ImageEntry[] = [
 
   // ─── Renal / AKI ───
   { id: "fst-infographic", src: "/images/fst-infographic.png", label: "FST Infographic", category: "Renal / AKI", description: "Furosemide Stress Test — predicting AKI progression", sourcePages: [{ label: "AKI Criteria", path: "/aki-criteria" }] },
+
+  // ─── Anemia / Hemolysis ───
+  { id: "hemolytic-anemia-algorithm", src: "/images/hemolytic-anemia-algorithm.jpg", label: "Hemolytic Anemia Algorithm", category: "Anemia & Coagulation", description: "Diagnostic algorithm for hemolytic anemia — Coombs-negative workup", sourcePages: [{ label: "Anemia", path: "/anemia" }] },
 ];
 
 const CATEGORIES = [...new Set(IMAGE_CATALOG.map((img) => img.category))];

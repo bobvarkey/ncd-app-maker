@@ -132,6 +132,27 @@ export default function Anemia() {
                   />
                 )}
 
+                {/* Hemolytic Anemia Diagnostic Algorithm */}
+                {result.classification.morphology === 'Normocytic' && (
+                  <div className="bg-card rounded-2xl shadow-sm border border-border p-4">
+                    <div className="flex items-center gap-2 mb-3">
+                      <Microscope className="w-5 h-5 text-primary" />
+                      <h2 className="text-lg font-semibold text-foreground">Hemolytic Anemia Diagnostic Algorithm</h2>
+                    </div>
+                    <p className="text-xs text-muted-foreground mb-3">
+                      Stepwise approach for Coombs-negative hemolytic anemia workup. Click to view full size.
+                    </p>
+                    <a href="/images/hemolytic-anemia-algorithm.jpg" target="_blank" rel="noopener noreferrer" className="block rounded-lg overflow-hidden border border-border">
+                      <img
+                        src="/images/hemolytic-anemia-algorithm.jpg"
+                        alt="Hemolytic Anemia Diagnostic Algorithm"
+                        className="w-full h-auto object-contain"
+                        loading="lazy"
+                      />
+                    </a>
+                  </div>
+                )}
+
                 <DiscriminantTable
                   results={result.discriminantResults}
                   idaCount={result.idaCount}
