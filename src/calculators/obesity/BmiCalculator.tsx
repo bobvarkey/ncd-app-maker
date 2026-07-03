@@ -594,95 +594,276 @@ export default function BmiCalculator() {
 
         {activeTab === "indian-classification" && (
           <>
-            {/* ─── Asian Indian / WHO Asia-Pacific BMI Classification ─── */}
+            {/* ─── ICMR (Asian Indian) BMI Classification ─── */}
             <Card className="clinical-card border-amber-500/30">
               <CardHeader className="pb-3">
                 <CardTitle className="flex items-center gap-2 text-lg">
                   <Info className="h-5 w-5 text-amber-500" />
-                  Asian Indian / WHO Asia-Pacific BMI Classification
+                  ICMR (Asian Indian) BMI Classification
                 </CardTitle>
                 <p className="text-xs text-muted-foreground">
-                  Used in most Indian clinical practice — 2009 Indian consensus statement
+                  Based on the 2009 Indian consensus statement and ICMR-INDIAB study framework
                 </p>
               </CardHeader>
-              <CardContent>
+              <CardContent className="space-y-4">
+                {/* Main Classification Table */}
                 <div className="overflow-x-auto">
                   <table className="w-full text-sm">
                     <thead>
                       <tr className="border-b border-border">
+                        <th className="text-left py-2 pr-4 font-semibold">Category</th>
                         <th className="text-left py-2 pr-4 font-semibold">BMI (kg/m²)</th>
-                        <th className="text-left py-2 font-semibold">Category</th>
+                        <th className="text-left py-2 font-semibold">Risk</th>
                       </tr>
                     </thead>
                     <tbody>
                       <tr className="border-b border-border/50">
+                        <td className="py-2 pr-4 text-yellow-500 font-medium">Underweight</td>
                         <td className="py-2 pr-4 font-mono">&lt;18.5</td>
-                        <td className="py-2 text-yellow-500 font-medium">Underweight</td>
+                        <td className="py-2 text-xs text-muted-foreground">Nutritional deficiency</td>
                       </tr>
                       <tr className="border-b border-border/50">
+                        <td className="py-2 pr-4 text-emerald-500 font-medium">Normal</td>
                         <td className="py-2 pr-4 font-mono">18.5–22.9</td>
-                        <td className="py-2 text-emerald-500 font-medium">Normal</td>
+                        <td className="py-2 text-xs text-muted-foreground">Low risk</td>
                       </tr>
                       <tr className="border-b border-border/50 bg-amber-500/5">
+                        <td className="py-2 pr-4 text-amber-500 font-bold">Overweight (At Risk)</td>
                         <td className="py-2 pr-4 font-mono font-bold">23.0–24.9</td>
-                        <td className="py-2 text-amber-500 font-bold">Overweight (At Risk)</td>
+                        <td className="py-2 text-xs text-muted-foreground">Increased cardiometabolic risk</td>
                       </tr>
                       <tr className="border-b border-border/50 bg-orange-500/5">
-                        <td className="py-2 pr-4 font-mono font-bold">25.0–29.9</td>
-                        <td className="py-2 text-orange-500 font-bold">Obesity Class I</td>
-                      </tr>
-                      <tr className="bg-red-500/5">
-                        <td className="py-2 pr-4 font-mono font-bold">≥30.0</td>
-                        <td className="py-2 text-red-500 font-bold">Obesity Class II</td>
+                        <td className="py-2 pr-4 text-orange-500 font-bold">Obesity</td>
+                        <td className="py-2 pr-4 font-mono font-bold">≥25.0</td>
+                        <td className="py-2 text-xs text-muted-foreground">High cardiometabolic risk</td>
                       </tr>
                     </tbody>
                   </table>
                 </div>
-                <p className="text-xs text-muted-foreground mt-3">
-                  BMI ≥23 kg/m² marks <strong>overweight/at-risk</strong> in Asian Indians.
-                  BMI ≥25 kg/m² defines <strong>obesity</strong> in both the traditional Indian consensus
-                  and the recent ICMR-INDIAB metabolic phenotype paper.
-                </p>
+
+                {/* Obesity Classes */}
+                <div className="rounded-lg bg-card/50 border border-border p-4">
+                  <p className="text-sm font-semibold mb-2">Obesity Classes (commonly used in India after obesity is diagnosed)</p>
+                  <div className="overflow-x-auto">
+                    <table className="w-full text-sm">
+                      <thead>
+                        <tr className="border-b border-border">
+                          <th className="text-left py-2 pr-4 font-semibold">Obesity Class</th>
+                          <th className="text-left py-2 font-semibold">BMI (kg/m²)</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr className="border-b border-border/50">
+                          <td className="py-2 pr-4">Class I</td>
+                          <td className="py-2 font-mono">25.0–29.9</td>
+                        </tr>
+                        <tr className="border-b border-border/50">
+                          <td className="py-2 pr-4">Class II</td>
+                          <td className="py-2 font-mono">30.0–34.9</td>
+                        </tr>
+                        <tr className="border-b border-border/50">
+                          <td className="py-2 pr-4">Class III</td>
+                          <td className="py-2 font-mono">35.0–39.9</td>
+                        </tr>
+                        <tr>
+                          <td className="py-2 pr-4">Class IV (Morbid/Extreme)</td>
+                          <td className="py-2 font-mono">≥40.0</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                  <p className="text-xs text-muted-foreground mt-2">
+                    The ICMR/Indian consensus primarily defines obesity as BMI ≥25 kg/m². The subdivision into Classes I–IV is widely used in Indian clinical practice for severity grading, although the original Indian consensus mainly emphasizes the lower BMI threshold rather than formal obesity classes.
+                  </p>
+                </div>
+
+                {/* WHO vs ICMR Comparison */}
+                <div className="rounded-lg bg-blue-500/5 border border-blue-500/30 p-4">
+                  <p className="text-sm font-semibold mb-2 flex items-center gap-2">
+                    <Activity className="h-4 w-4 text-blue-500" />
+                    ICMR vs WHO — BMI Classification Comparison
+                  </p>
+                  <p className="text-xs text-muted-foreground mb-3">
+                    The primary difference is that the ICMR shifts its BMI threshold <strong>downward by 5 units</strong> for obesity and <strong>2 units</strong> for overweight categories compared to WHO guidelines. This adjustment is due to the higher risk of cardiovascular disease and type 2 diabetes in South Asian populations at lower body weights.
+                  </p>
+                  <div className="overflow-x-auto">
+                    <table className="w-full text-sm">
+                      <thead>
+                        <tr className="border-b border-border">
+                          <th className="text-left py-2 pr-3 font-semibold">Category</th>
+                          <th className="text-left py-2 pr-3 font-semibold">ICMR (India)</th>
+                          <th className="text-left py-2 pr-3 font-semibold">WHO (Global)</th>
+                          <th className="text-left py-2 font-semibold">Risk for Indians</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr className="border-b border-border/50">
+                          <td className="py-2 pr-3">Underweight</td>
+                          <td className="py-2 pr-3 font-mono">&lt;18.5</td>
+                          <td className="py-2 pr-3 font-mono">&lt;18.5</td>
+                          <td className="py-2 text-xs">Nutritional deficiencies</td>
+                        </tr>
+                        <tr className="border-b border-border/50">
+                          <td className="py-2 pr-3">Normal Weight</td>
+                          <td className="py-2 pr-3 font-mono">18.5–22.9</td>
+                          <td className="py-2 pr-3 font-mono">18.5–24.9</td>
+                          <td className="py-2 text-xs">Standard healthy range</td>
+                        </tr>
+                        <tr className="border-b border-border/50 bg-amber-500/5">
+                          <td className="py-2 pr-3 font-bold">Overweight</td>
+                          <td className="py-2 pr-3 font-mono font-bold">23.0–24.9</td>
+                          <td className="py-2 pr-3 font-mono">25.0–29.9</td>
+                          <td className="py-2 text-xs">Pre-obesity / Increased risk</td>
+                        </tr>
+                        <tr className="border-b border-border/50 bg-orange-500/5">
+                          <td className="py-2 pr-3 font-bold">Obesity Class I</td>
+                          <td className="py-2 pr-3 font-mono font-bold">25.0–29.9</td>
+                          <td className="py-2 pr-3 font-mono">30.0–34.9</td>
+                          <td className="py-2 text-xs">High metabolic risk</td>
+                        </tr>
+                        <tr className="border-b border-border/50 bg-red-500/5">
+                          <td className="py-2 pr-3 font-bold">Obesity Class II</td>
+                          <td className="py-2 pr-3 font-mono font-bold">30.0–34.9</td>
+                          <td className="py-2 pr-3 font-mono">35.0–39.9</td>
+                          <td className="py-2 text-xs">Severe health risk</td>
+                        </tr>
+                        <tr className="bg-red-500/10">
+                          <td className="py-2 pr-3 font-bold">Obesity Class III</td>
+                          <td className="py-2 pr-3 font-mono font-bold">≥35.0</td>
+                          <td className="py-2 pr-3 font-mono">≥40.0</td>
+                          <td className="py-2 text-xs">Morbid obesity / Extreme risk</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+
+                  {/* Why the Guidelines Differ */}
+                  <div className="mt-3 space-y-2">
+                    <p className="text-sm font-semibold">Why the Guidelines Differ</p>
+                    <ul className="space-y-1 text-xs">
+                      <li className="flex items-start gap-2">
+                        <span className="text-blue-500 mt-1">•</span>
+                        <span><strong>Visceral Fat Accumulation:</strong> Asian Indians tend to have a higher percentage of body fat and more abdominal (visceral) fat at a lower BMI than Caucasians.</span>
+                      </li>
+                      <li className="flex items-start gap-2">
+                        <span className="text-blue-500 mt-1">•</span>
+                        <span><strong>The "Thin-Fat" Phenotype:</strong> Individuals may look lean externally but carry high internal fat surrounding major organs.</span>
+                      </li>
+                      <li className="flex items-start gap-2">
+                        <span className="text-blue-500 mt-1">•</span>
+                        <span><strong>Metabolic Vulnerability:</strong> Insulin resistance, type 2 diabetes, and early-onset heart attacks occur at much lower BMI levels in India.</span>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
               </CardContent>
             </Card>
 
-            {/* ─── ICMR-INDIAB 2025 Metabolic Phenotypes ─── */}
+            {/* ─── ICMR-INDIAB Metabolic Phenotypes ─── */}
             <Card className="clinical-card border-blue-500/30">
               <CardHeader className="pb-3">
                 <CardTitle className="flex items-center gap-2 text-lg">
                   <Activity className="h-5 w-5 text-blue-500" />
-                  ICMR-INDIAB 2025 Metabolic Phenotypes
+                  ICMR-INDIAB Metabolic Phenotypes
                 </CardTitle>
                 <p className="text-xs text-muted-foreground">
-                  For the purpose of defining the four metabolic phenotypes, the investigators used
-                  BMI &lt;25 kg/m² as non-obese and BMI ≥25 kg/m² as obese, combined with metabolic
-                  health (≥2 metabolic abnormalities).
+                  The ICMR-INDIAB study classifies individuals according to BMI and metabolic health (blood pressure, blood glucose, lipid profile, and waist circumference).
                 </p>
               </CardHeader>
-              <CardContent>
+              <CardContent className="space-y-4">
+                {/* Phenotype Grid */}
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                   <div className="rounded-lg bg-emerald-500/10 border border-emerald-500/30 p-4">
                     <p className="font-bold text-emerald-600 dark:text-emerald-400">MHNO</p>
-                    <p className="text-sm text-muted-foreground mt-1">BMI &lt;25 + Metabolically Healthy</p>
-                    <p className="text-xs text-muted-foreground mt-1">Metabolically healthy normal weight</p>
+                    <p className="text-xs text-muted-foreground">Metabolically Healthy Non-Obese</p>
+                    <p className="text-sm mt-1">BMI &lt;25 + Metabolically Healthy</p>
+                    <p className="text-xs text-muted-foreground mt-1">Lowest cardiometabolic risk</p>
                   </div>
                   <div className="rounded-lg bg-amber-500/10 border border-amber-500/30 p-4">
                     <p className="font-bold text-amber-600 dark:text-amber-400">MONO</p>
-                    <p className="text-sm text-muted-foreground mt-1">BMI &lt;25 + Metabolically Unhealthy</p>
-                    <p className="text-xs text-muted-foreground mt-1">Metabolically obese normal weight</p>
+                    <p className="text-xs text-muted-foreground">Metabolically Obese Non-Obese</p>
+                    <p className="text-sm mt-1">BMI &lt;25 + Metabolically Unhealthy</p>
+                    <p className="text-xs text-muted-foreground mt-1">"Slim-fat" phenotype; high risk of T2DM and CKD despite normal BMI</p>
                   </div>
                   <div className="rounded-lg bg-orange-500/10 border border-orange-500/30 p-4">
                     <p className="font-bold text-orange-600 dark:text-orange-400">MHO</p>
-                    <p className="text-sm text-muted-foreground mt-1">BMI ≥25 + Metabolically Healthy</p>
-                    <p className="text-xs text-muted-foreground mt-1">Metabolically healthy obesity</p>
+                    <p className="text-xs text-muted-foreground">Metabolically Healthy Obese</p>
+                    <p className="text-sm mt-1">BMI ≥25 + Metabolically Healthy</p>
+                    <p className="text-xs text-muted-foreground mt-1">Obese without metabolic abnormalities; lower risk than MOO but requires follow-up</p>
                   </div>
                   <div className="rounded-lg bg-red-500/10 border border-red-500/30 p-4">
                     <p className="font-bold text-red-600 dark:text-red-400">MOO</p>
-                    <p className="text-sm text-muted-foreground mt-1">BMI ≥25 + Metabolically Unhealthy</p>
-                    <p className="text-xs text-muted-foreground mt-1">Metabolically unhealthy obesity</p>
+                    <p className="text-xs text-muted-foreground">Metabolically Obese Obese</p>
+                    <p className="text-sm mt-1">BMI ≥25 + Metabolically Unhealthy</p>
+                    <p className="text-xs text-muted-foreground mt-1">Highest risk for T2DM, CVD, and other obesity-related complications</p>
                   </div>
                 </div>
-                <Alert className="mt-4 border-info/50 bg-info/10">
+
+                {/* Quick Reference Table */}
+                <div className="rounded-lg bg-card/50 border border-border p-4">
+                  <p className="text-sm font-semibold mb-2">Quick Reference</p>
+                  <div className="overflow-x-auto">
+                    <table className="w-full text-sm">
+                      <thead>
+                        <tr className="border-b border-border">
+                          <th className="text-left py-2 pr-4 font-semibold">BMI</th>
+                          <th className="text-left py-2 pr-4 font-semibold">Metabolic Health</th>
+                          <th className="text-left py-2 font-semibold">Phenotype</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr className="border-b border-border/50">
+                          <td className="py-2 pr-4">&lt;25</td>
+                          <td className="py-2 pr-4 text-emerald-500">Healthy</td>
+                          <td className="py-2 font-bold">MHNO</td>
+                        </tr>
+                        <tr className="border-b border-border/50">
+                          <td className="py-2 pr-4">&lt;25</td>
+                          <td className="py-2 pr-4 text-amber-500">Unhealthy</td>
+                          <td className="py-2 font-bold">MONO</td>
+                        </tr>
+                        <tr className="border-b border-border/50">
+                          <td className="py-2 pr-4">≥25</td>
+                          <td className="py-2 pr-4 text-emerald-500">Healthy</td>
+                          <td className="py-2 font-bold">MHO</td>
+                        </tr>
+                        <tr>
+                          <td className="py-2 pr-4">≥25</td>
+                          <td className="py-2 pr-4 text-red-500">Unhealthy</td>
+                          <td className="py-2 font-bold">MOO</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+
+                {/* Key Takeaways */}
+                <div className="rounded-lg bg-info/10 border border-info/30 p-4">
+                  <p className="text-sm font-semibold mb-2 flex items-center gap-2">
+                    <AlertCircle className="h-4 w-4 text-info" />
+                    Key Takeaways
+                  </p>
+                  <ul className="space-y-1 text-xs">
+                    <li className="flex items-start gap-2">
+                      <span className="text-info mt-1">•</span>
+                      <span><strong>BMI alone is insufficient</strong> for risk stratification in Indians.</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <span className="text-info mt-1">•</span>
+                      <span><strong>MONO</strong> individuals appear non-obese but carry substantial metabolic risk.</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <span className="text-info mt-1">•</span>
+                      <span><strong>MOO</strong> has the greatest risk of diabetes and cardiovascular disease.</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <span className="text-info mt-1">•</span>
+                      <span><strong>MHO</strong> exists but may progress to metabolically unhealthy obesity over time, so periodic reassessment is recommended.</span>
+                    </li>
+                  </ul>
+                </div>
+
+                <Alert className="border-info/50 bg-info/10">
                   <InfoIcon className="h-4 w-4" />
                   <AlertDescription className="text-xs">
                     <strong>Both classifications are correct, but they answer different questions.</strong>
