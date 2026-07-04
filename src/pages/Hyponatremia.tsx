@@ -9,7 +9,7 @@ import {
   AlertTriangle, Droplets, Stethoscope, FlaskConical, Bone,
   HeartPulse, Brain, Pill, Syringe, Activity, Info, Copy,
   Download, Clock, ShieldAlert, ChevronRight, ChevronDown,
-  Calculator,
+  Calculator, Beaker, TestTube, FileText,
 } from "lucide-react";
 import { downloadTextFile } from "@/lib/clinical-utils";
 import { toast } from "sonner";
@@ -480,6 +480,95 @@ export default function Hyponatremia() {
           Step 3: Treatment
         </Badge>
       </div>
+
+      {/* ── Quick Reference Card ── */}
+      <Card className="border-amber-500/20">
+        <button
+          onClick={() => setExpandedSection(expandedSection === "quickref" ? null : "quickref")}
+          className="w-full text-left"
+        >
+          <CardHeader className="pb-3">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-2">
+                <FileText className="h-5 w-5 text-amber-400" />
+                <CardTitle className="text-base">📋 Diagnostic Quick Reference Card</CardTitle>
+              </div>
+              {expandedSection === "quickref" ? <ChevronDown className="h-4 w-4" /> : <ChevronRight className="h-4 w-4" />}
+            </div>
+            <CardDescription>Quick differential: SIADH vs Diabetes Insipidus vs Psychogenic Polydipsia — lab patterns at a glance</CardDescription>
+          </CardHeader>
+        </button>
+
+        {expandedSection === "quickref" && (
+          <CardContent className="pt-0">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+              {/* SIADH */}
+              <div className="rounded-lg border border-blue-500/20 bg-blue-500/5 p-4">
+                <div className="flex items-center gap-2 mb-3">
+                  <Beaker className="h-5 w-5 text-blue-400" />
+                  <h3 className="font-bold text-sm text-blue-400">Diluted Blood / Concentrated Urine</h3>
+                </div>
+                <p className="text-xs text-muted-foreground mb-2 italic">"Low serum Na⁺ + concentrated urine = SIADH"</p>
+                <div className="space-y-1 text-xs">
+                  <div className="flex justify-between"><span className="text-muted-foreground">Serum Na⁺</span><span className="font-mono font-medium">&lt;135 mEq/L</span></div>
+                  <div className="flex justify-between"><span className="text-muted-foreground">Serum Osm</span><span className="font-mono font-medium">&lt;275 mOsm/kg</span></div>
+                  <div className="flex justify-between"><span className="text-muted-foreground">Urine Osm</span><span className="font-mono font-medium">&gt;100 mOsm/kg</span></div>
+                  <div className="flex justify-between"><span className="text-muted-foreground">Urine Na⁺</span><span className="font-mono font-medium">&gt;40 mEq/L</span></div>
+                </div>
+                <div className="mt-3 pt-2 border-t border-blue-500/10">
+                  <Badge variant="outline" className="text-[10px] border-blue-500/30 text-blue-400">SIADH</Badge>
+                </div>
+              </div>
+
+              {/* Diabetes Insipidus */}
+              <div className="rounded-lg border border-red-500/20 bg-red-500/5 p-4">
+                <div className="flex items-center gap-2 mb-3">
+                  <TestTube className="h-5 w-5 text-red-400" />
+                  <h3 className="font-bold text-sm text-red-400">Concentrated Blood / Diluted Urine</h3>
+                </div>
+                <p className="text-xs text-muted-foreground mb-2 italic">"↑Na⁺ + dilute urine = Diabetes Insipidus"</p>
+                <div className="space-y-1 text-xs">
+                  <div className="flex justify-between"><span className="text-muted-foreground">Serum Na⁺</span><span className="font-mono font-medium">&gt;145 mEq/L</span></div>
+                  <div className="flex justify-between"><span className="text-muted-foreground">Serum Osm</span><span className="font-mono font-medium">&gt;295 mOsm/kg</span></div>
+                  <div className="flex justify-between"><span className="text-muted-foreground">Urine Osm</span><span className="font-mono font-medium">&lt;300 mOsm/kg</span></div>
+                  <div className="flex justify-between"><span className="text-muted-foreground">Urine Na⁺</span><span className="font-mono font-medium">&lt;20 mEq/L</span></div>
+                </div>
+                <div className="mt-3 pt-2 border-t border-red-500/10">
+                  <Badge variant="outline" className="text-[10px] border-red-500/30 text-red-400">Diabetes Insipidus</Badge>
+                </div>
+              </div>
+
+              {/* Psychogenic Polydipsia */}
+              <div className="rounded-lg border border-emerald-500/20 bg-emerald-500/5 p-4">
+                <div className="flex items-center gap-2 mb-3">
+                  <Droplets className="h-5 w-5 text-emerald-400" />
+                  <h3 className="font-bold text-sm text-emerald-400">Dilute Blood AND Dilute Urine</h3>
+                </div>
+                <p className="text-xs text-muted-foreground mb-2 italic">"↓Na⁺ + dilute urine = Psychogenic Polydipsia"</p>
+                <div className="space-y-1 text-xs">
+                  <div className="flex justify-between"><span className="text-muted-foreground">Serum Na⁺</span><span className="font-mono font-medium">&lt;135 mEq/L</span></div>
+                  <div className="flex justify-between"><span className="text-muted-foreground">Serum Osm</span><span className="font-mono font-medium">&lt;275 mOsm/kg</span></div>
+                  <div className="flex justify-between"><span className="text-muted-foreground">Urine Osm</span><span className="font-mono font-medium">&lt;100 mOsm/kg</span></div>
+                  <div className="flex justify-between"><span className="text-muted-foreground">Urine Na⁺</span><span className="font-mono font-medium">&lt;20 mEq/L</span></div>
+                </div>
+                <div className="mt-3 pt-2 border-t border-blue-500/10">
+                  <Badge variant="outline" className="text-[10px] border-emerald-500/30 text-emerald-400">Psychogenic Polydipsia</Badge>
+                </div>
+              </div>
+            </div>
+
+            {/* Lithium toxicity note */}
+            <div className="mt-3 p-3 rounded-lg border border-purple-500/20 bg-purple-500/5 text-xs">
+              <p className="font-semibold text-purple-400 mb-1">⚠ Lithium Toxicity Note</p>
+              <p className="text-muted-foreground">
+                Lithium toxicity can present during volume depletion with low serum sodium and low serum osmolality;
+                urine osmolality is often low because lithium impairs concentrating ability. Treat by stopping lithium
+                and giving normal saline; dialysis if severe.
+              </p>
+            </div>
+          </CardContent>
+        )}
+      </Card>
 
       {/* ── STEP 1: Confirm Hypotonic Hyponatremia ── */}
       <Card className="border-blue-500/20">
