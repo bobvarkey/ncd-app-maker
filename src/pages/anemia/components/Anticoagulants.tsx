@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import {
@@ -18,7 +18,7 @@ import {
   Info,
   CheckCircle,
   XCircle,
-  ArrowRight,
+  ArrowRight, Heart, Activity, Droplets, Weight,
 } from 'lucide-react';
 import {
   Dialog,
@@ -300,6 +300,87 @@ export default function Anticoagulants() {
   const [showInfographic, setShowInfographic] = useState(false);
   const [hitState, setHitState] = useState<HitState>(defaultHitState);
 
+  // ── CHA2DS2-VASc state ──
+  const [cha2ds2Vasc, setCha2ds2Vasc] = useState<Record<string, boolean>>({
+    chf: false, htn: false, age65_74: false, age75: false,
+    dm: false, stroke: false, vascular: false, female: false,
+  });
+
+  const cha2ds2VascTotal = useMemo(() => {
+    let t = 0;
+    if (cha2ds2Vasc.chf) t += 1;
+    if (cha2ds2Vasc.htn) t += 1;
+    if (cha2ds2Vasc.age65_74) t += 1;
+    if (cha2ds2Vasc.age75) t += 2;
+    if (cha2ds2Vasc.dm) t += 1;
+    if (cha2ds2Vasc.stroke) t += 2;
+    if (cha2ds2Vasc.vascular) t += 1;
+    if (cha2ds2Vasc.female) t += 1;
+    return t;
+  }, [cha2ds2Vasc]);
+
+  const cha2ds2VascRisk = useMemo(() => {
+    const riskMap: Record<number, string> = {
+      0: '0% (men) / 0.8% (women) per year',
+      1: '1.3% (men) / 2.2% (women) per year',
+      2: '2.2% per year',
+      3: '3.2% per year',
+      4: '4.0% per year',
+      5: '6.7% per year',
+      6: '9.8% per year',
+      7: '9.6% per year',
+      8: '6.7% per year',
+      9: '15.2% per year',
+    };
+    return riskMap[cha2ds2VascTotal] || '—';
+  }, [cha2ds2VascTotal]);
+
+  const cha2ds2VascRecommendation = useMemo(() => {
+    if (cha2ds2VascTotal >= 2) return 'Anticoagulation recommended (Class I).';
+    if (cha2ds2VascTotal === 1) return 'Consider anticoagulation (Class IIb).';
+    return 'No anticoagulation recommended (Class III).';
+  }, [cha2ds2VascTotal]);
+
+  // ── HAS-BLED state ──
+  const [hasbled, setHasbled] = useState<Record<string, boolean>>({
+    htn_hasbled: false, renal: false, liver: false, stroke_hasbled: false,
+    bleeding: false, labile_inr: false, elderly: false, drugs: false,
+  });
+
+  const hasbledTotal = useMemo(() => {
+    let t = 0;
+    if (hasbled.htn_hasbled) t += 1;
+    if (hasbled.renal) t += 1;
+    if (hasbled.liver) t += 1;
+    if (hasbled.stroke_hasbled) t += 1;
+    if (hasbled.bleeding) t += 1;
+    if (hasbled.labile_inr) t += 1;
+    if (hasbled.elderly) t += 1;
+    if (hasbled.drugs) t += 1;
+    return t;
+  }, [hasbled]);
+
+  const hasbledRisk = useMemo(() => {
+    const riskMap: Record<number, string> = {
+      0: '0.9% per year',
+      1: '2.0% per year',
+      2: '3.7% per year',
+      3: '5.8% per year',
+      4: '8.9% per year',
+      5: '9.1% per year',
+      6: '11.1% per year',
+      7: '12.5% per year',
+      8: '15.0% per year',
+      9: '15.0% per year',
+    };
+    return riskMap[hasbledTotal] || '—';
+  }, [hasbledTotal]);
+
+  const hasbledRecommendation = useMemo(() => {
+    if (hasbledTotal >= 3) return 'High bleeding risk. Address modifiable factors. Do NOT withhold anticoagulation solely based on HAS-BLED if CHA₂DS₂-VASc indicates need.';
+    return 'Low-moderate bleeding risk. Proceed with anticoagulation as indicated.';
+  }, [hasbledTotal]);
+
   return (
     <div className="space-y-4">
       {/* Header */}
@@ -515,6 +596,143 @@ export default function Anticoagulants() {
             </li>
           ))}
         </ul>
+      </CollapsibleSection>
+
+      {/* ─── CHA2DS2-VASc & HAS-BLED Scores ──────────────────── */}
+      <CollapsibleSection title="CHA₂DS₂-VASc &amp; HAS-BLED Risk Scores" icon={Heart}>
+        <div className="space-y-6">
+          <p className="text-xs text-muted-foreground">
+            Use CHA₂DS₂-VASc to estimate stroke risk in non-valvular AF. Use HAS-BLED to estimate bleeding risk before starting anticoagulation.
+          </p>
+
+          {/* CHA2DS2-VASc */}
+          <div className="p-4 rounded-lg border border-blue-500/20 bg-blue-500/5">
+            <h3 className="text-sm font-bold text-blue-400 mb-3 flex items-center gap-2">
+              <Heart className="h-4 w-4" />
+              CHA₂DS₂-VASc Score — Stroke Risk in Non-Valvular AF
+            </h3>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 mb-3">
+              {[
+                { key: 'chf', label: 'C — CHF / LV dysfunction', points: 1 },
+                { key: 'htn', label: 'H — Hypertension', points: 1 },
+                { key: 'age65_74', label: 'A₂ — Age 65–74 years', points: 1 },
+                { key: 'age75', label: 'A₂ — Age ≥75 years', points: 2 },
+                { key: 'dm', label: 'D — Diabetes mellitus', points: 1 },
+                { key: 'stroke', label: 'S₂ — Stroke / TIA / TE', points: 2 },
+                { key: 'vascular', label: 'V — Vascular disease (PAD, prior MI, aortic plaque)', points: 1 },
+                { key: 'female', label: 'Sc — Female sex', points: 1 },
+              ].map((item) => (
+                <label
+                  key={item.key}
+                  className="flex items-center gap-2 p-2 rounded-lg border border-border bg-card/50 cursor-pointer hover:bg-accent/30 transition-colors text-xs"
+                >
+                  <input
+                    type="checkbox"
+                    checked={cha2ds2Vasc[item.key as keyof typeof cha2ds2Vasc]}
+                    onChange={() => {
+                      const updated = { ...cha2ds2Vasc, [item.key]: !cha2ds2Vasc[item.key as keyof typeof cha2ds2Vasc] };
+                      setCha2ds2Vasc(updated);
+                    }}
+                    className="rounded border-border accent-blue-500"
+                  />
+                  <span className="text-muted-foreground">{item.label}</span>
+                  <span className="ml-auto font-mono text-blue-400">+{item.points}</span>
+                </label>
+              ))}
+            </div>
+
+            {cha2ds2VascTotal > 0 && (
+              <div className="space-y-2">
+                <div className="flex items-center justify-between p-3 rounded-lg bg-card/50 border border-border">
+                  <span className="text-sm font-semibold">Total Score</span>
+                  <span className="text-2xl font-bold font-mono text-blue-400">{cha2ds2VascTotal}</span>
+                </div>
+                <div className="p-3 rounded-lg border border-blue-500/20 bg-blue-500/5">
+                  <p className="text-xs font-semibold text-blue-400 mb-1">Stroke Risk (per year)</p>
+                  <p className="text-sm font-bold">{cha2ds2VascRisk}</p>
+                  <p className="text-xs text-muted-foreground mt-1">{cha2ds2VascRecommendation}</p>
+                </div>
+              </div>
+            )}
+          </div>
+
+          {/* HAS-BLED */}
+          <div className="p-4 rounded-lg border border-red-500/20 bg-red-500/5">
+            <h3 className="text-sm font-bold text-red-400 mb-3 flex items-center gap-2">
+              <Activity className="h-4 w-4" />
+              HAS-BLED Score — Bleeding Risk
+            </h3>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 mb-3">
+              {[
+                { key: 'htn_hasbled', label: 'H — Hypertension (uncontrolled, SBP >160)', points: 1 },
+                { key: 'renal', label: 'A — Abnormal renal function (CrCl <30 or dialysis)', points: 1 },
+                { key: 'liver', label: 'A — Abnormal liver function (cirrhosis, bilirubin >2×, AST/ALT >3×)', points: 1 },
+                { key: 'stroke_hasbled', label: 'S — Stroke history', points: 1 },
+                { key: 'bleeding', label: 'B — Bleeding history / predisposition', points: 1 },
+                { key: 'labile_inr', label: 'L — Labile INR (unstable / TTR <60%)', points: 1 },
+                { key: 'elderly', label: 'E — Elderly (age >65)', points: 1 },
+                { key: 'drugs', label: 'D — Drugs (antiplatelets, NSAIDs) or alcohol excess', points: 1 },
+              ].map((item) => (
+                <label
+                  key={item.key}
+                  className="flex items-center gap-2 p-2 rounded-lg border border-border bg-card/50 cursor-pointer hover:bg-accent/30 transition-colors text-xs"
+                >
+                  <input
+                    type="checkbox"
+                    checked={hasbled[item.key as keyof typeof hasbled]}
+                    onChange={() => {
+                      const updated = { ...hasbled, [item.key]: !hasbled[item.key as keyof typeof hasbled] };
+                      setHasbled(updated);
+                    }}
+                    className="rounded border-border accent-red-500"
+                  />
+                  <span className="text-muted-foreground">{item.label}</span>
+                  <span className="ml-auto font-mono text-red-400">+{item.points}</span>
+                </label>
+              ))}
+            </div>
+
+            {hasbledTotal > 0 && (
+              <div className="space-y-2">
+                <div className="flex items-center justify-between p-3 rounded-lg bg-card/50 border border-border">
+                  <span className="text-sm font-semibold">Total Score</span>
+                  <span className="text-2xl font-bold font-mono text-red-400">{hasbledTotal}</span>
+                </div>
+                <div className="p-3 rounded-lg border border-red-500/20 bg-red-500/5">
+                  <p className="text-xs font-semibold text-red-400 mb-1">Bleeding Risk (per year)</p>
+                  <p className="text-sm font-bold">{hasbledRisk}</p>
+                  <p className="text-xs text-muted-foreground mt-1">{hasbledRecommendation}</p>
+                </div>
+              </div>
+            )}
+          </div>
+
+          {/* Combined Interpretation */}
+          {cha2ds2VascTotal > 0 && hasbledTotal > 0 && (
+            <div className="p-4 rounded-lg border border-amber-500/20 bg-amber-500/5">
+              <h3 className="text-sm font-bold text-amber-400 mb-2 flex items-center gap-2">
+                <Scale className="h-4 w-4" />
+                Risk-Benefit Assessment
+              </h3>
+              <div className="grid grid-cols-2 gap-3 text-xs">
+                <div className="p-2 rounded bg-card/50 border border-border text-center">
+                  <div className="text-muted-foreground">CHA₂DS₂-VASc</div>
+                  <div className="text-lg font-bold font-mono text-blue-400">{cha2ds2VascTotal}</div>
+                </div>
+                <div className="p-2 rounded bg-card/50 border border-border text-center">
+                  <div className="text-muted-foreground">HAS-BLED</div>
+                  <div className="text-lg font-bold font-mono text-red-400">{hasbledTotal}</div>
+                </div>
+              </div>
+              <p className="text-xs text-muted-foreground mt-2">
+                {hasbledTotal >= 3
+                  ? '⚠️ HAS-BLED ≥3 indicates high bleeding risk. Address modifiable risk factors (BP control, avoid NSAIDs, improve INR control). Anticoagulation still indicated if CHA₂DS₂-VASc ≥2 in men or ≥3 in women — do not withhold solely due to HAS-BLED.'
+                  : 'HAS-BLED <3 indicates low-moderate bleeding risk. Proceed with anticoagulation as indicated by CHA₂DS₂-VASc score.'
+                }
+              </p>
+            </div>
+          )}
+        </div>
       </CollapsibleSection>
 
       {/* ─── HIT Risk Toggle & Fondaparinux Section ──────────────────── */}
