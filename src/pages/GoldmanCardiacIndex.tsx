@@ -1,5 +1,5 @@
 import { useState, useMemo } from "react";
-import { Heart, AlertTriangle, CheckCircle, Info, ChevronDown, ChevronUp, Activity } from "lucide-react";
+import { Heart, AlertTriangle, CheckCircle, Info, ChevronDown, ChevronUp, Activity, Pill } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Switch } from "@/components/ui/switch";
 import { Label } from "@/components/ui/label";
@@ -327,7 +327,7 @@ const ECG_PATTERNS: ECGPattern[] = [
   {
     id: "hcm",
     name: "Hypertrophic Cardiomyopathy (HCM)",
- description: "LVH with bizarre QRS morphology, deep narrow Q waves",
+    description: "LVH with bizarre QRS morphology, deep narrow Q waves",
     criteria: [
       "Marked LVH criteria (Sokolow-Lyon, Cornell voltage)",
       "Deep narrow Q waves in lateral leads (I, aVL, V5-V6)",
@@ -396,6 +396,133 @@ const ECG_PATTERNS: ECGPattern[] = [
   },
 ];
 
+// Anti-arrhythmic Drug Classification (Vaughn-Williams)
+interface AntiarrhythmicDrug {
+  name: string;
+  uses?: string[];
+  cautions?: string;
+}
+
+interface AntiarrhythmicSubclass {
+  class: string;
+  mnemonic?: string;
+  drugs: AntiarrhythmicDrug[];
+}
+
+interface AntiarrhythmicClass {
+  class: string;
+  mechanism: string;
+  mnemonic?: string;
+  drugs: AntiarrhythmicDrug[];
+  subclasses?: AntiarrhythmicSubclass[];
+  clinicalPearls?: string[];
+}
+
+const ANTIARRHYTHMIC_CLASSES: AntiarrhythmicClass[] = [
+  {
+    class: "I",
+    mechanism: "Na⁺ channel blockers (membrane stabilizers)",
+    subclasses: [
+      {
+        class: "A",
+        mnemonic: "Quinine Likes Fever",
+        drugs: [
+          { name: "Quinidine", uses: ["AF/flutter conversion", "ventricular arrhythmias"], cautions: "QT prolongation, TdP risk, GI upset, cinchonism" },
+          { name: "Procainamide", uses: ["VT", "AF (IV)", "SVT"], cautions: "Lupus-like syndrome, QT prolongation, hypotension IV" },
+          { name: "Disopyramide", uses: ["VT prevention", "vagal AF"], cautions: "Anticholinergic effects, negative inotropy, contraindicated in HCM" },
+        ],
+      },
+      {
+        class: "B",
+        mnemonic: "Likes",
+        drugs: [
+          { name: "Lidocaine", uses: ["VT/VF (IV)", "post-MI VT"], cautions: "CNS toxicity (seizures, confusion), only IV/IM, narrow therapeutic window" },
+          { name: "Mexiletine", uses: ["VT (oral)", "neuropathic pain"], cautions: "GI upset, tremor, CNS effects, check levels" },
+        ],
+      },
+      {
+        class: "C",
+        mnemonic: "Fever",
+        drugs: [
+          { name: "Flecainide", uses: ["AF/flutter", "SVT", "WPW"], cautions: "Pro-arrhythmic in structural heart disease, contraindicated post-MI, CAD" },
+          { name: "Propafenone", uses: ["AF", "SVT"], cautions: "Structural heart disease contraindication, beta-blocking properties, interacts with digoxin" },
+        ],
+      },
+    ],
+    clinicalPearls: [
+      "Class IA: Moderate Na⁺ block, prolongs QRS and QT",
+      "Class IB: Mild Na⁺ block, shortens QT, ischemic tissue effect",
+      "Class IC: Strong Na⁺ block, markedly prolongs QRS, avoid in CAD",
+      "CAST trial: Flecainide/propafenone contraindicated post-MI",
+    ],
+  },
+  {
+    class: "II",
+    mechanism: "Beta blockers (β-adrenergic antagonists)",
+    mnemonic: "LOL",
+    drugs: [
+      { name: "Propranolol", uses: ["SVT", "thyroid storm", "essential tremor", "migraine prophylaxis"], cautions: "Non-selective, asthma contraindication, hypoglycemia masking" },
+      { name: "Metoprolol", uses: ["Rate control (AF)", "HF (succinate)", "post-MI", "HTN"], cautions: "β1-selective (less bronchospasm), fatigue, bradycardia" },
+      { name: "Atenolol", uses: ["HTN", "rate control"], cautions: "β1-selective, once daily, less effective post-MI" },
+      { name: "Esmolol", uses: ["IV rate control (AF)", "intraoperative", "thyroid storm"], cautions: "Short half-life (9 min), IV only, continuous infusion" },
+      { name: "Bisoprolol", uses: ["HF", "HTN"], cautions: "β1-selective, long-acting, well-tolerated in HF" },
+      { name: "Carvedilol", uses: ["HF", "HTN"], cautions: "Non-selective + α-blockade, more hypotension, take with food" },
+    ],
+    clinicalPearls: [
+      "First-line for rate control in AF (with diltiazem)",
+      "Reduce mortality post-MI and in HF",
+      "Avoid in acute decompensated HF, severe asthma, bradycardia",
+      "Never stop abruptly — taper over 1-2 weeks",
+    ],
+  },
+  {
+    class: "III",
+    mechanism: "K⁺ channel blockers (prolong repolarization)",
+    mnemonic: "AIDS",
+    drugs: [
+      { name: "Amiodarone", uses: ["VT/VF", "AF (rate/rhythm)", "ICD storms"], cautions: "Pulmonary fibrosis, thyroid dysfunction, hepatitis, photosensitivity, QT prolongation, drug interactions (CYP inhibitor), long half-life (40-55 days)" },
+      { name: "Dronedarone", uses: ["AF (non-permanent)", "paroxysmal AF"], cautions: "Contraindicated in HF (NYHA III-IV), permanent AF, contraindicated with potent CYP3A4 inhibitors" },
+      { name: "Sotalol", uses: ["AF", "VT"], cautions: "QT prolongation, TdP risk (especially females, hypokalemia), β-blockade effects, renal dosing" },
+      { name: "Ibutilide", uses: ["AF/flutter conversion (IV)"], cautions: "QT prolongation, TdP risk (3-4%), give with Mg, continuous monitoring required" },
+      { name: "Dofetilide", uses: ["AF conversion/maintenance"], cautions: "QT prolongation, TdP risk, requires inpatient initiation, renal dosing" },
+    ],
+    clinicalPearls: [
+      "Amiodarone: most effective, most toxic, long half-life",
+      "Dronedarone: amiodarone analog, less effective, less toxic",
+      "All prolong QT — monitor electrolytes, avoid with QT drugs",
+      "Sotalol/dofetilide/ibutilide require QT monitoring",
+    ],
+  },
+  {
+    class: "IV",
+    mechanism: "Ca²⁺ channel blockers (non-dihydropyridine)",
+    drugs: [
+      { name: "Verapamil", uses: ["SVT (AVNRT)", "rate control (AF)", "HTN", "HOCM"], cautions: "Negative inotropy, avoid in HF, AV block, WPW with AF, interacts with β-blockers" },
+      { name: "Diltiazem", uses: ["Rate control (AF)", "HTN", "angina"], cautions: "Less negative inotropy than verapamil, avoid in HF with reduced EF, contraindicated with β-blockers" },
+    ],
+    clinicalPearls: [
+      "Only non-DHP CCBs affect AV node (verapamil, diltiazem)",
+      "DHP CCBs (amlodipine, nifedipine) do NOT affect AV node",
+      "Avoid in WPW with AF (may precipitate VF)",
+      "First-line for SVT (AVNRT) with Valsalva/adenosine failure",
+    ],
+  },
+  {
+    class: "V",
+    mechanism: "Other / Miscellaneous",
+    drugs: [
+      { name: "Adenosine", uses: ["SVT termination (AVNRT)", "diagnostic (wide-complex tachycardia)"], cautions: "Very short half-life (<10s), avoid in WPW, asthma, heart transplant, may cause chest tightness/flushing" },
+      { name: "Digoxin", uses: ["Rate control (AF, especially HF)", "HF (add-on)"], cautions: "Narrow therapeutic window, renal dosing, toxicity (GI, visual, arrhythmias), avoid in WPW, interactions with amiodarone/verapamil" },
+      { name: "Magnesium sulfate", uses: ["TdP", "VT (refractory)", "digitalis toxicity"], cautions: "Hypotension IV, flushing, check renal function, may cause reflex hypocalcemia" },
+    ],
+    clinicalPearls: [
+      "Adenosine: diagnostic AND therapeutic for SVT",
+      "Digoxin: only improves resting rate (not exercise)",
+      "Magnesium: first-line for TdP regardless of Mg level",
+    ],
+  },
+];
+
 const GoldmanCardiacIndex = () => {
   const buildInitialFactors = (): RiskFactor[] => [
     // History
@@ -425,6 +552,8 @@ const GoldmanCardiacIndex = () => {
   const [expandedCats, setExpandedCats] = useState<Set<string>>(new Set(["history", "examination", "ecg", "vitals", "lab", "age"]));
   const [showECGPatterns, setShowECGPatterns] = useState(false);
   const [expandedECGPatterns, setExpandedECGPatterns] = useState<Set<string>>(new Set());
+  const [showAntiarrhythmics, setShowAntiarrhythmics] = useState(false);
+  const [expandedDrugClasses, setExpandedDrugClasses] = useState<Set<string>>(new Set());
 
   const toggleFactor = (id: string) => {
     setFactors(prev => prev.map(f => f.id === id ? { ...f, active: !f.active } : f));
@@ -449,6 +578,18 @@ const GoldmanCardiacIndex = () => {
         next.delete(id);
       } else {
         next.add(id);
+      }
+      return next;
+    });
+  };
+
+  const toggleDrugClass = (cls: string) => {
+    setExpandedDrugClasses(prev => {
+      const next = new Set(prev);
+      if (next.has(cls)) {
+        next.delete(cls);
+      } else {
+        next.add(cls);
       }
       return next;
     });
@@ -680,6 +821,153 @@ const GoldmanCardiacIndex = () => {
                   </CollapsibleContent>
                 </Collapsible>
               ))}
+            </CardContent>
+          </CollapsibleContent>
+        </Collapsible>
+      </Card>
+
+      {/* Anti-arrhythmic Drugs Classification */}
+      <Card className="border-border/40">
+        <Collapsible open={showAntiarrhythmics} onOpenChange={setShowAntiarrhythmics}>
+          <CollapsibleTrigger asChild>
+            <button className="w-full">
+              <CardHeader className="pb-2">
+                <CardTitle className="text-base flex items-center justify-between">
+                  <span className="flex items-center gap-2">
+                    <Pill className="w-4 h-4 text-muted-foreground" />
+                    Anti-arrhythmic Drugs (Vaughn-Williams)
+                  </span>
+                  {showAntiarrhythmics ? <ChevronUp className="w-4 h-4 text-muted-foreground" /> : <ChevronDown className="w-4 h-4 text-muted-foreground" />}
+                </CardTitle>
+              </CardHeader>
+            </button>
+          </CollapsibleTrigger>
+          <CollapsibleContent>
+            <CardContent className="pt-2 space-y-4">
+              {/* Mnemonic */}
+              <div className="p-3 rounded-lg bg-primary/5 border border-primary/20">
+                <p className="text-xs text-muted-foreground mb-1">Mnemonic</p>
+                <p className="text-lg font-bold text-primary">"Some Block Potassium Channels"</p>
+                <div className="grid grid-cols-4 gap-2 mt-2 text-xs">
+                  {["Some", "Block", "Potassium", "Channels"].map((word, i) => (
+                    <div key={word} className="text-center p-1.5 rounded bg-muted/50">
+                      <div className="font-medium text-foreground">{word}</div>
+                      <div className="text-muted-foreground">
+                        {["Sodium channel", "Beta blockers", "Potassium channel", "Calcium channel"][i]}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* Drug Classes */}
+              <div className="space-y-2">
+                {ANTIARRHYTHMIC_CLASSES.map((cls) => (
+                  <Collapsible key={cls.class} open={expandedDrugClasses.has(cls.class)} onOpenChange={() => toggleDrugClass(cls.class)}>
+                    <CollapsibleTrigger asChild>
+                      <button className="w-full text-left">
+                        <div className={`p-3 rounded-lg border transition-colors ${
+                          expandedDrugClasses.has(cls.class) ? "bg-muted/50 border-primary/30" : "bg-muted/20 border-border/40 hover:bg-muted/30"
+                        }`}>
+                          <div className="flex items-center justify-between">
+                            <div className="flex items-center gap-2">
+                              <span className="text-lg font-bold text-primary">Class {cls.class}</span>
+                              <span className="text-xs px-2 py-0.5 rounded-full bg-muted text-muted-foreground">
+                                {cls.mechanism}
+                              </span>
+                              {cls.mnemonic && (
+                                <span className="text-xs px-2 py-0.5 rounded-full bg-warning/10 text-warning">
+                                  {cls.mnemonic}
+                                </span>
+                              )}
+                            </div>
+                            {expandedDrugClasses.has(cls.class) ? (
+                              <ChevronUp className="w-4 h-4 text-muted-foreground shrink-0" />
+                            ) : (
+                              <ChevronDown className="w-4 h-4 text-muted-foreground shrink-0" />
+                            )}
+                          </div>
+                        </div>
+                      </button>
+                    </CollapsibleTrigger>
+                    <CollapsibleContent>
+                      <div className="mt-2 p-3 rounded-lg bg-muted/30 border border-border/30 space-y-3">
+                        {/* Subclasses for Class I */}
+                        {cls.subclasses ? (
+                          <div className="space-y-3">
+                            {cls.subclasses.map((sub) => (
+                              <div key={sub.class} className="space-y-2">
+                                <div className="flex items-center gap-2">
+                                  <span className="font-medium text-sm">Class {cls.class}{sub.class}</span>
+                                  {sub.mnemonic && (
+                                    <span className="text-xs px-2 py-0.5 rounded-full bg-warning/10 text-warning">
+                                      {sub.mnemonic}
+                                    </span>
+                                  )}
+                                </div>
+                                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2">
+                                  {sub.drugs.map((drug) => (
+                                    <div key={drug.name} className="p-2 rounded bg-background/50 border border-border/30">
+                                      <div className="font-medium text-sm">{drug.name}</div>
+                                      {drug.uses && (
+                                        <div className="text-xs text-muted-foreground mt-1">
+                                          <span className="text-muted-foreground/70">Uses: </span>
+                                          {drug.uses.join(", ")}
+                                        </div>
+                                      )}
+                                      {drug.cautions && (
+                                        <div className="text-xs text-destructive/80 mt-1">
+                                          <span className="text-muted-foreground/70">⚠️ </span>
+                                          {drug.cautions}
+                                        </div>
+                                      )}
+                                    </div>
+                                  ))}
+                                </div>
+                              </div>
+                            ))}
+                          </div>
+                        ) : (
+                          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2">
+                            {cls.drugs.map((drug) => (
+                              <div key={drug.name} className="p-2 rounded bg-background/50 border border-border/30">
+                                <div className="font-medium text-sm">{drug.name}</div>
+                                {drug.uses && (
+                                  <div className="text-xs text-muted-foreground mt-1">
+                                    <span className="text-muted-foreground/70">Uses: </span>
+                                    {drug.uses.join(", ")}
+                                  </div>
+                                )}
+                                {drug.cautions && (
+                                  <div className="text-xs text-destructive/80 mt-1">
+                                    <span className="text-muted-foreground/70">⚠️ </span>
+                                    {drug.cautions}
+                                  </div>
+                                )}
+                              </div>
+                            ))}
+                          </div>
+                        )}
+
+                        {/* Clinical Pearls */}
+                        {cls.clinicalPearls && (
+                          <div className="p-2 rounded bg-primary/5 border border-primary/20">
+                            <div className="text-xs font-medium text-primary mb-1">Clinical Pearls</div>
+                            <ul className="text-xs space-y-1">
+                              {cls.clinicalPearls.map((pearl, i) => (
+                                <li key={i} className="flex items-start gap-1.5">
+                                  <span className="text-primary shrink-0">•</span>
+                                  <span>{pearl}</span>
+                                </li>
+                              ))}
+                            </ul>
+                          </div>
+                        )}
+                      </div>
+                    </CollapsibleContent>
+                  </Collapsible>
+                ))}
+              </div>
             </CardContent>
           </CollapsibleContent>
         </Collapsible>
