@@ -1,5 +1,5 @@
 import { useState, useMemo } from "react";
-import { Heart, AlertTriangle, CheckCircle, Info, ChevronDown, ChevronUp, Activity, Pill, Brain } from "lucide-react";
+import { Heart, AlertTriangle, CheckCircle, Info, ChevronDown, ChevronUp, Activity, Pill, Brain, Shield } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Switch } from "@/components/ui/switch";
 import { Label } from "@/components/ui/label";
@@ -555,6 +555,7 @@ const GoldmanCardiacIndex = () => {
   const [showAntiarrhythmics, setShowAntiarrhythmics] = useState(false);
   const [expandedDrugClasses, setExpandedDrugClasses] = useState<Set<string>>(new Set());
   const [showSyncopeAlgorithm, setShowSyncopeAlgorithm] = useState(false);
+  const [showACLS, setShowACLS] = useState(false);
 
   const toggleFactor = (id: string) => {
     setFactors(prev => prev.map(f => f.id === id ? { ...f, active: !f.active } : f));
@@ -1157,6 +1158,283 @@ const GoldmanCardiacIndex = () => {
                     <span className="text-primary">•</span> <strong>Normal ECG:</strong> Does not exclude channelopathy — CPVT, Brugada may need provocation
                   </li>
                 </ul>
+              </div>
+            </CardContent>
+          </CollapsibleContent>
+        </Collapsible>
+      </Card>
+      {/* ACLS/BLS Algorithms */}
+      <Card className="border-border/40">
+        <Collapsible open={showACLS} onOpenChange={setShowACLS}>
+          <CollapsibleTrigger asChild>
+            <button className="w-full">
+              <CardHeader className="pb-2">
+                <CardTitle className="text-base flex items-center justify-between">
+                  <span className="flex items-center gap-2">
+                    <Shield className="w-4 h-4 text-muted-foreground" />
+                    ACLS/BLS Algorithms
+                  </span>
+                  {showACLS ? <ChevronUp className="w-4 h-4 text-muted-foreground" /> : <ChevronDown className="w-4 h-4 text-muted-foreground" />}
+                </CardTitle>
+              </CardHeader>
+            </button>
+          </CollapsibleTrigger>
+          <CollapsibleContent>
+            <CardContent className="pt-2 space-y-4">
+              {/* BLS Algorithm */}
+              <div className="space-y-2">
+                <h4 className="text-sm font-semibold text-primary">BLS (Basic Life Support) Algorithm</h4>
+                <div className="p-3 rounded-lg bg-success/5 border border-success/20 space-y-3">
+                  <div className="flex items-center gap-2 text-xs font-medium text-success">
+                    <span className="flex items-center justify-center w-6 h-6 rounded-full bg-success/20">1</span>
+                    Verify Scene Safety
+                  </div>
+                  <div className="flex items-center gap-2 text-xs font-medium text-success">
+                    <span className="flex items-center justify-center w-6 h-6 rounded-full bg-success/20">2</span>
+                    Check Responsiveness (tap shoulders, shout "Are you okay?")
+                  </div>
+                  <div className="flex items-center gap-2 text-xs font-medium text-success">
+                    <span className="flex items-center justify-center w-6 h-6 rounded-full bg-success/20">3</span>
+                    <span>If unresponsive:</span>
+                    <span className="text-muted-foreground">Call for help, activate emergency response, get AED</span>
+                  </div>
+                  <div className="flex items-center gap-2 text-xs font-medium text-success">
+                    <span className="flex items-center justify-center w-6 h-6 rounded-full bg-success/20">4</span>
+                    <span>Check breathing and pulse (simultaneously, &lt;10 seconds)</span>
+                  </div>
+                  <div className="ml-8 p-2 rounded bg-background/50 space-y-2">
+                    <div className="text-xs">
+                      <strong className="text-destructive">If no breathing + no pulse:</strong>
+                      <span className="text-muted-foreground"> Start CPR</span>
+                    </div>
+                    <div className="text-xs">
+                      <strong className="text-warning">If gasping only (agonal):</strong>
+                      <span className="text-muted-foreground"> Start CPR</span>
+                    </div>
+                    <div className="text-xs">
+                      <strong className="text-success">If normal breathing + pulse:</strong>
+                      <span className="text-muted-foreground"> Monitor, recovery position if needed</span>
+                    </div>
+                  </div>
+                  <div className="grid grid-cols-2 gap-2 mt-2">
+                    <div className="p-2 rounded bg-background/50 border border-success/20">
+                      <div className="text-xs font-medium text-success mb-1">CPR Quality</div>
+                      <ul className="text-xs text-muted-foreground space-y-0.5">
+                        <li>• Rate: 100-120/min</li>
+                        <li>• Depth: 2-2.4 inches (5-6 cm)</li>
+                        <li>• Allow full chest recoil</li>
+                        <li>• Minimize interruptions (&lt;10 seconds)</li>
+                        <li>• Ratio: 30:2 (compression:breath)</li>
+                      </ul>
+                    </div>
+                    <div className="p-2 rounded bg-background/50 border border-success/20">
+                      <div className="text-xs font-medium text-success mb-1">AED Use</div>
+                      <ul className="text-xs text-muted-foreground space-y-0.5">
+                        <li>• Power on immediately</li>
+                        <li>• Attach pads as shown</li>
+                        <li>• Clear during analysis</li>
+                        <li>• Deliver shock if advised</li>
+                        <li>• Resume CPR immediately after shock</li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* ACLS Cardiac Arrest */}
+              <div className="space-y-2">
+                <h4 className="text-sm font-semibold text-primary">ACLS Cardiac Arrest Algorithm</h4>
+                <div className="p-3 rounded-lg bg-destructive/5 border border-destructive/20 space-y-3">
+                  <div className="grid grid-cols-2 gap-2">
+                    <div className="p-2 rounded bg-background/50 border border-destructive/10">
+                      <div className="text-xs font-bold text-destructive mb-1">VF/pVT (Shockable)</div>
+                      <div className="text-xs space-y-1">
+                        <div className="font-medium">Shock → CPR 2 min → Rhythm check</div>
+                        <ul className="text-muted-foreground space-y-0.5 ml-2">
+                          <li>• Epinephrine 1 mg IV/IO q 3-5 min</li>
+                          <li>• Amiodarone 300 mg IV/IO after 2nd shock</li>
+                          <li>• Consider amiodarone 150 mg after 3rd shock</li>
+                          <li>• Continue until ROSC or termination</li>
+                        </ul>
+                      </div>
+                    </div>
+                    <div className="p-2 rounded bg-background/50 border border-destructive/10">
+                      <div className="text-xs font-bold text-destructive mb-1">Asystole/PEA (Non-Shockable)</div>
+                      <div className="text-xs space-y-1">
+                        <div className="font-medium">CPR → Epinephrine → Rhythm check</div>
+                        <ul className="text-muted-foreground space-y-0.5 ml-2">
+                          <li>• Epinephrine 1 mg IV/IO ASAP</li>
+                          <li>• Repeat epinephrine q 3-5 min</li>
+                          <li>• Search for reversible causes (H's & T's)</li>
+                          <li>• Continue high-quality CPR</li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="p-2 rounded bg-background/50 border border-destructive/10">
+                    <div className="text-xs font-medium text-destructive mb-1">Reversible Causes (H's &amp; T's)</div>
+                    <div className="grid grid-cols-2 gap-2 text-xs">
+                      <div>
+                        <div className="font-medium text-muted-foreground">H's:</div>
+                        <ul className="text-muted-foreground">
+                          <li>• Hypovolemia</li>
+                          <li>• Hypoxia</li>
+                          <li>• Hydrogen ion (acidosis)</li>
+                          <li>• Hypo-/Hyperkalemia</li>
+                          <li>• Hypothermia</li>
+                        </ul>
+                      </div>
+                      <div>
+                        <div className="font-medium text-muted-foreground">T's:</div>
+                        <ul className="text-muted-foreground">
+                          <li>• Tension pneumothorax</li>
+                          <li>• Tamponade (cardiac)</li>
+                          <li>• Toxins (drug OD)</li>
+                          <li>• Thrombosis (pulmonary)</li>
+                          <li>• Thrombosis (coronary)</li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Bradycardia Algorithm */}
+              <div className="space-y-2">
+                <h4 className="text-sm font-semibold text-primary">Bradycardia Algorithm</h4>
+                <div className="p-3 rounded-lg bg-warning/5 border border-warning/20 space-y-2">
+                  <div className="text-xs">
+                    <strong>Assess:</strong> HR &lt;60 bpm with symptoms?
+                  </div>
+                  <div className="text-xs space-y-1">
+                    <div className="font-medium">Symptoms of poor perfusion:</div>
+                    <ul className="text-muted-foreground ml-2">
+                      <li>• Hypotension (SBP &lt;90)</li>
+                      <li>• Altered mental status</li>
+                      <li>• Shock signs</li>
+                      <li>• Chest pain, dyspnea</li>
+                    </ul>
+                  </div>
+                  <div className="p-2 rounded bg-background/50 mt-2">
+                    <div className="text-xs font-medium text-warning mb-1">If symptomatic:</div>
+                    <ol className="text-xs space-y-1">
+                      <li>1. <strong>Atropine 0.5 mg IV</strong> (may repeat, max 3 mg)</li>
+                      <li>2. If atropine ineffective → <strong>Dopamine</strong> (2-20 mcg/kg/min) or <strong>Epinephrine</strong> (2-10 mcg/min)</li>
+                      <li>3. Prepare for <strong>transcutaneous pacing</strong></li>
+                      <li>4. Consider <strong>transvenous pacing</strong></li>
+                      <li>5. Consult cardiology for <strong>permanent pacemaker</strong></li>
+                    </ol>
+                  </div>
+                  <div className="text-xs text-muted-foreground">
+                    <strong>Note:</strong> Atropine may be ineffective in Mobitz II or complete heart block
+                  </div>
+                </div>
+              </div>
+
+              {/* Tachycardia Algorithm */}
+              <div className="space-y-2">
+                <h4 className="text-sm font-semibold text-primary">Tachycardia Algorithm</h4>
+                <div className="p-3 rounded-lg bg-warning/5 border border-warning/20 space-y-2">
+                  <div className="text-xs">
+                    <strong>Assess:</strong> HR &gt;150 bpm, stable vs unstable
+                  </div>
+                  <div className="p-2 rounded bg-destructive/10 border border-destructive/20">
+                    <div className="text-xs font-bold text-destructive mb-1">Unstable (immediate synchronized cardioversion)</div>
+                    <ul className="text-xs text-muted-foreground">
+                      <li>• Hypotension (SBP &lt;90)</li>
+                      <li>• Altered mental status</li>
+                      <li>• Shock signs</li>
+                      <li>• Chest pain, dyspnea</li>
+                    </ul>
+                    <div className="text-xs mt-1">
+                      <strong>Energy:</strong> Narrow: 50-100J → 200J; Wide: 100J → 200J
+                    </div>
+                  </div>
+                  <div className="grid grid-cols-2 gap-2 mt-2">
+                    <div className="p-2 rounded bg-background/50 border border-warning/10">
+                      <div className="text-xs font-medium text-warning mb-1">Narrow QRS (&lt;120ms)</div>
+                      <ul className="text-xs text-muted-foreground space-y-0.5">
+                        <li>• Regular: Vagal → Adenosine 6mg → 12mg</li>
+                        <li>• Irregular (AF): Rate control (β-blocker, CCB)</li>
+                        <li>• If unstable: Cardiovert</li>
+                      </ul>
+                    </div>
+                    <div className="p-2 rounded bg-background/50 border border-warning/10">
+                      <div className="text-xs font-medium text-warning mb-1">Wide QRS (&gt;120ms)</div>
+                      <ul className="text-xs text-muted-foreground space-y-0.5">
+                        <li>• Regular: Consider adenosine (diagnostic)</li>
+                        <li>• VT: Amiodarone 150mg IV</li>
+                        <li>• If unstable: Cardiovert 100J</li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* ROSC */}
+              <div className="space-y-2">
+                <h4 className="text-sm font-semibold text-success">Post-ROSC (Return of Spontaneous Circulation)</h4>
+                <div className="p-3 rounded-lg bg-success/5 border border-success/20 space-y-2">
+                  <div className="grid grid-cols-2 gap-2">
+                    <div className="p-2 rounded bg-background/50">
+                      <div className="text-xs font-medium text-success mb-1">Immediate</div>
+                      <ul className="text-xs text-muted-foreground space-y-0.5">
+                        <li>• Airway management</li>
+                        <li>• Oxygen (SpO2 94-98%)</li>
+                        <li>• IV access</li>
+                        <li>• 12-lead ECG</li>
+                        <li>• Consider coronary angiography</li>
+                      </ul>
+                    </div>
+                    <div className="p-2 rounded bg-background/50">
+                      <div className="text-xs font-medium text-success mb-1">Hemodynamic Support</div>
+                      <ul className="text-xs text-muted-foreground space-y-0.5">
+                        <li>• Fluid bolus for hypotension</li>
+                        <li>• Vasopressors if needed</li>
+                        <li>• Treat reversible causes</li>
+                      </ul>
+                    </div>
+                  </div>
+                  <div className="p-2 rounded bg-background/50 border border-success/20">
+                    <div className="text-xs font-medium text-success mb-1">TTM (Targeted Temperature Management)</div>
+                    <ul className="text-xs text-muted-foreground">
+                      <li>• Consider if comatose after ROSC</li>
+                      <li>• Target 32-36°C for 24 hours</li>
+                      <li>• Avoid fever for 72 hours</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+
+              {/* Drug Doses */}
+              <div className="space-y-2">
+                <h4 className="text-sm font-semibold text-primary">Quick Drug Reference</h4>
+                <div className="grid grid-cols-2 md:grid-cols-3 gap-2 text-xs">
+                  <div className="p-2 rounded bg-muted/30 border border-border/30">
+                    <div className="font-medium">Epinephrine</div>
+                    <div className="text-muted-foreground">1 mg IV/IO q 3-5 min</div>
+                  </div>
+                  <div className="p-2 rounded bg-muted/30 border border-border/30">
+                    <div className="font-medium">Amiodarone</div>
+                    <div className="text-muted-foreground">300 mg → 150 mg IV/IO</div>
+                  </div>
+                  <div className="p-2 rounded bg-muted/30 border border-border/30">
+                    <div className="font-medium">Atropine</div>
+                    <div className="text-muted-foreground">0.5 mg IV (max 3 mg)</div>
+                  </div>
+                  <div className="p-2 rounded bg-muted/30 border border-border/30">
+                    <div className="font-medium">Adenosine</div>
+                    <div className="text-muted-foreground">6 mg → 12 mg rapid IV push</div>
+                  </div>
+                  <div className="p-2 rounded bg-muted/30 border border-border/30">
+                    <div className="font-medium">Magnesium</div>
+                    <div className="text-muted-foreground">1-2 g IV for TdP</div>
+                  </div>
+                  <div className="p-2 rounded bg-muted/30 border border-border/30">
+                    <div className="font-medium">Calcium Chloride</div>
+                    <div className="text-muted-foreground">1 g IV for hyperkalemia</div>
+                  </div>
+                </div>
               </div>
             </CardContent>
           </CollapsibleContent>
