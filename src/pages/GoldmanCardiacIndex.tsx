@@ -1,8 +1,13 @@
 import { useState, useMemo } from "react";
-import { Heart, AlertTriangle, CheckCircle, Info, ChevronDown, ChevronUp } from "lucide-react";
+import { Heart, AlertTriangle, CheckCircle, Info, ChevronDown, ChevronUp, Activity } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Switch } from "@/components/ui/switch";
 import { Label } from "@/components/ui/label";
+import {
+  Collapsible,
+  CollapsibleContent,
+  CollapsibleTrigger,
+} from "@/components/ui/collapsible";
 
 interface RiskFactor {
   id: string;
@@ -20,11 +25,262 @@ interface RiskClass {
   color: string;
 }
 
+interface ECGPattern {
+  id: string;
+  name: string;
+  description: string;
+  criteria: string[];
+  clinicalSignificance: string;
+  management: string;
+}
+
 const GOLDMAN_CLASSES: RiskClass[] = [
   { label: "Class I", points: "0", observedRisk: "0.7%", color: "success" },
   { label: "Class II", points: "1–2", observedRisk: "3%", color: "warning" },
   { label: "Class III", points: "3–4", observedRisk: "15%", color: "warning" },
   { label: "Class IV", points: "5+", observedRisk: "30%", color: "destructive" },
+];
+
+const ECG_PATTERNS: ECGPattern[] = [
+  {
+    id: "af",
+    name: "Atrial Fibrillation",
+    description: "Irregularly irregular rhythm with absent P waves",
+    criteria: [
+      "Irregularly irregular RR intervals",
+      "No distinct P waves (replaced by fibrillatory waves)",
+      "Ventricular rate typically 100-160 bpm (uncontrolled)",
+      "Narrow QRS complexes (unless BBB or aberrancy)",
+      "Baseline may show coarse or fine fibrillatory waves",
+    ],
+    clinicalSignificance: "Most common sustained arrhythmia. Associated with increased stroke risk (CHA₂DS₂-VASc scoring). Rate control vs rhythm control decision needed pre-operatively.",
+    management: "Rate control (beta-blocker, diltiazem, digoxin). Anticoagulation if CHA₂DS₂-VASc ≥2. Consider cardioversion if <48h onset. Bridge with heparin for surgery.",
+  },
+  {
+    id: "aflutter",
+    name: "Atrial Flutter",
+    description: "Sawtooth flutter waves, typically 2:1 or 4:1 conduction",
+    criteria: [
+      "Sawtooth flutter waves (F waves) best seen in II, III, aVF",
+      "Atrial rate typically 250-350 bpm",
+      "Ventricular rate often 150 bpm (2:1 block)",
+      "Regular or regularly irregular RR intervals",
+      "F waves visible between QRS complexes",
+    ],
+    clinicalSignificance: "Organized atrial tachycardia. Higher stroke risk than AF. Often converts to AF. Pre-operative ablation may be considered.",
+    management: "Rate control (beta-blocker, calcium channel blocker). Anticoagulation recommended. Consider DC cardioversion or ablation.",
+  },
+  {
+    id: "svt",
+    name: "Supraventricular Tachycardia (SVT)",
+    description: "Regular narrow-complex tachycardia, abrupt onset/offset",
+    criteria: [
+      "Regular, narrow QRS tachycardia (150-250 bpm)",
+      "Abrupt onset and termination",
+      "P waves may be hidden (AVNRT) or retrograde (AVRT)",
+      "No visible atrial activity in many cases",
+      "May have QRST pattern mimicking atrial activity",
+    ],
+    clinicalSignificance: "Includes AVNRT, AVRT (WPW), atrial tachycardia. Generally benign but symptomatic. Rarely life-threatening unless WPW with AF.",
+    management: "Vagal maneuvers, adenosine 6-12mg IV. If recurrent, beta-blocker or ablation. Avoid AV nodal blockers in WPW with pre-excited AF.",
+  },
+  {
+    id: "vt",
+    name: "Ventricular Tachycardia (VT)",
+    description: "Wide-complex tachycardia, regular, AV dissociation",
+    criteria: [
+      "Wide QRS complexes (>120ms, usually >140ms)",
+      "Regular RR intervals",
+      "Rate typically 150-250 bpm",
+      "AV dissociation (P waves independent of QRS)",
+      "Capture beats or fusion beats (diagnostic)",
+      "Extreme axis deviation ('northwest axis')",
+    ],
+    clinicalSignificance: "Medical emergency if unstable. May be monomorphic or polymorphic. High perioperative risk. Requires urgent evaluation.",
+    management: "If unstable: immediate DC cardioversion. If stable: amiodarone, procainamide, or lidocaine. Identify reversible causes. ICD evaluation.",
+  },
+  {
+    id: "vfib",
+    name: "Ventricular Fibrillation (VF)",
+    description: "Chaotic, irregular wide-complex rhythm, no organized QRS",
+    criteria: [
+      "Irregularly irregular, chaotic rhythm",
+      "No distinct QRS complexes",
+      "Coarse or fine fibrillatory waves",
+      "Rate cannot be determined (usually very fast)",
+      "No P waves, no organized electrical activity",
+    ],
+    clinicalSignificance: "Cardiac arrest rhythm. No pulse. Requires immediate defibrillation. Post-op VF rare but catastrophic.",
+    management: "Immediate defibrillation (200J biphasic). ACLS protocol. Identify cause (ischemia, electrolytes, drugs). Post-ROSC: amiodarone, cooling.",
+  },
+  {
+    id: "pvc",
+    name: "Premature Ventricular Contractions (PVCs)",
+    description: "Early, wide QRS with compensatory pause",
+    criteria: [
+      "Premature, wide QRS complex (>120ms)",
+      "No preceding P wave",
+      "Bizarre morphology, different from sinus beats",
+      "Full compensatory pause (pause = 2x RR interval)",
+      "May be unifocal (same morphology) or multifocal",
+    ],
+    clinicalSignificance: "Common in healthy individuals. >5/min increases perioperative risk (Goldman criteria). Evaluate for underlying heart disease.",
+    management: "If asymptomatic and no structural heart disease: reassurance. If >5/min: beta-blocker, consider cardiology consult. Check electrolytes (K, Mg).",
+  },
+  {
+    id: "pac",
+    name: "Premature Atrial Contractions (PACs)",
+    description: "Early P wave with different morphology",
+    criteria: [
+      "Premature P wave with different morphology",
+      "PR interval may be normal, shortened, or prolonged",
+      "QRS typically narrow (unless aberrancy)",
+      "Incomplete compensatory pause",
+      "May trigger SVT or AF in susceptible patients",
+    ],
+    clinicalSignificance: "Generally benign. May indicate atrial irritability, electrolyte disturbance, or hypervagal tone. Less concerning than PVCs.",
+    management: "Usually no treatment needed. Address triggers (caffeine, alcohol, stress, electrolytes). Beta-blocker if symptomatic.",
+  },
+  {
+    id: "avblock",
+    name: "AV Blocks (1st, 2nd, 3rd Degree)",
+    description: "Progressive impairment of AV conduction",
+    criteria: [
+      "1st degree: PR interval >200ms, all P waves conducted",
+      "2nd degree Mobitz I (Wenckebach): progressive PR prolongation, then dropped beat",
+      "2nd degree Mobitz II: sudden dropped beats without PR prolongation",
+      "3rd degree (complete): P waves and QRS independent, regular escape rhythm",
+      "Mobitz II and 3rd degree: wide QRS suggests infranodal block",
+    ],
+    clinicalSignificance: "1st degree and Mobitz I usually benign. Mobitz II and 3rd degree: high perioperative risk. May need temporary pacing.",
+    management: "1st degree/Mobitz I: monitor. Mobitz II/3rd degree: cardiology consult, consider pacing. Avoid AV node blockers. Check for reversible causes (drugs, ischemia).",
+  },
+  {
+    id: "bbb",
+    name: "Bundle Branch Blocks (RBBB, LBBB)",
+    description: "Wide QRS from delayed ventricular conduction",
+    criteria: [
+      "QRS duration >120ms",
+      "RBBB: rsR' in V1 ('M' pattern), wide S in I, V5, V6",
+      "LBBB: Broad/notched R in I, V5, V6; QS or rS in V1, V2",
+      "LBBB: ST-T changes opposite to QRS direction",
+      "New LBBB: consider acute MI until proven otherwise",
+    ],
+    clinicalSignificance: "RBBB often benign. LBBB may indicate structural heart disease. New LBBB with chest pain = STEMI equivalent. Affects ECG interpretation.",
+    management: "Evaluate for underlying heart disease. New LBBB: troponins, echo. Chronic stable BBB: no specific treatment. Consider cardiology if symptomatic.",
+  },
+  {
+    id: "lvh",
+    name: "Left Ventricular Hypertrophy (LVH)",
+    description: "Increased QRS voltage from left ventricular mass",
+    criteria: [
+      "Sokolow-Lyon: S in V1 + R in V5/V6 > 35mm",
+      "Cornell: R in aVL + S in V3 > 20mm (women), > 28mm (men)",
+      "Romhilt-Estes score ≥5 (definite LVH)",
+      "Repolarization abnormalities (strain pattern)",
+      "Left axis deviation common",
+    ],
+    clinicalSignificance: "Indicates pressure or volume overload. Associated with HTN, aortic stenosis, hypertrophic cardiomyopathy. Independent CV risk factor.",
+    management: "Identify and treat underlying cause (HTN, AS, HCM). Optimize blood pressure. Echo for structural assessment. May affect surgical risk.",
+  },
+  {
+    id: "stchanges",
+    name: "ST-T Changes (Ischemia, Injury, Infarction)",
+    description: "ST elevation, depression, or T wave abnormalities",
+    criteria: [
+      "ST elevation: >1mm in ≥2 contiguous leads (STEMI)",
+      "ST depression: horizontal or downsloping >0.5mm",
+      "T wave inversions: >1mm in ≥2 contiguous leads",
+      "New changes are more concerning than chronic",
+      "ST elevation + Q waves = late MI",
+    ],
+    clinicalSignificance: "ST elevation = acute MI until proven otherwise. ST depression = ischemia or reciprocal changes. T wave inversion: ischemia, LVH, electrolytes.",
+    management: "New STEMI: immediate reperfusion (PCI or thrombolysis). ST depression with chest pain: NSTE-ACS pathway. Compare to prior ECGs.",
+  },
+  {
+    id: "paced",
+    name: "Paced Rhythm",
+    description: "Pacemaker-generated rhythm with pacing spikes",
+    criteria: [
+      "Pacing spikes preceding QRS complexes",
+      "LBBB morphology (right ventricular pacing)",
+      "May have atrial pacing spikes before P waves",
+      "Fusion beats if intrinsic rhythm competes",
+      "Rate typically set 60-70 bpm (ventricular)",
+    ],
+    clinicalSignificance: "Patient has pacemaker/ICD. Requires device interrogation pre-operatively. May need mode switch for surgery. MRI compatibility check.",
+    management: "Cardiology/pacemaker clinic consult. Check battery life, lead function. Pacemaker: set to asynchronous mode if needed. ICD: may need magnet or reprogramming.",
+  },
+  {
+    id: "sinusarrhythmia",
+    name: "Sinus Arrhythmia",
+    description: "Normal sinus rhythm with respiratory variation",
+    criteria: [
+      "Normal P wave morphology and axis",
+      "PR interval constant (120-200ms)",
+      "RR interval varies with respiration",
+      "Rate variation >10% common in young/athletic",
+      "Augments with inspiration, decreases with expiration",
+    ],
+    clinicalSignificance: "Normal variant, especially in young patients. Sign of good vagal tone. No clinical significance. NOT counted in Goldman 'rhythm other than sinus'.",
+    management: "No treatment needed. Reassurance that this is normal.",
+  },
+  {
+    id: "sinustachy",
+    name: "Sinus Tachycardia",
+    description: "Normal sinus rhythm at rate >100 bpm",
+    criteria: [
+      "P waves normal morphology and axis",
+      "PR interval normal (120-200ms)",
+      "Rate 100-150 bpm (may be higher if young)",
+      "Gradual onset and offset",
+      "Each P wave followed by QRS",
+    ],
+    clinicalSignificance: "Physiologic response to stress, pain, fever, hypovolemia, anemia, thyrotoxicosis. Find and treat underlying cause. NOT counted in Goldman 'rhythm other than sinus'.",
+    management: "Identify and treat underlying cause. Correct hypovolemia, hypoxia, pain, anxiety. Avoid treating the tachycardia itself without addressing cause.",
+  },
+  {
+    id: "sinusbrady",
+    name: "Sinus Bradycardia",
+    description: "Normal sinus rhythm at rate <60 bpm",
+    criteria: [
+      "P waves normal morphology and axis",
+      "PR interval normal (120-200ms)",
+      "Rate <60 bpm",
+      "Each P wave followed by QRS",
+      "May be seen in athletes, during sleep",
+    ],
+    clinicalSignificance: "Common in athletes, elderly, hypothyroidism, increased vagal tone. May cause symptoms if severe. NOT counted in Goldman 'rhythm other than sinus'.",
+    management: "If asymptomatic: observation. If symptomatic: atropine, transcutaneous pacing. Evaluate for beta-blocker overdose, sick sinus syndrome.",
+  },
+  {
+    id: "wpw",
+    name: "Wolff-Parkinson-White (WPW)",
+    description: "Pre-excitation syndrome with delta wave",
+    criteria: [
+      "Short PR interval (<120ms)",
+      "Delta wave (slurred upstroke of QRS)",
+      "Wide QRS complex (>120ms)",
+      "May have narrow QRS if accessory pathway far from AV node",
+      "Predisposes to AVRT (orthodromic or antidromic)",
+    ],
+    clinicalSignificance: "Pre-excited AF can degenerate to VF (life-threatening). Avoid AV nodal blockers in wide-complex tachycardia. Risk stratification needed.",
+    management: "Asymptomatic: may monitor or ablate. Symptomatic: ablation first-line. Avoid digoxin, verapamil in WPW with AF. Procainamide for acute management.",
+  },
+  {
+    id: "qtprolong",
+    name: "QT Prolongation",
+    description: "Prolonged QT interval, risk of torsades",
+    criteria: [
+      "QTc >450ms (men), >470ms (women)",
+      "Corrected QT = QT / √RR (Bazett formula)",
+      "May be congenital or acquired (drugs, electrolytes)",
+      "T wave may be notched or bifid",
+      "Predisposes to torsades de pointes",
+    ],
+    clinicalSignificance: "Risk of torsades de pointes (polymorphic VT). Many drugs prolong QT (antiarrhythmics, antibiotics, antipsychotics). Avoid QT-prolonging drugs.",
+    management: "Correct electrolytes (K, Mg). Stop QT-prolonging drugs. If torsades: magnesium sulfate IV. Consider temporary pacing for bradycardia-induced QT prolongation.",
+  },
 ];
 
 const GoldmanCardiacIndex = () => {
@@ -54,6 +310,8 @@ const GoldmanCardiacIndex = () => {
 
   const [factors, setFactors] = useState<RiskFactor[]>(buildInitialFactors());
   const [expandedCats, setExpandedCats] = useState<Set<string>>(new Set(["history", "examination", "ecg", "vitals", "lab", "age"]));
+  const [showECGPatterns, setShowECGPatterns] = useState(false);
+  const [expandedECGPatterns, setExpandedECGPatterns] = useState<Set<string>>(new Set());
 
   const toggleFactor = (id: string) => {
     setFactors(prev => prev.map(f => f.id === id ? { ...f, active: !f.active } : f));
@@ -66,6 +324,18 @@ const GoldmanCardiacIndex = () => {
         next.delete(cat);
       } else {
         next.add(cat);
+      }
+      return next;
+    });
+  };
+
+  const toggleECGPattern = (id: string) => {
+    setExpandedECGPatterns(prev => {
+      const next = new Set(prev);
+      if (next.has(id)) {
+        next.delete(id);
+      } else {
+        next.add(id);
       }
       return next;
     });
@@ -103,7 +373,7 @@ const GoldmanCardiacIndex = () => {
   const categoryLabels: Record<string, { label: string; icon: typeof Heart }> = {
     history: { label: "Cardiac History", icon: Heart },
     examination: { label: "Examination Findings", icon: Info },
-    ecg: { label: "ECG Abnormalities", icon: AlertTriangle },
+    ecg: { label: "ECG Abnormalities", icon: Activity },
     vitals: { label: "Surgery Urgency", icon: AlertTriangle },
     lab: { label: "General Status", icon: Info },
     age: { label: "Age", icon: Info },
@@ -225,6 +495,81 @@ const GoldmanCardiacIndex = () => {
             ))}
           </div>
         </CardContent>
+      </Card>
+
+      {/* ECG Patterns Reference */}
+      <Card className="border-border/40">
+        <Collapsible open={showECGPatterns} onOpenChange={setShowECGPatterns}>
+          <CollapsibleTrigger asChild>
+            <button className="w-full">
+              <CardHeader className="pb-2">
+                <CardTitle className="text-base flex items-center justify-between">
+                  <span className="flex items-center gap-2">
+                    <Activity className="w-4 h-4 text-muted-foreground" />
+                    ECG Patterns Reference
+                  </span>
+                  {showECGPatterns ? <ChevronUp className="w-4 h-4 text-muted-foreground" /> : <ChevronDown className="w-4 h-4 text-muted-foreground" />}
+                </CardTitle>
+              </CardHeader>
+            </button>
+          </CollapsibleTrigger>
+          <CollapsibleContent>
+            <CardContent className="pt-2 space-y-3">
+              <p className="text-xs text-muted-foreground mb-3">
+                Detailed ECG criteria for arrhythmias and conduction abnormalities. Helpful for interpreting Goldman's "Rhythm other than sinus" criterion.
+              </p>
+              {ECG_PATTERNS.map(pattern => (
+                <Collapsible key={pattern.id} open={expandedECGPatterns.has(pattern.id)} onOpenChange={() => toggleECGPattern(pattern.id)}>
+                  <CollapsibleTrigger asChild>
+                    <button className="w-full text-left">
+                      <div className={`p-3 rounded-lg border transition-colors ${
+                        expandedECGPatterns.has(pattern.id) ? "bg-muted/50 border-primary/30" : "bg-muted/20 border-border/40 hover:bg-muted/30"
+                      }`}>
+                        <div className="flex items-center justify-between">
+                          <div>
+                            <span className="font-medium text-sm">{pattern.name}</span>
+                            <p className="text-xs text-muted-foreground mt-0.5">{pattern.description}</p>
+                          </div>
+                          {expandedECGPatterns.has(pattern.id) ? (
+                            <ChevronUp className="w-4 h-4 text-muted-foreground shrink-0" />
+                          ) : (
+                            <ChevronDown className="w-4 h-4 text-muted-foreground shrink-0" />
+                          )}
+                        </div>
+                      </div>
+                    </button>
+                  </CollapsibleTrigger>
+                  <CollapsibleContent>
+                    <div className="mt-2 p-3 rounded-lg bg-muted/30 border border-border/30 space-y-3">
+                      {/* ECG Criteria */}
+                      <div>
+                        <h4 className="text-xs font-semibold text-muted-foreground mb-1.5">ECG Criteria</h4>
+                        <ul className="text-xs space-y-1">
+                          {pattern.criteria.map((c, i) => (
+                            <li key={i} className="flex items-start gap-2">
+                              <span className="text-primary">•</span>
+                              <span>{c}</span>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                      {/* Clinical Significance */}
+                      <div>
+                        <h4 className="text-xs font-semibold text-muted-foreground mb-1.5">Clinical Significance</h4>
+                        <p className="text-xs text-foreground">{pattern.clinicalSignificance}</p>
+                      </div>
+                      {/* Management */}
+                      <div className="p-2 rounded bg-background/50 border border-border/20">
+                        <h4 className="text-xs font-semibold text-muted-foreground mb-1">Pre-operative Management</h4>
+                        <p className="text-xs">{pattern.management}</p>
+                      </div>
+                    </div>
+                  </CollapsibleContent>
+                </Collapsible>
+              ))}
+            </CardContent>
+          </CollapsibleContent>
+        </Collapsible>
       </Card>
 
       {/* Expand All / Collapse All */}
