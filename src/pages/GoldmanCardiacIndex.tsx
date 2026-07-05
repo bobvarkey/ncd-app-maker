@@ -1,5 +1,5 @@
 import { useState, useMemo } from "react";
-import { Heart, AlertTriangle, CheckCircle, Info, ChevronDown, ChevronUp, Activity, Pill } from "lucide-react";
+import { Heart, AlertTriangle, CheckCircle, Info, ChevronDown, ChevronUp, Activity, Pill, Brain } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Switch } from "@/components/ui/switch";
 import { Label } from "@/components/ui/label";
@@ -554,6 +554,7 @@ const GoldmanCardiacIndex = () => {
   const [expandedECGPatterns, setExpandedECGPatterns] = useState<Set<string>>(new Set());
   const [showAntiarrhythmics, setShowAntiarrhythmics] = useState(false);
   const [expandedDrugClasses, setExpandedDrugClasses] = useState<Set<string>>(new Set());
+  const [showSyncopeAlgorithm, setShowSyncopeAlgorithm] = useState(false);
 
   const toggleFactor = (id: string) => {
     setFactors(prev => prev.map(f => f.id === id ? { ...f, active: !f.active } : f));
@@ -972,7 +973,195 @@ const GoldmanCardiacIndex = () => {
           </CollapsibleContent>
         </Collapsible>
       </Card>
+      {/* Syncope Algorithm */}
+      <Card className="border-border/40">
+        <Collapsible open={showSyncopeAlgorithm} onOpenChange={setShowSyncopeAlgorithm}>
+          <CollapsibleTrigger asChild>
+            <button className="w-full">
+              <CardHeader className="pb-2">
+                <CardTitle className="text-base flex items-center justify-between">
+                  <span className="flex items-center gap-2">
+                    <Brain className="w-4 h-4 text-muted-foreground" />
+                    Syncope Diagnostic Algorithm
+                  </span>
+                  {showSyncopeAlgorithm ? <ChevronUp className="w-4 h-4 text-muted-foreground" /> : <ChevronDown className="w-4 h-4 text-muted-foreground" />}
+                </CardTitle>
+              </CardHeader>
+            </button>
+          </CollapsibleTrigger>
+          <CollapsibleContent>
+            <CardContent className="pt-2 space-y-4">
+              {/* Step 1: Initial Evaluation */}
+              <div className="space-y-2">
+                <h4 className="text-sm font-semibold text-primary">Step 1: Initial Evaluation</h4>
+                <div className="p-3 rounded-lg bg-muted/30 border border-border/30 space-y-2">
+                  <div className="text-xs">
+                    <strong>History:</strong>
+                    <ul className="mt-1 space-y-0.5 ml-4 list-disc">
+                      <li>Circumstances (standing, sitting, exertion)</li>
+                      <li>Prodromal symptoms (warning signs)</li>
+                      <li>Witnessed seizure activity, incontinence</li>
+                      <li>Duration, recovery time</li>
+                      <li>Medications, family history of SCD</li>
+                    </ul>
+                  </div>
+                  <div className="text-xs">
+                    <strong>Physical Exam:</strong>
+                    <ul className="mt-1 space-y-0.5 ml-4 list-disc">
+                      <li>Blood pressure (supine and standing)</li>
+                      <li>Heart rate, rhythm</li>
+                      <li>Cardiac exam (murmurs, S3/S4)</li>
+                      <li>Neurologic exam</li>
+                    </ul>
+                  </div>
+                  <div className="text-xs">
+                    <strong>ECG (12-lead):</strong>
+                    <ul className="mt-1 space-y-0.5 ml-4 list-disc">
+                      <li>QT prolongation (LQTS)</li>
+                      <li>Brugada pattern (coved ST elevation V1-V3)</li>
+                      <li>Epsilon waves, T-wave inversions V1-V3 (ARVC)</li>
+                      <li>LVH, Q waves (HCM)</li>
+                      <li>AV block, bundle branch block</li>
+                      <li>Pre-excitation (WPW)</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
 
+              {/* Red Flags */}
+              <div className="space-y-2">
+                <h4 className="text-sm font-semibold text-destructive">Red Flags (High-Risk Features)</h4>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
+                  <div className="p-2 rounded bg-destructive/5 border border-destructive/20">
+                    <div className="text-xs font-medium text-destructive">Cardiac Red Flags</div>
+                    <ul className="text-xs mt-1 space-y-0.5">
+                      <li>• Syncope during exertion</li>
+                      <li>• Palpitations before syncope</li>
+                      <li>• Family history of SCD &lt;50 years</li>
+                      <li>• Known structural heart disease</li>
+                      <li>• Abnormal ECG</li>
+                      <li>• Heart failure, prior MI</li>
+                    </ul>
+                  </div>
+                  <div className="p-2 rounded bg-destructive/5 border border-destructive/20">
+                    <div className="text-xs font-medium text-destructive">Orthostatic Red Flags</div>
+                    <ul className="text-xs mt-1 space-y-0.5">
+                      <li>• SBP drop &gt;20 mmHg standing</li>
+                      <li>• Immediate syncope on standing</li>
+                      <li>• Recent medication changes</li>
+                      <li>• Dehydration, blood loss</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+
+              {/* Classification */}
+              <div className="space-y-2">
+                <h4 className="text-sm font-semibold text-primary">Step 2: Classify by Mechanism</h4>
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-2">
+                  <div className="p-2 rounded bg-muted/30 border border-border/30">
+                    <div className="text-xs font-medium text-foreground">Reflex (Neurocardiogenic)</div>
+                    <div className="text-xs text-muted-foreground mt-1 font-medium">Most common (35-50%)</div>
+                    <ul className="text-xs mt-1 space-y-0.5">
+                      <li>• Vasovagal syncope</li>
+                      <li>• Situational (cough, micturition)</li>
+                      <li>• Carotid sinus hypersensitivity</li>
+                    </ul>
+                    <div className="text-xs text-success mt-2">
+                      <strong>Clues:</strong> Prodrome (nausea, diaphoresis), standing/sitting, triggers
+                    </div>
+                  </div>
+                  <div className="p-2 rounded bg-muted/30 border border-border/30">
+                    <div className="text-xs font-medium text-foreground">Orthostatic Hypotension</div>
+                    <div className="text-xs text-muted-foreground mt-1 font-medium">10-20%</div>
+                    <ul className="text-xs mt-1 space-y-0.5">
+                      <li>• Medication-induced</li>
+                      <li>• Volume depletion</li>
+                      <li>• Autonomic dysfunction</li>
+                      <li>• Deconditioning</li>
+                    </ul>
+                    <div className="text-xs text-success mt-2">
+                      <strong>Clues:</strong> Immediate on standing, SBP drop &gt;20 mmHg
+                    </div>
+                  </div>
+                  <div className="p-2 rounded bg-destructive/5 border border-destructive/20">
+                    <div className="text-xs font-medium text-destructive">Cardiac Syncope</div>
+                    <div className="text-xs text-destructive/70 mt-1 font-medium">Highest mortality</div>
+                    <ul className="text-xs mt-1 space-y-0.5">
+                      <li>• Arrhythmias (VT, SVT, brady)</li>
+                      <li>• Structural (AS, HCM, PE)</li>
+                      <li>• Channelopathies (Brugada, LQTS)</li>
+                    </ul>
+                    <div className="text-xs text-destructive mt-2">
+                      <strong>Clues:</strong> No prodrome, exertion, abnormal ECG, heart disease
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Treatment */}
+              <div className="space-y-2">
+                <h4 className="text-sm font-semibold text-primary">Step 3: Treatment by Etiology</h4>
+                <div className="space-y-2">
+                  <div className="p-2 rounded bg-muted/30 border border-border/30">
+                    <div className="flex items-center gap-2 mb-1">
+                      <span className="text-xs font-medium text-foreground">Reflex (Vasovagal)</span>
+                      <span className="text-xs px-1.5 py-0.5 rounded-full bg-success/10 text-success">First-line</span>
+                    </div>
+                    <ul className="text-xs space-y-0.5">
+                      <li>• Lifestyle: avoid triggers, increase fluid/salt</li>
+                      <li>• Physical counterpressure: isometric exercises, leg crossing</li>
+                      <li>• Educate on prodrome → sit/lie down</li>
+                      <li>• Consider: midodrine, fludrocortisone if recurrent</li>
+                    </ul>
+                  </div>
+                  <div className="p-2 rounded bg-muted/30 border border-border/30">
+                    <div className="flex items-center gap-2 mb-1">
+                      <span className="text-xs font-medium text-foreground">Orthostatic</span>
+                    </div>
+                    <ul className="text-xs space-y-0.5">
+                      <li>• Address cause (meds, volume)</li>
+                      <li>• Non-pharmacologic: compression, rise slowly</li>
+                      <li>• Pharmacologic: midodrine, fludrocortisone</li>
+                    </ul>
+                  </div>
+                  <div className="p-2 rounded bg-destructive/5 border border-destructive/20">
+                    <div className="flex items-center gap-2 mb-1">
+                      <span className="text-xs font-medium text-destructive">Cardiac</span>
+                      <span className="text-xs px-1.5 py-0.5 rounded-full bg-destructive/10 text-destructive">Urgent</span>
+                    </div>
+                    <ul className="text-xs space-y-0.5">
+                      <li>• <strong>Brady:</strong> Pacemaker (sick sinus, AV block)</li>
+                      <li>• <strong>Tachy:</strong> Antiarrhythmics, ablation, ICD</li>
+                      <li>• <strong>Structural:</strong> Valve replacement, myectomy</li>
+                      <li>• <strong>Channelopathy:</strong> ICD (Brugada, LQTS), avoid triggers</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+
+              {/* Clinical Pearls */}
+              <div className="p-3 rounded bg-primary/5 border border-primary/20">
+                <h4 className="text-xs font-medium text-primary mb-2">Clinical Pearls</h4>
+                <ul className="text-xs space-y-1">
+                  <li>
+                    <span className="text-primary">•</span> <strong>Syncope vs Seizure:</strong> Syncope = rapid recovery (&lt;1 min), no postictal; Seizure = postictal confusion, tongue bite
+                  </li>
+                  <li>
+                    <span className="text-primary">•</span> <strong>Exertional syncope:</strong> Always cardiac until proven otherwise — echo, consider HCM, AS, VT
+                  </li>
+                  <li>
+                    <span className="text-primary">•</span> <strong>Young athlete:</strong> Screen for HCM, ARVC, Brugada, CPVT — may need sports restriction
+                  </li>
+                  <li>
+                    <span className="text-primary">•</span> <strong>Normal ECG:</strong> Does not exclude channelopathy — CPVT, Brugada may need provocation
+                  </li>
+                </ul>
+              </div>
+            </CardContent>
+          </CollapsibleContent>
+        </Collapsible>
+      </Card>
       {/* Expand All / Collapse All */}
       <div className="flex gap-2">
         <button
