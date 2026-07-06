@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Syringe, ChevronDown, ChevronUp, FlaskConical, Truck, IceCream, Layers, Moon } from 'lucide-react';
+import { Syringe, ChevronDown, ChevronUp, FlaskConical, Truck, IceCream, Layers, Moon, Droplets, AlertTriangle, Info } from 'lucide-react';
 import ferritinTsatChart from '@/assets/ferritin-tsat-thresholds.png.asset.json';
 import ironTransportImg from '@/assets/iron-transport-hepcidin.jpeg.asset.json';
 import ironIceCreamImg from '@/assets/iron-ice-cream-analogy.jpeg.asset.json';
@@ -68,6 +68,7 @@ const severityColor = {
 export default function IronTherapy() {
   const [open, setOpen] = useState(false);
   const [paramsOpen, setParamsOpen] = useState(false);
+  const [isDosingOpen, setIsDosingOpen] = useState(false);
 
   return (
     <div className="bg-card rounded-2xl shadow-sm border border-border overflow-hidden">
@@ -145,6 +146,108 @@ export default function IronTherapy() {
                 shell permits rapid high-dose infusion without tissue irritation or severe allergic reactions.
               </p>
             </div>
+          </div>
+
+          {/* Ferric Sucrose Detailed Dosing */}
+          <div className="rounded-2xl border border-amber-800/30 bg-amber-900/5 overflow-hidden">
+            <button
+              type="button"
+              onClick={() => setIsDosingOpen(v => !v)}
+              className="w-full flex items-center justify-between p-4 hover:bg-amber-900/10 transition-colors"
+            >
+              <div className="flex items-center gap-2">
+                <Droplets className="w-4 h-4 text-warning" />
+                <span className="text-sm font-semibold text-foreground">Ferric Sucrose (IS) — Detailed Dosing</span>
+                <span className="text-[10px] uppercase tracking-wide bg-amber-900/30 text-warning border border-amber-800 px-2 py-0.5 rounded-full">
+                  Context-dependent
+                </span>
+              </div>
+              {isDosingOpen ? <ChevronUp className="w-4 h-4 text-muted-foreground" /> : <ChevronDown className="w-4 h-4 text-muted-foreground" />}
+            </button>
+
+            {isDosingOpen && (
+              <div className="px-4 pb-4 space-y-5 border-t border-amber-800/20 pt-4">
+                <p className="text-xs text-muted-foreground leading-relaxed">
+                  Ferric sucrose is typically given in divided IV doses totaling about <strong className="text-foreground">1,000 mg</strong> for iron deficiency in adults,
+                  with per-dose limits commonly <strong className="text-foreground">100–200 mg</strong> (sometimes up to 300–400 mg depending on setting and protocol).
+                  Dosing is highly context-dependent — indication, CKD status, pregnancy, and setting all matter.
+                </p>
+
+                {/* CKD Regimens */}
+                <div>
+                  <h4 className="text-xs font-semibold text-foreground mb-2 flex items-center gap-1.5">
+                    <span className="w-1.5 h-1.5 rounded-full bg-amber-400" />
+                    Typical Adult CKD Regimens
+                  </h4>
+                  <div className="space-y-2">
+                    {[
+                      { setting: 'Hemodialysis-Dependent CKD', dose: '100 mg per HD session × 3×/week → cumulative 1,000 mg course' },
+                      { setting: 'Non–Dialysis-Dependent CKD (NDD-CKD)', dose: '200 mg per infusion × 5 doses → cumulative 1,000 mg' },
+                      { setting: 'Peritoneal Dialysis–Dependent CKD', dose: '300–400 mg per infusion, protocolized to ~1,000 mg total' },
+                      { setting: 'Maintenance (post-repletion)', dose: '50–100 mg at intervals (monthly or tied to Hb/TSAT targets)' },
+                    ].map((row, i) => (
+                      <div key={i} className="flex items-start gap-3 p-3 rounded-lg border border-border bg-muted/30">
+                        <div className="min-w-[160px]">
+                          <span className="text-xs font-semibold text-foreground">{row.setting}</span>
+                        </div>
+                        <span className="text-xs text-muted-foreground">{row.dose}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Per-Dose Limits */}
+                <div>
+                  <h4 className="text-xs font-semibold text-foreground mb-2 flex items-center gap-1.5">
+                    <span className="w-1.5 h-1.5 rounded-full bg-amber-400" />
+                    Per-Dose Limits &amp; Administration
+                  </h4>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                    {[
+                      { label: 'Vial Strengths', value: '50 mg/2.5 mL, 100 mg/5 mL, 200 mg/10 mL single-dose vials' },
+                      { label: 'Max IV Push', value: '100 mg per administration' },
+                      { label: 'Max Routine Infusion', value: '200 mg per dose (200–300 mg over ~2h has good safety record)' },
+                      { label: 'Higher Doses (300–400 mg)', value: 'More AEs than 200–300 mg; generally avoid 500 mg over 2h (hypotension, reactions)' },
+                    ].map((row, i) => (
+                      <div key={i} className="p-3 rounded-lg border border-border bg-muted/30">
+                        <div className="text-xs font-semibold text-foreground mb-0.5">{row.label}</div>
+                        <div className="text-xs text-muted-foreground">{row.value}</div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Pediatric */}
+                <div className="rounded-lg border border-sky-800/30 bg-sky-900/10 p-3">
+                  <div className="flex items-center gap-2 mb-1">
+                    <Info className="w-3.5 h-3.5 text-primary" />
+                    <span className="text-xs font-semibold text-foreground">Pediatric Dosing (Brief)</span>
+                  </div>
+                  <p className="text-xs text-muted-foreground leading-relaxed">
+                    CKD-related: 0.5 mg/kg (up to 100 mg) every 2–4 weeks in dialysis or ESA-treated children.
+                    Non-renal protocols: 2 mg/kg weekly with upper limits (e.g., 7 mg/kg, max 300 mg per dose).
+                  </p>
+                </div>
+
+                {/* Safety note */}
+                <div className="rounded-lg border border-rose-800/30 bg-rose-900/10 p-3">
+                  <div className="flex items-center gap-2 mb-1">
+                    <AlertTriangle className="w-3.5 h-3.5 text-destructive" />
+                    <span className="text-xs font-semibold text-foreground">Key Safety Points</span>
+                  </div>
+                  <ul className="space-y-1 text-xs text-muted-foreground">
+                    <li>• Many institutional protocols cap single doses at <strong className="text-muted-foreground">200–300 mg</strong> and avoid high single total-dose infusions with iron sucrose.</li>
+                    <li>• Doses of 300–400 mg over 2h have more adverse events than 200–300 mg.</li>
+                    <li>• 500 mg over 2h is generally <strong className="text-muted-foreground">not recommended</strong> because of hypotension and other reactions.</li>
+                    <li>• Test dose recommended (higher allergy risk vs FCM).</li>
+                  </ul>
+                </div>
+
+                <p className="text-[11px] text-muted-foreground italic">
+                  Sources: PubMed 11684551 (safe dose study), OSU Health Plan MMPP 23.0, CHEO Iron Sucrose Manual, KDIGO 2025 Anemia in CKD Guideline.
+                </p>
+              </div>
+            )}
           </div>
 
           {/* Iron markers section */}
