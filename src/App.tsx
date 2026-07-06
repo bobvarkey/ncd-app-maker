@@ -102,6 +102,7 @@ const Hypokalemia = lazy(() => import("@/pages/Hypokalemia"));
 const Hypomagnesemia = lazy(() => import("@/pages/Hypomagnesemia"));
 const Hypermagnesemia = lazy(() => import("@/pages/Hypermagnesemia"));
 const Hypophosphatemia = lazy(() => import("@/pages/Hypophosphatemia"));
+const FCMHypophosphatemia = lazy(() => import("@/pages/FCMHypophosphatemia"));
 const Hyperphosphatemia = lazy(() => import("@/pages/Hyperphosphatemia"));
 const HyperglycemicEmergency = lazy(() => import("@/pages/HyperglycemicEmergency"));
 const Type1TreatmentAlgorithm = lazy(() => import("@/pages/Type1TreatmentAlgorithm"));
@@ -244,6 +245,7 @@ const App = () => (
           <Route path="/hypomagnesemia" element={<><TabNavigation /><Hypomagnesemia /></>} />
           <Route path="/hypermagnesemia" element={<><TabNavigation /><Hypermagnesemia /></>} />
           <Route path="/hypophosphatemia" element={<><TabNavigation /><Hypophosphatemia /></>} />
+          <Route path="/fcm-hypophosphatemia" element={<><TabNavigation /><FCMHypophosphatemia /></>} />
           <Route path="/hyperphosphatemia" element={<><TabNavigation /><Hyperphosphatemia /></>} />
           <Route path="/hyperglycemic-emergency" element={<><TabNavigation /><HyperglycemicEmergency /></>} />
           <Route path="/type1-treatment-algorithm" element={<><TabNavigation /><Type1TreatmentAlgorithm /></>} />

@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Syringe, ChevronDown, ChevronUp, FlaskConical, Truck, IceCream, Layers, Moon, Droplets, AlertTriangle, Info, Bone } from 'lucide-react';
+import { Syringe, ChevronDown, ChevronUp, FlaskConical, Truck, IceCream, Layers, Moon, Droplets, AlertTriangle, Info } from 'lucide-react';
 import ferritinTsatChart from '@/assets/ferritin-tsat-thresholds.png.asset.json';
 import ironTransportImg from '@/assets/iron-transport-hepcidin.jpeg.asset.json';
 import ironIceCreamImg from '@/assets/iron-ice-cream-analogy.jpeg.asset.json';
@@ -69,7 +69,6 @@ export default function IronTherapy() {
   const [open, setOpen] = useState(false);
   const [paramsOpen, setParamsOpen] = useState(false);
   const [isDosingOpen, setIsDosingOpen] = useState(false);
-  const [hypoPhosOpen, setHypoPhosOpen] = useState(false);
 
   return (
     <div className="bg-card rounded-2xl shadow-sm border border-border overflow-hidden">
@@ -445,155 +444,6 @@ export default function IronTherapy() {
             References: Camaschella C. NEJM 2015; Cappellini MD et al. Am J Hematol 2020; Ponikowski P et al. ESC HF Guidelines 2021;
             KDIGO CKD Guidelines 2012/2024; Trenkwalder C et al. Lancet Neurol 2018.
           </p>
-
-          {/* FCM-Induced Hypophosphatemia — CDS Algorithm */}
-          <div className="rounded-2xl border border-sky-800/30 bg-sky-900/5 overflow-hidden">
-            <button
-              type="button"
-              onClick={() => setHypoPhosOpen(v => !v)}
-              className="w-full flex items-center justify-between p-4 hover:bg-sky-900/10 transition-colors"
-            >
-              <div className="flex items-center gap-2">
-                <Bone className="w-4 h-4 text-primary" />
-                <span className="text-sm font-semibold text-foreground">FCM-Induced Hypophosphatemia — CDS Algorithm</span>
-                <span className="text-[10px] uppercase tracking-wide bg-sky-900/30 text-primary border border-sky-800 px-2 py-0.5 rounded-full">
-                  Decision Support
-                </span>
-              </div>
-              {hypoPhosOpen ? <ChevronUp className="w-4 h-4 text-muted-foreground" /> : <ChevronDown className="w-4 h-4 text-muted-foreground" />}
-            </button>
-
-            {hypoPhosOpen && (
-              <div className="px-4 pb-4 space-y-5 border-t border-sky-800/20 pt-4">
-                <p className="text-xs text-muted-foreground leading-relaxed">
-                  Ferric carboxymaltose (FCM) can cause <strong className="text-foreground">hypophosphatemia</strong> via FGF23-mediated renal phosphate wasting.
-                  This algorithm stratifies severity and guides management. Check serum phosphate <strong className="text-foreground">1–2 weeks</strong> after FCM infusion
-                  in high-risk or symptomatic patients.
-                </p>
-
-                {/* Risk Factors */}
-                <div className="rounded-lg border border-amber-800/30 bg-amber-900/10 p-3">
-                  <div className="flex items-center gap-2 mb-2">
-                    <AlertTriangle className="w-3.5 h-3.5 text-warning" />
-                    <span className="text-xs font-semibold text-foreground">High-Risk Factors</span>
-                  </div>
-                  <div className="grid grid-cols-2 sm:grid-cols-3 gap-1.5 text-xs text-muted-foreground">
-                    <span>• IBD / malabsorption</span>
-                    <span>• Low BMI / malnutrition</span>
-                    <span>• Baseline hypophosphatemia</span>
-                    <span>• Vitamin D deficiency</span>
-                    <span>• Hyperparathyroidism</span>
-                    <span>• Antiresorptive therapy</span>
-                    <span className="col-span-2 sm:col-span-3">• Prior FCM-induced hypophosphatemia</span>
-                  </div>
-                </div>
-
-                {/* Severity Tiers */}
-                <div className="space-y-3">
-                  <h4 className="text-xs font-semibold text-foreground flex items-center gap-1.5">
-                    <span className="w-1.5 h-1.5 rounded-full bg-sky-400" />
-                    Severity-Based Management
-                  </h4>
-
-                  {/* Mild Asymptomatic */}
-                  <div className="rounded-lg border border-emerald-800/30 bg-emerald-900/10 p-3">
-                    <div className="flex items-center gap-2 mb-1.5">
-                      <span className="text-xs font-bold text-emerald-400">Mild Asymptomatic</span>
-                      <span className="text-[11px] font-mono text-emerald-400/70">PO₄ ≥ 0.6 mmol/L</span>
-                    </div>
-                    <ul className="space-y-1 text-xs text-muted-foreground">
-                      <li>• Discontinue FCM</li>
-                      <li>• No phosphate replacement needed</li>
-                      <li>• Check vitamin D &amp; PTH if high-risk</li>
-                      <li>• Repeat phosphate in 1–2 weeks</li>
-                    </ul>
-                  </div>
-
-                  {/* Moderate Symptomatic */}
-                  <div className="rounded-lg border border-amber-800/30 bg-amber-900/10 p-3">
-                    <div className="flex items-center gap-2 mb-1.5">
-                      <span className="text-xs font-bold text-amber-400">Moderate Symptomatic</span>
-                      <span className="text-[11px] font-mono text-amber-400/70">PO₄ 0.4–0.6 mmol/L + symptoms</span>
-                    </div>
-                    <ul className="space-y-1 text-xs text-muted-foreground">
-                      <li>• Discontinue FCM</li>
-                      <li>• Outpatient management if no red flags</li>
-                      <li>• Measure vitamin D, PTH, calcium, eGFR</li>
-                      <li>• Replete vitamin D if deficient</li>
-                      <li>• Start calcitriol if PTH elevated or osteomalacia suspected</li>
-                      <li>• Avoid routine oral phosphate (short course only if severe &amp; monitored)</li>
-                      <li>• Monitor phosphate, calcium, PTH q1–2wk until normalization</li>
-                      <li>• Consider spine/pelvis/hip imaging if bone pain or fracture suspected</li>
-                    </ul>
-                  </div>
-
-                  {/* Severe Non-Life-Threatening */}
-                  <div className="rounded-lg border border-orange-800/30 bg-orange-900/10 p-3">
-                    <div className="flex items-center gap-2 mb-1.5">
-                      <span className="text-xs font-bold text-orange-400">Severe (Non-Life-Threatening)</span>
-                      <span className="text-[11px] font-mono text-orange-400/70">PO₄ &lt; 0.4 mmol/L + bone symptoms</span>
-                    </div>
-                    <ul className="space-y-1 text-xs text-muted-foreground">
-                      <li>• Admit or observe unit</li>
-                      <li>• Discontinue FCM</li>
-                      <li>• Prioritize calcitriol &amp; vitamin D repletion</li>
-                      <li>• Consider IV phosphate if PO₄ &lt; 0.3 or symptoms severe</li>
-                      <li>• Avoid chronic high-dose oral phosphate (phosphaturia)</li>
-                      <li>• Monitor phosphate, calcium, PTH daily until stable</li>
-                      <li>• Evaluate for insufficiency fractures</li>
-                      <li>• Follow up with endocrinology / metabolic bone clinic</li>
-                    </ul>
-                  </div>
-
-                  {/* Life-Threatening */}
-                  <div className="rounded-lg border border-rose-800/30 bg-rose-900/10 p-3">
-                    <div className="flex items-center gap-2 mb-1.5">
-                      <span className="text-xs font-bold text-rose-400">Life-Threatening</span>
-                      <span className="text-[11px] font-mono text-rose-400/70">PO₄ &lt; 0.4 mmol/L + respiratory/cardiac/rhabdo</span>
-                    </div>
-                    <ul className="space-y-1 text-xs text-muted-foreground">
-                      <li>🚨 ICU admission</li>
-                      <li>• Discontinue FCM</li>
-                      <li>• IV phosphate with continuous cardiac monitoring</li>
-                      <li>• Start calcitriol &amp; replete vitamin D if deficient</li>
-                      <li>• Serial phosphate, calcium, PTH q6–12h initially</li>
-                      <li>• Anticipate repeated IV phosphate until FGF23 wasting resolves</li>
-                    </ul>
-                  </div>
-                </div>
-
-                {/* Re-exposure */}
-                <div className="rounded-lg border border-red-800/30 bg-red-900/10 p-3">
-                  <div className="flex items-center gap-2 mb-1.5">
-                    <span className="text-xs font-bold text-destructive">If FCM Re-Exposure Planned</span>
-                  </div>
-                  <ul className="space-y-1 text-xs text-muted-foreground">
-                    <li>• <strong className="text-muted-foreground">Avoid FCM</strong> — recommend alternative IV iron</li>
-                    <li>• Preferred alternatives: ferric derisomaltose, iron sucrose, or ferumoxytol</li>
-                  </ul>
-                </div>
-
-                {/* Prevention & Monitoring */}
-                <div className="rounded-lg border border-sky-800/30 bg-sky-900/10 p-3">
-                  <div className="flex items-center gap-2 mb-1.5">
-                    <Info className="w-3.5 h-3.5 text-primary" />
-                    <span className="text-xs font-semibold text-foreground">Prevention &amp; Monitoring</span>
-                  </div>
-                  <ul className="space-y-1 text-xs text-muted-foreground">
-                    <li>• Check phosphate at 1–2 weeks post-FCM in high-risk or symptomatic patients</li>
-                    <li>• Prefer non-FCM formulation if any history of FCM hypophosphatemia or high risk</li>
-                    <li>• Warn patients about symptoms: fatigue, bone pain, proximal weakness, gait change</li>
-                    <li>• Advise early testing if symptoms develop</li>
-                  </ul>
-                </div>
-
-                <p className="text-[11px] text-muted-foreground italic">
-                  Mechanism: FCM increases intact FGF23 → renal phosphate wasting &amp; calcitriol suppression.
-                  Risk is formulation-specific (lower with ferric derisomaltose and iron sucrose).
-                </p>
-              </div>
-            )}
-          </div>
 
           {/* Investigating IDA Cause */}
           <div className="rounded-xl border border-amber-800/40 bg-amber-900/10 p-4">
