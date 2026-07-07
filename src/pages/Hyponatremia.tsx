@@ -15,6 +15,173 @@ import { downloadTextFile } from "@/lib/clinical-utils";
 import { toast } from "sonner";
 
 // ══════════════════════════════════════════════
+// Differential Diagnosis: Hyponatremia & Polyuria Syndromes
+// Serum & Urine Osmolality Pattern Mapping
+// ══════════════════════════════════════════════
+
+interface OsmPattern {
+  id: string;
+  serumOsm: string;
+  urineOsm: string;
+  meaning: string;
+  condition: string;
+  keyClue: string;
+  color: string;
+  icon: string;
+}
+
+const OSM_PATTERNS: OsmPattern[] = [
+  {
+    id: "siadh",
+    serumOsm: "Dilute (low)",
+    urineOsm: "Concentrated (high)",
+    meaning: "Body is making excess ADH → retains water",
+    condition: "SIADH",
+    keyClue: "Euvolemic hyponatremia with inappropriately concentrated urine",
+    color: "blue",
+    icon: "🧪",
+  },
+  {
+    id: "psychogenic",
+    serumOsm: "Dilute (low)",
+    urineOsm: "Dilute (low)",
+    meaning: "Excess water intake → ADH suppressed",
+    condition: "Primary Polydipsia (Psychogenic Polydipsia)",
+    keyClue: "Very dilute urine, low urine sodium, psychiatric patient",
+    color: "emerald",
+    icon: "💧",
+  },
+  {
+    id: "di",
+    serumOsm: "Concentrated (high)",
+    urineOsm: "Dilute (low)",
+    meaning: "ADH problem → kidneys cannot concentrate urine",
+    condition: "Diabetes Insipidus (Central or Nephrogenic)",
+    keyClue: "Polyuria + polydipsia, hypernatremia risk, dilute urine",
+    color: "red",
+    icon: "🔥",
+  },
+  {
+    id: "lithium",
+    serumOsm: "Concentrated (high)",
+    urineOsm: "Concentrated (high)",
+    meaning: "Appropriate ADH response or non-specific situation",
+    condition: "Lithium-Induced Nephrogenic DI OR Appropriate Renal Concentration",
+    keyClue: "Check clinical context, lithium use, and other causes",
+    color: "purple",
+    icon: "⚡",
+  },
+];
+
+interface ConditionDetail {
+  id: string;
+  name: string;
+  pathophysiology: string;
+  labPattern: { label: string; value: string }[];
+  clinicalFeatures: string[];
+  management: string[];
+  examBuzzwords: string[];
+  color: string;
+}
+
+const CONDITIONS: ConditionDetail[] = [
+  {
+    id: "lithium-di",
+    name: "Lithium-Induced Nephrogenic DI",
+    pathophysiology: "Lithium impairs ADH response in the collecting duct, causing nephrogenic diabetes insipidus.",
+    labPattern: [
+      { label: "Serum sodium", value: "High or high-normal" },
+      { label: "Serum osmolality", value: "High (>295 mOsm/kg)" },
+      { label: "Urine osmolality", value: "Low (<300 mOsm/kg)" },
+      { label: "Urine specific gravity", value: "Low (<1.005)" },
+      { label: "Urine volume", value: "High (>3 L/day)" },
+      { label: "Desmopressin response", value: "Poor or none" },
+    ],
+    clinicalFeatures: ["Polyuria", "Polydipsia", "Nocturia", "Dry mouth", "Hypernatremia (severe cases)", "Dehydration symptoms", "Fatigue", "Weakness"],
+    management: [
+      "Evaluate need for continuing lithium",
+      "Amiloride preferred 5–10 mg/day",
+      "Or thiazide diuretics",
+      "Low-sodium diet + adequate water",
+      "Monitor serum lithium levels",
+      "Monitor electrolytes and renal function",
+      "Educate patient about dehydration and hypernatremia",
+    ],
+    examBuzzwords: ["Lithium", "Nephrogenic DI", "ADH resistance in collecting duct", "Polyuria + polydipsia + hypernatremia risk", "Poor response to DDAVP"],
+    color: "purple",
+  },
+  {
+    id: "siadh-detail",
+    name: "SIADH (Syndrome of Inappropriate Antidiuretic Hormone)",
+    pathophysiology: "Euvolemic hyponatremia with inappropriately concentrated urine. Inappropriate ADH release causes increased collecting duct water reabsorption, water retention, dilutional hyponatremia, plasma hypo-osmolality, while urine remains inappropriately concentrated.",
+    labPattern: [
+      { label: "Serum sodium", value: "Low (<135 mEq/L)" },
+      { label: "Serum osmolality", value: "Low (<275 mOsm/kg)" },
+      { label: "Urine osmolality", value: "High (>100 mOsm/kg)" },
+      { label: "Urine sodium", value: "High (>40 mEq/L)" },
+      { label: "ECF volume status", value: "Euvolemic" },
+      { label: "Hematocrit/BUN", value: "Normal" },
+    ],
+    clinicalFeatures: ["Euvolemic hyponatremia", "Inappropriately concentrated urine", "High urine sodium", "Low serum osmolality"],
+    management: [
+      "Treat underlying cause",
+      "Fluid restriction",
+      "Increase solute intake",
+      "Hypertonic saline in severe symptomatic cases",
+      "Vasopressin receptor antagonists",
+      "Monitor serum sodium carefully",
+    ],
+    examBuzzwords: ["Euvolemic hyponatremia", "Inappropriately concentrated urine", "High urine sodium", "Low serum osmolality", "ADH excess", "Small cell lung carcinoma"],
+    color: "blue",
+  },
+  {
+    id: "psychogenic-detail",
+    name: "Psychogenic Polydipsia (Primary Polydipsia)",
+    pathophysiology: "Excessive voluntary water intake suppresses ADH and causes dilutional hyponatremia with very dilute urine.",
+    labPattern: [
+      { label: "Serum sodium", value: "Low (<135 mEq/L)" },
+      { label: "Serum osmolality", value: "Low (<275 mOsm/kg)" },
+      { label: "Urine osmolality", value: "Very low (<100 mOsm/kg)" },
+      { label: "Urine sodium", value: "Low (<20 mEq/L)" },
+      { label: "Urine specific gravity", value: "Low (<1.005)" },
+      { label: "ECF volume status", value: "Euvolemic" },
+      { label: "BUN/Creatinine", value: "Low or normal" },
+    ],
+    clinicalFeatures: ["Psychiatric illness", "Schizophrenia", "Affective disorders", "Compulsive water drinking (often 10–15 L/day or more)"],
+    management: [
+      "Restrict water intake",
+      "Treat underlying psychiatric illness",
+      "Monitor serum sodium closely",
+      "Avoid rapid correction",
+      "3% saline if severe symptomatic hyponatremia",
+    ],
+    examBuzzwords: ["Excess water intake", "Suppressed ADH", "Very dilute urine", "Low urine sodium", "Dilutional hyponatremia", "Psychiatric patient"],
+    color: "emerald",
+  },
+  {
+    id: "di-detail",
+    name: "Diabetes Insipidus (Central & Nephrogenic)",
+    pathophysiology: "Failure of ADH action causing inability to concentrate urine. Central DI: deficiency of ADH secretion from hypothalamus/posterior pituitary. Nephrogenic DI: renal resistance to ADH in collecting duct.",
+    labPattern: [
+      { label: "Serum sodium", value: "High or high-normal" },
+      { label: "Serum osmolality", value: "High (>295 mOsm/kg)" },
+      { label: "Urine osmolality", value: "Low (<300 mOsm/kg)" },
+      { label: "Urine specific gravity", value: "Low (<1.005)" },
+      { label: "Urine volume", value: "High (>3 L/day)" },
+      { label: "Desmopressin response (Central)", value: "GOOD" },
+      { label: "Desmopressin response (Nephrogenic)", value: "POOR or NONE" },
+    ],
+    clinicalFeatures: ["Polyuria", "Polydipsia", "Nocturia", "Dry mouth", "Weakness", "Hypernatremia (in severe cases)"],
+    management: [
+      "Central DI: Desmopressin, adequate water intake",
+      "Nephrogenic DI: Treat underlying cause, thiazides, amiloride, low-sodium + low-protein diet, adequate water intake",
+    ],
+    examBuzzwords: ["Polyuria + polydipsia", "Dilute urine", "Hypernatremia risk", "Central responds to DDAVP", "Nephrogenic no response to DDAVP", "Lithium", "Hypercalcemia", "Hypokalemia"],
+    color: "red",
+  },
+];
+
+// ══════════════════════════════════════════════
 // Types
 // ══════════════════════════════════════════════
 
@@ -565,6 +732,147 @@ export default function Hyponatremia() {
                 urine osmolality is often low because lithium impairs concentrating ability. Treat by stopping lithium
                 and giving normal saline; dialysis if severe.
               </p>
+            </div>
+          </CardContent>
+        )}
+      </Card>
+
+      {/* ── Differential Diagnosis: Hyponatremia & Polyuria Syndromes ── */}
+      <Card className="border-indigo-500/20">
+        <button
+          onClick={() => setExpandedSection(expandedSection === "differential" ? null : "differential")}
+          className="w-full text-left"
+        >
+          <CardHeader className="pb-3">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-2">
+                <Brain className="h-5 w-5 text-indigo-400" />
+                <CardTitle className="text-base">🧠 Differential Diagnosis: Hyponatremia &amp; Polyuria Syndromes</CardTitle>
+              </div>
+              {expandedSection === "differential" ? <ChevronDown className="h-4 w-4" /> : <ChevronRight className="h-4 w-4" />}
+            </div>
+            <CardDescription>SIADH vs Psychogenic Polydipsia vs Diabetes Insipidus vs Lithium-Induced Nephrogenic DI — serum &amp; urine osmolality pattern mapping</CardDescription>
+          </CardHeader>
+        </button>
+
+        {expandedSection === "differential" && (
+          <CardContent className="pt-0 space-y-6">
+            {/* Osmolality Pattern Mapping Table */}
+            <div>
+              <h3 className="text-sm font-semibold mb-3 flex items-center gap-2">
+                <FileText className="h-4 w-4 text-indigo-400" />
+                Serum &amp; Urine Osmolality Pattern Mapping
+              </h3>
+              <div className="overflow-x-auto">
+                <table className="w-full text-xs border-collapse">
+                  <thead>
+                    <tr className="border-b border-border">
+                      <th className="text-left py-2 px-2 font-medium">Pattern</th>
+                      <th className="text-left py-2 px-2 font-medium">Serum Osmolality</th>
+                      <th className="text-left py-2 px-2 font-medium">Urine Osmolality</th>
+                      <th className="text-left py-2 px-2 font-medium">What It Means</th>
+                      <th className="text-left py-2 px-2 font-medium">Most Likely Condition</th>
+                      <th className="text-left py-2 px-2 font-medium">Key Clue</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {OSM_PATTERNS.map((p) => (
+                      <tr key={p.id} className="border-b border-border/50 hover:bg-muted/30">
+                        <td className="py-2 px-2">
+                          <Badge variant="outline" className={`text-[10px] border-${p.color}-500/30 text-${p.color}-400`}>
+                            {p.icon} {p.id === "siadh" ? "1" : p.id === "psychogenic" ? "2" : p.id === "di" ? "3" : "4"}
+                          </Badge>
+                        </td>
+                        <td className={`py-2 px-2 font-medium ${p.serumOsm.includes("Dilute") ? "text-blue-400" : "text-orange-400"}`}>{p.serumOsm}</td>
+                        <td className={`py-2 px-2 font-medium ${p.urineOsm.includes("Dilute") ? "text-blue-400" : "text-orange-400"}`}>{p.urineOsm}</td>
+                        <td className="py-2 px-2 text-muted-foreground">{p.meaning}</td>
+                        <td className="py-2 px-2">
+                          <Badge variant="outline" className={`text-[10px] border-${p.color}-500/30 text-${p.color}-400`}>
+                            {p.condition.split(" (")[0]}
+                          </Badge>
+                        </td>
+                        <td className="py-2 px-2 text-muted-foreground text-[10px]">{p.keyClue}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            {/* Decision Tree Logic */}
+            <div className="p-4 rounded-lg border border-indigo-500/20 bg-indigo-500/5">
+              <h3 className="text-sm font-semibold mb-2 flex items-center gap-2">
+                <Activity className="h-4 w-4 text-indigo-400" />
+                Decision Tree Logic
+              </h3>
+              <ol className="space-y-2 text-xs text-muted-foreground list-decimal list-inside">
+                <li><strong className="text-indigo-300">Step 1 — Check serum osmolality:</strong> Is it low (dilute) or high (concentrated)?</li>
+                <li><strong className="text-indigo-300">Step 2 — Check urine osmolality:</strong> Is it concentrated or dilute relative to serum?</li>
+                <li><strong className="text-indigo-300">Step 3 — Assess volume status:</strong> Euvolemic, hypovolemic, or hypervolemic?</li>
+                <li><strong className="text-indigo-300">Step 4 — Apply pattern matching:</strong> Use the table above to identify the most likely condition.</li>
+                <li><strong className="text-indigo-300">Step 5 — Use additional clues:</strong>
+                  <ul className="list-disc list-inside ml-4 mt-1 space-y-0.5">
+                    <li>Urine sodium (&gt;40 in SIADH, &lt;20 in psychogenic polydipsia)</li>
+                    <li>Desmopressin response (good in Central DI, poor in Nephrogenic DI / Lithium toxicity)</li>
+                    <li>Clinical context (lithium use, psychiatric illness, small cell lung cancer, head trauma)</li>
+                  </ul>
+                </li>
+              </ol>
+              <p className="mt-3 text-xs text-indigo-400 font-semibold">
+                💡 REMEMBER: Look at both serum &amp; urine osmolality together, assess volume status, and consider the clinical context!
+              </p>
+            </div>
+
+            {/* Detailed Condition Cards */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              {CONDITIONS.map((c) => (
+                <div key={c.id} className={`rounded-lg border border-${c.color}-500/20 bg-${c.color}-500/5 p-4`}>
+                  <h3 className={`text-sm font-bold text-${c.color}-400 mb-2`}>{c.name}</h3>
+                  <p className="text-xs text-muted-foreground mb-3">{c.pathophysiology}</p>
+
+                  <div className="mb-3">
+                    <p className="text-[10px] uppercase tracking-wider text-muted-foreground mb-1">Lab Pattern</p>
+                    <div className="space-y-0.5">
+                      {c.labPattern.map((l, i) => (
+                        <div key={i} className="flex justify-between text-xs">
+                          <span className="text-muted-foreground">{l.label}</span>
+                          <span className="font-mono font-medium">{l.value}</span>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+
+                  <div className="mb-3">
+                    <p className="text-[10px] uppercase tracking-wider text-muted-foreground mb-1">Clinical Features</p>
+                    <div className="flex flex-wrap gap-1">
+                      {c.clinicalFeatures.map((f, i) => (
+                        <Badge key={i} variant="secondary" className="text-[10px]">{f}</Badge>
+                      ))}
+                    </div>
+                  </div>
+
+                  <div className="mb-3">
+                    <p className="text-[10px] uppercase tracking-wider text-muted-foreground mb-1">Management</p>
+                    <ul className="space-y-0.5">
+                      {c.management.map((m, i) => (
+                        <li key={i} className="flex items-start gap-1.5 text-xs text-muted-foreground">
+                          <span className={`text-${c.color}-400 mt-0.5`}>•</span>
+                          {m}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+
+                  <div>
+                    <p className="text-[10px] uppercase tracking-wider text-muted-foreground mb-1">Exam Buzzwords</p>
+                    <div className="flex flex-wrap gap-1">
+                      {c.examBuzzwords.map((b, i) => (
+                        <Badge key={i} variant="outline" className={`text-[10px] border-${c.color}-500/30 text-${c.color}-400`}>{b}</Badge>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              ))}
             </div>
           </CardContent>
         )}

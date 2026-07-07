@@ -896,6 +896,16 @@ export default function Hypernatremia() {
                 </div>
               </div>
             ))}
+
+            {/* Cross-reference to Hyponatremia differential */}
+            <div className="p-3 rounded-lg border border-indigo-500/20 bg-indigo-500/5 text-xs">
+              <p className="font-semibold text-indigo-400 mb-1">🧠 Differential Diagnosis Reference</p>
+              <p className="text-muted-foreground">
+                For the complete differential diagnosis of <strong>SIADH vs Psychogenic Polydipsia vs Diabetes Insipidus vs Lithium-Induced Nephrogenic DI</strong> —
+                including the serum &amp; urine osmolality pattern mapping table, decision tree logic, and detailed condition cards —
+                see the <strong>Hyponatremia Decision Support</strong> tool (🧠 Differential Diagnosis section).
+              </p>
+            </div>
           </CardContent>
         )}
       </Card>
