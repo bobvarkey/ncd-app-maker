@@ -32,6 +32,7 @@ const HypertensionTab = lazy(() => import("@/pages/hypertension/HypertensionTab"
 const HypertensionTreatment = lazy(() => import("@/pages/hypertension/HypertensionTreatment"));
 const HypertensionClinicalCards = lazy(() => import("@/pages/hypertension/HypertensionClinicalCards"));
 const SecondaryHtnPage = lazy(() => import("@/pages/hypertension/SecondaryHtnPage"));
+const MRASelectionAlgorithm = lazy(() => import("@/pages/hypertension/MRASelectionAlgorithm"));
 const LipidsAssessment = lazy(() => import("@/pages/lipids/LipidsAssessment"));
 const LipidsOverview = lazy(() => import("@/pages/lipids/LipidsOverview"));
 const LipidsTab = lazy(() => import("@/pages/lipids/LipidsTab"));
@@ -197,6 +198,7 @@ const App = () => (
           <Route path="/hypertension/treatment" element={<><TabNavigation /><HypertensionTreatment /></>} />
           <Route path="/hypertension/clinical-cards" element={<><TabNavigation /><HypertensionClinicalCards /></>} />
           <Route path="/hypertension/secondary-htn" element={<><TabNavigation /><SecondaryHtnPage /></>} />
+          <Route path="/hypertension/mra-selection" element={<><TabNavigation /><MRASelectionAlgorithm /></>} />
           <Route path="/lipids/assessment" element={<><TabNavigation /><LipidsAssessment /></>} />
           <Route path="/lipids/overview" element={<><TabNavigation /><LipidsOverview /></>} />
           <Route path="/lipids/tab" element={<><TabNavigation /><LipidsTab /></>} />

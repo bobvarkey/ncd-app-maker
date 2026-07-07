@@ -26,6 +26,7 @@ import HypertensionTreatment from "./HypertensionTreatment";
 import HypertensionClinicalCards from "./HypertensionClinicalCards";
 import HypertensionDrugSelection from "./HypertensionDrugSelection";
 import HypertensionElectrolyteRisk from "./HypertensionElectrolyteRisk";
+import MRASelectionAlgorithm from "./MRASelectionAlgorithm";
 
 // Category colors for hypertension (orange theme)
 const categoryColors = {
@@ -154,9 +155,16 @@ export default function HypertensionTab() {
       description: "Risk assessment for hyperkalemia, hypokalemia, and hyponatremia — no lab values required",
       component: <HypertensionElectrolyteRisk />,
     },
+    {
+      id: "mra-selection",
+      title: "MRA Selection Algorithm",
+      icon: <Pill />,
+      description: "Spironolactone vs Eplerenone vs Finerenone — evidence-based decision support for cardiology, nephrology & hypertension",
+      component: <MRASelectionAlgorithm />,
+    },
   ];
 
-  const sectionOrder = ["overview", "assessment", "treatment", "workup", "drug-selection", "electrolyte-risk"];
+  const sectionOrder = ["overview", "assessment", "treatment", "workup", "drug-selection", "electrolyte-risk", "mra-selection"];
 
   return (
     <div className="min-h-screen bg-background">
