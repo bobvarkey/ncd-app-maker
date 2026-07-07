@@ -141,11 +141,17 @@ interface BranchResult {
   rationale: string;
   notes: string[];
   contraindicationWarnings: string[];
+  doseCategory: string;
+  monitoringPlan: string[];
 }
 
 function evaluateAlgorithm(input: InputState): BranchResult | null {
   const K = parseFloat(input.baseline_K || "0");
   const warnings: string[] = [];
+  const monitoring: string[] = [
+    "Check K⁺ and creatinine at baseline, 3–7 days after initiation, at 1 month, then every 3 months.",
+    "More frequent monitoring in CKD G3b+ or with ACEi/ARB/ARNI.",
+  ];
 
   // Safety checks
   if (K >= 5.0) {
@@ -173,6 +179,14 @@ function evaluateAlgorithm(input: InputState): BranchResult | null {
     warnings.push("Contraindication: known MRA hypersensitivity — avoid all MRAs.");
   }
 
+  // Determine dose category based on CKD stage
+  const getDoseCategory = (mra: string): string => {
+    if (["G4", "G5"].includes(input.ckd_stage)) return "low";
+    if (input.ckd_stage === "G3b") return "low";
+    if (input.ckd_stage === "G3a") return mra === "finerenone" ? "standard" : "low";
+    return "standard";
+  };
+
   // Branch 1: T2DM + albuminuric CKD
   if (
     input.diabetes_type2 &&
@@ -189,6 +203,11 @@ function evaluateAlgorithm(input: InputState): BranchResult | null {
         "Reserve spironolactone/eplerenone for additional HF or resistant HTN indications if potassium and renal function allow.",
       ],
       contraindicationWarnings: warnings,
+      doseCategory: getDoseCategory("finerenone"),
+      monitoringPlan: [
+        ...monitoring,
+        "Finerenone: check K⁺ at 4 weeks, then q4 months; more frequent if CKD or K-altering meds.",
+      ],
     };
   }
 
@@ -205,80 +224,118 @@ function evaluateAlgorithm(input: InputState): BranchResult | null {
           "Start eplerenone 25 mg OD, titrate to 50 mg OD as tolerated.",
         ],
         contraindicationWarnings: warnings,
+        doseCategory: getDoseCategory("eplerenone"),
+        monitoringPlan: monitoring,
       };
     }
     // HFrEF without post-MI
     return {
       preferred: "Spironolactone",
       alternative: "Eplerenone",
-      rationale: "HFrEF without recent MI: spironolactone has the strongest mortality data (RALES). Eplerenone is a reasonable alternative if endocrine AEs are a concern.",
+      rationale: "Chronic HFrEF: spironolactone is extensively proven (RALES), cheap, and effective; switch to eplerenone if gynecomastia or endocrine issues arise.",
       notes: [
         "Start spironolactone 12.5–25 mg OD, titrate to 50 mg OD as tolerated.",
+        "Use lower starting doses in CKD G3b–G4 and with ACEi/ARB/ARNI.",
+        "Consider finerenone in diabetics with CKD where hyperkalemia limits steroidal MRA dose.",
         "If gynecomastia develops, switch to eplerenone 25 mg OD, titrate to 50 mg OD.",
-        "Monitor K⁺ and Cr at 1 week, 4 weeks, then q3–6 months.",
       ],
       contraindicationWarnings: warnings,
+      doseCategory: getDoseCategory("spironolactone"),
+      monitoringPlan: monitoring,
     };
   }
 
-  // Branch 3: Primary aldosteronism
+  // Branch 3: HFpEF / HFmrEF
+  if (input.heart_failure_type === "HFpEF" || input.heart_failure_type === "HFmrEF") {
+    return {
+      preferred: "Finerenone",
+      alternative: "Spironolactone or Eplerenone",
+      rationale: "In HFpEF/HFmrEF, finerenone is the only MRA with clear reduction in HF hospitalization and a favorable efficacy–safety balance; steroidal MRAs may still help BP and congestion but with more hyperkalemia/endocrine risk.",
+      notes: [
+        "Prioritize finerenone in HFpEF/HFmrEF with T2DM/CKD.",
+        "Use spironolactone/eplerenone when resistant HTN or classical HFrEF-like phenotypes coexist.",
+        "FINEARTS-HF supports finerenone in HFmrEF/HFpEF with recent data.",
+      ],
+      contraindicationWarnings: warnings,
+      doseCategory: getDoseCategory("finerenone"),
+      monitoringPlan: [
+        ...monitoring,
+        "Finerenone: check K⁺ at 4 weeks, then q4 months.",
+      ],
+    };
+  }
+
+  // Branch 4: Primary aldosteronism
   if (input.primary_aldosteronism) {
     return {
       preferred: "Spironolactone",
       alternative: "Eplerenone",
-      rationale: "Primary aldosteronism: spironolactone is first-line due to superior BP control and long-standing evidence. Eplerenone is an alternative if endocrine AEs are problematic.",
+      rationale: "Primary aldosteronism: spironolactone is potent and cost-effective; eplerenone is chosen when endocrine AEs are problematic. Finerenone is not standard first-line for primary aldosteronism.",
       notes: [
         "Start spironolactone 25–50 mg OD, titrate to 100–200 mg OD as needed for BP/K⁺ control.",
         "If gynecomastia develops, switch to eplerenone 50–100 mg OD.",
-        "Monitor K⁺ and BP closely during titration.",
+        "Titrate dose to renin and BP targets; monitor K and renal function closely.",
       ],
       contraindicationWarnings: warnings,
+      doseCategory: "high",
+      monitoringPlan: [
+        ...monitoring,
+        "Monitor K⁺ and BP closely during titration — primary aldosteronism often requires higher MRA doses.",
+      ],
     };
   }
 
-  // Branch 4: Resistant hypertension
-  if (input.resistant_hypertension) {
+  // Branch 5: Resistant HTN without CKD/diabetes
+  if (input.resistant_hypertension && !input.diabetes_type2 && !["G3a", "G3b", "G4"].includes(input.ckd_stage)) {
     return {
       preferred: "Spironolactone",
       alternative: "Eplerenone",
-      rationale: "Resistant hypertension: spironolactone is the most effective add-on agent (PATHWAY-2). Eplerenone is an alternative if endocrine AEs are a concern.",
+      rationale: "Resistant hypertension without major CKD/diabetes: spironolactone is the most effective add-on MRA (PATHWAY-2); eplerenone is reserved for intolerance or endocrine AEs.",
       notes: [
-        "Start spironolactone 25 mg OD (PATHWAY-2 protocol).",
-        "Titrate to 50 mg OD if needed and K⁺ remains <5.0.",
-        "If gynecomastia develops, switch to eplerenone 50–100 mg OD.",
-        "Monitor K⁺ and Cr at 1 week, 4 weeks, then q3–6 months.",
+        "Start low, titrate based on BP response and K/eGFR.",
+        "If gynecomastia or sexual dysfunction occurs, switch to eplerenone with equivalent MR blockade.",
+        "Start spironolactone 25 mg OD (PATHWAY-2 protocol), titrate to 50 mg OD if needed.",
       ],
       contraindicationWarnings: warnings,
+      doseCategory: getDoseCategory("spironolactone"),
+      monitoringPlan: monitoring,
     };
   }
 
-  // Branch 5: HFmrEF / HFpEF
-  if (input.heart_failure_type === "HFmrEF" || input.heart_failure_type === "HFpEF") {
+  // Branch 6: Resistant HTN with CKD or T2DM
+  if (input.resistant_hypertension && (input.diabetes_type2 || ["G3a", "G3b", "G4"].includes(input.ckd_stage))) {
     return {
-      preferred: "Spironolactone",
-      alternative: "Finerenone",
-      rationale: "HFmrEF/HFpEF: spironolactone has the most data (TOPCAT). Finerenone is emerging (FINEARTS-HF) and may be preferred if CKD is also present.",
+      preferred: "Finerenone or low-dose Spironolactone/Eplerenone",
+      alternative: null,
+      rationale: "Resistant HTN plus CKD/T2DM: balance BP control with cardiorenal protection and hyperkalemia risk; finerenone may offer safer long-term kidney/CV profile.",
       notes: [
-        "TOPCAT showed possible benefit in HFpEF, particularly in the Americas region.",
-        "FINEARTS-HF supports finerenone in HFmrEF/HFpEF with recent data.",
-        "Consider finerenone if concomitant CKD (T2DM + albuminuria) is present.",
+        "Consider combining finerenone with careful RAAS blockade when albuminuric CKD is present.",
+        "Use low-dose spironolactone/eplerenone only if potassium allows and BP remains uncontrolled.",
+        "Monitor K⁺ and eGFR closely — dual RAAS + MRA in CKD carries high hyperkalemia risk.",
       ],
       contraindicationWarnings: warnings,
+      doseCategory: "low",
+      monitoringPlan: [
+        ...monitoring,
+        "High-risk combination: check K⁺ at 3–5 days, then weekly for first month.",
+      ],
     };
   }
 
-  // Branch 6: High-risk endocrine AEs (no other strong indication)
-  if (input.high_risk_endocrine_AEs) {
+  // Branch 7: High-risk endocrine AEs
+  if (input.high_risk_endocrine_AEs || input.sex === "male") {
     return {
-      preferred: "Eplerenone",
-      alternative: "Finerenone",
-      rationale: "High risk of endocrine AEs: eplerenone is selective with minimal gynecomastia. Finerenone is an alternative with no anti-androgen effects.",
+      preferred: "Eplerenone or Finerenone",
+      alternative: null,
+      rationale: "High concern for gynecomastia/sex-hormone effects: avoid spironolactone if possible; use eplerenone or finerenone depending on HF vs CKD/T2DM profile.",
       notes: [
-        "Eplerenone: start 25 mg OD, titrate to 50 mg OD.",
-        "Finerenone: start 10–20 mg OD depending on eGFR.",
+        "For pure HF/HTN without diabetic CKD, eplerenone is typically preferred.",
+        "For HF with diabetic CKD or predominant CKD risk, favor finerenone.",
         "Avoid eplerenone with strong CYP3A4 inhibitors.",
       ],
       contraindicationWarnings: warnings,
+      doseCategory: getDoseCategory("eplerenone"),
+      monitoringPlan: monitoring,
     };
   }
 
@@ -293,6 +350,8 @@ function evaluateAlgorithm(input: InputState): BranchResult | null {
       "Consult specialist if uncertain.",
     ],
     contraindicationWarnings: warnings,
+    doseCategory: "not_applicable",
+    monitoringPlan: [],
   };
 }
 
@@ -437,6 +496,10 @@ export default function MRASelectionAlgorithm() {
       lines.push("");
       lines.push("Notes:");
       result.notes.forEach((n) => lines.push(`  • ${n}`));
+      lines.push("");
+      lines.push(`  Dose Category: ${result.doseCategory}`);
+      lines.push("  Monitoring Plan:");
+      result.monitoringPlan.forEach((m) => lines.push(`    • ${m}`));
       if (result.contraindicationWarnings.length > 0) {
         lines.push("");
         lines.push("Warnings:");
@@ -854,6 +917,41 @@ export default function MRASelectionAlgorithm() {
                   </p>
                 )}
                 <p className="text-sm text-muted-foreground">{result.rationale}</p>
+              </div>
+
+              {/* Dose Category & Monitoring */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                <div className="p-3 rounded-lg border border-cyan-500/20 bg-cyan-500/5">
+                  <h4 className="text-sm font-semibold text-cyan-400 mb-1 flex items-center gap-2">
+                    <Activity className="h-4 w-4" />
+                    Dose Category
+                  </h4>
+                  <Badge variant="outline" className={`text-xs ${
+                    result.doseCategory === "low" ? "border-amber-500/30 text-amber-400" :
+                    result.doseCategory === "high" ? "border-red-500/30 text-red-400" :
+                    result.doseCategory === "not_applicable" ? "border-muted-foreground/30 text-muted-foreground" :
+                    "border-green-500/30 text-green-400"
+                  }`}>
+                    {result.doseCategory === "low" ? "Low — start at reduced dose" :
+                     result.doseCategory === "high" ? "High — may require higher doses" :
+                     result.doseCategory === "not_applicable" ? "N/A" :
+                     "Standard — start at usual dose"}
+                  </Badge>
+                </div>
+                <div className="p-3 rounded-lg border border-emerald-500/20 bg-emerald-500/5">
+                  <h4 className="text-sm font-semibold text-emerald-400 mb-1 flex items-center gap-2">
+                    <HeartPulse className="h-4 w-4" />
+                    Monitoring Plan
+                  </h4>
+                  <ul className="space-y-0.5">
+                    {result.monitoringPlan.map((m, i) => (
+                      <li key={i} className="flex items-start gap-1.5 text-[11px] text-muted-foreground">
+                        <span className="text-emerald-400 mt-0.5">•</span>
+                        {m}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
               </div>
 
               {/* Notes */}
