@@ -9,7 +9,7 @@ import {
   AlertTriangle, Droplets, Stethoscope, FlaskConical, Bone,
   HeartPulse, Brain, Pill, Syringe, Activity, Info, Copy,
   Download, Clock, ShieldAlert, ChevronRight, ChevronDown,
-  Calculator, Beaker, TestTube, FileText,
+  Calculator, Beaker, TestTube, FileText, Zap,
 } from "lucide-react";
 import { downloadTextFile } from "@/lib/clinical-utils";
 import { toast } from "sonner";
@@ -821,6 +821,79 @@ export default function Hyponatremia() {
               <p className="mt-3 text-xs text-indigo-400 font-semibold">
                 💡 REMEMBER: Look at both serum &amp; urine osmolality together, assess volume status, and consider the clinical context!
               </p>
+            </div>
+
+            {/* ADH Logic Quick Reference */}
+            <div className="p-4 rounded-lg border border-cyan-500/20 bg-cyan-500/5">
+              <h3 className="text-sm font-semibold mb-2 flex items-center gap-2">
+                <Zap className="h-4 w-4 text-cyan-400" />
+                ADH Logic Quick Reference
+              </h3>
+              <div className="overflow-x-auto">
+                <table className="w-full text-xs border-collapse">
+                  <thead>
+                    <tr className="border-b border-border">
+                      <th className="text-left py-2 px-2 font-medium">ADH State</th>
+                      <th className="text-left py-2 px-2 font-medium">Serum</th>
+                      <th className="text-left py-2 px-2 font-medium">Urine</th>
+                      <th className="text-left py-2 px-2 font-medium">Condition</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr className="border-b border-border/50 hover:bg-muted/30">
+                      <td className="py-1.5 px-2 font-medium text-red-400">ADH ↑ (excess)</td>
+                      <td className="py-1.5 px-2 text-blue-400">Dilute</td>
+                      <td className="py-1.5 px-2 text-orange-400">Concentrated</td>
+                      <td className="py-1.5 px-2"><Badge variant="outline" className="text-[10px] border-blue-500/30 text-blue-400">SIADH</Badge></td>
+                    </tr>
+                    <tr className="border-b border-border/50 hover:bg-muted/30">
+                      <td className="py-1.5 px-2 font-medium text-emerald-400">ADH ↓ (suppressed)</td>
+                      <td className="py-1.5 px-2 text-blue-400">Dilute</td>
+                      <td className="py-1.5 px-2 text-blue-400">Dilute</td>
+                      <td className="py-1.5 px-2"><Badge variant="outline" className="text-[10px] border-emerald-500/30 text-emerald-400">Primary Polydipsia</Badge></td>
+                    </tr>
+                    <tr className="border-b border-border/50 hover:bg-muted/30">
+                      <td className="py-1.5 px-2 font-medium text-orange-400">ADH absent/resistant</td>
+                      <td className="py-1.5 px-2 text-orange-400">Concentrated</td>
+                      <td className="py-1.5 px-2 text-blue-400">Dilute</td>
+                      <td className="py-1.5 px-2"><Badge variant="outline" className="text-[10px] border-red-500/30 text-red-400">Diabetes Insipidus</Badge></td>
+                    </tr>
+                    <tr className="hover:bg-muted/30">
+                      <td className="py-1.5 px-2 font-medium text-muted-foreground">ADH appropriate</td>
+                      <td className="py-1.5 px-2 text-orange-400">Concentrated</td>
+                      <td className="py-1.5 px-2 text-orange-400">Concentrated</td>
+                      <td className="py-1.5 px-2"><Badge variant="outline" className="text-[10px] border-purple-500/30 text-purple-400">Lithium NDI / Non-specific</Badge></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            {/* Normal Reference Ranges */}
+            <div className="p-4 rounded-lg border border-muted-foreground/20 bg-muted/10">
+              <h3 className="text-sm font-semibold mb-2 flex items-center gap-2">
+                <Info className="h-4 w-4 text-muted-foreground" />
+                Normal Reference Ranges
+              </h3>
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+                <div className="p-2 rounded bg-card/50 border border-border">
+                  <div className="text-[10px] uppercase tracking-wider text-muted-foreground">Serum Osmolality</div>
+                  <div className="text-sm font-bold">275–295 mOsm/kg</div>
+                </div>
+                <div className="p-2 rounded bg-card/50 border border-border">
+                  <div className="text-[10px] uppercase tracking-wider text-muted-foreground">Urine Osmolality</div>
+                  <div className="text-sm font-bold">50–1200 mOsm/kg</div>
+                </div>
+                <div className="p-2 rounded bg-card/50 border border-border">
+                  <div className="text-[10px] uppercase tracking-wider text-muted-foreground">Urine Specific Gravity</div>
+                  <div className="text-sm font-bold">1.005–1.030</div>
+                </div>
+                <div className="p-2 rounded bg-card/50 border border-border">
+                  <div className="text-[10px] uppercase tracking-wider text-muted-foreground">Urine Sodium</div>
+                  <div className="text-sm font-bold">Variable</div>
+                  <div className="text-[10px] text-muted-foreground">depends on volume status</div>
+                </div>
+              </div>
             </div>
 
             {/* Detailed Condition Cards */}
