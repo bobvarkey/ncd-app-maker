@@ -20,6 +20,7 @@ function getGitInfo() {
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => {
   const git = getGitInfo();
+  const analyzeBundle = process.env.ANALYZE === "true";
   return {
   server: {
     host: "::",
@@ -28,7 +29,11 @@ export default defineConfig(({ mode }) => {
       overlay: false,
     },
   },
-  plugins: [react(), mode === "development" && componentTagger(), visualizer({ open: true, gzipSize: true, brotliSize: true, filename: "stats.html" })].filter(Boolean),
+  plugins: [
+    react(),
+    mode === "development" && componentTagger(),
+    analyzeBundle && visualizer({ open: false, gzipSize: true, brotliSize: true, filename: "stats.html" }),
+  ].filter(Boolean),
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "./src"),
