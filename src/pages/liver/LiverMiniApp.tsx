@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
-import { Copy, Printer, Activity, Settings2, ChevronDown, Download, ImageIcon } from "lucide-react";
+import { Copy, Printer, Activity, Settings2, ChevronDown, Download, ImageIcon, Table2 } from "lucide-react";
 import { downloadTextFile } from "@/lib/clinical-utils";
 import { toast } from "@/hooks/use-toast";
 
@@ -164,6 +164,7 @@ export default function LiverMiniApp() {
   const [customCutoffs, setCustomCutoffs] = useState<Cutoffs>(PRESETS.aasld.cutoffs);
   const [showCutoffs, setShowCutoffs] = useState(false);
   const [showInfographic, setShowInfographic] = useState(false);
+  const [showMashTable, setShowMashTable] = useState(false);
   const cutoffs = preset === "custom" ? customCutoffs : PRESETS[preset].cutoffs;
   const setCutoff = (k: keyof Cutoffs, v: string) => {
     setPreset("custom");
@@ -314,6 +315,94 @@ export default function LiverMiniApp() {
           </CardDescription>
         </CardHeader>
       </Card>
+
+      {/* MASH / MetALD / Pure ALD diagnostic comparison table */}
+      <Collapsible open={showMashTable} onOpenChange={setShowMashTable}>
+        <Card>
+          <CollapsibleTrigger asChild>
+            <CardHeader className="py-3 cursor-pointer hover:bg-accent/30 transition-colors">
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-2">
+                  <Table2 className="h-4 w-4 text-primary" />
+                  <CardTitle className="text-sm">MASH vs MetALD vs Pure ALD — Diagnostic Classification</CardTitle>
+                </div>
+                <ChevronDown className={`h-4 w-4 text-muted-foreground transition-transform ${showMashTable ? "rotate-180" : ""}`} />
+              </div>
+            </CardHeader>
+          </CollapsibleTrigger>
+          <CollapsibleContent>
+            <CardContent className="space-y-4">
+              <div className="overflow-x-auto">
+                <table className="w-full text-xs border-collapse">
+                  <thead>
+                    <tr className="border-b">
+                      <th className="text-left p-2 font-semibold bg-muted/50">Diagnostic Feature</th>
+                      <th className="text-left p-2 font-semibold bg-emerald-500/10 border-x">MASH</th>
+                      <th className="text-left p-2 font-semibold bg-amber-500/10 border-x">MetALD</th>
+                      <th className="text-left p-2 font-semibold bg-red-500/10">Pure ALD</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr className="border-b">
+                      <td className="p-2 font-medium">Metabolic Factors</td>
+                      <td className="p-2 border-x bg-emerald-500/5">At least one metabolic risk factor present</td>
+                      <td className="p-2 border-x bg-amber-500/5">At least one metabolic risk factor present</td>
+                      <td className="p-2 bg-red-500/5">None required (driven purely by alcohol)</td>
+                    </tr>
+                    <tr className="border-b">
+                      <td className="p-2 font-medium">Weekly Alcohol Limit (Females)</td>
+                      <td className="p-2 border-x bg-emerald-500/5">&lt; 140 grams</td>
+                      <td className="p-2 border-x bg-amber-500/5">140 to 350 grams</td>
+                      <td className="p-2 bg-red-500/5">&gt; 350 grams</td>
+                    </tr>
+                    <tr className="border-b">
+                      <td className="p-2 font-medium">Weekly Alcohol Limit (Males)</td>
+                      <td className="p-2 border-x bg-emerald-500/5">&lt; 210 grams</td>
+                      <td className="p-2 border-x bg-amber-500/5">210 to 420 grams</td>
+                      <td className="p-2 bg-red-500/5">&gt; 420 grams</td>
+                    </tr>
+                    <tr className="border-b">
+                      <td className="p-2 font-medium">Daily Standard Drinks (Females)</td>
+                      <td className="p-2 border-x bg-emerald-500/5">&lt; ~1.5 drinks per day</td>
+                      <td className="p-2 border-x bg-amber-500/5">~1.5 to 3.5 drinks per day</td>
+                      <td className="p-2 bg-red-500/5">&gt; 3.5 drinks per day</td>
+                    </tr>
+                    <tr className="border-b">
+                      <td className="p-2 font-medium">Daily Standard Drinks (Males)</td>
+                      <td className="p-2 border-x bg-emerald-500/5">&lt; ~2 drinks per day</td>
+                      <td className="p-2 border-x bg-amber-500/5">~2 to 4 drinks per day</td>
+                      <td className="p-2 bg-red-500/5">&gt; 420 grams equivalent</td>
+                    </tr>
+                    <tr>
+                      <td className="p-2 font-medium">Primary Disease Driver</td>
+                      <td className="p-2 border-x bg-emerald-500/5">Metabolic dysfunction</td>
+                      <td className="p-2 border-x bg-amber-500/5">Combined metabolic and alcohol synergy</td>
+                      <td className="p-2 bg-red-500/5">Chronic alcohol overuse</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+
+              <div className="text-xs text-muted-foreground space-y-1">
+                <p><em>Note: One standard drink in the United States contains roughly 14 grams of pure alcohol.</em></p>
+                <p>A standard drink contains a specific amount of pure alcohol. Globally, this varies: in the US, it is about 14 grams, while in India and many other countries, it is 10 grams. In milliliters (mL), these pure alcohol amounts translate into the following typical serving sizes:</p>
+                <ul className="list-disc list-inside space-y-0.5 mt-1">
+                  <li><strong>Beer:</strong> 330–355 mL (a regular can/bottle at 5% ABV)</li>
+                  <li><strong>Wine:</strong> 100–150 mL (a glass at 12% ABV)</li>
+                  <li><strong>Spirits:</strong> 30–45 mL (one peg/shot at 40% ABV)</li>
+                </ul>
+              </div>
+
+              <img
+                src="/standard-drink-guide.svg"
+                alt="Standard drink sizes reference guide — beer, wine, and spirits"
+                className="w-full max-w-md mx-auto rounded-lg border object-contain"
+                loading="lazy"
+              />
+            </CardContent>
+          </CollapsibleContent>
+        </Card>
+      </Collapsible>
 
       {/* Liver infographic */}
       <Collapsible open={showInfographic} onOpenChange={setShowInfographic}>
