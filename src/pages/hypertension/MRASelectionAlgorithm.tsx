@@ -6,9 +6,9 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 import {
-  HeartPulse, Kidney, Pill, AlertTriangle, Copy, Download,
+  HeartPulse, Activity, Pill, AlertTriangle, Copy, Download,
   ChevronRight, ChevronDown, FlaskConical, Stethoscope,
-  Activity, Brain, ShieldAlert, Info, FileText, Zap,
+  Brain, ShieldAlert, Info, FileText, Zap,
 } from "lucide-react";
 import { downloadTextFile } from "@/lib/clinical-utils";
 import { toast } from "sonner";
@@ -369,7 +369,7 @@ const SAFETY_RULES = [
     border: "border-red-500/20",
   },
   {
-    icon: <Kidney className="h-4 w-4" />,
+    icon: <Activity className="h-4 w-4" />,
     title: "Renal Function Monitoring",
     detail: "Check eGFR before starting. Avoid steroidal MRAs if eGFR <30. Finerenone approved for eGFR ≥25. Monitor Cr at 1 week, 4 weeks, then q3–6 months. eGFR drop >30% warrants holding and reassessment.",
     color: "text-amber-500",
@@ -703,7 +703,7 @@ export default function MRASelectionAlgorithm() {
             {/* CKD Stage */}
             <div>
               <Label className="mb-2 block flex items-center gap-2">
-                <Kidney className="h-4 w-4 text-amber-400" />
+                <Activity className="h-4 w-4 text-amber-400" />
                 CKD Stage
               </Label>
               <div className="grid grid-cols-4 md:grid-cols-7 gap-1.5">

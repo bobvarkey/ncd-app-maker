@@ -422,6 +422,7 @@ const ANTIARRHYTHMIC_CLASSES: AntiarrhythmicClass[] = [
   {
     class: "I",
     mechanism: "Na⁺ channel blockers (membrane stabilizers)",
+    drugs: [],
     subclasses: [
       {
         class: "A",
