@@ -8,7 +8,7 @@ import DiscriminantTable from './anemia/components/DiscriminantTable';
 import CausesPanel from './anemia/components/CausesPanel';
 import ReferenceRanges from './anemia/components/ReferenceRanges';
 import IronTherapy from './anemia/components/IronTherapy';
-import IronOverloadAlgorithm from './anemia/components/IronOverloadAlgorithm';
+import IronStudiesCombined from './anemia/components/IronStudiesCombined';
 import ThrombocytopeniaEvaluator from './anemia/components/ThrombocytopeniaEvaluator';
 import BleedingClottingEvaluator from './anemia/components/BleedingClottingEvaluator';
 import IronReplacementCalculator from '@/calculators/iron/IronReplacementCalculator';
@@ -174,7 +174,7 @@ export default function Anemia() {
           </>
         ) : activeTab === 'iron' ? (
           <>
-            <IronOverloadAlgorithm />
+            <IronStudiesCombined />
             <IronReplacementCalculator />
             <IronTherapy />
           </>
