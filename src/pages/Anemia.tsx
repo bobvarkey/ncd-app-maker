@@ -172,7 +172,11 @@ export default function Anemia() {
             <TestSuggestionAlgorithm />
           </>
         ) : activeTab === 'iron' ? (
-          <IronStudiesCombined />
+          <>
+            <IronStudiesCombined />
+            <IronTherapy />
+          </>
+
         ) : activeTab === 'bleeding-clotting' ? (
           <BleedingClottingEvaluator />
         ) : activeTab === 'esr' ? (
