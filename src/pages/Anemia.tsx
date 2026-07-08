@@ -11,11 +11,10 @@ import IronTherapy from './anemia/components/IronTherapy';
 import IronStudiesCombined from './anemia/components/IronStudiesCombined';
 import ThrombocytopeniaEvaluator from './anemia/components/ThrombocytopeniaEvaluator';
 import BleedingClottingEvaluator from './anemia/components/BleedingClottingEvaluator';
-import IronReplacementCalculator from '@/calculators/iron/IronReplacementCalculator';
-import TestSuggestionAlgorithm from './anemia/components/TestSuggestionAlgorithm';
 import ESRInterpretation from './anemia/components/ESRInterpretation';
 import Anticoagulants from './anemia/components/Anticoagulants';
 import { Microscope, AlertTriangle, Droplet, Syringe, Activity, Timer, Pill } from 'lucide-react';
+import TestSuggestionAlgorithm from './anemia/components/TestSuggestionAlgorithm';
 
 const EMPTY_CBC: CBCValues = { hgb: '', rbc: '', mcv: '', mch: '', mchc: '', rdw: '', hct: '' };
 
@@ -173,11 +172,7 @@ export default function Anemia() {
             <TestSuggestionAlgorithm />
           </>
         ) : activeTab === 'iron' ? (
-          <>
-            <IronStudiesCombined />
-            <IronReplacementCalculator />
-            <IronTherapy />
-          </>
+          <IronStudiesCombined />
         ) : activeTab === 'bleeding-clotting' ? (
           <BleedingClottingEvaluator />
         ) : activeTab === 'esr' ? (
