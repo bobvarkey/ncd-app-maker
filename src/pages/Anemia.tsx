@@ -14,6 +14,7 @@ import BleedingClottingEvaluator from './anemia/components/BleedingClottingEvalu
 import ESRInterpretation from './anemia/components/ESRInterpretation';
 import Anticoagulants from './anemia/components/Anticoagulants';
 import { Microscope, AlertTriangle, Droplet, Syringe, Activity, Timer, Pill } from 'lucide-react';
+import TestSuggestionAlgorithm from './anemia/components/TestSuggestionAlgorithm';
 
 const EMPTY_CBC: CBCValues = { hgb: '', rbc: '', mcv: '', mch: '', mchc: '', rdw: '', hct: '' };
 
