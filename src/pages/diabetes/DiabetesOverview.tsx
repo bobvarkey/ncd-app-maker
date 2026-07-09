@@ -194,7 +194,7 @@ const DMClassificationSection = () => (
       />
     </div>
 
-    {/* Summary Table */}
+    {/* Summary Table — Image */}
     <Card className="clinical-card mt-4">
       <CardHeader className="pb-3">
         <CardTitle className="text-base flex items-center gap-2">
@@ -202,43 +202,13 @@ const DMClassificationSection = () => (
           DM Types — Quick Reference
         </CardTitle>
       </CardHeader>
-      <CardContent className="overflow-x-auto">
-        <table className="w-full text-xs">
-          <thead>
-            <tr className="border-b border-border">
-              <th className="text-left py-2 pr-3 font-semibold">Type</th>
-              <th className="text-left py-2 pr-3 font-semibold">Mechanism</th>
-              <th className="text-left py-2 pr-3 font-semibold">Autoantibodies</th>
-              <th className="text-left py-2 pr-3 font-semibold">Insulin Requirement</th>
-              <th className="text-left py-2 pr-3 font-semibold">Status</th>
-            </tr>
-          </thead>
-          <tbody>
-            {[
-              ["Type 1", "Autoimmune beta-cell destruction", "Yes (GAD65, IA-2, ZnT8)", "Lifelong, from onset", "Official"],
-              ["Type 2", "Insulin resistance + relative deficiency", "No", "Progressive; may need later", "Official"],
-              ["Type 1.5 (LADA)", "Slow autoimmune (adult-onset)", "Yes (GAD65 most common)", "Within 3-6 years", "Official"],
-              ["Type 3c", "Pancreatic damage (exocrine + endocrine)", "No", "Often required; brittle course", "Official"],
-              ["Type 3b", "Genetic insulin receptor defects", "No", "Variable; high-dose insulin", "Official"],
-              ["Type 3 (Alzheimer's)", "Brain insulin resistance", "No", "N/A (research concept)", "Proposed"],
-              ["Type 4", "Age-related Treg excess in fat", "No", "Variable", "Proposed"],
-              ["Type 5 (MRDM)", "Chronic malnutrition", "No", "Often required; partial reserve", "Proposed"],
-            ].map((row, i) => (
-              <tr key={i} className={cn("border-b border-border/50", i % 2 === 0 ? "bg-muted/20" : "")}>
-                {row.map((cell, j) => (
-                  <td key={j} className="py-2 pr-3">
-                    <span className={cn(
-                      j === 0 && "font-medium",
-                      j === 4 && (cell === "Official" ? "text-success" : "text-warning")
-                    )}>
-                      {cell}
-                    </span>
-                  </td>
-                ))}
-              </tr>
-            ))}
-          </tbody>
-        </table>
+      <CardContent>
+        <img
+          src="/dm-types-reference.jpg"
+          alt="Diabetes Mellitus Types Classification Reference Table"
+          className="w-full rounded-lg border border-border"
+          style={{ maxWidth: "100%", height: "auto" }}
+        />
       </CardContent>
     </Card>
 
