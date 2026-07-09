@@ -1,67 +1,273 @@
 import React from "react";
-import { AlertCircle, Activity, Heart, Brain, Flame, Shield, Target, ArrowRight } from "lucide-react";
+import { AlertCircle, Activity, Heart, Brain, Flame, Shield, Target, ArrowRight, Dna, Info, AlertTriangle, Stethoscope, Pill, UtensilsCrossed, Baby, Users, Bone, Microscope } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 import { cn } from "@/lib/utils";
 import { AbbreviationHover, AbbrText } from "@/components/AbbreviationHover";
 
+// DM Types Classification Section
+const DMTypeCard = ({ type, title, subtitle, icon, description, features, badge, badgeColor }: {
+  type: string;
+  title: string;
+  subtitle?: string;
+  icon: React.ReactNode;
+  description: string;
+  features: string[];
+  badge?: string;
+  badgeColor?: string;
+}) => (
+  <Card className={cn("clinical-card", badgeColor ? `border-${badgeColor}/20` : "")}>
+    <CardHeader className="pb-3">
+      <div className="flex items-start gap-2">
+        <div className="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center shrink-0 mt-0.5">
+          {React.cloneElement(icon as React.ReactElement, { className: "h-4 w-4 text-primary" })}
+        </div>
+        <div className="flex-1">
+          <div className="flex items-center gap-2 flex-wrap">
+            <CardTitle className="text-base">{title}</CardTitle>
+            {badge && (
+              <Badge variant="outline" className={cn("text-[10px]", badgeColor ? `border-${badgeColor}/30 text-${badgeColor}` : "")}>
+                {badge}
+              </Badge>
+            )}
+          </div>
+          {subtitle && <p className="text-xs text-muted-foreground mt-0.5">{subtitle}</p>}
+        </div>
+      </div>
+    </CardHeader>
+    <CardContent className="space-y-2">
+      <p className="text-sm text-muted-foreground">{description}</p>
+      <div className="space-y-1">
+        <p className="text-xs font-medium">Key Features:</p>
+        <ul className="text-xs text-muted-foreground space-y-0.5">
+          {features.map((f, i) => (
+            <li key={i}>• {f}</li>
+          ))}
+        </ul>
+      </div>
+    </CardContent>
+  </Card>
+);
+
+const DMClassificationSection = () => (
+  <div className="space-y-4">
+    <div className="flex items-center gap-2 mb-2">
+      <Dna className="h-5 w-5 text-primary" />
+      <h3 className="text-lg font-serif font-semibold">Diabetes Mellitus — Classification by Type</h3>
+    </div>
+    <p className="text-sm text-muted-foreground mb-4">
+      Beyond the classic Type 1 and Type 2 dichotomy, several other diabetes subtypes are recognized — some officially, others as proposed or descriptive categories.
+    </p>
+
+    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <DMTypeCard
+        type="type1"
+        title="Type 1 Diabetes"
+        icon={<Flame />}
+        description="Autoimmune destruction of pancreatic beta cells leading to absolute insulin deficiency. Typically presents in childhood or young adulthood."
+        features={[
+          "Autoantibodies present (GAD65, IA-2, ZnT8)",
+          "Rapid onset with classic symptoms",
+          "Ketosis-prone without insulin",
+          "Requires lifelong insulin therapy"
+        ]}
+        badge="Classic"
+        badgeColor="destructive"
+      />
+
+      <DMTypeCard
+        type="type2"
+        title="Type 2 Diabetes"
+        icon={<Activity />}
+        description="Progressive insulin resistance with relative insulin deficiency. Strong genetic and lifestyle factors."
+        features={[
+          "Insulin resistance predominates initially",
+          "Beta-cell dysfunction develops over time",
+          "Often associated with obesity",
+          "May have slow, insidious onset"
+        ]}
+        badge="Classic"
+        badgeColor="warning"
+      />
+
+      <DMTypeCard
+        type="lada"
+        title="Type 1.5 Diabetes (LADA)"
+        subtitle="Latent Autoimmune Diabetes in Adults"
+        icon={<Microscope />}
+        description="A slowly progressive autoimmune diabetes that straddles Type 1 and Type 2. Presents in adults (&gt;30 years) with detectable autoantibodies but initial non-insulin requirement."
+        features={[
+          "Positive GAD65 antibodies (most sensitive)",
+          "Slower beta-cell decline than classic T1DM",
+          "Often misdiagnosed as T2DM initially",
+          "Progresses to insulin dependence within 3-6 years",
+          "Lower BMI, younger onset than typical T2DM"
+        ]}
+        badge="Autoimmune"
+        badgeColor="purple"
+      />
+
+      <DMTypeCard
+        type="type3c"
+        title="Type 3c Diabetes"
+        subtitle="Pancreatogenic / Pancreoprivic Diabetes"
+        icon={<Stethoscope />}
+        description="Occurs when the pancreas itself is damaged, leading to loss of both endocrine (insulin-producing) and exocrine (enzyme-producing) functions."
+        features={[
+          "Causes: chronic pancreatitis, pancreatic cancer, cystic fibrosis, pancreatic resection",
+          "Concurrent exocrine pancreatic insufficiency (low fecal elastase)",
+          "Brittle course with risk of hypoglycemia (loss of glucagon reserve)",
+          "Requires insulin; metformin may be insufficient",
+          "Pancreatic enzyme replacement therapy (PERT) needed"
+        ]}
+        badge="Secondary"
+        badgeColor="orange"
+      />
+
+      <DMTypeCard
+        type="type3b"
+        title="Type 3b Diabetes"
+        subtitle="Genetic Insulin Resistance Syndromes"
+        icon={<Dna />}
+        description="Any form of diabetes caused by genetic defects that affect the action of insulin — monogenic severe insulin resistance syndromes."
+        features={[
+          "Genetic defects in insulin receptor (INSR) or post-receptor signaling",
+          "Includes: Type A insulin resistance, Rabson-Mendenhall syndrome, Donohue syndrome",
+          "Severe hyperinsulinemia with acanthosis nigricans",
+          "May have ovarian hyperandrogenism in females",
+          "Distinct from T2DM — not obesity-driven"
+        ]}
+        badge="Monogenic"
+        badgeColor="blue"
+      />
+
+      <DMTypeCard
+        type="type3"
+        title='Type 3 Diabetes (Alzheimer\'s Disease)'
+        subtitle="Insulin Dysregulation in the Brain"
+        icon={<Brain />}
+        description='"Type 3 diabetes" is a term some researchers use to describe Alzheimer\'s disease — reflecting the role of brain insulin resistance and dysregulated insulin signaling in neurodegeneration. Not an officially recognized health condition.'
+        features={[
+          "Brain insulin resistance impairs glucose utilization in neurons",
+          "Linked to tau hyperphosphorylation and amyloid-beta accumulation",
+          "Reduced insulin receptor expression in Alzheimer's brains",
+          "Not a formal ADA/WHO diagnosis — research concept only",
+          "May explain link between T2DM and dementia risk"
+        ]}
+        badge="Proposed"
+        badgeColor="violet"
+      />
+
+      <DMTypeCard
+        type="type4"
+        title="Type 4 Diabetes"
+        subtitle="Age-Related Insulin Resistance in Lean Individuals"
+        icon={<Users />}
+        description="A proposed term for insulin resistance in older, lean individuals — distinct from Type 2 (obesity-linked) and Type 1 (autoimmune). Driven by age-related metabolic and immune changes."
+        features={[
+          "Excess T-regulatory immune cells (Tregs) in fat tissue",
+          "Age-related immune dysregulation promotes insulin resistance",
+          "Occurs in non-obese, older adults without traditional risk factors",
+          "May explain undiagnosed diabetes in lean elderly",
+          "Not yet an official diagnostic category"
+        ]}
+        badge="Proposed"
+        badgeColor="violet"
+      />
+
+      <DMTypeCard
+        type="type5"
+        title="Type 5 Diabetes (MRDM)"
+        subtitle="Malnutrition-Related Diabetes Mellitus"
+        icon={<UtensilsCrossed />}
+        description="A form of diabetes primarily caused by chronic undernutrition, especially during childhood or adolescence. Distinct from both Type 1 and Type 2 diabetes."
+        features={[
+          "History of chronic malnutrition in early life",
+          "Presents with hyperglycemia but not ketosis-prone",
+          "Often requires insulin but has some residual beta-cell function",
+          "More common in low-resource settings (parts of Africa, Asia)",
+          "Controversial category — not universally accepted by WHO/ADA"
+        ]}
+        badge="Proposed"
+        badgeColor="violet"
+      />
+    </div>
+
+    {/* Summary Table */}
+    <Card className="clinical-card mt-4">
+      <CardHeader className="pb-3">
+        <CardTitle className="text-base flex items-center gap-2">
+          <Info className="h-4 w-4 text-primary" />
+          DM Types — Quick Reference
+        </CardTitle>
+      </CardHeader>
+      <CardContent className="overflow-x-auto">
+        <table className="w-full text-xs">
+          <thead>
+            <tr className="border-b border-border">
+              <th className="text-left py-2 pr-3 font-semibold">Type</th>
+              <th className="text-left py-2 pr-3 font-semibold">Mechanism</th>
+              <th className="text-left py-2 pr-3 font-semibold">Autoantibodies</th>
+              <th className="text-left py-2 pr-3 font-semibold">Insulin Requirement</th>
+              <th className="text-left py-2 pr-3 font-semibold">Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            {[
+              ["Type 1", "Autoimmune beta-cell destruction", "Yes (GAD65, IA-2, ZnT8)", "Lifelong, from onset", "Official"],
+              ["Type 2", "Insulin resistance + relative deficiency", "No", "Progressive; may need later", "Official"],
+              ["Type 1.5 (LADA)", "Slow autoimmune (adult-onset)", "Yes (GAD65 most common)", "Within 3-6 years", "Official"],
+              ["Type 3c", "Pancreatic damage (exocrine + endocrine)", "No", "Often required; brittle course", "Official"],
+              ["Type 3b", "Genetic insulin receptor defects", "No", "Variable; high-dose insulin", "Official"],
+              ["Type 3 (Alzheimer's)", "Brain insulin resistance", "No", "N/A (research concept)", "Proposed"],
+              ["Type 4", "Age-related Treg excess in fat", "No", "Variable", "Proposed"],
+              ["Type 5 (MRDM)", "Chronic malnutrition", "No", "Often required; partial reserve", "Proposed"],
+            ].map((row, i) => (
+              <tr key={i} className={cn("border-b border-border/50", i % 2 === 0 ? "bg-muted/20" : "")}>
+                {row.map((cell, j) => (
+                  <td key={j} className="py-2 pr-3">
+                    <span className={cn(
+                      j === 0 && "font-medium",
+                      j === 4 && (cell === "Official" ? "text-success" : "text-warning")
+                    )}>
+                      {cell}
+                    </span>
+                  </td>
+                ))}
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </CardContent>
+    </Card>
+
+    {/* Clinical Note */}
+    <Card className="clinical-card border-amber-500/20 bg-amber-500/5">
+      <CardContent className="pt-4">
+        <div className="flex items-start gap-3">
+          <AlertTriangle className="h-5 w-5 text-amber-500 shrink-0 mt-0.5" />
+          <div>
+            <p className="text-sm font-medium text-amber-600 dark:text-amber-400">Clinical Note</p>
+            <p className="text-xs text-muted-foreground mt-1">
+              Types 3, 4, and 5 are not currently recognized as official diagnostic categories by the ADA or WHO. 
+              They represent proposed or descriptive classifications that may aid clinical reasoning. 
+              Type 3c and Type 3b are officially recognized under the broader category of "secondary diabetes" or "other specific types."
+              Type 1.5 (LADA) is recognized as a subtype of Type 1 diabetes.
+            </p>
+          </div>
+        </div>
+      </CardContent>
+    </Card>
+  </div>
+);
+
 // Pathophysiology Section
 const PathophysiologySection = () => (
   <div className="space-y-4">
-    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-      <Card className="clinical-card border-red-500/20">
-        <CardHeader className="pb-3">
-          <div className="flex items-center gap-2">
-            <div className="w-8 h-8 rounded-lg bg-destructive/100/10 flex items-center justify-center">
-              <Flame className="h-4 w-4 text-red-500" />
-            </div>
-            <CardTitle className="text-base">Type 1 Diabetes</CardTitle>
-          </div>
-        </CardHeader>
-        <CardContent className="space-y-2">
-          <p className="text-sm text-muted-foreground">
-            Autoimmune destruction of pancreatic beta cells leading to absolute insulin deficiency.
-            Typically presents in childhood or young adulthood.
-          </p>
-          <div className="space-y-1">
-            <p className="text-xs font-medium">Key Features:</p>
-            <ul className="text-xs text-muted-foreground space-y-0.5">
-              <li>• Autoantibodies present (GAD65, IA-2, ZnT8)</li>
-              <li>• Rapid onset with classic symptoms</li>
-              <li>• Ketosis-prone without insulin</li>
-              <li>• Requires lifelong insulin therapy</li>
-            </ul>
-          </div>
-        </CardContent>
-      </Card>
+    <DMClassificationSection />
 
-      <Card className="clinical-card border-warning/20">
-        <CardHeader className="pb-3">
-          <div className="flex items-center gap-2">
-            <div className="w-8 h-8 rounded-lg bg-warning/100/10 flex items-center justify-center">
-              <Activity className="h-4 w-4 text-orange-500" />
-            </div>
-            <CardTitle className="text-base">Type 2 Diabetes</CardTitle>
-          </div>
-        </CardHeader>
-        <CardContent className="space-y-2">
-          <p className="text-sm text-muted-foreground">
-            Progressive insulin resistance with relative insulin deficiency.
-            Strong genetic and lifestyle factors.
-          </p>
-          <div className="space-y-1">
-            <p className="text-xs font-medium">Key Features:</p>
-            <ul className="text-xs text-muted-foreground space-y-0.5">
-              <li>• Insulin resistance predominates initially</li>
-              <li>• Beta-cell dysfunction develops over time</li>
-              <li>• Often associated with obesity</li>
-              <li>• May have slow, insidious onset</li>
-            </ul>
-          </div>
-        </CardContent>
-      </Card>
-    </div>
+    <Separator />
 
     <Card className="clinical-card">
       <CardHeader className="pb-3">
