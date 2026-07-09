@@ -630,59 +630,12 @@ export default function GLP1ObesityAlgorithm() {
                 </div>
               </CardHeader>
               <CardContent>
-                <div className="overflow-x-auto">
-                  <table className="w-full text-xs">
-                    <thead>
-                      <tr className="border-b border-border">
-                        <th className="text-left py-2.5 pr-4 font-semibold text-muted-foreground">Category</th>
-                        <th className="text-center py-2.5 px-3 font-semibold">
-                          <span className="text-emerald-500">🏆 Winner</span>
-                        </th>
-                        <th className="text-left py-2.5 pl-4 font-semibold text-muted-foreground">Evidence</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {[
-                        { category: "Body weight loss", winner: "Tirzepatide", evidence: "SURMOUNT-5", icon: <Weight className="h-3.5 w-3.5" /> },
-                        { category: "HbA1c reduction", winner: "Tirzepatide", evidence: "Indirect: STEP-2 vs. SURMOUNT-2", icon: <Droplets className="h-3.5 w-3.5" /> },
-                        { category: "Preserve lean mass", winner: "Tirzepatide", evidence: "Indirect: STEP-1 vs. SURMOUNT-1", icon: <Activity className="h-3.5 w-3.5" /> },
-                        { category: "Less withdrawal due to GI S/E", winner: "Tirzepatide", evidence: "SURMOUNT-5", icon: <AlertTriangle className="h-3.5 w-3.5" /> },
-                        { category: "Less weight regain after withdrawal", winner: "Semaglutide", evidence: "Indirect: STEP-4 vs. SURMOUNT-4", icon: <RefreshCw className="h-3.5 w-3.5" /> },
-                        { category: "Temperature stability for use", winner: "Semaglutide", evidence: "PI of FDA vs EMA", icon: <Thermometer className="h-3.5 w-3.5" /> },
-                        { category: "In people with eCVD", winner: "Semaglutide", evidence: "SELECT / SUSTAIN-6 vs. SURPASS CVOT, SURMOUNT-mmo", icon: <HeartPulse className="h-3.5 w-3.5" /> },
-                        { category: "In people with MASH", winner: "Semaglutide", evidence: "ESSENCE Phase 3 vs. SYNERGY-NASH Phase 2", icon: <Stethoscope className="h-3.5 w-3.5" /> },
-                        { category: "In people with OSA", winner: "Tirzepatide", evidence: "SURMOUNT-OSA", icon: <Wind className="h-3.5 w-3.5" /> },
-                        { category: "In people with OA", winner: "Semaglutide", evidence: "STEP-9", icon: <Bone className="h-3.5 w-3.5" /> },
-                        { category: "In people with PAD", winner: "Semaglutide", evidence: "STRIDE", icon: <Activity className="h-3.5 w-3.5" /> },
-                        { category: "In people with DKD", winner: "Semaglutide", evidence: "FLOW vs. TREASURE-CKD ongoing", icon: <Kidney className="h-3.5 w-3.5" /> },
-                        { category: "In people with HFpEF", winner: "Semaglutide", evidence: "STEP-HFpEF pooled vs. SUMMIT-HF", icon: <Heart className="h-3.5 w-3.5" /> },
-                      ].map((row, i) => (
-                        <tr key={i} className={`border-b border-border/50 ${i % 2 === 0 ? "bg-muted/20" : ""}`}>
-                          <td className="py-2.5 pr-4">
-                            <div className="flex items-center gap-2">
-                              <span className="text-muted-foreground shrink-0">{row.icon}</span>
-                              <span className="font-medium">{row.category}</span>
-                            </div>
-                          </td>
-                          <td className="py-2.5 px-3 text-center">
-                            <span className={cn(
-                              "inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-semibold",
-                              row.winner === "Tirzepatide"
-                                ? "bg-emerald-500/10 text-emerald-500 border border-emerald-500/30"
-                                : "bg-blue-500/10 text-blue-500 border border-blue-500/30"
-                            )}>
-                              <Trophy className="h-3 w-3" />
-                              {row.winner}
-                            </span>
-                          </td>
-                          <td className="py-2.5 pl-4 text-muted-foreground">
-                            <span className="text-[11px]">{row.evidence}</span>
-                          </td>
-                        </tr>
-                      ))}
-                    </tbody>
-                  </table>
-                </div>
+                <img
+                  src="/sema-vs-tirz.jpg"
+                  alt="Semaglutide vs Tirzepatide comparison table"
+                  className="w-full rounded-lg border border-border"
+                  style={{ maxWidth: "100%", height: "auto" }}
+                />
 
                 {/* Summary note */}
                 <div className="mt-4 p-3 rounded-lg bg-indigo-500/5 border border-indigo-500/20">
