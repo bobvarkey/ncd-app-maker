@@ -37,7 +37,6 @@ import {
   Droplets,
   Thermometer,
   Wind,
-  Kidney,
   HeartPulse,
 } from "lucide-react";
 
