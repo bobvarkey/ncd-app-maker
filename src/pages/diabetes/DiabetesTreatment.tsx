@@ -2,7 +2,7 @@ import { FrequencyBadge } from "@/components/FrequencyBadge";
 import React, { useState } from "react";
 import { AbbreviationHover, AbbrText } from "@/components/AbbreviationHover";
 import { Link } from "react-router-dom";
-import { Pill, Syringe, ChevronRight, ChevronDown, ChevronUp, ArrowRight, CheckCircle2, AlertTriangle, Heart, Activity, Scale, Brain, ArrowDown, FileText, BookOpen, Shield, Users, Stethoscope, Info, Footprints, Search, ClipboardList, RotateCcw, XCircle, AlertCircle } from "lucide-react";
+import { Pill, Syringe, ChevronRight, ChevronDown, ChevronUp, ArrowRight, CheckCircle2, AlertTriangle, Heart, Activity, Scale, Brain, ArrowDown, FileText, BookOpen, Shield, Users, Stethoscope, Info, Footprints, Search, ClipboardList, RotateCcw, XCircle, AlertCircle, Clock } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -728,6 +728,7 @@ const ManagementChecklist = () => {
 
 import InsulinGuide from "./InsulinGuide";
 import HyperglycemicEmergencySection from "./HyperglycemicEmergencySection";
+import IcodecMiniApp from "./IcodecMiniApp";
 
 // ─── CKD Safe Drugs Component ──────────────────────────────────────────────
 
@@ -1450,7 +1451,7 @@ function GeriatricSyndromes() {
 
 // ─── Main Component ────────────────────────────────────────────────────────
 export default function DiabetesTreatment() {
-  const [activeTab, setActiveTab] = useState<"algorithm" | "glp1" | "drugs" | "insulin" | "checklist" | "emergency" | "ckd">("algorithm");
+  const [activeTab, setActiveTab] = useState<"algorithm" | "glp1" | "drugs" | "insulin" | "icodec" | "checklist" | "emergency" | "ckd">("algorithm");
 
   return (
     <div className="space-y-4">
@@ -1460,6 +1461,7 @@ export default function DiabetesTreatment() {
           { id: "algorithm", label: "Treatment Algorithm", icon: Brain },
           { id: "glp1", label: "GLP-1 Guide", icon: Syringe },
           { id: "insulin", label: "Insulin Guide", icon: Activity },
+          { id: "icodec", label: "Icodec (Weekly)", icon: Clock },
           { id: "drugs", label: "Drug Classes", icon: Pill },
           { id: "checklist", label: "Care Checklist", icon: FileText },
           { id: "emergency", label: "DKA/HHS Guide", icon: AlertTriangle },
@@ -1483,6 +1485,7 @@ export default function DiabetesTreatment() {
       {activeTab === "algorithm" && <TreatmentAlgorithm />}
       {activeTab === "glp1" && <GLP1AdministrationGuide />}
       {activeTab === "insulin" && <InsulinGuide />}
+      {activeTab === "icodec" && <IcodecMiniApp />}
       {activeTab === "drugs" && <DrugClassesComparison />}
       {activeTab === "checklist" && <ManagementChecklist />}
       {activeTab === "emergency" && <HyperglycemicEmergencySection />}
