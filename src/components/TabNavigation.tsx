@@ -1,40 +1,7 @@
-import { useEffect, useMemo, useRef, useState } from "react";
-import { Link, useLocation, useNavigate, useSearchParams } from "react-router-dom";
-import { ChevronLeft, ChevronRight, Search, X, Pill, FileText, Home, Droplets, Heart, Droplet, Dna, Microscope, Weight, AirVent, Bean, Moon, Bug, UtensilsCrossed, Shield, Syringe, Zap, Bandage, Timer, Thermometer, Flame, Bone, Gem, Smile, Sun, Stethoscope, Filter, User, Image } from "lucide-react";
+import { useEffect, useState } from "react";
+import { Link, useLocation, useSearchParams } from "react-router-dom";
+import { ChevronLeft, ChevronRight, Home, Droplets, Heart, Droplet, Dna, Microscope, Weight, AirVent, Bean, Moon, Bug, UtensilsCrossed, Shield, Syringe, Zap, Bandage, Timer, Thermometer, Flame, Bone, Gem, Smile, Sun, Stethoscope, Filter, Search, User, Image, Pill } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { RENAL_DATA } from "@/calculators/diabetes/RenalDosing";
-import { ANTIBIOTICS_DATA } from "@/calculators/diabetes/antibiotics-data";
-import { ANTICOAGULANTS_DATA } from "@/calculators/diabetes/anticoagulants-data";
-import { ADDITIONAL_MEDS_DATA } from "@/calculators/diabetes/additional-meds-data";
-
-const ALL_MEDS = [
-  ...RENAL_DATA,
-  ...ANTIBIOTICS_DATA,
-  ...ANTICOAGULANTS_DATA,
-  ...ADDITIONAL_MEDS_DATA,
-];
-
-// Clinical topics for search
-const CLINICAL_TOPICS = [
-  { id: "reninoma", label: "Reninoma (JG Cell Tumor)", path: "/hypertension/secondary-htn", keywords: ["reninoma", "juxtaglomerular", "renal vein renin", "high renin hypertension"] },
-  { id: "primary-aldosteronism", label: "Primary Aldosteronism", path: "/hypertension/secondary-htn", keywords: ["aldosteronism", "conn", "arr", "aldosterone"] },
-  { id: "pheochromocytoma", label: "Pheochromocytoma", path: "/hypertension/secondary-htn", keywords: ["pheochromocytoma", "metanephrines", "catecholamine"] },
-  { id: "cushings", label: "Cushing's Syndrome", path: "/hypertension/secondary-htn", keywords: ["cushing", "cortisol", "dexamethasone"] },
-  { id: "sleep-apnea", label: "Sleep Apnea", path: "/hypertension/secondary-htn", keywords: ["sleep apnea", "osa", "polysomnography"] },
-  { id: "hypothyroidism", label: "Hypothyroidism", path: "/thyroid", keywords: ["hypothyroidism", "low t4", "high tsh"] },
-  { id: "hyperthyroidism", label: "Hyperthyroidism", path: "/thyroid", keywords: ["hyperthyroidism", "thyrotoxicosis", "graves"] },
-  { id: "thyroid-nodules", label: "Thyroid Nodules", path: "/thyroid", keywords: ["thyroid nodule", "fna"] },
-  { id: "type1-dm", label: "Type 1 Diabetes", path: "/diabetes/type1", keywords: ["type 1 diabetes", "t1dm"] },
-  { id: "type2-dm", label: "Type 2 Diabetes", path: "/diabetes", keywords: ["type 2 diabetes", "t2dm"] },
-  { id: "dk", label: "DKA", path: "/diabetes", keywords: [" dka", "diabetic ketoacidosis"] },
-  { id: "hhs", label: "HHS", path: "/diabetes", keywords: ["hhs", "hyperosmolar hyperglycemic"] },
-  { id: "iron-deficiency", label: "Iron Deficiency Anemia", path: "/anemia", keywords: ["iron deficiency", "microcytic"] },
-  { id: "b12-deficiency", label: "B12 Deficiency", path: "/anemia", keywords: ["b12 deficiency", "cobalamin", "megaloblastic"] },
-  { id: "statins", label: "Statins", path: "/lipids", keywords: ["statins", "atorvastatin", "cholesterol"] },
-  { id: "glp1", label: "GLP-1 Agonists", path: "/obesity/glp1-obesity", keywords: ["glp1", "semaglutide", "wegovy"] },
-  { id: "ckd", label: "CKD", path: "/hypertension/gfr", keywords: ["ckd", "chronic kidney disease"] },
-  { id: "copd", label: "COPD", path: "/respiratory/copd", keywords: ["copd", "gold", "emphysema"] },
-];
 
 const bloodSubItems: { tab: string; label: string; icon: React.ComponentType<{ className?: string }> }[] = [
   { tab: "anemia", label: "Anemia Evaluator", icon: Droplet },
@@ -202,42 +169,9 @@ const womenHealthItems: NavItem[] = [
 export function TabNavigation() {
   const location = useLocation();
   const currentPath = location.pathname;
-  const navigate = useNavigate();
   const [collapsed, setCollapsed] = useState(() =>
     typeof window !== "undefined" ? window.innerWidth < 768 : false
   );
-
-  // Search state
-  const [searchQ, setSearchQ] = useState("");
-  const [searchOpen, setSearchOpen] = useState(false);
-  const searchRef = useRef<HTMLDivElement>(null);
-
-  const searchResults = useMemo(() => {
-    const term = searchQ.trim().toLowerCase();
-    if (!term) return [];
-    const meds = ALL_MEDS
-      .filter((m) => m.drug.toLowerCase().includes(term) || m.drugClass.toLowerCase().includes(term))
-      .slice(0, 5)
-      .map(m => ({ type: 'med' as const, ...m }));
-    const topics = CLINICAL_TOPICS
-      .filter((t) => t.label.toLowerCase().includes(term) || t.keywords?.some(k => k.includes(term)))
-      .slice(0, 5)
-      .map(t => ({ type: 'topic' as const, ...t }));
-    return [...meds, ...topics].slice(0, 8);
-  }, [searchQ]);
-
-  useEffect(() => {
-    function onKey(e: KeyboardEvent) {
-      if ((e.metaKey || e.ctrlKey) && e.key === "k") {
-        e.preventDefault();
-        setSearchOpen(true);
-        setCollapsed(false);
-      }
-      if (e.key === "Escape") setSearchOpen(false);
-    }
-    document.addEventListener("keydown", onKey);
-    return () => document.removeEventListener("keydown", onKey);
-  }, []);
 
   useEffect(() => {
     document.body.classList.add("has-tab-navigation");
@@ -257,182 +191,25 @@ export function TabNavigation() {
     return () => document.body.classList.remove("tab-navigation-collapsed");
   }, [collapsed]);
 
-  // Close search on outside click
-  useEffect(() => {
-    function onClick(e: MouseEvent) {
-      if (searchRef.current && !searchRef.current.contains(e.target as Node)) {
-        setSearchOpen(false);
-      }
-    }
-    document.addEventListener("mousedown", onClick);
-    return () => document.removeEventListener("mousedown", onClick);
-  }, []);
-
-  function goToDrug(drug: string) {
-    setSearchOpen(false);
-    setSearchQ("");
-    navigate(`/renal-dosing?q=${encodeURIComponent(drug)}`);
-  }
-
-  // Medication result item
-  const MedResultItem = ({ m }: { m: typeof ALL_MEDS[number] }) => (
-    <button
-      type="button"
-      onClick={() => goToDrug(m.drug)}
-      className="w-full flex items-start gap-3 px-3 py-2 text-left hover:bg-muted/60 transition-colors"
-    >
-      <Pill className="mt-0.5 h-4 w-4 text-primary shrink-0" />
-      <div className="min-w-0 flex-1">
-        <div className="flex items-baseline justify-between gap-2">
-          <span className="font-semibold text-sm text-foreground truncate">
-            {m.drug}
-          </span>
-          <span className="text-[10px] uppercase tracking-wide text-muted-foreground shrink-0">
-            {m.drugClass}
-          </span>
-        </div>
-        <div className="text-xs text-muted-foreground truncate">
-          Normal: {m.normalDose}
-        </div>
-      </div>
-    </button>
-  );
-
-  // Clinical topic result item
-  const TopicResultItem = ({ t }: { t: typeof CLINICAL_TOPICS[number] }) => {
-    const navigate = useNavigate();
-    return (
-      <button
-        type="button"
-        onClick={() => { setSearchOpen(false); navigate(t.path); }}
-        className="w-full flex items-start gap-3 px-3 py-2 text-left hover:bg-muted/60 transition-colors"
-      >
-        <FileText className="mt-0.5 h-4 w-4 text-blue-500 shrink-0" />
-        <div className="min-w-0 flex-1">
-          <div className="flex items-baseline justify-between gap-2">
-            <span className="font-semibold text-sm text-foreground truncate">
-              {t.label}
-            </span>
-            <span className="text-[10px] uppercase tracking-wide text-blue-500 shrink-0">
-              Topic
-            </span>
-          </div>
-        </div>
-      </button>
-    );
-  };
-
   return (
     <aside
       className={cn(
-        "fixed top-0 left-0 z-50 h-screen clay-sidebar flex flex-col transition-[width] duration-200 ease-out",
+        "fixed top-12 left-0 z-50 h-[calc(100vh-3rem)] clay-sidebar flex flex-col transition-[width] duration-200 ease-out",
         collapsed ? "w-14" : "w-56"
       )}
       aria-label="Primary"
     >
       {/* Header */}
       <div className="flex items-center justify-between h-12 px-2 border-b border-white/[0.06] shrink-0">
-        {!collapsed && (
-          <button
-            type="button"
-            onClick={() => setSearchOpen(true)}
-            className="flex items-center gap-2 px-2 py-1 rounded-md hover:bg-muted transition-colors w-full"
-          >
-            <Search className="h-4 w-4 text-muted-foreground shrink-0" />
-            <span className="text-xs text-muted-foreground truncate">Search meds…</span>
-          </button>
-        )}
-        {collapsed && (
-          <button
-            type="button"
-            onClick={() => setSearchOpen(true)}
-            className="mx-auto inline-flex items-center justify-center h-8 w-8 rounded-md text-muted-foreground hover:bg-muted hover:text-foreground"
-            aria-label="Search"
-          >
-            <Search className="h-4 w-4" />
-          </button>
-        )}
         <button
           type="button"
           onClick={() => setCollapsed((c) => !c)}
-          className="ml-auto inline-flex items-center justify-center h-8 w-8 rounded-md text-muted-foreground hover:bg-muted hover:text-foreground shrink-0"
+          className="inline-flex items-center justify-center h-8 w-8 rounded-md text-muted-foreground hover:bg-muted hover:text-foreground shrink-0"
           aria-label={collapsed ? "Expand sidebar" : "Collapse sidebar"}
         >
           {collapsed ? <ChevronRight className="h-4 w-4" /> : <ChevronLeft className="h-4 w-4" />}
         </button>
       </div>
-
-      {/* Search panel (inside sidebar when open) */}
-      {searchOpen && !collapsed && (
-        <div ref={searchRef} className="border-b border-border px-2 py-2">
-          <div className="flex items-center gap-1.5 rounded-md border border-primary/30 bg-primary/5 px-2">
-            <Search className="h-3.5 w-3.5 text-primary shrink-0" />
-            <input
-              type="text"
-              value={searchQ}
-              onChange={(e) => setSearchQ(e.target.value)}
-              placeholder="Medication or topic name…"
-              className="flex-1 bg-transparent py-1.5 text-xs placeholder:text-muted-foreground focus:outline-none"
-              autoFocus
-            />
-            {searchQ && (
-              <button type="button" onClick={() => { setSearchQ(""); setSearchOpen(false); }} className="shrink-0">
-                <X className="h-3 w-3 text-muted-foreground" />
-              </button>
-            )}
-          </div>
-          {searchQ && (
-            <div className="mt-1 max-h-40 overflow-y-auto">
-              {searchResults.length === 0 ? (
-                <p className="px-2 py-1.5 text-xs text-muted-foreground">No medications or topics found.</p>
-              ) : (
-              <ul className="py-1">
-                {searchResults.map((item) => (
-                  <li key={item.type === 'med' ? `${item.drug}-${item.drugClass}` : item.id}>
-                    {item.type === 'med' ? <MedResultItem m={item} /> : <TopicResultItem t={item} />}
-                  </li>
-                ))}
-              </ul>
-              )}
-            </div>
-          )}
-        </div>
-      )}
-
-      {/* Floating search modal when collapsed */}
-      {searchOpen && collapsed && (
-        <div className="absolute left-full top-0 ml-1 w-56 rounded-lg border border-border bg-card shadow-xl z-50 p-2" ref={searchRef}>
-          <div className="flex items-center gap-1.5 rounded-md border border-primary/30 bg-primary/5 px-2">
-            <Search className="h-3.5 w-3.5 text-primary shrink-0" />
-            <input
-              type="text"
-              value={searchQ}
-              onChange={(e) => setSearchQ(e.target.value)}
-              placeholder="Search meds, topics…"
-              className="flex-1 bg-transparent py-1.5 text-xs placeholder:text-muted-foreground focus:outline-none"
-              autoFocus
-            />
-            <button type="button" onClick={() => { setSearchQ(""); setSearchOpen(false); }} className="shrink-0">
-              <X className="h-3 w-3 text-muted-foreground" />
-            </button>
-          </div>
-          {searchQ && (
-            <div className="mt-1 max-h-40 overflow-y-auto">
-              {searchResults.length === 0 ? (
-                <p className="px-2 py-1.5 text-xs text-muted-foreground">No medications or topics found.</p>
-              ) : (
-              <ul className="py-1">
-                {searchResults.map((item) => (
-                  <li key={item.type === 'med' ? `${item.drug}-${item.drugClass}` : item.id}>
-                    {item.type === 'med' ? <MedResultItem m={item} /> : <TopicResultItem t={item} />}
-                  </li>
-                ))}
-              </ul>
-              )}
-            </div>
-          )}
-        </div>
-      )}
 
       <nav className="flex-1 overflow-y-auto overflow-x-hidden py-2">
         <ul className="flex flex-col gap-1 px-2">

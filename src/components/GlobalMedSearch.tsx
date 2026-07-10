@@ -1,7 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Search, Pill, X, FileText, Calculator } from "lucide-react";
-import { cn } from "@/lib/utils";
+import { Search, Pill, X, FileText } from "lucide-react";
 import { RENAL_DATA } from "@/calculators/diabetes/RenalDosing";
 import { ANTIBIOTICS_DATA } from "@/calculators/diabetes/antibiotics-data";
 import { ANTICOAGULANTS_DATA } from "@/calculators/diabetes/anticoagulants-data";
@@ -233,15 +232,10 @@ export function GlobalMedSearch() {
   return (
     <div
       ref={wrapRef}
-      className="fixed top-3 right-4 z-[60] w-[min(92vw,400px)] md:w-80"
+      className="fixed top-0 left-0 right-0 z-[60] h-12 border-b border-border bg-card/95 backdrop-blur-md shadow-sm relative"
     >
-      <div
-        className={cn(
-          "relative flex items-center gap-2 rounded-full border bg-card/95 backdrop-blur-md shadow-lg transition-all",
-          open ? "border-primary/50 ring-2 ring-primary/20" : "border-border"
-        )}
-      >
-        <Search className="ml-3 h-4 w-4 text-primary shrink-0" />
+      <div className="flex items-center h-full max-w-7xl mx-auto px-4 gap-3">
+        <Search className="h-4 w-4 text-primary shrink-0" />
         <input
           type="text"
           value={q}
@@ -251,7 +245,7 @@ export function GlobalMedSearch() {
           }}
           onFocus={() => setOpen(true)}
           placeholder="Search any topic — reninoma, hypothyroidism, medications…"
-          className="flex-1 bg-transparent py-2 pr-2 text-sm placeholder:text-muted-foreground focus:outline-none"
+          className="flex-1 bg-transparent py-1.5 text-sm placeholder:text-muted-foreground focus:outline-none"
           aria-label="Search medications"
         />
         {q && (
@@ -261,19 +255,19 @@ export function GlobalMedSearch() {
               setQ("");
               setOpen(false);
             }}
-            className="mr-1 inline-flex h-7 w-7 items-center justify-center rounded-full text-muted-foreground hover:bg-muted hover:text-foreground"
+            className="inline-flex h-7 w-7 items-center justify-center rounded-full text-muted-foreground hover:bg-muted hover:text-foreground shrink-0"
             aria-label="Clear search"
           >
             <X className="h-3.5 w-3.5" />
           </button>
         )}
-        <kbd className="mr-3 hidden md:inline-flex items-center gap-0.5 rounded border border-border bg-muted px-1.5 py-0.5 text-xs font-medium text-muted-foreground">
+        <kbd className="hidden md:inline-flex items-center gap-0.5 rounded border border-border bg-muted px-1.5 py-0.5 text-xs font-medium text-muted-foreground shrink-0">
           ⌘K
         </kbd>
       </div>
 
       {open && q.trim() && (
-        <div className="mt-2 max-h-[60vh] overflow-y-auto rounded-xl border border-border bg-card/98 backdrop-blur-md shadow-xl">
+        <div className="absolute top-full left-0 right-0 mt-0 max-h-[60vh] overflow-y-auto border-b border-border bg-card/98 backdrop-blur-md shadow-xl">
           {results.length === 0 ? (
             <div className="p-4 text-sm text-muted-foreground">
               No medications or topics found for "{q}".
