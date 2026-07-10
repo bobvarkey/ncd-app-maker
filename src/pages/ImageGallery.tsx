@@ -17,6 +17,7 @@ interface ImageEntry {
 
 const IMAGE_CATALOG: ImageEntry[] = [
   // ─── Diabetes ───
+  { id: "semaglutide-vs-tirzepatide", src: "/images/semaglutide-vs-tirzepatide.jpg", label: "Semaglutide vs Tirzepatide", category: "Diabetes", description: "Head-to-head comparison — metabolic vs cardiorenal outcomes", sourcePages: [{ label: "Diabetes Treatment", path: "/diabetes/treatment" }, { label: "GLP-1 Administration", path: "/db/glp1-administration" }] },
   { id: "dka-algorithm", src: "/dka-algorithm.jpg", label: "DKA Algorithm", category: "Diabetes", description: "Diabetic Ketoacidosis management algorithm", sourcePages: [{ label: "Hyperglycemic Emergency", path: "/hyperglycemic-emergency" }, { label: "Diabetes Treatment", path: "/diabetes/treatment" }] },
   { id: "hhs-algorithm", src: "/hhs-algorithm.jpg", label: "HHS Algorithm", category: "Diabetes", description: "Hyperosmolar Hyperglycemic State management algorithm", sourcePages: [{ label: "Hyperglycemic Emergency", path: "/hyperglycemic-emergency" }, { label: "Diabetes Treatment", path: "/diabetes/treatment" }] },
   { id: "mixed-dka-hhs", src: "/mixed-dka-hhs-algorithm.jpg", label: "Mixed DKA/HHS Algorithm", category: "Diabetes", description: "Mixed DKA and HHS management algorithm", sourcePages: [{ label: "Hyperglycemic Emergency", path: "/hyperglycemic-emergency" }, { label: "Diabetes Treatment", path: "/diabetes/treatment" }] },
