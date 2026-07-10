@@ -144,10 +144,10 @@ const DMClassificationSection = () => (
 
       <DMTypeCard
         type="type3"
-        title='Type 3 Diabetes (Alzheimer\'s Disease)'
+        title={"Type 3 Diabetes (Alzheimer's Disease)"}
         subtitle="Insulin Dysregulation in the Brain"
         icon={<Brain />}
-        description='"Type 3 diabetes" is a term some researchers use to describe Alzheimer\'s disease — reflecting the role of brain insulin resistance and dysregulated insulin signaling in neurodegeneration. Not an officially recognized health condition.'
+        description={`"Type 3 diabetes" is a term some researchers use to describe Alzheimer's disease — reflecting the role of brain insulin resistance and dysregulated insulin signaling in neurodegeneration. Not an officially recognized health condition.`}
         features={[
           "Brain insulin resistance impairs glucose utilization in neurons",
           "Linked to tau hyperphosphorylation and amyloid-beta accumulation",
