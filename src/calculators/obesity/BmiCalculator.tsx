@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
@@ -18,6 +18,7 @@ import {
 } from "@/components/ui/select";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { cn } from "@/lib/utils";
 import {
   ETHNICITY_GUIDELINES,
   getBmiCategory,
@@ -60,6 +61,18 @@ export default function BmiCalculator() {
   const [showGrades, setShowGrades] = useState(false);
   const [treatmentData, setTreatmentData] = useState<ReturnType<typeof getTreatmentGuidelines>>(null);
   const [activeTab, setActiveTab] = useState("calculator");
+
+  // HOMA-IR state
+  const [homaInsulin, setHomaInsulin] = useState("");
+  const [homaGlucose, setHomaGlucose] = useState("");
+  const [homaUnit, setHomaUnit] = useState("mg/dL");
+  const homaResult = useMemo(() => {
+    const ins = parseFloat(homaInsulin);
+    const glu = parseFloat(homaGlucose);
+    if (isNaN(ins) || isNaN(glu) || ins <= 0 || glu <= 0) return null;
+    const divisor = homaUnit === "mg/dL" ? 405 : 22.5;
+    return (ins * glu) / divisor;
+  }, [homaInsulin, homaGlucose, homaUnit]);
 
   const {
     register,
@@ -1021,6 +1034,96 @@ export default function BmiCalculator() {
                     </AlertDescription>
                   </Alert>
                 </div>
+              </CardContent>
+            </Card>
+
+            {/* ─── HOMA-IR Calculator ─── */}
+            <Card className="clinical-card border-amber-500/30">
+              <CardHeader className="pb-3">
+                <CardTitle className="flex items-center gap-2 text-lg">
+                  <Calculator className="h-5 w-5 text-amber-500" />
+                  HOMA-IR Calculator
+                </CardTitle>
+                <p className="text-xs text-muted-foreground">
+                  Homeostatic Model Assessment for Insulin Resistance — key for identifying MONO and MOO phenotypes
+                </p>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div className="space-y-1.5">
+                    <Label className="text-xs">Fasting Insulin (μIU/mL)</Label>
+                    <Input type="number" min="0" step="0.1" placeholder="e.g. 12" value={homaInsulin} onChange={e => setHomaInsulin(e.target.value)} className="h-10 px-3 rounded-lg border-border/60" />
+                  </div>
+                  <div className="space-y-1.5">
+                    <Label className="text-xs">Fasting Glucose</Label>
+                    <div className="flex gap-2">
+                      <Input type="number" min="0" step="1" placeholder="e.g. 95" value={homaGlucose} onChange={e => setHomaGlucose(e.target.value)} className="h-10 px-3 rounded-lg border-border/60 flex-1" />
+                      <Select value={homaUnit} onValueChange={setHomaUnit}>
+                        <SelectTrigger className="h-10 w-24 rounded-lg border-border/60">
+                          <SelectValue />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="mg/dL">mg/dL</SelectItem>
+                          <SelectItem value="mmol/L">mmol/L</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </div>
+                  </div>
+                </div>
+
+                {homaResult !== null && (
+                  <div className="rounded-lg border border-border bg-muted/20 p-4 space-y-3">
+                    <div className="flex items-center justify-between">
+                      <span className="text-sm font-semibold">HOMA-IR Score</span>
+                      <span className={cn(
+                        "text-2xl font-bold",
+                        homaResult < 1.0 ? "text-emerald-500" :
+                        homaResult < 2.0 ? "text-amber-500" :
+                        homaResult < 3.0 ? "text-orange-500" :
+                        "text-red-500"
+                      )}>
+                        {homaResult.toFixed(2)}
+                      </span>
+                    </div>
+                    <div className="text-xs text-muted-foreground">
+                      Formula: (Insulin × Glucose) / {homaUnit === "mg/dL" ? "405" : "22.5"}
+                    </div>
+                    <div className="overflow-x-auto">
+                      <table className="w-full text-xs">
+                        <thead>
+                          <tr className="border-b border-border">
+                            <th className="text-left py-1.5 pr-3 font-semibold text-muted-foreground">Score</th>
+                            <th className="text-left py-1.5 font-semibold text-muted-foreground">Clinical Meaning</th>
+                          </tr>
+                        </thead>
+                        <tbody className="text-foreground">
+                          <tr className={homaResult < 1.0 ? "bg-emerald-500/10" : "border-b border-border/50"}>
+                            <td className="py-1.5 pr-3 font-medium">&lt; 1.0</td>
+                            <td className="py-1.5">Optimal insulin sensitivity (Healthy)</td>
+                          </tr>
+                          <tr className={homaResult >= 1.0 && homaResult < 2.0 ? "bg-amber-500/10" : "border-b border-border/50"}>
+                            <td className="py-1.5 pr-3 font-medium">1.0 – 1.9</td>
+                            <td className="py-1.5">Early or mild insulin resistance</td>
+                          </tr>
+                          <tr className={homaResult >= 2.0 && homaResult < 3.0 ? "bg-orange-500/10" : "border-b border-border/50"}>
+                            <td className="py-1.5 pr-3 font-medium">2.0 – 2.9</td>
+                            <td className="py-1.5">Moderate insulin resistance — commonly seen in <strong>MONO</strong> and <strong>MOO</strong></td>
+                          </tr>
+                          <tr className={homaResult >= 3.0 ? "bg-red-500/10" : ""}>
+                            <td className="py-1.5 pr-3 font-medium">≥ 3.0</td>
+                            <td className="py-1.5">Severe insulin resistance — high risk for Type 2 Diabetes</td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                    <div className="rounded-lg bg-amber-500/5 border border-amber-500/20 p-3">
+                      <p className="text-xs text-muted-foreground">
+                        <strong>Example:</strong> Fasting Insulin 12 μIU/mL × Fasting Glucose 95 mg/dL = 1,140 ÷ 405 ={' '}
+                        <strong className="text-foreground">2.81</strong> — Moderate insulin resistance (MONO/MOO range)
+                      </p>
+                    </div>
+                  </div>
+                )}
               </CardContent>
             </Card>
           </>
