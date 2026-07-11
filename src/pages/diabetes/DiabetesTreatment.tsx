@@ -343,8 +343,9 @@ const TreatmentAlgorithm = () => {
         </div>
       </CardHeader>
       <CardContent>
-        <div className="mb-4">
+        <div className="mb-4 space-y-3">
           <ImageLink imageId="diabetes-treatment-algorithm" label="View Diabetes Treatment Algorithm →" />
+          <ImageLink imageId="diabetes-treatment-algorithm-v2" label="View Updated Algorithm (with Icodec) →" />
           <p className="px-3 py-2 text-xs text-muted-foreground text-center">
             Goal therapy: HbA1c {'<'}7% (individualised) — stepped pharmacotherapy by entry HbA1c
           </p>
