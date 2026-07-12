@@ -204,11 +204,16 @@ const VACCINES: Vaccine[] = [
     type: "inactivated/recombinant",
     age_min: 18,
     age_max: null,
-    routine_adult_schedule: "Two-dose series, 2–6 months apart (some guidance allows 1–2 months depending on product)",
+    routine_adult_schedule: "Two-dose series, 2–6 months apart (may be shortened to 1–2 months in immunocompromised)",
     timing_before_immunosuppression: "Preferably at least 2 weeks before initiating immunosuppression",
     contraindications: ["Severe allergy to vaccine component"],
     notes: "Recombinant (non-live) vaccine — safe for many immunocompromised adults and strongly recommended",
-    recommendation: "ESSENTIAL"
+    recommendation: "ESSENTIAL",
+    implementation_guidance: {
+      age_restriction: "≥18 years if immunocompromised; ≥50 years for routine immunocompetent adults",
+      dose_schedule: "Standard (CDC/ACIP): 2 doses (0.5 mL IM each). Preferred interval 2–6 months after dose 1. Shortened interval 1–2 months is allowed and often preferred in immunocompromised patients to complete the series faster (e.g., before starting rituximab/anti-CD20 or other therapies, or to avoid periods of intense immunosuppression).",
+      special_notes: "Practical considerations for mAb patients: Response may be blunted if given soon after a recent mAb dose — especially anti-CD20 therapies (rituximab, ocrelizumab) which deplete B cells. When possible, give closer to the end of the dosing interval (e.g., ~4 weeks before the next infusion). Use the shortened 1–2 month interval between doses for immunocompromised patients when appropriate. Still worth giving even if the response is suboptimal — it provides meaningful protection for many patients."
+    }
   },
   {
     id: "japanese_encephalitis",
