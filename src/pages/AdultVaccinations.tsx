@@ -12,6 +12,8 @@ import {
 } from "lucide-react";
 import { downloadTextFile } from "@/lib/clinical-utils";
 import { toast } from "sonner";
+import { ZoomableImage } from "@/components/ZoomableImage";
+import vaccinesLiveVsInactivatedAsset from "@/assets/vaccines-live-vs-inactivated.png.asset.json";
 
 // ══════════════════════════════════════════════
 // Vaccine Data Schema
