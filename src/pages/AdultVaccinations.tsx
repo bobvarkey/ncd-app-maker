@@ -486,6 +486,23 @@ export default function AdultVaccinations() {
         </p>
       </div>
 
+      {/* Live vs Inactivated Reference Chart */}
+      <Card className="border-border/60 overflow-hidden">
+        <CardHeader className="pb-3">
+          <CardTitle className="text-base flex items-center gap-2">
+            <Shield className="h-4 w-4 text-primary" />
+            Live vs Inactivated Vaccines — Before Immunosuppressive Therapy
+          </CardTitle>
+        </CardHeader>
+        <CardContent>
+          <ZoomableImage
+            src={vaccinesLiveVsInactivatedAsset.url}
+            alt="Live vs inactivated vaccines to consider before initiating immunosuppressive therapy"
+            className="w-full h-auto rounded-md"
+          />
+        </CardContent>
+      </Card>
+
       {/* Action Buttons */}
       <div className="flex justify-end gap-2">
         <Button variant="outline" size="sm" onClick={handleCopy}>
