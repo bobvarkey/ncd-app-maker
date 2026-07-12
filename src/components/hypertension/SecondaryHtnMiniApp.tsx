@@ -105,6 +105,13 @@ const evaluationItems: EvaluationItem[] = [
     tests: ['Urine toxicology', 'CBC/Hematocrit', 'EPO levels'],
     icon: <Stethoscope className="h-5 w-5" />,
     category: 'other'
+  },
+  {
+    id: 'liddles',
+    condition: "Liddle's Syndrome",
+    tests: ['Plasma renin activity (low)', 'Aldosterone levels (low)', 'Serum K+ (hypokalemia)', 'Genetic testing: SCNN1A, SCNN1B, SCNN1G mutations', 'Family history of early-onset HTN', 'Response to amiloride/triamterene (no response to spironolactone)'],
+    icon: <Droplets className="h-5 w-5" />,
+    category: 'endocrine'
   }
 ];
 
@@ -221,7 +228,7 @@ export default function SecondaryHtnMiniApp() {
               <h4 className="text-sm font-semibold mb-2">🔬 Common Secondary Causes</h4>
               <div className="grid gap-2 text-xs">
                 <div className="p-2 rounded bg-purple-500/5 border border-purple-500/20">
-                  <strong>Endocrine:</strong> Primary aldosteronism, Cushing's, pheochromocytoma, thyroid disease, hyperparathyroidism, <strong>Reninoma</strong>
+                  <strong>Endocrine:</strong> Primary aldosteronism, Cushing's, pheochromocytoma, thyroid disease, hyperparathyroidism, <strong>Reninoma</strong>, <strong>Liddle's syndrome</strong>
                 </div>
                 <div className="p-2 rounded bg-blue-500/5 border border-blue-500/20">
                   <strong>Renal:</strong> Renovascular disease (RAS), renal artery stenosis, chronic kidney disease, polycystic kidney
@@ -274,6 +281,10 @@ export default function SecondaryHtnMiniApp() {
                 <li className="flex items-start gap-2">
                   <span className="text-primary font-bold">•</span>
                   <span><strong>Renal vein renin sampling — Wolley technique:</strong> After 5 days of salt deprivation and overnight recumbency, simultaneous bilateral renal vein and infrarenal IVC samples are drawn before and 20 minutes after IV enalaprilat 2.5 mg. A right-to-left ratio &gt;1.5 (or left-to-right &gt;1.5) before and after enalaprilat indicates a unilateral renin-secreting source — typically a reninoma (JG cell tumor).</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-primary font-bold">•</span>
+                  <span><strong>Liddle's syndrome:</strong> Autosomal dominant disorder mimicking primary aldosteronism — early-onset HTN, hypokalemia, metabolic alkalosis, but with <strong>low renin AND low aldosterone</strong>. Caused by gain-of-function mutations in ENaC (SCNN1A/B/G). Key diagnostic clue: <strong>no response to spironolactone</strong> but responds to amiloride or triamterene (ENaC blockers). Genetic testing confirms. Treatment: amiloride + low-Na diet.</span>
                 </li>
               </ul>
             </div>
