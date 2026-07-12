@@ -198,7 +198,7 @@ const DiabetesBuddyLayout = () => (
         </span>
       </header>
       <main className="flex-1 overflow-y-auto p-4 md:p-6 max-w-4xl">
-        <Suspense fallback={<div className="flex items-center justify-center min-h-[60vh]"><div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div></div>}>
+        <Suspense fallback={<RouteLoading />}>
         <Routes>
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/patient" element={<PatientInput />} />
@@ -238,7 +238,8 @@ const App = () => (
       <BrowserRouter>
         <CommandPalette />
         <GlobalMedSearch />
-        <Suspense fallback={<div className="flex items-center justify-center min-h-screen"><div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div></div>}>
+        <RouteErrorBoundary>
+        <Suspense fallback={<RouteLoading fullScreen />}>
         <Routes>
           {/* Landing — redirect to main app */}
           <Route path="/" element={<Navigate to="/home" replace />} />
@@ -339,6 +340,7 @@ const App = () => (
           <Route path="*" element={<NotFound />} />
         </Routes>
         </Suspense>
+        </RouteErrorBoundary>
         <BackToHome />
       </BrowserRouter>
     </TooltipProvider>
