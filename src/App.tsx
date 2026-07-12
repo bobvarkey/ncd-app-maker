@@ -1,4 +1,4 @@
-import { lazy, Suspense } from "react";
+import { Component, lazy, Suspense, type ErrorInfo, type ReactNode } from "react";
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { CommandPalette } from "@/components/CommandPalette";
@@ -13,102 +13,177 @@ import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import { TabNavigation } from "@/components/TabNavigation";
 import { AppSidebar } from "@/components/AppSidebar";
 
+const moduleLoadErrorPattern = /Importing a module script failed|Failed to fetch dynamically imported module|error loading dynamically imported module|Load failed|Loading chunk \d+ failed/i;
+const moduleReloadKey = "ncd-module-script-reloaded";
+
+function lazyWithModuleRetry<T extends React.ComponentType<Record<string, unknown>>>(
+  importer: () => Promise<{ default: T }>
+) {
+  return lazy(async () => {
+    try {
+      const module = await importer();
+      if (typeof window !== "undefined") {
+        window.sessionStorage.removeItem(moduleReloadKey);
+      }
+      return module;
+    } catch (error) {
+      const message = error instanceof Error ? error.message : String(error);
+      const isModuleLoadError =
+        moduleLoadErrorPattern.test(message) ||
+        (error instanceof TypeError && /module|import|fetch|script/i.test(message));
+
+      if (typeof window !== "undefined" && isModuleLoadError) {
+        const alreadyReloaded = window.sessionStorage.getItem(moduleReloadKey) === "true";
+        if (!alreadyReloaded) {
+          window.sessionStorage.setItem(moduleReloadKey, "true");
+          window.location.reload();
+          return new Promise<{ default: T }>(() => undefined);
+        }
+      }
+
+      throw error;
+    }
+  });
+}
+
+const RouteLoading = ({ fullScreen = false }: { fullScreen?: boolean }) => (
+  <div className={`flex items-center justify-center ${fullScreen ? "min-h-screen" : "min-h-[60vh]"}`}>
+    <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary" />
+  </div>
+);
+
+class RouteErrorBoundary extends Component<{ children: ReactNode }, { hasError: boolean }> {
+  state = { hasError: false };
+
+  static getDerivedStateFromError() {
+    return { hasError: true };
+  }
+
+  componentDidCatch(error: Error, info: ErrorInfo) {
+    console.error("Route rendering failed", error, info);
+  }
+
+  render() {
+    if (this.state.hasError) {
+      return (
+        <main className="min-h-screen bg-background text-foreground flex items-center justify-center p-6">
+          <section className="max-w-md space-y-4 text-center">
+            <h1 className="text-2xl font-heading font-semibold">Unable to load this page</h1>
+            <p className="text-sm text-muted-foreground">
+              The app could not load the latest page module. Refresh to get the newest version.
+            </p>
+            <button
+              type="button"
+              onClick={() => window.location.reload()}
+              className="inline-flex items-center justify-center rounded-xl bg-primary px-4 py-2 text-sm font-medium text-primary-foreground hover:bg-primary/90"
+            >
+              Refresh
+            </button>
+          </section>
+        </main>
+      );
+    }
+
+    return this.props.children;
+  }
+}
+
 // Lazy-loaded page components
-const Home = lazy(() => import("@/pages/Home"));
-const Diabetes = lazy(() => import("@/pages/Diabetes"));
-const Hypertension = lazy(() => import("@/pages/Hypertension"));
-const Lipids = lazy(() => import("@/pages/Lipids"));
-const Liver = lazy(() => import("@/pages/Liver"));
-const Anemia = lazy(() => import("@/pages/Anemia"));
-const DiabetesAssessment = lazy(() => import("@/pages/diabetes/DiabetesAssessment"));
-const DiabetesOverview = lazy(() => import("@/pages/diabetes/DiabetesOverview"));
-const DiabetesTab = lazy(() => import("@/pages/diabetes/DiabetesTab"));
-const DiabetesTreatment = lazy(() => import("@/pages/diabetes/DiabetesTreatment"));
-const InsulinGuide = lazy(() => import("@/pages/diabetes/InsulinGuide"));
-const HypertensionAssessment = lazy(() => import("@/pages/hypertension/HypertensionAssessment"));
-const HypertensionMedicationGuide = lazy(() => import("@/pages/hypertension/HypertensionMedicationGuide"));
-const HypertensionOverview = lazy(() => import("@/pages/hypertension/HypertensionOverview"));
-const HypertensionTab = lazy(() => import("@/pages/hypertension/HypertensionTab"));
-const HypertensionTreatment = lazy(() => import("@/pages/hypertension/HypertensionTreatment"));
-const HypertensionClinicalCards = lazy(() => import("@/pages/hypertension/HypertensionClinicalCards"));
-const SecondaryHtnPage = lazy(() => import("@/pages/hypertension/SecondaryHtnPage"));
-const MRASelectionAlgorithm = lazy(() => import("@/pages/hypertension/MRASelectionAlgorithm"));
-const LipidsAssessment = lazy(() => import("@/pages/lipids/LipidsAssessment"));
-const LipidsOverview = lazy(() => import("@/pages/lipids/LipidsOverview"));
-const LipidsTab = lazy(() => import("@/pages/lipids/LipidsTab"));
-const LipidsTreatment = lazy(() => import("@/pages/lipids/LipidsTreatment"));
-const InsulinTitrationCalc = lazy(() => import("@/calculators/diabetes/InsulinTitration"));
-const HypoRiskCalculatorCalc = lazy(() => import("@/calculators/diabetes/HypoRisk"));
-const RenalDoseAdjustmentCalc = lazy(() => import("@/calculators/diabetes/RenalDosing"));
-const SlidingScaleInsulinCalc = lazy(() => import("@/calculators/diabetes/SlidingScale"));
-const DiabetesMedicationAlgorithmCalc = lazy(() => import("@/calculators/diabetes/DiabetesMedicationAlgorithm"));
-const AscvdEmrCalc = lazy(() => import("@/calculators/lipids/AscvdRisk"));
-const LipidPanelCalc = lazy(() => import("@/calculators/lipids/LipidPanel"));
-const LipidRiskMiniCalc = lazy(() => import("@/calculators/lipids/LipidRiskMini"));
-const GfrCalculatorCalc = lazy(() => import("@/calculators/htn/GfrCalculator"));
-const DrugInteractionCheckerCalc = lazy(() => import("@/calculators/htn/DrugInteractions"));
-const AntihypertensiveTreatmentAlgorithmCalc = lazy(() => import("@/calculators/htn/AntihypertensiveTreatmentAlgorithm"));
-const AntihypertensivePotencyTableCalc = lazy(() => import("@/calculators/htn/AntihypertensivePotencyTable"));
-const BmiCalculatorCalc = lazy(() => import("@/calculators/obesity/BmiCalculator"));
-const WaistHeightRatioCalc = lazy(() => import("@/calculators/obesity/WaistHeightRatio"));
-const GLP1ObesityAlgorithmCalc = lazy(() => import("@/calculators/obesity/GLP1ObesityAlgorithm"));
-const IronReplacementCalculator = lazy(() => import("@/calculators/iron/IronReplacementCalculator"));
-const ThyroidCalculator = lazy(() => import("@/calculators/thyroid/ThyroidCalculator"));
-const Dashboard = lazy(() => import("@/pages/Dashboard"));
-const PatientInput = lazy(() => import("@/pages/PatientInput"));
-const FoodDatabase = lazy(() => import("@/pages/FoodDatabase"));
-const PlateMethod = lazy(() => import("@/pages/PlateMethod"));
-const MedOptimizer = lazy(() => import("@/pages/MedOptimizer"));
-const DietPlanPage = lazy(() => import("@/pages/DietPlanPage"));
-const Progress = lazy(() => import("@/pages/Progress"));
-const SummaryPage = lazy(() => import("@/pages/SummaryPage"));
-const InsulinTitrationPage = lazy(() => import("@/pages/InsulinTitration"));
-const SlidingScalePage = lazy(() => import("@/pages/SlidingScaleInsulin"));
-const HypoRiskPage = lazy(() => import("@/pages/HypoRiskCalculator"));
-const RenalDosePage = lazy(() => import("@/pages/RenalDoseAdjustment"));
-const RespiratoryPage = lazy(() => import("@/pages/Respiratory"));
-const PrediabetesAlgorithm = lazy(() => import("@/pages/PrediabetesAlgorithm"));
-const CKDGuideline = lazy(() => import("@/pages/CKDGuideline"));
-const PrivacyPolicy = lazy(() => import("@/pages/PrivacyPolicy"));
-const TermsOfService = lazy(() => import("@/pages/TermsOfService"));
-const DisclaimerPage = lazy(() => import("@/pages/Disclaimer"));
-const ImageGallery = lazy(() => import("@/pages/ImageGallery"));
-const GLP1Administration = lazy(() => import("@/pages/GLP1Administration"));
-const DailyManagementGuide = lazy(() => import("@/pages/DailyManagementGuide"));
-const Type1DMManagement = lazy(() => import("@/pages/Type1DMManagement"));
-const InsulinTherapy = lazy(() => import("@/pages/InsulinTherapy"));
-const Type1Pitfalls = lazy(() => import("@/pages/Type1Pitfalls"));
-const Type2Transition = lazy(() => import("@/pages/Type2Transition"));
-const FeedbackTips = lazy(() => import("@/pages/FeedbackTips"));
-const NotFound = lazy(() => import("@/components/NotFound"));
-const Fatigue = lazy(() => import("@/pages/Fatigue"));
-const VitaminD = lazy(() => import("@/pages/VitaminD"));
-const WomenHealth = lazy(() => import("@/pages/WomenHealth"));
-const Infections = lazy(() => import("@/pages/Infections"));
-const AcuteDiarrhoeaPage = lazy(() => import("@/pages/AcuteDiarrhoeaPage"));
-const FoodPoisoningPage = lazy(() => import("@/pages/FoodPoisoningPage"));
-const PEP = lazy(() => import("@/pages/PEP"));
-const AdultVaccinations = lazy(() => import("@/pages/AdultVaccinations"));
-const AKICriteria = lazy(() => import("@/pages/AKICriteria"));
-const AcidBaseDisorders = lazy(() => import("@/pages/AcidBaseDisorders"));
-const MetabolicAlkalosis = lazy(() => import("@/pages/MetabolicAlkalosis"));
-const Geriatrics = lazy(() => import("@/pages/Geriatrics"));
-const Electrolytes = lazy(() => import("@/pages/Electrolytes"));
-const Hyponatremia = lazy(() => import("@/pages/Hyponatremia"));
-const Hypernatremia = lazy(() => import("@/pages/Hypernatremia"));
-const Hyperkalemia = lazy(() => import("@/pages/Hyperkalemia"));
-const Hypocalcemia = lazy(() => import("@/pages/Hypocalcemia"));
-const Hypercalcemia = lazy(() => import("@/pages/Hypercalcemia"));
-const Hypokalemia = lazy(() => import("@/pages/Hypokalemia"));
-const Hypomagnesemia = lazy(() => import("@/pages/Hypomagnesemia"));
-const Hypermagnesemia = lazy(() => import("@/pages/Hypermagnesemia"));
-const Hypophosphatemia = lazy(() => import("@/pages/Hypophosphatemia"));
-const FCMHypophosphatemia = lazy(() => import("@/pages/FCMHypophosphatemia"));
-const Hyperphosphatemia = lazy(() => import("@/pages/Hyperphosphatemia"));
-const HyperglycemicEmergency = lazy(() => import("@/pages/HyperglycemicEmergency"));
-const Type1TreatmentAlgorithm = lazy(() => import("@/pages/Type1TreatmentAlgorithm"));
-const Type2TreatmentAlgorithm = lazy(() => import("@/pages/Type2TreatmentAlgorithm"));
-const GoldmanCardiacIndex = lazy(() => import("@/pages/GoldmanCardiacIndex"));
+const Home = lazyWithModuleRetry(() => import("@/pages/Home"));
+const Diabetes = lazyWithModuleRetry(() => import("@/pages/Diabetes"));
+const Hypertension = lazyWithModuleRetry(() => import("@/pages/Hypertension"));
+const Lipids = lazyWithModuleRetry(() => import("@/pages/Lipids"));
+const Liver = lazyWithModuleRetry(() => import("@/pages/Liver"));
+const Anemia = lazyWithModuleRetry(() => import("@/pages/Anemia"));
+const DiabetesAssessment = lazyWithModuleRetry(() => import("@/pages/diabetes/DiabetesAssessment"));
+const DiabetesOverview = lazyWithModuleRetry(() => import("@/pages/diabetes/DiabetesOverview"));
+const DiabetesTab = lazyWithModuleRetry(() => import("@/pages/diabetes/DiabetesTab"));
+const DiabetesTreatment = lazyWithModuleRetry(() => import("@/pages/diabetes/DiabetesTreatment"));
+const InsulinGuide = lazyWithModuleRetry(() => import("@/pages/diabetes/InsulinGuide"));
+const HypertensionAssessment = lazyWithModuleRetry(() => import("@/pages/hypertension/HypertensionAssessment"));
+const HypertensionMedicationGuide = lazyWithModuleRetry(() => import("@/pages/hypertension/HypertensionMedicationGuide"));
+const HypertensionOverview = lazyWithModuleRetry(() => import("@/pages/hypertension/HypertensionOverview"));
+const HypertensionTab = lazyWithModuleRetry(() => import("@/pages/hypertension/HypertensionTab"));
+const HypertensionTreatment = lazyWithModuleRetry(() => import("@/pages/hypertension/HypertensionTreatment"));
+const HypertensionClinicalCards = lazyWithModuleRetry(() => import("@/pages/hypertension/HypertensionClinicalCards"));
+const SecondaryHtnPage = lazyWithModuleRetry(() => import("@/pages/hypertension/SecondaryHtnPage"));
+const MRASelectionAlgorithm = lazyWithModuleRetry(() => import("@/pages/hypertension/MRASelectionAlgorithm"));
+const LipidsAssessment = lazyWithModuleRetry(() => import("@/pages/lipids/LipidsAssessment"));
+const LipidsOverview = lazyWithModuleRetry(() => import("@/pages/lipids/LipidsOverview"));
+const LipidsTab = lazyWithModuleRetry(() => import("@/pages/lipids/LipidsTab"));
+const LipidsTreatment = lazyWithModuleRetry(() => import("@/pages/lipids/LipidsTreatment"));
+const InsulinTitrationCalc = lazyWithModuleRetry(() => import("@/calculators/diabetes/InsulinTitration"));
+const HypoRiskCalculatorCalc = lazyWithModuleRetry(() => import("@/calculators/diabetes/HypoRisk"));
+const RenalDoseAdjustmentCalc = lazyWithModuleRetry(() => import("@/calculators/diabetes/RenalDosing"));
+const SlidingScaleInsulinCalc = lazyWithModuleRetry(() => import("@/calculators/diabetes/SlidingScale"));
+const DiabetesMedicationAlgorithmCalc = lazyWithModuleRetry(() => import("@/calculators/diabetes/DiabetesMedicationAlgorithm"));
+const AscvdEmrCalc = lazyWithModuleRetry(() => import("@/calculators/lipids/AscvdRisk"));
+const LipidPanelCalc = lazyWithModuleRetry(() => import("@/calculators/lipids/LipidPanel"));
+const LipidRiskMiniCalc = lazyWithModuleRetry(() => import("@/calculators/lipids/LipidRiskMini"));
+const GfrCalculatorCalc = lazyWithModuleRetry(() => import("@/calculators/htn/GfrCalculator"));
+const DrugInteractionCheckerCalc = lazyWithModuleRetry(() => import("@/calculators/htn/DrugInteractions"));
+const AntihypertensiveTreatmentAlgorithmCalc = lazyWithModuleRetry(() => import("@/calculators/htn/AntihypertensiveTreatmentAlgorithm"));
+const AntihypertensivePotencyTableCalc = lazyWithModuleRetry(() => import("@/calculators/htn/AntihypertensivePotencyTable"));
+const BmiCalculatorCalc = lazyWithModuleRetry(() => import("@/calculators/obesity/BmiCalculator"));
+const WaistHeightRatioCalc = lazyWithModuleRetry(() => import("@/calculators/obesity/WaistHeightRatio"));
+const GLP1ObesityAlgorithmCalc = lazyWithModuleRetry(() => import("@/calculators/obesity/GLP1ObesityAlgorithm"));
+const IronReplacementCalculator = lazyWithModuleRetry(() => import("@/calculators/iron/IronReplacementCalculator"));
+const ThyroidCalculator = lazyWithModuleRetry(() => import("@/calculators/thyroid/ThyroidCalculator"));
+const Dashboard = lazyWithModuleRetry(() => import("@/pages/Dashboard"));
+const PatientInput = lazyWithModuleRetry(() => import("@/pages/PatientInput"));
+const FoodDatabase = lazyWithModuleRetry(() => import("@/pages/FoodDatabase"));
+const PlateMethod = lazyWithModuleRetry(() => import("@/pages/PlateMethod"));
+const MedOptimizer = lazyWithModuleRetry(() => import("@/pages/MedOptimizer"));
+const DietPlanPage = lazyWithModuleRetry(() => import("@/pages/DietPlanPage"));
+const Progress = lazyWithModuleRetry(() => import("@/pages/Progress"));
+const SummaryPage = lazyWithModuleRetry(() => import("@/pages/SummaryPage"));
+const InsulinTitrationPage = lazyWithModuleRetry(() => import("@/pages/InsulinTitration"));
+const SlidingScalePage = lazyWithModuleRetry(() => import("@/pages/SlidingScaleInsulin"));
+const HypoRiskPage = lazyWithModuleRetry(() => import("@/pages/HypoRiskCalculator"));
+const RenalDosePage = lazyWithModuleRetry(() => import("@/pages/RenalDoseAdjustment"));
+const RespiratoryPage = lazyWithModuleRetry(() => import("@/pages/Respiratory"));
+const PrediabetesAlgorithm = lazyWithModuleRetry(() => import("@/pages/PrediabetesAlgorithm"));
+const CKDGuideline = lazyWithModuleRetry(() => import("@/pages/CKDGuideline"));
+const PrivacyPolicy = lazyWithModuleRetry(() => import("@/pages/PrivacyPolicy"));
+const TermsOfService = lazyWithModuleRetry(() => import("@/pages/TermsOfService"));
+const DisclaimerPage = lazyWithModuleRetry(() => import("@/pages/Disclaimer"));
+const ImageGallery = lazyWithModuleRetry(() => import("@/pages/ImageGallery"));
+const GLP1Administration = lazyWithModuleRetry(() => import("@/pages/GLP1Administration"));
+const DailyManagementGuide = lazyWithModuleRetry(() => import("@/pages/DailyManagementGuide"));
+const Type1DMManagement = lazyWithModuleRetry(() => import("@/pages/Type1DMManagement"));
+const InsulinTherapy = lazyWithModuleRetry(() => import("@/pages/InsulinTherapy"));
+const Type1Pitfalls = lazyWithModuleRetry(() => import("@/pages/Type1Pitfalls"));
+const Type2Transition = lazyWithModuleRetry(() => import("@/pages/Type2Transition"));
+const FeedbackTips = lazyWithModuleRetry(() => import("@/pages/FeedbackTips"));
+const NotFound = lazyWithModuleRetry(() => import("@/components/NotFound"));
+const Fatigue = lazyWithModuleRetry(() => import("@/pages/Fatigue"));
+const VitaminD = lazyWithModuleRetry(() => import("@/pages/VitaminD"));
+const WomenHealth = lazyWithModuleRetry(() => import("@/pages/WomenHealth"));
+const Infections = lazyWithModuleRetry(() => import("@/pages/Infections"));
+const AcuteDiarrhoeaPage = lazyWithModuleRetry(() => import("@/pages/AcuteDiarrhoeaPage"));
+const FoodPoisoningPage = lazyWithModuleRetry(() => import("@/pages/FoodPoisoningPage"));
+const PEP = lazyWithModuleRetry(() => import("@/pages/PEP"));
+const AdultVaccinations = lazyWithModuleRetry(() => import("@/pages/AdultVaccinations"));
+const AKICriteria = lazyWithModuleRetry(() => import("@/pages/AKICriteria"));
+const AcidBaseDisorders = lazyWithModuleRetry(() => import("@/pages/AcidBaseDisorders"));
+const MetabolicAlkalosis = lazyWithModuleRetry(() => import("@/pages/MetabolicAlkalosis"));
+const Geriatrics = lazyWithModuleRetry(() => import("@/pages/Geriatrics"));
+const Electrolytes = lazyWithModuleRetry(() => import("@/pages/Electrolytes"));
+const Hyponatremia = lazyWithModuleRetry(() => import("@/pages/Hyponatremia"));
+const Hypernatremia = lazyWithModuleRetry(() => import("@/pages/Hypernatremia"));
+const Hyperkalemia = lazyWithModuleRetry(() => import("@/pages/Hyperkalemia"));
+const Hypocalcemia = lazyWithModuleRetry(() => import("@/pages/Hypocalcemia"));
+const Hypercalcemia = lazyWithModuleRetry(() => import("@/pages/Hypercalcemia"));
+const Hypokalemia = lazyWithModuleRetry(() => import("@/pages/Hypokalemia"));
+const Hypomagnesemia = lazyWithModuleRetry(() => import("@/pages/Hypomagnesemia"));
+const Hypermagnesemia = lazyWithModuleRetry(() => import("@/pages/Hypermagnesemia"));
+const Hypophosphatemia = lazyWithModuleRetry(() => import("@/pages/Hypophosphatemia"));
+const FCMHypophosphatemia = lazyWithModuleRetry(() => import("@/pages/FCMHypophosphatemia"));
+const Hyperphosphatemia = lazyWithModuleRetry(() => import("@/pages/Hyperphosphatemia"));
+const HyperglycemicEmergency = lazyWithModuleRetry(() => import("@/pages/HyperglycemicEmergency"));
+const Type1TreatmentAlgorithm = lazyWithModuleRetry(() => import("@/pages/Type1TreatmentAlgorithm"));
+const Type2TreatmentAlgorithm = lazyWithModuleRetry(() => import("@/pages/Type2TreatmentAlgorithm"));
+const GoldmanCardiacIndex = lazyWithModuleRetry(() => import("@/pages/GoldmanCardiacIndex"));
 
 const queryClient = new QueryClient();
 
@@ -123,7 +198,7 @@ const DiabetesBuddyLayout = () => (
         </span>
       </header>
       <main className="flex-1 overflow-y-auto p-4 md:p-6 max-w-4xl">
-        <Suspense fallback={<div className="flex items-center justify-center min-h-[60vh]"><div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div></div>}>
+        <Suspense fallback={<RouteLoading />}>
         <Routes>
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/patient" element={<PatientInput />} />
@@ -163,7 +238,8 @@ const App = () => (
       <BrowserRouter>
         <CommandPalette />
         <GlobalMedSearch />
-        <Suspense fallback={<div className="flex items-center justify-center min-h-screen"><div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div></div>}>
+        <RouteErrorBoundary>
+        <Suspense fallback={<RouteLoading fullScreen />}>
         <Routes>
           {/* Landing — redirect to main app */}
           <Route path="/" element={<Navigate to="/home" replace />} />
@@ -264,6 +340,7 @@ const App = () => (
           <Route path="*" element={<NotFound />} />
         </Routes>
         </Suspense>
+        </RouteErrorBoundary>
         <BackToHome />
       </BrowserRouter>
     </TooltipProvider>
