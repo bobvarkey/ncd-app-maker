@@ -29,6 +29,7 @@ const IMAGE_CATALOG: ImageEntry[] = [
   { id: "htn-algorithm-steps", src: "/images/htn-algorithm-steps.jpg", label: "HTN Algorithm Steps", category: "Hypertension", description: "Hypertension treatment algorithm steps", sourcePages: [{ label: "HTN Algorithm Flowchart", path: "/hypertension/assessment" }] },
   { id: "htn-comorbidity-matrix", src: "/images/htn-comorbidity-matrix.jpg", label: "HTN Comorbidity Matrix", category: "Hypertension", description: "Hypertension comorbidity treatment matrix", sourcePages: [{ label: "HTN Algorithm Flowchart", path: "/hypertension/assessment" }] },
   { id: "htn-rx", src: "/images/htn-rx.png", label: "HTN Medication Guide", category: "Hypertension", description: "Hypertension medication reference", sourcePages: [{ label: "HTN Medication Guide", path: "/hypertension/medication-guide" }] },
+  { id: "haaland-mnemonic", src: "/images/haaland-mnemonic.jpg", label: "HAALAND Mnemonic — Secondary HTN", category: "Hypertension", description: "HAALAND mnemonic for secondary hypertension causes (Hyperaldosteronism, Aortic coarctation, Apnea/OSA, Liddle syndrome, Adrenal, Nephropathy, Drugs)", sourcePages: [{ label: "Secondary HTN Evaluation", path: "/hypertension/assessment" }] },
 
   // ─── Lipids ───
   { id: "lipids-infographic", src: "/lipids-infographic.jpg", label: "Lipids Infographic", category: "Lipids", description: "Lipid management overview infographic", sourcePages: [{ label: "Lipids Overview", path: "/lipids/overview" }] },

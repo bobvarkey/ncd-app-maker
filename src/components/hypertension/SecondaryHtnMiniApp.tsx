@@ -8,6 +8,7 @@ import {
   Heart, Wine, Pill, Activity, Zap, Moon, TestTube, Stethoscope, FlaskConical,
   Droplets, Syringe, Info, AlertTriangle
 } from "lucide-react";
+import ImageLink from "@/components/ImageLink";
 
 interface EvaluationItem {
   id: string;
@@ -287,6 +288,9 @@ export default function SecondaryHtnMiniApp() {
                   <span><strong>Liddle's syndrome:</strong> Autosomal dominant disorder mimicking primary aldosteronism — early-onset HTN, hypokalemia, metabolic alkalosis, but with <strong>low renin AND low aldosterone</strong>. Caused by gain-of-function mutations in ENaC (SCNN1A/B/G). Key diagnostic clue: <strong>no response to spironolactone</strong> but responds to amiloride or triamterene (ENaC blockers). Genetic testing confirms. Treatment: amiloride + low-Na diet.</span>
                 </li>
               </ul>
+            </div>
+            <div className="flex justify-center pt-2">
+              <ImageLink imageId="haaland-mnemonic" label="View HAALAND Mnemonic →" />
             </div>
           </TabsContent>
         </Tabs>
