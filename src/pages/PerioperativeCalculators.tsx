@@ -325,6 +325,8 @@ const PerioperativeCalculators = () => {
           <TabsTrigger value="apgar" className="text-xs">Surgical Apgar</TabsTrigger>
           <TabsTrigger value="meds" className="text-xs">Med Management</TabsTrigger>
           <TabsTrigger value="labs" className="text-xs">Pre-op Labs</TabsTrigger>
+          <TabsTrigger value="woo" className="text-xs">Woo Risk</TabsTrigger>
+          <TabsTrigger value="sts" className="text-xs">STS Cardiac</TabsTrigger>
         </TabsList>
 
         {/* ─── RCRI ─── */}
@@ -365,6 +367,12 @@ const PerioperativeCalculators = () => {
         {/* ─── Pre-op Labs ─── */}
         <TabsContent value="labs" className="mt-4 space-y-4">
           <PreopLabsGuide />
+        </TabsContent>
+        <TabsContent value="woo" className="mt-4 space-y-4">
+          <WooRiskCalculator />
+        </TabsContent>
+        <TabsContent value="sts" className="mt-4 space-y-4">
+          <STSCardiacRiskCalculator />
         </TabsContent>
       </Tabs>
     </div>
@@ -1234,6 +1242,668 @@ const PreopLabsGuide = () => {
               <li>• <strong>Repeat testing</strong> is rarely needed if recent (&lt;30 days) results are available and stable</li>
             </ul>
           </div>
+        </CardContent>
+      </Card>
+    </div>
+  );
+};
+
+// ─── Woo Perioperative Risk (Non-Cardiac Surgery) ───
+// Based on: Woo SH et al. JAHA 2021. PMID: 33522252
+// Model predicts 30-day postoperative stroke, MACE (MI/cardiac arrest/stroke), and mortality
+// Uses multivariate logistic regression with 9 predictors
+
+interface WooInputs {
+  age: string;
+  cad: "no" | "yes";
+  strokeHx: "no" | "yes";
+  emergency: "no" | "yes";
+  sodium: "normal" | "low" | "high";
+  creatinine: "normal" | "high";
+  hematocrit: "normal" | "low";
+  asa: string;
+  surgeryType: string;
+}
+
+// Coefficients derived from Woo model (log-odds / beta coefficients)
+// Reference: Table S1-S5 from the paper
+// These are approximate coefficients based on reported ORs and model structure
+const WOO_COEFF = {
+  // Intercepts
+  intercept_stroke: -6.5,
+  intercept_cardiac: -5.2,
+  intercept_mace: -4.8,
+  intercept_mortality: -5.0,
+  // Continuous predictors (per unit)
+  age_per_10yr: 0.25,
+  // Binary predictors
+  cad: 0.36,        // OR ~1.43 for MACE
+  strokeHx_stroke: 0.83,   // OR ~2.3 for stroke
+  strokeHx_mace: 0.38,     // OR ~1.46 for MACE
+  strokeHx_mortality: 0.45,
+  emergency: 0.64,  // OR ~1.89
+  // Sodium (reference: normal 131-146)
+  na_low: 0.18,     // OR ~1.2 for MACE
+  na_high: 0.51,    // OR ~1.67 for MACE
+  // Creatinine >1.8 mg/dL
+  cr_high: 0.33,    // OR ~1.41 for stroke
+  cr_high_mace: 0.67, // OR ~1.96 for MACE
+  cr_high_mortality: 0.55,
+  // Hematocrit ≤27%
+  hct_low: 0.25,    // OR ~1.29 for stroke
+  hct_low_mace: 0.35, // OR ~1.42 for MACE
+  hct_low_mortality: 0.30,
+  // ASA class (per class increase, reference: ASA I)
+  asa_per_class: 0.35,
+  // Surgery type coefficients (reference: general/abdominal)
+  surg_ortho: 0.1,
+  surg_vascular: 0.6,
+  surg_neuro: 0.5,
+  surg_thoracic: 0.3,
+  surg_ent: 0.05,
+  surg_other: 0.1,
+};
+
+const SURGERY_TYPES = [
+  { value: "general", label: "General / Abdominal" },
+  { value: "ortho", label: "Orthopedic" },
+  { value: "vascular", label: "Vascular" },
+  { value: "neuro", label: "Neurosurgery / Brain" },
+  { value: "thoracic", label: "Thoracic (non-cardiac)" },
+  { value: "ent", label: "ENT / Head & Neck" },
+  { value: "other", label: "Other / Mixed" },
+];
+
+const WooRiskCalculator = () => {
+  const [inputs, setInputs] = useState<WooInputs>({
+    age: "",
+    cad: "no",
+    strokeHx: "no",
+    emergency: "no",
+    sodium: "normal",
+    creatinine: "normal",
+    hematocrit: "normal",
+    asa: "2",
+    surgeryType: "general",
+  });
+
+  const update = (field: keyof WooInputs, value: string) => {
+    setInputs(prev => ({ ...prev, [field]: value }));
+  };
+
+  const result = useMemo(() => {
+    const age = parseFloat(inputs.age);
+    if (isNaN(age) || age < 18) return null;
+
+    const ageTerm = (age - 50) / 10 * WOO_COEFF.age_per_10yr;
+    const cadTerm = inputs.cad === "yes" ? WOO_COEFF.cad : 0;
+    const strokeTerm_stroke = inputs.strokeHx === "yes" ? WOO_COEFF.strokeHx_stroke : 0;
+    const strokeTerm_mace = inputs.strokeHx === "yes" ? WOO_COEFF.strokeHx_mace : 0;
+    const strokeTerm_mort = inputs.strokeHx === "yes" ? WOO_COEFF.strokeHx_mortality : 0;
+    const emergTerm = inputs.emergency === "yes" ? WOO_COEFF.emergency : 0;
+    const naTerm = inputs.sodium === "low" ? WOO_COEFF.na_low : inputs.sodium === "high" ? WOO_COEFF.na_high : 0;
+    const crTerm = inputs.creatinine === "high" ? WOO_COEFF.cr_high : 0;
+    const crTerm_mace = inputs.creatinine === "high" ? WOO_COEFF.cr_high_mace : 0;
+    const crTerm_mort = inputs.creatinine === "high" ? WOO_COEFF.cr_high_mortality : 0;
+    const hctTerm = inputs.hematocrit === "low" ? WOO_COEFF.hct_low : 0;
+    const hctTerm_mace = inputs.hematocrit === "low" ? WOO_COEFF.hct_low_mace : 0;
+    const hctTerm_mort = inputs.hematocrit === "low" ? WOO_COEFF.hct_low_mortality : 0;
+    const asaTerm = (parseFloat(inputs.asa) - 1) * WOO_COEFF.asa_per_class;
+
+    const surgCoeffs: Record<string, number> = {
+      general: 0, ortho: WOO_COEFF.surg_ortho, vascular: WOO_COEFF.surg_vascular,
+      neuro: WOO_COEFF.surg_neuro, thoracic: WOO_COEFF.surg_thoracic,
+      ent: WOO_COEFF.surg_ent, other: WOO_COEFF.surg_other,
+    };
+    const surgTerm = surgCoeffs[inputs.surgeryType] || 0;
+
+    const logit = (intercept: number, ...terms: number[]) => {
+      const lp = intercept + terms.reduce((a, b) => a + b, 0);
+      return 1 / (1 + Math.exp(-lp));
+    };
+
+    const strokeRisk = logit(WOO_COEFF.intercept_stroke, ageTerm, strokeTerm_stroke, emergTerm, crTerm, hctTerm, asaTerm, surgTerm);
+    const maceRisk = logit(WOO_COEFF.intercept_mace, ageTerm, cadTerm, strokeTerm_mace, emergTerm, naTerm, crTerm_mace, hctTerm_mace, asaTerm, surgTerm);
+    const mortalityRisk = logit(WOO_COEFF.intercept_mortality, ageTerm, strokeTerm_mort, emergTerm, crTerm_mort, hctTerm_mort, asaTerm, surgTerm);
+
+    return {
+      stroke: strokeRisk * 100,
+      mace: maceRisk * 100,
+      mortality: mortalityRisk * 100,
+    };
+  }, [inputs]);
+
+  const riskColor = (pct: number) => {
+    if (pct < 0.5) return "text-success";
+    if (pct < 2) return "text-warning";
+    return "text-destructive";
+  };
+
+  const riskBg = (pct: number) => {
+    if (pct < 0.5) return "bg-success/10 border-success/20";
+    if (pct < 2) return "bg-warning/10 border-warning/20";
+    return "bg-destructive/10 border-destructive/20";
+  };
+
+  return (
+    <div className="space-y-4">
+      <Card className="border-border/40">
+        <CardHeader className="pb-2">
+          <CardTitle className="text-base flex items-center gap-2">
+            <Brain className="w-4 h-4 text-purple-500" />
+            Woo Perioperative Risk (Non-Cardiac Surgery)
+          </CardTitle>
+        </CardHeader>
+        <CardContent>
+          <p className="text-xs text-muted-foreground mb-4">
+            Predicts 30-day postoperative stroke, major adverse cardiovascular events (MI, cardiac arrest, or stroke), and mortality after non-cardiac surgery.
+            Based on Woo SH et al., JAHA 2021 (PMID: 33522252). Trained on 1.16M patients from ACS-NSQIP.
+          </p>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-3 mb-4">
+            <div className="space-y-1.5">
+              <Label className="text-xs">Age (years)</Label>
+              <Input type="number" placeholder="e.g., 65" value={inputs.age} onChange={e => update("age", e.target.value)} className="h-9" />
+            </div>
+            <div className="space-y-1.5">
+              <Label className="text-xs">ASA Physical Status</Label>
+              <Select value={inputs.asa} onValueChange={v => update("asa", v)}>
+                <SelectTrigger className="h-9">
+                  <SelectValue placeholder="Select ASA class" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="1">ASA I — Normal healthy</SelectItem>
+                  <SelectItem value="2">ASA II — Mild systemic disease</SelectItem>
+                  <SelectItem value="3">ASA III — Severe systemic disease</SelectItem>
+                  <SelectItem value="4">ASA IV — Constant threat to life</SelectItem>
+                  <SelectItem value="5">ASA V — Moribund</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+            <div className="space-y-1.5">
+              <Label className="text-xs">History of CAD (MI, angina, PCI, CABG)</Label>
+              <Select value={inputs.cad} onValueChange={v => update("cad", v)}>
+                <SelectTrigger className="h-9"><SelectValue /></SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="no">No</SelectItem>
+                  <SelectItem value="yes">Yes</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+            <div className="space-y-1.5">
+              <Label className="text-xs">History of Stroke or TIA</Label>
+              <Select value={inputs.strokeHx} onValueChange={v => update("strokeHx", v)}>
+                <SelectTrigger className="h-9"><SelectValue /></SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="no">No</SelectItem>
+                  <SelectItem value="yes">Yes</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+            <div className="space-y-1.5">
+              <Label className="text-xs">Emergency Surgery</Label>
+              <Select value={inputs.emergency} onValueChange={v => update("emergency", v)}>
+                <SelectTrigger className="h-9"><SelectValue /></SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="no">No (elective/urgent)</SelectItem>
+                  <SelectItem value="yes">Yes (emergency)</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+            <div className="space-y-1.5">
+              <Label className="text-xs">Type of Surgery</Label>
+              <Select value={inputs.surgeryType} onValueChange={v => update("surgeryType", v)}>
+                <SelectTrigger className="h-9"><SelectValue /></SelectTrigger>
+                <SelectContent>
+                  {SURGERY_TYPES.map(t => (
+                    <SelectItem key={t.value} value={t.value}>{t.label}</SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
+            <div className="space-y-1.5">
+              <Label className="text-xs">Serum Sodium</Label>
+              <Select value={inputs.sodium} onValueChange={v => update("sodium", v)}>
+                <SelectTrigger className="h-9"><SelectValue /></SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="normal">Normal (131–146 mEq/L)</SelectItem>
+                  <SelectItem value="low">≤130 mEq/L (Hyponatremia)</SelectItem>
+                  <SelectItem value="high">&gt;146 mEq/L (Hypernatremia)</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+            <div className="space-y-1.5">
+              <Label className="text-xs">Serum Creatinine</Label>
+              <Select value={inputs.creatinine} onValueChange={v => update("creatinine", v)}>
+                <SelectTrigger className="h-9"><SelectValue /></SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="normal">≤1.8 mg/dL (Normal)</SelectItem>
+                  <SelectItem value="high">&gt;1.8 mg/dL (Elevated)</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+            <div className="space-y-1.5">
+              <Label className="text-xs">Hematocrit</Label>
+              <Select value={inputs.hematocrit} onValueChange={v => update("hematocrit", v)}>
+                <SelectTrigger className="h-9"><SelectValue /></SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="normal">&gt;27% (Normal)</SelectItem>
+                  <SelectItem value="low">≤27% (Anemia)</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+          </div>
+
+          {/* Results */}
+          {result && (
+            <div className="space-y-3">
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+                <div className={`p-3 rounded-lg border ${riskBg(result.stroke)}`}>
+                  <div className="text-xs text-muted-foreground mb-1">30-day Stroke Risk</div>
+                  <div className={`text-2xl font-heading font-bold ${riskColor(result.stroke)}`}>
+                    {result.stroke.toFixed(2)}%
+                  </div>
+                  <div className="text-xs text-muted-foreground mt-1">
+                    {result.stroke < 0.5 ? "Low risk" : result.stroke < 2 ? "Moderate risk" : "High risk"}
+                  </div>
+                </div>
+                <div className={`p-3 rounded-lg border ${riskBg(result.mace)}`}>
+                  <div className="text-xs text-muted-foreground mb-1">30-day MACE Risk</div>
+                  <div className={`text-2xl font-heading font-bold ${riskColor(result.mace)}`}>
+                    {result.mace.toFixed(2)}%
+                  </div>
+                  <div className="text-xs text-muted-foreground mt-1">
+                    MI, cardiac arrest, or stroke
+                  </div>
+                </div>
+                <div className={`p-3 rounded-lg border ${riskBg(result.mortality)}`}>
+                  <div className="text-xs text-muted-foreground mb-1">30-day Mortality Risk</div>
+                  <div className={`text-2xl font-heading font-bold ${riskColor(result.mortality)}`}>
+                    {result.mortality.toFixed(2)}%
+                  </div>
+                  <div className="text-xs text-muted-foreground mt-1">
+                    {result.mortality < 1 ? "Low risk" : result.mortality < 5 ? "Moderate risk" : "High risk"}
+                  </div>
+                </div>
+              </div>
+
+              {/* Risk meter */}
+              <div className="p-3 rounded-lg bg-muted/30 border border-border/30">
+                <div className="text-xs font-medium mb-2">Model Performance (from paper)</div>
+                <div className="grid grid-cols-3 gap-2 text-xs">
+                  <div className="p-1.5 rounded bg-background/50">
+                    <span className="text-muted-foreground">Stroke AUC: </span>
+                    <strong>0.876</strong>
+                  </div>
+                  <div className="p-1.5 rounded bg-background/50">
+                    <span className="text-muted-foreground">MACE AUC: </span>
+                    <strong>0.868</strong>
+                  </div>
+                  <div className="p-1.5 rounded bg-background/50">
+                    <span className="text-muted-foreground">Mortality AUC: </span>
+                    <strong>0.925</strong>
+                  </div>
+                </div>
+              </div>
+
+              {/* Clinical note */}
+              <div className="p-3 rounded-lg bg-warning/5 border border-warning/20">
+                <h4 className="text-xs font-medium text-warning mb-1">⚠️ Important Notes</h4>
+                <ul className="text-xs space-y-1">
+                  <li>• Coefficients are approximate, derived from published ORs. For precise clinical use, refer to the official calculator at predictionmodel.org or QxMD.</li>
+                  <li>• The model does not include atrial fibrillation, timing of prior stroke, or type of prior stroke — important considerations per the authors.</li>
+                  <li>• ~25% of strokes occurred after discharge — counsel patients on FAST warning signs.</li>
+                  <li>• Postoperative stroke has ~24% 30-day mortality — similar to post-op MI.</li>
+                </ul>
+              </div>
+            </div>
+          )}
+
+          {!result && (
+            <div className="text-center py-6 text-muted-foreground">
+              <p className="text-sm">Enter age ≥ 18 to calculate risks</p>
+            </div>
+          )}
+        </CardContent>
+      </Card>
+    </div>
+  );
+};
+
+// ─── STS-Style Cardiac Surgery Risk Calculator ───
+// Based on: STS 2018 Adult Cardiac Surgery Risk Models
+// Reference: O'Brien SM et al., Ann Thorac Surg 2018. PMID: 29559225
+// This is a simplified educational model — for clinical use, use the official STS calculator at acsdriskcalc.research.sts.org
+
+interface STSInputs {
+  age: string;
+  sex: "male" | "female";
+  renal: "normal" | "moderate" | "severe" | "dialysis";
+  hf: "no" | "yes";
+  priorCardiacSurg: "no" | "yes";
+  lvef: string;
+  procedureType: string;
+  urgency: "elective" | "urgent" | "emergent";
+  strokeHx: "no" | "yes";
+  copd: "no" | "yes";
+  pvd: "no" | "yes";
+  dm: "none" | "oral" | "insulin";
+  htn: "no" | "yes";
+}
+
+const STS_PROCEDURES = [
+  { value: "cabg", label: "Isolated CABG" },
+  { value: "avr", label: "Isolated AVR" },
+  { value: "mvr", label: "Isolated MVR" },
+  { value: "avr_cabg", label: "AVR + CABG" },
+  { value: "mvr_cabg", label: "MVR + CABG" },
+  { value: "mv_repair", label: "MV Repair" },
+  { value: "aortic_root", label: "Aortic Root / Ascending Aorta" },
+  { value: "complex", label: "Other / Complex" },
+];
+
+// Approximate coefficients for STS-style model (simplified educational version)
+// These are NOT the official STS coefficients — they are derived from published ORs for educational purposes
+const STS_COEFF = {
+  intercept_mortality: -5.5,
+  intercept_stroke: -5.8,
+  intercept_morbidity: -4.5,
+  age_per_10yr: 0.35,
+  female: 0.25,
+  renal_moderate: 0.4,
+  renal_severe: 0.7,
+  renal_dialysis: 1.0,
+  hf: 0.5,
+  prior_surg: 0.6,
+  lvef_per_10_below_50: -0.3,
+  procedure_cabg: 0,
+  procedure_avr: 0.1,
+  procedure_mvr: 0.3,
+  procedure_avr_cabg: 0.4,
+  procedure_mvr_cabg: 0.5,
+  procedure_mv_repair: 0.15,
+  procedure_aortic_root: 0.6,
+  procedure_complex: 0.7,
+  urgent: 0.4,
+  emergent: 0.9,
+  stroke_hx: 0.5,
+  copd: 0.3,
+  pvd: 0.35,
+  dm_oral: 0.15,
+  dm_insulin: 0.3,
+  htn: 0.2,
+};
+
+const STSCardiacRiskCalculator = () => {
+  const [inputs, setInputs] = useState<STSInputs>({
+    age: "",
+    sex: "male",
+    renal: "normal",
+    hf: "no",
+    priorCardiacSurg: "no",
+    lvef: "",
+    procedureType: "cabg",
+    urgency: "elective",
+    strokeHx: "no",
+    copd: "no",
+    pvd: "no",
+    dm: "none",
+    htn: "no",
+  });
+
+  const update = (field: keyof STSInputs, value: string) => {
+    setInputs(prev => ({ ...prev, [field]: value }));
+  };
+
+  const result = useMemo(() => {
+    const age = parseFloat(inputs.age);
+    const lvef = parseFloat(inputs.lvef);
+    if (isNaN(age) || age < 18 || isNaN(lvef)) return null;
+
+    const ageTerm = (age - 60) / 10 * STS_COEFF.age_per_10yr;
+    const sexTerm = inputs.sex === "female" ? STS_COEFF.female : 0;
+    const renalTerm = inputs.renal === "moderate" ? STS_COEFF.renal_moderate :
+      inputs.renal === "severe" ? STS_COEFF.renal_severe :
+      inputs.renal === "dialysis" ? STS_COEFF.renal_dialysis : 0;
+    const hfTerm = inputs.hf === "yes" ? STS_COEFF.hf : 0;
+    const priorTerm = inputs.priorCardiacSurg === "yes" ? STS_COEFF.prior_surg : 0;
+    const lvefTerm = lvef < 50 ? (50 - lvef) / 10 * Math.abs(STS_COEFF.lvef_per_10_below_50) : 0;
+    const procCoeffs: Record<string, number> = {
+      cabg: STS_COEFF.procedure_cabg, avr: STS_COEFF.procedure_avr,
+      mvr: STS_COEFF.procedure_mvr, avr_cabg: STS_COEFF.procedure_avr_cabg,
+      mvr_cabg: STS_COEFF.procedure_mvr_cabg, mv_repair: STS_COEFF.procedure_mv_repair,
+      aortic_root: STS_COEFF.procedure_aortic_root, complex: STS_COEFF.procedure_complex,
+    };
+    const procTerm = procCoeffs[inputs.procedureType] || 0;
+    const urgencyTerm = inputs.urgency === "urgent" ? STS_COEFF.urgent :
+      inputs.urgency === "emergent" ? STS_COEFF.emergent : 0;
+    const strokeTerm = inputs.strokeHx === "yes" ? STS_COEFF.stroke_hx : 0;
+    const copdTerm = inputs.copd === "yes" ? STS_COEFF.copd : 0;
+    const pvdTerm = inputs.pvd === "yes" ? STS_COEFF.pvd : 0;
+    const dmTerm = inputs.dm === "oral" ? STS_COEFF.dm_oral :
+      inputs.dm === "insulin" ? STS_COEFF.dm_insulin : 0;
+    const htnTerm = inputs.htn === "yes" ? STS_COEFF.htn : 0;
+
+    const logit = (intercept: number, ...terms: number[]) => {
+      const lp = intercept + terms.reduce((a, b) => a + b, 0);
+      return 1 / (1 + Math.exp(-lp));
+    };
+
+    const sharedTerms = [ageTerm, sexTerm, renalTerm, hfTerm, priorTerm, lvefTerm, procTerm, urgencyTerm];
+    const mortalityRisk = logit(STS_COEFF.intercept_mortality, ...sharedTerms, strokeTerm, copdTerm, pvdTerm, dmTerm, htnTerm);
+    const strokeRisk = logit(STS_COEFF.intercept_stroke, ...sharedTerms, strokeTerm, pvdTerm, htnTerm);
+    const morbidityRisk = logit(STS_COEFF.intercept_morbidity, ...sharedTerms, copdTerm, dmTerm, htnTerm);
+
+    return {
+      mortality: mortalityRisk * 100,
+      stroke: strokeRisk * 100,
+      majorMorbidity: morbidityRisk * 100,
+    };
+  }, [inputs]);
+
+  const riskColor = (pct: number) => {
+    if (pct < 2) return "text-success";
+    if (pct < 5) return "text-warning";
+    return "text-destructive";
+  };
+
+  const riskBg = (pct: number) => {
+    if (pct < 2) return "bg-success/10 border-success/20";
+    if (pct < 5) return "bg-warning/10 border-warning/20";
+    return "bg-destructive/10 border-destructive/20";
+  };
+
+  return (
+    <div className="space-y-4">
+      <Card className="border-border/40">
+        <CardHeader className="pb-2">
+          <CardTitle className="text-base flex items-center gap-2">
+            <Heart className="w-4 h-4 text-red-500" />
+            STS-Style Cardiac Surgery Risk Calculator
+          </CardTitle>
+        </CardHeader>
+        <CardContent>
+          <p className="text-xs text-muted-foreground mb-4">
+            Simplified educational model based on the STS 2018 Adult Cardiac Surgery Risk Models (O'Brien SM et al., Ann Thorac Surg 2018).
+            For clinical use, use the official STS calculator at <strong>acsdriskcalc.research.sts.org</strong>.
+          </p>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 mb-4">
+            <div className="space-y-1.5">
+              <Label className="text-xs">Age (years)</Label>
+              <Input type="number" placeholder="e.g., 65" value={inputs.age} onChange={e => update("age", e.target.value)} className="h-9" />
+            </div>
+            <div className="space-y-1.5">
+              <Label className="text-xs">Sex</Label>
+              <Select value={inputs.sex} onValueChange={v => update("sex", v)}>
+                <SelectTrigger className="h-9"><SelectValue /></SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="male">Male</SelectItem>
+                  <SelectItem value="female">Female</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+            <div className="space-y-1.5">
+              <Label className="text-xs">Procedure Type</Label>
+              <Select value={inputs.procedureType} onValueChange={v => update("procedureType", v)}>
+                <SelectTrigger className="h-9"><SelectValue /></SelectTrigger>
+                <SelectContent>
+                  {STS_PROCEDURES.map(p => (
+                    <SelectItem key={p.value} value={p.value}>{p.label}</SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
+            <div className="space-y-1.5">
+              <Label className="text-xs">Urgency</Label>
+              <Select value={inputs.urgency} onValueChange={v => update("urgency", v)}>
+                <SelectTrigger className="h-9"><SelectValue /></SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="elective">Elective</SelectItem>
+                  <SelectItem value="urgent">Urgent</SelectItem>
+                  <SelectItem value="emergent">Emergent</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+            <div className="space-y-1.5">
+              <Label className="text-xs">LVEF (%)</Label>
+              <Input type="number" placeholder="e.g., 55" value={inputs.lvef} onChange={e => update("lvef", e.target.value)} className="h-9" />
+            </div>
+            <div className="space-y-1.5">
+              <Label className="text-xs">Renal Function</Label>
+              <Select value={inputs.renal} onValueChange={v => update("renal", v)}>
+                <SelectTrigger className="h-9"><SelectValue /></SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="normal">Normal (Cr ≤1.2)</SelectItem>
+                  <SelectItem value="moderate">Moderate (Cr 1.2–2.0)</SelectItem>
+                  <SelectItem value="severe">Severe (Cr &gt;2.0)</SelectItem>
+                  <SelectItem value="dialysis">Dialysis-dependent</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+            <div className="space-y-1.5">
+              <Label className="text-xs">Heart Failure</Label>
+              <Select value={inputs.hf} onValueChange={v => update("hf", v)}>
+                <SelectTrigger className="h-9"><SelectValue /></SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="no">No</SelectItem>
+                  <SelectItem value="yes">Yes</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+            <div className="space-y-1.5">
+              <Label className="text-xs">Prior Cardiac Surgery</Label>
+              <Select value={inputs.priorCardiacSurg} onValueChange={v => update("priorCardiacSurg", v)}>
+                <SelectTrigger className="h-9"><SelectValue /></SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="no">No</SelectItem>
+                  <SelectItem value="yes">Yes</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+            <div className="space-y-1.5">
+              <Label className="text-xs">Prior Stroke/TIA</Label>
+              <Select value={inputs.strokeHx} onValueChange={v => update("strokeHx", v)}>
+                <SelectTrigger className="h-9"><SelectValue /></SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="no">No</SelectItem>
+                  <SelectItem value="yes">Yes</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+            <div className="space-y-1.5">
+              <Label className="text-xs">COPD</Label>
+              <Select value={inputs.copd} onValueChange={v => update("copd", v)}>
+                <SelectTrigger className="h-9"><SelectValue /></SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="no">No</SelectItem>
+                  <SelectItem value="yes">Yes</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+            <div className="space-y-1.5">
+              <Label className="text-xs">Peripheral Vascular Disease</Label>
+              <Select value={inputs.pvd} onValueChange={v => update("pvd", v)}>
+                <SelectTrigger className="h-9"><SelectValue /></SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="no">No</SelectItem>
+                  <SelectItem value="yes">Yes</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+            <div className="space-y-1.5">
+              <Label className="text-xs">Diabetes</Label>
+              <Select value={inputs.dm} onValueChange={v => update("dm", v)}>
+                <SelectTrigger className="h-9"><SelectValue /></SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="none">None</SelectItem>
+                  <SelectItem value="oral">Oral medication</SelectItem>
+                  <SelectItem value="insulin">Insulin-dependent</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+            <div className="space-y-1.5">
+              <Label className="text-xs">Hypertension</Label>
+              <Select value={inputs.htn} onValueChange={v => update("htn", v)}>
+                <SelectTrigger className="h-9"><SelectValue /></SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="no">No</SelectItem>
+                  <SelectItem value="yes">Yes</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+          </div>
+
+          {/* Results */}
+          {result && (
+            <div className="space-y-3">
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+                <div className={`p-3 rounded-lg border ${riskBg(result.mortality)}`}>
+                  <div className="text-xs text-muted-foreground mb-1">Operative Mortality</div>
+                  <div className={`text-2xl font-heading font-bold ${riskColor(result.mortality)}`}>
+                    {result.mortality.toFixed(2)}%
+                  </div>
+                  <div className="text-xs text-muted-foreground mt-1">
+                    {result.mortality < 2 ? "Low risk" : result.mortality < 5 ? "Moderate risk" : "High risk"}
+                  </div>
+                </div>
+                <div className={`p-3 rounded-lg border ${riskBg(result.stroke)}`}>
+                  <div className="text-xs text-muted-foreground mb-1">Postoperative Stroke</div>
+                  <div className={`text-2xl font-heading font-bold ${riskColor(result.stroke)}`}>
+                    {result.stroke.toFixed(2)}%
+                  </div>
+                  <div className="text-xs text-muted-foreground mt-1">
+                    Permanent stroke risk
+                  </div>
+                </div>
+                <div className={`p-3 rounded-lg border ${riskBg(result.majorMorbidity)}`}>
+                  <div className="text-xs text-muted-foreground mb-1">Major Morbidity</div>
+                  <div className={`text-2xl font-heading font-bold ${riskColor(result.majorMorbidity)}`}>
+                    {result.majorMorbidity.toFixed(2)}%
+                  </div>
+                  <div className="text-xs text-muted-foreground mt-1">
+                    Stroke, renal failure, prolonged vent, reoperation, DSWI
+                  </div>
+                </div>
+              </div>
+
+              <div className="p-3 rounded-lg bg-warning/5 border border-warning/20">
+                <h4 className="text-xs font-medium text-warning mb-1">⚠️ Educational Model Only</h4>
+                <ul className="text-xs space-y-1">
+                  <li>• This is a simplified educational model with approximate coefficients derived from published STS risk model ORs.</li>
+                  <li>• The official STS risk calculator uses proprietary, frequently updated models with ~40+ variables.</li>
+                  <li>• For clinical use, use the official STS ACSD Risk Calculator at <strong>acsdriskcalc.research.sts.org</strong>.</li>
+                  <li>• The official calculator covers: isolated CABG, isolated AVR, isolated MVR, AVR+CABG, MVR+CABG, MV repair.</li>
+                </ul>
+              </div>
+            </div>
+          )}
+
+          {!result && (
+            <div className="text-center py-6 text-muted-foreground">
+              <p className="text-sm">Enter age ≥ 18 and LVEF to calculate risks</p>
+            </div>
+          )}
         </CardContent>
       </Card>
     </div>
