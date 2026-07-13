@@ -369,7 +369,7 @@ const PerioperativeCalculators = () => {
           <PreopLabsGuide />
         </TabsContent>
         <TabsContent value="woo" className="mt-4 space-y-4">
-          <WooRiskCalculator />
+          <WooRiskCalculator onSwitchToASA={() => setActiveTab("asa")} />
         </TabsContent>
         <TabsContent value="sts" className="mt-4 space-y-4">
           <STSCardiacRiskCalculator />
@@ -1297,7 +1297,7 @@ const SURGERY_TYPES = [
 
 const logistic = (x: number) => 1 / (1 + Math.exp(-x));
 
-const WooRiskCalculator = () => {
+const WooRiskCalculator = ({ onSwitchToASA }: { onSwitchToASA?: () => void }) => {
   const [inputs, setInputs] = useState<WooInputs>({
     age: "",
     cad: "no",
@@ -1401,7 +1401,15 @@ const WooRiskCalculator = () => {
               <Input type="number" placeholder="e.g., 65" value={inputs.age} onChange={e => update("age", e.target.value)} className="h-9" />
             </div>
             <div className="space-y-1.5">
-              <Label className="text-xs">ASA Physical Status</Label>
+              <div className="flex items-center justify-between">
+                <Label className="text-xs">ASA Physical Status</Label>
+                <button
+                  onClick={onSwitchToASA}
+                  className="text-xs text-primary hover:text-primary/80 underline underline-offset-2"
+                >
+                  View ASA criteria →
+                </button>
+              </div>
               <Select value={inputs.asa} onValueChange={v => update("asa", v)}>
                 <SelectTrigger className="h-9">
                   <SelectValue placeholder="Select ASA class" />
