@@ -923,18 +923,6 @@ export default function Home() {
         </DiseaseGroup>
 
         {/* Quick Actions */}
-        <section>
-          <h2 className="text-lg font-semibold mb-4 flex items-center gap-2">
-            <Calculator className="h-5 w-5 text-primary" />
-            Quick Actions
-          </h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
-            {quickActions.map((action) => (
-              <QuickAction key={action.title} {...action} />
-            ))}
-          </div>
-        </section>
-
         <section className="pt-4 border-t border-border">
           <div className="flex flex-wrap items-center justify-between gap-4">
             <div className="flex items-center gap-6 text-sm text-muted-foreground">
