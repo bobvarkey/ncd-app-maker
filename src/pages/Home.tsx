@@ -630,14 +630,14 @@ interface QuickActionProps {
 function QuickAction({ title, description, icon, to }: QuickActionProps) {
   return (
     <Link to={to}>
-      <div className="p-4 rounded-lg border border-border/40 bg-muted/20 hover:bg-muted/30 hover:border-border/60 transition-all cursor-pointer group">
-        <div className="flex items-start gap-3">
-          <div className="w-8 h-8 rounded-md bg-primary/10 flex items-center justify-center shrink-0">
+      <div className="p-5 rounded-xl border border-border/30 bg-gradient-to-br from-background via-muted/10 to-muted/20 hover:from-primary/5 hover:via-primary/5 hover:to-primary/10 hover:border-primary/30 hover:shadow-md hover:shadow-primary/5 transition-all duration-200 cursor-pointer group">
+        <div className="flex items-start gap-4">
+          <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-primary/10 to-primary/5 flex items-center justify-center shrink-0 group-hover:scale-110 group-hover:from-primary/20 group-hover:to-primary/10 transition-all duration-200">
             {icon}
           </div>
           <div className="min-w-0">
-            <p className="text-sm font-medium text-foreground group-hover:text-primary transition-colors">{title}</p>
-            <p className="text-xs text-muted-foreground mt-0.5">{description}</p>
+            <p className="text-base font-semibold text-foreground group-hover:text-primary transition-colors">{title}</p>
+            <p className="text-sm text-muted-foreground mt-1 leading-relaxed">{description}</p>
           </div>
         </div>
       </div>
