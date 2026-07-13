@@ -184,6 +184,7 @@ const HyperglycemicEmergency = lazyWithModuleRetry(() => import("@/pages/Hypergl
 const Type1TreatmentAlgorithm = lazyWithModuleRetry(() => import("@/pages/Type1TreatmentAlgorithm"));
 const Type2TreatmentAlgorithm = lazyWithModuleRetry(() => import("@/pages/Type2TreatmentAlgorithm"));
 const GoldmanCardiacIndex = lazyWithModuleRetry(() => import("@/pages/GoldmanCardiacIndex"));
+const PerioperativeCalculators = lazyWithModuleRetry(() => import("@/pages/PerioperativeCalculators"));
 
 const queryClient = new QueryClient();
 
@@ -329,6 +330,7 @@ const App = () => (
           <Route path="/type1-treatment-algorithm" element={<><TabNavigation /><Type1TreatmentAlgorithm /></>} />
           <Route path="/type2-treatment-algorithm" element={<><TabNavigation /><Type2TreatmentAlgorithm /></>} />
           <Route path="/goldman-cardiac" element={<><TabNavigation /><GoldmanCardiacIndex /></>} />
+          <Route path="/perioperative" element={<><TabNavigation /><PerioperativeCalculators /></>} />
 
           {/* Legal / Compliance */}
           <Route path="/privacy" element={<><TabNavigation /><PrivacyPolicy /></>} />

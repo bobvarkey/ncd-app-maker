@@ -698,6 +698,12 @@ export default function Home() {
       icon: <Heart className="h-4 w-4 text-rose-500" />,
       to: "/goldman-cardiac",
     },
+    {
+      title: "Perioperative Calculators",
+      description: "RCRI, ASA, Mallampati, Caprini, STOP-Bang, Apgar, Med Management",
+      icon: <Scissors className="h-4 w-4 text-indigo-500" />,
+      to: "/perioperative",
+    },
   ];
 
   return (
