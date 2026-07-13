@@ -51,11 +51,11 @@ const RCRI_CLASSES = [
 
 // ─── ASA Physical Status ───
 const ASA_CLASSES = [
-  { class: "I", description: "Normal healthy patient", example: "Healthy, non-smoking, no meds", color: "text-success" },
-  { class: "II", description: "Mild systemic disease", example: "Remote TIA/CVA with no or minimal residual deficit", color: "text-success" },
-  { class: "III", description: "Severe systemic disease", example: "Remote (>3mo) TIA/CVA with residual deficit, stable", color: "text-warning" },
-  { class: "IV", description: "Severe disease — constant threat to life", example: "Recent (<3mo) stroke/TIA, unstable hemodynamics", color: "text-warning" },
-  { class: "V", description: "Moribund — not expected to survive without surgery", example: "Ruptured AAA, massive trauma", color: "text-destructive" },
+  { class: "I", description: "Normal healthy patient — no systemic disease, good exercise tolerance", example: "Healthy, non-smoking, no meds", color: "text-success" },
+  { class: "II", description: "Mild systemic disease — no substantive functional limitation", example: "Well-controlled HTN/DM, mild lung disease, pregnancy, social alcohol use, remote TIA/CVA with no/minimal residual deficit", color: "text-success" },
+  { class: "III", description: "Severe systemic disease — substantive functional limitation, not constant threat to life", example: "Poorly controlled DM/HTN, mod-severe COPD, BMI ≥40, ESRD on dialysis, >3mo MI/CVA/TIA/stents, remote CVA with residual deficit", color: "text-warning" },
+  { class: "IV", description: "Severe disease — constant threat to life", example: "Recent (<3mo) MI/CVA/TIA, ongoing ischemia, severe valve disease, low EF, sepsis, ARDS, unstable hemodynamics", color: "text-warning" },
+  { class: "V", description: "Moribund — not expected to survive without surgery", example: "Ruptured AAA, massive trauma with shock, ischemic bowel with major cardiac disease", color: "text-destructive" },
   { class: "VI", description: "Declared brain-dead — organ donor", example: "Organ procurement", color: "text-muted-foreground" },
 ];
 
@@ -544,12 +544,12 @@ const ASACalculator = () => {
             <div className="mt-4 p-3 rounded-lg bg-primary/5 border border-primary/20">
               <h4 className="text-sm font-medium mb-2">Selected: ASA {selectedClass}</h4>
               <p className="text-xs text-muted-foreground">
-                {selectedClass === "I" && "Normal healthy patient. No medical problems. No smoking. No medications."}
-                {selectedClass === "II" && "Mild systemic disease without functional limitation. Remote TIA/CVA with no or minimal residual deficit and no significant functional limitation. Well-controlled conditions."}
-                {selectedClass === "III" && "Severe systemic disease with definite functional limitation. Remote (>3 months) TIA/CVA with clear residual deficit causing substantive functional limitation, but the patient is medically stable. Or stroke with well-controlled comorbidities, able to perform some activities but clearly limited."}
-                {selectedClass === "IV" && "Severe systemic disease that is a constant threat to life. Recent (<3 months) stroke/TIA, or stroke with unstable hemodynamics, progressive neurologic deficit, or other organ failure making the patient at constant threat to life. ICU-level care may be needed."}
-                {selectedClass === "V" && "Moribund patient not expected to survive without surgery. Emergency salvage procedure."}
-                {selectedClass === "VI" && "Declared brain-dead. Organ procurement surgery only."}
+                {selectedClass === "I" && "Normal healthy patient with no systemic disease and good exercise tolerance. No medical problems. No smoking. No medications."}
+                {selectedClass === "II" && "Patient with mild systemic disease without substantive functional limitation. Examples: well-controlled HTN or diabetes, mild lung disease, social alcohol use, pregnancy. Remote TIA/CVA with no or minimal residual deficit and no significant functional limitation."}
+                {selectedClass === "III" && "Patient with severe systemic disease that results in substantive functional limitations (but not a constant threat to life). Examples: poorly controlled DM or HTN, moderate-severe COPD, BMI ≥40, ESRD on regular dialysis, >3-month history of MI, CVA, TIA, or stents. Remote (>3 months) TIA/CVA with clear residual deficit causing substantive functional limitation, but medically stable. Or stroke with well-controlled comorbidities, able to perform some activities but clearly limited."}
+                {selectedClass === "IV" && "Patient with severe systemic disease that is a constant threat to life. Examples: recent (<3 months) MI or CVA/TIA, ongoing ischemia, severe valve disease, severe reduction in EF, sepsis, ARDS. Stroke with unstable hemodynamics, progressive neurologic deficit, or other organ failure making the patient at constant threat to life. ICU-level care may be needed."}
+                {selectedClass === "V" && "Moribund patient who is not expected to survive without the operation. Examples: ruptured abdominal/thoracic aneurysm, massive trauma with shock, ischemic bowel with major cardiac disease. Emergency salvage procedure."}
+                {selectedClass === "VI" && "Declared brain-dead patient whose organs are being removed for donor purposes."}
               </p>
               <div className="mt-2 text-xs text-muted-foreground">
                 <strong>Note:</strong> ASA class alone does not predict surgical risk. Use with RCRI or other risk calculators.
