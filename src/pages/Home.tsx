@@ -5,7 +5,7 @@ import {
   ChevronDown, Upload, Sparkles, Calculator, Stethoscope, FileSearch, UtensilsCrossed,
   Scan, CheckCircle2, X, AlertTriangle, Weight, AirVent, Filter, Moon, Bug, Shield,
   Zap, Sun, Bone, Thermometer, Flame, Gem, Smile, Bandage, Timer, Microscope, Pill,
-  Home as HomeIcon, Search, ArrowRight, FlaskConical, User,
+  Home as HomeIcon, Search, ArrowRight, FlaskConical, User, Scissors,
 } from "lucide-react";
 import ZoomableImage from "@/components/ZoomableImage";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
