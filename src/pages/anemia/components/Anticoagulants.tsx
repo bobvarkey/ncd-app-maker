@@ -467,8 +467,8 @@ export default function Anticoagulants() {
           Rivaroxaban is a <strong>BCS Class II</strong> compound with limited aqueous solubility (only 5–7 mg/L) but high permeability.
         </p>
         <ul className="space-y-1 text-xs text-muted-foreground list-disc list-inside">
-          <li>For lower doses (≤10 mg), even this limited solubility is sufficient for absorption.</li>
-          <li>For <strong>15–20 mg doses</strong>, the drug cannot fully dissolve in gastric fluid alone — hence the <strong>"with food"</strong> requirement.</li>
+          <li><strong>Rivaroxaban 15 mg and 20 mg</strong> should be taken <strong>with food</strong> because food increases bioavailability.</li>
+          <li><strong>Rivaroxaban 10 mg</strong> can be taken with or without food.</li>
           <li>Food, particularly <strong>fat content and bile acids</strong>, enhances solubilization and absorption.</li>
           <li>Food also <strong>delays gastric emptying</strong>, increasing gastric residence time, which contributes to enhanced dissolution.</li>
         </ul>
