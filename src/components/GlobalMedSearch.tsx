@@ -266,7 +266,11 @@ export function GlobalMedSearch() {
         </kbd>
       </div>
 
-      {open && q.trim() && (
+      {open && q.trim() && <>
+        <div
+          className="fixed inset-0 z-0 backdrop-blur-sm bg-background/30"
+          onClick={() => { setOpen(false); setQ(""); }}
+        />
         <div className="absolute top-full left-0 right-0 mt-0 max-h-[60vh] overflow-y-auto border-b border-border bg-card/98 backdrop-blur-md shadow-xl">
           {results.length === 0 ? (
             <div className="p-4 text-sm text-muted-foreground">
@@ -336,7 +340,7 @@ export function GlobalMedSearch() {
             <kbd className="rounded bg-muted px-1">↵</kbd> to open • Medications or clinical topics
           </div>
         </div>
-      )}
+      </>}
     </div>
   );
 }
