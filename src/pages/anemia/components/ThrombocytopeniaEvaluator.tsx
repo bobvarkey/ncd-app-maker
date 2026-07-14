@@ -771,6 +771,18 @@ export default function ThrombocytopeniaEvaluator() {
             <p className="text-xs text-muted-foreground pt-2">
               Sources: Al-Samkari H, Kuter DJ. Blood 2024; ASH 2019 ITP Guidelines; ASH HIT Guidelines.
             </p>
+
+            {/* Thrombocytopenia Diagnostic Algorithm Reference Image */}
+            <div className="mt-4 rounded-lg overflow-hidden border border-border">
+              <img
+                src="/thrombocytopenia-algorithm.jpg"
+                alt="Thrombocytopenia Diagnostic Algorithm"
+                className="w-full h-auto"
+              />
+              <p className="text-[10px] text-muted-foreground text-center py-1.5 bg-muted/30">
+                Thrombocytopenia Diagnostic Algorithm — Reference Card
+              </p>
+            </div>
           </div>
         )}
       </div>
