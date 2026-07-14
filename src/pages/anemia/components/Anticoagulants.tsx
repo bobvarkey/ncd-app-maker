@@ -457,6 +457,26 @@ export default function Anticoagulants() {
         />
       </CollapsibleSection>
 
+      {/* Rivaroxaban Key Takeaway */}
+      <div className="rounded-xl border border-blue-500/30 bg-blue-500/5 p-4 space-y-2">
+        <div className="flex items-center gap-2">
+          <Info className="h-4 w-4 text-blue-400" />
+          <span className="text-sm font-bold text-blue-400">Key Takeaway — Rivaroxaban</span>
+        </div>
+        <p className="text-xs text-foreground">
+          Rivaroxaban is a <strong>BCS Class II</strong> compound with limited aqueous solubility (only 5–7 mg/L) but high permeability.
+        </p>
+        <ul className="space-y-1 text-xs text-muted-foreground list-disc list-inside">
+          <li>For lower doses (≤10 mg), even this limited solubility is sufficient for absorption.</li>
+          <li>For <strong>15–20 mg doses</strong>, the drug cannot fully dissolve in gastric fluid alone — hence the <strong>"with food"</strong> requirement.</li>
+          <li>Food, particularly <strong>fat content and bile acids</strong>, enhances solubilization and absorption.</li>
+          <li>Food also <strong>delays gastric emptying</strong>, increasing gastric residence time, which contributes to enhanced dissolution.</li>
+        </ul>
+        <p className="text-[10px] text-muted-foreground italic">
+          BCS Class II: Low solubility, high permeability.
+        </p>
+      </div>
+
       {/* Dosing in AF */}
       <CollapsibleSection title="Dosing in Atrial Fibrillation" icon={HeartPulse}>
         <Table
