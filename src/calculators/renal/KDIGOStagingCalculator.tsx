@@ -418,6 +418,18 @@ export default function KDIGOStagingCalculator() {
                 ⚠️ eGFR &lt; 60: Review renal dosing adjustments for all medications
               </p>
             )}
+
+            {/* KDIGO Staging Reference Image */}
+            <div className="mt-4 rounded-lg overflow-hidden border border-border">
+              <img
+                src="/kdigo-staging-reference.jpg"
+                alt="KDIGO Staging Reference"
+                className="w-full h-auto"
+              />
+              <p className="text-[10px] text-muted-foreground text-center py-1.5 bg-muted/30">
+                KDIGO Staging Reference — GA Classification &amp; Risk Heatmap
+              </p>
+            </div>
           </div>
         )}
       </CardContent>
