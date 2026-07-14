@@ -121,6 +121,7 @@ const drugDoseDetails: DrugDoseDetail[] = [
 
   // ─── CCBs ───
   { name: "Azelnidipine", brand: "Calblock", drugClass: "DHP-CCB", doseRange: "8–16 mg OD", pearls: "Long t½ (~19h) — true OD. Less pedal oedema vs amlodipine. Also blocks T-type Ca channels — may have less reflex tachycardia. Popular in Japanese/Asian markets.", caution: "Headache, dizziness. Avoid with strong CYP3A4 inhibitors." },
+  { name: "Cilnidipine", brand: "Cilacar, Cilnidipine", drugClass: "DHP-CCB", doseRange: "5–10 mg OD (max 20 mg/day)", pearls: "Dual L/N-type Ca channel blocker — blocks N-type Ca channels in sympathetic nerve terminals, reducing reflex tachycardia. Less pedal edema vs amlodipine. Renoprotective (↓ proteinuria). Popular in India/Asia. T½ ~16h.", caution: "Headache, dizziness, flushing. Caution with CYP3A4 inhibitors." },
   { name: "Amlodipine", brand: "Norvasc", drugClass: "DHP-CCB", doseRange: "2.5–10 mg OD", pearls: "Long T½ (30-50h) — true OD dosing. Vasoselective. Peripheral edema common.", caution: "Lower extremity edema" },
   { name: "Nifedipine ER", brand: "Procardia XL, Adalat CC", drugClass: "DHP-CCB", doseRange: "30–90 mg OD", pearls: "ER/XL only — short-acting IR NEVER use (reflex tachycardia, ↑ CV events).", caution: "Short-acting form contraindicated" },
   { name: "Verapamil", brand: "Calan, Isoptin", drugClass: "Non-DHP CCB", doseRange: "120–480 mg/day", pearls: "Rate + BP control — use in AF + HTN. Causes constipation.", caution: "Avoid with BB (bradycardia). Negative inotrope." },
