@@ -1016,10 +1016,10 @@ export default function AscvdEmr() {
               <label className="mb-1 block text-xs font-semibold text-muted-foreground">
                 Subclinical Atherosclerosis Type {southAsian ? "(ASCVD-equivalent for South Asians)" : ""}
               </label>
-              <Select value={genetic.subclinicalAtherosclerosis} onValueChange={v => setG("subclinicalAtherosclerosis", v)}>
+              <Select value={genetic.subclinicalAtherosclerosis || "none"} onValueChange={v => setG("subclinicalAtherosclerosis", v === "none" ? "" : v)}>
                 <SelectTrigger className="max-w-xs"><SelectValue placeholder="Select type" /></SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="">None specified</SelectItem>
+                  <SelectItem value="none">None specified</SelectItem>
                   {(Object.entries(SUBCLINICAL_LABELS) as [SubclinicalType, string][]).map(([val, lbl]) => (
                     <SelectItem key={val} value={val}>{lbl}</SelectItem>
                   ))}
